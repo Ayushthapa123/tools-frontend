@@ -10,57 +10,57 @@ type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
-export async function generateMetadata(
-  { params, searchParams }: Props,
-  parent: ResolvingMetadata,
-): Promise<Metadata> {
-  const slug = params.slug;
+// export async function generateMetadata(
+//   { params, searchParams }: Props,
+//   parent: ResolvingMetadata,
+// ): Promise<Metadata> {
+//   const slug = params.slug;
  
 
-  const query = gql`
-        query getHomestayMetaBySlug($slug: String!) {
-          getHomestayBySlug(slug: $slug) {
-            name
-            description
-            slug
+//   const query = gql`
+//         query getHomestayMetaBySlug($slug: String!) {
+//           getHomestayBySlug(slug: $slug) {
+//             name
+//             description
+//             slug
             
-          }
-        }
-      `
+//           }
+//         }
+//       `
     
-  const variables = {
-    slug: params.slug,
-  };
+//   const variables = {
+//     slug: params.slug,
+//   };
 
-  const res = await graphqlClient
-    .request(query, variables)
-    .then((data: any) => {
-      return  data.getHomestayBySlug // Returning the fetched data
-    })
-    .catch(error => {
-      console.error(error);
-      return null; // Return null in case of an error
-    });
+//   const res = await graphqlClient
+//     .request(query, variables)
+//     .then((data: any) => {
+//       return  data.getHomestayBySlug // Returning the fetched data
+//     })
+//     .catch(error => {
+//       console.error(error);
+//       return null; // Return null in case of an error
+//     });
 
-  console.log('rrrrrrrrrrrrrr', res);
+//   console.log('rrrrrrrrrrrrrr', res);
 
-  // Safeguard against errors by checking if res exists
-  if (!res) {
-    return {
-      title: 'Error loading metadata',
-    };
-  }
+//   // Safeguard against errors by checking if res exists
+//   if (!res) {
+//     return {
+//       title: 'Error loading metadata',
+//     };
+//   }
 
-  return {
-    title: res?.name || 'Homestay',
-    description: res?.description || 'Homestay',
-    openGraph: {
-      title: res?.name,
-      description: res?.description,
-      images: `/images/default-image.png` 
-    },
-  };
-}
+//   return {
+//     title: res?.name || 'Homestay',
+//     description: res?.description || 'Homestay',
+//     openGraph: {
+//       title: res?.name,
+//       description: res?.description,
+//       images: `/images/default-image.png` 
+//     },
+//   };
+// }
 
 export default function Home({ params }: { params: { slug: string } }) {
   const slug = params?.slug;
