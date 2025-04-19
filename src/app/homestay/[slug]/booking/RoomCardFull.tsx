@@ -65,7 +65,7 @@ interface RoomCardProps {
               {room.price && (
                 <div className="flex items-baseline gap-1">
                   <span className="text-2xl font-bold text-primary">
-                    ${room.price.amount}
+                    {room.price.amount} {room.price.currency}
                   </span>
                   <span className="text-sm text-base-content/60">/night</span>
                 </div>

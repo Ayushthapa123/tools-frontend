@@ -191,15 +191,15 @@ const StepTwo = ({ selectedRoom, formData, handleBack, handleSubmit, onSubmit }:
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        amount: (selectedRoom?.price?.amount * 100) || 10000,
+        amount: (selectedRoom?.price?.amount * 100) ,
         currency: 'NPR',
-        roomId: selectedRoom?.id ?? "1",
+        roomId: selectedRoom?.id ,
         quantity: 1,
         bookingKey: uuidv4(),
-        guestId: user.userId??1,
+        guestId: user.userId,
         startDate: formData?.checkInDate,
         endDate: formData?.checkOutDate,
-        customerEmail: formData?.email??"test@test.com",
+        customerEmail: formData?.email,
         customerPassword: formData?.password,
          
       }),
@@ -261,8 +261,8 @@ export const BookingForm = ({ homestayId, roomId, onSuccess, rooms }: BookingFor
   const selectedRoom = rooms.find(room => room.id === roomId);
 
   const searchParams = useSearchParams();
-  const checkInDate = searchParams.get('checkInDate') ?? new Date().toISOString().split('T')[0];
-  const checkOutDate = searchParams.get('checkOutDate') ?? new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[0];
+  const checkInDate = searchParams.get('checkInDate') ? new Date(searchParams.get('checkInDate') ?? '') : new Date().toISOString().split('T')[0];
+  const checkOutDate = searchParams.get('checkOutDate') ? new Date(searchParams.get('checkOutDate') ?? '') : new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[0];
  
 
 

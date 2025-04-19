@@ -77,8 +77,8 @@ console.log(room);
     defaultValues: {
      roomNumber: room?.roomNumber,
      caption: room?.caption,
-     capacity: room?.capacity,
-     status: room?.status,
+     capacity: room?.capacity??RoomCapacity.OneBed,
+     status: room?.status??RoomStatus.Available,
      maxOccupancy: room?.maxOccupancy,
      attachBathroom: room?.attachBathroom,
   

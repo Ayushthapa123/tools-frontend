@@ -4,7 +4,7 @@ import { useGraphqlClientRequest } from "src/client/useGraphqlClientRequest";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import TextInput from "src/features/react-hook-form/TextField";
-import { Price, CreatePriceInput, CreatePriceMutation, CreatePriceMutationVariables, UpdatePriceMutation, UpdatePriceMutationVariables, CreatePrice, UpdatePrice } from "src/gql/graphql";
+import { Price, CreatePriceInput, CreatePriceMutation, CreatePriceMutationVariables, UpdatePriceMutation, UpdatePriceMutationVariables, CreatePrice, UpdatePrice, Currency } from "src/gql/graphql";
 import Button from "src/components/Button";
 import ReactSelect from "src/features/react-hook-form/ReactSelect";
 
@@ -24,7 +24,7 @@ export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Pri
     } = useForm<CreatePriceInput>({
       defaultValues: {
         amount: price?.amount,
-        currency: price?.currency,
+        currency: price?.currency??Currency.Npr ,
         dynamicPrice: price?.dynamicPrice ?? false,
         discountAmount: price?.discountAmount,
         discountType: price?.discountType,
@@ -91,8 +91,9 @@ export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Pri
       }
     };
     const currencyOptions = [
-      { label: "USD", value: "USD" },
       { label: "NPR", value: "NPR" },
+
+      { label: "USD", value: "USD" },
   
     ];
 
@@ -112,7 +113,9 @@ export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Pri
                 options={currencyOptions}
                 control={control}
                 label="Currency"
+                defaultValue={currencyOptions[0]}
                 required 
+                isdisabled={true}
                 error={!!errors.currency} 
                 helperText={errors.currency?.type === 'required' ? 'Currency is Required' : ''}
               />  
