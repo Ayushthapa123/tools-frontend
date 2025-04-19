@@ -439,7 +439,7 @@ export type Price = {
   amount: Scalars['Float']['output'];
   createdAt: Scalars['DateTime']['output'];
   currency: Currency;
-  discountAmount: Scalars['Float']['output'];
+  discountAmount?: Maybe<Scalars['Float']['output']>;
   discountType?: Maybe<DiscountType>;
   dynamicPrice?: Maybe<Scalars['Boolean']['output']>;
   id: Scalars['ID']['output'];
@@ -809,7 +809,7 @@ export type VerifyEmailResponse = {
 export type BookingsByHomestayQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type BookingsByHomestayQuery = { __typename?: 'Query', bookingsByHomestay: Array<{ __typename?: 'Booking', id: string, bookingKey: string, startDate: any, endDate: any, status: BookingStatus, createdAt: any, updatedAt: any, room: { __typename?: 'Room', id: string, caption: string, roomNumber?: string | null, capacity: RoomCapacity, status: RoomStatus, attachBathroom?: boolean | null, maxOccupancy?: string | null, price?: { __typename?: 'Price', amount: number, currency: Currency, discountAmount: number, discountType?: DiscountType | null, isDiscountActive: boolean } | null, image?: Array<{ __typename?: 'RoomImage', url: string, caption?: string | null }> | null }, guest: { __typename?: 'User', id: string, email: string, fullName: string, phoneNumber?: string | null } }> };
+export type BookingsByHomestayQuery = { __typename?: 'Query', bookingsByHomestay: Array<{ __typename?: 'Booking', id: string, bookingKey: string, startDate: any, endDate: any, status: BookingStatus, createdAt: any, updatedAt: any, room: { __typename?: 'Room', id: string, caption: string, roomNumber?: string | null, capacity: RoomCapacity, status: RoomStatus, attachBathroom?: boolean | null, maxOccupancy?: string | null, price?: { __typename?: 'Price', amount: number, currency: Currency, discountAmount?: number | null, discountType?: DiscountType | null, isDiscountActive: boolean } | null, image?: Array<{ __typename?: 'RoomImage', url: string, caption?: string | null }> | null }, guest: { __typename?: 'User', id: string, email: string, fullName: string, phoneNumber?: string | null } }> };
 
 export type GetHomestayDetailsBasicQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -919,7 +919,7 @@ export type CreatePriceMutationVariables = Exact<{
 }>;
 
 
-export type CreatePriceMutation = { __typename?: 'Mutation', createPrice: { __typename?: 'Price', id: string, amount: number, currency: Currency, roomId: number, dynamicPrice?: boolean | null, discountAmount: number, discountType?: DiscountType | null, isDiscountActive: boolean } };
+export type CreatePriceMutation = { __typename?: 'Mutation', createPrice: { __typename?: 'Price', id: string, amount: number, currency: Currency, roomId: number, dynamicPrice?: boolean | null, discountAmount?: number | null, discountType?: DiscountType | null, isDiscountActive: boolean } };
 
 export type CreateRoomMutationVariables = Exact<{
   createRoomInput: CreateRoomInput;
@@ -940,7 +940,7 @@ export type GetRoomWithPriceAndGalleryQueryVariables = Exact<{
 }>;
 
 
-export type GetRoomWithPriceAndGalleryQuery = { __typename?: 'Query', room: { __typename?: 'Room', id: string, status: RoomStatus, capacity: RoomCapacity, caption: string, maxOccupancy?: string | null, roomNumber?: string | null, attachBathroom?: boolean | null, homestayId: number, createdAt: any, updatedAt: any, image?: Array<{ __typename?: 'RoomImage', id: string, caption?: string | null, url: string, roomId: number, createdAt: any, updatedAt: any }> | null, price?: { __typename?: 'Price', id: string, amount: number, currency: Currency, discountAmount: number, discountType?: DiscountType | null, isDiscountActive: boolean, dynamicPrice?: boolean | null, createdAt: any, updatedAt: any } | null } };
+export type GetRoomWithPriceAndGalleryQuery = { __typename?: 'Query', room: { __typename?: 'Room', id: string, status: RoomStatus, capacity: RoomCapacity, caption: string, maxOccupancy?: string | null, roomNumber?: string | null, attachBathroom?: boolean | null, homestayId: number, createdAt: any, updatedAt: any, image?: Array<{ __typename?: 'RoomImage', id: string, caption?: string | null, url: string, roomId: number, createdAt: any, updatedAt: any }> | null, price?: { __typename?: 'Price', id: string, amount: number, currency: Currency, discountAmount?: number | null, discountType?: DiscountType | null, isDiscountActive: boolean, dynamicPrice?: boolean | null, createdAt: any, updatedAt: any } | null } };
 
 export type GetRoomsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -952,7 +952,7 @@ export type UpdatePriceMutationVariables = Exact<{
 }>;
 
 
-export type UpdatePriceMutation = { __typename?: 'Mutation', updatePrice: { __typename?: 'Price', id: string, amount: number, currency: Currency, dynamicPrice?: boolean | null, discountAmount: number, discountType?: DiscountType | null, isDiscountActive: boolean } };
+export type UpdatePriceMutation = { __typename?: 'Mutation', updatePrice: { __typename?: 'Price', id: string, amount: number, currency: Currency, dynamicPrice?: boolean | null, discountAmount?: number | null, discountType?: DiscountType | null, isDiscountActive: boolean } };
 
 export type UpdateRoomMutationVariables = Exact<{
   updateRoomInput: UpdateRoomInput;
