@@ -1,0 +1,7 @@
+query getSearchQueries($query: String!) {
+  searchQueries(query: $query) {
+    country
+    city
+    subCity
+  }
+}

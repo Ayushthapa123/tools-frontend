@@ -1,0 +1,11 @@
+#query getDailyPricingByHostelId($hostelId: Float!) {
+#  getDailyPricingByHostelId(hostelId: $hostelId) {
+#    dailyPricingId
+#    oneSeater
+#    twoSeater
+#    threeSeater
+#    fourSeater
+#    fiveSeater
+#    attachBathroom
+#  }
+#}

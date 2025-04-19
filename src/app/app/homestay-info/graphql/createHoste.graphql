@@ -1,0 +1,7 @@
+mutation createHomestay($input: CreateHomestayInput!) {
+ createHomestay(data: $input) {
+   id 
+  ownerId
+   
+ }
+}

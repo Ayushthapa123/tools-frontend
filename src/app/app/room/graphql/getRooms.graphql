@@ -1,0 +1,33 @@
+query GetRooms {
+  roomsByHomestay {
+    id
+    status
+    capacity
+    caption
+    roomNumber
+    attachBathroom
+    homestayId
+    image {
+      id
+      caption
+      url
+      roomId
+      createdAt
+      updatedAt
+    }
+    price {
+      currency 
+      amount
+    }
+    
+    booking {
+      id
+      startDate
+      endDate
+      status
+      guestId
+    }
+    createdAt
+    updatedAt
+  }
+}

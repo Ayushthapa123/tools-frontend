@@ -1,0 +1,20 @@
+# Ignore Next.js build output
+.next/
+
+# Ignore Node.js environment files
+.env
+
+# Ignore package-lock.json file
+package-lock.json
+
+# Ignore yarn lock file
+yarn.lock
+
+# Ignore development/build files
+/.idea
+/.vscode
+/node_modules
+/.next
+
+# Ignore any files/folders specific to your development setup
+# Add any other files/directories you want to ignore below this line

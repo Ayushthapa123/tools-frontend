@@ -1,0 +1,8 @@
+mutation CreateRoomImage($data: CreateRoomImageInput!) {
+  createRoomImage(data: $data) {
+    id
+    roomId
+    url
+    caption
+  }
+}

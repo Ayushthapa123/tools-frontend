@@ -1,0 +1,5 @@
+#mutation createRoomAvailibility($input: CreateRoomAvailibilityInput!) {
+#  createRoomAvailibility(data: $input) {
+#    roomAvailabilityId
+#  }
+#}

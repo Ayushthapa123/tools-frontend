@@ -1,0 +1,14 @@
+## Write your query or mutation here
+#query getMonthlyPricingByHostelId($hostelId: Float!) {
+#  getMonthlyPricingByHostelId(hostelId: $hostelId) {
+#    monthlyPricingId
+#    oneSeater
+#    twoSeater
+#    threeSeater
+#    fourSeater
+#    fiveSeater
+#    attachBathroom
+#    admission
+#    deposite
+#  }
+#}

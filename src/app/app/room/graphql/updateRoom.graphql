@@ -1,0 +1,14 @@
+mutation UpdateRoom($updateRoomInput: UpdateRoomInput!) {
+  updateRoom(updateRoomInput: $updateRoomInput) {
+    id
+    status
+    capacity
+    caption
+    roomNumber
+    attachBathroom
+    homestayId
+ 
+    createdAt
+    updatedAt
+  }
+}

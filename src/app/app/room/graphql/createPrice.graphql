@@ -1,0 +1,12 @@
+mutation CreatePrice($createPriceInput: CreatePriceInput!) {
+  createPrice(createPriceInput: $createPriceInput) {
+    id
+    amount
+    currency
+    roomId
+    dynamicPrice
+    discountAmount
+    discountType
+    isDiscountActive
+  }
+}

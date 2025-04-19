@@ -1,0 +1,10 @@
+mutation DeleteRoomImage($roomImageId: Int!) {
+  deleteRoomImage(roomImageId: $roomImageId) {
+    id
+    roomId
+    url
+    caption
+    createdAt
+    updatedAt
+  }
+}

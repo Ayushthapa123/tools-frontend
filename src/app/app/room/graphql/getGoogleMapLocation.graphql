@@ -1,0 +1,8 @@
+#query getGoogleMapLocation($id: Int!) {
+#  googleMapLocation(id: $id) {
+#    googleMapLocationId
+#    description
+#    lat
+#    lng
+#  }
+#}

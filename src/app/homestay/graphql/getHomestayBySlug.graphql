@@ -1,0 +1,42 @@
+query getHomestayBySlug($slug: String!) {
+  getHomestayBySlug(slug: $slug) {
+    id
+    name
+    description
+   
+    slug
+    moderatedBySuperAdmin 
+    moderatedByCommunityOwner
+    address {
+      country
+      city
+      subCity
+      street
+    }
+
+    contact {
+      phone
+      altPhone
+      email
+    }
+    rooms{
+      id
+      caption 
+      capacity 
+      roomNumber
+      status
+      image {
+        url 
+        id 
+        caption
+      }
+      
+      price {
+        amount 
+        currency
+      }
+      
+    }
+ 
+  }
+}

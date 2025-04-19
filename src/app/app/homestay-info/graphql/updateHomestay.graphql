@@ -1,0 +1,5 @@
+mutation updateHomestay($input: UpdateHomestayInput!, $homestayId: Float!) {
+ updateHomestay(data: $input, homestayId: $homestayId) {
+   id
+ }
+}

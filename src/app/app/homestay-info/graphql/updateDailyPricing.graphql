@@ -1,0 +1,5 @@
+#mutation updateDailyPricing($input: UpdateDailyPricingInput!, $dailyPricingId: Float!) {
+#  updateDailyPricing(data: $input, dailyPricingId: $dailyPricingId) {
+#    dailyPricingId
+#  }
+#}

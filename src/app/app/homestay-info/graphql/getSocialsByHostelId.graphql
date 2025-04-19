@@ -1,0 +1,10 @@
+#query getSocialsByHostelId($hostelId: Float!) {
+#  getSocialsByHostelId(hostelId: $hostelId) {
+#    socialsId
+#    facebook
+#    instaGram
+#    tiktok
+#    youTube
+#    map
+#  }
+#}

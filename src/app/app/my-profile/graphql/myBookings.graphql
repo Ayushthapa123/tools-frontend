@@ -1,0 +1,32 @@
+query MyBookings {
+  myBookings {
+    id
+    roomId
+    bookingKey
+    guestId
+    startDate
+    endDate
+    status
+    paymentPlatformName
+    createdAt
+    updatedAt
+    room {
+      id
+      roomNumber
+      capacity
+      caption
+      status
+      attachBathroom
+      maxOccupancy
+      price {
+        currency 
+        amount
+      }
+    }
+    guest {
+      id
+      fullName
+      email
+    }
+  }
+}

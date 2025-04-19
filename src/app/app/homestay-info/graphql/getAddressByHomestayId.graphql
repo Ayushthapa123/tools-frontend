@@ -1,0 +1,9 @@
+query getAddressByHomestayId($homestayId: Float!) {
+ getAddressByHomestayId(homestayId: $homestayId) {
+   id
+   country    
+   city
+   subCity
+   street
+ }
+}

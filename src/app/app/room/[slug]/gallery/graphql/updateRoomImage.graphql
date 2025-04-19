@@ -1,0 +1,10 @@
+mutation UpdateRoomImage($roomImageId: Int!, $data: UpdateRoomImageInput!) {
+  updateRoomImage(roomImageId: $roomImageId, data: $data) {
+    id
+    roomId
+    url
+    caption
+    createdAt
+    updatedAt
+  }
+}

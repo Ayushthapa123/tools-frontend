@@ -1,0 +1,11 @@
+query getUserByAccessToken($token: String!) {
+ 
+ getUserByAccessToken(accessToken: $token) {
+   email
+   fullName
+   id 
+  isVerified
+  phoneNumber
+  profilePicture
+ }
+}

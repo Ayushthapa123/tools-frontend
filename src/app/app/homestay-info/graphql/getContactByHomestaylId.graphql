@@ -1,0 +1,9 @@
+query getContactsByHomestayId($homestayId: Float!) {
+ getContactByHomestayId(homestayId: $homestayId) {
+   id
+  email 
+  phone 
+  altPhone
+  
+ }
+}

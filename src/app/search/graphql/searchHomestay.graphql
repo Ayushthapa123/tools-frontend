@@ -1,0 +1,34 @@
+query searchHomestay($input: SearchHomestayInput!) {
+  getHomestaysBySearch(input: $input) {
+    name
+    description
+    address {
+      city
+      country
+      subCity
+      street
+    }
+    contact {
+      phone
+      email
+      altPhone
+    }
+    image {
+      url
+    }
+    rooms {
+      caption 
+      image {
+        url 
+        caption
+      }
+      price {
+        amount 
+        currency
+      }
+    }
+
+    slug
+   
+  }
+}

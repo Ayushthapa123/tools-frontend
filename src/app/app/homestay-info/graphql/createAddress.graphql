@@ -1,0 +1,5 @@
+mutation createAddress($input: CreateAddressInput!) {
+ createAddress(data: $input) {
+   id
+ }
+}

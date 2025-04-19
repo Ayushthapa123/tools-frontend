@@ -1,0 +1,5 @@
+#mutation createDailyPricing($input: CreateDailyPricingInput!) {
+#  createDailyPricing(data: $input) {
+#    dailyPricingId
+#  }
+#}

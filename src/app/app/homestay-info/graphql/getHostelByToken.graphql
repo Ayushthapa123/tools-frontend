@@ -1,0 +1,11 @@
+query getHomestayByToken {
+ getHomestayByToken {
+   id
+   name
+   description
+   slug
+  moderatedBySuperAdmin 
+  moderatedByCommunityOwner
+ 
+ }
+}

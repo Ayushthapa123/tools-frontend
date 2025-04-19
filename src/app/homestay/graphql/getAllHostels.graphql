@@ -1,0 +1,32 @@
+# query getAllHostels($pageNumber: Int!, $pageSize: Int!) {
+#   getAllHostels(pageNumber: $pageNumber, pageSize: $pageSize) {
+#     name
+#     description
+#     capacity
+#     hostelType
+#     genderType
+#     slug
+#     address {
+#       country
+#       city
+#       subCity
+#       street
+#     }
+#     contact {
+#       phone
+#       altPhone
+#       email
+#     }
+#     gallery {
+#       galleryId
+#       url
+#       caption
+#     }
+#     roomAvailability {
+#       oneSeater
+#       twoSeater
+#       threeSeater
+#       fourSeater
+#     }
+#   }
+# }

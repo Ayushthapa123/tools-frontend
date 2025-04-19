@@ -1,0 +1,5 @@
+#mutation createMonthlyPricing($input: CreateMonthlyPricingInput!) {
+#  createMonthlyPricing(data: $input) {
+#    monthlyPricingId
+#  }
+#}

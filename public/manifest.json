@@ -1,0 +1,24 @@
+{
+  "name": "homestay",
+  "short_name": "homestay", 
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4a90e2",
+  "description": "homestay offers a comprehensive platform that allows you to seamlessly upload and manage all the details of your hostel online. By leveraging our user-friendly interface, you can ensure that potential guests can easily find your hostel, check availability, and reach out to you directly.",
+  "icons": [
+    {
+      "src": "/logo512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo512.svg",
+      "sizes": "512x512",
+      "type": "image/svg"
+    }
+  ],
+  "scope": "/",
+  "orientation": "portrait",
+  "lang": "en"
+}

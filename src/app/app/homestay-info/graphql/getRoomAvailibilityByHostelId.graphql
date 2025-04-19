@@ -1,0 +1,11 @@
+#query getRoomAvailibilityByHostelId($hostelId: Float!) {
+#  getRoomAvailibilityByHostelId(hostelId: $hostelId) {
+#    roomAvailabilityId
+#    oneSeater
+#    twoSeater
+#    threeSeater
+#    fourSeater
+#    fiveSeater
+#    attachBathroom
+#  }
+#}

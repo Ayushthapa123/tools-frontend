@@ -1,0 +1,5 @@
+mutation updateAddress($input: UpdateAddressInput!, $addressId: Float!) {
+ updateAddress(data: $input, addressId: $addressId) {
+   id
+ }
+}

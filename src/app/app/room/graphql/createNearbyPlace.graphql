@@ -1,0 +1,5 @@
+#mutation createNearbyPlace($input: CreateNearbyPlaceInput!) {
+#  createNearbyPlace(createNearbyPlaceInput: $input) {
+#    nearbyPlaceId
+#  }
+#}

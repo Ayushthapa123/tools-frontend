@@ -1,0 +1,7 @@
+mutation CreateRoom($createRoomInput: CreateRoomInput!) {
+  createRoom(createRoomInput: $createRoomInput) {
+    id
+    status
+  
+  }
+}

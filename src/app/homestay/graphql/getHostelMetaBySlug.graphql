@@ -1,0 +1,11 @@
+# query getHostelMetaBySlug($slug: String!) {
+#   getHostelBySlug(slug: $slug) {
+#     name
+#     description
+#     slug
+#     gallery {
+#       url
+#       caption
+#     }
+#   }
+# }

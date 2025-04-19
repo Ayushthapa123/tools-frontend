@@ -1,0 +1,5 @@
+#mutation createSocials($input: CreateSocialsInput!) {
+#  createSocials(data: $input) {
+#    socialsId
+#  }
+#}

@@ -1,0 +1,15 @@
+mutation refreshToken($input: GetTokenInput!) {
+ refreshTokens(input: $input) {
+   user {
+     email
+     fullName
+     id
+     userType
+    homestayId
+   }
+   token {
+     refreshToken
+     accessToken
+   }
+ }
+}

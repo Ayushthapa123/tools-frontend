@@ -1,0 +1,223 @@
+@import 'defaults.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Default Styles */
+
+html {
+  font-size: 14px;
+  /* !This affects the rem value so consider it  */
+}
+
+:root {
+  --base-font-size: 1rem;
+  --color-primary: #3b5d50;
+}
+
+body {
+  font-size: var(--base-font-size);
+  line-height: 1.6;
+  /* color: red; */
+  overflow-x: hidden;
+  background-color: white;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: bold;
+  margin: 0 0 10px 0;
+  line-height: 1.2;
+  color: var(--color-primary);
+}
+
+h1 {
+  font-size: 2.8rem;
+}
+
+h2 {
+  font-size: 1.6rem;
+}
+
+h3 {
+  font-size: 1.4rem;
+}
+
+h4 {
+  font-size: 1.2rem;
+}
+
+h5 {
+  font-size: 1rem;
+}
+
+h6 {
+  font-size: 0.9rem;
+}
+
+p {
+  font-size: var(--base-font-size);
+  margin: 0 0 10px 0;
+}
+
+ul,
+ol {
+  margin: 0 0 10px 20px;
+  padding: 0;
+}
+
+li {
+  margin: 0 0 5px 0;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  /* text-decoration: underline; */
+}
+
+button {
+  font-size: var(--base-font-size);
+  padding: 10px 20px;
+  border: none;
+  /* background-color: var(--color-primary); */
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+/* Media Query for Small Devices */
+@media (max-width: 600px) {
+  body {
+    font-size: 0.7rem;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  h4 {
+    font-size: 1rem;
+  }
+
+  h5 {
+    font-size: 0.9rem;
+  }
+
+  h6 {
+    font-size: 0.8rem;
+  }
+}
+
+/* Media Query for Medium Devices */
+@media (min-width: 601px) and (max-width: 1024px) {
+  body {
+    font-size: 0.9rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  h3 {
+    font-size: 1.6rem;
+  }
+
+  h4 {
+    font-size: 1.4rem;
+  }
+
+  h5 {
+    font-size: 1.2rem;
+  }
+
+  h6 {
+    font-size: 1rem;
+  }
+}
+
+/* Media Query for Large Devices */
+@media (min-width: 1025px) {
+  body {
+    font-size: var(--base-font-size);
+  }
+
+  h1 {
+    font-size: 2.8rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+  }
+
+  h4 {
+    font-size: 1.2rem;
+  }
+
+  h5 {
+    font-size: 1rem;
+  }
+
+  h6 {
+    font-size: 0.9rem;
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-offwhite-cream font-sora text-himalayan-green;
+  }
+
+  h1 {
+    @apply text-h1 text-deep-red;
+  }
+
+  h2 {
+    @apply text-h2 text-deep-red;
+  }
+
+  h3 {
+    @apply text-h3 text-deep-red;
+  }
+
+  p {
+    @apply text-body;
+  }
+
+  small {
+    @apply text-small;
+  }
+}

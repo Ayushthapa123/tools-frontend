@@ -1,0 +1,15 @@
+query getHomestayDetailsBasic {
+ getHomestayByToken {
+   name
+   slug
+   moderatedBySuperAdmin 
+  moderatedByCommunityOwner
+  
+   address {
+     country
+     city
+     subCity
+     street
+   }
+ }
+}

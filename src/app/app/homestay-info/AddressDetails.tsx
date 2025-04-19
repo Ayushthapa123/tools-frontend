@@ -1,0 +1,249 @@
+'use client';
+import React, { FC, useMemo } from 'react';
+
+import Button from 'src/components/Button';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
+import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import TextInput from 'src/features/react-hook-form/TextField';
+import { countries } from '../data/countries';
+
+import { useToastStore } from 'src/store/toastStore';
+
+import {
+  CreateAddress,
+  CreateAddressMutation,
+  CreateAddressMutationVariables,
+  GetAddressByHomestayId,
+  GetAddressByHomestayIdQuery,
+  GetAddressByHomestayIdQueryVariables,
+  UpdateAddress,
+  UpdateAddressMutation,
+  UpdateAddressMutationVariables,
+} from 'src/gql/graphql';
+import ReactSelect from 'src/features/react-hook-form/ReactSelect';
+import LoadingSpinner from 'src/components/Loading';
+
+interface Iprops {
+  homestayId: number;
+}
+export const  AddressDetails = (props: Iprops) => {
+  const { homestayId } = props;
+  const queryAddressData = useGraphqlClientRequest<
+    GetAddressByHomestayIdQuery,
+    GetAddressByHomestayIdQueryVariables
+  >(GetAddressByHomestayId.loc?.source?.body!);
+
+  //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
+  const fetchData = async () => {
+    const res = await queryAddressData({ homestayId: homestayId });
+    return res.getAddressByHomestayId;
+  };
+
+  const { data: hostelData, isLoading } = useQuery({
+    queryKey: ['getAddress'],
+    queryFn: fetchData,
+  });
+
+  return (
+    <div className="    w-full">
+      {!isLoading ? (
+        <HostelInfoForm
+          homestayId={homestayId}
+          addressId={hostelData?.id}
+          country={hostelData?.country}
+          city={hostelData?.city}
+          subCity={hostelData?.subCity}
+          street={hostelData?.street}
+        />
+      ) : (
+        <div className=" h-[50vh] w-full">
+          <LoadingSpinner color='primary' size='lg' />
+        </div>
+      )}
+    </div>
+  );
+};
+
+interface IProps {
+    homestayId: number;
+  addressId?: string | null;
+
+  country?: string | null;
+
+  city?: string | null;
+  subCity?: string | null;
+  street?: string | null;
+}
+
+const HostelInfoForm: FC<IProps> = props => {
+  const { homestayId, addressId, city, country, street, subCity } = props;
+
+  const queryClient = useQueryClient();
+
+  const { setMessage, setRole, setShowToast } = useToastStore();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IProps>({
+    defaultValues: {
+      country,
+
+      city,
+      subCity,
+      street,
+    },
+  });
+
+  const mutateCreateHostelAddress = useGraphqlClientRequest<
+    CreateAddressMutation,
+    CreateAddressMutationVariables
+  >(CreateAddress.loc?.source.body!);
+
+  const { mutateAsync: createAddress, isPending: isCreating } = useMutation({
+    mutationFn: mutateCreateHostelAddress,
+  });
+
+  const mutateUpdateAddress = useGraphqlClientRequest<
+    UpdateAddressMutation,
+    UpdateAddressMutationVariables
+  >(UpdateAddress.loc?.source.body!);
+
+  const { mutateAsync: updateAddress, isPending: isUpdating } = useMutation({
+    mutationFn: mutateUpdateAddress,
+  });
+
+  const handleSubmitForm = (data: IProps) => {
+    const country = data.country;
+    const city = data.city;
+    const subCity = data.subCity;
+
+    const street = data.street;
+
+    if (addressId) {
+      //
+      updateAddress({
+        addressId: Number(addressId),
+        input: {
+          ...(country && {
+            country,
+          }),
+
+          ...(city && {
+            city,
+          }),
+          ...(subCity && {
+            subCity,
+          }),
+          ...(street && {
+            street,
+          }),
+        },
+      }).then(res => {
+        if (res?.updateAddress?.id) {
+          setShowToast(true);
+          setMessage('Address Updated');
+          setRole('success');
+        } else {
+          setShowToast(true);
+          setMessage('Something went wrong!');
+          setRole('error');
+        }
+      });
+    } else {
+      createAddress({
+        input: {
+          homestayId: homestayId,
+          country: country ?? '',
+
+          city: city,
+          subCity,
+          street,
+        },
+      }).then(res => {
+        if (res?.createAddress?.id) {
+          setShowToast(true);
+          setMessage('Address created');
+          setRole('success');
+          //
+          queryClient.invalidateQueries({ queryKey: ['getAddress'] });
+          queryClient.invalidateQueries({ queryKey: ['getHostelByToken'] });
+        } else {
+          setShowToast(true);
+          setMessage('Something Went Wrong!');
+          setRole('error');
+        }
+      });
+    }
+  };
+
+  const countryOptions = useMemo(() => {
+    return countries.map(country => ({
+      label: country.name,
+      value: country.name,
+    }));
+  }, []);
+
+  return (
+    <form className=" w-full" onSubmit={handleSubmit(handleSubmitForm)}>
+      <div className=" grid w-full gap-5 md:grid-cols-2">
+        <div>
+          <ReactSelect
+            name="country"
+            placeholder="Country"
+            control={control}
+            options={countryOptions}
+            label="Country"
+            required
+            helperText={errors.country?.type === 'required' ? 'Country Is Required' : ''}
+            error={!!errors.country}
+          />
+        </div>
+
+        <div>
+          <TextInput
+            name="city"
+            type="text"
+            placeholder="City"
+            control={control}
+            label="City"
+            required
+            helpertext={errors.city?.type === 'required' ? 'City Is Required' : ''}
+            error={!!errors.city}
+          />
+        </div>
+        <div>
+          <TextInput
+            name="subCity"
+            type="text"
+            placeholder="Tole"
+            control={control}
+            label="Tole"
+            error={!!errors.subCity}
+          />
+        </div>
+        <div>
+          <TextInput
+            name="street"
+            type="text"
+            placeholder="Street"
+            control={control}
+            label="Street"
+            error={!!errors.street}
+          />
+        </div>
+      </div>
+
+      <div className=" flex w-full justify-end">
+        <div className=" mt-10 w-[200px]">
+          <Button
+            label={`${addressId ? 'Update Address Info' : 'Create Address'}`}
+            type="submit"
+            loading={isCreating || isUpdating}
+          />
+        </div>
+      </div>
+    </form>
+  );
+};
