@@ -276,7 +276,9 @@ export const BookingForm = ({ homestayId, roomId, onSuccess, rooms }: BookingFor
     getValues
   } = useForm<BookingFormData>({
     defaultValues: {
+      //@ts-ignore
       checkInDate: checkInDate,
+      //@ts-ignore
       checkOutDate: checkOutDate,
     },
   });
