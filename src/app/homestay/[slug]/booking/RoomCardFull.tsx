@@ -1,16 +1,20 @@
 import { Room, RoomStatus } from "src/gql/graphql";
 import Image from "next/image";
-
+import { useRoomStore } from "src/store/roomStore";
 interface RoomCardProps {
     room: Room;
     isSelected: boolean;
-    onSelect: (roomId: string) => void;
+  
   }
   
-  export const RoomCardFull = ({ room, isSelected, onSelect }: RoomCardProps) => {
+  export const RoomCardFull = ({ room, isSelected }: RoomCardProps) => {
+    const {setRoomId}=useRoomStore()
+    const handleRoomSelect = (roomId: string) => {
+      setRoomId(roomId)
+    }
     return (
       <div
-        onClick={() => onSelect(room.id)}
+        onClick={() => handleRoomSelect(room.id)}
         className={`card card-side h-[300px] bg-base-100 shadow-md hover:shadow-lg transition-all cursor-pointer ${
           isSelected ? 'border-2 border-primary bg-primary/5' : 'border border-base-200'
         }`}

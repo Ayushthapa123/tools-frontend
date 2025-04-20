@@ -152,12 +152,12 @@ export default function MainContent(props: Iprops) {
                 <div>
                   {hostel?.rooms?.map((room) => (
                     <div key={room.id} className='mb-4'>
-                      <Link href={`/homestay/${hostel?.slug}/booking?roomId=${room.id}&checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}>
+                      <Link href={`/homestay/${hostel?.slug}/booking?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}>
                     <RoomCardFull
                       key={room.id}
                       room={room}
                       isSelected={false}
-                      onSelect={() => {}}
+                     
                     />
                     </Link>
                     </div>

@@ -35,7 +35,7 @@ export const HomestayInfo = ({
   images,
   rooms,
   selectedRoomId,
-  onRoomSelect,
+
 }: HomestayInfoProps) => {
   const editorRef = useRef(description);
   return (
@@ -85,7 +85,7 @@ export const HomestayInfo = ({
                 key={room.id}
                 room={room}
                 isSelected={selectedRoomId === room.id}
-                onSelect={onRoomSelect || (() => {})}
+               
               />
             ))}
           </div>

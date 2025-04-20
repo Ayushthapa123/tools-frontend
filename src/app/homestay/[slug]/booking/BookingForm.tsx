@@ -5,15 +5,17 @@ import TextInput from 'src/features/react-hook-form/TextField';
 import TextArea from 'src/features/react-hook-form/TextArea';
 import Button from 'src/components/Button';
 import { useToastStore } from 'src/store/toastStore';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
-import { Room, RoomCapacity, RoomStatus } from 'src/gql/graphql';
+import { CheckValidBooking, CheckValidBookingQuery, CheckValidBookingQueryVariables, Room, RoomCapacity, RoomStatus } from 'src/gql/graphql';
 import { useEffect, useState } from 'react';
 import { useUserStore } from 'src/store/userStore';
 import { v4 as uuidv4 } from 'uuid';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useRoomStore } from 'src/store/roomStore';
 interface BookingFormProps {
   homestayId: string;
+  homeStaySlug: string;
   roomId: string;
   onSuccess: () => void;
   rooms: Array<{
@@ -31,8 +33,8 @@ interface BookingFormData {
   fullName: string;
   email: string;
   phone: string;
-  checkInDate: string;
-  checkOutDate: string;
+  checkInDate: string | Date;
+  checkOutDate: string | Date;
   numberOfGuests: number;
   specialRequests?: string;
   password?: string;
@@ -46,9 +48,123 @@ interface StepOneProps {
   setValue: any;
   watch: any;
   getValues: any;
+  roomId: string;
+  checkInDateValue: string | Date;
+  checkOutDateValue: string | Date;
+  handleCheckInDateChange: (date: string | Date) => void;
+  handleCheckOutDateChange: (date: string | Date) => void;
 }
 
-const StepOne = ({ control, handleSubmit, errors, onSubmit ,setValue,watch,getValues}: StepOneProps) => {
+export const BookingForm = ({ homestayId, homeStaySlug, roomId, onSuccess, rooms }: BookingFormProps) => {
+  const { setMessage, setRole, setShowToast } = useToastStore();
+  const [currentStep, setCurrentStep] = useState(1);
+  const [formData, setFormData] = useState<BookingFormData | null>(null);
+  const selectedRoom = rooms.find(room => room.id === roomId);
+  const router=useRouter()
+
+  const searchParams = useSearchParams();
+  const checkInDate = searchParams.get('checkInDate') ? new Date(searchParams.get('checkInDate') ?? '') : new Date().toISOString().split('T')[0];
+  const checkOutDate = searchParams.get('checkOutDate') ? new Date(searchParams.get('checkOutDate') ?? '') : new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[0];
+ 
+  const [checkInDateValue,setCheckInDateValue]=useState<string | Date>(checkInDate)
+  const [checkOutDateValue,setCheckOutDateValue]=useState<string | Date>(checkOutDate)
+
+  const handleCheckInDateChange=(date:string | Date)=>{
+    setCheckInDateValue(date)
+    // also change the search params 
+    window.location.href = `/homestay/${homeStaySlug}/booking?checkInDate=${date}&checkOutDate=${checkOutDateValue}`
+  }
+  const handleCheckOutDateChange=(date:string | Date)=>{
+    setCheckOutDateValue(date)
+    // also change the search params 
+   window.location.href = `/homestay/${homeStaySlug}/booking?checkInDate=${checkInDateValue}&checkOutDate=${date}`
+  }
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    setValue,
+    watch,
+    getValues
+  } = useForm<BookingFormData>({
+    defaultValues: {
+      checkInDate: checkInDate instanceof Date ? checkInDate.toISOString().split('T')[0] : checkInDate,
+      checkOutDate: checkOutDate instanceof Date ? checkOutDate.toISOString().split('T')[0] : checkOutDate,
+    },
+  });
+
+  const onSubmit = async (data: BookingFormData) => {
+    if (currentStep === 1) {
+      setFormData(data);
+      setCurrentStep(2);
+    } else {
+      try {
+        // Here you would typically make the API call to create the booking
+        setMessage('Booking successful!');
+        setRole('success');
+        setShowToast(true);
+        onSuccess();
+      } catch (error) {
+        setMessage('Failed to create booking. Please try again.');
+        setRole('error');
+        setShowToast(true);
+      }
+    }
+  };
+
+  const handleBack = () => {
+    setCurrentStep(1);
+  };
+
+
+
+
+  return (
+    <div>
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold mb-2">Step {currentStep} of 2</h2>
+        <div className="w-full bg-gray-200 rounded-full h-2.5">
+          <div
+            className="bg-primary h-2.5 rounded-full"
+            style={{ width: `${(currentStep / 2) * 100}%` }}
+          />
+        </div>
+       
+      </div>
+
+      {currentStep === 1 ? (
+        <StepOne
+          control={control}
+          handleSubmit={handleSubmit}
+          errors={errors}
+          onSubmit={onSubmit}
+          setValue={setValue}
+          watch={watch}
+          getValues={getValues}
+          roomId={roomId}
+          checkInDateValue={checkInDateValue}
+          checkOutDateValue={checkOutDateValue}
+          handleCheckInDateChange={handleCheckInDateChange}
+          handleCheckOutDateChange={handleCheckOutDateChange}
+        />
+      ) : (
+        <StepTwo
+          selectedRoom={selectedRoom}
+          formData={formData}
+          handleBack={handleBack}
+          handleSubmit={handleSubmit}
+          onSubmit={onSubmit}
+          checkInDateValue={checkInDateValue}
+          checkOutDateValue={checkOutDateValue}
+        />
+      )}
+    </div>
+  );
+}; 
+
+const StepOne = ({ control, handleSubmit, errors, onSubmit ,setValue,watch,getValues,roomId,checkInDateValue,checkOutDateValue,handleCheckInDateChange,handleCheckOutDateChange }: StepOneProps) => {
   
   const { user } = useUserStore();
 
@@ -61,10 +177,45 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit ,setValue,watch,getVa
   }, [user.userId, setValue, user.userName, user.userEmail]);
   
 
-  const checkInDateValue = watch('checkInDate');
-  const checkOutDateValue = watch('checkOutDate');
+
+  // Check for validity here.
+
+  const queryValidity = useGraphqlClientRequest<
+  CheckValidBookingQuery,
+  CheckValidBookingQueryVariables
+>(CheckValidBooking.loc?.source?.body!);
+
+
+const fetchData = async () => {
+  const res = await queryValidity({
+    roomId: parseInt(roomId),
+    startDate: new Date(checkInDateValue),
+    endDate: new Date(checkOutDateValue),
+  });
+  return res.checkValidBooking;
+};
+
+const { data: validity,isLoading } = useQuery({
+  queryKey: ['checkValidBooking'],
+  queryFn: fetchData,
+});
+console.log('vvvvvvvvvvvvvvv',validity)
+
+const {roomId:roomIdFromStore}=useRoomStore()
+
+
   return (
   <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+
+    
+    {!validity?.isValid?<div>
+      <p>Room is already booked for the selected dates</p>
+      <p>{validity?.message}</p>
+    </div>:<div>
+      <p>Room is available for the selected dates</p>
+      <p>{validity?.message}</p>
+    </div>}
+    {isLoading}
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       <TextInput
         name="fullName"
@@ -119,9 +270,10 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit ,setValue,watch,getVa
         // required
         helpertext={errors.checkInDate?.type === 'required' ? 'Check-in date is required' : ''}
         error={!!errors.checkInDate}
-        value={watch('checkInDate')??checkInDateValue}
+        value={checkInDateValue instanceof Date ? checkInDateValue.toISOString().split('T')[0] : checkInDateValue}
 
-        min={checkInDateValue}
+        min={checkInDateValue instanceof Date ? checkInDateValue.toISOString().split('T')[0] : checkInDateValue}
+        onChange={(e)=>handleCheckInDateChange(e.target.value)}
       />
 
       <TextInput
@@ -133,8 +285,9 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit ,setValue,watch,getVa
         // required
         helpertext={errors.checkOutDate?.type === 'required' ? 'Check-out date is required' : ''}
         error={!!errors.checkOutDate}
-        value={checkOutDateValue}
-        min={checkInDateValue}
+        value={checkOutDateValue instanceof Date ? checkOutDateValue.toISOString().split('T')[0] : checkOutDateValue}
+        min={checkInDateValue instanceof Date ? checkInDateValue.toISOString().split('T')[0] : checkInDateValue}
+        onChange={(e)=>handleCheckOutDateChange(e.target.value)}
       />
     </div>
 
@@ -169,6 +322,7 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit ,setValue,watch,getVa
         type="submit"
         loading={false}
         className="w-full"
+        disabled={!validity?.isValid}
       />
     </div>
   </form>
@@ -180,9 +334,13 @@ interface StepTwoProps {
   handleBack: () => void;
   handleSubmit: any;
   onSubmit: (data: BookingFormData) => void;
+  checkInDateValue: string | Date;
+  checkOutDateValue: string | Date;
 }
 
-const StepTwo = ({ selectedRoom, formData, handleBack, handleSubmit, onSubmit }: StepTwoProps) => {
+
+
+const StepTwo = ({ selectedRoom, formData, handleBack, handleSubmit, onSubmit,checkInDateValue,checkOutDateValue }: StepTwoProps) => {
   const { user } = useUserStore();
   const handleCheckout = async () => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/payment/create-checkout-session`, {
@@ -227,8 +385,8 @@ const StepTwo = ({ selectedRoom, formData, handleBack, handleSubmit, onSubmit }:
         <p>Email: {formData?.email}</p>
         <p>Phone: {formData?.phone}</p>
         <p>Number of Guests: {formData?.numberOfGuests}</p>
-        <p>Check-in Date: {formData?.checkInDate}</p>
-        <p>Check-out Date: {formData?.checkOutDate}</p>
+        <p>Check-in Date: {checkInDateValue instanceof Date ? checkInDateValue.toISOString().split('T')[0] : checkInDateValue}</p>
+        <p>Check-out Date: {checkOutDateValue instanceof Date ? checkOutDateValue.toISOString().split('T')[0] : checkOutDateValue }</p>
         {formData?.specialRequests && (
           <p>Special Requests: {formData.specialRequests}</p>
         )}
@@ -254,89 +412,3 @@ const StepTwo = ({ selectedRoom, formData, handleBack, handleSubmit, onSubmit }:
   );
 };
 
-export const BookingForm = ({ homestayId, roomId, onSuccess, rooms }: BookingFormProps) => {
-  const { setMessage, setRole, setShowToast } = useToastStore();
-  const [currentStep, setCurrentStep] = useState(1);
-  const [formData, setFormData] = useState<BookingFormData | null>(null);
-  const selectedRoom = rooms.find(room => room.id === roomId);
-
-  const searchParams = useSearchParams();
-  const checkInDate = searchParams.get('checkInDate') ? new Date(searchParams.get('checkInDate') ?? '') : new Date().toISOString().split('T')[0];
-  const checkOutDate = searchParams.get('checkOutDate') ? new Date(searchParams.get('checkOutDate') ?? '') : new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[0];
- 
-
-
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    reset,
-    setValue,
-    watch,
-    getValues
-  } = useForm<BookingFormData>({
-    defaultValues: {
-      //@ts-ignore
-      checkInDate: checkInDate,
-      //@ts-ignore
-      checkOutDate: checkOutDate,
-    },
-  });
-
-  const onSubmit = async (data: BookingFormData) => {
-    if (currentStep === 1) {
-      setFormData(data);
-      setCurrentStep(2);
-    } else {
-      try {
-        // Here you would typically make the API call to create the booking
-        setMessage('Booking successful!');
-        setRole('success');
-        setShowToast(true);
-        onSuccess();
-      } catch (error) {
-        setMessage('Failed to create booking. Please try again.');
-        setRole('error');
-        setShowToast(true);
-      }
-    }
-  };
-
-  const handleBack = () => {
-    setCurrentStep(1);
-  };
-
-  return (
-    <div>
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold mb-2">Step {currentStep} of 2</h2>
-        <div className="w-full bg-gray-200 rounded-full h-2.5">
-          <div
-            className="bg-primary h-2.5 rounded-full"
-            style={{ width: `${(currentStep / 2) * 100}%` }}
-          />
-        </div>
-      </div>
-
-      {currentStep === 1 ? (
-        <StepOne
-          control={control}
-          handleSubmit={handleSubmit}
-          errors={errors}
-          onSubmit={onSubmit}
-          setValue={setValue}
-          watch={watch}
-          getValues={getValues}
-        />
-      ) : (
-        <StepTwo
-          selectedRoom={selectedRoom}
-          formData={formData}
-          handleBack={handleBack}
-          handleSubmit={handleSubmit}
-          onSubmit={onSubmit}
-        />
-      )}
-    </div>
-  );
-}; 

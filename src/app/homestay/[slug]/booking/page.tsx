@@ -5,17 +5,15 @@ import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import {
   GetHomestayBySlugQuery,
   GetHomestayBySlugQueryVariables,
-  GetHomestayBySlugDocument,
-  GetHomestayBySlug,
   Room,
 } from 'src/gql/graphql';
 import LoadingSpinner from 'src/components/Loading';
 import { BookingForm } from './BookingForm';
 import { HomestayInfo } from './HomestayInfo';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState, useEffect } from 'react';
 import { gql } from 'graphql-request';
 import { CommonNav } from 'src/components/NavBar/CommonNav';
+import { useRoomStore } from 'src/store/roomStore';
 
 const GET_HOMESTAY_BY_SLUG = gql`
   query getHomestayBySlug($slug: String!) {
@@ -63,10 +61,11 @@ const GET_HOMESTAY_BY_SLUG = gql`
 
 export default function BookingPage({ params }: { params: { slug: string } }) {
   const router = useRouter();
-  const [selectedRoomId, setSelectedRoomId] = useState<string>(); 
+const {roomId,setRoomId}=useRoomStore()
 
-  const searchParams = useSearchParams();
-  const roomId = searchParams.get('roomId');
+const handleRoomSelect=(roomId:string)=>{
+  setRoomId(roomId)
+}
 
   const searchHostels = useGraphqlClientRequest<
     GetHomestayBySlugQuery,
@@ -85,11 +84,7 @@ export default function BookingPage({ params }: { params: { slug: string } }) {
     queryFn: fetchData,
   });
 
-  useEffect(() => {
-    if (homestay?.rooms && homestay.rooms.length > 0) {
-      setSelectedRoomId(roomId || homestay.rooms[0].id);
-    }
-  }, [homestay?.rooms, roomId]);
+
 
   const handleBookingSuccess = () => {
     router.push('/my-bookings');
@@ -134,20 +129,21 @@ export default function BookingPage({ params }: { params: { slug: string } }) {
               }}
               images={homestay.rooms?.flatMap(room => room.image?.map(img => img.url) || []) || []}
               rooms={homestay.rooms as Room[]}
-              selectedRoomId={selectedRoomId}
-              onRoomSelect={setSelectedRoomId}
+              selectedRoomId={roomId}
+              onRoomSelect={handleRoomSelect}
             />
           </div>
 
           {/* Right Column - Booking Form */}
           <div className="rounded-lg bg-white p-6 shadow-md">
             <h2 className="mb-6 text-2xl font-bold">Book Your Stay</h2>
-            {selectedRoomId ? (
+            {roomId ? (
               <BookingForm
                 homestayId={String(homestay.id)}
-                roomId={selectedRoomId}
+                roomId={roomId}
                 onSuccess={handleBookingSuccess}
                 rooms={homestay.rooms || []}
+                homeStaySlug={params.slug}
               />
             ) : (
               <div className="text-center text-gray-600">

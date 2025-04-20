@@ -1,0 +1,7 @@
+query CheckValidBooking($roomId: Int!, $startDate: DateTime!, $endDate: DateTime!) {
+  checkValidBooking(roomId: $roomId, startDate: $startDate, endDate: $endDate) {
+    isValid
+    message
+    status
+  }
+}
