@@ -24,6 +24,7 @@ import PriceIcon from '../icons/Pricing';
 import { useUserStore } from 'src/store/userStore';   
 import { UserType } from 'src/gql/graphql';
 import BookingIcon from '../icons/Booking';
+import { FaHotel } from 'react-icons/fa';
 interface MenuItemType {
   icon: JSX.Element;
   text: string;
@@ -53,7 +54,14 @@ const Sidebar = () => {
       text: 'Dashboard',
       href: '/app',
       children: false,
-      show: user.userType === UserType.HomestayOwner,
+      show: (user.userType === UserType.HomestayOwner || user.userType === UserType.Superadmin),
+    },
+    {
+      icon: <FaHotel />,
+      text: 'Homestays',
+      href: '/app/homestays',
+      children: false,
+      show: ( user.userType === UserType.Superadmin),
     },
     { icon: <HostelInfoIcon />, text: 'Homestay', href: '/app/homestay-info', children: false, show: user.userType === UserType.HomestayOwner },
     { icon: <RoomIcon />, text: 'Rooms', href: '/app/room', children: false, show: user.userType === UserType.HomestayOwner },
@@ -71,8 +79,8 @@ const Sidebar = () => {
       children: true,
       show: user.userType === UserType.HomestayOwner,
       childRoutes: [
-        { icon: <WifiIcon />, text: 'Amenities', href: '/app/amenities', show: user.userType === UserType.HomestayOwner },
-        { icon: <ServiceIcon />, text: 'Services', href: '/app/services', show: user.userType === UserType.HomestayOwner },
+        // { icon: <WifiIcon />, text: 'Amenities', href: '/app/amenities', show: user.userType === UserType.HomestayOwner },
+        // { icon: <ServiceIcon />, text: 'Services', href: '/app/services', show: user.userType === UserType.HomestayOwner },
 
         { icon: <RulesIcon />, text: 'Rules', href: '/app/rules', show: user.userType === UserType.HomestayOwner },
       ],
@@ -103,7 +111,7 @@ const Sidebar = () => {
           {/* <UserProfile /> */}
         </div>
         <div className="flex flex-col flex-grow w-full gap-2 mt-5">
-          {menuItems.map((item, index) => (
+          {menuItems.filter((item) => item.show).map((item, index) => (
             <React.Fragment key={index}>
               {!item.children && (
                 <MenuItem

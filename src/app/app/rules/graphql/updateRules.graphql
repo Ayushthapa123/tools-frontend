@@ -1,0 +1,6 @@
+mutation updateRules($input: UpdateRulesInput!, $rulesId: Int!) {
+  updateRules(rulesId: $rulesId, updateRulesInput: $input) {
+    id
+    rules
+  }
+}

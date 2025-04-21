@@ -1,0 +1,6 @@
+query getRules {
+  getRulesByHomestay {
+    id
+    rules
+  }
+}

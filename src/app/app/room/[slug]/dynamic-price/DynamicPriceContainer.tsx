@@ -5,7 +5,6 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 
-
 import {
   CreateRoom,
   CreateRoomInput,
@@ -27,9 +26,7 @@ import {
 import { useToastStore } from 'src/store/toastStore';
 import { useUserStore } from 'src/store/userStore';
 import { Suspense, useState } from 'react';
-import SetPriceForm from './SetPriceForm';
-import UploadPhotos from './UploadPhotosForm';
-import {RoomCreateForm} from './RoomCreateForm';
+
 import Button from 'src/components/Button';
 
 
@@ -37,7 +34,6 @@ export default function RoomContainer({ params }: { params: { slug: string } }) 
 
   const isEdit = params?.slug !== "new";
 
-    
   const queryRoom = useGraphqlClientRequest<
   GetRoomWithPriceAndGalleryQuery,
   GetRoomWithPriceAndGalleryQueryVariables
@@ -163,36 +159,8 @@ const { mutateAsync: mutateUpdateRoomAsync } = useMutation({ mutationFn: mutateU
   return (
     <div className="w-full">
       <div className="bg-white p-6 rounded-lg shadow">
-        <div className="mb-6">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold">Step {currentStep} of 3</h2>
-            <div className="steps steps-horizontal">
-              <div className={`step ${currentStep >= 1 ? 'step-primary' : ''}`}>Room Details</div>
-              <div className={`step ${currentStep >= 2 ? 'step-primary' : ''}`}>Set Price</div>
-              <div className={`step ${currentStep >= 3 ? 'step-primary' : ''}`}>Upload Photos</div>
-            </div>
-          </div>
-        </div>
-
-        <form onSubmit={handleSubmit(onSubmit)}>
-          {currentStep === 1 && <RoomCreateForm control={control} errors={errors} />}
-        
-
-        <div className='flex justify-end'>
-          <div className="flex justify-end mt-6 gap-2 ">
-          {currentStep === 1 && isEdit && <Button label="Next" onClick={handleNext} className='btn-primary w-min btn' />}
-         
-            { currentStep === 1 && <Button 
-              type={currentStep === 1  ? 'submit' : 'button'}
-              className={`btn btn-primary  w-min`} 
-              label={buttonText}
-            />
-              }
-          </div>
-          </div>
-        </form>
-        {currentStep === 2 && <SetPriceForm price={room?.price as Price | undefined} roomId={Number(room?.id) } onNext={handleNext} handleBack={handleBack} />}
-        {currentStep === 3 && <UploadPhotos  handleBack={handleBack} roomImages={room?.image as RoomImage[]} roomId={Number(room?.id) } />}
+      map the details
+   
       </div>
     </div>
   );

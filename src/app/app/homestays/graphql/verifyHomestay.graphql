@@ -1,0 +1,7 @@
+mutation VerifyHomestay($homestayId: Int!, $status: Boolean!) {
+  verifyHomestay(homestayId: $homestayId, status: $status) {
+    id
+    name
+    
+  }
+}

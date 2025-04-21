@@ -1,0 +1,6 @@
+mutation createRules($input: CreateRulesInput!) {
+  createRules(createRulesInput: $input) {
+    id
+    rules
+  }
+}

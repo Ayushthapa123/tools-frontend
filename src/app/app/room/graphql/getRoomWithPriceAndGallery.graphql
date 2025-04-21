@@ -2,7 +2,8 @@ query GetRoomWithPriceAndGallery($id: Int!) {
   room(id: $id) {
     id
     status
-    capacity
+    capacity 
+    description
     caption
     maxOccupancy
     roomNumber

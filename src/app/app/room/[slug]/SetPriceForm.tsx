@@ -125,7 +125,7 @@ export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Pri
                 name="amount"
                 placeholder="Price Amount"
                 control={control}
-                label="Price "
+                label="Base Price "
                 required
                 type="number"
                 helpertext={errors.amount?.type === 'required' ? 'Amount is Required' : ''}

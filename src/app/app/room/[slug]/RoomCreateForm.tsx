@@ -1,6 +1,7 @@
 import TextInput from "src/features/react-hook-form/TextField";
 import { RoomStatus } from "src/gql/graphql";
 import ReactSelect from "src/features/react-hook-form/ReactSelect";
+import TextArea from "src/features/react-hook-form/TextArea";
 export const RoomCreateForm = ({ control, errors }: { control: any; errors: any }) => {
     const roomStatus = [
       { label: "Available", value: RoomStatus.Available },
@@ -37,6 +38,19 @@ export const RoomCreateForm = ({ control, errors }: { control: any; errors: any 
             required
             helpertext={errors.roomNumber?.type === 'required' ? 'Room Number is Required' : ''}
             error={!!errors.roomNumber}
+          />
+        </div>
+        <div className="mb-3">
+        
+          <TextArea
+            name="description"
+            placeholder="Description"
+            control={control}
+            label="Description"
+            error={!!errors.description} 
+            
+            rows={2}
+
           />
         </div>
         <div className="mb-3">

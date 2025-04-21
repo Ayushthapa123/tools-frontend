@@ -11,6 +11,8 @@ interface IProps<T extends FieldValues> {
   helpertext?: string;
   size?: 'lg' | 'sm'
   error: boolean;
+  multiline?: boolean;
+  rows?: number;
 }
 
 type TextFieldProps<T extends FieldValues> = IProps<T> &
@@ -26,6 +28,8 @@ const TextInput = <T extends FieldValues>(props: TextFieldProps<T>) => {
     error,
     required,
     size,
+    multiline,
+    rows,
     ...otherProps
   } = props;
 
@@ -43,8 +47,8 @@ const TextInput = <T extends FieldValues>(props: TextFieldProps<T>) => {
           label={label}
           helpertext={helpertext}
           error={Boolean(error)}
-          height={size}
-          
+          height={size} 
+         
           // ref={ref} // Forward the ref here, ensuring it is the last one set for the input
         />
       )}
