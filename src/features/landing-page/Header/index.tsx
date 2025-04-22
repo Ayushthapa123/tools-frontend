@@ -20,7 +20,7 @@ export const Header = () => {
               Find Your Next Homestay
             </h1>
             <p className="mb-8 text-lg text-white">
-              Get the best prices on 2,000,00+ properties, in Nepal
+              Get the best prices on 200,000+ properties, in Nepal
             </p>
             <div className="">
               <Suspense>
