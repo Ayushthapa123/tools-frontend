@@ -3,6 +3,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import {
+  GetHomestayBySlug,
   GetHomestayBySlugQuery,
   GetHomestayBySlugQueryVariables,
   Room,
@@ -11,60 +12,9 @@ import LoadingSpinner from 'src/components/Loading';
 import { BookingForm } from './BookingForm';
 import { HomestayInfo } from './HomestayInfo';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { gql } from 'graphql-request';
 import { CommonNav } from 'src/components/NavBar/CommonNav';
 import { useRoomStore } from 'src/store/roomStore';
 
-const GET_HOMESTAY_BY_SLUG = gql`
-  query getHomestayBySlug($slug: String!) {
-    getHomestayBySlug(slug: $slug) {
-      id
-      name
-      description
-
-      moderatedBySuperAdmin
-      moderatedByCommunityOwner
-      address {
-        country
-        city
-        subCity
-        street
-      }
-      contact {
-        phone
-        altPhone
-        email
-      }
-      rooms {
-        id
-        caption
-        capacity
-        roomNumber
-        status
-        attachBathroom
-        homestayId
-        createdAt
-        updatedAt
-        image {
-          url
-          id
-        } 
-
-        price {
-          baseAmount
-          currency 
-          isDynamicPricing
-          dynamicAmount
-          dynamicPriceStart
-          dynamicPriceEnd
-          isWeekend
-          discountAmount
-          discountType
-        }
-      }
-    }
-  }
-`;
 
 export default function BookingPage({ params }: { params: { slug: string } }) {
   const router = useRouter();
@@ -77,7 +27,7 @@ const handleRoomSelect=(roomId:string)=>{
   const searchHostels = useGraphqlClientRequest<
     GetHomestayBySlugQuery,
     GetHomestayBySlugQueryVariables
-  >(GET_HOMESTAY_BY_SLUG);
+  >(GetHomestayBySlug.loc?.source?.body!);
 
   const fetchData = async () => {
     const res = await searchHostels({
