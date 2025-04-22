@@ -1,10 +1,10 @@
 mutation CreatePrice($createPriceInput: CreatePriceInput!) {
   createPrice(createPriceInput: $createPriceInput) {
     id
-    amount
+    baseAmount
     currency
     roomId
-    dynamicPrice
+    isDynamicPricing
     discountAmount
     discountType
     isDiscountActive

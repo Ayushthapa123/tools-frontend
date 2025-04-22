@@ -4,9 +4,12 @@ import { useGraphqlClientRequest } from "src/client/useGraphqlClientRequest";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import TextInput from "src/features/react-hook-form/TextField";
-import { Price, CreatePriceInput, CreatePriceMutation, CreatePriceMutationVariables, UpdatePriceMutation, UpdatePriceMutationVariables, CreatePrice, UpdatePrice, Currency } from "src/gql/graphql";
+import { Price, CreatePriceInput, CreatePriceMutation, CreatePriceMutationVariables, UpdatePriceMutation, UpdatePriceMutationVariables, CreatePrice, UpdatePrice, Currency, DiscountType } from "src/gql/graphql";
 import Button from "src/components/Button";
 import ReactSelect from "src/features/react-hook-form/ReactSelect";
+import DynamicPriceContainer from "./dynamic-price-rules/DynamicPriceContainer";
+import { Toggle } from "src/components/Toggle";
+import DatePicker from "src/features/react-hook-form/DatePicker";
 
 export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Price | undefined, roomId: number , onNext: () => void , handleBack: () => void,}) => {
     const [showToast, setShowToast] = useState(false);
@@ -21,14 +24,17 @@ export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Pri
       handleSubmit,
       control,
       formState: { errors },
+      watch
     } = useForm<CreatePriceInput>({
       defaultValues: {
-        amount: price?.amount,
-        currency: price?.currency??Currency.Npr ,
-        dynamicPrice: price?.dynamicPrice ?? false,
-        discountAmount: price?.discountAmount,
-        discountType: price?.discountType,
-        isDiscountActive: price?.isDiscountActive ?? false,
+        baseAmount: price?.baseAmount,
+        currency: price?.currency ?? Currency.Npr,
+        isDynamicPricing: price?.isDynamicPricing ?? false,
+        dynamicAmount: price?.dynamicAmount,
+        dynamicPriceStart: price?.dynamicPriceStart,
+        dynamicPriceEnd: price?.dynamicPriceEnd,
+        isWeekend: price?.isWeekend ?? false,
+     
         roomId: roomId,
       },
     });
@@ -50,7 +56,21 @@ export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Pri
     const onSubmit = async (data: CreatePriceInput) => {
       try {
         if (!isEdit) {
-          const result = await mutateAsync({ createPriceInput: { roomId: roomId ,amount: Number(data.amount), currency: data.currency, discountAmount: Number(data.discountAmount)    , discountType: data.discountType, isDiscountActive: data.isDiscountActive } });  
+          const result = await mutateAsync({ 
+            createPriceInput: { 
+              roomId: roomId,
+              baseAmount: Number(data.baseAmount), 
+              currency: data.currency, 
+              isDynamicPricing: data.isDynamicPricing,
+              dynamicAmount: data.dynamicAmount ? Number(data.dynamicAmount) : undefined,
+              dynamicPriceStart: data.dynamicPriceStart,
+              dynamicPriceEnd: data.dynamicPriceEnd,
+              isWeekend: data.isWeekend,
+              discountAmount: data.discountAmount ? Number(data.discountAmount) : undefined,
+              discountType: data.discountType,
+              isDiscountActive: data.isDiscountActive
+            } 
+          });  
           if (result?.createPrice?.id) {
             setShowToast(true);
             setMessage('Price Created!');
@@ -66,15 +86,19 @@ export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Pri
           mutateUpdatePriceAsync({ 
             updatePriceInput: { 
               id: Number(price?.id),
-              amount: Number(data.amount),
+              baseAmount: Number(data.baseAmount),
               currency: data.currency,
-              discountAmount: Number(data.discountAmount),
+              isDynamicPricing: data.isDynamicPricing,
+              dynamicAmount: data.dynamicAmount ? Number(data.dynamicAmount) : undefined,
+              dynamicPriceStart: data.dynamicPriceStart,
+              dynamicPriceEnd: data.dynamicPriceEnd,
+              isWeekend: data.isWeekend,
+              discountAmount: data.discountAmount ? Number(data.discountAmount) : undefined,
               discountType: data.discountType,
               isDiscountActive: data.isDiscountActive
             } 
           }).then(res => {
             if (res?.updatePrice?.id) {
-
               setShowToast(true);
               setMessage('Price Updated!');
               setRole('success');
@@ -82,7 +106,6 @@ export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Pri
               onNext();
             }
           });
-       
         }
       } catch (error) {
         setShowToast(true);
@@ -106,8 +129,7 @@ export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Pri
       <div className="space-y-4">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-4 min-h-[400px]">
-
-          <div className="mb-3">
+            <div className="mb-3">
               <ReactSelect
                 name="currency"
                 options={currencyOptions}
@@ -122,37 +144,72 @@ export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Pri
             </div>
             <div className="mb-3">
               <TextInput
-                name="amount"
+                name="baseAmount"
                 placeholder="Price Amount"
                 control={control}
-                label="Base Price "
+                label="Base Price"
                 required
                 type="number"
-                helpertext={errors.amount?.type === 'required' ? 'Amount is Required' : ''}
-                error={!!errors.amount}
+                helpertext={errors.baseAmount?.type === 'required' ? 'Amount is Required' : ''}
+                error={!!errors.baseAmount}
               />
             </div>
-         
-            {/* <div className="mb-3">
-              <TextInput
-                name="discountAmount"
-                placeholder="Discount Amount"
-                control={control}
-                label="Discount Amount"
-                type="number"
-                helpertext={errors.discountAmount?.message}
-                error={!!errors.discountAmount}
-              />
-            </div>
+
             <div className="mb-3">
-              <ReactSelect
-                name="discountType"
-                options={discountTypeOptions}
+              <Toggle
+                name="isDynamicPricing"
                 control={control}
-                label="Discount Type"
-                // required
+                label="Enable Dynamic Pricing"
               />
-            </div> */}
+            </div>
+
+         { watch("isDynamicPricing")&&<div className="flex flex-col card p-4">
+          <div className="grid grid-cols-2 gap-2 w-full">  
+          <div className="mb-3">
+              <DatePicker
+                name="dynamicPriceStart"
+                control={control}
+                label="Dynamic Price Start Date"
+              />
+            </div>
+
+            <div className="mb-3">
+              <DatePicker
+                name="dynamicPriceEnd"
+                control={control}
+                label="Dynamic Price End Date"
+              />
+            </div>
+
+          </div>
+            <div className="mb-3">
+              <TextInput
+                name="dynamicAmount"
+                placeholder="Dynamic Price Amount"
+                control={control}
+                label="Dynamic Price Amount"
+                type="number"
+                helpertext={errors.dynamicAmount?.message}
+                error={!!errors.dynamicAmount}
+              />
+            </div>
+
+          
+
+            <div className="mb-3">
+              <Toggle
+                name="isWeekend"
+                control={control}
+                label="Weekend Only "
+              />
+            </div>
+
+            </div>}
+
+     
+
+  
+
           </div>
           <div className="flex justify-between ">
             <div className="flex">

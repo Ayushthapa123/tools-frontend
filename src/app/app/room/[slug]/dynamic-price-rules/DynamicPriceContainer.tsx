@@ -5,12 +5,19 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 
-
 import {
   CreateRoom,
   CreateRoomInput,
   CreateRoomMutation,
   CreateRoomMutationVariables,
+
+  DynamicPricingRule,
+
+  GetPriceRulesByRoom,
+
+  GetPriceRulesByRoomQuery,
+
+  GetPriceRulesByRoomQueryVariables,
 
   GetRoomWithPriceAndGallery,
   GetRoomWithPriceAndGalleryQuery,
@@ -18,6 +25,7 @@ import {
   Price,
   Room,
   RoomCapacity,
+  RoomImage,
   RoomStatus,
   UpdateRoom,
   UpdateRoomMutation,
@@ -26,40 +34,36 @@ import {
 import { useToastStore } from 'src/store/toastStore';
 import { useUserStore } from 'src/store/userStore';
 import { Suspense, useState } from 'react';
-import SetPriceForm from './SetPriceForm';
-import UploadPhotos from './UploadPhotosForm';
-// import {RoomCreateForm} from './RoomCreateForm';
+
 import Button from 'src/components/Button';
+  import { GetRulesQuery, GetRulesQueryVariables } from 'src/gql/graphql';
 
+export default function DynamicPriceContainer({ roomId }: { roomId: number }) {
 
-export default function RoomContainer({ params }: { params: { slug: string } }) {
+  const isEdit = Boolean(roomId);
 
-  const isEdit = params?.slug !== "new";
-
-    
-  const queryRoom = useGraphqlClientRequest<
-  GetRoomWithPriceAndGalleryQuery,
-  GetRoomWithPriceAndGalleryQueryVariables
->(GetRoomWithPriceAndGallery.loc?.source?.body!);
+  const queryDynamicPriceRules = useGraphqlClientRequest<
+  GetPriceRulesByRoomQuery,
+  GetPriceRulesByRoomQueryVariables
+>(GetPriceRulesByRoom.loc?.source?.body!);
 
 //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
 const fetchData = async () => {
-  const res = await queryRoom({id: Number(params?.slug)});
-  return res.room;
+  const res = await queryDynamicPriceRules({roomId: Number(roomId)});
+  return res.priceRulesByRoom;
 };
 
-const { data: room ,isLoading} = useQuery({
-  queryKey: ['getRoomWithPriceAndGallery', params?.slug],
+const { data: rules ,isLoading} = useQuery({
+  queryKey: ['getPriceRulesByRoom', roomId],
   queryFn: fetchData,
   enabled: isEdit,
 });
-console.log(room);
-  return <Suspense><div>{!isLoading &&<RoomForm params={params} room={room as Room | undefined} />}</div></Suspense>;
+console.log(rules);
+  return <Suspense><div>{!isLoading &&<RulesForm rules={rules as DynamicPricingRule | undefined} roomId={roomId} />}</div></Suspense>;
 }
 
- function RoomForm({ params, room }: { params: { slug: string }, room: Room | undefined | null }) {
-  const slug = params?.slug;
-  const isEdit = slug !== "new";
+  function RulesForm({ roomId, rules }: { roomId: number, rules: DynamicPricingRule | undefined | null }) {
+  const isEdit = Boolean(roomId);
   const searchParams = useSearchParams();
   const [currentStep, setCurrentStep] = useState(Number(searchParams.get('step')    ) || 1); 
 
@@ -74,12 +78,7 @@ console.log(room);
     formState: { errors },
   } = useForm<CreateRoomInput>({
     defaultValues: {
-     roomNumber: room?.roomNumber,
-     caption: room?.caption,
-     capacity: room?.capacity,
-     status: room?.status,
-     maxOccupancy: room?.maxOccupancy,
-     attachBathroom: room?.attachBathroom,
+     
   
     },
   });
@@ -121,7 +120,7 @@ const { mutateAsync: mutateUpdateRoomAsync } = useMutation({ mutationFn: mutateU
         }
       });
     }else {
-      mutateUpdateRoomAsync({ updateRoomInput: { ...input, id: Number(room?.id) } }).then(res => {
+      mutateUpdateRoomAsync({ updateRoomInput: { ...input, id: Number(roomId) } }).then(res => {
         if (res?.updateRoom?.id) {
           setShowToast(true);
           setMessage('Room Updated!');
@@ -161,35 +160,8 @@ const { mutateAsync: mutateUpdateRoomAsync } = useMutation({ mutationFn: mutateU
   return (
     <div className="w-full">
       <div className="bg-white p-6 rounded-lg shadow">
-        <div className="mb-6">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold">Step {currentStep} of 3</h2>
-            <div className="steps steps-horizontal">
-              <div className={`step ${currentStep >= 1 ? 'step-primary' : ''}`}>Room Details</div>
-              <div className={`step ${currentStep >= 2 ? 'step-primary' : ''}`}>Set Price</div>
-              <div className={`step ${currentStep >= 3 ? 'step-primary' : ''}`}>Upload Photos</div>
-            </div>
-          </div>
-        </div>
-
-        <form onSubmit={handleSubmit(onSubmit)}>
-          {/* {currentStep === 1 && <RoomCreateForm control={control} errors={errors} />} */}
-        
-
-          <div className="flex justify-between mt-6">
-         
-            { currentStep === 1 && <Button 
-
-            
-              type={currentStep === 1  ? 'submit' : 'button'}
-              className={`btn btn-primary ${currentStep === 1 ? 'ml-auto' : ''}`} 
-              label={buttonText}
-            />
-              }
-          </div>
-        </form>
-        {currentStep === 2 && <SetPriceForm price={room?.price as Price | undefined} roomId={Number(room?.id) } onNext={handleNext} handleBack={handleBack} />}
-        {currentStep === 3 && <UploadPhotos  handleBack={handleBack} />}
+      map the details
+   
       </div>
     </div>
   );

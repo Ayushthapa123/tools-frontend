@@ -32,7 +32,7 @@ query getHomestayBySlug($slug: String!) {
       }
       
       price {
-        amount 
+        baseAmount 
         currency
       }
       

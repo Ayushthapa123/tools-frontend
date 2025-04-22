@@ -41,11 +41,11 @@ query GetAllHomestays($pageSize: Int, $pageNumber: Int) {
       attachBathroom
       price {
         id
-        amount
+        baseAmount
         currency
         discountAmount
         discountType
-        dynamicPrice
+        isDynamicPricing
         isDiscountActive
       }
       image {

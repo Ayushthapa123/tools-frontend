@@ -23,7 +23,7 @@ query searchHomestay($input: SearchHomestayInput!) {
         caption
       }
       price {
-        amount 
+        baseAmount 
         currency
       }
     }

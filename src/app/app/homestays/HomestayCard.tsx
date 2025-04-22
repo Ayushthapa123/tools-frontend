@@ -135,7 +135,7 @@ const {user}=useUserStore()
                 </svg>
                 <div>
                   <span className="text-2xl font-bold text-primary">
-                    {firstRoom.price.currency} {firstRoom.price.amount.toLocaleString()}
+                    {firstRoom.price.currency} {firstRoom.price.baseAmount?.toLocaleString()}
                   </span>
                   <span className="text-sm text-gray-500 ml-1">/night</span>
                 </div>

@@ -216,7 +216,7 @@ export default function MainContent(props: Iprops) {
                 <div className="text-sm">
                   from
                   <span className="text-2xl font-bold">
-                    {hostel?.rooms?.[0]?.price?.amount}
+                    {hostel?.rooms?.[0]?.price?.baseAmount}
                   </span>{' '}
                   {hostel?.rooms?.[0]?.price?.currency} /night
                 </div>

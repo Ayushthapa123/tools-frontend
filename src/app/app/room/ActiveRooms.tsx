@@ -39,7 +39,7 @@ export const ActiveRooms = () => {
               caption={room.caption ?? ''}
               roomNumber={room.roomNumber ?? ''}
               status={room.status ?? ''}
-              price={room.price?.amount ?? 0}
+              price={room.price?.baseAmount ?? 0}
               currency={room.price?.currency ?? ''}
               imageUrl={room.image?.[0]?.url ?? ''}
             />

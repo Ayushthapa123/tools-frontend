@@ -1,0 +1,7 @@
+query GetPriceRulesByRoom($roomId: Int!) {
+priceRulesByRoom(roomId: $roomId) {
+    id
+  
+    
+  }
+}

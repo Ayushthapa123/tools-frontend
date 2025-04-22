@@ -17,7 +17,7 @@ export const Header = () => {
         <div className=" hero-overlay min-h-[50vh] bg-opacity-60 z-10 ">
           <div className=" inset-0 flex flex-col items-center justify-center px-4 text-center">
             <h1 className=" mb-4 mt-80 text-4xl font-bold text-white md:text-5xl">
-              Find your next stay
+              Find Your Next Homestay
             </h1>
             <p className="mb-8 text-lg text-white">
               Get the best prices on 2,000,00+ properties, in Nepal

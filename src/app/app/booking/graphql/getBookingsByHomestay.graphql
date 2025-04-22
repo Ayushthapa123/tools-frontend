@@ -16,7 +16,7 @@ query BookingsByHomestay {
       attachBathroom
       maxOccupancy
       price {
-        amount
+        baseAmount
         currency
         discountAmount
         discountType

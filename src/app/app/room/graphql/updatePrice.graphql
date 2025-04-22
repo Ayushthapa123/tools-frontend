@@ -1,9 +1,9 @@
 mutation UpdatePrice($updatePriceInput: UpdatePriceInput!) {
   updatePrice(updatePriceInput: $updatePriceInput) {
     id
-    amount
+    baseAmount
     currency
-    dynamicPrice
+    isDynamicPricing
     discountAmount
     discountType
     isDiscountActive

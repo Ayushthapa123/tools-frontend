@@ -24,7 +24,7 @@ query GetBookingByKey($bookingKey: String!) {
         caption
       } 
       price {
-        amount
+        baseAmount
         currency
       }
     }
