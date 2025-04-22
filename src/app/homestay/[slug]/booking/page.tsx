@@ -51,8 +51,15 @@ const GET_HOMESTAY_BY_SLUG = gql`
         } 
 
         price {
-          amount
-          currency
+          baseAmount
+          currency 
+          isDynamicPricing
+          dynamicAmount
+          dynamicPriceStart
+          dynamicPriceEnd
+          isWeekend
+          discountAmount
+          discountType
         }
       }
     }
