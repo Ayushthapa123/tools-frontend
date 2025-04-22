@@ -1,0 +1,15 @@
+mutation UpdatePriceRule($updatePriceInput: UpdateDynamicPriceRuleInput!) {
+  updatePriceRule(updatePriceInput: $updatePriceInput) {
+    id
+    name
+    description
+    roomId
+    startDate
+    endDate
+    amount
+    isWeekend
+    isActive
+    priority
+    updatedAt
+  }
+}

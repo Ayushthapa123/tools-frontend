@@ -1,38 +1,32 @@
 'use client';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import IconButton from 'src/components/IconButton';
-import EditIcon from 'src/components/icons/Edit';
-
 import { Modal } from 'src/components/Modal';
 import TextArea from 'src/features/react-hook-form/TextArea';
 import TextInput from 'src/features/react-hook-form/TextField';
+import DatePicker from 'src/features/react-hook-form/DatePicker';
+import Toggle from 'src/components/Toggle';
 import {
-  UpdateRoom,
-  UpdateRoomMutation,
-  UpdateRoomMutationVariables,
-  RoomCapacity,
-  RoomStatus,
+  CreatePriceRule,
+  CreatePriceRuleMutation,
+  CreatePriceRuleMutationVariables,
+  UpdatePriceRule,
+  UpdatePriceRuleMutation,
+  UpdatePriceRuleMutationVariables,
+  DynamicPricingRule,
 } from 'src/gql/graphql';
 import { useToastStore } from 'src/store/toastStore';
-import { useUserStore } from 'src/store/userStore';
 
 export const DynamicRulesModal = ({
-  id,
-  caption,
-  roomNumber,
-  status,
-  capacity,
+  roomId,
+  rules
 }: {
-  id: number | string;
-  caption: string;
-  roomNumber: string;
-  status: RoomStatus;
-  capacity: RoomCapacity;
+  roomId: number | string;
+  rules: DynamicPricingRule | undefined;
 }) => {
   const [open, setOpen] = useState(false);
   const handleClose = () => {
@@ -40,87 +34,118 @@ export const DynamicRulesModal = ({
   };
   return (
     <div>
-      <IconButton onClick={() => setOpen(true)}>
-        <EditIcon />
+      <IconButton onClick={() => setOpen(true)} className='text-white bg-blue-500 border border-blue-500'>
+        {rules?.id ? 'Edit Rule' : 'Add New Rule'}
       </IconButton>
       {open && (
-        <RoomForm
+        <RuleForm
           open
           handleClose={handleClose}
-          id={id}
-          caption={caption}
-          roomNumber={roomNumber}
-          status={status}
-          capacity={capacity}
+          roomId={roomId}
+          rules={rules}
         />
       )}
     </div>
   );
 };
 
-interface IUpdateRoom {
-  status: RoomStatus;
-  capacity: RoomCapacity;
-  caption: string;
-  roomNumber: string;
-}
-
-export const RoomForm = ({
+export const RuleForm = ({
   handleClose,
   open,
-  id,
-  caption,
-  roomNumber,
-  status,
-  capacity,
+  roomId,
+  rules,
 }: {
   handleClose: () => void;
   open: boolean;
-  id: number | string;
-  caption: string;
-  roomNumber: string;
-  status: RoomStatus;
-  capacity: RoomCapacity;
+  roomId: number | string;
+  rules: DynamicPricingRule | undefined;
 }) => {
-  const { user } = useUserStore();
   const { setRole, setShowToast, setMessage } = useToastStore();
   const queryClient = useQueryClient();
+  const isEdit = Boolean(rules?.id);
 
   const {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<IUpdateRoom>({
+  } = useForm<DynamicPricingRule>({
     defaultValues: {
-      status,
-      capacity,
-      caption,
-      roomNumber,
+      name: rules?.name ?? '',
+      description: rules?.description ?? '',
+      amount: rules?.amount ?? 0,
+      startDate: rules?.startDate ?? new Date(),
+      endDate: rules?.endDate ?? new Date(),
+      isWeekend: rules?.isWeekend ?? false,
+      isActive: rules?.isActive ?? true,
+      priority: rules?.priority ?? 0,
+      roomId: Number(roomId),
     },
   });
 
-  const mutateUpdateRoom = useGraphqlClientRequest<
-    UpdateRoomMutation,
-    UpdateRoomMutationVariables
-  >(UpdateRoom.loc?.source.body!);
+  const mutateCreateRule = useGraphqlClientRequest<
+    CreatePriceRuleMutation,
+    CreatePriceRuleMutationVariables
+  >(CreatePriceRule.loc?.source.body!);
 
-  const { mutateAsync } = useMutation({ mutationFn: mutateUpdateRoom });
+  const mutateUpdateRule = useGraphqlClientRequest<
+    UpdatePriceRuleMutation,
+    UpdatePriceRuleMutationVariables
+  >(UpdatePriceRule.loc?.source.body!);
 
-  const onSubmit = async (data: IUpdateRoom) => {
-    const input = { ...data, id: Number(id) };
-    mutateAsync({ updateRoomInput: input }).then(res => {
-      if (res?.updateRoom?.id) {
-        setShowToast(true);
-        setMessage('Room Updated!');
-        setRole('success');
-        queryClient.invalidateQueries({ queryKey: ['getRooms'] });
-        handleClose();
+  const { mutateAsync: createRule } = useMutation({ mutationFn: mutateCreateRule });
+  const { mutateAsync: updateRule } = useMutation({ mutationFn: mutateUpdateRule });
+
+  const onSubmit = async (data: DynamicPricingRule) => {
+    try {
+      if (isEdit) {
+        const result = await updateRule({
+          updatePriceInput: {
+            id: Number(rules?.id),
+            name: data.name,
+            description: data.description,
+            amount: Number(data.amount),
+            startDate: data.startDate,
+            endDate: data.endDate,
+            isWeekend: data.isWeekend,
+            isActive: data.isActive,
+            priority: Number(data.priority),
+            roomId: Number(roomId),
+          },
+        });
+        if (result?.updatePriceRule?.id) {
+          setShowToast(true);
+          setMessage('Rule Updated!');
+          setRole('success');
+          queryClient.invalidateQueries({ queryKey: ['getPriceRulesByRoom'] });
+          handleClose();
+        }
       } else {
-        setShowToast(true);
-        setMessage('Something went wrong!');
-        setRole('error');
+        const result = await createRule({
+          createPriceRuleInput: {
+            name: data.name,
+            description: data.description,
+            amount: Number(data.amount),
+            startDate: data.startDate,
+            endDate: data.endDate,
+            isWeekend: data.isWeekend,
+            isActive: data.isActive,
+            priority: Number(data.priority),
+            roomId: Number(roomId),
+          },
+        });
+        if (result?.createPriceRule?.id) {
+          setShowToast(true);
+          setMessage('Rule Created!');
+          setRole('success');
+          queryClient.invalidateQueries({ queryKey: ['getPriceRulesByRoom'] });
+          handleClose();
+        }
       }
-    });
+    } catch (error) {
+      setShowToast(true);
+      setMessage('Something went wrong!');
+      setRole('error');
+    }
   };
 
   return (
@@ -129,50 +154,92 @@ export const RoomForm = ({
         open={open}
         handleClose={handleClose}
         onSave={handleSubmit(onSubmit)}
-        title="Update Room"
-        actionLabel="Save">
+        title={isEdit ? 'Update Rule' : 'Add New Rule'}
+        actionLabel={isEdit ? 'Update' : 'Create'}>
         <div className="bg-white">
-          <form className="bg-white text-left">
-            <div className="w-full py-3">
+          <form className="bg-white text-left space-y-4 p-4">
+            <div className="mb-3">
+              <TextInput
+                name="name"
+                placeholder="Rule Name"
+                control={control}
+                label="Rule Name"
+                required
+                error={!!errors.name}
+                helpertext={errors.name?.message}
+              />
+            </div>
+
+            <div className="mb-3">
+              <TextArea
+                name="description"
+                placeholder="Description"
+                control={control}
+                label="Description"
+                rows={2}
+                error={!!errors.description}
+                helpertext={errors.description?.message}
+              />
+            </div>
+
+            <div className="mb-3">
+              <TextInput
+                name="amount"
+                placeholder="Amount"
+                control={control}
+                label="Amount"
+                type="number"
+                required
+                error={!!errors.amount}
+                helpertext={errors.amount?.message}
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
               <div className="mb-3">
-                <TextInput
-                  name="caption"
-                  placeholder="Room Caption"
+                <DatePicker
+                  name="startDate"
                   control={control}
-                  label="Room Caption"
-                  required
-                  helpertext={errors.caption?.type === 'required' ? 'Caption is Required' : ''}
-                  error={!!errors.caption}
-                />
-              </div>
-              <div className="mb-3">
-                <TextInput
-                  name="roomNumber"
-                  placeholder="Room Number"
-                  control={control}
-                  label="Room Number"
-                  required
-                  helpertext={errors.roomNumber?.type === 'required' ? 'Room Number is Required' : ''}
-                  error={!!errors.roomNumber}
+                  label="Start Date"
                 />
               </div>
 
               <div className="mb-3">
-                <select
-                  {...control.register('status')}
-                  className="w-full rounded border p-2">
-                  <option value={RoomStatus.Available}>Available</option>
-                  <option value={RoomStatus.Idle}>Occupied</option>
-                </select>
+                <DatePicker
+                  name="endDate"
+                  control={control}
+                  label="End Date"
+                />
+              </div>
+            </div>
+
+            <div className="mb-3">
+              <TextInput
+                name="priority"
+                placeholder="Priority"
+                control={control}
+                label="Priority"
+                type="number"
+                error={!!errors.priority}
+                helpertext={errors.priority?.message}
+              />
+            </div>
+
+            <div className="flex gap-4">
+              <div className="mb-3">
+                <Toggle
+                  name="isWeekend"
+                  control={control}
+                  label="Weekend Only"
+                />
               </div>
 
               <div className="mb-3">
-                <select
-                  {...control.register('capacity')}
-                  className="w-full rounded border p-2">
-                  <option value={RoomCapacity.OneBed}>Single</option>
-                  <option value={RoomCapacity.TwoBed}>Double</option>
-                </select>
+                <Toggle
+                  name="isActive"
+                  control={control}
+                  label="Active"
+                />
               </div>
             </div>
           </form>

@@ -1,0 +1,23 @@
+# Dynamic Price Rule Mutations
+
+mutation CreatePriceRule($createPriceRuleInput: CreateDynamicPriceRuleInput!) {
+  createPriceRule(createPriceRuleInput: $createPriceRuleInput) {
+    id
+    name
+    description
+    roomId
+    startDate
+    endDate
+    amount
+    isWeekend
+    isActive
+    priority
+    createdAt
+    updatedAt
+  }
+}
+
+
+
+
+

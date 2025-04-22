@@ -9,12 +9,11 @@ import Button from "src/components/Button";
 import ReactSelect from "src/features/react-hook-form/ReactSelect";
 import DynamicPriceContainer from "./dynamic-price-rules/DynamicPriceContainer";
 import { Toggle } from "src/components/Toggle";
-import DatePicker from "src/features/react-hook-form/DatePicker";
+import { useToastStore } from "src/store/toastStore";
 
 export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Price | undefined, roomId: number , onNext: () => void , handleBack: () => void,}) => {
-    const [showToast, setShowToast] = useState(false);
-    const [message, setMessage] = useState("");
-    const [role, setRole] = useState<"success" | "error">("success");
+  const { setRole, setShowToast, setMessage } = useToastStore();
+   
     const router = useRouter();
     const queryClient = useQueryClient();
 
@@ -76,7 +75,7 @@ export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Pri
             setMessage('Price Created!');
             setRole('success');
             queryClient.invalidateQueries({ queryKey: ['getRoom'] });
-            onNext();
+            // onNext();
           } else {
             setShowToast(true);
             setMessage('Something went wrong!');
@@ -100,10 +99,10 @@ export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Pri
           }).then(res => {
             if (res?.updatePrice?.id) {
               setShowToast(true);
-              setMessage('Price Updated!');
               setRole('success');
+              setMessage('Price Updated!');
               queryClient.invalidateQueries({ queryKey: ['getRoom'] });
-              onNext();
+              // onNext();
             }
           });
         }
@@ -155,7 +154,7 @@ export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Pri
               />
             </div>
 
-            <div className="mb-3">
+            <div className="">
               <Toggle
                 name="isDynamicPricing"
                 control={control}
@@ -163,53 +162,14 @@ export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Pri
               />
             </div>
 
-         { watch("isDynamicPricing")&&<div className="flex flex-col card p-4">
-          <div className="grid grid-cols-2 gap-2 w-full">  
-          <div className="mb-3">
-              <DatePicker
-                name="dynamicPriceStart"
-                control={control}
-                label="Dynamic Price Start Date"
-              />
-            </div>
-
-            <div className="mb-3">
-              <DatePicker
-                name="dynamicPriceEnd"
-                control={control}
-                label="Dynamic Price End Date"
-              />
-            </div>
-
-          </div>
-            <div className="mb-3">
-              <TextInput
-                name="dynamicAmount"
-                placeholder="Dynamic Price Amount"
-                control={control}
-                label="Dynamic Price Amount"
-                type="number"
-                helpertext={errors.dynamicAmount?.message}
-                error={!!errors.dynamicAmount}
-              />
-            </div>
-
-          
-
-            <div className="mb-3">
-              <Toggle
-                name="isWeekend"
-                control={control}
-                label="Weekend Only "
-              />
+         { watch("isDynamicPricing")&&<div className="flex flex-col card ">
+       
+            <div className=""> 
+              <DynamicPriceContainer roomId={roomId} />
             </div>
 
             </div>}
-
-     
-
   
-
           </div>
           <div className="flex justify-between ">
             <div className="flex">

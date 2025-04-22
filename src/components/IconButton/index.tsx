@@ -26,7 +26,7 @@ const IconButton: React.FC<IconButtonProps> = ({
   };
 
   const colorStyles = {
-    default: ' bg-gray-50 hover:bg-gray-200 ',
+    default: ' ',
     primary: 'text-primary hover:bg-primary-light ',
     secondary: 'text-secondary hover:bg-secondary-light ',
     error: 'text-error hover:bg-red-200',
@@ -47,6 +47,7 @@ const IconButton: React.FC<IconButtonProps> = ({
       className={combinedClassName}
       onClick={onClick}
       disabled={disabled}
+      type="button"
       aria-disabled={disabled}>
       {children}
     </button>

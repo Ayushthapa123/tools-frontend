@@ -1,0 +1,6 @@
+mutation RemovePriceRule($id: Int!) {
+  removePriceRule(id: $id) {
+    id
+    name
+  }
+}

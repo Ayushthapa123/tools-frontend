@@ -188,7 +188,7 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit ,setValue,watch,getVa
 
 const fetchData = async () => {
   const res = await queryValidity({
-    roomId: parseInt(roomId),
+    roomIds: [parseInt(roomId)],
     startDate: new Date(checkInDateValue),
     endDate: new Date(checkOutDateValue),
   });
