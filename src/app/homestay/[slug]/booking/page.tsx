@@ -18,10 +18,10 @@ import { useRoomStore } from 'src/store/roomStore';
 
 export default function BookingPage({ params }: { params: { slug: string } }) {
   const router = useRouter();
-const {roomId,setRoomId}=useRoomStore()
+const {roomIds,setRoomIds}=useRoomStore()
 
 const handleRoomSelect=(roomId:string)=>{
-  setRoomId(roomId)
+  setRoomIds([...roomIds,roomId])
 }
 
   const searchHostels = useGraphqlClientRequest<
@@ -86,7 +86,7 @@ const handleRoomSelect=(roomId:string)=>{
               }}
               images={homestay.rooms?.flatMap(room => room.image?.map(img => img.url) || []) || []}
               rooms={homestay.rooms as Room[]}
-              selectedRoomId={roomId}
+              selectedRoomIds={roomIds}
               onRoomSelect={handleRoomSelect}
             />
           </div>
@@ -94,10 +94,10 @@ const handleRoomSelect=(roomId:string)=>{
           {/* Right Column - Booking Form */}
           <div className="rounded-lg bg-white p-6 shadow-md">
             <h2 className="mb-6 text-2xl font-bold">Book Your Stay</h2>
-            {roomId ? (
+            {roomIds.length > 0 ? (
               <BookingForm
                 homestayId={String(homestay.id)}
-                roomId={roomId}
+                roomIds={roomIds  }
                 onSuccess={handleBookingSuccess}
                 rooms={homestay.rooms || []}
                 homeStaySlug={params.slug}

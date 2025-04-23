@@ -192,7 +192,7 @@ const HostelInfoForm: FC<IProps> = props => {
           <TextInput
             name="altPhone"
             type="text"
-            placeholder="Capacity"
+            placeholder="Alternative Phone"
             control={control}
             label="Alternative Phone"
             error={!!errors.altPhone}

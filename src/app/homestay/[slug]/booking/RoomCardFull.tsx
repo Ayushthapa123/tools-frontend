@@ -8,9 +8,13 @@ interface RoomCardProps {
   }
   
   export const RoomCardFull = ({ room, isSelected }: RoomCardProps) => {
-    const {setRoomId}=useRoomStore()
+    const {setRoomIds,roomIds}=useRoomStore()
     const handleRoomSelect = (roomId: string) => {
-      setRoomId(roomId)
+      if(roomIds.includes(roomId)){
+        setRoomIds(roomIds.filter((id) => id !== roomId))
+      }else{
+        setRoomIds([...roomIds,roomId])
+      }
     }
     return (
       <div
