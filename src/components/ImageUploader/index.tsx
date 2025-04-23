@@ -29,7 +29,7 @@ const ImageUploader = (props: Iprops) => {
       setLoading(true);
 
       const response = await axios.post(
-        process.env.NEXT_PUBLIC_UPLOAD_IMAGE_ENDPOINT ?? 'http://localhost:3003/upload/image',
+        `${process.env.NEXT_PUBLIC_API_URL!}/upload/image`,
         formData,
         {
           headers: {

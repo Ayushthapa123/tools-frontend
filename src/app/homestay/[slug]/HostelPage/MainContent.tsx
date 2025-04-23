@@ -19,7 +19,7 @@ import Image from 'next/image';
 import { FaParking } from 'react-icons/fa';
 import RichTextEditor from 'src/components/RichTextEditor';
 import { RoomCardFull } from '../booking/RoomCardFull';
-
+import { useRoomStore } from 'src/store/roomStore';
 interface Iprops {
   hostel: Homestay | undefined | null;
   checkInDate: string;
@@ -32,6 +32,8 @@ export default function MainContent(props: Iprops) {
   const roomImages = hostel?.rooms?.[0]?.image ?? [];
 
   const editorRef = useRef(hostel?.description ?? '');
+
+  const {roomIds}=useRoomStore()
 
   return (
     <div>
@@ -149,6 +151,7 @@ export default function MainContent(props: Iprops) {
               <div tabIndex={0} className="collapse collapse-arrow ">
                 <input type="checkbox" defaultChecked />
                 <div className="collapse-title px-4 py-3 text-lg font-medium ">Rooms</div>
+                {JSON.stringify(roomIds)}
                 <div>
                   {hostel?.rooms?.map((room) => (
                     <div key={room.id} className='mb-4'>
@@ -156,7 +159,7 @@ export default function MainContent(props: Iprops) {
                     <RoomCardFull
                       key={room.id}
                       room={room}
-                      isSelected={false}
+                      isSelected={roomIds.includes(room.id)}
                      
                     />
                     </Link>
