@@ -9,7 +9,7 @@ interface LocationOption {
 
 export const Header = () => {
   return (
-    <div className="dark:bg-default-300 bg-primary-100 flex min-h-screen w-full flex-col items-center gap-10">
+    <div className="dark:bg-default-300 bg-primary-100 flex min-h-screen w-full flex-col items-center">
       <div
         className=" hero min-h-screen w-full bg-cover bg-center relative"
       >

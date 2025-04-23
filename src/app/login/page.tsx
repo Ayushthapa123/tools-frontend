@@ -132,8 +132,11 @@ const SignIn = () => {
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
             <div className=" relative mx-auto max-w-[450px]  rounded-lg bg-white px-[1rem] py-[1.5rem] text-center sm:px-12 md:px-[2.5rem]">
-              <div className="relative mb-5 flex  gap-1 md:mb-5">
-                <FullLogo />
+              <div className="relative mb-5 flex items-center  gap-1 md:-ml-4">
+                <Logo />
+                <div>
+                <FullLogo/>
+                </div>
               </div>
               <p className="  text-error">{error ?? error}</p>
 
@@ -168,14 +171,10 @@ const SignIn = () => {
                 </div>
 
                 <div className="mb-5 flex justify-center">
-                  <button
-                    type="submit"
-                    disabled={loading || !isValid}
+                  <Button label='Log in' disabled={loading || !isValid}
                     className={`${
                       loading || !isValid ? 'cursor-not-allowed opacity-30' : 'opacity-100'
-                    } rounded-md bg-forest-green px-4 py-2 font-bold   `}>
-                    Sign In
-                  </button>
+                    } rounded-md bg-forest-green px-4 py-2 font-bold   `}/>
                 </div>
               </form>
 
@@ -186,7 +185,7 @@ const SignIn = () => {
               </a>
               <p className="text-base">
                 <span className="pr-0.5">Dont have an account yet? </span>
-                <Link href="/signup" className="text-primary hover:underline">
+                <Link href="/signup" className="text-blue-500 hover:underline ">
                   Get one here
                 </Link>
               </p>

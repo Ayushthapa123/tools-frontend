@@ -40,7 +40,7 @@ export function SearchPage() {
   };
   return (
     <div className="w-full ">
-      <div className="mx-auto mt-4 h-full max-w-[1800px] bg-white py-3 ">
+      <div className="mx-auto mt-4 h-full max-w-[1800px] pt-3 min-h-10">
         <Suspense>
           <SearchBox />
         </Suspense>
@@ -51,13 +51,13 @@ export function SearchPage() {
               <span>
                 <MdApartment />
               </span>
-              {subCity ? `${subCity}` : ''} {city}, {country}
+              {subCity ? `${subCity}` : ''} {city ? city + ",":""} {country}
             </h2>
-            <p className="">{count} Homestays Found!</p>
+            <p className="">{count} <span className='text-primary/80'>Homestays Found!</span></p>
           </div>
         </div>
-        <div className=" relative flex h-[73vh]  w-full overflow-y-hidden">
-          <div className="relative grid h-[75vh] flex-grow gap-3 overflow-y-scroll p-5">
+        <div className=" relative flex h-auto  w-full overflow-y-hidden">
+          <div className="relative grid h-auto flex-grow gap-3 overflow-y-scroll p-5 bg-gray-50">
             <SearchResults
               city={city}
               subCity={subCity}
