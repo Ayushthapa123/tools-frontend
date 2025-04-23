@@ -1,8 +1,8 @@
-query CheckValidBooking($roomIds : [Int!]!, $startDate: DateTime!, $endDate: DateTime!) {
+query CheckValidBooking($roomIds: [Int!]!, $startDate: DateTime!, $endDate: DateTime!) {
   checkValidBooking(roomIds: $roomIds, startDate: $startDate, endDate: $endDate) {
     isValid
     message
-    status
-    bookingSummary
+    totalPrice
+    totalDays
   }
 }

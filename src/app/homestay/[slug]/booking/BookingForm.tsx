@@ -16,7 +16,7 @@ import { useRoomStore } from 'src/store/roomStore';
 interface BookingFormProps {
   homestayId: string;
   homeStaySlug: string;
-  roomId: string;
+  roomIds: string[];
   onSuccess: () => void;
   rooms: Array<{
     id: string;
@@ -48,18 +48,18 @@ interface StepOneProps {
   setValue: any;
   watch: any;
   getValues: any;
-  roomId: string;
+  roomIds: string[];
   checkInDateValue: string | Date;
   checkOutDateValue: string | Date;
   handleCheckInDateChange: (date: string | Date) => void;
   handleCheckOutDateChange: (date: string | Date) => void;
 }
 
-export const BookingForm = ({ homestayId, homeStaySlug, roomId, onSuccess, rooms }: BookingFormProps) => {
+export const BookingForm = ({ homestayId, homeStaySlug, roomIds, onSuccess, rooms }: BookingFormProps) => {
   const { setMessage, setRole, setShowToast } = useToastStore();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<BookingFormData | null>(null);
-  const selectedRoom = rooms.find(room => room.id === roomId);
+  const selectedRoom = rooms.find(room => roomIds.includes(room.id));
   const router=useRouter()
 
   const searchParams = useSearchParams();
@@ -70,14 +70,18 @@ export const BookingForm = ({ homestayId, homeStaySlug, roomId, onSuccess, rooms
   const [checkOutDateValue,setCheckOutDateValue]=useState<string | Date>(checkOutDate)
 
   const handleCheckInDateChange=(date:string | Date)=>{
-    setCheckInDateValue(date)
+    // setCheckInDateValue(date) 
+    const checkoutDate=new Date(checkOutDate)
+    const dateString=date instanceof Date ? date.toISOString().split('T')[0] : new Date(date).toISOString().split('T')[0]
     // also change the search params 
-    window.location.href = `/homestay/${homeStaySlug}/booking?checkInDate=${date}&checkOutDate=${checkOutDateValue}`
+    window.location.href = `/homestay/${homeStaySlug}/booking?checkInDate=${dateString}&checkOutDate=${checkoutDate.toISOString().split('T')[0]}`
   }
   const handleCheckOutDateChange=(date:string | Date)=>{
-    setCheckOutDateValue(date)
+    // setCheckOutDateValue(date)
+    const dateString=date instanceof Date ? date.toISOString().split('T')[0] : new Date(date).toISOString().split('T')[0]
     // also change the search params 
-   window.location.href = `/homestay/${homeStaySlug}/booking?checkInDate=${checkInDateValue}&checkOutDate=${date}`
+    const checkInDate=new Date(checkInDateValue)
+   window.location.href = `/homestay/${homeStaySlug}/booking?checkInDate=${checkInDate.toISOString().split('T')[0]}&checkOutDate=${dateString}`
   }
 
   const {
@@ -143,7 +147,7 @@ export const BookingForm = ({ homestayId, homeStaySlug, roomId, onSuccess, rooms
           setValue={setValue}
           watch={watch}
           getValues={getValues}
-          roomId={roomId}
+          roomIds={roomIds}
           checkInDateValue={checkInDateValue}
           checkOutDateValue={checkOutDateValue}
           handleCheckInDateChange={handleCheckInDateChange}
@@ -164,7 +168,7 @@ export const BookingForm = ({ homestayId, homeStaySlug, roomId, onSuccess, rooms
   );
 }; 
 
-const StepOne = ({ control, handleSubmit, errors, onSubmit ,setValue,watch,getValues,roomId,checkInDateValue,checkOutDateValue,handleCheckInDateChange,handleCheckOutDateChange }: StepOneProps) => {
+const StepOne = ({ control, handleSubmit, errors, onSubmit ,setValue,watch,getValues,roomIds,checkInDateValue,checkOutDateValue,handleCheckInDateChange,handleCheckOutDateChange }: StepOneProps) => {
   
   const { user } = useUserStore();
 
@@ -188,7 +192,7 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit ,setValue,watch,getVa
 
 const fetchData = async () => {
   const res = await queryValidity({
-    roomIds: [parseInt(roomId)],
+    roomIds: roomIds.map(id => parseInt(id)),
     startDate: new Date(checkInDateValue),
     endDate: new Date(checkOutDateValue),
   });
@@ -201,7 +205,7 @@ const { data: validity,isLoading } = useQuery({
 });
 console.log('vvvvvvvvvvvvvvv',validity)
 
-const {roomId:roomIdFromStore}=useRoomStore()
+const {roomIds:roomIdsFromStore}=useRoomStore()
 
 
   return (
@@ -214,6 +218,8 @@ const {roomId:roomIdFromStore}=useRoomStore()
     </div>:<div>
       <p>Room is available for the selected dates</p>
       <p>{validity?.message}</p>
+     <p>Total Days: {validity?.totalDays}</p>
+     <p>Total Price: NPR {validity?.totalPrice}</p>
     </div>}
     {isLoading}
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

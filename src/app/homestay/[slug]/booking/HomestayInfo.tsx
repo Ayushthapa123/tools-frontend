@@ -23,7 +23,7 @@ interface HomestayInfoProps {
   };
   images?: string[];
   rooms?: Room[];
-  selectedRoomId?: string;
+  selectedRoomIds?: string[];
   onRoomSelect?: (roomId: string) => void;
 }
 
@@ -34,7 +34,7 @@ export const HomestayInfo = ({
   contact,
   images,
   rooms,
-  selectedRoomId,
+  selectedRoomIds,
 
 }: HomestayInfoProps) => {
   const editorRef = useRef(description);
@@ -84,7 +84,7 @@ export const HomestayInfo = ({
               <RoomCardFull
                 key={room.id}
                 room={room}
-                isSelected={selectedRoomId === room.id}
+                isSelected={Boolean(selectedRoomIds?.includes(room.id)  )}
                
               />
             ))}

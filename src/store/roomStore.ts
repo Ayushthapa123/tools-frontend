@@ -2,18 +2,18 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 type Store = {
-  roomId: string;
+  roomIds: string[];
 };
 
 type Actions = {
-  setRoomId: (roomId: string) => void;
+  setRoomIds: (roomIds: string[]) => void;
 };
 
 export const useRoomStore = create<Store & Actions>()(
   persist(
     (set) => ({
-      roomId: '',
-      setRoomId: (roomId: string) => set({ roomId: roomId }),
+      roomIds: [],
+      setRoomIds: (roomIds: string[]) => set({ roomIds: [...new Set(roomIds)] }),
     }),
     {
       name: 'room-storage', // unique name for the storage
