@@ -18,9 +18,9 @@ import { useEffect } from 'react';
 import { UserProfile } from '../UserProfile';
 
 export const CommonNav = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isCurrencyOpen, setIsCurrencyOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [ isMenuOpen, setIsMenuOpen ] = useState(false);
+  const [ isCurrencyOpen, setIsCurrencyOpen ] = useState(false);
+  const [ isModalOpen, setIsModalOpen ] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -56,11 +56,11 @@ export const CommonNav = () => {
         }
       });
     }
-  }, [getAccessToken, router, setAccessToken, setUser]);
+  }, [ getAccessToken, router, setAccessToken, setUser ]);
 
   return (
     <div
-      className="sticky top-0 z-[999] flex h-[70px] w-full  bg-white  px-3 shadow-sm md:h-[70px] md:px-[50px] "
+      className="sticky top-0 z-[999] flex h-[70px] w-full  bg-white  px-3 shadow-sm md:h-[70px] md:px-[30px] "
       id="common-nav">
       <div className="flex w-full justify-between ">
         <div className="relative flex w-auto">
@@ -72,22 +72,38 @@ export const CommonNav = () => {
 
         <div className=" flex flex-col justify-center ">
           <div className="flex gap-1 md:gap-4">
-            <div className="flex gap-1 md:gap-4">
-              <Link href={'/login'}>
-                <motion.div className="  font-semibold " transition={{ duration: 0.3 }}>
-                  <div className="px-3 py-3 text-[1rem]  md:px-6 ">Login</div>
-                </motion.div>
-              </Link>
+            {!user.userId && (
+              <>
+                <div className="flex gap-1 md:gap-2">
+                  <Link href={'/login'}>
+                    <motion.div className="  font-semibold " transition={{ duration: 0.3 }}>
+                      <div className="py-3 text-[1rem] p1-1">Login</div>
+                    </motion.div>
+                  </Link>
+                </div>
 
-              <div className="flex gap-1 md:gap-4">
-                <Link href={'/signup'}>
+                {/* <div className="flex gap-1 md:gap-2">
+                  <Link href={'/signup'}>
+                    <motion.div className="  font-semibold " transition={{ duration: 0.3 }}>
+                      <div className="py-3 text-[1rem] pl-1">Signup</div>
+                    </motion.div>
+                  </Link>
+                </div> */}
+
+                <button
+                  className="flex flex-row items-center justify-center rounded-full border border-transparent bg-forest-green font-medium tracking-wide transition duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 md:min-w-fit py-0"
+                >
                   <motion.div className="  font-semibold " transition={{ duration: 0.3 }}>
-                    <div className="px-3 py-3 text-[1rem] md:px-6 ">Signup</div>
+                    <Link href={"/signup"}>
+                      <span className="block sm:hidden md:block text-white">Signup</span>
+                    </Link>
                   </motion.div>
-                </Link>
+                </button>
+              </>
+            )}
 
-                {/* Desktop Navigation */}
-                {/* <nav className="hidden items-center space-x-8 md:flex">
+            {/* Desktop Navigation */}
+            {/* <nav className="hidden items-center space-x-8 md:flex">
               <Link href="/" className="h2 font-medium text-primary">
                 Find Your Room
               </Link>
@@ -108,18 +124,16 @@ export const CommonNav = () => {
               </Link>
             </nav> */}
 
-                {user.userId && (
-                  <div className=" flex flex-col justify-center ">
-                    <div className="flex gap-1 md:gap-4">
-                      <UserProfile />
-                    </div>
-                  </div>
-                )}
+            {user.userId && (
+              <div className=" flex flex-col justify-center ">
+                <div className="flex gap-1 md:gap-2">
+                  <UserProfile />
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };

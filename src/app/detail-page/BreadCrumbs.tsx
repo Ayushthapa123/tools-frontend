@@ -7,7 +7,7 @@ export const BreadCrumbs = (props: Iprops) => {
     <>
       <div className="ml-16 mt-2">
         <div className="breadcrumbs line-clamp-1 w-full text-sm lg:w-auto">
-          <ul className="text-lg ">
+          <ul className="text-sm">
             <li>
               <a href="/">Home</a>
             </li>
@@ -19,7 +19,7 @@ export const BreadCrumbs = (props: Iprops) => {
         </div>
       </div>
       <div className="flex w-full flex-col">
-        <hr className="  my-3 w-full border" />
+        <hr className="mb-3 w-full border" />
       </div>
     </>
   );

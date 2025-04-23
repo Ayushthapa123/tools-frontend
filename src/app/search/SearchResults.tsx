@@ -50,6 +50,13 @@ export const SearchResults = (props: IResults) => {
 
   return (
     <div className="w-full ">
+      {isLoading && (
+          <div className="flex justify-center items-center w-full gap-3 ">
+            <HostelCardSkeleton />
+            <HostelCardSkeleton />
+            <HostelCardSkeleton />
+          </div>
+        )}
       <div className="grid w-full grid-cols-3  gap-3">
         {hostels?.map(hostel => {
           const imgUrl = hostel.rooms?.[0]?.image?.[0]?.url || '/images/default-image.png';
@@ -75,12 +82,6 @@ export const SearchResults = (props: IResults) => {
             </div>
           );
         })}
-        {isLoading && (
-          <div className="grid w-full gap-3">
-            <HostelCardSkeleton />
-            <HostelCardSkeleton />
-          </div>
-        )}
       </div>
     </div>
   );

@@ -22,6 +22,7 @@ import { useAccessTokenStore } from 'src/store/accessTokenStore';
 import { useSearchParams } from 'next/navigation';
 import Button from 'src/components/Button';
 import { FullLogo } from 'src/components/Logo/FullLogoWithText';
+import { Logo } from 'src/components/Logo';
 
 export default function Home() {
   return (
@@ -40,8 +41,8 @@ type signupData = {
   confirmPassword: string;
 };
 function SignUp() {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [ loading, setLoading ] = useState(false);
+  const [ error, setError ] = useState('');
 
   const { setAccessToken } = useAccessTokenStore();
 
@@ -81,7 +82,7 @@ function SignUp() {
   };
 
   const { data: signupUrl } = useQuery({
-    queryKey: ['getGoogleAuthUrl'],
+    queryKey: [ 'getGoogleAuthUrl' ],
     queryFn: fetchData,
   });
 
@@ -148,8 +149,11 @@ function SignUp() {
         <div className="flex flex-wrap ">
           <div className="w-full px-4">
             <div className=" relative mx-auto max-w-[450px] overflow-hidden rounded-lg bg-white px-5 py-[1rem] text-center sm:px-[1rem] md:px-[3rem]">
-              <div className="relative mb-5 flex gap-1 md:mb-6">
-                <FullLogo />
+              <div className="relative mb-5 flex items-center  gap-1 md:-ml-4">
+                <Logo />
+                <div>
+                  <FullLogo />
+                </div>
               </div>
               <div>
                 <p className=" text-error">{error ?? error}</p>
@@ -220,21 +224,18 @@ function SignUp() {
                 </div>
 
                 <div className="mb-5 flex justify-center">
-                  <button
-                    type="submit"
+                  <Button
+                    label={"Sign up"}
                     disabled={loading || !isValid}
-                    className={`${
-                      loading || !isValid ? 'cursor-not-allowed opacity-30' : 'opacity-100'
-                    } bg-forest-green w-full rounded-md px-4 py-2  font-bold   `}>
-                    Sign In
-                  </button>
+                    className={`${loading || !isValid ? 'cursor-not-allowed opacity-30' : 'opacity-100'
+                      } bg-forest-green w-full rounded-md px-4 py-2  font-bold   `}/>
                 </div>
               </form>
 
               <p className="text-body-color text-base">
                 <span className="pr-0.5">Already a member?</span>
-                <Link href="/login" className="text-primary hover:underline">
-                  Sign In
+                <Link href="/login" className="text-blue-400 ml-1 hover:underline">
+                  Log In
                 </Link>
               </p>
 
