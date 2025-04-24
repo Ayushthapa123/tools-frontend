@@ -225,7 +225,7 @@ function SignUp() {
                     disabled={loading || !isValid}
                     className={`${
                       loading || !isValid ? 'cursor-not-allowed opacity-30' : 'opacity-100'
-                    } bg-forest-green rounded-md px-4 py-2 font-bold w-full   `}>
+                    } bg-secondary rounded-md px-4 py-2 font-bold w-full   `}>
                     Sign In
                   </button>
                 </div>
