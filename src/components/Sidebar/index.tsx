@@ -104,7 +104,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="relative z-[99909] flex h-full w-[18rem] flex-col border-r bg-white px-[1rem] shadow-lg">
+    <div className="relative z-[99909] flex h-full w-[18rem] flex-col border-r bg-base-100 px-[1rem] shadow-lg">
       <div className="flex flex-col w-full h-full">
         <div className="box-content relative w-full">
           {/* profile */}
