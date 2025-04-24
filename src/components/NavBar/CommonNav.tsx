@@ -91,7 +91,7 @@ export const CommonNav = () => {
                 </div> */}
 
                 <button
-                  className="flex flex-row items-center justify-center rounded-full border border-transparent bg-forest-green font-medium tracking-wide transition duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 md:min-w-fit py-0"
+                  className="flex flex-row items-center justify-center rounded-full border border-transparent bg-secondary font-medium tracking-wide transition duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 md:min-w-fit py-0"
                 >
                   <motion.div className="  font-semibold " transition={{ duration: 0.3 }}>
                     <Link href={"/signup"}>
