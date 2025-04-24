@@ -4,7 +4,13 @@ import { useRoomStore } from "src/store/roomStore";
 import Button from "src/components/Button";
 import Link from "next/link";
 import { IoBed } from "react-icons/io5";
-import { MdMeetingRoom } from "react-icons/md";
+import { MdMeetingRoom, MdOutlineKingBed } from "react-icons/md";
+import { FaShower } from "react-icons/fa";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { BsCheckCircleFill } from "react-icons/bs";
+import { BiArea } from "react-icons/bi";
+
 interface RoomCardProps {
   room: Room;
   isSelected: boolean;
@@ -14,36 +20,66 @@ interface RoomCardProps {
 }
 
 export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate }: RoomCardProps) => {
-  const { setRoomIds, roomIds } = useRoomStore()
+  const { setRoomIds, roomIds } = useRoomStore();
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const pathName = usePathname();
+  const [ isBookingPage, setIsBookingPage ] = useState(false);
+
+  useEffect(() => {
+    setIsBookingPage(pathName.includes("booking"));
+  }, [ pathName ]);
+
   const handleRoomSelect = (roomId: string) => {
-    if (roomIds.includes(roomId)) {
-      setRoomIds(roomIds.filter((id) => id !== roomId))
-    } else {
-      setRoomIds([...roomIds, roomId])
+    if (sectionRef.current) {
+      sectionRef.current.scrollIntoView({
+        behavior: "smooth",
+        block:"start"
+      })
     }
-  }
-  console.log("room", room)
+    if (roomIds.includes(roomId)) {
+      setRoomIds(roomIds.filter((id) => id !== roomId));
+    } else {
+      setRoomIds([ ...roomIds, roomId ]);
+    }
+    
+  };
+
   return (
     <div
-      onClick={() => handleRoomSelect(room.id)}
-      className={`card card-side  bg-gray-50 shadow-md hover:shadow-lg transition-all cursor-pointer ${isSelected ? 'border-2 border-green-600' : 'border border-gray-200 hover:border-gray-400'
+      ref={sectionRef}
+      className={`group relative flex h-full overflow-hidden rounded-xl bg-white transition-all duration-300 ${isSelected
+          ? 'border-2 border-blue-600 ring-2 ring-blue-200'
+          : 'border border-gray-200 hover:border-gray-300 hover:shadow-lg'
         }`}
     >
+      {/* Status indicator */}
+      <div className={`absolute left-1 top-2 z-10 rounded-full px-3 py-1 text-xs font-semibold text-white ${room.status === RoomStatus.Available
+          ? 'bg-green-500'
+          : 'bg-red-500'
+        }`}>
+        {room.status}
+      </div>
+
       {/* Left side - Image */}
-      <figure className="min-w-[290px] cursor-default">
+      <div className="relative h-auto w-2/5 min-w-[200px] overflow-hidden">
         {room.image && room.image.length > 0 ? (
-          <div className="relative h-full w-full lg:max-h-[240]">
+          <div className="relative h-full">
             <Image
               src={room.image[ 0 ].url}
-              alt={room.caption}
+              alt={room.caption || "Room image"}
               fill
-              className="object-cover"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
+            {room.image.length > 1 && (
+              <div className="absolute bottom-3 right-3 rounded-md bg-black/60 px-2 py-1 text-xs font-medium text-white">
+                +{room.image.length - 1} Photos
+              </div>
+            )}
           </div>
         ) : (
-          <div className="h-full w-full bg-base-200 flex items-center justify-center">
+          <div className="flex h-full w-full items-center justify-center bg-gray-100">
             <svg
-              className="h-12 w-12 text-base-300"
+              className="h-12 w-12 text-gray-400"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -57,86 +93,120 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
             </svg>
           </div>
         )}
-      </figure>
+      </div>
 
-      <div className="card-body p-4 cursor-default w-full">
-        {/* <div className="flex justify-between items-start"> */}
+      {/* Right side - Content */}
+      <div className="flex w-3/5 flex-col justify-between p-5">
         <div>
-          <div className="space-y-2 flex-1">
-            {/* Header Section */}
-            <div>
-              <div className={`badge badge-xs px-3 py-4 mb-4 ${room.status === RoomStatus.Available
-                ? 'badge-success'
-                : 'badge-error'
-                }`}>
-                <span className="text-[2px]">{room.status}</span>
-              </div>
-              <h3 className="card-title text-lg">{room.caption}</h3>
-              <div className="flex items-center justify-between gap-2 mt-1">
-                <span className="badge badge-outline text-nowrap p-4">
-                  <span className="text-xl pr-3"><MdMeetingRoom /></span>Room {room.roomNumber || 'N/A'}
-                </span>
-                <span className="badge badge-outline badge-primary text-nowrap p-4">
-                  <span className="text-xl pr-3"><IoBed /></span>
-                  {room.capacity}
-                </span>
-              </div>
-            </div>
+          <h3 className="text-xl font-semibold text-gray-800">{room.caption}</h3>
 
-            {/* Price Section */}
-            {room.price && (
-              <div className="flex items-baseline gap-1 pt-2">
-                <span className="text-3xl font-semibold text-primary">
-                  {room.price.isDynamicPricing ? room.price.dynamicAmount : room.price.baseAmount} {room.price.currency}
-                </span>
-                <span className="text-sm text-base-content/60">/night</span>
+          <div className="mt-3 flex flex-wrap gap-3">
+            <div className="flex items-center rounded-full bg-blue-50 px-3 py-1 text-sm text-primary">
+              <MdMeetingRoom className="mr-1 text-xl" />
+              Room {room.roomNumber || 'N/A'}
+            </div>
+            <div className="flex items-center rounded-full bg-blue-50 px-3 py-1 text-sm text-primary">
+              <MdOutlineKingBed className="mr-1 text-xl" />
+              {room.capacity}
+            </div>
+            {room.attachBathroom && (
+              <div className="flex items-center rounded-full bg-blue-50 px-3 py-1 text-sm text-primary">
+                <FaShower className="mr-1 text-xl" />
+                Private Bathroom
               </div>
             )}
-
-            {/* Features Section */}
-            <div className="flex flex-wrap gap-2 mt-3">
-              {/* <div className={`badge ${
-                  room.status === RoomStatus.Available 
-                    ? 'badge-success' 
-                    : 'badge-error'
-                }`}>
-                  {room.status}
-                </div> */}
-              {room.attachBathroom && (
-                <div className="badge badge-secondary">
-                  <svg
-                    className="w-4 h-4 mr-1"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M21 12h-4M3 12h4m8-9v4M12 21v-4"
-                    />
-                  </svg>
-                  Attached Bathroom
-                </div>
-              )}
+            <div className="flex items-center rounded-full bg-blue-50 px-3 py-1 text-sm text-primary">
+              <BiArea className="mr-1 text-xl" />
+              25m²
             </div>
           </div>
 
-          {/* Selection Indicator */}
-          {isSelected ? (
-            <div className="flex-shrink-0">
-              <div className=" w-full">
-                <Button className="bg-green-600" label={"Selected"}/>
-              </div>
+          <div className="mt-4 grid grid-cols-2 gap-y-2 text-sm text-gray-600">
+            <div className="flex items-center">
+              <BsCheckCircleFill className="mr-2 text-green-500" />
+              <span>Free WiFi</span>
             </div>
-          ) : (
-            <Link href={`/homestay/${slug}/booking?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}>
-              <Button label="Select room" />
-            </Link>
+            <div className="flex items-center">
+              <BsCheckCircleFill className="mr-2 text-green-500" />
+              <span>AC</span>
+            </div>
+            <div className="flex items-center">
+              <BsCheckCircleFill className="mr-2 text-green-500" />
+              <span>TV</span>
+            </div>
+            <div className="flex items-center">
+              <BsCheckCircleFill className="mr-2 text-green-500" />
+              <span>Room Service</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-5 flex items-center justify-between">
+          {/* Price */}
+          {room.price && (
+            <div>
+              <div className="flex items-baseline">
+                <span className="text-3xl font-bold text-primary">
+                  {room.price.isDynamicPricing ? room.price.dynamicAmount : room.price.baseAmount}
+                </span>
+                <span className="ml-1 text-lg font-medium text-primary">{room.price.currency}</span>
+                <span className="ml-1 text-sm text-gray-500">/night</span>
+              </div>
+              <div className="text-xs text-gray-400">(includes taxes & fees)</div>
+            </div>
+          )}
+
+          {/* Action Button */}
+          {isSelected && (
+            <div className="flex items-center">
+              <div className="mr-2 h-5 w-5 rounded-full bg-green-500 text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <Button
+                className="bg-green-500 hover:bg-green-600"
+                label="Selected"
+              />
+            </div>
+          )}{(
+            isBookingPage ? (
+              !isSelected &&
+              <div onClick={(e) => {
+                e.stopPropagation();
+                handleRoomSelect(room.id);
+              }}>
+                <Button
+                  className="bg-blue-600 hover:bg-blue-700"
+                  label="Select Room"
+                />
+              </div>
+            ) : ( !isSelected && 
+              <Link
+                href={`/homestay/${slug}/booking?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleRoomSelect(room.id)
+                   }}
+              >
+                <Button
+                  className="bg-blue-600 hover:bg-blue-700"
+                  label="Book Now"
+                />
+              </Link>
+            )
           )}
         </div>
       </div>
+
+      {/* Selected overlay */}
+      {isSelected && (
+        <div className="absolute right-4 top-4 z-10 rounded-full bg-blue-600 p-1 text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+          </svg>
+        </div>
+      )}
     </div>
   );
 };
