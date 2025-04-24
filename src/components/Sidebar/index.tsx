@@ -8,19 +8,12 @@ import DashboardIcon from '../icons/Dashboard';
 import HostelInfoIcon from '../icons/HostelInfo';
 import RoomIcon from '../icons/Room';
 
-import GalleryIcon from '../icons/Gallery';
-import SettingsIcon from '../icons/Settings';
 import LogoutIcon from '../icons/LogOut';
-import MapIcon from '../icons/Map';
 import {  MdOutlineDirections } from 'react-icons/md';
 import { useState } from 'react';
 import { IoIosArrowUp } from 'react-icons/io';
 import IconButton from '../IconButton';
-import WifiIcon from '../icons/Wifi';
 import RulesIcon from '../icons/Rules';
-import ServiceIcon from '../icons/Services';
-import CommunityIcon from '../icons/Community';
-import PriceIcon from '../icons/Pricing';
 import { useUserStore } from 'src/store/userStore';   
 import { UserType } from 'src/gql/graphql';
 import BookingIcon from '../icons/Booking';
@@ -99,7 +92,7 @@ const Sidebar = () => {
 
   // this function 
   const bottomItems: MenuItemType[] = [
-    { icon: <SettingsIcon />, text: 'Settings', href: '/app/settings' },
+    // { icon: <SettingsIcon />, text: 'Settings', href: '/app/settings' },
     { icon: <LogoutIcon />, text: 'Log Out', href: '/', handleFunc: logOut },
   ];
 

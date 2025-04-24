@@ -22,12 +22,17 @@ const config: Config = {
       },
       colors: {
 
-        // Accent Colors
-        'saffron-yellow': '#F6B042',
-        'deep-red': '#C8473D',
-        'sky-blue': '#469BAF',
-        'forest-green': '#4C7C59',
-        'forest-green-500':'#3b5f45',
+        primary: '#3B5D50',
+        secondary: '#C27C5E',
+        accent: '#3B5D50',
+        neutral: '#4A4A4A',
+        info: '#3A919B',
+        success: '#3E684C',
+        warning: '#EBB52C',
+        error: '#D95C45',
+       
+        
+        
         // from expensify 
         black: '#000000',
         white: '#FFFFFF',
