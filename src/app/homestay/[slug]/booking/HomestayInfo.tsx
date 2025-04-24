@@ -135,11 +135,12 @@ export const HomestayInfo = ({
                     <h3 className="mb-2 text-lg font-medium text-gray-600">Selected Room(s)</h3>
                     {selectedRooms.map((selectedRoom) => (
                       <RoomCardFull
-                      checkInDate={checkInDate}
-                      checkOutDate={checkOutDate}
-                      isSelected={true}
-                      room={selectedRoom}
-                      slug={slug}
+                        key={selectedRoom.id}
+                        checkInDate={checkInDate}
+                        checkOutDate={checkOutDate}
+                        isSelected={true}
+                        room={selectedRoom}
+                        slug={slug}
                     />
                     ))}
                   </motion.div>
