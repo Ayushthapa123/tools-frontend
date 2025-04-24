@@ -3,13 +3,13 @@ import React from 'react';
 const Footer = () => {
   return (
     <>
-      <footer className="relative z-10  px-5 pb-10 pt-20 md:px-20 lg:pb-20 lg:pt-[120px]">
+      <footer className="relative z-10  px-5 pb-10 pt-20 md:px-20 lg:pb-2 lg:pt-10 bg-base-100">
         <div className="container">
           <div className="-mx-4 flex flex-wrap items-center justify-center">
-            <div className="w-full px-4 sm:w-1/2 lg:w-3/12">
-              <div className="w-full justify-items-center ">
-                <h4 className="text-dark mb-9 text-lg font-semibold ">Follow Us On</h4>
-                <div className="mb-6 flex items-center">
+            <div className="w-full px-4 sm:w-1/2 lg:w-1/3">
+              <div className="w-full flex items-center justify-center flex-col">
+                <h4 className="text-dark text-lg font-semibold ">Follow Us On</h4>
+                <div className="mb-1 flex items-center">
                   <a
                     href="https://www.facebook.com/homestay"
                     className="border-stroke text-dark mr-3 flex h-8 w-8 items-center justify-center rounded-full border hover:border-primary hover:bg-primary hover:text-white sm:mr-4 lg:mr-3 xl:mr-4 ">
@@ -39,7 +39,7 @@ const Footer = () => {
                     </svg>
                   </a>
                 </div>
-                <p className="text-body-color text-base">&copy; 2025 homestay.com</p>
+                <p className="text-body-color text-base">&copy; 2025 All rights reserved to homestay.com</p>
               </div>
             </div>
           </div>

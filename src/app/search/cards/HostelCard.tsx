@@ -3,9 +3,11 @@ import Image from 'next/image';
 import { useRef, useState } from 'react';
 import { BiFoodMenu, BiHeart } from 'react-icons/bi';
 import { BsLine } from 'react-icons/bs';
-import { FaSwimmingPool } from 'react-icons/fa';
+import { FaArrowCircleRight, FaSwimmingPool } from 'react-icons/fa';
+import { GrLocation } from 'react-icons/gr';
 import { MdBathroom, MdBreakfastDining, MdSafetyDivider } from 'react-icons/md';
 import { TiWiFi } from 'react-icons/ti';
+import Button from 'src/components/Button';
 import SignupModal from 'src/components/Modal/SignUpModal';
 import RichTextEditor from 'src/components/RichTextEditor';
 
@@ -24,7 +26,7 @@ interface Iprops {
   threeSeater?: boolean | null;
 }
 export const HostelCard = (props: Iprops) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [ isModalOpen, setIsModalOpen ] = useState(false);
   const {
     name,
     country,
@@ -42,14 +44,14 @@ export const HostelCard = (props: Iprops) => {
   const editorRef = useRef(description ?? '');
 
   return (
-    <div className="card-bordered mb-2 flex h-full w-full cursor-pointer flex-col gap-4 rounded-3xl p-3">
+    <div className="card-bordered mb-2 flex h-full w-full cursor-pointer flex-col gap-4 rounded-3xl bg-white/80 hover:bg-white group  opacity-90 hover:opacity-100 transition ease-in-out duration-200">
       <div className="relative h-[300px] w-full rounded-3xl">
         <div className="relative h-full w-full">
           <Image
             src={imgUrl ? imgUrl : '/default-image.png'}
             alt={name}
             fill
-            className="rounded-xl object-cover"
+            className="rounded-xl object-cover rounded-bl-none rounded-br-none"
           />
           <button className="absolute right-2 top-2 rounded-full bg-white/80 p-2 transition hover:bg-white">
             <BiHeart
@@ -63,20 +65,28 @@ export const HostelCard = (props: Iprops) => {
       </div>
 
       <div className="flex-grow overflow-y-auto p-2" style={{ maxHeight: '150px' }}>
-        <h3 className="mb-1 text-xl font-medium">{name}</h3>
-        <p className="text-capitalize mb-3 text-sm">
-          {subCity} {city}, {country}
-        </p>
+        <div className='flex justify-between items-center'>
+          <p className="text-capitalize mb-1 text-xs text-primary/70 flex items-center gap-2">
+            <GrLocation />
+            <span>
+              {subCity} {city}, {country}
+            </span>
+          </p>
+          <div>
+            <span className='text-sm text-primary/80 font-semibold'>{currency} {amount}</span>
+          </div>
+        </div>
+        <h3 className="mb-1 ml-1 text-lg font-medium text-gray-700">{name}</h3>
 
         <div className="">
           {/* <RichTextEditor editorRef={editorRef} readOnly={true} /> */}
         </div>
 
-        {/* Price */}
-        <div className="mt-2 flex items-center">
-          <span className="text-sm">Price From :</span>
-          <span className="ml-1 font-semibold">{amount}</span>
-          <span className="ml-1 text-sm"> {currency} </span>
+        <div className="flex items-center justify-between gap-2 mt-2">
+            <Button label={"View full details"} className='bg-primary/80 hover:bg-primary/90' />
+          {/* <div>
+            <FaArrowCircleRight className='text-4xl text-gray-400 w-fit group-hover:text-primary/90 transition duration-300 ease-in-out' />
+          </div> */}
         </div>
       </div>
     </div>

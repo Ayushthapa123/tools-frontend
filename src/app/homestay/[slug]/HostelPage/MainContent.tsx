@@ -39,13 +39,13 @@ export default function MainContent(props: Iprops) {
     <div>
       <BreadCrumbs name={hostel?.name ?? ''} />
       <div className="box-border w-full lg:flex lg:pr-10 ">
-        <div className="box-border flex-grow overflow-x-hidden p-3 md:p-16 md:pl-24 ">
+        <div className="box-border flex-grow overflow-x-hidden p-3 md:p-16 md:pt-4 md:pl-24 ">
           <div>
             <h1 className="text-dark font-bold">
-              {hostel?.name},{hostel?.address?.city},{hostel?.address?.country}
+              {hostel?.name}
             </h1>
             <div className="text-6 my-3 flex text-lg font-semibold">
-              <CiLocationOn className="relative text-3xl " /> <span>{hostel?.address?.city}</span>
+              <CiLocationOn className="relative text-3xl " /> <span>{hostel?.address?.city}, { hostel?.address?.country}</span>
             </div>
           </div>
           {/* Image Gallery */}
