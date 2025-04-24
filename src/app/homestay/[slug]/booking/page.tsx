@@ -14,6 +14,7 @@ import { HomestayInfo } from './HomestayInfo';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { CommonNav } from 'src/components/NavBar/CommonNav';
 import { useRoomStore } from 'src/store/roomStore';
+import Footer from 'src/features/Footer';
 
 
 export default function BookingPage({ params }: { params: { slug: string } }) {
@@ -64,13 +65,13 @@ const handleRoomSelect=(roomId:string)=>{
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 ">
+    <div className="bg-gray-50 ">
       <CommonNav />
 
       <div className="container mx-auto p-4">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 ">
           {/* Left Column - Homestay Information */}
-          <div className="rounded-lg bg-white p-6 shadow-md">
+          <div className="rounded-lg bg-white p-6 pr-1 shadow-md md:min-h-[780px] overflow-y-scroll">
             <HomestayInfo
               name={homestay.name}
               description={homestay.description || ''}
@@ -86,7 +87,8 @@ const handleRoomSelect=(roomId:string)=>{
               }}
               images={homestay.rooms?.flatMap(room => room.image?.map(img => img.url) || []) || []}
               rooms={homestay.rooms as Room[]}
-              selectedRoomIds={roomIds}
+              selectedRoomId={roomIds[0]}  // TODO: some change needed
+              slug={params.slug}
               onRoomSelect={handleRoomSelect}
             />
           </div>
@@ -109,6 +111,9 @@ const handleRoomSelect=(roomId:string)=>{
             )}
           </div>
         </div>
+      </div>
+      <div>
+        <Footer/>
       </div>
     </div>
   );

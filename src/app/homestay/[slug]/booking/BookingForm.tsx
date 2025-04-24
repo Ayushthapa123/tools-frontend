@@ -417,4 +417,3 @@ const StepTwo = ({ selectedRoom, formData, handleBack, handleSubmit, onSubmit,ch
     </div>
   );
 };
-
