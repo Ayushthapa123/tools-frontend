@@ -16,9 +16,12 @@ import { BsAirplane } from 'react-icons/bs';
 import { FcWiFiLogo } from 'react-icons/fc';
 import WifiIcon from 'src/components/icons/Wifi';
 import Image from 'next/image';
-import { FaParking } from 'react-icons/fa';
+import { FaFacebook, FaParking } from 'react-icons/fa';
 import RichTextEditor from 'src/components/RichTextEditor';
 import { RoomCardFull } from '../booking/RoomCardFull';
+import { FaPhoneFlip } from 'react-icons/fa6';
+import { MdEmail } from 'react-icons/md';
+import { GrFacebook, GrInstagram, GrYoutube } from 'react-icons/gr';
 
 interface Iprops {
   hostel: Homestay | undefined | null;
@@ -27,9 +30,9 @@ interface Iprops {
 }
 export default function MainContent(props: Iprops) {
   const { hostel, checkInDate, checkOutDate } = props;
-  const [mainImage, setMainImage] = useState(0);
+  const [ mainImage, setMainImage ] = useState(0);
 
-  const roomImages = hostel?.rooms?.[0]?.image ?? [];
+  const roomImages = hostel?.rooms?.[ 0 ]?.image ?? [];
 
   const editorRef = useRef(hostel?.description ?? '');
 
@@ -37,22 +40,22 @@ export default function MainContent(props: Iprops) {
     <div>
       <BreadCrumbs name={hostel?.name ?? ''} />
       <div className="box-border w-full lg:flex lg:pr-10 ">
-        <div className="box-border flex-grow overflow-x-hidden p-3 md:p-16 md:pt-4 md:pl-24 ">
+        <div className="box-border flex-grow overflow-x-hidden p-3 md:p-16 md:pb-0 md:pt-4 md:pl-24 ">
           <div>
             <h1 className="text-dark font-bold">
               {hostel?.name}
             </h1>
             <div className="text-6 my-3 flex text-lg font-semibold">
-              <CiLocationOn className="relative text-3xl " /> <span>{hostel?.address?.city}, { hostel?.address?.country}</span>
+              <CiLocationOn className="relative text-3xl " /> <span>{hostel?.address?.city}, {hostel?.address?.country}</span>
             </div>
           </div>
           {/* Image Gallery */}
-          <div className="mb-20">
+          <div className="mb-4">
             {/* Main Image */}
             <div className="relative mb-2 h-[400px] w-full overflow-hidden rounded-lg bg-gray-200">
               {roomImages.length > 0 ? (
                 <Image
-                  src={roomImages[mainImage]?.url ?? '/images/default-image.png'}
+                  src={roomImages[ mainImage ]?.url ?? '/images/default-image.png'}
                   alt={`Room image ${mainImage + 1}`}
                   fill
                   className="object-cover"
@@ -70,7 +73,7 @@ export default function MainContent(props: Iprops) {
                 <div
                   key={img.id}
                   className={`relative h-20 w-full cursor-pointer overflow-hidden rounded-md bg-gray-200
-        ${mainImage === index ? 'ring-2 ring-primary' : ''}`}
+         ${mainImage === index ? 'ring-2 ring-primary' : ''}`}
                   onClick={() => setMainImage(index)}>
                   <Image
                     src={img.url}
@@ -83,126 +86,14 @@ export default function MainContent(props: Iprops) {
             </div>
 
             {/* Description Section */}
-            <div className="mb-8">
+            <div className="bg-gray-100 rounded-xl px-3">
               <div tabIndex={0} className="collapse collapse-arrow">
                 <input type="checkbox" defaultChecked />
-                <div className="collapse-title px-4 py-3 text-lg font-medium">Description</div>
+                <div className="collapse-title px-4 text-lg font-medium">Description</div>
 
                 <div>
                   <RichTextEditor editorRef={editorRef} readOnly={true} />
                 </div>
-              </div>
-            </div>
-
-            {/* Hotel Facilities Section */}
-            <div className="mb-8">
-              <div tabIndex={0} className="collapse collapse-arrow">
-                <input type="checkbox" defaultChecked />
-                <div className="collapse-title px-4 py-3 text-lg font-bold ">Hotel Facilities</div>
-                <div className="collapse-content px-4 pb-4">
-                  <div className="grid grid-cols-3 gap-4">
-                    <div className="flex items-center">
-                      <div className="mr-3 flex h-10 w-10 items-center justify-center">
-                        <BsAirplane />
-                      </div>
-                      <span>Airport Transport</span>
-                    </div>
-                    <div className="flex items-center">
-                      <div className="mr-3 flex h-10 w-10 items-center justify-center ">
-                        <WifiIcon />
-                      </div>
-                      <span>Internet - Wifi</span>
-                    </div>
-                    <div className="flex items-center">
-                      <div className="mr-3 flex h-10 w-10 items-center justify-center ">
-                        <FaParking />
-                      </div>
-                      <span>Parking</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Rules Section */}
-            <div className="mb-8">
-              <div tabIndex={0} className="collapse collapse-arrow ">
-                <input type="checkbox" defaultChecked />
-                <div className="collapse-title px-4 py-3 text-lg font-bold ">Rules</div>
-                <div className="collapse-content px-4 pb-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <p className="mb-1 font-medium">Check In</p>
-                      <p className="font-medium">10:00 AM</p>
-                    </div>
-                    <div>
-                      <p className="mb-1 font-medium ">Check Out</p>
-                      <p className="font-medium ">1:00 PM</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Room Section */}
-            <div className="mb-8">
-              <div tabIndex={0} className="collapse collapse-arrow ">
-                <input type="checkbox" defaultChecked />
-                <div className="collapse-title px-4 py-3 text-lg font-medium ">Rooms</div>
-                <div>
-                  {hostel?.rooms?.map((room) => (
-                    <div key={room.id} className='mb-4'>
-                      <Link href={`/homestay/${hostel?.slug}/booking?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}>
-                    <RoomCardFull
-                      key={room.id}
-                      room={room}
-                      isSelected={false}
-                     
-                    />
-                    </Link>
-                    </div>
-                  ))}
-                </div>
-                {/* <div className="collapse-content px-4 pb-4">
-                  <div className="overflow-hidden rounded-lg border ">
-                    <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                      <div className="flex h-48 items-center justify-center">
-                        <Image
-                          src={hostel?.rooms?.[0]?.image?.[0]?.url ?? '/images/default-image.png'}
-                          width={200}
-                          height={200}
-                          alt="Room Image"
-                          className=" rounded-xl"
-                        />
-                      </div>
-                      <div className="p-4 md:col-span-2">
-                        <h3 className="mb-2 text-xl font-medium ">Double Room</h3>
-                        <div className="mb-4 grid grid-cols-3 gap-4">
-                          <div className="flex items-center">
-                            <span className="mr-2 ">12m²</span>
-                            <span className="mr-2 ">x2</span>
-                            <span className="mr-2 ">x2</span>
-                          </div>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <div className="text-xl font-bold ">
-                            <span className="text-sm font-normal">
-                              {hostel?.rooms?.[0]?.price?.currency}
-                            </span>
-                            {hostel?.rooms?.[0]?.price?.amount}
-                          </div>
-                          <div className="mt-10">
-                            <Link href={`/homestay/${hostel?.slug}/booking`}>
-                              <button className="rounded-md bg-forest-green px-4 py-2 text-sm">
-                                Book Room
-                              </button>
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
               </div>
             </div>
           </div>
@@ -211,14 +102,14 @@ export default function MainContent(props: Iprops) {
         <div className=" top-[100px] m-3  h-[100vh]   lg:m-0  lg:min-w-[450px] lg:max-w-[450px] ">
           <div className="card h-auto w-full gap-7 p-10">
             {/* Card 1: Price & Booking */}
-            <div className="card  sticky overflow-hidden bg-offwhite-cream shadow-md">
+            {/* <div className="card  sticky overflow-hidden bg-offwhite-cream shadow-md">
               <div className="bg-forest-green-500 p-4 text-center text-white">
                 <div className="text-sm">
                   from
                   <span className="text-2xl font-bold">
-                    {hostel?.rooms?.[0]?.price?.baseAmount}
+                    {hostel?.rooms?.[ 0 ]?.price?.baseAmount}
                   </span>{' '}
-                  {hostel?.rooms?.[0]?.price?.currency} /night
+                  {hostel?.rooms?.[ 0 ]?.price?.currency} /night
                 </div>
               </div>
 
@@ -271,10 +162,60 @@ export default function MainContent(props: Iprops) {
                   </button>
                 </div>
               </div>
+            </div> */}
+
+            {/* Hotel Facilities Section */}
+            <div className="bg-gray-100 rounded-xl p-3">
+              <div tabIndex={0} className="collapse collapse-arrow">
+                <input type="checkbox" defaultChecked />
+                <div className="collapse-title px-4 py-3 text-lg font-bold ">Hotel Facilities</div>
+                <div className="collapse-content px-4 pb-4">
+                  <div className="grid grid-cols-2  justify-between">
+                    <div className="flex items-center">
+                      <div className="mr-3 flex h-10 w-10 items-center justify-center">
+                        <BsAirplane />
+                      </div>
+                      <span className='w-full'>Airport Transport</span>
+                    </div>
+                    <div className="flex items-center">
+                      <div className="mr-3 flex h-10 w-10 items-center justify-center ">
+                        <WifiIcon />
+                      </div>
+                      <span>Internet - Wifi</span>
+                    </div>
+                    <div className="flex items-center">
+                      <div className="mr-3 flex h-10 w-8 items-center justify-center ">
+                        <FaParking />
+                      </div>
+                      <span>Parking</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Rules Section */}
+            <div className="bg-gray-100 rounded-xl p-3">
+              <div tabIndex={0} className="collapse collapse-arrow ">
+                <input type="checkbox" defaultChecked />
+                <div className="collapse-title px-4 py-3 text-lg font-bold ">Rules</div>
+                <div className="collapse-content px-4 pb-4">
+                  <div className="grid grid-cols-2 justify-between">
+                    <div>
+                      <p className="mb-1 font-medium">Check In</p>
+                      <p className="font-medium">10:00 AM</p>
+                    </div>
+                    <div>
+                      <p className="mb-1 font-medium ">Check Out</p>
+                      <p className="font-medium ">1:00 PM</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Card 2: Image */}
-            <div className="card sticky gap-7  bg-offwhite-cream p-4 shadow-md">
+            {/* <div className="card sticky gap-7  bg-offwhite-cream p-4 shadow-md">
               <div className="flex h-48 items-center justify-center">
                 <Image
                   src={'/images/default-image.png'}
@@ -284,20 +225,96 @@ export default function MainContent(props: Iprops) {
                   className=" rounded-xl"
                 />
               </div>
-            </div>
+            </div> */}
 
             {/* Card 4: Information Contact */}
-            <div className="card sticky gap-7  bg-offwhite-cream p-4 shadow-md">
-              <h4 className="mb-3 text-sm ">Information Contact</h4>
-
-              <div className="space-y-3">
-                <div>
-                  <h5 className="mb-1 text-xs ">Phone</h5>
+            <div className="card sticky gap-2  bg-gray-100 p-4 shadow-md">
+              <h4 className=" text-sm border-b-2 pb-2">Contact Us</h4>
+              <div className="space-y-2">
+                <div className='flex items-center justify-start gap-3'>
+                  <h5 className="text-md "><FaPhoneFlip /></h5>
                   <p className="text-sm">+977783705178</p>
+                </div>
+                <div className='flex items-center justify-start gap-3'>
+                  <h5 className="text-md "><MdEmail /></h5>
+                  <p className="text-sm">demo123@gmail.com</p>
+                </div>
+                <div className='flex items-start justify-start gap-4'>
+                <div className='font-semibold'>
+                  Socials :
+                </div>
+                <div className='flex items-center justify-start gap-3'>
+                  <h5 className="text-xl "><GrInstagram /></h5>
+                  <h5 className="text-xl "><FaFacebook /></h5>
+                  <h5 className="text-xl "><GrYoutube /></h5>
+                </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+
+
+      </div>
+      {/* Room Section */}
+      <div className="p-4 md:p-16 md:pl-24">
+        <div tabIndex={0} className="collapse collapse-arrow ">
+          {/* <input type="checkbox" defaultChecked /> */}
+          <div className="collapse-title px-4 py-3 text-lg font-medium ">Rooms</div>
+          <div className='grid grid-cols-2'>
+            {hostel?.rooms?.map((room) => (
+              <div key={room.id} className='mb-4 p-4'>
+                <RoomCardFull
+                  key={room.id}
+                  room={room}
+                  isSelected={false}
+                  slug={hostel?.slug}
+                  checkInDate={checkInDate}
+                  checkOutDate={checkOutDate}
+                />
+              </div>
+            ))}
+          </div>
+          {/* <div className="collapse-content px-4 pb-4">
+                  <div className="overflow-hidden rounded-lg border ">
+                    <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                      <div className="flex h-48 items-center justify-center">
+                        <Image
+                          src={hostel?.rooms?.[0]?.image?.[0]?.url ?? '/images/default-image.png'}
+                          width={200}
+                          height={200}
+                          alt="Room Image"
+                          className=" rounded-xl"
+                        />
+                      </div>
+                      <div className="p-4 md:col-span-2">
+                        <h3 className="mb-2 text-xl font-medium ">Double Room</h3>
+                        <div className="mb-4 grid grid-cols-3 gap-4">
+                          <div className="flex items-center">
+                            <span className="mr-2 ">12m²</span>
+                            <span className="mr-2 ">x2</span>
+                            <span className="mr-2 ">x2</span>
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div className="text-xl font-bold ">
+                            <span className="text-sm font-normal">
+                              {hostel?.rooms?.[0]?.price?.currency}
+                            </span>
+                            {hostel?.rooms?.[0]?.price?.amount}
+                          </div>
+                          <div className="mt-10">
+                            <Link href={`/homestay/${hostel?.slug}/booking`}>
+                              <button className="rounded-md bg-forest-green px-4 py-2 text-sm">
+                                Book Room
+                              </button>
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div> */}
         </div>
       </div>
     </div>

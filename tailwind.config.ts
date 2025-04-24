@@ -38,7 +38,7 @@ const config: Config = {
         h2: ['24px', { lineHeight: '1.3', fontWeight: '600' }],
         h3: ['20px', { lineHeight: '1.3', fontWeight: '500' }],
         body: ['16px', { lineHeight: '1.5' }],
-        small: ['14px', { lineHeight: '1.5' }],
+        small: ['15px', { lineHeight: '1.5' }],
       },
     },
   },

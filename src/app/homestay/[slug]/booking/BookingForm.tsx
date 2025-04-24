@@ -57,27 +57,27 @@ interface StepOneProps {
 
 export const BookingForm = ({ homestayId, homeStaySlug, roomId, onSuccess, rooms }: BookingFormProps) => {
   const { setMessage, setRole, setShowToast } = useToastStore();
-  const [currentStep, setCurrentStep] = useState(1);
-  const [formData, setFormData] = useState<BookingFormData | null>(null);
+  const [ currentStep, setCurrentStep ] = useState(1);
+  const [ formData, setFormData ] = useState<BookingFormData | null>(null);
   const selectedRoom = rooms.find(room => room.id === roomId);
-  const router=useRouter()
+  const router = useRouter()
 
   const searchParams = useSearchParams();
-  const checkInDate = searchParams.get('checkInDate') ? new Date(searchParams.get('checkInDate') ?? '') : new Date().toISOString().split('T')[0];
-  const checkOutDate = searchParams.get('checkOutDate') ? new Date(searchParams.get('checkOutDate') ?? '') : new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[0];
- 
-  const [checkInDateValue,setCheckInDateValue]=useState<string | Date>(checkInDate)
-  const [checkOutDateValue,setCheckOutDateValue]=useState<string | Date>(checkOutDate)
+  const checkInDate = searchParams.get('checkInDate') ? new Date(searchParams.get('checkInDate') ?? '') : new Date().toISOString().split('T')[ 0 ];
+  const checkOutDate = searchParams.get('checkOutDate') ? new Date(searchParams.get('checkOutDate') ?? '') : new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[ 0 ];
 
-  const handleCheckInDateChange=(date:string | Date)=>{
+  const [ checkInDateValue, setCheckInDateValue ] = useState<string | Date>(checkInDate)
+  const [ checkOutDateValue, setCheckOutDateValue ] = useState<string | Date>(checkOutDate)
+
+  const handleCheckInDateChange = (date: string | Date) => {
     setCheckInDateValue(date)
     // also change the search params 
     window.location.href = `/homestay/${homeStaySlug}/booking?checkInDate=${date}&checkOutDate=${checkOutDateValue}`
   }
-  const handleCheckOutDateChange=(date:string | Date)=>{
+  const handleCheckOutDateChange = (date: string | Date) => {
     setCheckOutDateValue(date)
     // also change the search params 
-   window.location.href = `/homestay/${homeStaySlug}/booking?checkInDate=${checkInDateValue}&checkOutDate=${date}`
+    window.location.href = `/homestay/${homeStaySlug}/booking?checkInDate=${checkInDateValue}&checkOutDate=${date}`
   }
 
   const {
@@ -90,8 +90,8 @@ export const BookingForm = ({ homestayId, homeStaySlug, roomId, onSuccess, rooms
     getValues
   } = useForm<BookingFormData>({
     defaultValues: {
-      checkInDate: checkInDate instanceof Date ? checkInDate.toISOString().split('T')[0] : checkInDate,
-      checkOutDate: checkOutDate instanceof Date ? checkOutDate.toISOString().split('T')[0] : checkOutDate,
+      checkInDate: checkInDate instanceof Date ? checkInDate.toISOString().split('T')[ 0 ] : checkInDate,
+      checkOutDate: checkOutDate instanceof Date ? checkOutDate.toISOString().split('T')[ 0 ] : checkOutDate,
     },
   });
 
@@ -131,7 +131,7 @@ export const BookingForm = ({ homestayId, homeStaySlug, roomId, onSuccess, rooms
             style={{ width: `${(currentStep / 2) * 100}%` }}
           />
         </div>
-       
+
       </div>
 
       {currentStep === 1 ? (
@@ -162,10 +162,10 @@ export const BookingForm = ({ homestayId, homeStaySlug, roomId, onSuccess, rooms
       )}
     </div>
   );
-}; 
+};
 
-const StepOne = ({ control, handleSubmit, errors, onSubmit ,setValue,watch,getValues,roomId,checkInDateValue,checkOutDateValue,handleCheckInDateChange,handleCheckOutDateChange }: StepOneProps) => {
-  
+const StepOne = ({ control, handleSubmit, errors, onSubmit, setValue, watch, getValues, roomId, checkInDateValue, checkOutDateValue, handleCheckInDateChange, handleCheckOutDateChange }: StepOneProps) => {
+
   const { user } = useUserStore();
 
 
@@ -174,159 +174,159 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit ,setValue,watch,getVa
       setValue('fullName', user.userName);
       setValue('email', user.userEmail);
     }
-  }, [user.userId, setValue, user.userName, user.userEmail]);
-  
+  }, [ user.userId, setValue, user.userName, user.userEmail ]);
+
 
 
   // Check for validity here.
 
   const queryValidity = useGraphqlClientRequest<
-  CheckValidBookingQuery,
-  CheckValidBookingQueryVariables
->(CheckValidBooking.loc?.source?.body!);
+    CheckValidBookingQuery,
+    CheckValidBookingQueryVariables
+  >(CheckValidBooking.loc?.source?.body!);
 
 
-const fetchData = async () => {
-  const res = await queryValidity({
-    roomIds: [parseInt(roomId)],
-    startDate: new Date(checkInDateValue),
-    endDate: new Date(checkOutDateValue),
+  const fetchData = async () => {
+    const res = await queryValidity({
+      roomIds: [ parseInt(roomId) ],
+      startDate: new Date(checkInDateValue),
+      endDate: new Date(checkOutDateValue),
+    });
+    return res.checkValidBooking;
+  };
+
+  const { data: validity, isLoading } = useQuery({
+    queryKey: [ 'checkValidBooking' ],
+    queryFn: fetchData,
   });
-  return res.checkValidBooking;
-};
+  console.log('vvvvvvvvvvvvvvv', validity)
 
-const { data: validity,isLoading } = useQuery({
-  queryKey: ['checkValidBooking'],
-  queryFn: fetchData,
-});
-console.log('vvvvvvvvvvvvvvv',validity)
-
-const {roomId:roomIdFromStore}=useRoomStore()
+  const { roomId: roomIdFromStore } = useRoomStore()
 
 
   return (
-  <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 
-    
-    {!validity?.isValid?<div>
-      <p>Room is already booked for the selected dates</p>
-      <p>{validity?.message}</p>
-    </div>:<div>
-      <p>Room is available for the selected dates</p>
-      <p>{validity?.message}</p>
-    </div>}
-    {isLoading}
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <TextInput
-        name="fullName"
-        type="text"
-        placeholder="Full Name"
+
+      {!validity?.isValid ? <div>
+        <p>Room is already booked for the selected dates</p>
+        <p>{validity?.message}</p>
+      </div> : <div>
+        <p>Room is available for the selected dates</p>
+        <p>{validity?.message}</p>
+      </div>}
+      {isLoading}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <TextInput
+          name="fullName"
+          type="text"
+          placeholder="Full Name"
+          control={control}
+          label="Full Name"
+          required
+          helpertext={errors.fullName?.type === 'required' ? 'Name is required' : ''}
+          error={!!errors.fullName}
+        />
+
+        <TextInput
+          name="email"
+          type="email"
+          placeholder="Email Address"
+          control={control}
+          label="Email Address"
+          required
+          helpertext={errors.email?.type === 'required' ? 'Email is required' : ''}
+          error={!!errors.email}
+        />
+
+        <TextInput
+          name="phone"
+          type="tel"
+          placeholder="Phone Number"
+          control={control}
+          label="Phone Number"
+          required
+          helpertext={errors.phone?.type === 'required' ? 'Phone number is required' : ''}
+          error={!!errors.phone}
+        />
+
+        <TextInput
+          name="numberOfGuests"
+          type="number"
+          placeholder="Number of Guests"
+          control={control}
+          label="Number of Guests"
+          required
+          helpertext={errors.numberOfGuests?.type === 'required' ? 'Number of guests is required' : ''}
+          error={!!errors.numberOfGuests}
+        />
+
+        <TextInput
+          name="checkInDate"
+          type="date"
+          placeholder="Check-in Date"
+          control={control}
+          label="Check-in Date"
+          // required
+          helpertext={errors.checkInDate?.type === 'required' ? 'Check-in date is required' : ''}
+          error={!!errors.checkInDate}
+          value={checkInDateValue instanceof Date ? checkInDateValue.toISOString().split('T')[ 0 ] : checkInDateValue}
+
+          min={checkInDateValue instanceof Date ? checkInDateValue.toISOString().split('T')[ 0 ] : checkInDateValue}
+          onChange={(e) => handleCheckInDateChange(e.target.value)}
+        />
+
+        <TextInput
+          name="checkOutDate"
+          type="date"
+          placeholder="Check-out Date"
+          control={control}
+          label="Check-out Date"
+          // required
+          helpertext={errors.checkOutDate?.type === 'required' ? 'Check-out date is required' : ''}
+          error={!!errors.checkOutDate}
+          value={checkOutDateValue instanceof Date ? checkOutDateValue.toISOString().split('T')[ 0 ] : checkOutDateValue}
+          min={checkInDateValue instanceof Date ? checkInDateValue.toISOString().split('T')[ 0 ] : checkInDateValue}
+          onChange={(e) => handleCheckOutDateChange(e.target.value)}
+        />
+      </div>
+
+      <TextArea
+        name="specialRequests"
+        placeholder="Special Requests"
         control={control}
-        label="Full Name"
-        required
-        helpertext={errors.fullName?.type === 'required' ? 'Name is required' : ''}
-        error={!!errors.fullName}
+        label="Special Requests"
+        rows={3}
+        error={!!errors.specialRequests}
       />
 
-      <TextInput
-        name="email"
-        type="email"
-        placeholder="Email Address"
-        control={control}
-        label="Email Address"
-        required
-        helpertext={errors.email?.type === 'required' ? 'Email is required' : ''}
-        error={!!errors.email}
-      />
+      {!user.userId && <div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <h3>Please Enter the password for customer Creation</h3>
+        </div>
+        <TextInput
+          name="password"
+          type="password"
+          placeholder="Password"
+          control={control}
+          label="Password"
+          required
+          helpertext={errors.password?.type === 'required' ? 'Password is required' : ''}
+          error={!!errors.password}
+        />
+      </div>}
 
-      <TextInput
-        name="phone"
-        type="tel"
-        placeholder="Phone Number"
-        control={control}
-        label="Phone Number"
-        required
-        helpertext={errors.phone?.type === 'required' ? 'Phone number is required' : ''}
-        error={!!errors.phone}
-      />
-
-      <TextInput
-        name="numberOfGuests"
-        type="number"
-        placeholder="Number of Guests"
-        control={control}
-        label="Number of Guests"
-        required
-        helpertext={errors.numberOfGuests?.type === 'required' ? 'Number of guests is required' : ''}
-        error={!!errors.numberOfGuests}
-      />
-
-      <TextInput
-        name="checkInDate"
-        type="date"
-        placeholder="Check-in Date"
-        control={control}
-        label="Check-in Date"
-        // required
-        helpertext={errors.checkInDate?.type === 'required' ? 'Check-in date is required' : ''}
-        error={!!errors.checkInDate}
-        value={checkInDateValue instanceof Date ? checkInDateValue.toISOString().split('T')[0] : checkInDateValue}
-
-        min={checkInDateValue instanceof Date ? checkInDateValue.toISOString().split('T')[0] : checkInDateValue}
-        onChange={(e)=>handleCheckInDateChange(e.target.value)}
-      />
-
-      <TextInput
-        name="checkOutDate"
-        type="date"
-        placeholder="Check-out Date"
-        control={control}
-        label="Check-out Date"
-        // required
-        helpertext={errors.checkOutDate?.type === 'required' ? 'Check-out date is required' : ''}
-        error={!!errors.checkOutDate}
-        value={checkOutDateValue instanceof Date ? checkOutDateValue.toISOString().split('T')[0] : checkOutDateValue}
-        min={checkInDateValue instanceof Date ? checkInDateValue.toISOString().split('T')[0] : checkInDateValue}
-        onChange={(e)=>handleCheckOutDateChange(e.target.value)}
-      />
-    </div>
-
-    <TextArea
-      name="specialRequests"
-      placeholder="Special Requests"
-      control={control}
-      label="Special Requests"
-      rows={3}
-      error={!!errors.specialRequests}
-    />
-
-{ !user.userId&&<div>
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <h3>Please Enter the password for customer Creation</h3>
-    </div>
-    <TextInput
-      name="password"
-      type="password"
-      placeholder="Password"  
-      control={control}
-      label="Password"
-      required
-      helpertext={errors.password?.type === 'required' ? 'Password is required' : ''}
-      error={!!errors.password}
-    />
-    </div>}
-
-    <div className="mt-6">
-      <Button
-        label="Next"
-        type="submit"
-        loading={false}
-        className="w-full"
-        disabled={!validity?.isValid}
-      />
-    </div>
-  </form>
-);
+      <div className="mt-6">
+        <Button
+          label="Next"
+          type="submit"
+          loading={false}
+          className="w-full"
+          disabled={!validity?.isValid}
+        />
+      </div>
+    </form>
+  );
 }
 interface StepTwoProps {
   selectedRoom: any;
@@ -340,7 +340,7 @@ interface StepTwoProps {
 
 
 
-const StepTwo = ({ selectedRoom, formData, handleBack, handleSubmit, onSubmit,checkInDateValue,checkOutDateValue }: StepTwoProps) => {
+const StepTwo = ({ selectedRoom, formData, handleBack, handleSubmit, onSubmit, checkInDateValue, checkOutDateValue }: StepTwoProps) => {
   const { user } = useUserStore();
   const handleCheckout = async () => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/payment/create-checkout-session`, {
@@ -349,9 +349,9 @@ const StepTwo = ({ selectedRoom, formData, handleBack, handleSubmit, onSubmit,ch
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        amount: (selectedRoom?.price?.amount * 100) ,
+        amount: (selectedRoom?.price?.amount * 100),
         currency: 'NPR',
-        roomId: selectedRoom?.id ,
+        roomId: selectedRoom?.id,
         quantity: 1,
         bookingKey: uuidv4(),
         guestId: user.userId,
@@ -359,7 +359,7 @@ const StepTwo = ({ selectedRoom, formData, handleBack, handleSubmit, onSubmit,ch
         endDate: formData?.checkOutDate,
         customerEmail: formData?.email,
         customerPassword: formData?.password,
-         
+
       }),
     });
     const data = await response.json();
@@ -369,36 +369,38 @@ const StepTwo = ({ selectedRoom, formData, handleBack, handleSubmit, onSubmit,ch
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 bg-gray-50">
 
-      <div className="bg-gray-50 p-4 rounded-lg">
-        <h3 className="font-semibold mb-2">Selected Room</h3>
-        <p>{selectedRoom?.caption}</p>
-        <p>Capacity: {selectedRoom?.capacity}</p>
-        {selectedRoom?.roomNumber && <p>Room Number: {selectedRoom.roomNumber}</p>}
-        {selectedRoom?.attachBathroom && <p>With Attached Bathroom</p>}
+      <div className='grid grid-cols-1 md:grid-cols-2 '>
+        <div className="bg-gray-50 p-4 rounded-lg">
+          <h3 className="font-semibold mb-2 border-b-2 pb-2">Room Details</h3>
+          <p> <strong>{selectedRoom?.caption}</strong></p>
+          <p><strong>Capacity:</strong> {selectedRoom?.capacity}</p>
+          {selectedRoom?.roomNumber && <p><strong>Room Number:</strong> {selectedRoom.roomNumber}</p>}
+          {selectedRoom?.attachBathroom && <p><strong>With Attached Bathroom</strong></p>}
+        </div>
+
+        <div className="bg-gray-50 p-4 rounded-lg">
+          <h3 className="font-semibold mb-2 border-b-2 pb-2">Booking Details</h3>
+          <p><strong>Name: </strong>{formData?.fullName}</p>
+          <p><strong>Email:</strong> {formData?.email}</p>
+          <p><strong>Phone: </strong>{formData?.phone}</p>
+          <p><strong>Number of Guests: </strong>{formData?.numberOfGuests}</p>
+          <p><strong>Check-in Date:</strong> {checkInDateValue instanceof Date ? checkInDateValue.toISOString().split('T')[ 0 ] : checkInDateValue}</p>
+          <p><strong>Check-out Date:</strong> {checkOutDateValue instanceof Date ? checkOutDateValue.toISOString().split('T')[ 0 ] : checkOutDateValue}</p>
+          {formData?.specialRequests && (
+            <p><strong>Special Requests:</strong> {formData.specialRequests}</p>
+          )}
+        </div>
       </div>
 
-      <div className="bg-gray-50 p-4 rounded-lg">
-        <h3 className="font-semibold mb-2">Booking Details</h3>
-        <p>Name: {formData?.fullName}</p>
-        <p>Email: {formData?.email}</p>
-        <p>Phone: {formData?.phone}</p>
-        <p>Number of Guests: {formData?.numberOfGuests}</p>
-        <p>Check-in Date: {checkInDateValue instanceof Date ? checkInDateValue.toISOString().split('T')[0] : checkInDateValue}</p>
-        <p>Check-out Date: {checkOutDateValue instanceof Date ? checkOutDateValue.toISOString().split('T')[0] : checkOutDateValue }</p>
-        {formData?.specialRequests && (
-          <p>Special Requests: {formData.specialRequests}</p>
-        )}
-      </div>
-
-      <div className="flex gap-4">
+      <div className="flex gap-4 pb-4">
         <Button
           label="Back"
           type="button"
           variant="outlined"
           onClick={handleBack}
-          className="flex-1"
+          className="flex-1 border-b-2 border-gray-600"
         />
         <Button
           label="Pay and Confirm Booking"
