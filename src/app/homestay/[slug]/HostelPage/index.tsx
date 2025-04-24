@@ -15,6 +15,7 @@ import {
 import MainContent from './MainContent';
 import { CommonNav } from 'src/components/NavBar/CommonNav';
 import { useSearchParams } from 'next/navigation';
+import LoadingSpinner from 'src/components/Loading';
 export function HostelPage({ slug,  }: { slug: string}) {
 
   const searchParams = useSearchParams();
@@ -42,6 +43,7 @@ export function HostelPage({ slug,  }: { slug: string}) {
       <CommonNav />
       <div className="w-full ">
         <div>
+          {!hostel && <LoadingSpinner/>}
           <div>{hostel && <MainContent hostel={hostel as Homestay} checkInDate={checkInDate} checkOutDate={checkOutDate} />}</div>
           <Footer />
         </div>

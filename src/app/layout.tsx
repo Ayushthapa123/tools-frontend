@@ -33,7 +33,7 @@ export default function RootLayout({
 
         <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
       </Head>
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-base-body`}>
         <TopLevelWrapper>{children}</TopLevelWrapper>
       </body>
     </html>

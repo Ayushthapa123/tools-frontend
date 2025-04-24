@@ -39,7 +39,7 @@ const Footer = () => {
                     </svg>
                   </a>
                 </div>
-                <p className="text-body-color text-base">&copy; 2025 All rights reserved to homestay.com</p>
+                <p className="text-body-color text-base">&copy; 2025 All rights reserved to Nepal Homestay</p>
               </div>
             </div>
           </div>
