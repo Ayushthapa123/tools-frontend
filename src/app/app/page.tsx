@@ -19,7 +19,6 @@ export default function Home() {
     GetHomestayDetailsBasicQueryVariables
   >(GetHomestayDetailsBasic.loc?.source?.body!);
 
-  //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
   const fetchData = async () => {
     const res = await querySignupUrl();
     return res.getHomestayByToken;
@@ -29,35 +28,33 @@ export default function Home() {
     queryKey: ['getHomestayDetailsBasic'],
     queryFn: fetchData,
   });
-  return (
-    <div>
-      <div className="   grid h-auto  w-full gap-[1rem] ">
-        <div className="relative flex w-full bg-white card-body card card-bordered min-h-10">
-          <div className="flex-grow w-[70%] ">
-            <h3 className="">
-              Welcome Back! <span className=" text-secondary">{user.userName}</span>
-            </h3>
-            <div className="relative ">
-              <p className="">
-                {data?.address?.subCity}
-                {data?.address?.city},{data?.address?.country}
-              </p>
-            </div>
-          </div>
-          <div className="absolute right-6">
-            <Link href={`${process.env.NEXT_PUBLIC_APP_URL}/homestay/${data?.slug}`}>
-              <Button
-                label="See Your Profile"
-                className="rounded-lg bg-secondary"
-                variant="primary"
-              />
-            </Link>
-          </div>
-        </div>
 
-        <div className="relative w-full bg-white card-body card card-bordered min-h-10">
-          <h3>Homestay Profiles</h3>
+  return (
+    <div className="grid w-full gap-4">
+      <div className="relative flex w-full p-4 card bg-base-100 border shadow text-base-content">
+        <div className="flex-grow w-[70%]">
+          <h3 className="text-lg font-semibold">
+            Welcome Back!{' '}
+            <span className="text-secondary font-bold">{user.userName}</span>
+          </h3>
+          <p>
+            {data?.address?.subCity}
+            {data?.address?.city}, {data?.address?.country}
+          </p>
         </div>
+        <div className="absolute right-6 top-4">
+          <Link href={`${process.env.NEXT_PUBLIC_APP_URL}/homestay/${data?.slug}`}>
+            <Button
+              label="See Your Profile"
+              className="rounded-lg bg-secondary"
+              variant="primary"
+            />
+          </Link>
+        </div>
+      </div>
+
+      <div className="w-full p-4 card bg-base-100 border shadow text-base-content">
+        <h3 className="text-lg font-semibold">Homestay Profiles</h3>
       </div>
     </div>
   );

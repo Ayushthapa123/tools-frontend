@@ -196,28 +196,3 @@ button:hover {
   }
 }
 
-@layer base {
-  body {
-    @apply bg-offwhite-cream font-sora text-himalayan-green;
-  }
-
-  h1 {
-    @apply text-h1 text-deep-red;
-  }
-
-  h2 {
-    @apply text-h2 text-deep-red;
-  }
-
-  h3 {
-    @apply text-h3 text-deep-red;
-  }
-
-  p {
-    @apply text-body;
-  }
-
-  small {
-    @apply text-small;
-  }
-}

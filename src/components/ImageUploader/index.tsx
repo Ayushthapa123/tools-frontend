@@ -34,6 +34,7 @@ const ImageUploader = (props: Iprops) => {
         {
           headers: {
             'Content-Type': 'multipart/form-data',
+            
           },
         },
       );

@@ -13,6 +13,7 @@ import { useAccessTokenStore } from 'src/store/accessTokenStore';
 import GlobalToast from 'src/components/GlobalToast';
 
 import { useUserStore } from 'src/store/userStore';
+import { ThemeProvider } from 'src/components/themes/ThemeProvider';
 
 export default function Layout({
   children,
@@ -58,7 +59,8 @@ export default function Layout({
   }, [getAccessToken, router, setAccessToken, setUser]);
 
   return (
-    <div className=" w-full bg-gray-50">
+    <ThemeProvider>
+    <div className=" w-full ">
       <GlobalToast />
 
       {accessToken ? (
@@ -83,6 +85,7 @@ export default function Layout({
           <LayoutSkeleton />
         </>
       )}
-    </div>
+      </div>
+      </ThemeProvider>
   );
 }
