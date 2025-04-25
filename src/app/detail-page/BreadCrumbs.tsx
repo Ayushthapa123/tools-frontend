@@ -5,7 +5,7 @@ interface Iprops {
 export const BreadCrumbs = (props: Iprops) => {
   return (
     <>
-      <div className="ml-16 mt-2">
+      <div className="ml-[30px] pt-2">
         <div className="breadcrumbs line-clamp-1 w-full text-sm lg:w-auto">
           <ul className="text-sm">
             <li>
@@ -19,7 +19,7 @@ export const BreadCrumbs = (props: Iprops) => {
         </div>
       </div>
       <div className="flex w-full flex-col">
-        <hr className="mb-3 w-full border" />
+        <hr className="mb-8 -mt-4 w-full border" />
       </div>
     </>
   );

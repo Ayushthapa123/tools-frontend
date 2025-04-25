@@ -26,7 +26,7 @@ import {
 } from 'src/gql/graphql';
 import { useToastStore } from 'src/store/toastStore';
 import { useUserStore } from 'src/store/userStore';
-import { Suspense, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import SetPriceForm from './SetPriceForm';
 import UploadPhotos from './UploadPhotosForm';
 import {RoomCreateForm} from './RoomCreateForm';
@@ -73,6 +73,7 @@ console.log(room);
     handleSubmit,
     control,
     formState: { errors },
+    reset
   } = useForm<CreateRoomInput>({
     defaultValues: {
      roomNumber: room?.roomNumber,
@@ -85,7 +86,21 @@ console.log(room);
   
     },
   });
-
+   
+  useEffect(() => {
+    if (room) {
+      reset({
+        roomNumber: room.roomNumber,
+        caption: room.caption,
+        capacity: room.capacity ?? RoomCapacity.OneBed,
+        description: room.description,
+        status: room.status ?? RoomStatus.Available,
+        maxOccupancy: room.maxOccupancy ?? "1",
+        attachBathroom: room.attachBathroom ?? false,
+      });
+    }
+  }, [room]);
+//This ensures the form updates when room is fetched from the backend.
 
 
   const mutateCreateRoom = useGraphqlClientRequest<

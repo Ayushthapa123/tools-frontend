@@ -57,7 +57,7 @@ export function SearchPage() {
           </div>
         </div>
         <div className=" relative flex h-auto  w-full overflow-y-hidden">
-          <div className="relative grid h-auto flex-grow gap-3 overflow-y-scroll p-5 bg-gray-50">
+          <div className="relative grid h-auto flex-grow gap-3 overflow-y-scroll p-5">
             <SearchResults
               city={city}
               subCity={subCity}

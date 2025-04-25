@@ -44,7 +44,7 @@ export const HostelCard = (props: Iprops) => {
   const editorRef = useRef(description ?? '');
 
   return (
-    <div className="card-bordered mb-2 flex h-full w-full cursor-pointer flex-col gap-4 rounded-3xl bg-white/80 hover:bg-white group  opacity-90 hover:opacity-100 transition ease-in-out duration-200">
+    <div className="card-bordered mb-2 flex h-full w-full cursor-pointer flex-col gap-4 rounded-3xl bg-base-100 group  opacity-90 hover:opacity-100 transition ease-in-out duration-200">
       <div className="relative h-[300px] w-full rounded-3xl">
         <div className="relative h-full w-full">
           <Image
@@ -64,7 +64,7 @@ export const HostelCard = (props: Iprops) => {
         </div>
       </div>
 
-      <div className="flex-grow overflow-y-auto p-2" style={{ maxHeight: '150px' }}>
+      <div className="flex-grow overflow-y-auto px-4" style={{ maxHeight: '150px' }}>
         <div className='flex justify-between items-center'>
           <p className="text-capitalize mb-1 text-xs text-primary/70 flex items-center gap-2">
             <GrLocation />

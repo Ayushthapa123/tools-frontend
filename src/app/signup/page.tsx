@@ -228,13 +228,13 @@ function SignUp() {
                     label={"Sign up"}
                     disabled={loading || !isValid}
                     className={`${loading || !isValid ? 'cursor-not-allowed opacity-30' : 'opacity-100'
-                      } bg-secondary w-full rounded-md px-4 py-2  font-bold   `}/>
+                      } bg-primary w-full rounded-md px-4 py-2  font-bold   `}/>
                 </div>
               </form>
 
               <p className="text-body-color text-base">
                 <span className="pr-0.5">Already a member?</span>
-                <Link href="/login" className="text-blue-400 ml-1 hover:underline">
+                <Link href="/login" className="text-blue ml-1 hover:underline">
                   Log In
                 </Link>
               </p>
@@ -244,7 +244,7 @@ function SignUp() {
 
                 <button
                   onClick={() => openSignupUrl()}
-                  className="bg-secondary flex w-full items-center justify-center rounded-md px-4 py-2 font-bold text-white">
+                  className="bg-primary flex w-full items-center justify-center rounded-md px-4 py-2 font-bold text-white">
                   <FcGoogle className="mr-2 text-3xl" />
                   Continue With Google
                 </button>
