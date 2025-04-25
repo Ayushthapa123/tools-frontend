@@ -223,15 +223,50 @@ const {roomIds:roomIdsFromStore}=useRoomStore()
   <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
     {isLoading && <LoadingSpinner color='primary' size='sm' key={"load-booking-spinner"} />}
     
-    {!validity?.isValid?<div>
-      <p className='text-red font-medium'>Room is already booked for the selected dates.</p>
-      <p className='text-redHover font-bold'>{validity?.message}</p>
-    </div>:<div>
-      <p className='text-greenHover'>Room is available for the selected dates</p>
-      <p>{validity?.message}</p>
-     <p>Total Days: <span className='text-gray-700'>{validity?.totalDays}</span></p>
-     <p>Total Price:  <span className='text-gray-700'>NPR{validity?.totalPrice}</span></p>
-    </div>}
+    {!validity?.isValid ? (
+      <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-md shadow-md mb-4">
+        <div className="flex items-center gap-3">
+          <svg xmlns="http://www.w3.org/2000/svg" className="text-red-500 shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <div className="flex-1">
+            <h3 className="font-bold text-lg text-red-700">Room Unavailable</h3>
+            <div className="mt-1">
+              <p className="text-red-600">Room is already booked for the selected dates.</p>
+              <p className="font-medium text-red-800 mt-1">{validity?.message}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    ) : validity ? (
+      <div className="bg-emerald-50 border-l-4 border-success p-4 rounded-md shadow-md mb-4">
+        <div className="flex items-center gap-3">
+          <svg xmlns="http://www.w3.org/2000/svg" className="text-success  shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <div className="flex-1">
+            <div className="w-full flex items-center justify-between gap-4">
+                  <div>
+                  <h3 className="font-bold text-lg text-success">Room Available!</h3>
+                  <p className="text-success">{validity.message}</p>
+                  </div>
+              <div>
+                <div className="stats stats-vertical lg:stats-horizontal shadow mt-2 bg-white">
+                  <div className="stat">
+                    <div className="stat-title text-gray-600">Duration</div>
+                    <div className="stat-value text-base text-success">{validity.totalDays} Days</div>
+                  </div>
+                  <div className="stat">
+                    <div className="stat-title text-gray-600">Total Price</div>
+                    <div className="stat-value text-base text-success">NPR {validity.totalPrice}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    ) : null}
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-gray-300 pt-4">
       <TextInput
         name="fullName"
@@ -418,7 +453,7 @@ const { data: validity,isLoading } = useQuery({
   return (
     <div className="space-y-6">
 
-      <div className="bg-gray-50 p-4 rounded-lg">
+      <div className="bg-base-100 p-4 rounded-lg">
         <h3 className="font-semibold mb-2">Selected Room</h3>
         <div className='grid grid-cols-2 gap-2'>
         {selectedRooms.map((selRoom) => (
@@ -432,7 +467,7 @@ const { data: validity,isLoading } = useQuery({
         </div>
       </div>
 
-      <div className="bg-gray-50 p-4 rounded-lg">
+      <div className="bg-base-100 p-4 rounded-lg">
         <h3 className="font-semibold mb-2">Booking Details</h3>
         <strong>Name:</strong><span> {formData?.fullName}</span><br/>
         <strong>Email:</strong><span> {formData?.email}</span><br/>
@@ -446,18 +481,44 @@ const { data: validity,isLoading } = useQuery({
           </>
         )}
       </div>
-      <div className="bg-gray-50 p-4 rounded-lg">
+      <div className="bg-base-100 p-4 rounded-lg">
         <h3 className="font-semibold mb-2">Payment Details</h3>
         <strong>Total Days:</strong><span> {validity?.totalDays}</span><br/>
         <strong>Total Price:</strong><span> NPR {validity?.totalPrice}</span>
       </div>
+
+      {/* Payment method */}
+      <div className="bg-base-100 p-4 rounded-lg shadow-md">
+        <h3 className="font-semibold mb-4 text-lg">Select Payment Method</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Button
+            label="Pay with Stripe"
+            type="button"
+            variant="outlined"
+            className="w-full bg-[#635bff] hover:bg-[#5346e0] text-white border-2 border-[#635BFF] hover:border-[#4F4B99]"
+          />
+          <Button
+            label="Pay with Khalti"
+            type="button"
+            variant="outlined"
+            className="w-full bg-[#5C2D91] hover:bg-[#4A2275] text-white border-2 border-[#5C2D91] hover:border-[#4A2275]"
+          />
+          <Button
+            label="Pay with eSewa"
+            type="button"
+            variant="outlined"
+            className="w-full bg-[#60BB46] hover:bg-[#4F9F3B] text-white border-2 border-[#60BB46] hover:border-[#4F9F3B]"
+          />
+        </div>
+      </div>
+
       <div className="flex gap-4">
         <Button
           label="Back"
           type="button"
           variant="outlined"
           onClick={handleBack}
-          className="flex-1"
+          className="flex-1 text-black"
         />
         <Button
           label="Pay and Confirm Booking"
