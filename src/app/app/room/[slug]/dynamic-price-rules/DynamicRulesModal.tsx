@@ -133,12 +133,16 @@ export const RuleForm = ({
             roomId: Number(roomId),
           },
         });
-        if (result?.createPriceRule?.id) {
+        if (result?.createPriceRule?.data?.id) {
           setShowToast(true);
           setMessage('Rule Created!');
           setRole('success');
           queryClient.invalidateQueries({ queryKey: ['getPriceRulesByRoom'] });
           handleClose();
+        }else {
+          setShowToast(true);
+          setMessage(result?.createPriceRule.error?.message?? 'Something went wrong!');
+          setRole('error');
         }
       }
     } catch (error) {
