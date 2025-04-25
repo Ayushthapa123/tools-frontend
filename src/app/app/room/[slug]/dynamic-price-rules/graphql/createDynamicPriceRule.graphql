@@ -2,6 +2,7 @@
 
 mutation CreatePriceRule($createPriceRuleInput: CreateDynamicPriceRuleInput!) {
   createPriceRule(createPriceRuleInput: $createPriceRuleInput) {
+  data {
     id
     name
     description
@@ -14,7 +15,12 @@ mutation CreatePriceRule($createPriceRuleInput: CreateDynamicPriceRuleInput!) {
     priority
     createdAt
     updatedAt
+   }
+   error {
+    message
+   }
   }
+ 
 }
 
 
