@@ -11,7 +11,7 @@ export const Header = () => {
   return (
     <div className="dark:bg-default-300 bg-primary-100 flex min-h-screen w-full flex-col items-center">
       <div
-        className=" hero min-h-screen w-full bg-cover bg-center relative"
+        className=" hero min-h-[calc(100vh-70px)] w-full bg-cover bg-center relative"
       >
         <Image src={'/background-image.png'} fill alt=''/>
         <div className=" hero-overlay min-h-[50vh] bg-opacity-60 z-10 ">

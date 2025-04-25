@@ -167,7 +167,7 @@ const LogIn = () => {
                 <div className="mb-5 ">
                   <Button
                     variant="teal"
-                    label="Sign In"
+                    label="Log In"
                     disabled={loading || !isValid}
                     type="submit"
                     className={`${loading || !isValid ? 'cursor-not-allowed opacity-30' : ' opacity-100'}`}
@@ -183,6 +183,7 @@ const LogIn = () => {
                   onClick={() => openSignupUrl()}
                   label="Continue With Google"
                   startAdornment={<FcGoogle className="text-3xl " />}
+                  className='bg-primary'
                 />
               </div>
             </div>

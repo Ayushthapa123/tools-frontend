@@ -25,7 +25,7 @@ const Input = forwardRef<HTMLInputElement, InputComponentProps>(
         {label && (
           <label htmlFor={restProps.name} className="text-sm font-semibold text-gray-600">
             {label}
-            {restProps.required && <span className="text-red-500">*</span>}
+            {restProps.required && <span className="text-error">*</span>}
           </label>
         )}
         <div className="relative">

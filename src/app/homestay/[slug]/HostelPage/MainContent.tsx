@@ -41,7 +41,7 @@ export default function MainContent(props: Iprops) {
   const { roomIds } = useRoomStore();
 
   return (
-    <div className="bg-gray-50">
+    <div className="bg-gray-50 pb-4">
       <div className="container mx-auto">
         <BreadCrumbs name={hostel?.name ?? ''} />
         <div className="box-border w-full lg:flex lg:gap-8 lg:px-10">
@@ -51,7 +51,7 @@ export default function MainContent(props: Iprops) {
                 <div>
                   <h1 className="text-3xl font-bold text-gray-800">{hostel?.name}</h1>
                   <div className="mt-2 flex items-center text-gray-600">
-                    <CiLocationOn className="mr-1 text-2xl text-blue-600" />
+                    <CiLocationOn className="mr-1 text-2xl text-secondary" />
                     <span className="text-lg">{hostel?.address?.city}, {hostel?.address?.country}</span>
                   </div>
                 </div>
@@ -74,12 +74,6 @@ export default function MainContent(props: Iprops) {
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                       quality={90}
                     />
-                    <button 
-                      onClick={() => setIsGalleryOpen(true)}
-                      className="absolute bottom-4 right-4 rounded-lg bg-white/80 px-4 py-2 text-sm font-medium text-gray-800 backdrop-blur-sm transition-opacity hover:bg-white/90"
-                    >
-                      View All Photos
-                    </button>
                   </div>
                 ) : (
                   <div className="flex h-full w-full items-center justify-center bg-gray-300">
@@ -126,19 +120,19 @@ export default function MainContent(props: Iprops) {
                 <div className="grid grid-cols-2 gap-y-5 gap-x-2 justify-between">
                   <div className="flex items-center">
                     <div className="mr-3 flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600">
-                      <BsAirplane />
+                      <BsAirplane className='text-secondary'/>
                     </div>
                     <span className="text-sm text-gray-700">Airport Transport</span>
                   </div>
                   <div className="flex items-center">
                     <div className="mr-3 flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600">
-                      <WifiIcon />
+                      <WifiIcon className='text-secondary'/>
                     </div>
                     <span className="text-sm text-gray-700">Free WiFi</span>
                   </div>
                   <div className="flex items-center">
                     <div className="mr-3 flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600">
-                      <FaParking />
+                      <FaParking className='text-secondary'/>
                     </div>
                     <span className="text-sm text-gray-700">Free Parking</span>
                   </div>
@@ -164,13 +158,13 @@ export default function MainContent(props: Iprops) {
                 <div className="space-y-4">
                   <div className="flex items-center">
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600">
-                      <FaPhoneFlip />
+                      <FaPhoneFlip className='text-secondary'/>
                     </div>
                     <p className="ml-3 text-gray-700">+977 783 705 178</p>
                   </div>
                   <div className="flex items-center">
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600">
-                      <MdEmail />
+                      <MdEmail className='text-secondary'/>
                     </div>
                     <p className="ml-3 text-gray-700">demo123@gmail.com</p>
                   </div>
@@ -178,13 +172,13 @@ export default function MainContent(props: Iprops) {
                     <div className="mr-3 pt-2 font-medium text-gray-700">Socials:</div>
                     <div className="flex items-center space-x-4">
                       <a href="#" className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-colors hover:bg-blue-100">
-                        <GrInstagram />
+                        <GrInstagram className='text-secondary'/>
                       </a>
                       <a href="#" className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-colors hover:bg-blue-100">
-                        <FaFacebook />
+                        <FaFacebook className='text-secondary'/>
                       </a>
                       <a href="#" className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-colors hover:bg-blue-100">
-                        <GrYoutube />
+                        <GrYoutube className='text-secondary'/>
                       </a>
                     </div>
                   </div>
@@ -194,8 +188,13 @@ export default function MainContent(props: Iprops) {
           </div>
         </div>
 
-        <div className="mt-10 rounded-xl bg-white m-6 p-4 shadow-sm">
-          <h2 className="mb-6 text-2xl font-semibold text-gray-800">Available Rooms</h2>
+        <div className="mt-10 rounded-xl bg-white p-4 shadow-sm">
+          <div className='flex items-center justify-between'>
+            <h2 className="mb-6 text-2xl font-semibold text-gray-800">Available Rooms</h2>
+            <Link href={`/homestay/${hostel?.slug}/booking?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`} className='mb-3'>
+              <Button label='View Bookings' className='w-fit bg-primary'/>
+            </Link>
+          </div>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {hostel?.rooms?.map((room) => (
               <div key={room.id} className="overflow-hidden rounded-xl border border-gray-200 transition-all duration-300 hover:shadow-md">

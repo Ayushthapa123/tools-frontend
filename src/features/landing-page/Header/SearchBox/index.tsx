@@ -124,7 +124,7 @@ export const SearchBox = () => {
         </div>
 
         <button
-          className="flex flex-row items-center justify-center rounded-full border border-transparent bg-secondary px-3 py-2 text-base font-medium tracking-wide text-white transition duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 md:min-w-[130px] md:px-8"
+          className="flex flex-row items-center justify-center rounded-full border border-transparent bg-primary px-3 py-2 text-base font-medium tracking-wide text-white transition duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 md:min-w-[130px] md:px-8"
           onClick={() => handleSearch()}>
           <span className="block sm:hidden md:block">Search</span>
           <span className="hidden text-xl sm:flex  md:hidden">

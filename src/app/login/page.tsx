@@ -174,7 +174,7 @@ const SignIn = () => {
                   <Button label='Log in' disabled={loading || !isValid}
                     className={`${
                       loading || !isValid ? 'cursor-not-allowed opacity-30' : 'opacity-100'
-                    } rounded-md bg-secondary px-4 py-2 font-bold   `}/>
+                    } rounded-md bg-primary px-4 py-2 font-bold   `}/>
                 </div>
               </form>
 
@@ -185,7 +185,7 @@ const SignIn = () => {
               </a>
               <p className="text-base">
                 <span className="pr-0.5">Dont have an account yet? </span>
-                <Link href="/signup" className="text-blue-500 hover:underline ">
+                <Link href="/signup" className="text-blue hover:underline ">
                   Get one here
                 </Link>
               </p>
@@ -194,7 +194,7 @@ const SignIn = () => {
 
                 <button
                   onClick={() => openSignupUrl()}
-                  className="flex w-full items-center justify-center rounded-md bg-secondary px-4 py-2 font-bold text-white">
+                  className="flex w-full items-center justify-center rounded-md bg-primary px-4 py-2 font-bold text-white">
                   <FcGoogle className="mr-2 text-3xl" />
                   Continue With Google
                 </button>

@@ -60,7 +60,7 @@ export const CommonNav = () => {
 
   return (
     <div
-      className="sticky top-0 z-[999] flex h-[70px] w-full  bg-white  px-3 shadow-sm md:h-[70px] md:px-[30px] "
+      className="sticky top-0 z-[999] flex h-[70px] w-full  bg-base-100  px-3 shadow-sm md:h-[70px] md:px-[30px] "
       id="common-nav">
       <div className="flex w-full justify-between ">
         <div className="relative flex w-auto">
@@ -91,7 +91,7 @@ export const CommonNav = () => {
                 </div> */}
 
                 <button
-                  className="flex flex-row items-center justify-center rounded-full border border-transparent bg-secondary font-medium tracking-wide transition duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 md:min-w-fit py-0"
+                  className="flex flex-row items-center justify-center rounded-full border border-transparent bg-primary font-medium tracking-wide transition duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 md:min-w-fit py-0"
                 >
                   <motion.div className="  font-semibold " transition={{ duration: 0.3 }}>
                     <Link href={"/signup"}>

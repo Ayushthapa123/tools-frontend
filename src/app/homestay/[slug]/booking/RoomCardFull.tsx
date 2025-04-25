@@ -10,6 +10,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { BsCheckCircleFill } from "react-icons/bs";
 import { BiArea } from "react-icons/bi";
+import { useRouter } from "next/navigation";
 
 interface RoomCardProps {
   room: Room;
@@ -22,6 +23,7 @@ interface RoomCardProps {
 export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate }: RoomCardProps) => {
   const { setRoomIds, roomIds } = useRoomStore();
   const sectionRef = useRef<HTMLDivElement>(null);
+  const router = useRouter()
   const pathName = usePathname();
   const [ isBookingPage, setIsBookingPage ] = useState(false);
 
@@ -47,8 +49,8 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
   return (
     <div
       ref={sectionRef}
-      className={`group relative flex h-full overflow-hidden rounded-xl bg-white transition-all duration-300 ${isSelected
-          ? 'border-2 border-blue-600 ring-2 ring-blue-200'
+      className={`group relative flex h-full overflow-hidden rounded-xl bg-base-100 transition-all duration-300 ${isSelected
+          ? 'border border-blue ring-2 ring-blue-200'
           : 'border border-gray-200 hover:border-gray-300 hover:shadow-lg'
         }`}
     >
@@ -100,23 +102,23 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
         <div>
           <h3 className="text-xl font-semibold text-gray-800">{room.caption}</h3>
 
-          <div className="mt-3 flex flex-wrap gap-3">
-            <div className="flex items-center rounded-full bg-blue-50 px-3 py-1 text-sm text-primary">
-              <MdMeetingRoom className="mr-1 text-xl" />
+          <div className="mt-3 flex flex-wrap gap-3 pl-0">
+            <div className="flex items-center rounded-full bg-blue/40 px-3 py-1 text-sm text-black">
+              <MdMeetingRoom className="mr-1 text-xl text-secondary" />
               Room {room.roomNumber || 'N/A'}
             </div>
-            <div className="flex items-center rounded-full bg-blue-50 px-3 py-1 text-sm text-primary">
-              <MdOutlineKingBed className="mr-1 text-xl" />
+            <div className="flex items-center rounded-full bg-blue/40 px-3 py-1 text-sm text-black">
+              <MdOutlineKingBed className="mr-1 text-xl text-secondary" />
               {room.capacity}
             </div>
             {room.attachBathroom && (
-              <div className="flex items-center rounded-full bg-blue-50 px-3 py-1 text-sm text-primary">
-                <FaShower className="mr-1 text-xl" />
+              <div className="flex items-center rounded-full bg-blue/40 px-3 py-1 text-sm text-black">
+                <FaShower className="mr-1 text-xl text-secondary" />
                 Private Bathroom
               </div>
             )}
-            <div className="flex items-center rounded-full bg-blue-50 px-3 py-1 text-sm text-primary">
-              <BiArea className="mr-1 text-xl" />
+            <div className="flex items-center rounded-full bg-blue/40 px-3 py-1 text-sm text-black">
+              <BiArea className="mr-1 text-xl text-secondary" />
               25m²
             </div>
           </div>
@@ -146,10 +148,10 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
           {room.price && (
             <div>
               <div className="flex items-baseline">
-                <span className="text-3xl font-bold text-primary">
+                <span className="text-3xl font-bold text-secondary">
                   {room.price.isDynamicPricing ? room.price.dynamicAmount : room.price.baseAmount}
                 </span>
-                <span className="ml-1 text-lg font-medium text-primary">{room.price.currency}</span>
+                <span className="ml-1 text-lg font-medium text-secondary">{room.price.currency}</span>
                 <span className="ml-1 text-sm text-gray-500">/night</span>
               </div>
               <div className="text-xs text-gray-400">(includes taxes & fees)</div>
@@ -159,25 +161,28 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
           {/* Action Button */}
           {isSelected && (
             <div className="flex items-center">
-              <div className="mr-2 h-5 w-5 rounded-full bg-green-500 text-white">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-              </div>
+              <div onClick={
+                (e) => {
+                  e.stopPropagation();
+                  handleRoomSelect(room.id);
+                }
+              }>
               <Button
-                className="bg-green-500 hover:bg-green-600"
+                className="bg-primary/90 hover:bg-primary"
                 label="Selected"
               />
+              </div>
             </div>
           )}{(
             isBookingPage ? (
               !isSelected &&
               <div onClick={(e) => {
                 e.stopPropagation();
-                handleRoomSelect(room.id);
+                  handleRoomSelect(room.id);
+                  router.refresh();
               }}>
                 <Button
-                  className="bg-blue-600 hover:bg-blue-700"
+                  className="bg-primary/90 hover:bg-primary"
                   label="Select Room"
                 />
               </div>
@@ -190,7 +195,7 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
                    }}
               >
                 <Button
-                  className="bg-blue-600 hover:bg-blue-700"
+                  className="bg-primary/90 hover:bg-primary"
                   label="Book Now"
                 />
               </Link>
@@ -201,7 +206,7 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
 
       {/* Selected overlay */}
       {isSelected && (
-        <div className="absolute right-4 top-4 z-10 rounded-full bg-blue-600 p-1 text-white">
+        <div className="absolute right-4 top-4 z-10 rounded-full bg-success p-1 text-white">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
           </svg>

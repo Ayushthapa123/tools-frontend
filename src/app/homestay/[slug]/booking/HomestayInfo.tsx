@@ -84,8 +84,8 @@ export const HomestayInfo = ({
             <button
               onClick={() => setActiveTab('rooms')}
               className={`border-b-2 py-4 px-1 text-sm font-medium ${activeTab === 'rooms'
-                ? 'border-blue-500 text-blue-600'
-                : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                ? 'border-blue-500 text-blue'
+                : 'border-transparent text-gray-600 hover:border-gray-300 hover:text-gray-700'
                 }`}
             >
               Available Rooms
@@ -93,7 +93,7 @@ export const HomestayInfo = ({
             <button
               onClick={() => setActiveTab('description')}
               className={`border-b-2 py-4 px-1 text-sm font-medium ${activeTab === 'description'
-                ? 'border-blue-500 text-blue-600'
+                ? 'border-blue-500 text-blue'
                 : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
                 }`}
             >
@@ -102,7 +102,7 @@ export const HomestayInfo = ({
             <button
               onClick={() => setActiveTab('contact')}
               className={`border-b-2 py-4 px-1 text-sm font-medium ${activeTab === 'contact'
-                ? 'border-blue-500 text-blue-600'
+                ? 'border-blue-500 text-blue'
                 : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
                 }`}
             >
@@ -118,7 +118,7 @@ export const HomestayInfo = ({
             <div className="space-y-3" ref={sectionRef}>
               <div className="flex items-start justify-between">
                 <h2 className="text-xl font-semibold text-gray-800">Available Rooms</h2>
-                <div className="rounded-full bg-blue-50 p-3 px-6 text-xs font-extralight text-blue-700">
+                <div className="rounded-full p-2 px-4 text-xs font-extralight text-blue border border-blue">
                   <FaInfoCircle className="mr-2 inline text-lg" />
                   You can select multiple rooms
                 </div>
@@ -130,7 +130,7 @@ export const HomestayInfo = ({
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="border-l-4 border-blue-500 pl-3 space-y-4" 
+                    className="border-l-4 border-blue pl-2 space-y-4" 
                   >
                     <h3 className="mb-2 text-lg font-medium text-gray-600">Selected Room(s)</h3>
                     {selectedRooms.map((selectedRoom) => (
@@ -173,7 +173,7 @@ export const HomestayInfo = ({
               <div className="rounded-lg bg-gray-50 p-4">
                 <h3 className="mb-3 text-lg font-medium text-gray-700">Location</h3>
                 <div className="mt-2 flex items-center text-gray-600">
-                  <CiLocationOn className="mr-1 text-xl text-blue-600" />
+                  <CiLocationOn className="mr-1 text-xl text-blue" />
                   <span>
                     {[ address.street, address.subCity, address.city, address.country ]
                       .filter(Boolean)
@@ -186,11 +186,11 @@ export const HomestayInfo = ({
                 <h3 className="mb-3 text-lg font-medium text-gray-700">Contact Details</h3>
                 <div className="ml-1 space-y-3">
                   <div className="flex items-center text-gray-600">
-                    <MdPhone className="mr-2 text-blue-600" />
+                    <MdPhone className="mr-2 text-blue" />
                     <span>{contact.phone}</span>
                   </div>
                   <div className="flex items-center text-gray-600">
-                    <MdEmail className="mr-2 text-blue-600" />
+                    <MdEmail className="mr-2 text-blue" />
                     <span>{contact.email}</span>
                   </div>
                 </div>
@@ -199,7 +199,7 @@ export const HomestayInfo = ({
           )}
         </div>
       </div>
-      {remainingRooms && remainingRooms.length > 0 && (
+      {activeTab!=="description" && activeTab!=="contact" && remainingRooms && remainingRooms.length > 0 && (
         <div className="mt-8 border-t-2 border-gray-300 pt-2">
           <h3 className="mb-4 text-lg font-medium text-gray-700">Other Available Options</h3>
           <div className="space-y-4 max-h-[600px] overflow-y-auto pr-4">

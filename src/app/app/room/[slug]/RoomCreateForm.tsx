@@ -48,7 +48,6 @@ export const RoomCreateForm = ({ control, errors }: { control: any; errors: any 
             control={control}
             label="Description"
             error={!!errors.description} 
-            
             rows={2}
 
           />

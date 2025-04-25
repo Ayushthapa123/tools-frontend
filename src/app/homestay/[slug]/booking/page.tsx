@@ -15,6 +15,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { CommonNav } from 'src/components/NavBar/CommonNav';
 import { useRoomStore } from 'src/store/roomStore';
 import Footer from 'src/features/Footer';
+import {RxCross2} from "react-icons/rx"
 
 
 export default function BookingPage({ params }: { params: { slug: string } }) {
@@ -99,14 +100,15 @@ const handleRoomSelect=(roomId:string)=>{
             {roomIds.length > 0 ? (
               <BookingForm
                 homestayId={String(homestay.id)}
-                roomIds={roomIds  }
+                // roomIds={roomIds  }
                 onSuccess={handleBookingSuccess}
                 rooms={homestay.rooms || []}
                 homeStaySlug={params.slug}
               />
             ) : (
-              <div className="text-center text-gray-600">
-                Please select a room to proceed with booking
+                <div className="h-[50vh] w-full text-redHover flex items-center justify-center flex-col gap-4">
+                  <p><RxCross2 className='text-4xl'/></p>
+                <p>Please select a room to proceed with booking</p>
               </div>
             )}
           </div>
