@@ -199,7 +199,7 @@ export enum DiscountType {
 
 export type DynamicPriceRuleModel = {
   __typename?: 'DynamicPriceRuleModel';
-  data: DynamicPricingRule;
+  data?: Maybe<DynamicPricingRule>;
   error?: Maybe<GraphQlError>;
 };
 
@@ -1091,7 +1091,7 @@ export type CreatePriceRuleMutationVariables = Exact<{
 }>;
 
 
-export type CreatePriceRuleMutation = { __typename?: 'Mutation', createPriceRule: { __typename?: 'DynamicPriceRuleModel', data: { __typename?: 'DynamicPricingRule', id: string, name: string, description: string, roomId: number, startDate: any, endDate: any, amount: number, isWeekend: boolean, isActive: boolean, priority: number, createdAt: any, updatedAt: any }, error?: { __typename?: 'GraphQLError', message: string } | null } };
+export type CreatePriceRuleMutation = { __typename?: 'Mutation', createPriceRule: { __typename?: 'DynamicPriceRuleModel', data?: { __typename?: 'DynamicPricingRule', id: string, name: string, description: string, roomId: number, startDate: any, endDate: any, amount: number, isWeekend: boolean, isActive: boolean, priority: number, createdAt: any, updatedAt: any } | null, error?: { __typename?: 'GraphQLError', message: string } | null } };
 
 export type RemovePriceRuleMutationVariables = Exact<{
   id: Scalars['Int']['input'];
