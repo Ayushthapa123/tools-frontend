@@ -2,6 +2,7 @@
 import { SearchBox } from './SearchBox';
 import { Suspense } from 'react';
 import Image from 'next/image';
+import { FeaturedHomestay } from 'src/features/featured/featuredHomestay';
 interface LocationOption {
   id: number;
   name: string;
@@ -29,6 +30,9 @@ export const Header = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className='w-full bg-white mx-4 p-4'>
+        <FeaturedHomestay/>
       </div>
       <div />
     </div>

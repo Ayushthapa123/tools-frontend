@@ -176,7 +176,9 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
           )}{(
             isBookingPage ? (
               !isSelected &&
-              <div onClick={(e) => {
+              <Link
+              href={`/homestay/${slug}/booking?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}
+                  onClick={(e) => {
                 e.stopPropagation();
                   handleRoomSelect(room.id);
                   router.refresh();
@@ -185,7 +187,7 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
                   className="bg-primary/90 hover:bg-primary"
                   label="Select Room"
                 />
-              </div>
+              </Link>
             ) : ( !isSelected && 
               <Link
                 href={`/homestay/${slug}/booking?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}

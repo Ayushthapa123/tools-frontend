@@ -1,0 +1,52 @@
+query GetFeaturedHomestays($pageSize: Int!) {
+  getAllHomestays(pageSize: $pageSize) {
+    id
+    name
+    description
+    slug
+    address {
+      country
+      city
+      subCity
+      street
+      latitude
+      longitude
+    }
+    image {
+      url
+      caption
+    }
+    rooms {
+      id
+      caption 
+      capacity 
+      roomNumber
+      status
+      createdAt
+      updatedAt
+      homestayId
+      image {
+        url 
+        id 
+        caption
+        createdAt
+        updatedAt
+        roomId
+      }
+      price {
+        baseAmount 
+        currency
+        isDynamicPricing
+        dynamicAmount
+        dynamicPriceStart
+        dynamicPriceEnd
+        isWeekend
+        discountAmount
+        discountType
+      }
+    }
+    services {
+      service
+    }
+  }
+}

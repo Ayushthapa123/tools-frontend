@@ -13,8 +13,8 @@ export const UserProfile = () => {
           data-tip={user.userEmail}>
           <div className=" relative max-h-11 min-h-11 min-w-11 max-w-11 ">
           <div className="avatar placeholder h-full w-full">
-            <div className="h-full w-full rounded-full bg-neutral text-neutral-content">
-              <span className="text-3xl">{user.userName.charAt(0)}</span>
+            <div className="h-full w-full rounded-full bg-primary text-neutral-content">
+              <span className="text-3xl text-white">{user.userName.charAt(0)}</span>
             </div>
             </div>
           </div>
