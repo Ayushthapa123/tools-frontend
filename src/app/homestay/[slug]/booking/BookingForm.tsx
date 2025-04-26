@@ -59,7 +59,7 @@ interface StepOneProps {
 export const BookingForm = ({ homestayId, homeStaySlug, onSuccess, rooms }: BookingFormProps) => {
   const { setMessage, setRole, setShowToast } = useToastStore();
   const {roomIds} = useRoomStore()
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(2);
   const [formData, setFormData] = useState<BookingFormData | null>(null);
   // const selectedRoom = rooms.find(room => roomIds.includes(room.id));
   const selectedRoom = rooms.map((room)=> roomIds.includes(room.id))
@@ -398,11 +398,28 @@ interface StepTwoProps {
   checkOutDateValue: string | Date;
 }
 
-
+const paymentMethods = [
+  {
+    key: 'stripe',
+    label: 'Pay with Stripe',
+    img: 'https://logowik.com/content/uploads/images/stripe1461.jpg',
+  },
+  {
+    key: 'khalti',
+    label: 'Pay with Khalti',
+    img: 'https://seeklogo.com/images/K/khalti-logo-FA9A5E5C5B-seeklogo.com.png',
+  },
+  {
+    key: 'esewa',
+    label: 'Pay with eSewa',
+    img: 'https://upload.wikimedia.org/wikipedia/commons/6/6b/Esewa_logo.png',
+  },
+];
 
 const StepTwo = ({ selectedRoom, selectedRooms, formData, handleBack, handleSubmit, onSubmit,checkInDateValue,checkOutDateValue }: StepTwoProps) => {
   const { user } = useUserStore();
   const { roomIds } = useRoomStore();
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>("stripe");
   console.log("selectedrooms", selectedRooms);
   const queryValidity = useGraphqlClientRequest<
   CheckValidBookingQuery,
@@ -424,6 +441,7 @@ const { data: validity,isLoading } = useQuery({
   enabled:roomIds.length > 0 && !!checkInDateValue && !!checkOutDateValue
 });
   const handleCheckout = async () => {
+    if (!selectedPaymentMethod) return;
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/payment/create-checkout-session`, {
       method: 'POST',
       headers: {
@@ -440,7 +458,7 @@ const { data: validity,isLoading } = useQuery({
         endDate: formData?.checkOutDate,
         customerEmail: formData?.email,
         customerPassword: formData?.password,
-         
+        paymentMethod: selectedPaymentMethod,
       }),
     });
     const data = await response.json();
@@ -491,24 +509,18 @@ const { data: validity,isLoading } = useQuery({
       <div className="bg-base-100 p-4 rounded-lg shadow-md">
         <h3 className="font-semibold mb-4 text-lg">Select Payment Method</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Button
-            label="Pay with Stripe"
-            type="button"
-            variant="outlined"
-            className="w-full bg-[#635bff] hover:bg-[#5346e0] text-white border-2 border-[#635BFF] hover:border-[#4F4B99]"
-          />
-          <Button
-            label="Pay with Khalti"
-            type="button"
-            variant="outlined"
-            className="w-full bg-[#5C2D91] hover:bg-[#4A2275] text-white border-2 border-[#5C2D91] hover:border-[#4A2275]"
-          />
-          <Button
-            label="Pay with eSewa"
-            type="button"
-            variant="outlined"
-            className="w-full bg-[#60BB46] hover:bg-[#4F9F3B] text-white border-2 border-[#60BB46] hover:border-[#4F9F3B]"
-          />
+          {paymentMethods.map((method) => (
+            <button
+              key={method.key}
+              type="button"
+              onClick={() => setSelectedPaymentMethod(method.key)}
+              className={`w-full flex flex-col items-center justify-center gap-2 border-2 rounded-lg p-4 transition-all duration-150
+                ${selectedPaymentMethod === method.key ? 'border-primary ring-2 ring-primary bg-primary/10' : 'border-gray-200 hover:border-primary'}`}
+            >
+              <img src={method.img} alt={method.label} className="h-10 object-contain mb-2" />
+              <span className={`font-medium ${selectedPaymentMethod === method.key ? 'text-primary' : 'text-gray-700'}`}>{method.label}</span>
+            </button>
+          ))}
         </div>
       </div>
 
@@ -523,9 +535,9 @@ const { data: validity,isLoading } = useQuery({
         <Button
           label="Pay and Confirm Booking"
           type="button"
-          // onClick={() => handleSubmit(onSubmit)()}
           onClick={handleCheckout}
           className="flex-1"
+          disabled={!selectedPaymentMethod}
         />
       </div>
     </div>

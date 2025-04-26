@@ -149,12 +149,12 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
             <div>
               <div className="flex items-baseline">
                 <span className="text-3xl font-bold text-secondary">
-                  {room.price.isDynamicPricing ? room.price.dynamicAmount : room.price.baseAmount}
+                  {room.price.baseAmount}
                 </span>
                 <span className="ml-1 text-lg font-medium text-secondary">{room.price.currency}</span>
                 <span className="ml-1 text-sm text-gray-500">/night</span>
               </div>
-              <div className="text-xs text-gray-400">(includes taxes & fees)</div>
+              <div className="text-xs text-gray-400">(Base Price & may include dynamic pricing)</div>
             </div>
           )}
 

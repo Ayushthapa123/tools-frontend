@@ -102,12 +102,12 @@ export default function MainContent(props: Iprops) {
 
               <div className="rounded-xl rounded-t-none bg-white/70 border-t-2 border-gray-100 pt-1">
                 <h2 className=" text-2xl font-semibold text-gray-800">Description</h2>
-                {/* <div className="prose max-w-none">
+                <div className="prose max-w-none">
                   <RichTextEditor editorRef={editorRef} readOnly={true} />
-                </div> */}
-                <div className='text-xs font-light leading-tight text-gray-600  '> 
-                  {hostel?.description} 
                 </div>
+                {/* <div className='text-xs font-light leading-tight text-gray-600  '> 
+                  {hostel?.description} 
+                </div> */}
               </div>
             </div>
           </div>

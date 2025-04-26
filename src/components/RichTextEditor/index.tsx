@@ -30,6 +30,7 @@ const RichTextEditor: React.FC<SimpleQuillProps> = ({ editorRef, onChange,readOn
       }}
       modules={modules}
       readOnly={readOnly}
+      className='p-0 border-base-200 bg-base-100 rounded-md'
     />
   );
 };

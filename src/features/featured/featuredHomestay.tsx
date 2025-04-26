@@ -19,21 +19,21 @@ export const FeaturedHomestay = () => {
   })
   
   return (
-    <div className="w-[80vw] mx-auto flex items-center justify-center flex-col">
-      <div className="mb-6 flex justify-between items-center flex-col  gap-0">
-        <h2 className="text-2xl font-bold text-primary  m-0">Featured Homestays</h2>
-        <p className="text-gray-600 text-xs">Discover our most popular accommodations</p>
+    <div className="w-[90vw] mx-auto flex items-center justify-center flex-col  py-10">
+      <div className="my-6 flex justify-between items-center flex-col  gap-0">
+        <h2 className="text-4xl font-bold text-primary  m-0">Featured Homestays</h2>
+        <p className="">Discover our most popular accommodations</p>
       </div>
 
       {isLoading && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
           <HostelCardSkeleton />
           <HostelCardSkeleton />
           <HostelCardSkeleton />
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
         {homestays?.map(hostel => {
           const imgUrl = hostel.rooms?.reduce((acc, room) => {
             if (acc) return acc; // if we already found an image, keep it

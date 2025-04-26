@@ -16,6 +16,7 @@ import { CommonNav } from 'src/components/NavBar/CommonNav';
 import { useRoomStore } from 'src/store/roomStore';
 import Footer from 'src/features/Footer';
 import {RxCross2} from "react-icons/rx"
+import { useEffect } from 'react';
 
 
 export default function BookingPage({ params }: { params: { slug: string } }) {
@@ -49,6 +50,18 @@ const handleRoomSelect=(roomId:string)=>{
     router.push('/my-bookings');
   };
 
+
+// it should invoked only once
+  useEffect(()=> {
+    // if selected rooms are not among the current room of that homestay remove them. 
+if(homestay?.rooms){
+    const currentRooms = homestay?.rooms?.map(room => room.id) || [];
+    const selectedRooms = roomIds.filter(id => currentRooms.includes(id));
+    setRoomIds(selectedRooms);
+}
+
+  }, [homestay?.rooms]);
+
   if (isLoading) {
     return (
       <div className="flex h-screen items-center justify-center">
@@ -64,6 +77,8 @@ const handleRoomSelect=(roomId:string)=>{
       </div>
     );
   }
+
+
 
   return (
     <div className="bg-gray-50 ">

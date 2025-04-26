@@ -60,7 +60,7 @@ export const CommonNav = () => {
 
   return (
     <div
-      className="sticky top-0 z-[999] flex h-[70px] w-full  bg-base-100  px-3 shadow-sm md:h-[70px] md:px-[30px] "
+      className="sticky top-0 z-[999] flex h-[70px] w-full  bg-white  px-3 shadow-sm md:h-[70px] md:px-[30px] "
       id="common-nav">
       <div className="flex w-full justify-between ">
         <div className="relative flex w-auto">
