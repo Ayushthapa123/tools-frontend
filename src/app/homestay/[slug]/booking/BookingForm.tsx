@@ -59,7 +59,7 @@ interface StepOneProps {
 export const BookingForm = ({ homestayId, homeStaySlug, onSuccess, rooms }: BookingFormProps) => {
   const { setMessage, setRole, setShowToast } = useToastStore();
   const {roomIds} = useRoomStore()
-  const [currentStep, setCurrentStep] = useState(2);
+  const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<BookingFormData | null>(null);
   // const selectedRoom = rooms.find(room => roomIds.includes(room.id));
   const selectedRoom = rooms.map((room)=> roomIds.includes(room.id))
@@ -168,6 +168,7 @@ export const BookingForm = ({ homestayId, homeStaySlug, onSuccess, rooms }: Book
           onSubmit={onSubmit}
           checkInDateValue={checkInDateValue}
           checkOutDateValue={checkOutDateValue}
+        
         />
       )}
     </div>
@@ -396,6 +397,7 @@ interface StepTwoProps {
   onSubmit: (data: BookingFormData) => void;
   checkInDateValue: string | Date;
   checkOutDateValue: string | Date;
+
 }
 
 const paymentMethods = [
@@ -426,6 +428,7 @@ const StepTwo = ({ selectedRoom, selectedRooms, formData, handleBack, handleSubm
   CheckValidBookingQueryVariables
 >(CheckValidBooking.loc?.source?.body!);
 
+const [isPaymentUrlLoading, setIsPaymentUrlLoading] = useState(false);
 
 const fetchData = async () => {
   const res = await queryValidity({
@@ -442,25 +445,40 @@ const { data: validity,isLoading } = useQuery({
 });
   const handleCheckout = async () => {
     if (!selectedPaymentMethod) return;
+    setIsPaymentUrlLoading(true);
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/payment/create-checkout-session`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+
+      // amount,
+      // currency,
+      // roomIds,
+      // quantity,
+      // bookingKey,
+      // guestId,
+      // customerEmail,
+      // customerPassword,
+      // startDate,
+      // endDate,
       body: JSON.stringify({
-        amount: (selectedRoom?.price?.amount * 100) ,
+        amount: (Number(validity?.totalPrice) * 100) ,
         currency: 'NPR',
-        roomId: selectedRoom?.id ,
+        roomIds: roomIds,
         quantity: 1,
         bookingKey: uuidv4(),
         guestId: user.userId,
+        customerEmail: formData?.email??"test@test.com",
+        customerPassword: formData?.password??"Ayush@123",
+
         startDate: formData?.checkInDate,
         endDate: formData?.checkOutDate,
-        customerEmail: formData?.email,
-        customerPassword: formData?.password,
+       
         paymentMethod: selectedPaymentMethod,
       }),
     });
+    setIsPaymentUrlLoading(false);
     const data = await response.json();
     if (data.url) {
       window.open(data.url, '_blank');
@@ -537,7 +555,8 @@ const { data: validity,isLoading } = useQuery({
           type="button"
           onClick={handleCheckout}
           className="flex-1"
-          disabled={!selectedPaymentMethod}
+          disabled={!selectedPaymentMethod || isPaymentUrlLoading}
+          loading={isPaymentUrlLoading}
         />
       </div>
     </div>

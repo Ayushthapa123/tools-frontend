@@ -1,6 +1,6 @@
-mutation ConfirmBooking($bookingKey: String!, $bookingId: String!) {
-  confirmBooking(bookingKey: $bookingKey, bookingId: $bookingId) {
-    id
+mutation ConfirmBooking($bookingKey: String!) {
+  confirmBooking(bookingKey: $bookingKey) {
+    count
     # Add other Booking fields you want to receive in the response
   }
 }

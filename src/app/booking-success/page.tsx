@@ -37,17 +37,17 @@ const MakeBookingConfirmation = () => {
 
   const [isBookingValid, setIsBookingValid] = useState(false);
 
-  const mutateLoginRequest = useGraphqlClientRequest<ConfirmBookingMutation,ConfirmBookingMutationVariables>(
+  const mutateConfirmBooking = useGraphqlClientRequest<ConfirmBookingMutation,ConfirmBookingMutationVariables>(
     ConfirmBooking.loc?.source.body!,
   );
 
-  const { mutateAsync } = useMutation({ mutationFn: mutateLoginRequest });
+  const { mutateAsync } = useMutation({ mutationFn: mutateConfirmBooking });
 
   const handleConfirmBooking = async () => {
     try {
-      const response = await mutateAsync({ bookingKey: bookingKey!, bookingId: bookingId! });
+      const response = await mutateAsync({ bookingKey: bookingKey!});
       // Set isBookingValid based on the response
-      setIsBookingValid(!!response.confirmBooking?.id);
+      setIsBookingValid(!!response.confirmBooking?.count);
     } catch (error) {
       console.error('Booking confirmation failed:', error);
       setIsBookingValid(false);
@@ -55,12 +55,12 @@ const MakeBookingConfirmation = () => {
   };
 
   useEffect(() => {
-    if (bookingKey && bookingId) {
+    if (bookingKey ) {
       handleConfirmBooking();
     } else {
       setIsBookingValid(false);
     }
-  }, [bookingKey, bookingId]);
+  }, [bookingKey]);
 
   // Show loading state while confirming
   if (!bookingKey || !bookingId) {
@@ -97,13 +97,26 @@ const RedirectToBookingFailed = () => {
 //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
 const fetchData = async () => {
   const res = await queryBooking({bookingKey:bookingKey!});
-  return res.bookingWithKey;
+  return res.bookingsWithKey;
 };
 
-const { data: booking } = useQuery({
+const { data: bookings } = useQuery({
   queryKey: ['getBookingByKey'],
   queryFn: fetchData,
 });
+
+const booking = bookings && bookings.length > 0 ? bookings[0] : undefined;
+
+if (!booking) {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="text-center">
+        <h2 className="text-2xl font-bold mb-4">No booking found</h2>
+        <p className="text-base-content/70">We couldnt find your booking details. Please check your booking key or contact support.</p>
+      </div>
+    </div>
+  );
+}
   return (
     <div className="min-h-screen bg-base-200 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
@@ -156,26 +169,26 @@ const { data: booking } = useQuery({
               <div>
                 <h3 className="text-sm font-medium text-base-content/70">Booking Key</h3>
                 <p className="mt-1 text-lg font-semibold">
-                  {booking?.bookingKey}
+                  {booking.bookingKey}
                 </p>
               </div>
               <div>
                 <h3 className="text-sm font-medium text-base-content/70">Status</h3>
                 <p className="mt-1 text-lg font-semibold text-success">
-                  {booking?.status}
+                  {booking.status}
                   
                 </p>
               </div>
               <div>
                 <h3 className="text-sm font-medium text-base-content/70">Check-in</h3>
                 <p className="mt-1 text-lg font-semibold">
-                  {formatDate(booking?.startDate)} 
+                  {formatDate(booking.startDate)} 
                 </p>
               </div>
               <div>
                 <h3 className="text-sm font-medium text-base-content/70">Check-out</h3>
                 <p className="mt-1 text-lg font-semibold">
-                  {formatDate(booking?.endDate)} 
+                  {formatDate(booking.endDate)} 
                 </p>
               </div>
               
@@ -194,8 +207,8 @@ const { data: booking } = useQuery({
               <div className="md:w-1/3">
                 <div className="relative h-48 w-full rounded-lg overflow-hidden">
                   <Image
-                    src={booking?.room?.image?.[0]?.url ?? roomDetails.image}
-                    alt={booking?.room?.caption ?? roomDetails.name}
+                    src={booking.room?.image?.[0]?.url ?? roomDetails.image}
+                    alt={booking.room?.caption ?? roomDetails.name}
                     fill
                     className="object-cover"
                   />
@@ -203,9 +216,9 @@ const { data: booking } = useQuery({
               </div>
               <div className="md:w-2/3">
                 <h3 className="text-lg font-semibold mb-2">
-                  {booking?.room?.caption}
+                  {booking.room?.caption}
                 </h3>
-                <p className="text-base-content/70 mb-4">Room Number:{booking?.room?.roomNumber}</p>
+                <p className="text-base-content/70 mb-4">Room Number:{booking.room?.roomNumber}</p>
                 <div>
                   <h4 className="text-sm font-medium text-base-content/70 mb-2">
                     {/* Amenities */}
@@ -236,19 +249,19 @@ const { data: booking } = useQuery({
               <div>
                 <h3 className="text-sm font-medium text-base-content/70">Full Name</h3>
                 <p className="mt-1 text-lg font-semibold">
-                  {booking?.guest?.fullName}
+                  {booking.guest?.fullName}
                 </p>
               </div>
               <div>
                 <h3 className="text-sm font-medium text-base-content/70">Email</h3>
                 <p className="mt-1 text-lg font-semibold">
-                  {booking?.guest?.email}
+                  {booking.guest?.email}
                 </p>
               </div>
               <div>
                 <h3 className="text-sm font-medium text-base-content/70">Phone</h3>
                 <p className="mt-1 text-lg font-semibold">
-                  {booking?.guest?.phoneNumber}
+                  {booking.guest?.phoneNumber}
                 </p>
               </div>
               <div>

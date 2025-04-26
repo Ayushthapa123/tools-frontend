@@ -42,7 +42,7 @@ function  BookingFailedPageContent() {
 //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
 const fetchData = async () => {
   const res = await queryBooking({bookingKey:bookingKey!});
-  return res.bookingWithKey;
+  return res.bookingsWithKey[0];
 };
 
 const { data: booking } = useQuery({
