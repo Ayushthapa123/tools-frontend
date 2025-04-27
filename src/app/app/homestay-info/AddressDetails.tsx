@@ -1,5 +1,5 @@
 'use client';
-import React, { FC, useMemo } from 'react';
+import React, { FC, useMemo, useState } from 'react';
 
 import Button from 'src/components/Button';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -23,6 +23,7 @@ import {
 } from 'src/gql/graphql';
 import ReactSelect from 'src/features/react-hook-form/ReactSelect';
 import LoadingSpinner from 'src/components/Loading';
+import { MapComponent } from './MapComponent';
 
 interface Iprops {
   homestayId: number;
@@ -55,6 +56,8 @@ export const  AddressDetails = (props: Iprops) => {
           city={hostelData?.city}
           subCity={hostelData?.subCity}
           street={hostelData?.street}
+          lat={hostelData?.latitude}
+          lng={hostelData?.longitude}
         />
       ) : (
         <div className=" h-[50vh] w-full">
@@ -74,10 +77,18 @@ interface IProps {
   city?: string | null;
   subCity?: string | null;
   street?: string | null;
+  lat?: number | null;
+  lng?: number | null;
 }
 
 const HostelInfoForm: FC<IProps> = props => {
-  const { homestayId, addressId, city, country, street, subCity } = props;
+  const { homestayId, addressId, city, country, street, subCity, lat, lng } = props;
+
+  const [clickedLatLng, setClickedLatLng] = useState<{ lat: number | null; lng: number | null } | null>({ lat: lat ?? null, lng: lng ?? null });
+
+  const handleClickLatLng = (lat: number | null, lng: number | null) => {
+    setClickedLatLng({ lat, lng });
+  };
 
   const queryClient = useQueryClient();
 
@@ -93,6 +104,8 @@ const HostelInfoForm: FC<IProps> = props => {
       city,
       subCity,
       street,
+      lat,
+      lng,
     },
   });
 
@@ -139,6 +152,12 @@ const HostelInfoForm: FC<IProps> = props => {
           ...(street && {
             street,
           }),
+          ...(clickedLatLng?.lat && {
+            latitude: clickedLatLng?.lat,
+          }),
+          ...(clickedLatLng?.lng && {
+            longitude: clickedLatLng?.lng,
+          }),
         },
       }).then(res => {
         if (res?.updateAddress?.id) {
@@ -160,6 +179,8 @@ const HostelInfoForm: FC<IProps> = props => {
           city: city,
           subCity,
           street,
+          latitude: clickedLatLng?.lat,
+          longitude: clickedLatLng?.lng,
         },
       }).then(res => {
         if (res?.createAddress?.id) {
@@ -186,8 +207,8 @@ const HostelInfoForm: FC<IProps> = props => {
   }, []);
 
   return (
-    <form className=" w-full" onSubmit={handleSubmit(handleSubmitForm)}>
-      <div className=" grid w-full gap-5 md:grid-cols-2">
+    <form className=" w-full h-auto" onSubmit={handleSubmit(handleSubmitForm)}>
+      <div className=" grid w-full gap-5 md:grid-cols-2 h-auto">
         <div>
           <ReactSelect
             name="country"
@@ -233,6 +254,10 @@ const HostelInfoForm: FC<IProps> = props => {
             error={!!errors.street}
           />
         </div>
+      </div>
+  
+      <div className='mt-5 w-full h-[400px] relative overflow-hidden'>
+        <MapComponent  clickedLatLng={clickedLatLng} setClickedLatLng={handleClickLatLng} lat={lat} lng={lng} />
       </div>
 
       <div className=" flex w-full justify-end">

@@ -18,7 +18,7 @@ const documents = {
     "mutation createAddress($input: CreateAddressInput!) {\n  createAddress(data: $input) {\n    id\n  }\n}": types.CreateAddressDocument,
     "mutation createContacts($input: CreateContactInput!) {\n  createContact(data: $input) {\n    id\n  }\n}": types.CreateContactsDocument,
     "mutation createHomestay($input: CreateHomestayInput!) {\n  createHomestay(data: $input) {\n    id\n    ownerId\n  }\n}": types.CreateHomestayDocument,
-    "query getAddressByHomestayId($homestayId: Float!) {\n  getAddressByHomestayId(homestayId: $homestayId) {\n    id\n    country\n    city\n    subCity\n    street\n  }\n}": types.GetAddressByHomestayIdDocument,
+    "query getAddressByHomestayId($homestayId: Float!) {\n  getAddressByHomestayId(homestayId: $homestayId) {\n    id\n    country\n    city\n    subCity\n    street\n    latitude\n    longitude\n  }\n}": types.GetAddressByHomestayIdDocument,
     "query getContactsByHomestayId($homestayId: Float!) {\n  getContactByHomestayId(homestayId: $homestayId) {\n    id\n    email\n    phone\n    altPhone\n  }\n}": types.GetContactsByHomestayIdDocument,
     "query getHomestayByToken {\n  getHomestayByToken {\n    id\n    name\n    description\n    slug\n    moderatedBySuperAdmin\n    moderatedByCommunityOwner\n  }\n}": types.GetHomestayByTokenDocument,
     "mutation updateAddress($input: UpdateAddressInput!, $addressId: Float!) {\n  updateAddress(data: $input, addressId: $addressId) {\n    id\n  }\n}": types.UpdateAddressDocument,
@@ -97,7 +97,7 @@ export function graphql(source: "mutation createHomestay($input: CreateHomestayI
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query getAddressByHomestayId($homestayId: Float!) {\n  getAddressByHomestayId(homestayId: $homestayId) {\n    id\n    country\n    city\n    subCity\n    street\n  }\n}"): (typeof documents)["query getAddressByHomestayId($homestayId: Float!) {\n  getAddressByHomestayId(homestayId: $homestayId) {\n    id\n    country\n    city\n    subCity\n    street\n  }\n}"];
+export function graphql(source: "query getAddressByHomestayId($homestayId: Float!) {\n  getAddressByHomestayId(homestayId: $homestayId) {\n    id\n    country\n    city\n    subCity\n    street\n    latitude\n    longitude\n  }\n}"): (typeof documents)["query getAddressByHomestayId($homestayId: Float!) {\n  getAddressByHomestayId(homestayId: $homestayId) {\n    id\n    country\n    city\n    subCity\n    street\n    latitude\n    longitude\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -23,6 +23,8 @@ import { AddressDetails } from './AddressDetails';
 // import { SocialsDetails } from './SocialsDetails';
 import LoadingSpinner from 'src/components/Loading';
 import RichTextEditor from 'src/components/RichTextEditor';
+import {  MapComponent } from './MapComponent';
+import { MapProvider } from 'src/features/MapProvider';
 
 export const HostelInfo = () => {
   const queryHostelData = useGraphqlClientRequest<
@@ -71,8 +73,7 @@ export const HostelInfo = () => {
 const HostelTabs = ({ hostelId }: { hostelId: number }) => {
   const tabs = [
     { title: 'Contact Details', id: 1, comp: <ContactDetails hostelId={hostelId} /> },
-    { title: 'Address Details', id: 2, comp: <AddressDetails homestayId={hostelId} /> },
-    // { title: 'Social Details', id: 3, comp: <SocialsDetails hostelId={hostelId} /> },
+    { title: 'Address Details', id: 2, comp: <MapProvider><AddressDetails homestayId={hostelId} /></MapProvider> },
   ];
   const [activeTab, setActiveTab] = useState(1);
 
