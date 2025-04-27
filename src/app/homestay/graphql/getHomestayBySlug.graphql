@@ -12,6 +12,8 @@ query getHomestayBySlug($slug: String!) {
       city
       subCity
       street
+      latitude
+      longitude
     }
 
     contact {

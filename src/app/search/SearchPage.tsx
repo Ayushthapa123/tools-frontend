@@ -7,7 +7,7 @@ import Footer from 'src/features/Footer';
 // import { SearchBox } from 'src/features/Header/SearchBox';
 import { SearchResults } from './SearchResults';
 import { SearchBox } from 'src/features/landing-page/Header/SearchBox';
-
+import { MapProvider } from 'src/features/MapProvider';
 export function SearchPage() {
   const params = useSearchParams();
 
@@ -19,6 +19,8 @@ export function SearchPage() {
   const [city, setCity] = useState(params.get('city') ?? '');
   const [subCity, setSubCity] = useState(params.get('subCity') ?? '');
   const [country, setCountry] = useState(params.get('country') ?? '');
+  const [lat, setLat] = useState(params.get('lat') ?? '');
+  const [lng, setLng] = useState(params.get('lng') ?? '');
   const [query, setQuery] = useState(params.get('query') ?? '');
   const [count, setCount] = useState(0);
 
@@ -42,7 +44,7 @@ export function SearchPage() {
     <div className="w-full ">
       <div className="mx-auto mt-4 h-full max-w-[1800px] pt-3 min-h-10">
         <Suspense>
-          <SearchBox />
+          <MapProvider><SearchBox /></MapProvider>
         </Suspense>
 
         <div className="flex border-b p-10 py-5 ">
@@ -67,6 +69,8 @@ export function SearchPage() {
               handleCount={handleCount}
               checkInDate={checkInDate}
               checkOutDate={checkOutDate}
+              lat={Number(lat)}
+              lng={Number(lng)}
             />
           </div>
         </div>

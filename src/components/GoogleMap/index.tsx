@@ -32,12 +32,13 @@ const MapComponent = (props: Iprops) => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full relative h-[250px]">
       <GoogleMap
         mapContainerStyle={defaultMapContainerStyle}
         center={defaultMapCenter}
         options={defaultMapOptions}
-        zoom={28}>
+      
+        zoom={16}>
         {<Marker position={{ lat, lng }} />}
 
       </GoogleMap>

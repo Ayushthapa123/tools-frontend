@@ -3,6 +3,7 @@ import { SearchBox } from './SearchBox';
 import { Suspense } from 'react';
 import Image from 'next/image';
 import { FeaturedHomestay } from 'src/features/featured/featuredHomestay';
+import { MapProvider } from 'src/features/MapProvider';
 interface LocationOption {
   id: number;
   name: string;
@@ -25,7 +26,7 @@ export const Header = () => {
             </p>
             <div className="">
               <Suspense>
-                <SearchBox />
+                <MapProvider><SearchBox /></MapProvider>
               </Suspense>
             </div>
           </div>

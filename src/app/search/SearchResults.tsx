@@ -17,10 +17,12 @@ interface IResults {
   handleCount: (c: number) => void;
   checkInDate: string;
   checkOutDate: string;
+  lat: number;
+  lng: number;
 }
 
 export const SearchResults = (props: IResults) => {
-  const { country, city, subCity, hostelType, genderType, handleCount, checkInDate, checkOutDate } =
+  const { country, city, subCity, hostelType, genderType, handleCount, checkInDate, checkOutDate, lat, lng } =
     props;
   const searchHomestay = useGraphqlClientRequest<SearchHomestayQuery, SearchHomestayQueryVariables>(
     SearchHomestay.loc?.source?.body!,
@@ -32,6 +34,8 @@ export const SearchResults = (props: IResults) => {
         city,
         subCity,
         pageNumber: 1,
+        latitude: lat,
+        longitude: lng,
       },
     });
     return res.getHomestaysBySearch;

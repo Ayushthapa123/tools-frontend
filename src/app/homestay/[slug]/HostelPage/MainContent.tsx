@@ -184,6 +184,20 @@ export default function MainContent(props: Iprops) {
                   </div>
                 </div>
               </div>
+              <div className="rounded-xl bg-white p-6 shadow-sm">
+                <h3 className="mb-4 text-lg font-semibold text-gray-800">Map On Google</h3>
+                <div className=" w-full h-[250px] ">
+                <MapProvider>
+                  {hostel?.address?.latitude && hostel?.address?.longitude && (
+                    <MapComponent
+                      lat={hostel.address.latitude}
+                      lng={hostel.address.longitude}
+                      description={hostel.name}
+                    />
+                  )}
+                </MapProvider>
+                </div>
+              </div>
             </div>
           </div>
         </div>

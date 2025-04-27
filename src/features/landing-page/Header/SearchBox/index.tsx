@@ -1,5 +1,7 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
+import { GoogleMap, Marker, Autocomplete } from '@react-google-maps/api';
+
 
 import { BiSearch } from 'react-icons/bi';
 import { SearchSuggestions } from './SearchSuggestions';
@@ -27,6 +29,8 @@ export const SearchBox = () => {
   const [query, setQuery] = useState(params.get('query') ?? '');
   const router = useRouter();
 
+  const [clickedLatLng, setClickedLatLng] = useState<{ lat: number | null; lng: number | null } | null>(null);
+
   const handleCountry = (country: string) => {
     setCountry(country);
   };
@@ -44,18 +48,6 @@ export const SearchBox = () => {
     setShowSearchSuggestions(false);
   };
 
-  // const handleSearch = () => {
-  //   if (!city) {
-  //     return;
-  //   }
-
-  //   router.push(`/search?country=${country}&city=${city}&subCity=${subCity}&query=${query}`);
-  //   setTimeout(() => {
-  //     if (path.includes('search')) {
-  //       window.location.reload();
-  //     }
-  //   }, 100);
-  // };
 
   const handleSearch = () => {
     const searchParams = new URLSearchParams();
@@ -66,6 +58,8 @@ export const SearchBox = () => {
     if (query) searchParams.set('query', query);
     if (checkInDate) searchParams.set('checkInDate', checkInDate);
     if (checkOutDate) searchParams.set('checkOutDate', checkOutDate);
+    if (clickedLatLng) searchParams.set('lat', clickedLatLng.lat?.toString() ?? '');
+    if (clickedLatLng) searchParams.set('lng', clickedLatLng.lng?.toString() ?? '');
 
     if (!city && !query) {
       router.push(`/search?${searchParams.toString()}`);
@@ -82,10 +76,23 @@ export const SearchBox = () => {
     }, 100);
   };
 
+  const autocompleteRef = useRef<any>(null);
+
+  const handlePlaceChanged = () => {
+    const place = autocompleteRef.current.getPlace();
+    console.log("eeeeeeeeeeeeeeeeeeeeee",place);
+    if (place.geometry && place.geometry.location) {
+      const lat = place.geometry.location.lat();
+      const lng = place.geometry.location.lng();
+      setClickedLatLng({ lat, lng });
+    }
+  };
+
+
   return (
     <div className="relative flex w-full flex-col items-center justify-center px-3 ">
       <div className="relative z-50 flex w-full max-w-6xl flex-col gap-2  space-y-[6px] rounded-2xl border bg-gray-50 px-[10px] py-[10px] focus-within:border-gray-300 sm:flex-row sm:space-y-0 sm:rounded-full sm:pl-6">
-        <input
+        {/* <input
           type="text"
           placeholder="Search By Location"
           autoComplete="off"
@@ -94,7 +101,18 @@ export const SearchBox = () => {
           value={query}
           onChange={e => setQuery(e.target.value)}
           onClick={() => setShowSearchSuggestions(true)}
+        /> */}
+
+      <Autocomplete
+        onLoad={autocomplete => (autocompleteRef.current = autocomplete)}
+        onPlaceChanged={handlePlaceChanged}>
+        <input
+          type="text"
+          placeholder="Search Your Location"
+          className=" rounded-lg border p-2  mt-2 border-white w-full  bg-gray-50"
+         
         />
+      </Autocomplete>
 
         <div className=" flex ">
           <label className="relative mb-1 mt-4 block whitespace-nowrap text-sm font-medium text-primary">
