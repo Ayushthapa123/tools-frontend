@@ -73,7 +73,7 @@ export const HostelCard = (props: Iprops) => {
             </span>
           </p>
           <div>
-            <span className='text-sm text-secondary/80 font-semibold'>{currency} {amount}</span>
+            {/* <span className='text-sm text-secondary/80 font-semibold'>{currency} {amount}</span> */}
           </div>
         </div>
         <h3 className="mb-1 ml-1 text-lg font-medium text-gray-700">{name}</h3>
