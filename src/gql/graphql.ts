@@ -129,6 +129,12 @@ export type CreateHomestayInput = {
   name: Scalars['String']['input'];
 };
 
+export type CreateHomestayWallpaperInput = {
+  caption: Scalars['String']['input'];
+  homestayId: Scalars['Float']['input'];
+  url: Scalars['String']['input'];
+};
+
 export type CreatePriceInput = {
   baseAmount: Scalars['Int']['input'];
   currency: Currency;
@@ -294,6 +300,16 @@ export type HomestayRules = {
   updatedAt: Scalars['DateTime']['output'];
 };
 
+export type HomestayWallpaper = {
+  __typename?: 'HomestayWallpaper';
+  caption?: Maybe<Scalars['String']['output']>;
+  createdAt: Scalars['DateTime']['output'];
+  homestayId: Scalars['Float']['output'];
+  id: Scalars['ID']['output'];
+  updatedAt: Scalars['DateTime']['output'];
+  url: Scalars['String']['output'];
+};
+
 export type LoginInput = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
@@ -307,6 +323,7 @@ export type Mutation = {
   createBooking: Booking;
   createContact: ContactDetails;
   createHomestay: Homestay;
+  createHomestayImage: HomestayWallpaper;
   createPrice: Price;
   createPriceRule: DynamicPriceRuleModel;
   createRoom: Room;
@@ -315,6 +332,7 @@ export type Mutation = {
   createSearchQuery: SearchQueries;
   createUser: User;
   deleteHomestay: Homestay;
+  deleteHomestayImage: HomestayWallpaper;
   deleteRoomImage: RoomImage;
   deleteRules: HomestayRules;
   deleteSearchQuery: SearchQueries;
@@ -332,6 +350,7 @@ export type Mutation = {
   updateBooking: Booking;
   updateContact: ContactDetails;
   updateHomestay: Homestay;
+  updateHomestayImage: HomestayWallpaper;
   updatePrice: Price;
   updatePriceRule: DynamicPricingRule;
   updateRoom: Room;
@@ -373,6 +392,11 @@ export type MutationCreateHomestayArgs = {
 };
 
 
+export type MutationCreateHomestayImageArgs = {
+  data: CreateHomestayWallpaperInput;
+};
+
+
 export type MutationCreatePriceArgs = {
   createPriceInput: CreatePriceInput;
 };
@@ -410,6 +434,11 @@ export type MutationCreateUserArgs = {
 
 export type MutationDeleteHomestayArgs = {
   homestayId: Scalars['Float']['input'];
+};
+
+
+export type MutationDeleteHomestayImageArgs = {
+  homestayImageId: Scalars['Int']['input'];
 };
 
 
@@ -502,6 +531,12 @@ export type MutationUpdateHomestayArgs = {
 };
 
 
+export type MutationUpdateHomestayImageArgs = {
+  data: UpdateHomestayWallpaperInput;
+  homestayImageId: Scalars['Int']['input'];
+};
+
+
 export type MutationUpdatePriceArgs = {
   updatePriceInput: UpdatePriceInput;
 };
@@ -585,6 +620,7 @@ export type Query = {
   getHomestayById?: Maybe<Homestay>;
   getHomestayBySlug?: Maybe<Homestay>;
   getHomestayByToken?: Maybe<Homestay>;
+  getHomestayWallpaperByHomestayId?: Maybe<HomestayWallpaper>;
   getHomestaysBySearch: Array<Homestay>;
   getHostelSearchSuggestions?: Maybe<Array<SearchQueries>>;
   getRoomImagesByRoomId?: Maybe<Array<RoomImage>>;
@@ -657,6 +693,11 @@ export type QueryGetHomestayBySlugArgs = {
   checkInDate?: InputMaybe<Scalars['DateTime']['input']>;
   checkOutDate?: InputMaybe<Scalars['DateTime']['input']>;
   slug: Scalars['String']['input'];
+};
+
+
+export type QueryGetHomestayWallpaperByHomestayIdArgs = {
+  homestayId: Scalars['Int']['input'];
 };
 
 
@@ -892,6 +933,12 @@ export type UpdateHomestayInput = {
   slug?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type UpdateHomestayWallpaperInput = {
+  caption?: InputMaybe<Scalars['String']['input']>;
+  homestayId?: InputMaybe<Scalars['Float']['input']>;
+  url?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type UpdatePriceInput = {
   baseAmount?: InputMaybe<Scalars['Int']['input']>;
   currency?: InputMaybe<Currency>;
@@ -998,6 +1045,35 @@ export type GetHomestayDetailsBasicQueryVariables = Exact<{ [key: string]: never
 
 
 export type GetHomestayDetailsBasicQuery = { __typename?: 'Query', getHomestayByToken?: { __typename?: 'Homestay', name: string, slug: string, moderatedBySuperAdmin: boolean, moderatedByCommunityOwner: boolean, address?: { __typename?: 'Address', country: string, city?: string | null, subCity?: string | null, street?: string | null } | null } | null };
+
+export type CreateHomestayImageMutationVariables = Exact<{
+  data: CreateHomestayWallpaperInput;
+}>;
+
+
+export type CreateHomestayImageMutation = { __typename?: 'Mutation', createHomestayImage: { __typename?: 'HomestayWallpaper', id: string, homestayId: number, url: string, caption?: string | null } };
+
+export type DeleteHomestayImageMutationVariables = Exact<{
+  homestayImageId: Scalars['Int']['input'];
+}>;
+
+
+export type DeleteHomestayImageMutation = { __typename?: 'Mutation', deleteHomestayImage: { __typename?: 'HomestayWallpaper', id: string, homestayId: number, url: string, caption?: string | null, createdAt: any, updatedAt: any } };
+
+export type GetHomestayWallpaperByHomestayIdQueryVariables = Exact<{
+  homestayId: Scalars['Int']['input'];
+}>;
+
+
+export type GetHomestayWallpaperByHomestayIdQuery = { __typename?: 'Query', getHomestayWallpaperByHomestayId?: { __typename?: 'HomestayWallpaper', id: string, homestayId: number, url: string, caption?: string | null, createdAt: any, updatedAt: any } | null };
+
+export type UpdateHomestayImageMutationVariables = Exact<{
+  homestayImageId: Scalars['Int']['input'];
+  data: UpdateHomestayWallpaperInput;
+}>;
+
+
+export type UpdateHomestayImageMutation = { __typename?: 'Mutation', updateHomestayImage: { __typename?: 'HomestayWallpaper', id: string, homestayId: number, url: string, caption?: string | null, createdAt: any, updatedAt: any } };
 
 export type CreateAddressMutationVariables = Exact<{
   input: CreateAddressInput;
@@ -1302,6 +1378,10 @@ export type GetFeaturedHomestaysQuery = { __typename?: 'Query', getAllHomestays:
 
 export const BookingsByHomestayDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"BookingsByHomestay"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bookingsByHomestay"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"bookingKey"}},{"kind":"Field","name":{"kind":"Name","value":"startDate"}},{"kind":"Field","name":{"kind":"Name","value":"endDate"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"room"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"roomNumber"}},{"kind":"Field","name":{"kind":"Name","value":"capacity"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"attachBathroom"}},{"kind":"Field","name":{"kind":"Name","value":"maxOccupancy"}},{"kind":"Field","name":{"kind":"Name","value":"price"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"baseAmount"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"discountAmount"}},{"kind":"Field","name":{"kind":"Name","value":"discountType"}},{"kind":"Field","name":{"kind":"Name","value":"isDiscountActive"}}]}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"guest"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"fullName"}},{"kind":"Field","name":{"kind":"Name","value":"phoneNumber"}}]}}]}}]}}]} as unknown as DocumentNode<BookingsByHomestayQuery, BookingsByHomestayQueryVariables>;
 export const GetHomestayDetailsBasicDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getHomestayDetailsBasic"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getHomestayByToken"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"moderatedBySuperAdmin"}},{"kind":"Field","name":{"kind":"Name","value":"moderatedByCommunityOwner"}},{"kind":"Field","name":{"kind":"Name","value":"address"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"country"}},{"kind":"Field","name":{"kind":"Name","value":"city"}},{"kind":"Field","name":{"kind":"Name","value":"subCity"}},{"kind":"Field","name":{"kind":"Name","value":"street"}}]}}]}}]}}]} as unknown as DocumentNode<GetHomestayDetailsBasicQuery, GetHomestayDetailsBasicQueryVariables>;
+export const CreateHomestayImageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateHomestayImage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateHomestayWallpaperInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createHomestayImage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"homestayId"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}}]}}]}}]} as unknown as DocumentNode<CreateHomestayImageMutation, CreateHomestayImageMutationVariables>;
+export const DeleteHomestayImageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteHomestayImage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"homestayImageId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteHomestayImage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"homestayImageId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"homestayImageId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"homestayId"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<DeleteHomestayImageMutation, DeleteHomestayImageMutationVariables>;
+export const GetHomestayWallpaperByHomestayIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetHomestayWallpaperByHomestayId"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"homestayId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getHomestayWallpaperByHomestayId"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"homestayId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"homestayId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"homestayId"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<GetHomestayWallpaperByHomestayIdQuery, GetHomestayWallpaperByHomestayIdQueryVariables>;
+export const UpdateHomestayImageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateHomestayImage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"homestayImageId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateHomestayWallpaperInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateHomestayImage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"homestayImageId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"homestayImageId"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"homestayId"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<UpdateHomestayImageMutation, UpdateHomestayImageMutationVariables>;
 export const CreateAddressDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createAddress"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateAddressInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createAddress"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateAddressMutation, CreateAddressMutationVariables>;
 export const CreateContactsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createContacts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateContactInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createContact"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateContactsMutation, CreateContactsMutationVariables>;
 export const CreateHomestayDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createHomestay"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateHomestayInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createHomestay"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ownerId"}}]}}]}}]} as unknown as DocumentNode<CreateHomestayMutation, CreateHomestayMutationVariables>;
@@ -1398,6 +1478,52 @@ export const GetHomestayDetailsBasic = gql`
       subCity
       street
     }
+  }
+}
+    `;
+export const CreateHomestayImage = gql`
+    mutation CreateHomestayImage($data: CreateHomestayWallpaperInput!) {
+  createHomestayImage(data: $data) {
+    id
+    homestayId
+    url
+    caption
+  }
+}
+    `;
+export const DeleteHomestayImage = gql`
+    mutation DeleteHomestayImage($homestayImageId: Int!) {
+  deleteHomestayImage(homestayImageId: $homestayImageId) {
+    id
+    homestayId
+    url
+    caption
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export const GetHomestayWallpaperByHomestayId = gql`
+    query GetHomestayWallpaperByHomestayId($homestayId: Int!) {
+  getHomestayWallpaperByHomestayId(homestayId: $homestayId) {
+    id
+    homestayId
+    url
+    caption
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export const UpdateHomestayImage = gql`
+    mutation UpdateHomestayImage($homestayImageId: Int!, $data: UpdateHomestayWallpaperInput!) {
+  updateHomestayImage(homestayImageId: $homestayImageId, data: $data) {
+    id
+    homestayId
+    url
+    caption
+    createdAt
+    updatedAt
   }
 }
     `;

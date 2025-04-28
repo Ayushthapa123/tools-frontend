@@ -1,0 +1,8 @@
+mutation CreateHomestayImage($data: CreateHomestayWallpaperInput!) {
+  createHomestayImage(data: $data) {
+    id
+    homestayId
+    url
+    caption
+  }
+}
