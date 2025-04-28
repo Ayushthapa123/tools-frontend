@@ -1,0 +1,10 @@
+#mutation UpdateHomestayImage($homestayImageId: Int!, $data: UpdateHomestayWallpaperInput!) {
+#  updateHomestayImage(homestayImageId: $homestayImageId, data: $data) {
+#    id
+#    homestayId
+#    url
+#    caption
+#    createdAt
+#    updatedAt
+#  }
+#}
