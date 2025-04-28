@@ -90,7 +90,7 @@ const ImageUploader = (props: Iprops) => {
         {imageUrl ? (
           <div className="relative w-full h-full ">
             <div
-              className=" absolute right-0 top-0 z-10 cursor-pointer text-[25px]"
+              className=" absolute right-0 top-0 z-10 cursor-pointer text-[25px]" 
               onClick={() => removeImage()}>
               <MdOutlineCancelPresentation />
             </div>
@@ -103,7 +103,7 @@ const ImageUploader = (props: Iprops) => {
             <p className="mt-2 text-gray-400">or</p>
             <label
               htmlFor="fileInput"
-              className="px-4 py-2 mt-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-600">
+              className="px-4 py-2 mt-2  text-gray-600 bg-blue-500 rounded hover:bg-blue-600">
               Browse Pictures
             </label>
             {loading && (

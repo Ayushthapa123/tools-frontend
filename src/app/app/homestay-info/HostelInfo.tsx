@@ -25,6 +25,7 @@ import LoadingSpinner from 'src/components/Loading';
 import RichTextEditor from 'src/components/RichTextEditor';
 import {  MapComponent } from './MapComponent';
 import { MapProvider } from 'src/features/MapProvider';
+import { WallpaperGallery } from './gallery/WallpaperGallery';
 
 export const HostelInfo = () => {
   const queryHostelData = useGraphqlClientRequest<
@@ -57,8 +58,13 @@ export const HostelInfo = () => {
           <LoadingSpinner color="primary" size="lg" />
         </div>
       )}
+
+
       {hostelData?.id && (
         <div>
+          <div className="bg-white card-body card card-bordered mb-4">
+            <WallpaperGallery homestayId={Number(hostelData.id)} galleryType="ROOM" galleryKey="getRoomImages"  />
+          </div>
           {
             <div className="bg-white card-body card card-bordered">
               <HostelTabs hostelId={Number(hostelData.id)} />

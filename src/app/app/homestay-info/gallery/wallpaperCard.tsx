@@ -4,12 +4,14 @@ import { useState } from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import {
-  DeleteRoomImage,
-  DeleteRoomImageMutation,
+  DeleteHomestayImage,
+  DeleteHomestayImageMutation,
+  DeleteHomestayImageMutationVariables,
   DeleteRoomImageMutationVariables,
 } from 'src/gql/graphql';
 import { useToastStore } from 'src/store/toastStore';
 import { WallpaperEditBox } from './WallpaperEditBox';
+import { useRouter } from 'next/navigation';
 
 interface Iprops {
   galleryId: number;
@@ -27,24 +29,26 @@ export const WallpaperCard = (props: Iprops) => {
   const handleBack = () => {
     setShowEditBox(false);
   };
+  const window = useRouter();
 
   //create new image
   const mutateDeleteGallery = useGraphqlClientRequest<
-    DeleteRoomImageMutation,
-    DeleteRoomImageMutationVariables
-  >(DeleteRoomImage.loc?.source.body!);
+    DeleteHomestayImageMutation,
+    DeleteHomestayImageMutationVariables
+  >(DeleteHomestayImage.loc?.source.body!);
 
   const { mutateAsync: deleteGallery } = useMutation({
     mutationFn: mutateDeleteGallery,
   });
 
   const handleDeleteGallery = (galleryId: number) => {
-    deleteGallery({ roomImageId: galleryId }).then(res => {
-      if (res?.deleteRoomImage?.id) {
+    deleteGallery({ homestayImageId: galleryId }).then(res => {
+      if (res?.deleteHomestayImage?.id) {
         queryClient.invalidateQueries({ queryKey: [ String(invalidateKey) ] });
         setShowToast(true);
         setMessage('Image Deleted Success');
         setRole('success');
+        window.refresh();
       } else {
         setShowToast(true);
         setMessage('Something went wrong');
@@ -58,16 +62,11 @@ export const WallpaperCard = (props: Iprops) => {
         {!showEditBox ? (
           <div>
             <div className="absolute right-3 top-3 z-50  flex flex-col gap-3">
-              <div
-                className="  z-10 flex h-10 w-10 cursor-pointer flex-col items-center justify-center rounded-full bg-gray-200 align-middle text-lg text-white"
-                onClick={() => setShowEditBox(true)}>
-                <FaEdit />
-              </div>
               {galleryId && (
                 <div
-                  className="  z-10 flex h-10 w-10 cursor-pointer flex-col items-center justify-center rounded-full bg-gray-200 align-middle text-lg text-white"
+                  className=" border hover:border-error z-10 flex h-10 w-10 cursor-pointer flex-col items-center justify-center rounded-full bg-gray-200 align-middle text-lg text-white"
                   onClick={() => handleDeleteGallery(galleryId)}>
-                  <FaTrash />
+                  <FaTrash className='text-error'/>
                 </div>
               )}
             </div>
