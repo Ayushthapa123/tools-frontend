@@ -140,12 +140,8 @@ export type CreatePriceInput = {
   currency: Currency;
   discountAmount?: InputMaybe<Scalars['Int']['input']>;
   discountType?: InputMaybe<DiscountType>;
-  dynamicAmount?: InputMaybe<Scalars['Int']['input']>;
-  dynamicPriceEnd?: InputMaybe<Scalars['DateTime']['input']>;
-  dynamicPriceStart?: InputMaybe<Scalars['DateTime']['input']>;
   isDiscountActive?: Scalars['Boolean']['input'];
   isDynamicPricing?: Scalars['Boolean']['input'];
-  isWeekend?: Scalars['Boolean']['input'];
   roomId: Scalars['Int']['input'];
 };
 
@@ -948,13 +944,9 @@ export type UpdatePriceInput = {
   currency?: InputMaybe<Currency>;
   discountAmount?: InputMaybe<Scalars['Int']['input']>;
   discountType?: InputMaybe<DiscountType>;
-  dynamicAmount?: InputMaybe<Scalars['Int']['input']>;
-  dynamicPriceEnd?: InputMaybe<Scalars['DateTime']['input']>;
-  dynamicPriceStart?: InputMaybe<Scalars['DateTime']['input']>;
   id: Scalars['Int']['input'];
   isDiscountActive?: InputMaybe<Scalars['Boolean']['input']>;
   isDynamicPricing?: InputMaybe<Scalars['Boolean']['input']>;
-  isWeekend?: InputMaybe<Scalars['Boolean']['input']>;
   roomId?: InputMaybe<Scalars['Int']['input']>;
 };
 

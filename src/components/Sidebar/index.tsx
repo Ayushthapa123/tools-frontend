@@ -54,7 +54,7 @@ const Sidebar = () => {
       text: 'Homestays',
       href: '/app/homestays',
       children: false,
-      show: ( user.userType === UserType.Superadmin),
+      show: ( user.userType === UserType.Superadmin || user.userType === UserType.CommunityOwner),
     },
     { icon: <HostelInfoIcon />, text: 'Homestay', href: '/app/homestay-info', children: false, show: user.userType === UserType.HomestayOwner },
     { icon: <RoomIcon />, text: 'Rooms', href: '/app/room', children: false, show: user.userType === UserType.HomestayOwner },

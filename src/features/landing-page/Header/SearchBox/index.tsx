@@ -105,6 +105,7 @@ export const SearchBox = () => {
 
       <Autocomplete
         onLoad={autocomplete => (autocompleteRef.current = autocomplete)}
+        className=' '
         onPlaceChanged={handlePlaceChanged}>
         <input
           type="text"
