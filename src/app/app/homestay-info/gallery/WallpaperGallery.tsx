@@ -47,8 +47,8 @@ export const WallpaperGallery = (props: Iprops) => {
   return (
     <div className=" relative z-10 min-h-[250px] w-full rounded-md">
       <h3 className='text-primary inline mr-2'>Homestay Wallpaper</h3>
-      <span className='text-gray-400 text-xs'>You can only upload 1 image.</span>
-      <div className=" grid gap-10 md:grid-cols-2 mt-4">
+      <span className='text-gray-400 text-xs block md:inline'>You can only upload 1 image.</span>
+      <div className="mt-4">
         {wallpaperData ?
           <div className="relative">
             <WallpaperCard

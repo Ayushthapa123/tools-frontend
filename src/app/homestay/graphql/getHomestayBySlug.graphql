@@ -7,6 +7,9 @@ query getHomestayBySlug($slug: String!) {
     slug
     moderatedBySuperAdmin 
     moderatedByCommunityOwner
+    image{
+      url 
+    }
     address {
       country
       city

@@ -38,6 +38,7 @@ const ImageUploader = (props: Iprops) => {
           },
         },
       );
+      console.log("handle response", response);
       setLoading(false);
 
       handleImageUrl(response.data.imageUrl);

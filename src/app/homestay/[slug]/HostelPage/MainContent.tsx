@@ -33,6 +33,7 @@ interface Iprops {
 
 export default function MainContent(props: Iprops) {
   const { hostel, checkInDate, checkOutDate } = props;
+  console.log("homestay",hostel)
   const [mainImage, setMainImage] = useState(0);
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
@@ -65,25 +66,19 @@ export default function MainContent(props: Iprops) {
 
             <div className="mb-8">
               <div className="relative mb-4 h-[500px] w-full overflow-hidden rounded-2xl bg-gray-200">
-                {roomImages.length > 0 ? (
                   <div className="group relative h-full w-full">
                     <Image
-                      src={roomImages[mainImage]?.url ?? '/images/default-image.png'}
+                      src={hostel?.image?.[0].url ?? '/images/default-image.png'}
                       alt={`Room image ${mainImage + 1}`}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                       quality={90}
                     />
                   </div>
-                ) : (
-                  <div className="flex h-full w-full items-center justify-center bg-gray-300">
-                    <span className="text-gray-500">Homestay image</span>
-                  </div>
-                )}
               </div>
 
               <div className="mb-8 grid grid-cols-6 gap-3">
-                {roomImages.slice(0, 6).map((img, index) => (
+                {hostel?.image?.slice(0, 6).map((img, index) => (
                   <div
                     key={img.id}
                     className={`relative h-24 w-full cursor-pointer overflow-hidden rounded-lg bg-gray-200 transition-all duration-200 hover:opacity-90
@@ -91,7 +86,7 @@ export default function MainContent(props: Iprops) {
                     onClick={() => setMainImage(index)}
                   >
                     <Image
-                      src={img.url}
+                      src={img.url ?? '/images/default-image.png'}
                       alt={`Thumbnail ${index + 1}`}
                       fill
                       className="object-cover"
@@ -184,9 +179,9 @@ export default function MainContent(props: Iprops) {
                   </div>
                 </div>
               </div>
-              <div className="rounded-xl bg-white p-6 shadow-sm">
+              <div className="rounded-xl bg-white p-6 pt-2 shadow-sm">
                 <h3 className="mb-4 text-lg font-semibold text-gray-800">Map On Google</h3>
-                <div className=" w-full h-[250px] ">
+                <div className=" w-full h-[250px] overflow-y-hidden ">
                 <MapProvider>
                   {hostel?.address?.latitude && hostel?.address?.longitude && (
                     <MapComponent
@@ -202,7 +197,7 @@ export default function MainContent(props: Iprops) {
           </div>
         </div>
 
-        <div className="mt-10 rounded-xl bg-white p-4 shadow-sm">
+        <div className="mt-10 rounded-xl bg-white p-4 shadow-sm w-[93vw] mx-auto">
           <div className='flex items-center justify-between'>
             <h2 className="mb-6 text-2xl font-semibold text-gray-800">Available Rooms</h2>
             <Link href={`/homestay/${hostel?.slug}/booking?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`} className='mb-3'>

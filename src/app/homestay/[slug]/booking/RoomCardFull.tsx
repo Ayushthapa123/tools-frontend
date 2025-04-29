@@ -49,7 +49,7 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
   return (
     <div
       ref={sectionRef}
-      className={`group relative flex h-full overflow-hidden rounded-xl bg-base-100 transition-all duration-300 ${isSelected
+      className={`group relative flex flex-col xl:flex-row h-full overflow-hidden rounded-xl bg-base-100 transition-all duration-300 ${isSelected
           ? 'border border-blue ring-2 ring-blue-200'
           : 'border border-gray-200 hover:border-gray-300 hover:shadow-lg'
         }`}
@@ -63,9 +63,10 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
       </div>
 
       {/* Left side - Image */}
-      <div className="relative h-auto w-2/5 min-w-[200px] overflow-hidden">
+      <div className="relative h-44 md:h-80 lg:h-60 xl:h-auto xl:w-2/3 min-w-[200px] overflow-hidden">
         {room.image && room.image.length > 0 ? (
-          <div className="relative h-full">
+          <div className="relative h-full bg-red">
+            hello
             <Image
               src={room.image[ 0 ].url}
               alt={room.caption || "Room image"}
@@ -98,15 +99,15 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
       </div>
 
       {/* Right side - Content */}
-      <div className="flex w-3/5 flex-col justify-between p-5">
+      <div className="flex xl:w-3/5 flex-col justify-between p-3 md:p-5">
         <div>
           <h3 className="text-xl font-semibold text-gray-800">{room.caption}</h3>
 
           <div className="mt-3 flex flex-wrap gap-3 pl-0">
-            <div className="flex items-center rounded-full bg-blue/40 px-3 py-1 text-sm text-black">
+            {/* <div className="flex items-center rounded-full bg-blue/40 px-3 py-1 text-sm text-black">
               <MdMeetingRoom className="mr-1 text-xl text-secondary" />
               Room {room.roomNumber || 'N/A'}
-            </div>
+            </div> */}
             <div className="flex items-center rounded-full bg-blue/40 px-3 py-1 text-sm text-black">
               <MdOutlineKingBed className="mr-1 text-xl text-secondary" />
               {room.capacity}

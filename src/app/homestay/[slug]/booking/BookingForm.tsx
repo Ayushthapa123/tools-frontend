@@ -225,16 +225,16 @@ const {roomIds:roomIdsFromStore}=useRoomStore()
     {isLoading && <LoadingSpinner color='primary' size='sm' key={"load-booking-spinner"} />}
     
     {!validity?.isValid ? (
-      <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-md shadow-md mb-4">
+      <div className="bg-red-50 border-l-4 border-error p-4 rounded-md shadow-md mb-4">
         <div className="flex items-center gap-3">
           <svg xmlns="http://www.w3.org/2000/svg" className="text-red-500 shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           <div className="flex-1">
-            <h3 className="font-bold text-lg text-red-700">Room Unavailable</h3>
+            <h3 className="font-bold text-lg text-error">Room Unavailable</h3>
             <div className="mt-1">
-              <p className="text-red-600">Room is already booked for the selected dates.</p>
-              <p className="font-medium text-red-800 mt-1">{validity?.message}</p>
+              <p className="text-error">Room is already booked for the selected dates.</p>
+              {/* <p className="font-medium text-error/80 mt-1">{validity?.message}</p> */}
             </div>
           </div>
         </div>
@@ -486,7 +486,7 @@ const { data: validity,isLoading } = useQuery({
           <div key={`selRoom-${selRoom?.caption}`}>
             <p className='font-semibold text-base'>{selRoom?.caption}</p>
             <p className='text-xs'>Capacity: <span className='text-gray-700'>{selRoom?.capacity}</span></p>
-            {selRoom?.roomNumber && <p>Room Number: {selRoom.roomNumber}</p>}
+            {/* {selRoom?.roomNumber && <p>Room Number: {selRoom.roomNumber}</p>} */}
             {selRoom?.attachBathroom && <p>With Attached Bathroom</p>}
         </div>
         ))}

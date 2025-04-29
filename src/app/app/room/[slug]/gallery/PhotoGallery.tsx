@@ -43,7 +43,7 @@ export const PhotoGallery = (props: Iprops) => {
 
   return (
     <div className=" relative z-10 min-h-[250px] w-full rounded-md  md:min-h-[400px] lg:min-h-[500px]">
-      <div className=" grid gap-10 md:grid-cols-2">
+      <div className=" grid gap-10 lg:grid-cols-2">
         {roomData?.map(room => (
           <div key={room.id} className="relative">
             <GalleryCard

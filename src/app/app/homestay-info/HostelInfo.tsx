@@ -45,7 +45,7 @@ export const HostelInfo = () => {
   });
 
   return (
-    <div className="    grid w-full gap-[1rem]">
+    <div className="">
       {!isLoading ? (
         <HostelInfoForm
           hostelId={hostelData?.id}
@@ -84,8 +84,8 @@ const HostelTabs = ({ hostelId }: { hostelId: number }) => {
   const [activeTab, setActiveTab] = useState(1);
 
   return (
-    <div className="w-full py-5 ">
-      <div role="tablist" className="tabs-boxed tabs sticky bg-transparent top-0 z-[99] my-3 flex flex-wrap py-2">
+    <div className="w-full ">
+      <div role="tablist" className="tabs-boxed tabs bg-transparent z-[99] mb-2 flex flex-wrap pt-2">
         {tabs.map(tab => (
           <a
             key={tab.id}
@@ -102,7 +102,7 @@ const HostelTabs = ({ hostelId }: { hostelId: number }) => {
             <div>
               <h3 className=" mb-[1rem] ">{tab.title}</h3>
               {tab.comp}
-              <hr className=" divider" />
+              {/* <hr className=" divider" /> */}
             </div>
           )}
         </div>
@@ -185,9 +185,9 @@ export const HostelInfoForm: FC<IProps> = props => {
 
   return (
     <form
-      className=" card-body card card-bordered w-full gap-[1rem]  bg-white"
+      className="bg-white card-body card w-fit card-bordered gap-[1rem] mb-4"
       onSubmit={handleSubmit(handleSubmitForm)}>
-      <div className=" grid w-full gap-[1rem] md:grid-cols-2">
+      <div className=" grid gap-[1rem] md:grid-cols-2">
         <div>
           <TextInput
             name="name"
@@ -208,8 +208,8 @@ export const HostelInfoForm: FC<IProps> = props => {
       <div>
        <RichTextEditor editorRef={descriptionRef}  />
       </div>
-      <div className="flex justify-end w-full ">
-        <div className=" mt-10 w-[200px]">
+      <div className="flex justify-end ">
+        <div className=" mt-10 w-fit md:w-[200px]">
           <Button
             label={`${hostelId ? 'Update Homestay Info' : 'Create Homestay Info'}`}
             type="submit"

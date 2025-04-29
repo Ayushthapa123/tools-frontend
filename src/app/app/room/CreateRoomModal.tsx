@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { MdAddCircleOutline } from 'react-icons/md';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import Button from 'src/components/Button';
 
@@ -23,14 +24,15 @@ import { useToastStore } from 'src/store/toastStore';
 import { useUserStore } from 'src/store/userStore';
 
 export const CreateRoomModal = () => {
-  const [open, setOpen] = useState(false);
+  const [ open, setOpen ] = useState(false);
   const handleClose = () => {
     setOpen(false);
   };
   return (
     <div>
-      <Link href="/app/room/new"><Button label="Add Room" onClick={() => setOpen(true)} /></Link>
-   
+      <Link href="/app/room/new">
+        <Button label="Add Room" onClick={() => setOpen(true)} ></Button></Link>
+
     </div>
   );
 };
@@ -80,7 +82,7 @@ export const RoomForm = ({
         setShowToast(true);
         setMessage('Room Created!');
         setRole('success');
-        queryClient.invalidateQueries({ queryKey: ['getRooms'] });
+        queryClient.invalidateQueries({ queryKey: [ 'getRooms' ] });
         handleClose();
       } else {
         setShowToast(true);
@@ -101,7 +103,7 @@ export const RoomForm = ({
         <div className="bg-white">
           <form className="bg-white text-left">
             <div className="w-full py-3">
-            <div className="mb-3">
+              <div className="mb-3">
                 <TextInput
                   name="caption"
                   placeholder="Room Caption"
@@ -124,7 +126,7 @@ export const RoomForm = ({
                 />
               </div>
 
-        
+
 
               <div className="mb-3">
                 <select
@@ -141,7 +143,7 @@ export const RoomForm = ({
                   className="w-full rounded border p-2">
                   <option value={RoomCapacity.OneBed}>Single</option>
                   <option value={RoomCapacity.TwoBed}>Double</option>
-              
+
                 </select>
               </div>
             </div>

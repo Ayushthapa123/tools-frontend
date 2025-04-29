@@ -34,7 +34,7 @@ const LocationTabs = () => {
 
   return (
     <div className="w-full py-5 ">
-      <div role="tablist" className="tabs-boxed bg-transparent tabs sticky top-0 z-[99] my-3 flex flex-wrap py-2">
+      <div role="tablist" className="tabs-boxed bg-transparent tabs z-[99] my-3 flex flex-wrap py-2">
         {tabs.map(tab => (
           <div key={tab.id} className="flex flex-wrap ">
             <a
@@ -46,12 +46,12 @@ const LocationTabs = () => {
           </div>
         ))}
       </div>
+      
       {tabs.map((tab, index) => (
         <div key={index}>
           {tab.id == activeTab && (
             <div>
               {tab.comp}
-              <hr className=" divider" />
             </div>
           )}
         </div>

@@ -14,7 +14,8 @@ export const OwnProfile = (props: { userType: string }) => {
   return (
     <div>
       <div className=" w-full mt-[100px] min-h-[calc(100vh-400px)]">
-        <div className=" mb-4 flex gap-5">
+        <div className=" mb-4 flex gap-5 flex-col lg:flex-row">
+          <div className='flex items-center justify-center'>
           <div className="avatar placeholder relative h-[80px] w-[80px] lg:h-[130px] lg:w-[130px]">
             <div className="w-full h-full rounded-full bg-neutral text-neutral-content">
               <span className="text-[50px]">{user.userName.charAt(0)}</span>
@@ -28,10 +29,11 @@ export const OwnProfile = (props: { userType: string }) => {
               <FaCamera />
             </button>
           </div>
-          <div className="flex-grow   ">
+          </div>
+          <div className="flex-grow ">
             <div className="relative top-[10px] lg:top-[30px]">
-              <h2 className=" font-bold text-[25px] ">{user.userName}({user.userType})</h2>{' '}
-              <p className="  font-medium text-secondary">{user.userEmail}</p>
+              <h2 className=" font-bold text-[25px] ">{user.userName}<span className='text-xs md:text-base text-secondary'> ({user.userType})</span></h2>{' '}
+              <h2 className="  font-medium text-[20px] text-secondary">{user.userEmail}</h2>
             </div>
           </div>
           <div className=" relative">

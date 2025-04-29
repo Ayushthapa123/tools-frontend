@@ -31,7 +31,7 @@ export default function Home() {
 
   return (
     <div className="grid w-full gap-4">
-      <div className="card relative flex w-full border bg-base-100 p-4 text-base-content shadow">
+      <div className="card relative flex flex-col lg:flex-row w-full border bg-base-100 p-4 text-base-content shadow">
         <div className="w-[70%] flex-grow">
           <h3 className="text-lg font-semibold">
             Welcome Back! <span className="font-bold text-secondary">{user.userName}</span>
@@ -41,7 +41,7 @@ export default function Home() {
             {/* {data?.address?.city}, {data?.address?.country} */}
           </p>
         </div>
-        <div className="absolute right-6 top-4">
+        <div className="">
           <Link href={`${process.env.NEXT_PUBLIC_APP_URL}/homestay/${data?.slug}`}>
             <Button
               label="See Homestay Profile"
