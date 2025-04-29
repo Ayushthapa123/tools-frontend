@@ -81,7 +81,7 @@ const LogIn = () => {
         if (res?.loginUser?.id) {
           //after login what to do before pushing him to dashboard/me
           setAccessToken(res.loginUser.token.accessToken);
-          localStorage.setItem('refreshToken', res.loginUser.token.refreshToken);
+          // localStorage.setItem('refreshToken', res.loginUser.token.refreshToken);
           if (res.loginUser.userType !== 'GUEST') {
             router.push('/app');
           } else {

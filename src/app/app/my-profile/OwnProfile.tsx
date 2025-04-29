@@ -1,15 +1,27 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { FaCamera, FaEdit } from 'react-icons/fa';
+import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { LogOut, LogOutMutation, LogOutMutationVariables } from 'src/gql/graphql';
 import LogoutIcon from 'src/components/icons/LogOut';
 import { useUserStore } from 'src/store/userStore';
+import { useMutation } from '@tanstack/react-query';
 
 export const OwnProfile = (props: { userType: string }) => {
   const { user } = useUserStore();
   const router = useRouter();
+  const mutateLogOutRequest = useGraphqlClientRequest<LogOutMutation, LogOutMutationVariables>( 
+    LogOut.loc?.source.body!,
+  );
+
+  const { mutateAsync } = useMutation({ mutationFn: mutateLogOutRequest });
+
   const handleLogout = () => {
-    localStorage.removeItem('refreshToken');
-    router.push('/login');
+    mutateAsync({}).then(res => {
+      if (res?.logout?.success) {
+        router.push('/login');
+      }
+    });
   };
   return (
     <div>

@@ -37,10 +37,7 @@ query getHomestayBySlug($slug: String!) {
         baseAmount 
         currency
         isDynamicPricing
-        dynamicAmount
-        dynamicPriceStart
-        dynamicPriceEnd
-        isWeekend
+     
         discountAmount
         discountType
       }

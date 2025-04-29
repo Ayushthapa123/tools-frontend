@@ -34,9 +34,10 @@ export const useGraphqlClientRequest = <TData, TVariables>(
         headers: {
           'Content-Type': 'application/json',
           ...(accessToken && {
-            Authorization: accessToken ?? `Bearer ${accessToken}`,
+            // Authorization: accessToken ?? `Bearer ${accessToken}`,
           }),
         },
+        withCredentials: true,
       },
     );
 

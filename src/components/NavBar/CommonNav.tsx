@@ -43,7 +43,7 @@ export const CommonNav = () => {
   useEffect(() => {
     const refreshToken = localStorage.getItem('refreshToken');
     if (refreshToken) {
-      getAccessToken({ input: { refreshToken: refreshToken } }).then(res => {
+      getAccessToken({  }).then(res => {
         if (res?.refreshTokens?.token?.accessToken) {
           setAccessToken(res.refreshTokens.token.accessToken);
           setUser({

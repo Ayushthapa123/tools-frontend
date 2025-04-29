@@ -27,10 +27,7 @@ query GetRoomWithPriceAndGallery($id: Int!) {
       discountType
       isDiscountActive
       isDynamicPricing
-      dynamicAmount
-      dynamicPriceStart
-      dynamicPriceEnd
-      isWeekend
+ 
       createdAt
       updatedAt
     }

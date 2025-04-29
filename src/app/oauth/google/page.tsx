@@ -48,7 +48,7 @@ function SignUp() {
       }).then(res => {
         if (res?.signUpWithGoogle?.id) {
           setAccessToken(res.signUpWithGoogle.token.accessToken);
-          localStorage.setItem('refreshToken', res.signUpWithGoogle.token.refreshToken);
+          // localStorage.setItem('refreshToken', res.signUpWithGoogle.token.refreshToken);
           router.push('/app');
         }
       });
