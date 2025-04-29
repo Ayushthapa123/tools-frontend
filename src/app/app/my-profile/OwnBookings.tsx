@@ -2,11 +2,11 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { FaCamera, FaEdit, FaCalendar, FaClock, FaMapMarkerAlt, FaUser } from 'react-icons/fa';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
-import { GetGoogleOauthUrlQueryVariables, MyBookings, MyBookingsQueryVariables, BookingStatus, PaymentPlatformName, Room, Booking } from 'src/gql/graphql';
+import { GetGoogleOauthUrlQueryVariables, MyBookings, MyBookingsQueryVariables, BookingStatus, PaymentPlatformName, Room, Booking, LogOut, LogOutMutationVariables, LogOutMutation } from 'src/gql/graphql';
 import LogoutIcon from 'src/components/icons/LogOut';
 import { MyBookingsQuery } from 'src/gql/graphql';
 import { useUserStore } from 'src/store/userStore';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 // Update the interface to match the exact GraphQL schema
 
@@ -89,9 +89,18 @@ const BookingCard = ({ booking }: { booking: Booking  }) => {
 export const OwnBookings = (props: { userType: string }) => {
   const { user } = useUserStore();
   const router = useRouter();
+  const mutateLogOutRequest = useGraphqlClientRequest<LogOutMutation, LogOutMutationVariables>(
+    LogOut.loc?.source.body!,
+  );
+
+  const { mutateAsync } = useMutation({ mutationFn: mutateLogOutRequest });
+
   const handleLogout = () => {
-    localStorage.removeItem('refreshToken');
-    router.push('/login');
+    mutateAsync({}).then(res => {
+      if (res?.logout?.success) {
+        router.push('/login');
+      }
+    });
   };
 
   const querySignupUrl = useGraphqlClientRequest<

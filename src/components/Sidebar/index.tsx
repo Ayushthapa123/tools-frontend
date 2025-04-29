@@ -15,9 +15,11 @@ import { IoIosArrowUp } from 'react-icons/io';
 import IconButton from '../IconButton';
 import RulesIcon from '../icons/Rules';
 import { useUserStore } from 'src/store/userStore';   
-import { UserType } from 'src/gql/graphql';
+import { LogInUser, LogInUserMutation, LogInUserMutationVariables, LogOutMutationVariables, LogOut, LogOutMutation, UserType } from 'src/gql/graphql';
 import BookingIcon from '../icons/Booking';
 import { FaHotel } from 'react-icons/fa';
+import { useMutation } from '@tanstack/react-query';
+import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 interface MenuItemType {
   icon: JSX.Element;
   text: string;
@@ -40,6 +42,13 @@ const Sidebar = () => {
   const router = useRouter();
   const pathName = usePathname();
   const { user } = useUserStore();
+
+  const mutateLogOutRequest = useGraphqlClientRequest<LogOutMutation, LogOutMutationVariables>(
+    LogOut.loc?.source.body!,
+  );
+
+  const { mutateAsync } = useMutation({ mutationFn: mutateLogOutRequest });
+
 
   const menuItems: MenuItemType[] = [
     {
@@ -86,8 +95,11 @@ const Sidebar = () => {
    * and redirecting to the login page
    */
   const logOut = () => {
-    localStorage.removeItem('refreshToken');
-    router.push('/login');
+    mutateAsync({}).then(res => {
+      if (res?.logout?.success) {
+        router.push('/login');
+      }
+    });
   };
 
   // this function 

@@ -105,7 +105,7 @@ function SignUp() {
     }).then(res => {
       if (res?.signupUser?.id) {
         setAccessToken(res.signupUser.token.accessToken);
-        localStorage.setItem('refreshToken', res.signupUser.token.refreshToken);
+        // localStorage.setItem('refreshToken', res.signupUser.token.refreshToken);
         router.push('/app');
       } else {
         setError('Failed to signup!');

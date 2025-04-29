@@ -19,10 +19,7 @@ query GetRooms {
       currency 
       baseAmount
       isDynamicPricing
-      dynamicAmount
-      dynamicPriceStart
-      dynamicPriceEnd
-      isWeekend
+     
       discountAmount
       discountType
     }

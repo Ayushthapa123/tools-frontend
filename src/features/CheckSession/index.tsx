@@ -22,7 +22,7 @@ export const CheckSession = () => {
     if (!refreshToken) {
       return;
     } else {
-      getAccessToken({ input: { refreshToken: refreshToken } }).then(res => {
+      getAccessToken({ }).then(res => {
         if (res?.refreshTokens?.token?.accessToken) {
           setUser({
             userName: res.refreshTokens?.user.fullName,

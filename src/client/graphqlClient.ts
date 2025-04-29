@@ -6,6 +6,7 @@ const endpoint = process.env.NEXT_PUBLIC_GRAPHQL_SERVER_ENDPOINT ; // Replace wi
 
 export const graphqlClient = new GraphQLClient(endpoint!, {
   headers: {
-    authorization: 'Bearer YOUR_AUTH_TOKEN', // If your API requires authentication
+    // authorization: 'Bearer YOUR_AUTH_TOKEN', // If your API requires authentication
   },
+  credentials: 'include',
 });
