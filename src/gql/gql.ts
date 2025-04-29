@@ -15,10 +15,6 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "query BookingsByHomestay {\n  bookingsByHomestay {\n    id\n    bookingKey\n    startDate\n    endDate\n    status\n    createdAt\n    updatedAt\n    room {\n      id\n      caption\n      roomNumber\n      capacity\n      status\n      attachBathroom\n      maxOccupancy\n      price {\n        baseAmount\n        currency\n        discountAmount\n        discountType\n        isDiscountActive\n      }\n      image {\n        url\n        caption\n      }\n    }\n    guest {\n      id\n      email\n      fullName\n      phoneNumber\n    }\n  }\n}": types.BookingsByHomestayDocument,
     "query getHomestayDetailsBasic {\n  getHomestayByToken {\n    name\n    slug\n    moderatedBySuperAdmin\n    moderatedByCommunityOwner\n    address {\n      country\n      city\n      subCity\n      street\n    }\n  }\n}": types.GetHomestayDetailsBasicDocument,
-    "mutation CreateHomestayImage($data: CreateHomestayWallpaperInput!) {\n  createHomestayImage(data: $data) {\n    id\n    homestayId\n    url\n    caption\n  }\n}": types.CreateHomestayImageDocument,
-    "mutation DeleteHomestayImage($homestayImageId: Int!) {\n  deleteHomestayImage(homestayImageId: $homestayImageId) {\n    id\n    homestayId\n    url\n    caption\n    createdAt\n    updatedAt\n  }\n}": types.DeleteHomestayImageDocument,
-    "query GetHomestayWallpaperByHomestayId($homestayId: Int!) {\n  getHomestayWallpaperByHomestayId(homestayId: $homestayId) {\n    id\n    homestayId\n    url\n    caption\n    createdAt\n    updatedAt\n  }\n}": types.GetHomestayWallpaperByHomestayIdDocument,
-    "mutation UpdateHomestayImage($homestayImageId: Int!, $data: UpdateHomestayWallpaperInput!) {\n  updateHomestayImage(homestayImageId: $homestayImageId, data: $data) {\n    id\n    homestayId\n    url\n    caption\n    createdAt\n    updatedAt\n  }\n}": types.UpdateHomestayImageDocument,
     "mutation createAddress($input: CreateAddressInput!) {\n  createAddress(data: $input) {\n    id\n  }\n}": types.CreateAddressDocument,
     "mutation createContacts($input: CreateContactInput!) {\n  createContact(data: $input) {\n    id\n  }\n}": types.CreateContactsDocument,
     "mutation createHomestay($input: CreateHomestayInput!) {\n  createHomestay(data: $input) {\n    id\n    ownerId\n  }\n}": types.CreateHomestayDocument,
@@ -77,7 +73,6 @@ const documents = {
  * The query argument is unknown!
  * Please regenerate the types.
  */
-export function graphql(source: string): unknown;
 
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -279,6 +274,7 @@ export function graphql(source: "query getUserByAccessToken($token: String!) {\n
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "query GetFeaturedHomestays($pageSize: Int!) {\n  getAllHomestays(pageSize: $pageSize) {\n    id\n    name\n    description\n    slug\n    address {\n      country\n      city\n      subCity\n      street\n      latitude\n      longitude\n    }\n    image {\n      url\n      caption\n    }\n    rooms {\n      id\n      caption\n      capacity\n      roomNumber\n      status\n      createdAt\n      updatedAt\n      homestayId\n      image {\n        url\n        id\n        caption\n        createdAt\n        updatedAt\n        roomId\n      }\n      price {\n        baseAmount\n        currency\n        isDynamicPricing\n        discountAmount\n        discountType\n      }\n    }\n    services {\n      service\n    }\n  }\n}"): (typeof documents)["query GetFeaturedHomestays($pageSize: Int!) {\n  getAllHomestays(pageSize: $pageSize) {\n    id\n    name\n    description\n    slug\n    address {\n      country\n      city\n      subCity\n      street\n      latitude\n      longitude\n    }\n    image {\n      url\n      caption\n    }\n    rooms {\n      id\n      caption\n      capacity\n      roomNumber\n      status\n      createdAt\n      updatedAt\n      homestayId\n      image {\n        url\n        id\n        caption\n        createdAt\n        updatedAt\n        roomId\n      }\n      price {\n        baseAmount\n        currency\n        isDynamicPricing\n        discountAmount\n        discountType\n      }\n    }\n    services {\n      service\n    }\n  }\n}"];
+
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

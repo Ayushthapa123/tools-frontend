@@ -42,7 +42,7 @@ export const RoomCard = (props: Iprops) => {
         setShowToast(true);
         setMessage('Room Deleted!');
         setRole('success');
-        queryClient.invalidateQueries({ queryKey: ['getRooms'] });
+        queryClient.invalidateQueries({ queryKey: [ 'getRooms' ] });
       } else {
         setShowToast(true);
         setMessage('Something went wrong!');
@@ -74,16 +74,16 @@ export const RoomCard = (props: Iprops) => {
           fill
           className="object-cover"
         />
+        <div className="absolute flex justify-between items-start mb-2 left-2 top-1 text-white">
+          <Badge className={getStatusColor(status)}>{status}</Badge>
+        </div>
       </div>
 
       {/* Content Section */}
-      <div className="p-4">
-        <div className="flex justify-between items-start mb-2">
-          <h3 className="text-xl font-semibold text-gray-800">{caption}</h3>
-          <Badge className={getStatusColor(status)}>{status}</Badge>
-        </div>
+      <div className="p-4 min-h-[150px]">
 
         <div className="space-y-2">
+          <h3 className="text-xl font-semibold text-gray-800">{caption}</h3>
           <p className="text-gray-600">
             <span className="font-medium">Room Number:</span> {roomNumber}
           </p>
@@ -99,7 +99,7 @@ export const RoomCard = (props: Iprops) => {
               <EditIcon className="w-5 h-5" />
             </IconButton>
           </Link>
-          <IconButton 
+          <IconButton
             onClick={onSubmit}
             className="bg-white/80 hover:bg-white"
           >

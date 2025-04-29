@@ -53,21 +53,21 @@ export const GalleryCard = (props: Iprops) => {
     });
   };
   return (
-    <div className=" relative h-[300px] w-[450px] ">
+    <div className=" relative h-[300px] w-[370px] lg:w-[333px] xl:w-[450px] ">
       <div>
         {!showEditBox ? (
           <div>
             <div className="absolute right-3 top-3 z-50  flex flex-col gap-3">
               <div
-                className="  z-10 flex h-10 w-10 cursor-pointer flex-col items-center justify-center rounded-full bg-gray-200 align-middle text-lg text-white"
+                className="  z-10 flex h-10 w-10 cursor-pointer  hover:border hover:border-error flex-col items-center justify-center rounded-full bg-gray-200 align-middle text-lg text-white"
                 onClick={() => setShowEditBox(true)}>
-                <FaEdit />
+                <FaEdit className='text-error ml-1 mb-1' />
               </div>
               {galleryId && (
                 <div
-                  className="  z-10 flex h-10 w-10 cursor-pointer flex-col items-center justify-center rounded-full bg-gray-200 align-middle text-lg text-white"
+                  className="  z-10 flex h-10 w-10 cursor-pointer hover:border hover:border-error  flex-col items-center justify-center rounded-full bg-gray-200 align-middle text-lg text-white"
                   onClick={() => handleDeleteGallery(galleryId)}>
-                  <FaTrash />
+                  <FaTrash  className='text-error'/>
                 </div>
               )}
             </div>

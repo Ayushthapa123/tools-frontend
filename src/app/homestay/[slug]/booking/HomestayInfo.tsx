@@ -116,8 +116,8 @@ export const HomestayInfo = ({
           {/* Rooms Tab */}
           {activeTab === 'rooms' && (
             <div className="space-y-3" ref={sectionRef}>
-              <div className="flex items-start justify-between">
-                <h2 className="text-xl font-semibold text-gray-800">Available Rooms</h2>
+              <div className="flex flex-col lg:flex-row items-start justify-between">
+                <h2 className=" text-md lg:text-xl font-semibold text-gray-800">Available Rooms</h2>
                 <div className="rounded-full p-2 px-4 text-xs font-extralight text-blue border border-blue">
                   <FaInfoCircle className="mr-2 inline text-lg" />
                   You can select multiple rooms

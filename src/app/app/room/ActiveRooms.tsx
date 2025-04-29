@@ -7,6 +7,7 @@ import {
   GetRoomsQueryVariables,
 } from 'src/gql/graphql';
 import { useQuery } from '@tanstack/react-query';
+import LoadingSpinner from 'src/components/Loading';
 
 export const ActiveRooms = () => {
   const querySignupUrl = useGraphqlClientRequest<
@@ -20,20 +21,16 @@ export const ActiveRooms = () => {
     return res.roomsByHomestay;
   };
 
-  const { data: rooms } = useQuery({
+  const { data: rooms,isLoading } = useQuery({
     queryKey: ['getRooms'],
     queryFn: fetchData,
   });
   return (
     <div className="w-full ">
-      <div className="flex w-full justify-end">
-        <CreateRoomModal />
-      </div>
-      <hr className="divider w-full" />
-
-      <div className="grid gap-[1rem]  bg-slate-100 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      {isLoading && <div> <LoadingSpinner /></div>}
+      <div className="grid gap-[1rem] grid-cols-2 md:grid-cols-3 lg:grid-cols-4 pb-4 px-2">
         {rooms?.map(room => (
-          <div key={room.id}>
+          <div key={room.id} className='xl:min-h-[320px]'>
             <RoomCard
               id={room.id}
               caption={room.caption ?? ''}
@@ -45,6 +42,9 @@ export const ActiveRooms = () => {
             />
           </div>
         ))}
+      </div>
+      <div className="flex w-full justify-center">
+        <CreateRoomModal />
       </div>
     </div>
   );

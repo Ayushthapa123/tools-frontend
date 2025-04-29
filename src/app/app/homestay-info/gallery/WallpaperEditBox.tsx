@@ -33,7 +33,7 @@ interface IcoverEdit {
 
 export const WallpaperEditBox = (props: IcoverEdit) => {
   const { galleryType, handleBack, galleryId, homestayId, invalidateKey } = props;
-  const window = useRouter();
+  const router = useRouter();
 
   const queryClient = useQueryClient();
   const { setMessage, setRole, setShowToast } = useToastStore();
@@ -50,7 +50,7 @@ export const WallpaperEditBox = (props: IcoverEdit) => {
   const mutateCreateGallery = useGraphqlClientRequest<CreateHomestayImageMutation, CreateHomestayImageMutationVariables>(CreateHomestayImage.loc?.source.body!)
   const { mutateAsync: createGallery } = useMutation({
     mutationFn: mutateCreateGallery,
-    mutationKey:[String(invalidateKey)]
+    mutationKey: [ String(invalidateKey) ]
   });
 
   //create new image
@@ -62,17 +62,17 @@ export const WallpaperEditBox = (props: IcoverEdit) => {
   const { mutateAsync: updateGallery } = useMutation({
     mutationFn: mutateUpdateGallery,
   });
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (imageUrl && galleryId) {
       //update
-      updateGallery({ homestayImageId: galleryId, data: { url: imageUrl, caption: '', homestayId: galleryId } }).then(res => {
+      updateGallery({ homestayImageId: galleryId, data: { url: imageUrl, caption: '', homestayId: homestayId } }).then(res => {
         if (res?.updateHomestayImage?.id) {
-          queryClient.invalidateQueries({ queryKey: [ String(invalidateKey) ]});
+          queryClient.invalidateQueries({ queryKey: [ String(invalidateKey) ] });
           setShowToast(true);
           setMessage('Image Updated Success');
           setRole('success');
           handleBack?.();
-          window.refresh();
+          router.refresh();
         } else {
           setShowToast(true);
           setMessage('Something went wrong');
@@ -80,23 +80,34 @@ export const WallpaperEditBox = (props: IcoverEdit) => {
         }
       });
     } else if (imageUrl && homestayId) {
-      //create
-      createGallery({ data: { homestayId: homestayId, url: imageUrl, caption: '' } }).then(async (res) => {
-        if (res.createHomestayImage.id) {
-          await queryClient.invalidateQueries({ queryKey: [ String(invalidateKey) ] });
+      // create
+      try {
+        const response = await createGallery({
+          data: {
+            homestayId: homestayId,
+            url: imageUrl,
+            caption: ''
+          }
+        });
 
+        if (response?.createHomestayImage?.id) {
+          await queryClient.invalidateQueries({ queryKey: [ String(invalidateKey) ] });
+          console.log("after submitting", response?.createHomestayImage);
           setShowToast(true);
-          setMessage('Image Created Success');
+          setMessage('Image Created Successfully');
           setRole('success');
           handleBack?.();
-          setImageUrl(null);
+          router.push(window.location.pathname)
+
         } else {
-          setShowToast(true);
-          setMessage('Something went wrong');
-          setRole('error');
-          handleBack?.();
+          throw new Error('Failed to get valid response ID');
         }
-      });
+      } catch (error) {
+        console.error('Error creating gallery image:', error);
+        setShowToast(true);
+        setMessage(`Error: ${error instanceof Error ? error.message : 'Something went wrong'}`);
+        setRole('error');
+      }
     }
   };
 

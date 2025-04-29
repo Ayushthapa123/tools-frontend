@@ -90,7 +90,7 @@ function PageContent() {
         {mobileTabs?.map(tab => (
           <a
             role="tab"
-            className={`tab text-xl font-bold text-primary ${activeTab == tab.id ? '  tab-active' : ''}`}
+            className={`tab text-sm lg:text-xl font-bold text-primary ${activeTab == tab.id ? '  tab-active' : ''}`}
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}>
             {tab.name}

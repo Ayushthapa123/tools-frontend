@@ -57,7 +57,7 @@ export const WallpaperCard = (props: Iprops) => {
     });
   };
   return (
-    <div className=" relative h-[300px] w-[450px] ">
+    <div className=" relative h-[300px] w-[350px] md:w-[450px] ">
       <div>
         {!showEditBox ? (
           <div>
