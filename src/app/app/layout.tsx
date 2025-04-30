@@ -33,9 +33,9 @@ export default function Layout({
   const { mutateAsync: getAccessToken } = useMutation({ mutationFn: mutateRefreshToken });
 
   useEffect(() => {
-    const refreshToken = localStorage.getItem('refreshToken');
-    if (refreshToken) {
-      getAccessToken({ input: { refreshToken: refreshToken } }).then(res => {
+    // const refreshToken = localStorage.getItem('refreshToken');
+   
+      getAccessToken({}).then(res => {
         if (res?.refreshTokens?.token?.accessToken) {
           setAccessToken(res.refreshTokens.token.accessToken);
           setUser({
@@ -49,13 +49,11 @@ export default function Layout({
             router.push('/app/my-profile');
           }
         } else {
-          localStorage.removeItem('refreshToken');
+          // localStorage.removeItem('refreshToken');
           router.push('/login');
         }
       });
-    } else {
-      router.push('/login');
-    }
+    
   }, [getAccessToken, router, setAccessToken, setUser]);
 
   return (

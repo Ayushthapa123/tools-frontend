@@ -1,5 +1,5 @@
-mutation refreshToken($input: GetTokenInput!) {
- refreshTokens(input: $input) {
+mutation refreshToken {
+ refreshTokens{
    user {
      email
      fullName

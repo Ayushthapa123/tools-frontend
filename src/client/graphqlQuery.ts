@@ -16,7 +16,7 @@ export const graphqlQuery = <TData, TVariables>(
 
   const headers: HeadersInit = {};
   if (options?.accessToken) {
-    headers.Authorization = `Bearer ${options?.accessToken}`;
+    // headers.Authorization = `Bearer ${options?.accessToken}`;
   }
 
   return async (variables?: TVariables) => {
@@ -34,6 +34,7 @@ export const graphqlQuery = <TData, TVariables>(
             ...headers,
             ...(options as any),
           },
+          withCredentials: true,
         },
       );
 
