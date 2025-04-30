@@ -7,6 +7,8 @@ alwaysApply: false
 # Your rule content
 
 - Always Ask for permission for installing new package 
+- Those commands don't require confirmation (git add . , yarn build, yarn start, git status )
+- Ignore service worker files while writing commi message
 - Always check if there is error present in your result 
 - Always use Next.js 14.1 version , tailwindCss, daisyUI. 
 - Don't directly use html elements like button,input etc. Look for components inside components folder. 
