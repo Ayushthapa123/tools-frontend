@@ -63,6 +63,10 @@ type Documents = {
     "mutation signupUser($input: SignupInput!) {\n  signupUser(input: $input) {\n    email\n    id\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}": typeof types.SignupUserDocument,
     "mutation signUpWithGoogle($input: SignupWithGoogleInput!) {\n  signUpWithGoogle(input: $input) {\n    id\n    email\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}": typeof types.SignUpWithGoogleDocument,
     "query getUserByAccessToken($token: String!) {\n  getUserByAccessToken(accessToken: $token) {\n    email\n    fullName\n    id\n    isVerified\n    phoneNumber\n    profilePicture\n  }\n}": typeof types.GetUserByAccessTokenDocument,
+    "mutation CreateAmenity($createAmenityInput: CreateAmenityInput!) {\n  createAmenity(createAmenityInput: $createAmenityInput) {\n    id\n    amenity\n    homestayId\n  }\n}": typeof types.CreateAmenityDocument,
+    "query FindAmenityByHomestayId($homestayId: Int!) {\n  findAmenityByHomestayId(homestayId: $homestayId) {\n    id\n    amenity\n    homestayId\n  }\n}": typeof types.FindAmenityByHomestayIdDocument,
+    "mutation RemoveAmenity($id: Int!) {\n  removeAmenity(id: $id) {\n    id\n    amenity\n    homestayId\n  }\n}": typeof types.RemoveAmenityDocument,
+    "mutation UpdateAmenity($updateAmenityInput: UpdateAmenityInput!) {\n  updateAmenity(updateAmenityInput: $updateAmenityInput) {\n    id\n    amenity\n    homestayId\n  }\n}": typeof types.UpdateAmenityDocument,
     "query GetFeaturedHomestays($pageSize: Int!) {\n  getAllHomestays(pageSize: $pageSize) {\n    id\n    name\n    description\n    slug\n    address {\n      country\n      city\n      subCity\n      street\n      latitude\n      longitude\n    }\n    image {\n      url\n      caption\n    }\n    rooms {\n      id\n      caption\n      capacity\n      roomNumber\n      status\n      createdAt\n      updatedAt\n      homestayId\n      image {\n        url\n        id\n        caption\n        createdAt\n        updatedAt\n        roomId\n      }\n      price {\n        baseAmount\n        currency\n        isDynamicPricing\n        discountAmount\n        discountType\n      }\n    }\n    services {\n      service\n    }\n  }\n}": typeof types.GetFeaturedHomestaysDocument,
 };
 const documents: Documents = {
@@ -115,6 +119,10 @@ const documents: Documents = {
     "mutation signupUser($input: SignupInput!) {\n  signupUser(input: $input) {\n    email\n    id\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}": types.SignupUserDocument,
     "mutation signUpWithGoogle($input: SignupWithGoogleInput!) {\n  signUpWithGoogle(input: $input) {\n    id\n    email\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}": types.SignUpWithGoogleDocument,
     "query getUserByAccessToken($token: String!) {\n  getUserByAccessToken(accessToken: $token) {\n    email\n    fullName\n    id\n    isVerified\n    phoneNumber\n    profilePicture\n  }\n}": types.GetUserByAccessTokenDocument,
+    "mutation CreateAmenity($createAmenityInput: CreateAmenityInput!) {\n  createAmenity(createAmenityInput: $createAmenityInput) {\n    id\n    amenity\n    homestayId\n  }\n}": types.CreateAmenityDocument,
+    "query FindAmenityByHomestayId($homestayId: Int!) {\n  findAmenityByHomestayId(homestayId: $homestayId) {\n    id\n    amenity\n    homestayId\n  }\n}": types.FindAmenityByHomestayIdDocument,
+    "mutation RemoveAmenity($id: Int!) {\n  removeAmenity(id: $id) {\n    id\n    amenity\n    homestayId\n  }\n}": types.RemoveAmenityDocument,
+    "mutation UpdateAmenity($updateAmenityInput: UpdateAmenityInput!) {\n  updateAmenity(updateAmenityInput: $updateAmenityInput) {\n    id\n    amenity\n    homestayId\n  }\n}": types.UpdateAmenityDocument,
     "query GetFeaturedHomestays($pageSize: Int!) {\n  getAllHomestays(pageSize: $pageSize) {\n    id\n    name\n    description\n    slug\n    address {\n      country\n      city\n      subCity\n      street\n      latitude\n      longitude\n    }\n    image {\n      url\n      caption\n    }\n    rooms {\n      id\n      caption\n      capacity\n      roomNumber\n      status\n      createdAt\n      updatedAt\n      homestayId\n      image {\n        url\n        id\n        caption\n        createdAt\n        updatedAt\n        roomId\n      }\n      price {\n        baseAmount\n        currency\n        isDynamicPricing\n        discountAmount\n        discountType\n      }\n    }\n    services {\n      service\n    }\n  }\n}": types.GetFeaturedHomestaysDocument,
 };
 
@@ -328,6 +336,22 @@ export function graphql(source: "mutation signUpWithGoogle($input: SignupWithGoo
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "query getUserByAccessToken($token: String!) {\n  getUserByAccessToken(accessToken: $token) {\n    email\n    fullName\n    id\n    isVerified\n    phoneNumber\n    profilePicture\n  }\n}"): (typeof documents)["query getUserByAccessToken($token: String!) {\n  getUserByAccessToken(accessToken: $token) {\n    email\n    fullName\n    id\n    isVerified\n    phoneNumber\n    profilePicture\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation CreateAmenity($createAmenityInput: CreateAmenityInput!) {\n  createAmenity(createAmenityInput: $createAmenityInput) {\n    id\n    amenity\n    homestayId\n  }\n}"): (typeof documents)["mutation CreateAmenity($createAmenityInput: CreateAmenityInput!) {\n  createAmenity(createAmenityInput: $createAmenityInput) {\n    id\n    amenity\n    homestayId\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query FindAmenityByHomestayId($homestayId: Int!) {\n  findAmenityByHomestayId(homestayId: $homestayId) {\n    id\n    amenity\n    homestayId\n  }\n}"): (typeof documents)["query FindAmenityByHomestayId($homestayId: Int!) {\n  findAmenityByHomestayId(homestayId: $homestayId) {\n    id\n    amenity\n    homestayId\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation RemoveAmenity($id: Int!) {\n  removeAmenity(id: $id) {\n    id\n    amenity\n    homestayId\n  }\n}"): (typeof documents)["mutation RemoveAmenity($id: Int!) {\n  removeAmenity(id: $id) {\n    id\n    amenity\n    homestayId\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation UpdateAmenity($updateAmenityInput: UpdateAmenityInput!) {\n  updateAmenity(updateAmenityInput: $updateAmenityInput) {\n    id\n    amenity\n    homestayId\n  }\n}"): (typeof documents)["mutation UpdateAmenity($updateAmenityInput: UpdateAmenityInput!) {\n  updateAmenity(updateAmenityInput: $updateAmenityInput) {\n    id\n    amenity\n    homestayId\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

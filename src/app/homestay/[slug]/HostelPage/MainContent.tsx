@@ -24,6 +24,7 @@ import { MdEmail, MdLocalOffer } from 'react-icons/md';
 import { GrFacebook, GrInstagram, GrYoutube } from 'react-icons/gr';
 import { useRoomStore } from 'src/store/roomStore';
 import { motion } from 'framer-motion';
+import HomestayAmenitiesPage from 'src/features/amenity/HomestayAmenityPage';
 
 interface Iprops {
   hostel: Homestay | undefined | null;
@@ -64,6 +65,9 @@ export default function MainContent(props: Iprops) {
               </div>
             </div>
 
+            <div>
+              <HomestayAmenitiesPage homestayId={Number(hostel?.id)} key={hostel?.id} />
+            </div>
             <div className="mb-8">
               <div className="relative mb-4 h-[500px] w-full overflow-hidden rounded-2xl bg-gray-200">
                   <div className="group relative h-full w-full">
