@@ -1,12 +1,13 @@
-// TODO: GET ENDPOINT FROM ENV
+import { GraphQLClient } from 'graphql-request';
 
-import { GraphQLClient, gql } from 'graphql-request';
+const endpoint = process.env.NEXT_PUBLIC_GRAPHQL_SERVER_ENDPOINT!;
 
-const endpoint = process.env.NEXT_PUBLIC_GRAPHQL_SERVER_ENDPOINT ; // Replace with your GraphQL endpoint
-
-export const graphqlClient = new GraphQLClient(endpoint!, {
-  headers: {
-    // authorization: 'Bearer YOUR_AUTH_TOKEN', // If your API requires authentication
+export const graphqlClient = new GraphQLClient(endpoint, {
+  fetch: (input, init = {}) => {
+    // Ensure cookies are included in requests
+    return fetch(input, { ...init, credentials: 'include' });
   },
-  credentials: 'include',
+  headers: {
+    // authorization: 'Bearer YOUR_AUTH_TOKEN',
+  },
 });

@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 
-const GRAPHQL_ENDPOINT = process.env.NEXT_PUBLIC_GRAPHQL_SERVER_ENDPOINT??"http://localhost:3001/graphql";
+const GRAPHQL_ENDPOINT = process.env.NEXT_PUBLIC_GRAPHQL_SERVER_ENDPOINT!
 // process.env.NODE_ENV === "production"
 //   ? "https://app.tuteeline.com/api/graphql"
 // : // "http://localhost:3001/api/graphql";
