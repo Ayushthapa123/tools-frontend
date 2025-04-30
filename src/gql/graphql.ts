@@ -300,16 +300,6 @@ export type HomestayRules = {
   updatedAt: Scalars['DateTime']['output'];
 };
 
-export type HomestayWallpaper = {
-  __typename?: 'HomestayWallpaper';
-  caption?: Maybe<Scalars['String']['output']>;
-  createdAt: Scalars['DateTime']['output'];
-  homestayId: Scalars['Float']['output'];
-  id: Scalars['ID']['output'];
-  updatedAt: Scalars['DateTime']['output'];
-  url: Scalars['String']['output'];
-};
-
 export type LoginInput = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
@@ -323,7 +313,7 @@ export type Mutation = {
   createBooking: Booking;
   createContact: ContactDetails;
   createHomestay: Homestay;
-  createHomestayImage: HomestayWallpaper;
+  createHomestayImage: HomestayImage;
   createPrice: Price;
   createPriceRule: DynamicPriceRuleModel;
   createRoom: Room;
@@ -332,7 +322,7 @@ export type Mutation = {
   createSearchQuery: SearchQueries;
   createUser: User;
   deleteHomestay: Homestay;
-  deleteHomestayImage: HomestayWallpaper;
+  deleteHomestayImage: HomestayImage;
   deleteRoomImage: RoomImage;
   deleteRules: HomestayRules;
   deleteSearchQuery: SearchQueries;
@@ -350,7 +340,7 @@ export type Mutation = {
   updateBooking: Booking;
   updateContact: ContactDetails;
   updateHomestay: Homestay;
-  updateHomestayImage: HomestayWallpaper;
+  updateHomestayImage: HomestayImage;
   updatePrice: Price;
   updatePriceRule: DynamicPricingRule;
   updateRoom: Room;
@@ -620,7 +610,7 @@ export type Query = {
   getHomestayById?: Maybe<Homestay>;
   getHomestayBySlug?: Maybe<Homestay>;
   getHomestayByToken?: Maybe<Homestay>;
-  getHomestayWallpaperByHomestayId?: Maybe<HomestayWallpaper>;
+  getHomestayWallpaperByHomestayId?: Maybe<HomestayImage>;
   getHomestaysBySearch: Array<Homestay>;
   getHostelSearchSuggestions?: Maybe<Array<SearchQueries>>;
   getRoomImagesByRoomId?: Maybe<Array<RoomImage>>;
@@ -1051,21 +1041,21 @@ export type CreateHomestayImageMutationVariables = Exact<{
 }>;
 
 
-export type CreateHomestayImageMutation = { __typename?: 'Mutation', createHomestayImage: { __typename?: 'HomestayWallpaper', id: string, homestayId: number, url: string, caption?: string | null } };
+export type CreateHomestayImageMutation = { __typename?: 'Mutation', createHomestayImage: { __typename?: 'HomestayImage', id: string, homestayId: number, url: string, caption?: string | null } };
 
 export type DeleteHomestayImageMutationVariables = Exact<{
   homestayImageId: Scalars['Int']['input'];
 }>;
 
 
-export type DeleteHomestayImageMutation = { __typename?: 'Mutation', deleteHomestayImage: { __typename?: 'HomestayWallpaper', id: string, homestayId: number, url: string, caption?: string | null, createdAt: any, updatedAt: any } };
+export type DeleteHomestayImageMutation = { __typename?: 'Mutation', deleteHomestayImage: { __typename?: 'HomestayImage', id: string, homestayId: number, url: string, caption?: string | null, createdAt: any, updatedAt: any } };
 
 export type GetHomestayWallpaperByHomestayIdQueryVariables = Exact<{
   homestayId: Scalars['Int']['input'];
 }>;
 
 
-export type GetHomestayWallpaperByHomestayIdQuery = { __typename?: 'Query', getHomestayWallpaperByHomestayId?: { __typename?: 'HomestayWallpaper', id: string, homestayId: number, url: string, caption?: string | null, createdAt: any, updatedAt: any } | null };
+export type GetHomestayWallpaperByHomestayIdQuery = { __typename?: 'Query', getHomestayWallpaperByHomestayId?: { __typename?: 'HomestayImage', id: string, homestayId: number, url: string, caption?: string | null, createdAt: any, updatedAt: any } | null };
 
 export type UpdateHomestayImageMutationVariables = Exact<{
   homestayImageId: Scalars['Int']['input'];
@@ -1073,7 +1063,7 @@ export type UpdateHomestayImageMutationVariables = Exact<{
 }>;
 
 
-export type UpdateHomestayImageMutation = { __typename?: 'Mutation', updateHomestayImage: { __typename?: 'HomestayWallpaper', id: string, homestayId: number, url: string, caption?: string | null, createdAt: any, updatedAt: any } };
+export type UpdateHomestayImageMutation = { __typename?: 'Mutation', updateHomestayImage: { __typename?: 'HomestayImage', id: string, homestayId: number, url: string, caption?: string | null, createdAt: any, updatedAt: any } };
 
 export type CreateAddressMutationVariables = Exact<{
   input: CreateAddressInput;

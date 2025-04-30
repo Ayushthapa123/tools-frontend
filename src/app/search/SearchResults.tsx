@@ -61,9 +61,9 @@ export const SearchResults = (props: IResults) => {
             <HostelCardSkeleton />
           </div>
         )}
-      <div className="grid w-full grid-cols-3  gap-3">
+      <div className="grid w-full grid-cols-1 md:grid-cols-2 xl:grid-cols-3  gap-3">
         {hostels?.map(hostel => {
-          const imgUrl = hostel.rooms?.[0]?.image?.[0]?.url || '/images/default-image.png';
+          const imgUrl = hostel?.image?.[0]?.url || '/images/default-image.png';
 
           return (
             <div key={hostel.slug}>
