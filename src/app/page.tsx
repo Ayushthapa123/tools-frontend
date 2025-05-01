@@ -1,5 +1,5 @@
 import { Header as Header1 } from 'src/features/landing-page/Header1';
-import { CommonNav } from 'src/components/NavBar/CommonNav';
+import { CommonNav } from 'src/features/NavBar/CommonNav';
 
 import type { Metadata } from 'next';
 import { CheckSession } from 'src/features/CheckSession';

@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { FaLongArrowAltLeft } from 'react-icons/fa';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import Button from 'src/components/Button';
-import ImageUploader from 'src/components/ImageUploader';
+import ImageUploader from 'src/features/ImageUploader';
 import {
   CreateHomestayImage,
   CreateHomestayImageMutation,

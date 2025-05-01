@@ -4,7 +4,7 @@ import { SearchPage } from './SearchPage';
 import { Metadata } from 'next';
 import { Header } from 'src/features/Header';
 import Footer from 'src/features/Footer';
-import { CommonNav } from 'src/components/NavBar/CommonNav';
+import { CommonNav } from 'src/features/NavBar/CommonNav';
 
 export const metadata: Metadata = {
   title: 'Homestay  For Students And Young Professionals',

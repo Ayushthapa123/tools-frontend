@@ -8,7 +8,6 @@ import { ImageGallery } from 'src/app/detail-page/Gallery';
 import { FoodTable } from 'src/app/detail-page/FoodTable';
 import Button from 'src/components/Button';
 import { FindAmenityByHomestayId, FindAmenityByHomestayIdQueryVariables, FindAmenityByHomestayIdQuery, Homestay } from 'src/gql/graphql';
-import { MapComponent } from 'src/components/GoogleMap';
 import { MapProvider } from 'src/features/MapProvider';
 import { useRef, useState } from 'react';
 import { Accordion } from '@material-tailwind/react';
@@ -26,6 +25,7 @@ import { useRoomStore } from 'src/store/roomStore';
 import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { MapComponent } from 'src/features/GoogleMap';
 
 interface Iprops {
   hostel: Homestay | undefined | null;

@@ -8,7 +8,7 @@ import { Price, CreatePriceInput, CreatePriceMutation, CreatePriceMutationVariab
 import Button from "src/components/Button";
 import ReactSelect from "src/features/react-hook-form/ReactSelect";
 import DynamicPriceContainer from "./dynamic-price-rules/DynamicPriceContainer";
-import { Toggle } from "src/components/Toggle";
+import { Toggle } from "src/features/react-hook-form/Toggle";
 import { useToastStore } from "src/store/toastStore";
 
 export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Price | undefined, roomId: number , onNext: () => void , handleBack: () => void,}) => {

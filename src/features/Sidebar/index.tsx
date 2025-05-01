@@ -4,19 +4,19 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 
-import DashboardIcon from '../icons/Dashboard';
-import HostelInfoIcon from '../icons/HostelInfo';
-import RoomIcon from '../icons/Room';
+import DashboardIcon from '../../components/icons/Dashboard';
+import HostelInfoIcon from '../../components/icons/HostelInfo';
+import RoomIcon from '../../components/icons/Room';
 
-import LogoutIcon from '../icons/LogOut';
+import LogoutIcon from '../../components/icons/LogOut';
 import {  MdOutlineDirections } from 'react-icons/md';
 import { useState } from 'react';
 import { IoIosArrowUp } from 'react-icons/io';
-import IconButton from '../IconButton';
-import RulesIcon from '../icons/Rules';
+import IconButton from '../../components/IconButton';
+import RulesIcon from '../../components/icons/Rules';
 import { useUserStore } from 'src/store/userStore';   
 import { LogInUser, LogInUserMutation, LogInUserMutationVariables, LogOutMutationVariables, LogOut, LogOutMutation, UserType } from 'src/gql/graphql';
-import BookingIcon from '../icons/Booking';
+import BookingIcon from '../../components/icons/Booking';
 import { FaHotel, FaRegLightbulb } from 'react-icons/fa';
 import { useMutation } from '@tanstack/react-query';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';

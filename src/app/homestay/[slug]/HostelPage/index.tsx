@@ -13,7 +13,7 @@ import {
   Homestay,
 } from 'src/gql/graphql';
 import MainContent from './MainContent';
-import { CommonNav } from 'src/components/NavBar/CommonNav';
+import { CommonNav } from 'src/features/NavBar/CommonNav';
 import { useSearchParams } from 'next/navigation';
 import LoadingSpinner from 'src/components/Loading';
 export function HostelPage({ slug,  }: { slug: string}) {
