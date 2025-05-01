@@ -12,7 +12,7 @@ import LoadingSpinner from 'src/components/Loading';
 import { BookingForm } from './BookingForm';
 import { HomestayInfo } from './HomestayInfo';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { CommonNav } from 'src/components/NavBar/CommonNav';
+import { CommonNav } from 'src/features/NavBar/CommonNav';
 import { useRoomStore } from 'src/store/roomStore';
 import Footer from 'src/features/Footer';
 import {RxCross2} from "react-icons/rx"

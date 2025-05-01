@@ -8,7 +8,7 @@ import { ImageGallery } from 'src/app/detail-page/Gallery';
 import { FoodTable } from 'src/app/detail-page/FoodTable';
 import Button from 'src/components/Button';
 import { Homestay } from 'src/gql/graphql';
-import { MapComponent } from 'src/components/GoogleMap';
+import { MapComponent } from 'src/features/GoogleMap';
 import { MapProvider } from 'src/features/MapProvider';
 import { useRef, useState } from 'react';
 import { Accordion } from '@material-tailwind/react';

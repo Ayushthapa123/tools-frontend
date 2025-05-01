@@ -2,18 +2,18 @@
 
 import React, { useEffect, useState } from 'react';
 
-import Navbar from 'src/components/NavBar';
-import { Drawer } from 'src/components/Drawer';
+import Navbar from 'src/features/NavBar';
+import { Drawer } from 'src/features/Drawer';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import { RefreshToken, RefreshTokenMutation, RefreshTokenMutationVariables } from 'src/gql/graphql';
 import { useMutation } from '@tanstack/react-query';
 import { LayoutSkeleton } from '../../features/Skeletons/LayoutSkeleton';
 import { useRouter } from 'next/navigation';
 import { useAccessTokenStore } from 'src/store/accessTokenStore';
-import GlobalToast from 'src/components/GlobalToast';
+import GlobalToast from 'src/features/GlobalToast';
 
 import { useUserStore } from 'src/store/userStore';
-import { ThemeProvider } from 'src/components/themes/ThemeProvider';
+import { ThemeProvider } from 'src/features/themes/ThemeProvider';
 
 export default function Layout({
   children,
