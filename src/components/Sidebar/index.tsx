@@ -17,7 +17,7 @@ import RulesIcon from '../icons/Rules';
 import { useUserStore } from 'src/store/userStore';   
 import { LogInUser, LogInUserMutation, LogInUserMutationVariables, LogOutMutationVariables, LogOut, LogOutMutation, UserType } from 'src/gql/graphql';
 import BookingIcon from '../icons/Booking';
-import { FaHotel } from 'react-icons/fa';
+import { FaHotel, FaRegLightbulb } from 'react-icons/fa';
 import { useMutation } from '@tanstack/react-query';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 interface MenuItemType {
@@ -85,6 +85,7 @@ const Sidebar = () => {
         // { icon: <ServiceIcon />, text: 'Services', href: '/app/services', show: user.userType === UserType.HomestayOwner },
 
         { icon: <RulesIcon />, text: 'Rules', href: '/app/rules', show: user.userType === UserType.HomestayOwner },
+        { icon: <FaRegLightbulb />, text: 'Amenities', href: '/app/amenities', show: user.userType === UserType.HomestayOwner },
       ],
     },
 

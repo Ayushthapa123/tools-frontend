@@ -3,11 +3,12 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useState, useEffect } from 'react';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import { FindAmenityByHomestayId, FindAmenityByHomestayIdDocument, FindAmenityByHomestayIdQuery, FindAmenityByHomestayIdQueryVariables } from 'src/gql/graphql';
-import AmenitySelector from './AmenitySelector';
+import { AmenitySelector } from './AmenitySelector';
+import { AmenityDisplay } from './DisplayAmenity';
 
 
 
-const HomestayAmenitiesPage = ({ homestayId }: { homestayId: number }) => {
+export const HomestayAmenitiesPage = ({ homestayId }: { homestayId: number }) => {
   // GraphQL query to fetch homestay details
   const queryAmenity = useGraphqlClientRequest<FindAmenityByHomestayIdQuery, FindAmenityByHomestayIdQueryVariables>(FindAmenityByHomestayId.loc?.source.body!)
   const fetchData = async () => {
@@ -30,11 +31,6 @@ const HomestayAmenitiesPage = ({ homestayId }: { homestayId: number }) => {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="mb-6">
-        {/* <h1 className="text-3xl font-bold mb-2">{data.homestay.name}</h1> */}
-        <p className="text-gray-600">Manage amenities for your homestay</p>
-      </div>
-
       <AmenitySelector
         homestayId={(homestayId)}
         existingAmenities={existingAmenities}
@@ -44,5 +40,3 @@ const HomestayAmenitiesPage = ({ homestayId }: { homestayId: number }) => {
     </div>
   );
 };
-
-export default HomestayAmenitiesPage;
