@@ -68,7 +68,7 @@ export default function MainContent(props: Iprops) {
               <div className="relative mb-4 h-[500px] w-full overflow-hidden rounded-2xl bg-gray-200">
                   <div className="group relative h-full w-full">
                     <Image
-                      src={hostel?.image?.[0].url ?? '/images/default-image.png'}
+                      src={hostel?.image?.[0]?.url ?? '/images/default-image.png'}
                       alt={`Room image ${mainImage + 1}`}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
