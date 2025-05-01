@@ -24,8 +24,8 @@ export const FeaturedHomestay = () => {
   return (
     <div className="w-[90vw] mx-auto flex items-center justify-center flex-col  py-10">
       <div className="my-6 flex justify-between items-center flex-col  gap-0">
-        <h2 className="text-4xl font-bold text-primary  m-0">Featured Homestays</h2>
-        <p className="">Discover our most popular accommodations</p>
+        <h2 className="text-xl lg:text-4xl font-bold text-primary m-0">Featured Homestays</h2>
+        <p className="text-sm lg:text-lg text-center">Discover our most popular accommodations</p>
       </div>
 
       {isLoading && (

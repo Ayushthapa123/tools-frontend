@@ -15,13 +15,13 @@ export const Header = () => {
       <div
         className=" hero h-fit xl:min-h-[calc(100vh-70px)] w-[100vw] xl:w-full bg-cover bg-center relative"
       >
-        <Image src={'/background-image.png'} fill alt=''/>
+        <Image src={'/background-image.png'} fill alt='' className='object-cover'/>
         <div className=" hero-overlay min-h-[50vh] bg-opacity-60 z-10 pb-28 lg:pb-0">
           <div className=" inset-0 flex flex-col items-center justify-center px-4 text-center">
             <h1 className=" mb-4 mt-40 md:mt-80 text-4xl font-bold text-white md:text-5xl">
               Find Your Next Homestay
             </h1>
-            <p className="mb-8 text-lg text-white">
+            <p className="mb-8 text-base lg:text-lg text-white">
               Get the best prices on 200,000+ properties, in Nepal
             </p>
             <div className="">

@@ -15,10 +15,12 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: [ 'Poppins', 'Inter', 'system-ui', 'sans' ],
-        monospace: [ 'DM Mono', 'monospace' ],
-        sora: [ 'Sora', 'sans-serif' ],
-        teko: [ 'Teko', 'sans-serif' ],
+        // Primary font
+        sans: ['var(--font-sora)', 'system-ui', 'sans-serif'],
+        // Secondary font
+        display: ['var(--font-teko)', 'system-ui', 'sans-serif'],
+        // Keeping mono for code blocks if needed
+        mono: ['DM Mono', 'monospace'],
       },
       colors: {
 
