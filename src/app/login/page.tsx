@@ -179,7 +179,7 @@ const SignIn = () => {
               </form>
 
               <a
-                href="/forgot-password"
+                href="/auth/forgotpassword"
                 className="text-dark mb-2 inline-block text-base hover:text-primary hover:underline ">
                 Forget Password?
               </a>

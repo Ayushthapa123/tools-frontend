@@ -15,6 +15,7 @@ import { useSearchParams } from 'next/navigation';
 import { OwnProfile } from './OwnProfile';
 import { useUserStore } from 'src/store/userStore';
 import { OwnBookings } from './OwnBookings';
+import ChangePassword from './ChangePassword';
 
 export default function Page() {
   return (
@@ -99,6 +100,7 @@ function PageContent() {
       </div>
       {activeTab == 1 && <OwnProfile userType={user.userType} />}
       {activeTab == 2 && <OwnBookings userType={user.userType} />}
+      {activeTab == 3 && <ChangePassword userId={Number(user.userId)} />}
 
 
       <div className=" py-10"></div>
