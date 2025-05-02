@@ -1,0 +1,7 @@
+mutation RemoveAmenity($id:Int!){
+  removeAmenity(id:$id){
+    id
+    amenity
+    homestayId
+  }
+}

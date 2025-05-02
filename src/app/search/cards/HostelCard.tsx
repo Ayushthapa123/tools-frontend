@@ -53,14 +53,14 @@ export const HostelCard = (props: Iprops) => {
             fill
             className="rounded-xl object-cover rounded-bl-none rounded-br-none"
           />
-          <button className="absolute right-2 top-2 rounded-full bg-white/80 p-2 transition hover:bg-red">
+          {/* <button className="absolute right-2 top-2 rounded-full bg-white/80 p-2 transition hover:bg-red">
             <BiHeart
               className="h-5 w-5 text-gray-500 hover:text-white"
               onClick={() => {
                 isModalOpen && <SignupModal onClose={() => setIsModalOpen(false)} />;
               }}
             />
-          </button>
+          </button> */}
         </div>
       </div>
 

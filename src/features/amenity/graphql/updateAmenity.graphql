@@ -1,0 +1,7 @@
+mutation UpdateAmenity($updateAmenityInput:UpdateAmenityInput!){
+  updateAmenity(updateAmenityInput:$updateAmenityInput){
+    id
+    amenity
+    homestayId
+  }
+}

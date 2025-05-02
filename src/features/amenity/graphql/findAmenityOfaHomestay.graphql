@@ -1,0 +1,7 @@
+query FindAmenityByHomestayId($homestayId:Int!){
+  findAmenityByHomestayId(homestayId:$homestayId){
+    id
+    amenity
+    homestayId
+  }
+}
