@@ -137,7 +137,7 @@ export default function MainContent(props: Iprops) {
                 <div className="grid grid-cols-2 gap-y-5 gap-x-2 justify-between">
                   {
                     essentialAmenities.map((amenity:string) => (
-                      <div className="flex items-center">
+                      <div className="flex items-center" key={amenity}>
                         <div className=" flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600">
                           {amenity.includes('Wi-Fi') ? <WifiIcon className='text-secondary mr-3'/> : amenity.includes('Air conditioning / Heating') ? <FaThermometerHalf className='text-secondary mr-3'/> : amenity.includes('Free breakfast') ? <MdOutlineFreeBreakfast  className='text-secondary mr-3'/> : amenity.includes('Clean private bathroom with hot shower') ? <FaShower className='text-secondary mr-3'/> : amenity.includes('Free parking') ? <FaParking className='text-secondary mr-3'/> : amenity.includes('Free airport transfer') ? <FaPlane className='text-secondary mr-3'/> : <FaUmbrellaBeach className='text-secondary mr-3'/>}
                         </div>
