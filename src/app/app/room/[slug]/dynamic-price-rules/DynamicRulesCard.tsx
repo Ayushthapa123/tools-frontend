@@ -1,7 +1,8 @@
 import React from 'react'
 import { DynamicPricingRule } from 'src/gql/graphql'
 import { DynamicRulesModal } from './DynamicRulesModal'
-import { format } from 'date-fns'
+import formatDate from 'src/utils/date'
+
 
 export default function DynamicRulesCard({rule, roomId}: {rule: DynamicPricingRule, roomId: number}) {
   const getPriorityColor = (priority: number) => {
@@ -17,7 +18,7 @@ export default function DynamicRulesCard({rule, roomId}: {rule: DynamicPricingRu
           <span className="text-gray-900 font-medium w-40">{rule.name}</span>
           <span className="text-gray-600 w-28">NPR {rule.amount}/night</span>
           <span className="text-gray-600 w-40">
-            {format(new Date(rule.startDate), 'MMM d, yyyy')} - {format(new Date(rule.endDate), 'MMM d, yyyy')}
+            {formatDate(rule.startDate)} - {formatDate(rule.endDate)}
           </span>
           <span className={`px-2 py-1 rounded-full text-xs font-medium w-16 text-center ${getPriorityColor(rule.priority)}`}>
             {rule.priority}

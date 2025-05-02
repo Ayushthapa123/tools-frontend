@@ -1,5 +1,18 @@
 import React from 'react';
-import classNames from 'classnames';
+
+const combineClasses = (...classes: (string | Record<string, boolean> | undefined)[]): string => {
+  return classes
+    .map((item) => {
+      if (!item) return '';
+      if (typeof item === 'string') return item;
+      return Object.entries(item)
+        .filter(([_, value]) => value)
+        .map(([key]) => key)
+        .join(' ');
+    })
+    .filter(Boolean)
+    .join(' ');
+};
 
 interface IconButtonProps {
   children: React.ReactNode;
@@ -34,12 +47,12 @@ const IconButton: React.FC<IconButtonProps> = ({
 
   const disabledStyles = 'text-gray-400 bg-gray-100 cursor-not-allowed';
 
-  const combinedClassName = classNames(
+  const combinedClassName = combineClasses(
     baseStyles,
     sizeStyles[size],
     colorStyles[color],
     { [disabledStyles]: disabled },
-    className,
+    className
   );
 
   return (

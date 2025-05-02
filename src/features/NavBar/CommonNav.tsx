@@ -6,7 +6,6 @@ import { useUserStore } from 'src/store/userStore';
 
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import SignupModal from '../Modal/SignUpModal';
 import { useAccessTokenStore } from 'src/store/accessTokenStore';
 import { RefreshTokenMutationVariables } from 'src/gql/graphql';
 import { useRouter } from 'next/navigation';

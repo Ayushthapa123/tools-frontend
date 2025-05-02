@@ -3,7 +3,6 @@
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { BottomNav } from 'src/app/detail-page/BottomNav';
-import { CarouselImageSlider } from 'src/app/detail-page/AdImageSlider';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import Footer from 'src/features/Footer';
 import {
@@ -13,7 +12,7 @@ import {
   Homestay,
 } from 'src/gql/graphql';
 import MainContent from './MainContent';
-import { CommonNav } from 'src/components/NavBar/CommonNav';
+import { CommonNav } from 'src/features/NavBar/CommonNav';
 import { useSearchParams } from 'next/navigation';
 import LoadingSpinner from 'src/components/Loading';
 export function HostelPage({ slug,  }: { slug: string}) {

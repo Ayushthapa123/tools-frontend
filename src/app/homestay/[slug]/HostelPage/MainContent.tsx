@@ -4,14 +4,11 @@ import { BreadCrumbs } from 'src/app/detail-page/BreadCrumbs';
 import { CustomChip } from 'src/components/Chip';
 import { CgWebsite } from 'react-icons/cg';
 import Link from 'next/link';
-import { ImageGallery } from 'src/app/detail-page/Gallery';
 import { FoodTable } from 'src/app/detail-page/FoodTable';
 import Button from 'src/components/Button';
 import { FindAmenityByHomestayId, FindAmenityByHomestayIdQueryVariables, FindAmenityByHomestayIdQuery, Homestay } from 'src/gql/graphql';
-import { MapComponent } from 'src/components/GoogleMap';
 import { MapProvider } from 'src/features/MapProvider';
 import { useRef, useState } from 'react';
-import { Accordion } from '@material-tailwind/react';
 import { BsAirplane } from 'react-icons/bs';
 import { FcWiFiLogo } from 'react-icons/fc';
 import WifiIcon from 'src/components/icons/Wifi';
@@ -26,6 +23,7 @@ import { useRoomStore } from 'src/store/roomStore';
 import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { MapComponent } from 'src/features/GoogleMap';
 
 interface Iprops {
   hostel: Homestay | undefined | null;
@@ -136,7 +134,7 @@ export default function MainContent(props: Iprops) {
                 <div className="grid grid-cols-2 gap-y-5 gap-x-2 justify-between">
                   {
                     essentialAmenities.map((amenity:string) => (
-                      <div className="flex items-center">
+                      <div className="flex items-center" key={amenity}>
                         <div className=" flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600">
                           {amenity.includes('Wi-Fi') ? <WifiIcon className='text-secondary mr-3'/> : amenity.includes('Air conditioning / Heating') ? <FaThermometerHalf className='text-secondary mr-3'/> : amenity.includes('Free breakfast') ? <MdOutlineFreeBreakfast  className='text-secondary mr-3'/> : amenity.includes('Clean private bathroom with hot shower') ? <FaShower className='text-secondary mr-3'/> : amenity.includes('Free parking') ? <FaParking className='text-secondary mr-3'/> : amenity.includes('Free airport transfer') ? <FaPlane className='text-secondary mr-3'/> : <FaUmbrellaBeach className='text-secondary mr-3'/>}
                         </div>

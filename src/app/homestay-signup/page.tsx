@@ -21,7 +21,7 @@ import { useAccessTokenStore } from 'src/store/accessTokenStore';
 
 import { useSearchParams } from 'next/navigation';
 import Button from 'src/components/Button';
-import { FullLogo } from 'src/components/Logo/FullLogoWithText';
+import { FullLogo } from 'src/features/Logo/FullLogoWithText';
 
 export default function Home() {
   return (

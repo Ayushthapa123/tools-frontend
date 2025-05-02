@@ -9,7 +9,7 @@ import { Modal } from 'src/components/Modal';
 import TextArea from 'src/features/react-hook-form/TextArea';
 import TextInput from 'src/features/react-hook-form/TextField';
 import DatePicker from 'src/features/react-hook-form/DatePicker';
-import Toggle from 'src/components/Toggle';
+import Toggle from 'src/features/react-hook-form/Toggle';
 import {
   CreatePriceRule,
   CreatePriceRuleMutation,
