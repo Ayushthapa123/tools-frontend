@@ -95,6 +95,11 @@ export type CreateAddressInput = {
   subCity?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type CreateAmenityInput = {
+  amenity: Scalars['String']['input'];
+  homestayId: Scalars['Int']['input'];
+};
+
 export type CreateBookingInput = {
   bookingKey: Scalars['String']['input'];
   endDate: Scalars['DateTime']['input'];
@@ -312,6 +317,7 @@ export type Mutation = {
   changePassword: Scalars['String']['output'];
   confirmBooking: ConfirmBooking;
   createAddress: Address;
+  createAmenity: Amenity;
   createBooking: Booking;
   createContact: ContactDetails;
   createHomestay: Homestay;
@@ -332,6 +338,7 @@ export type Mutation = {
   loginUser: UsersAndToken;
   logout: LogoutResponse;
   refreshTokens: UsersHostelIdAndToken;
+  removeAmenity: Amenity;
   removeBooking: Booking;
   removePrice: Price;
   removePriceRule: DynamicPricingRule;
@@ -340,6 +347,7 @@ export type Mutation = {
   signUpWithGoogle: UsersAndToken;
   signupUser: UsersAndToken;
   updateAddress: Address;
+  updateAmenity: Amenity;
   updateBooking: Booking;
   updateContact: ContactDetails;
   updateHomestay: Homestay;
@@ -367,6 +375,11 @@ export type MutationConfirmBookingArgs = {
 
 export type MutationCreateAddressArgs = {
   data: CreateAddressInput;
+};
+
+
+export type MutationCreateAmenityArgs = {
+  createAmenityInput: CreateAmenityInput;
 };
 
 
@@ -460,6 +473,11 @@ export type MutationLoginUserArgs = {
 };
 
 
+export type MutationRemoveAmenityArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
 export type MutationRemoveBookingArgs = {
   id: Scalars['Float']['input'];
 };
@@ -498,6 +516,11 @@ export type MutationSignupUserArgs = {
 export type MutationUpdateAddressArgs = {
   addressId: Scalars['Float']['input'];
   data: UpdateAddressInput;
+};
+
+
+export type MutationUpdateAmenityArgs = {
+  updateAmenityInput: UpdateAmenityInput;
 };
 
 
@@ -595,6 +618,9 @@ export type Query = {
   bookingsByHomestay: Array<Booking>;
   bookingsWithKey: Array<Booking>;
   checkValidBooking: ValidInvalidBooking;
+  findAllAmenities: Array<Amenity>;
+  findAmenityByHomestayId: Array<Amenity>;
+  findAnAmenityById: Amenity;
   getAddressByHomestayId?: Maybe<Address>;
   getAllHomestays: Array<Homestay>;
   getAllSearchQueries: Array<SearchQueries>;
@@ -644,6 +670,16 @@ export type QueryCheckValidBookingArgs = {
   endDate: Scalars['DateTime']['input'];
   roomIds: Array<Scalars['Int']['input']>;
   startDate: Scalars['DateTime']['input'];
+};
+
+
+export type QueryFindAmenityByHomestayIdArgs = {
+  homestayId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindAnAmenityByIdArgs = {
+  id: Scalars['Int']['input'];
 };
 
 
@@ -876,6 +912,12 @@ export type UpdateAddressInput = {
   longitude?: InputMaybe<Scalars['Float']['input']>;
   street?: InputMaybe<Scalars['String']['input']>;
   subCity?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpdateAmenityInput = {
+  amenity?: InputMaybe<Scalars['String']['input']>;
+  homestayId?: InputMaybe<Scalars['Int']['input']>;
+  id: Scalars['Int']['input'];
 };
 
 export type UpdateBookingInput = {
@@ -1355,6 +1397,34 @@ export type GetUserByAccessTokenQueryVariables = Exact<{
 
 export type GetUserByAccessTokenQuery = { __typename?: 'Query', getUserByAccessToken?: { __typename?: 'User', email: string, fullName: string, id: string, isVerified: boolean, phoneNumber?: string | null, profilePicture?: string | null } | null };
 
+export type CreateAmenityMutationVariables = Exact<{
+  createAmenityInput: CreateAmenityInput;
+}>;
+
+
+export type CreateAmenityMutation = { __typename?: 'Mutation', createAmenity: { __typename?: 'Amenity', id: string, amenity: string, homestayId: number } };
+
+export type FindAmenityByHomestayIdQueryVariables = Exact<{
+  homestayId: Scalars['Int']['input'];
+}>;
+
+
+export type FindAmenityByHomestayIdQuery = { __typename?: 'Query', findAmenityByHomestayId: Array<{ __typename?: 'Amenity', id: string, amenity: string, homestayId: number }> };
+
+export type RemoveAmenityMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type RemoveAmenityMutation = { __typename?: 'Mutation', removeAmenity: { __typename?: 'Amenity', id: string, amenity: string, homestayId: number } };
+
+export type UpdateAmenityMutationVariables = Exact<{
+  updateAmenityInput: UpdateAmenityInput;
+}>;
+
+
+export type UpdateAmenityMutation = { __typename?: 'Mutation', updateAmenity: { __typename?: 'Amenity', id: string, amenity: string, homestayId: number } };
+
 export type GetFeaturedHomestaysQueryVariables = Exact<{
   pageSize: Scalars['Int']['input'];
 }>;
@@ -1412,6 +1482,10 @@ export const RefreshTokenDocument = {"kind":"Document","definitions":[{"kind":"O
 export const SignupUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"signupUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SignupInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signupUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userType"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}}]}}]}}]}}]} as unknown as DocumentNode<SignupUserMutation, SignupUserMutationVariables>;
 export const SignUpWithGoogleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"signUpWithGoogle"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SignupWithGoogleInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signUpWithGoogle"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}}]}}]}}]}}]} as unknown as DocumentNode<SignUpWithGoogleMutation, SignUpWithGoogleMutationVariables>;
 export const GetUserByAccessTokenDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getUserByAccessToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"token"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getUserByAccessToken"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"accessToken"},"value":{"kind":"Variable","name":{"kind":"Name","value":"token"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"fullName"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isVerified"}},{"kind":"Field","name":{"kind":"Name","value":"phoneNumber"}},{"kind":"Field","name":{"kind":"Name","value":"profilePicture"}}]}}]}}]} as unknown as DocumentNode<GetUserByAccessTokenQuery, GetUserByAccessTokenQueryVariables>;
+export const CreateAmenityDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateAmenity"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createAmenityInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateAmenityInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createAmenity"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createAmenityInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createAmenityInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"amenity"}},{"kind":"Field","name":{"kind":"Name","value":"homestayId"}}]}}]}}]} as unknown as DocumentNode<CreateAmenityMutation, CreateAmenityMutationVariables>;
+export const FindAmenityByHomestayIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindAmenityByHomestayId"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"homestayId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findAmenityByHomestayId"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"homestayId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"homestayId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"amenity"}},{"kind":"Field","name":{"kind":"Name","value":"homestayId"}}]}}]}}]} as unknown as DocumentNode<FindAmenityByHomestayIdQuery, FindAmenityByHomestayIdQueryVariables>;
+export const RemoveAmenityDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RemoveAmenity"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removeAmenity"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"amenity"}},{"kind":"Field","name":{"kind":"Name","value":"homestayId"}}]}}]}}]} as unknown as DocumentNode<RemoveAmenityMutation, RemoveAmenityMutationVariables>;
+export const UpdateAmenityDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateAmenity"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateAmenityInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateAmenityInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateAmenity"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"updateAmenityInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateAmenityInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"amenity"}},{"kind":"Field","name":{"kind":"Name","value":"homestayId"}}]}}]}}]} as unknown as DocumentNode<UpdateAmenityMutation, UpdateAmenityMutationVariables>;
 export const GetFeaturedHomestaysDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetFeaturedHomestays"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAllHomestays"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pageSize"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"address"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"country"}},{"kind":"Field","name":{"kind":"Name","value":"city"}},{"kind":"Field","name":{"kind":"Name","value":"subCity"}},{"kind":"Field","name":{"kind":"Name","value":"street"}},{"kind":"Field","name":{"kind":"Name","value":"latitude"}},{"kind":"Field","name":{"kind":"Name","value":"longitude"}}]}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}}]}},{"kind":"Field","name":{"kind":"Name","value":"rooms"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"capacity"}},{"kind":"Field","name":{"kind":"Name","value":"roomNumber"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"homestayId"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"roomId"}}]}},{"kind":"Field","name":{"kind":"Name","value":"price"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"baseAmount"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"isDynamicPricing"}},{"kind":"Field","name":{"kind":"Name","value":"discountAmount"}},{"kind":"Field","name":{"kind":"Name","value":"discountType"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"services"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"service"}}]}}]}}]}}]} as unknown as DocumentNode<GetFeaturedHomestaysQuery, GetFeaturedHomestaysQueryVariables>;
 
 export const BookingsByHomestay = gql`
@@ -2202,6 +2276,42 @@ export const GetUserByAccessToken = gql`
     isVerified
     phoneNumber
     profilePicture
+  }
+}
+    `;
+export const CreateAmenity = gql`
+    mutation CreateAmenity($createAmenityInput: CreateAmenityInput!) {
+  createAmenity(createAmenityInput: $createAmenityInput) {
+    id
+    amenity
+    homestayId
+  }
+}
+    `;
+export const FindAmenityByHomestayId = gql`
+    query FindAmenityByHomestayId($homestayId: Int!) {
+  findAmenityByHomestayId(homestayId: $homestayId) {
+    id
+    amenity
+    homestayId
+  }
+}
+    `;
+export const RemoveAmenity = gql`
+    mutation RemoveAmenity($id: Int!) {
+  removeAmenity(id: $id) {
+    id
+    amenity
+    homestayId
+  }
+}
+    `;
+export const UpdateAmenity = gql`
+    mutation UpdateAmenity($updateAmenityInput: UpdateAmenityInput!) {
+  updateAmenity(updateAmenityInput: $updateAmenityInput) {
+    id
+    amenity
+    homestayId
   }
 }
     `;

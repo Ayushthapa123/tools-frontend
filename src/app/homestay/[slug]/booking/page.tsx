@@ -90,6 +90,7 @@ if(homestay?.rooms){
           <div className="rounded-lg bg-white p-6 pr-1 shadow-md md:min-h-[780px] overflow-y-scroll">
             <HomestayInfo
               name={homestay.name}
+              homestayId = {Number(homestay.id)}
               description={homestay.description || ''}
               address={{
                 city: homestay.address?.city || '',

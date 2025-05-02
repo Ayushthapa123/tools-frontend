@@ -1,0 +1,7 @@
+mutation CreateAmenity($createAmenityInput:CreateAmenityInput!){
+  createAmenity(createAmenityInput:$createAmenityInput){
+    id
+    amenity
+    homestayId
+  }
+}

@@ -12,10 +12,12 @@ import { MdEmail, MdPhone } from 'react-icons/md';
 import { FaInfoCircle } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { useRoomStore } from 'src/store/roomStore';
+import { AmenityDisplay } from 'src/features/amenity/DisplayAmenity';
 
 interface HomestayInfoProps {
   name: string;
   description: string;
+  homestayId: number;
   address: {
     city: string;
     country: string;
@@ -35,6 +37,7 @@ interface HomestayInfoProps {
 
 export const HomestayInfo = ({
   name,
+  homestayId,
   description,
   address,
   contact,
@@ -84,7 +87,7 @@ export const HomestayInfo = ({
             <button
               onClick={() => setActiveTab('rooms')}
               className={`border-b-2 py-4 px-1 text-sm font-medium ${activeTab === 'rooms'
-                ? 'border-blue-500 text-blue'
+                ? 'border-blue text-blue'
                 : 'border-transparent text-gray-600 hover:border-gray-300 hover:text-gray-700'
                 }`}
             >
@@ -93,7 +96,7 @@ export const HomestayInfo = ({
             <button
               onClick={() => setActiveTab('description')}
               className={`border-b-2 py-4 px-1 text-sm font-medium ${activeTab === 'description'
-                ? 'border-blue-500 text-blue'
+                ? 'border-blue text-blue'
                 : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
                 }`}
             >
@@ -102,11 +105,20 @@ export const HomestayInfo = ({
             <button
               onClick={() => setActiveTab('contact')}
               className={`border-b-2 py-4 px-1 text-sm font-medium ${activeTab === 'contact'
-                ? 'border-blue-500 text-blue'
+                ? 'border-blue text-blue'
                 : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
                 }`}
             >
               Contact Info
+            </button>
+            <button
+              onClick={() => setActiveTab('amenity')}
+              className={`border-b-2 py-4 px-1 text-sm font-medium ${activeTab === 'amenity'
+                ? 'border-blue text-blue'
+                : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                }`}
+            >
+              Amenities
             </button>
           </nav>
         </div>
@@ -161,6 +173,15 @@ export const HomestayInfo = ({
               <h2 className="mb-4 text-xl font-semibold text-gray-800">About This Property</h2>
               <div className="prose max-w-none">
                 <RichTextEditor editorRef={editorRef} readOnly={true} />
+              </div>
+            </div>
+          )}
+          
+          {/* Amenity Tab */}
+          {activeTab === 'amenity' && (
+            <div className="rounded-lg bg-white p-4">
+              <div className="prose max-w-none">
+                <AmenityDisplay homestayId={homestayId} key={homestayId} showAll={true} />
               </div>
             </div>
           )}

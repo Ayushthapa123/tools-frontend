@@ -48,18 +48,18 @@ export function SearchPage() {
         </Suspense>
 
         <div className="flex border-b p-10 py-5 ">
-          <div className="flex-grow ">
+          <div className="flex-grow flex items-center justify-between">
             <h2 className="flex text-4xl capitalize text-primary">
               <span>
                 <MdApartment />
               </span>
               {subCity ? `${subCity}` : ''} {city ? city + ",":""} {country}
             </h2>
-            <p className="">{count} <span className='text-primary/80'>Homestays Found!</span></p>
+            <p className=""> <span className='text-secondary/80'>{count} Homestays Found!</span></p>
           </div>
         </div>
         <div className=" relative flex h-auto  w-full overflow-y-hidden">
-          <div className="relative grid h-auto flex-grow gap-3 overflow-y-scroll p-5">
+          <div className="relative grid h-auto flex-grow gap-3 p-5 w-[90vw] mx-auto">
             <SearchResults
               city={city}
               subCity={subCity}

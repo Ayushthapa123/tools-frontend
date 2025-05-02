@@ -26,6 +26,7 @@ import RichTextEditor from 'src/components/RichTextEditor';
 import {  MapComponent } from './MapComponent';
 import { MapProvider } from 'src/features/MapProvider';
 import { WallpaperGallery } from './gallery/WallpaperGallery';
+import HomestayAmenitiesPage from 'src/features/amenity/HomestayAmenityPage';
 
 export const HostelInfo = () => {
   const queryHostelData = useGraphqlClientRequest<
@@ -58,7 +59,6 @@ export const HostelInfo = () => {
           <LoadingSpinner color="primary" size="lg" />
         </div>
       )}
-
 
       {hostelData?.id && (
         <div>

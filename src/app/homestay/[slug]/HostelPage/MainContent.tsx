@@ -6,22 +6,24 @@ import { CgWebsite } from 'react-icons/cg';
 import Link from 'next/link';
 import { FoodTable } from 'src/app/detail-page/FoodTable';
 import Button from 'src/components/Button';
-import { Homestay } from 'src/gql/graphql';
-import { MapComponent } from 'src/features/GoogleMap';
+import { FindAmenityByHomestayId, FindAmenityByHomestayIdQueryVariables, FindAmenityByHomestayIdQuery, Homestay } from 'src/gql/graphql';
 import { MapProvider } from 'src/features/MapProvider';
 import { useRef, useState } from 'react';
 import { BsAirplane } from 'react-icons/bs';
 import { FcWiFiLogo } from 'react-icons/fc';
 import WifiIcon from 'src/components/icons/Wifi';
 import Image from 'next/image';
-import { FaFacebook, FaParking, FaRegStar, FaStar } from 'react-icons/fa';
+import { FaFacebook, FaParking, FaPlane, FaRegStar, FaShower, FaStar, FaUmbrellaBeach, FaThermometerHalf } from 'react-icons/fa';
 import RichTextEditor from 'src/components/RichTextEditor';
 import { RoomCardFull } from '../booking/RoomCardFull';
 import { FaPhoneFlip } from 'react-icons/fa6';
-import { MdEmail, MdLocalOffer } from 'react-icons/md';
+import { MdEmail, MdLocalOffer, MdOutlineFreeBreakfast } from 'react-icons/md';
 import { GrFacebook, GrInstagram, GrYoutube } from 'react-icons/gr';
 import { useRoomStore } from 'src/store/roomStore';
 import { motion } from 'framer-motion';
+import { useQuery } from '@tanstack/react-query';
+import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { MapComponent } from 'src/features/GoogleMap';
 
 interface Iprops {
   hostel: Homestay | undefined | null;
@@ -39,12 +41,35 @@ export default function MainContent(props: Iprops) {
   const editorRef = useRef(hostel?.description ?? '');
   const { roomIds } = useRoomStore();
 
+  // for amenities 
+  const queryAmenity = useGraphqlClientRequest<FindAmenityByHomestayIdQuery, FindAmenityByHomestayIdQueryVariables>(FindAmenityByHomestayId.loc?.source.body!)
+  const fetchData = async () => {
+    const res = await queryAmenity({homestayId: Number(hostel?.id )?? 0 });
+    console.log("fetching amenity", res);
+    return res.findAmenityByHomestayId[0] ?? null;
+  };    
+
+  const { data:amenities, error, isLoading: loading } = useQuery({
+    queryKey: [ 'getAmenity' ],
+    queryFn: fetchData,
+    enabled: !!Number(hostel?.id),
+  });
+// Parse the amenities string into an array
+  const amenitiesArray = amenities ? amenities.amenity.split(',').filter(Boolean) : [];
+  
+  const essentialAmenities = [
+    'Wi-Fi (Free)',
+    'Air conditioning / Heating',
+    'Free breakfast',
+    'Clean private bathroom with hot shower',
+    'Free parking',
+  ].filter(amenity => amenitiesArray.includes(amenity));
   return (
     <div className="bg-gray-50 pb-4">
       <div className="container mx-auto">
         <BreadCrumbs name={hostel?.name ?? ''} />
         <div className="box-border w-full lg:flex lg:gap-8 lg:px-10">
-          <div className="box-border flex-grow overflow-x-hidden rounded-xl bg-white p-3 shadow-sm md:p-4 md:px-4">
+          <div className="box-border flex-grow overflow-x-hidden overflow-y-hidden rounded-xl bg-white p-3 shadow-sm md:p-4 md:px-4">
             <div className="mb-6">
               <div className="flex items-start justify-between">
                 <div>
@@ -61,7 +86,6 @@ export default function MainContent(props: Iprops) {
                 </div> */}
               </div>
             </div>
-
             <div className="mb-8">
               <div className="relative mb-4 h-[500px] w-full overflow-hidden rounded-2xl bg-gray-200">
                   <div className="group relative h-full w-full">
@@ -109,26 +133,18 @@ export default function MainContent(props: Iprops) {
             <div className="space-y-6">
 
               <div className="rounded-xl bg-white p-6 shadow-sm">
-                <h3 className="mb-4 text-lg font-semibold text-gray-800">Hotel Facilities</h3>
+                <h3 className="mb-4 text-lg font-semibold text-gray-800">Top Homestay Facilities</h3>
                 <div className="grid grid-cols-2 gap-y-5 gap-x-2 justify-between">
-                  <div className="flex items-center">
-                    <div className="mr-3 flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600">
-                      <BsAirplane className='text-secondary'/>
-                    </div>
-                    <span className="text-sm text-gray-700">Airport Transport</span>
-                  </div>
-                  <div className="flex items-center">
-                    <div className="mr-3 flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600">
-                      <WifiIcon className='text-secondary'/>
-                    </div>
-                    <span className="text-sm text-gray-700">Free WiFi</span>
-                  </div>
-                  <div className="flex items-center">
-                    <div className="mr-3 flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600">
-                      <FaParking className='text-secondary'/>
-                    </div>
-                    <span className="text-sm text-gray-700">Free Parking</span>
-                  </div>
+                  {
+                    essentialAmenities.map((amenity:string) => (
+                      <div className="flex items-center">
+                        <div className=" flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+                          {amenity.includes('Wi-Fi') ? <WifiIcon className='text-secondary mr-3'/> : amenity.includes('Air conditioning / Heating') ? <FaThermometerHalf className='text-secondary mr-3'/> : amenity.includes('Free breakfast') ? <MdOutlineFreeBreakfast  className='text-secondary mr-3'/> : amenity.includes('Clean private bathroom with hot shower') ? <FaShower className='text-secondary mr-3'/> : amenity.includes('Free parking') ? <FaParking className='text-secondary mr-3'/> : amenity.includes('Free airport transfer') ? <FaPlane className='text-secondary mr-3'/> : <FaUmbrellaBeach className='text-secondary mr-3'/>}
+                        </div>
+                        <span className="text-xs text-gray-700">{amenity}</span>
+                      </div>
+                    ))
+                 }
                 </div>
               </div>
 
