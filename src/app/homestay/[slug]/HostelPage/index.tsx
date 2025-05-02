@@ -3,7 +3,6 @@
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { BottomNav } from 'src/app/detail-page/BottomNav';
-import { CarouselImageSlider } from 'src/app/detail-page/AdImageSlider';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import Footer from 'src/features/Footer';
 import {

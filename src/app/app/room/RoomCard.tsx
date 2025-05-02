@@ -12,7 +12,7 @@ import { UpdateRoomModal } from './UpdateRoomModal';
 import Link from 'next/link';
 import EditIcon from 'src/components/icons/Edit';
 import Image from 'next/image';
-import { Badge } from '@material-tailwind/react';
+import { Badge } from 'src/components/Badge';
 
 interface Iprops {
   id: number | string;

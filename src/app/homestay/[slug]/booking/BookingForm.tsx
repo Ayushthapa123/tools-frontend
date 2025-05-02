@@ -10,7 +10,6 @@ import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import { CheckValidBooking, CheckValidBookingQuery, CheckValidBookingQueryVariables, Room, RoomCapacity, RoomStatus } from 'src/gql/graphql';
 import { useEffect, useState } from 'react';
 import { useUserStore } from 'src/store/userStore';
-import { v4 as uuidv4 } from 'uuid';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useRoomStore } from 'src/store/roomStore';
 import LoadingSpinner from 'src/components/Loading';
