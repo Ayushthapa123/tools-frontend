@@ -6,8 +6,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import Button from 'src/components/Button';
-import { Logo } from 'src/components/Logo';
-import { FullLogo } from 'src/components/Logo/FullLogoWithText';
+import { Logo } from 'src/features/Logo';
+import { FullLogo } from 'src/features/Logo/FullLogoWithText';
 import TextInput from 'src/features/react-hook-form/TextField';
 import { ForgotPassword, ForgotPasswordMutation, ForgotPasswordMutationVariables } from 'src/gql/graphql';
 

@@ -1,6 +1,6 @@
 'use client';
 
-import GlobalToast from "src/components/GlobalToast";
+import GlobalToast from "src/features/GlobalToast";
 
 export default function AuthLayout({
   children,
