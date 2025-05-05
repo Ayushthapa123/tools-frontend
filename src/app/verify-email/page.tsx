@@ -70,7 +70,7 @@ export default function VerifyUserEmail() {
                       <MdError className="text-6xl text-error" />
                     </div>
                     <h2 className="text-2xl font-semibold text-error mb-4">Verification Failed</h2>
-                    <p className="text-gray-600 mb-4">We couldn't verify your email address.</p>
+                    <p className="text-gray-600 mb-4">We couldn not verify your email address.</p>
                     <div className="bg-error/10 rounded-lg p-4 mb-4">
                       <p className="text-error">{error.message}</p>
                     </div>

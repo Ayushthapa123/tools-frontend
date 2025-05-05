@@ -3,6 +3,7 @@ import { Sora, Teko } from 'next/font/google';
 import './globals.css';
 import Head from 'next/head';
 import { TopLevelWrapper } from 'src/features/TopLevelWrapper';
+import PWARegister from 'src/components/PWARegister';
 
 const sora = Sora({
   subsets: ['latin'],
@@ -21,6 +22,11 @@ export const metadata: Metadata = {
   description:
     'homestay offers a comprehensive platform that allows you to seamlessly upload and manage all the details of your hostel online. By leveraging our user-friendly interface, you can ensure that potential guests can easily find your hostel, check availability, and reach out to you directly',
   manifest: '/manifest.json',
+  icons: {
+    icon: '/logo512.png',
+    apple: '/logo512.png',
+  },
+  themeColor: '#3B5D50',
 };
 
 export default function RootLayout({
