@@ -11,9 +11,6 @@ const withPWA = createPWAConfig({
 });
 
 const config = {
-  Server: {
-    port: 80,
-  },
   images: {
     domains: ["images.unsplash.com","s3-np1.datahub.com.np"],
   },
