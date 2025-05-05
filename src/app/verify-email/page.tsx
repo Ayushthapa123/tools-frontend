@@ -3,11 +3,11 @@ import { QueryClient, useMutation, useQueryClient } from "@tanstack/react-query"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useGraphqlClientRequest } from "src/client/useGraphqlClientRequest"
 import { VerifyEmail, VerifyEmailDocument, VerifyEmailInput, VerifyEmailMutation, VerifyEmailMutationVariables } from "src/gql/graphql"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, Suspense } from "react"
 import { MdMarkEmailRead, MdError, MdEmail } from "react-icons/md"
 import Link from "next/link"
 
-export default function VerifyUserEmail() {
+function VerifyUserEmailInner() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -32,8 +32,7 @@ export default function VerifyUserEmail() {
 
     hasTriggered.current = true;
     verifyUser({ token: { token } as VerifyEmailInput });
-  }, [  ]);
-
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -72,7 +71,7 @@ export default function VerifyUserEmail() {
                       <MdError className="text-6xl text-error" />
                     </div>
                     <h2 className="text-2xl font-semibold text-error mb-4">Verification Failed</h2>
-                    <p className="text-gray-600 mb-4">We couldn't verify your email address.</p>
+                    <p className="text-gray-600 mb-4">We couldn not verify your email address.</p>
                     <div className="bg-error/10 rounded-lg p-4 mb-4">
                       <p className="text-error">{error.message}</p>
                     </div>
@@ -108,4 +107,12 @@ export default function VerifyUserEmail() {
       </div>
     </div>
   )
+}
+
+export default function VerifyUserEmail() {
+  return (
+    <Suspense>
+      <VerifyUserEmailInner />
+    </Suspense>
+  );
 } 

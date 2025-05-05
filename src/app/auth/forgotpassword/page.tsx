@@ -103,7 +103,7 @@ export default function ForgotUserPassword() {
                 <>
                   <h2 className="text-2xl font-semibold text-primary mb-6">Forgot Password</h2>
                   <p className="text-gray-400 mb-8 w-full">
-                    Enter your email address and we'll send you instructions to reset your password.
+                    Enter your email address and we will send you instructions to reset your password.
                   </p>
 
                   {error && <p className="text-error mb-4">{error}</p>}

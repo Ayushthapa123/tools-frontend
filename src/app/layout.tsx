@@ -3,6 +3,7 @@ import { Sora, Teko } from 'next/font/google';
 import './globals.css';
 import Head from 'next/head';
 import { TopLevelWrapper } from 'src/features/TopLevelWrapper';
+import PWARegister from 'src/components/PWARegister';
 
 const sora = Sora({
   subsets: ['latin'],
@@ -16,12 +17,17 @@ const teko = Teko({
   variable: '--font-teko',
 });
 
-export const metadata: Metadata = {
-  title: 'Homestay Management Software',
-  description:
-    'homestay offers a comprehensive platform that allows you to seamlessly upload and manage all the details of your hostel online. By leveraging our user-friendly interface, you can ensure that potential guests can easily find your hostel, check availability, and reach out to you directly',
-  manifest: '/manifest.json',
-};
+// export const metadata: Metadata = {
+//   title: 'Homestay Management Software',
+//   description:
+//     'homestay offers a comprehensive platform that allows you to seamlessly upload and manage all the details of your hostel online. By leveraging our user-friendly interface, you can ensure that potential guests can easily find your hostel, check availability, and reach out to you directly',
+//   manifest: '/manifest.json',
+//   icons: {
+//     icon: '/logo512.png',
+//     apple: '/logo512.png',
+//   },
+//   themeColor: '#3B5D50',
+// };
 
 export default function RootLayout({
   children,
@@ -30,18 +36,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Head>
+        <Head>
         <link rel="apple-touch-icon" sizes="180x180" href="/logo512.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/logo512.png" />
-        <link rel="icon" type="image/png" sizes="512x512" href="/logo512.png" />
+
+        <link rel="icon" href="/logo512.png" />
 
         <link rel="manifest" href="/manifest.json" />
-
-        <link rel="mask-icon" href="/home-stay-logo.png" color="#3B5D50" />
-
+        <meta name="theme-color" content="#000" />
+        <link rel="mask-icon" href="/logo512.png" color="#5bbad5" />
         <meta name="msapplication-TileColor" content="#ffffff" />
-        <meta name="nepal-theme" content="#3B5D50" />
-
+        <meta name="theme-color" content="#ffffff" />
         <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
       </Head>
       <body className={`${sora.variable} ${teko.variable} font-sans bg-base-body`}>
