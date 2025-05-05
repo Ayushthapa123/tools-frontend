@@ -13,17 +13,19 @@ import ReactSelect from 'src/features/react-hook-form/ReactSelect';
 import { useForm } from 'react-hook-form';
 import DatePicker from 'src/features/react-hook-form/DatePicker';
 import { useToastStore } from 'src/store/toastStore';
+import axios from 'axios';
 
 export const OwnProfile = (props: { userType: string }) => {
   const { user } = useUserStore();
   const router = useRouter();
+  const [ loading, setLoading ] = useState(false);
   const mutateLogOutRequest = useGraphqlClientRequest<LogOutMutation, LogOutMutationVariables>(
     LogOut.loc?.source.body!,
   );
+  const { mutateAsync } = useMutation({ mutationFn: mutateLogOutRequest });
   const mutateUpdateUser = useGraphqlClientRequest<UpdateUserMutation, UpdateUserMutationVariables>(
     UpdateUser.loc?.source.body!
   );
-  const { mutateAsync } = useMutation({ mutationFn: mutateLogOutRequest });
   const { mutateAsync: updateUser } = useMutation({ mutationFn: mutateUpdateUser });
   const { setShowToast, setMessage, setRole } = useToastStore();
   const [ openPersonalModal, setOpenPersonalModal ] = useState(false);
@@ -112,10 +114,69 @@ export const OwnProfile = (props: { userType: string }) => {
     });
   };
 
+  const [imageUrl,setImageUrl] = useState(userData?.profilePicture || '')
   const onSubmitProfilePicture = async (data: any) => {
-    console.log('edit profile picture');
-    console.log(data);
+    setLoading(true);
+    try {
+      const formData = new FormData();
+      if (data.profilePicture && data.profilePicture[0]) {
+        formData.append('image', data.profilePicture[0]);
+      } else {
+        setShowToast(true);
+        setMessage('Please select a file.');
+        setRole('error');
+        setLoading(false);
+        return;
+      }
+      console.log("formData", formData);
+      let response;
+      try {
+        response = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL!}/upload/image`,
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          },
+        );
+      } catch (err) {
+        setShowToast(true);
+        setMessage('Image upload failed!');
+        setRole('error');
+        return;
+      }
+      console.log("response", response);
+      setImageUrl(response.data.imageUrl);
+      console.log("imageUrl", imageUrl);
+
+      const imageUploaded = await updateUser({
+        input: {
+          id: Number(user.userId),
+          profilePicture: response.data.imageUrl,
+        }
+      });
+
+      if (imageUploaded?.updateUser?.profilePicture) {
+        console.log("imageUploaded", imageUploaded);
+        setShowToast(true);
+        setMessage('Profile picture updated successfully!');
+        setRole('success');
+        setOpenProfilePictureModal(false); // Optionally close modal
+      } else {
+        setShowToast(true);
+        setMessage('Something went wrong upload!');
+        setRole('error');
+      }
+    } catch (err) {
+      setShowToast(true);
+      setMessage('Something went wrong file!');
+      setRole('error');
+    } finally {
+      setLoading(false);
+    }
   }
+
   return (
     <div>
       <div className=" w-full mt-[100px] min-h-[calc(100vh-400px)]">
@@ -124,8 +185,8 @@ export const OwnProfile = (props: { userType: string }) => {
             <div className="avatar placeholder relative h-[80px] w-[80px] lg:h-[130px] lg:w-[130px]">
 
               {
-                userData?.profilePicture ? (
-                  <Image className=" rounded-full border-3" src={userData.profilePicture} alt="user avatar" fill />
+                userData?.profilePicture || imageUrl ? (
+                  <Image className=" rounded-full border border-black" src={userData?.profilePicture || imageUrl || ""} alt="user avatar" fill />
                 ) : (
                   <div className="w-full h-full rounded-full bg-neutral text-neutral-content">
                     <span className="text-[50px]">{user.userName.charAt(0)}</span>
@@ -133,7 +194,7 @@ export const OwnProfile = (props: { userType: string }) => {
                 )
               }
               <button
-                className="absolute bottom-1 right-0 rounded-full p-1 text-[21px] text-secondary lg:bottom-[5px] lg:right-[14px]"
+                className={`absolute bottom-1 right-0 rounded-full p-1 text-[21px] ${userData?.profilePicture || imageUrl ? 'text-white' : 'text-primary'} lg:bottom-[5px] lg:right-[14px]`}
                 onClick={() => setOpenProfilePictureModal(true)}>
                 <FaCamera />
               </button>
@@ -231,4 +292,4 @@ export const OwnProfile = (props: { userType: string }) => {
       </Modal>
     </div>
   );
-};
+}

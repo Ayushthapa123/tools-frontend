@@ -1,6 +1,7 @@
 query getUserById($id: Float!) {
   getUserById(id: $id) {
     id
+    isVerified
     fullName
     email
     phoneNumber

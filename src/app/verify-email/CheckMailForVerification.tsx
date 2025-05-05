@@ -1,0 +1,57 @@
+import { FullLogo } from 'src/features/Logo/FullLogoWithText';
+import Button from 'src/components/Button';
+import { MdEmail } from 'react-icons/md';
+import Link from 'next/link';
+import { Logo } from 'src/features/Logo';
+import { LogOut } from 'src/gql/graphql';
+import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { LogOutMutation } from 'src/gql/graphql';
+import { LogOutMutationVariables } from 'src/gql/graphql';
+import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+export const CheckMailForVerification = () => {
+  const router = useRouter();
+  const mutateLogOutRequest = useGraphqlClientRequest<LogOutMutation, LogOutMutationVariables>(
+    LogOut.loc?.source.body!,
+  );
+  const { mutateAsync } = useMutation({ mutationFn: mutateLogOutRequest });
+  const handleLogout = () => {
+    mutateAsync({}).then(res => {
+      if (res?.logout?.success) {
+        router.push('/');
+      }
+    });
+  };
+  return (
+    <section className="flex min-h-screen flex-col justify-center bg-gray-100 p-5 align-middle lg:py-[3rem]">
+      <div className="container mx-auto">
+        <div className="-mx-4 flex flex-wrap">
+          <div className="w-full px-4">
+            <div className="relative mx-auto max-w-[450px] rounded-lg bg-white px-[1rem] py-[1.5rem] text-center shadow-md sm:px-12 md:px-[2.5rem]">
+              <div className="relative mb-5 flex justify-center">
+                <div className='flex justify-center'>
+                <Logo />
+                <FullLogo />
+                </div>
+              </div>
+              <div className="flex justify-center mb-4">
+                <MdEmail className="text-6xl text-primary animate-bounce" />
+              </div>
+              <h2 className="text-2xl font-semibold text-primary mb-4">Check Your Email</h2>
+              <p className="text-gray-600 mb-6">
+                We have sent a verification link to your email address. Please check your inbox and click the link to verify your account. You must verify your email before you can access the site.
+              </p>
+              <p className="text-sm text-gray-500 mt-4">
+                Didn&apos;t receive the email? Check your spam folder
+                {/* <span className="text-primary font-medium cursor-pointer hover:underline">Resend Email</span>. */}
+              </p>
+              <div>
+                <Button label={"Log out"} className='w-full text-primary ' onClick={() => handleLogout()} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};  
