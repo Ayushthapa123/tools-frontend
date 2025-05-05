@@ -41,7 +41,7 @@ export function ReactSelect<T extends FieldValues>(props: IProps<T>) {
               className="text-sm font-semibold text-gray-600"
             >
               {props.label}{' '}
-              {props.required && <span className="text-red-500">*</span>}
+              {props.required && <span className="text-error">*</span>}
             </label>
           )}
         </div>
