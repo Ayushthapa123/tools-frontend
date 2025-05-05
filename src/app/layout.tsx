@@ -1,10 +1,21 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Sora, Teko } from 'next/font/google';
 import './globals.css';
 import Head from 'next/head';
 import { TopLevelWrapper } from 'src/features/TopLevelWrapper';
 
-const inter = Inter({ subsets: ['latin'] });
+const sora = Sora({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-sora',
+});
+
+const teko = Teko({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-teko',
+});
+
 export const metadata: Metadata = {
   title: 'Homestay Management Software',
   description:
@@ -33,7 +44,7 @@ export default function RootLayout({
 
         <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
       </Head>
-      <body className={`${inter.className} bg-base-body`}>
+      <body className={`${sora.variable} ${teko.variable} font-sans bg-base-body`}>
         <TopLevelWrapper>{children}</TopLevelWrapper>
       </body>
     </html>

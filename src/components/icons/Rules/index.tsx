@@ -8,7 +8,7 @@ interface IconProps {
 }
 
 const RulesIcon: React.FC<IconProps> = ({ className = '' }) => {
-  return <FaFileContract className={`text-secondary ${className}`} />;
+  return <FaFileContract className={`text-primary ${className}`} />;
 };
 
 export default RulesIcon;

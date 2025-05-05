@@ -205,7 +205,7 @@ export const AmenitySelector = ({
       <h1 className="text-2xl font-bold mb-2 text-gray-800">Homestay Amenities</h1>
       <p className="mb-6 text-gray-600">Select all amenities available at your property.</p>
 
-      {Object.keys(amenityCategories).map((category) => (
+      {Object.keys(amenityCategories).map((category:any) => (
         <div key={category} className="mb-6 border-b border-gray-100 pb-4 last:border-b-0">
           <div
             className="flex justify-between items-center mb-3 cursor-pointer group"
@@ -230,13 +230,13 @@ export const AmenitySelector = ({
                 </span>
               </h2>
             </div>
-            <div className="flex space-x-2">
+            <div className="flex md:space-x-2">
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   selectAllInCategory(category);
                 }}
-                className="px-3 underline py-1 text-xs bg-white border border-gray-300 text-gray-700 rounded-full hover:bg-gray-50 transition-colors"
+                className="px-3 underline text-nowrap py-1 text-xs bg-white border border-gray-300 text-gray-700 rounded-full hover:bg-gray-50 transition-colors"
               >
                 Select All
               </button>

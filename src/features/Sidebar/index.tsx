@@ -84,12 +84,12 @@ const Sidebar = () => {
         // { icon: <WifiIcon />, text: 'Amenities', href: '/app/amenities', show: user.userType === UserType.HomestayOwner },
         // { icon: <ServiceIcon />, text: 'Services', href: '/app/services', show: user.userType === UserType.HomestayOwner },
 
-        { icon: <RulesIcon />, text: 'Rules', href: '/app/rules', show: user.userType === UserType.HomestayOwner },
+        { icon: <RulesIcon className='text-primary'/>, text: 'Rules', href: '/app/rules', show: user.userType === UserType.HomestayOwner },
         { icon: <FaRegLightbulb />, text: 'Amenities', href: '/app/amenities', show: user.userType === UserType.HomestayOwner },
       ],
     },
 
-  ];
+  ];  
 
   /**
    * Handles user logout by removing the refresh token from localStorage
@@ -210,7 +210,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ icon, text, href, isActive, handleF
             isActive ? 'bg-slate-100 font-semibold text-primary' : 'font-medium text-dark hover:bg-slate-100'
           }`}
         >
-          <div className="relative top-[5px] font-bold">{icon}</div>
+          <div className="relative top-[5px] font-bold text-primary">{icon}</div>
           <div className="relative left-[-8px] flex items-center">{text}</div>
         </div>
       </Link>

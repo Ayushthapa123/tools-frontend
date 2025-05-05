@@ -7,14 +7,17 @@ import { BsCamera } from 'react-icons/bs';
 export const HowItWorks = () => {
   return (
     <div className="container-group mb-20">
-      <div className="mx-auto mb-[30px]  text-center ">
-        <span className="mb-2 block text-2xl font-semibold text-secondary">
+      <div className="mx-auto mb-[30px] text-center">
+        <span className="mb-2 block text-2xl font-display font-semibold text-secondary">
           Get Started In Three Steps:
         </span>
-        <h2 className="mb-4 text-2xl font-bold text-primary  md:text-[36px]">
+        <h2 className="mb-4 text-2xl font-bold text-primary md:text-[36px]">
           Start designing your interior or exterior by following these 3 simple steps
         </h2>
       </div>
+      <p className="text-center text-[18px] font-display font-medium text-secondary lg:text-[25px]">
+        Start designing your interior or exterior by following these 3 simple steps
+      </p>
       {/* <h2 className=" text-center text-[36px] font-bold text-primary lg:text-[50px]">
         How Does It Works?
       </h2>

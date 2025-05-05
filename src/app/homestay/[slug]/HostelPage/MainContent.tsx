@@ -86,7 +86,7 @@ export default function MainContent(props: Iprops) {
                 </div> */}
               </div>
             </div>
-            <div className="mb-8">
+            <div className="mb-2">
               <div className="relative mb-4 h-[500px] w-full overflow-hidden rounded-2xl bg-gray-200">
                   <div className="group relative h-full w-full">
                     <Image
@@ -122,9 +122,6 @@ export default function MainContent(props: Iprops) {
                 <div className="prose max-w-none">
                   <RichTextEditor editorRef={editorRef} readOnly={true} />
                 </div>
-                {/* <div className='text-xs font-light leading-tight text-gray-600  '> 
-                  {hostel?.description} 
-                </div> */}
               </div>
             </div>
           </div>
