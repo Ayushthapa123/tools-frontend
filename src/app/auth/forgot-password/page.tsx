@@ -2,7 +2,7 @@
 
 import { useMutation } from '@tanstack/react-query';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { useForm } from 'react-hook-form';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import Button from 'src/components/Button';
@@ -18,7 +18,7 @@ type ResetPasswordData = {
   confirmPassword: string;
 };
 
-export default function ForgotPasswordByToken() {
+function ForgotPasswordByTokenInner() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -232,5 +232,13 @@ export default function ForgotPasswordByToken() {
         </div>
       </div>
     </section>
+  );
+}
+
+export default function ForgotPasswordByToken() {
+  return (
+    <Suspense>
+      <ForgotPasswordByTokenInner />
+    </Suspense>
   );
 }
