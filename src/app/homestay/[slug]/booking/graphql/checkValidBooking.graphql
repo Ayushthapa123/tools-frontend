@@ -4,7 +4,11 @@ query CheckValidBooking($roomIds: [Int!]!, $startDate: DateTime!, $endDate: Date
     message
     totalPrice
     totalDays 
-    bookingSummary
-
+    bookingSummary {
+      roomId 
+      price 
+      totalPriceOfRoom
+      priceType
+    }
   }
 }
