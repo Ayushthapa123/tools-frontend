@@ -55,6 +55,7 @@ type Documents = {
     "mutation updateRules($input: UpdateRulesInput!, $rulesId: Int!) {\n  updateRules(rulesId: $rulesId, updateRulesInput: $input) {\n    id\n    rules\n  }\n}": typeof types.UpdateRulesDocument,
     "mutation ForgotPassword($email: String!) {\n  forgotPassword(email: $email) {\n    id\n  }\n}": typeof types.ForgotPasswordDocument,
     "mutation ResetPassword($input: ResetPasswordInput!) {\n  resetPassword(input: $input) {\n    email\n    id\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}": typeof types.ResetPasswordDocument,
+    "mutation resendVerificationMail($id: Float!) {\n  resendVerificationMail(id: $id)\n}": typeof types.ResendVerificationMailDocument,
     "mutation VerifyEmail($token: VerifyEmailInput!) {\n  verifyEmail(input: $token) {\n    id\n  }\n}": typeof types.VerifyEmailDocument,
     "mutation ConfirmBooking($bookingKey: String!) {\n  confirmBooking(bookingKey: $bookingKey) {\n    count\n  }\n}": typeof types.ConfirmBookingDocument,
     "query GetBookingByKey($bookingKey: String!) {\n  bookingsWithKey(bookingKey: $bookingKey) {\n    id\n    roomId\n    bookingKey\n    guestId\n    startDate\n    endDate\n    status\n    createdAt\n    updatedAt\n    room {\n      id\n      status\n      capacity\n      caption\n      roomNumber\n      attachBathroom\n      homestayId\n      createdAt\n      updatedAt\n      image {\n        url\n        caption\n      }\n      price {\n        baseAmount\n        currency\n      }\n    }\n    guest {\n      id\n      email\n      fullName\n      phoneNumber\n      isVerified\n      userType\n      createdAt\n      updatedAt\n    }\n  }\n}": typeof types.GetBookingByKeyDocument,
@@ -68,7 +69,6 @@ type Documents = {
     "mutation refreshToken {\n  refreshTokens {\n    user {\n      email\n      fullName\n      id\n      userType\n      homestayId\n    }\n    token {\n      refreshToken\n      accessToken\n    }\n  }\n}": typeof types.RefreshTokenDocument,
     "mutation signupUser($input: SignupInput!) {\n  signupUser(input: $input) {\n    email\n    id\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}": typeof types.SignupUserDocument,
     "mutation signUpWithGoogle($input: SignupWithGoogleInput!) {\n  signUpWithGoogle(input: $input) {\n    id\n    email\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}": typeof types.SignUpWithGoogleDocument,
-    "mutation resendVerificationMail($id: Float!) {\n  resendVerificationMail(id: $id)\n}": typeof types.ResendVerificationMailDocument,
     "query getUserByAccessToken($token: String!) {\n  getUserByAccessToken(accessToken: $token) {\n    email\n    fullName\n    id\n    isVerified\n    phoneNumber\n    profilePicture\n  }\n}": typeof types.GetUserByAccessTokenDocument,
     "mutation CreateAmenity($createAmenityInput: CreateAmenityInput!) {\n  createAmenity(createAmenityInput: $createAmenityInput) {\n    id\n    amenity\n    homestayId\n  }\n}": typeof types.CreateAmenityDocument,
     "query FindAmenityByHomestayId($homestayId: Int!) {\n  findAmenityByHomestayId(homestayId: $homestayId) {\n    id\n    amenity\n    homestayId\n  }\n}": typeof types.FindAmenityByHomestayIdDocument,
@@ -118,6 +118,7 @@ const documents: Documents = {
     "mutation updateRules($input: UpdateRulesInput!, $rulesId: Int!) {\n  updateRules(rulesId: $rulesId, updateRulesInput: $input) {\n    id\n    rules\n  }\n}": types.UpdateRulesDocument,
     "mutation ForgotPassword($email: String!) {\n  forgotPassword(email: $email) {\n    id\n  }\n}": types.ForgotPasswordDocument,
     "mutation ResetPassword($input: ResetPasswordInput!) {\n  resetPassword(input: $input) {\n    email\n    id\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}": types.ResetPasswordDocument,
+    "mutation resendVerificationMail($id: Float!) {\n  resendVerificationMail(id: $id)\n}": types.ResendVerificationMailDocument,
     "mutation VerifyEmail($token: VerifyEmailInput!) {\n  verifyEmail(input: $token) {\n    id\n  }\n}": types.VerifyEmailDocument,
     "mutation ConfirmBooking($bookingKey: String!) {\n  confirmBooking(bookingKey: $bookingKey) {\n    count\n  }\n}": types.ConfirmBookingDocument,
     "query GetBookingByKey($bookingKey: String!) {\n  bookingsWithKey(bookingKey: $bookingKey) {\n    id\n    roomId\n    bookingKey\n    guestId\n    startDate\n    endDate\n    status\n    createdAt\n    updatedAt\n    room {\n      id\n      status\n      capacity\n      caption\n      roomNumber\n      attachBathroom\n      homestayId\n      createdAt\n      updatedAt\n      image {\n        url\n        caption\n      }\n      price {\n        baseAmount\n        currency\n      }\n    }\n    guest {\n      id\n      email\n      fullName\n      phoneNumber\n      isVerified\n      userType\n      createdAt\n      updatedAt\n    }\n  }\n}": types.GetBookingByKeyDocument,
@@ -131,7 +132,6 @@ const documents: Documents = {
     "mutation refreshToken {\n  refreshTokens {\n    user {\n      email\n      fullName\n      id\n      userType\n      homestayId\n    }\n    token {\n      refreshToken\n      accessToken\n    }\n  }\n}": types.RefreshTokenDocument,
     "mutation signupUser($input: SignupInput!) {\n  signupUser(input: $input) {\n    email\n    id\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}": types.SignupUserDocument,
     "mutation signUpWithGoogle($input: SignupWithGoogleInput!) {\n  signUpWithGoogle(input: $input) {\n    id\n    email\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}": types.SignUpWithGoogleDocument,
-    "mutation resendVerificationMail($id: Float!) {\n  resendVerificationMail(id: $id)\n}": types.ResendVerificationMailDocument,
     "query getUserByAccessToken($token: String!) {\n  getUserByAccessToken(accessToken: $token) {\n    email\n    fullName\n    id\n    isVerified\n    phoneNumber\n    profilePicture\n  }\n}": types.GetUserByAccessTokenDocument,
     "mutation CreateAmenity($createAmenityInput: CreateAmenityInput!) {\n  createAmenity(createAmenityInput: $createAmenityInput) {\n    id\n    amenity\n    homestayId\n  }\n}": types.CreateAmenityDocument,
     "query FindAmenityByHomestayId($homestayId: Int!) {\n  findAmenityByHomestayId(homestayId: $homestayId) {\n    id\n    amenity\n    homestayId\n  }\n}": types.FindAmenityByHomestayIdDocument,
@@ -321,6 +321,10 @@ export function graphql(source: "mutation ResetPassword($input: ResetPasswordInp
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function graphql(source: "mutation resendVerificationMail($id: Float!) {\n  resendVerificationMail(id: $id)\n}"): (typeof documents)["mutation resendVerificationMail($id: Float!) {\n  resendVerificationMail(id: $id)\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function graphql(source: "mutation VerifyEmail($token: VerifyEmailInput!) {\n  verifyEmail(input: $token) {\n    id\n  }\n}"): (typeof documents)["mutation VerifyEmail($token: VerifyEmailInput!) {\n  verifyEmail(input: $token) {\n    id\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -370,10 +374,6 @@ export function graphql(source: "mutation signupUser($input: SignupInput!) {\n  
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "mutation signUpWithGoogle($input: SignupWithGoogleInput!) {\n  signUpWithGoogle(input: $input) {\n    id\n    email\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}"): (typeof documents)["mutation signUpWithGoogle($input: SignupWithGoogleInput!) {\n  signUpWithGoogle(input: $input) {\n    id\n    email\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(source: "mutation resendVerificationMail($id: Float!) {\n  resendVerificationMail(id: $id)\n}"): (typeof documents)["mutation resendVerificationMail($id: Float!) {\n  resendVerificationMail(id: $id)\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
