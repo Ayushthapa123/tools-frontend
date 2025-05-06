@@ -22,6 +22,7 @@ export const CheckSession = () => {
     if (!refreshToken) {
       return;
     } else {
+      alert('hi')
       getAccessToken({ }).then(res => {
         if (res?.refreshTokens?.token?.accessToken) {
           setUser({
