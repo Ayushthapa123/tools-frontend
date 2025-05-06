@@ -5,8 +5,8 @@ import React, { useEffect, useState } from 'react';
 import Navbar from 'src/features/NavBar';
 import { Drawer } from 'src/features/Drawer';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
-import { RefreshToken, RefreshTokenMutation, RefreshTokenMutationVariables } from 'src/gql/graphql';
-import { useMutation } from '@tanstack/react-query';
+import { GetUserById, GetUserByIdQueryVariables, GetUserByIdQuery, RefreshToken, RefreshTokenMutation, RefreshTokenMutationVariables } from 'src/gql/graphql';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { LayoutSkeleton } from '../../features/Skeletons/LayoutSkeleton';
 import { useRouter } from 'next/navigation';
 import { useAccessTokenStore } from 'src/store/accessTokenStore';
@@ -14,6 +14,8 @@ import GlobalToast from 'src/features/GlobalToast';
 
 import { useUserStore } from 'src/store/userStore';
 import { ThemeProvider } from 'src/features/themes/ThemeProvider';
+import { CheckMailForVerification } from '../verify-email/CheckMailForVerification';
+import LoadingSpinner from 'src/components/Loading';
 
 export default function Layout({
   children,
@@ -56,34 +58,47 @@ export default function Layout({
     
   }, [getAccessToken, router, setAccessToken, setUser]);
 
+  // Fetch user profile by userId
+  const queryUser = useGraphqlClientRequest<GetUserByIdQuery, GetUserByIdQueryVariables>(GetUserById.loc?.source.body!);
+  const fetchUser = async () => {
+    const res = await queryUser({ id: Number(user.userId) });
+    return res.getUserById;
+  };
+  const { data: userData, isLoading} = useQuery({
+    queryKey: [ 'getUser' ],
+    queryFn: fetchUser,
+    enabled: !!user.userId && user.userId !== null,
+  });
   return (
     <ThemeProvider>
-    <div className=" w-full ">
-      <GlobalToast />
+      {isLoading ? <LoadingSpinner color='primary' size='lg' /> : (
+        <div className=" w-full ">
+          <GlobalToast />
+          {accessToken ? (
+            <>
+              <div className=" relative  z-[999] h-[70px] shadow-sm">
+                <Navbar />
+              </div>
 
-      {accessToken ? (
-        <>
-          <div className=" relative  z-[999] h-[70px] shadow-sm">
-            <Navbar />
-          </div>
+              {!userData?.isVerified ? <CheckMailForVerification /> : (
+                <div className=" pt-15    h-[calc(100vh-70px)] w-full  md:flex">
+                  {user.userType !== "GUEST" && <div className="fixed z-50 hidden  lg:relative lg:flex">
+                    <Drawer />
+                  </div>}
 
-          <div className=" pt-15    h-[calc(100vh-70px)] w-full  md:flex">
-            {user.userType!=="GUEST" &&<div className="fixed z-50 hidden  lg:relative lg:flex">
-              <Drawer />
-            </div>}
 
-            <div
-              className={`  relative h-[calc(100vh-70px)] w-full overflow-y-scroll   bg-slate-50 p-3 md:p-5`}>
-              {children}
-            </div>
-          </div>
-        </>
-      ) : (
-        <>
-          <LayoutSkeleton />
-        </>
-      )}
-      </div>
+                  <div
+                    className={`  relative h-[calc(100vh-70px)] w-full overflow-y-scroll   bg-slate-50 p-3 md:p-5`}>
+                    {children}
+                  </div>
+                </div>)}
+            </>
+          ) : (
+            <>
+              <LayoutSkeleton />
+            </>
+          )}
+        </div>)}
       </ThemeProvider>
   );
 }

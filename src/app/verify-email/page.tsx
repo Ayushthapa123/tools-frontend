@@ -1,5 +1,5 @@
 "use client"
-import { useMutation } from "@tanstack/react-query"
+import { QueryClient, useMutation, useQueryClient } from "@tanstack/react-query"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useGraphqlClientRequest } from "src/client/useGraphqlClientRequest"
 import { VerifyEmail, VerifyEmailDocument, VerifyEmailInput, VerifyEmailMutation, VerifyEmailMutationVariables } from "src/gql/graphql"
@@ -12,10 +12,12 @@ function VerifyUserEmailInner() {
   const router = useRouter();
 
   const queryVerification = useGraphqlClientRequest<VerifyEmailMutation, VerifyEmailMutationVariables>(VerifyEmail.loc?.source.body!)
+  const queryClient = useQueryClient();
   const { mutate: verifyUser, status, error } = useMutation({
     mutationFn: queryVerification,
     onSuccess: (data) => {
       if (data?.verifyEmail) {
+        queryClient.invalidateQueries({ queryKey: ['getUser'] });
         console.log("verified")
         router.push('/');
       }
