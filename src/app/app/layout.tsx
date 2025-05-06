@@ -14,7 +14,7 @@ import GlobalToast from 'src/features/GlobalToast';
 
 import { useUserStore } from 'src/store/userStore';
 import { ThemeProvider } from 'src/features/themes/ThemeProvider';
-import { CheckMailForVerification } from '../verify-email/CheckMailForVerification';
+import { CheckMailForVerification } from '../auth/verify-email/CheckMailForVerification';
 import LoadingSpinner from 'src/components/Loading';
 
 export default function Layout({
@@ -82,7 +82,8 @@ export default function Layout({
 
               {!userData?.isVerified ? <CheckMailForVerification /> : (
                 <div className=" pt-15    h-[calc(100vh-70px)] w-full  md:flex">
-                  {user.userType !== "GUEST" && <div className="fixed z-50 hidden  lg:relative lg:flex">
+                  {user.userType !== "GUEST" &&
+                    <div className="fixed z-50 hidden  lg:relative lg:flex">
                     <Drawer />
                   </div>}
 

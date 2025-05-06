@@ -1,0 +1,3 @@
+mutation resendVerificationMail($id:Float!){
+  resendVerificationMail(id:$id)
+}

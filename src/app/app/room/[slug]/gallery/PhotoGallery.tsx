@@ -42,7 +42,7 @@ export const PhotoGallery = (props: Iprops) => {
   };
 
   return (
-    <div className=" relative z-10 min-h-[250px] w-full rounded-md  md:min-h-[400px] lg:min-h-[500px]">
+    <div className=" relative z-10 min-h-[250px] w-full rounded-md  md:min-h-[400px] lg:min-h-fit">
       <div className=" grid gap-10 lg:grid-cols-2">
         {roomData?.map(room => (
           <div key={room.id} className="relative">
@@ -55,8 +55,7 @@ export const PhotoGallery = (props: Iprops) => {
             />
           </div>
         ))}
-      </div>
-      <div className=" relative mt-10 h-[300px] md:w-[450px]">
+        <div className=" relative h-[300px] md:w-[450px]">
         {Number(roomData?.length) < 5 && (
           <GalleryEditBox
             handleBack={handleBack}
@@ -67,6 +66,8 @@ export const PhotoGallery = (props: Iprops) => {
           />
         )}
       </div>
+      </div>
+      
     </div>
   );
 };
