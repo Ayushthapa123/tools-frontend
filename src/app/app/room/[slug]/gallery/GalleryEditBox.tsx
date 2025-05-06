@@ -94,7 +94,7 @@ export const GalleryEditBox = (props: IcoverEdit) => {
   };
 
   return (
-    <div className="relative items-center w-full h-full py-4 border ">
+    <div className="relative items-center w-full h-full py-4 border rounded-lg">
       <div className="absolute text-2xl cursor-pointer left-3 top-3">
         {' '}
         <div className="p-1 text-white bg-gray-200 rounded-full " onClick={() => handleBack?.()}>

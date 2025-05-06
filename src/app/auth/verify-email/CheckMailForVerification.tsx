@@ -3,18 +3,30 @@ import Button from 'src/components/Button';
 import { MdEmail } from 'react-icons/md';
 import Link from 'next/link';
 import { Logo } from 'src/features/Logo';
-import { LogOut } from 'src/gql/graphql';
+import { LogOut, ResendVerificationMail, ResendVerificationMailMutation, ResendVerificationMailMutationVariables } from 'src/gql/graphql';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import { LogOutMutation } from 'src/gql/graphql';
 import { LogOutMutationVariables } from 'src/gql/graphql';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import { useUserStore } from 'src/store/userStore';
+import { useToastStore } from 'src/store/toastStore';
+
 export const CheckMailForVerification = () => {
   const router = useRouter();
+  const { user } = useUserStore();
+  const { setShowToast, setMessage, setRole } = useToastStore();
   const mutateLogOutRequest = useGraphqlClientRequest<LogOutMutation, LogOutMutationVariables>(
     LogOut.loc?.source.body!,
   );
   const { mutateAsync } = useMutation({ mutationFn: mutateLogOutRequest });
+  const mutateResendVerificationMail = useGraphqlClientRequest<ResendVerificationMailMutation, ResendVerificationMailMutationVariables>(
+    ResendVerificationMail.loc?.source.body!,
+  );
+  const { mutateAsync: resendVerificationMail } = useMutation({
+    mutationFn: mutateResendVerificationMail,
+  });
+
   const handleLogout = () => {
     mutateAsync({}).then(res => {
       if (res?.logout?.success) {
@@ -22,6 +34,33 @@ export const CheckMailForVerification = () => {
       }
     });
   };
+
+  const handleResendEmail = async () => {
+    if (!user.userId) {
+      setShowToast(true);
+      setMessage('User ID not found. Please log in again.');
+      setRole('error');
+      return;
+    }
+    try {
+      const res = await resendVerificationMail({ id: user.userId });
+      console.log(res);
+      if (res?.resendVerificationMail) {
+        setShowToast(true);
+        setMessage('Verification email resent successfully!');
+        setRole('success');
+      } else {
+        setShowToast(true);
+        setMessage('Failed to resend verification email.');
+        setRole('error');
+      }
+    } catch (err: any) {
+      setShowToast(true);
+      setMessage(err?.message || 'An error occurred while resending email.');
+      setRole('error');
+    }
+  };
+
   return (
     <section className="flex min-h-screen flex-col justify-center bg-gray-100 p-5 align-middle lg:py-[3rem]">
       <div className="container mx-auto">
@@ -42,8 +81,8 @@ export const CheckMailForVerification = () => {
                 We have sent a verification link to your email address. Please check your inbox and click the link to verify your account. You must verify your email before you can access the site.
               </p>
               <p className="text-sm text-gray-500 mt-4">
-                Didn&apos;t receive the email? Check your spam folder
-                {/* <span className="text-primary font-medium cursor-pointer hover:underline">Resend Email</span>. */}
+                Didn&apos;t receive the email? Check your spam folder  
+                <span className="text-primary font-medium cursor-pointer hover:underline" onClick={() => handleResendEmail()}> Resend Email</span>.
               </p>
               <div>
                 <Button label={"Log out"} className='w-full text-primary ' onClick={() => handleLogout()} />

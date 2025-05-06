@@ -127,7 +127,8 @@ export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Pri
     return (
       <div className="space-y-4">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="space-y-4 min-h-[400px]">
+          <div className="space-y-4 min-h-fit">
+            <div className="grid grid-cols-2 gap-4">
             <div className="mb-3">
               <ReactSelect
                 name="currency"
@@ -153,6 +154,7 @@ export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Pri
                 error={!!errors.baseAmount}
               />
             </div>
+            </div>
 
             <div className="">
               <Toggle
@@ -164,7 +166,7 @@ export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Pri
 
          { watch("isDynamicPricing")&&<div className="flex flex-col card ">
        
-            <div className=""> 
+            <div className="mb-4"> 
               <DynamicPriceContainer roomId={roomId} />
             </div>
 

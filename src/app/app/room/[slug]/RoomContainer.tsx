@@ -179,9 +179,9 @@ const { mutateAsync: mutateUpdateRoomAsync } = useMutation({ mutationFn: mutateU
     <div className="w-full">
       <div className="bg-white p-6 rounded-lg shadow">
         <div className="mb-6">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold">Step {currentStep} of 3</h2>
-            <div className="steps steps-horizontal">
+          <div className="flex justify-center items-center mb-4">
+            {/* <h2 className="text-xl font-semibold">Step {currentStep} of 3</h2> */}
+            <div className="steps steps-horizontal text-gray-600">
               <div className={`step ${currentStep >= 1 ? 'step-primary' : ''}`}>Room Details</div>
               <div className={`step ${currentStep >= 2 ? 'step-primary' : ''}`}>Set Price</div>
               <div className={`step ${currentStep >= 3 ? 'step-primary' : ''}`}>Upload Photos</div>

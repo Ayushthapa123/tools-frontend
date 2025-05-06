@@ -45,10 +45,10 @@ console.log(rules);
   function RulesForm({ roomId, rules }: { roomId: number, rules: DynamicPricingRule[] | undefined | null }) {
 
   return (
-    <div className="w-full h-[300px] ">
+    <div className="w-full h-fit ">
       <div className="bg-white  rounded-lg shadow">
      <div className='flex justify-end '><DynamicRulesModal roomId={roomId} rules={undefined} /></div>
-     <div className='overflow-y-auto h-[250px]'>
+     <div className='overflow-y-auto h-fit'>
      {rules?.map((rule: DynamicPricingRule) => (
       <div key={rule.id}>
       <DynamicRulesCard rule={rule} roomId={roomId}/>

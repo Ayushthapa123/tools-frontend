@@ -17,8 +17,8 @@ export const RoomCreateForm = ({ control, errors }: { control: any; errors: any 
     ];
   
     return (
-      <div className="space-y-4">
-        <div className="mb-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="mb-2">
           <TextInput
             name="caption"
             placeholder="Room Caption"
@@ -29,7 +29,7 @@ export const RoomCreateForm = ({ control, errors }: { control: any; errors: any 
             error={!!errors.caption}
           />
         </div>
-        <div className="mb-3">
+        <div className="mb-2">
           <TextInput
             name="roomNumber"
             placeholder="Room Number"
@@ -40,19 +40,8 @@ export const RoomCreateForm = ({ control, errors }: { control: any; errors: any 
             error={!!errors.roomNumber}
           />
         </div>
-        <div className="mb-3">
-        
-          <TextArea
-            name="description"
-            placeholder="Description"
-            control={control}
-            label="Description"
-            error={!!errors.description} 
-            rows={2}
-
-          />
-        </div>
-        <div className="mb-3">
+       
+        <div className="mb-2">
           <ReactSelect
             name="status"
             placeholder="Status"
@@ -63,7 +52,7 @@ export const RoomCreateForm = ({ control, errors }: { control: any; errors: any 
             error={!!errors.status}
           />
         </div>
-        <div className="mb-3">
+        <div className="mb-2">
           <ReactSelect
             name="capacity"
             placeholder="Capacity"
@@ -74,7 +63,19 @@ export const RoomCreateForm = ({ control, errors }: { control: any; errors: any 
             error={!!errors.capacity}
           />
         </div>
-        <div className="mb-3">
+        <div className="mb-2">
+        
+        <TextArea
+          name="description"
+          placeholder="Description"
+          control={control}
+          label="Description"
+          error={!!errors.description} 
+          rows={2}
+
+        />
+      </div>
+        <div className="mb-2">
           <TextInput
             name="maxOccupancy"
             placeholder="Max Occupancy"

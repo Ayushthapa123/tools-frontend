@@ -54,6 +54,7 @@ const documents = {
     "mutation updateRules($input: UpdateRulesInput!, $rulesId: Int!) {\n  updateRules(rulesId: $rulesId, updateRulesInput: $input) {\n    id\n    rules\n  }\n}": types.UpdateRulesDocument,
     "mutation ForgotPassword($email: String!) {\n  forgotPassword(email: $email) {\n    id\n  }\n}": types.ForgotPasswordDocument,
     "mutation ResetPassword($input: ResetPasswordInput!) {\n  resetPassword(input: $input) {\n    email\n    id\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}": types.ResetPasswordDocument,
+    "mutation resendVerificationMail($id: Float!) {\n  resendVerificationMail(id: $id)\n}": types.ResendVerificationMailDocument,
     "mutation VerifyEmail($token: VerifyEmailInput!) {\n  verifyEmail(input: $token) {\n    id\n  }\n}": types.VerifyEmailDocument,
     "mutation ConfirmBooking($bookingKey: String!) {\n  confirmBooking(bookingKey: $bookingKey) {\n    count\n  }\n}": types.ConfirmBookingDocument,
     "query GetBookingByKey($bookingKey: String!) {\n  bookingsWithKey(bookingKey: $bookingKey) {\n    id\n    roomId\n    bookingKey\n    guestId\n    startDate\n    endDate\n    status\n    createdAt\n    updatedAt\n    room {\n      id\n      status\n      capacity\n      caption\n      roomNumber\n      attachBathroom\n      homestayId\n      createdAt\n      updatedAt\n      image {\n        url\n        caption\n      }\n      price {\n        baseAmount\n        currency\n      }\n    }\n    guest {\n      id\n      email\n      fullName\n      phoneNumber\n      isVerified\n      userType\n      createdAt\n      updatedAt\n    }\n  }\n}": types.GetBookingByKeyDocument,
@@ -253,6 +254,10 @@ export function graphql(source: "mutation ForgotPassword($email: String!) {\n  f
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "mutation ResetPassword($input: ResetPasswordInput!) {\n  resetPassword(input: $input) {\n    email\n    id\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}"): (typeof documents)["mutation ResetPassword($input: ResetPasswordInput!) {\n  resetPassword(input: $input) {\n    email\n    id\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation resendVerificationMail($id: Float!) {\n  resendVerificationMail(id: $id)\n}"): (typeof documents)["mutation resendVerificationMail($id: Float!) {\n  resendVerificationMail(id: $id)\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

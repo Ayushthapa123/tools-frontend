@@ -28,7 +28,7 @@ export const ActiveRooms = () => {
   return (
     <div className="w-full ">
       {isLoading && <div> <LoadingSpinner /></div>}
-      <div className="grid gap-[1rem] grid-cols-2 md:grid-cols-3 lg:grid-cols-4 pb-4 px-2">
+      <div className="grid gap-[1rem] grid-cols-2 md:grid-cols-3 pb-4 px-2">
         {rooms?.map(room => (
           <div key={room.id} className='xl:min-h-[320px]'>
             <RoomCard
@@ -43,9 +43,9 @@ export const ActiveRooms = () => {
           </div>
         ))}
       </div>
-      <div className="flex w-full justify-center">
+      {/* <div className="flex w-full justify-center">
         <CreateRoomModal />
-      </div>
+      </div> */}
     </div>
   );
 };

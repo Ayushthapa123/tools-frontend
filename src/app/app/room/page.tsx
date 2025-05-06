@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 // import { MapComponent } from './GoogleMap';
 import { ActiveRooms } from './ActiveRooms';
 import { MapProvider } from 'src/features/MapProvider';
+import Button from 'src/components/Button';
+import { CreateRoomModal } from './CreateRoomModal';
 
 export default function Home() {
   return (
@@ -30,23 +32,32 @@ const LocationTabs = () => {
       comp: <div>Inactive Rooms</div>,
     },
   ];
-  const [activeTab, setActiveTab] = useState(1);
+  const [ activeTab, setActiveTab ] = useState(1);
 
   return (
     <div className="w-full py-5 ">
-      <div role="tablist" className="tabs-boxed bg-transparent tabs z-[99] my-3 flex flex-wrap py-2">
-        {tabs.map(tab => (
-          <div key={tab.id} className="flex flex-wrap ">
-            <a
-              role="tab"
-              className={`  tab  text-base font-medium ${tab.id == activeTab ? 'tab-active text-white' : ' text-primary'}`}
-              onClick={() => setActiveTab(tab.id)}>
-              {tab.title}
-            </a>
-          </div>
-        ))}
+      <div role="tablist" className="tabs-boxed bg-transparent justify-between tabs z-[99] my-3 flex flex-row flex-wrap py-2">
+        <div className="flex flex-wrap flex-row">
+          {tabs.map(tab => (
+            <div key={tab.id} >
+              <a
+                role="tab"
+                className={`  tab  text-base font-medium ${tab.id == activeTab ? 'tab-active text-white' : ' text-primary'}`}
+                onClick={() => setActiveTab(tab.id)}>
+                {tab.title}
+              </a>
+            </div>
+          ))}
+        </div>
+        {
+          activeTab == 1 && (
+            <div>
+              <CreateRoomModal />
+            </div>
+          )
+        }
       </div>
-      
+
       {tabs.map((tab, index) => (
         <div key={index}>
           {tab.id == activeTab && (

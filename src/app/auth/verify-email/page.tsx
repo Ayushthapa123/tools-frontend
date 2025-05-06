@@ -21,7 +21,7 @@ function VerifyUserEmailInner() {
         setShowToast(true);
         setMessage("Email verified successfully!");
         setRole("success");
-        router.push('/');
+        router.push('/app/my-profile');
       }
     }
   })
