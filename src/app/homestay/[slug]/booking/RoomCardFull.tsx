@@ -18,9 +18,11 @@ interface RoomCardProps {
   slug: string;
   checkInDate: string;
   checkOutDate: string;
+  setShowDetails: (showDetails: boolean) => void;
+  setSelectedRoom: (room: Room) => void;
 }
 
-export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate }: RoomCardProps) => {
+export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate, setShowDetails, setSelectedRoom }: RoomCardProps) => {
   const { setRoomIds, roomIds } = useRoomStore();
   const sectionRef = useRef<HTMLDivElement>(null);
   const router = useRouter()
@@ -66,7 +68,6 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
       <div className="relative h-44 md:h-80 lg:h-60 xl:h-auto xl:w-2/3 min-w-[200px] overflow-hidden">
         {room.image && room.image.length > 0 ? (
           <div className="relative h-full bg-red">
-            hello
             <Image
               src={room.image[ 0 ].url}
               alt={room.caption || "Room image"}
@@ -144,9 +145,9 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
           </div>
         </div>
 
-        <div className="mt-5 flex items-center justify-between">
+        <div className="mt-5 flex items-center justify-between gap-2">
           {/* Price */}
-          {room.price && (
+          {/* {room.price && (
             <div>
               <div className="flex items-baseline">
                 <span className="text-3xl font-bold text-secondary">
@@ -157,7 +158,12 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
               </div>
               <div className="text-xs text-gray-400">(Base Price & may include dynamic pricing)</div>
             </div>
-          )}
+          )} */}
+
+          {/* View Full Room Details */}
+          <div className="w-fit">
+            <Button label="View Details" className="bg-primary/90 hover:bg-primary w-fit" onClick={() => { setShowDetails(true); setSelectedRoom(room); }}/>
+          </div>
 
           {/* Action Button */}
           {isSelected && (

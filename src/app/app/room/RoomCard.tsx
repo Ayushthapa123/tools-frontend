@@ -38,7 +38,9 @@ export const RoomCard = (props: Iprops) => {
   const { setMessage, setRole, setShowToast } = useToastStore();
 
   const onSubmit = async () => {
-    mutateAsync({ id: Number(id) }).then(res => {
+    console.log("deelted room",id)
+    await mutateAsync({ id: Number(id) }).then(res => {
+      console.log("res",res)
       if (res?.removeRoom) {
         setShowToast(true);
         setMessage('Room Deleted!');

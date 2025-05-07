@@ -3,6 +3,7 @@ mutation UpdateHomestayImage($homestayImageId: Int!, $data: UpdateHomestayWallpa
     id
     homestayId
     url
+    isSelected
     caption
     createdAt
     updatedAt

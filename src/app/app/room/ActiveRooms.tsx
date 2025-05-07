@@ -28,9 +28,9 @@ export const ActiveRooms = () => {
   return (
     <div className="w-full ">
       {isLoading && <div> <LoadingSpinner /></div>}
-      <div className="grid gap-[1rem] grid-cols-2 md:grid-cols-3 pb-4 px-2">
+      <div className="grid gap-[1rem] grid-cols-2 md:grid-cols-3 px-2 md:gap-">
         {rooms?.map(room => (
-          <div key={room.id} className='xl:min-h-[320px]'>
+          <div key={room.id} className='md:mb-4'>
             <RoomCard
               id={room.id}
               caption={room.caption ?? ''}

@@ -38,7 +38,8 @@ export const FeaturedHomestay = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
         {homestays?.map(hostel => {
-          var imgUrl = hostel.image?.[ 0 ]?.url ?? '/images/default-image.png';
+        const mainWallpaper = hostel.image?.filter(img => img.isSelected)[ 0 ]
+          var imgUrl = mainWallpaper?.url ?? '/images/default-image.png';
           if(imgUrl == "https://example.com/image.jpg") imgUrl = "/images/default-image.png"
           console.log(hostel.name, imgUrl);
           return (

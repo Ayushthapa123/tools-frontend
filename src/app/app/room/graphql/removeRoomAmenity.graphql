@@ -1,0 +1,7 @@
+mutation RemoveRoomAmenity($roomAmenityId: Int!) {
+  removeRoomAmenity(roomAmenityId: $roomAmenityId) {
+    roomAmenityId
+    roomId
+    amenity
+  }
+} 

@@ -42,25 +42,25 @@ export const WallpaperGallery = (props: Iprops) => {
   const handleBack = () => {
     setShowEditBox(false);
   };
+  const mainImage = wallpaperData?.filter(img => img.isSelected)[0];
 
 
   return (
-    <div className=" relative z-10 min-h-[250px] w-full rounded-md">
-      <h3 className='text-primary inline mr-2'>Homestay Wallpaper</h3>
-      <span className='text-gray-400 text-xs block md:inline'>You can only upload 1 image.</span>
-      <div className="mt-4">
-        {wallpaperData ?
+    <div className=" relative z-10 min-h-[250px] w-full rounded-md flex items-center justify-center flex-col gap-0">
+      <span className='text-gray-400 text-xs block md:inline'>You can only upload upto 6 images.</span>
+      <div className="">
+        {/* {wallpaperData?.length  ?
           <div className="relative">
             <WallpaperCard
-              galleryId={Number(wallpaperData?.id)}
+              galleryId={Number(mainImage?.id)}
               galleryType={galleryType}
               // roomId={roomId}
               homestayId={homestayId}
-              url={String(wallpaperData?.url)}
+              url={String(mainImage?.url)}
               invalidateKey={galleryKey}
             />
           </div> :
-          (
+          ( */}
             <div className=" relative mt-10 h-[300px] md:w-[450px]">
               <WallpaperEditBox
                 handleBack={handleBack}
@@ -71,8 +71,8 @@ export const WallpaperGallery = (props: Iprops) => {
                 invalidateKey={galleryKey}
               />
             </div>
-          )
-        }
+          {/* ) */}
+        {/* } */}
       </div>
 
     </div>
