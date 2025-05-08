@@ -1,14 +1,6 @@
 mutation deleteRoom($id: Int!) {
   removeRoom(id: $id) {
     id
-    status
-    capacity
-    caption
-    roomNumber
-    attachBathroom
-    homestayId
-  
-  
     createdAt
     updatedAt
   }

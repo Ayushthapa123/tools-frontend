@@ -4,6 +4,7 @@ query GetHomestayWallpaperByHomestayId($homestayId: Int!) {
     homestayId
     url
     caption
+    isSelected
     createdAt
     updatedAt
   }

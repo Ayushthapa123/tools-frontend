@@ -20,6 +20,7 @@ import BookingIcon from '../../components/icons/Booking';
 import { FaHotel, FaRegLightbulb } from 'react-icons/fa';
 import { useMutation } from '@tanstack/react-query';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { GrGallery } from 'react-icons/gr';
 interface MenuItemType {
   icon: JSX.Element;
   text: string;
@@ -65,8 +66,9 @@ const Sidebar = () => {
       children: false,
       show: ( user.userType === UserType.Superadmin || user.userType === UserType.CommunityOwner),
     },
-    { icon: <HostelInfoIcon />, text: 'Homestay', href: '/app/homestay-info', children: false, show: user.userType === UserType.HomestayOwner },
+    { icon: <FaHotel />, text: 'Homestay', href: '/app/homestay-info', children: false, show: user.userType === UserType.HomestayOwner },
     { icon: <RoomIcon />, text: 'Rooms', href: '/app/room', children: false, show: user.userType === UserType.HomestayOwner },
+    { icon: <GrGallery />, text: 'Gallery', href: '/app/gallery', children: false, show: user.userType === UserType.HomestayOwner },
     { icon: <BookingIcon />, text: 'Bookings', href: '/app/booking', children: false, show: user.userType === UserType.HomestayOwner },
 
     // { icon: <PriceIcon />, text: 'Pricing', href: '/app/pricing', children: false },

@@ -69,9 +69,13 @@ export default function Layout({
     queryFn: fetchUser,
     enabled: !!user.userId && user.userId !== null,
   });
+  if(isLoading) return (
+    <>
+    <LoadingSpinner color='primary' size='lg' />
+    </>
+  )
   return (
     <ThemeProvider>
-      {isLoading ? <LoadingSpinner color='primary' size='lg' /> : (
         <div className=" w-full ">
           <GlobalToast />
           {accessToken ? (
@@ -99,7 +103,7 @@ export default function Layout({
               <LayoutSkeleton />
             </>
           )}
-        </div>)}
+        </div>
       </ThemeProvider>
   );
 }

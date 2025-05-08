@@ -63,38 +63,23 @@ export const WallpaperEditBox = (props: IcoverEdit) => {
     mutationFn: mutateUpdateGallery,
   });
   const handleSubmit = async () => {
-    if (imageUrl && galleryId) {
-      //update
-      updateGallery({ homestayImageId: galleryId, data: { url: imageUrl, caption: '', homestayId: homestayId } }).then(res => {
-        if (res?.updateHomestayImage?.id) {
-          queryClient.invalidateQueries({ queryKey: [ String(invalidateKey) ] });
-          setShowToast(true);
-          setMessage('Image Updated Success');
-          setRole('success');
-          handleBack?.();
-          router.refresh();
-        } else {
-          setShowToast(true);
-          setMessage('Something went wrong');
-          setRole('error');
-        }
-      });
-    } else if (imageUrl && homestayId) {
-      // create
+       // create
       try {
         const response = await createGallery({
           data: {
-            homestayId: homestayId,
-            url: imageUrl,
+            homestayId: Number(homestayId),
+            url: imageUrl ?? '',
             caption: ''
           }
         });
 
         if (response?.createHomestayImage?.id) {
           await queryClient.invalidateQueries({ queryKey: [ String(invalidateKey) ] });
+          await queryClient.invalidateQueries({queryKey:["getHomestayWallpaper"]})
           console.log("after submitting", response?.createHomestayImage);
           setShowToast(true);
           setMessage('Image Created Successfully');
+          setImageUrl(null);
           setRole('success');
           handleBack?.();
           router.push(window.location.pathname)
@@ -102,24 +87,24 @@ export const WallpaperEditBox = (props: IcoverEdit) => {
         } else {
           throw new Error('Failed to get valid response ID');
         }
-      } catch (error) {
-        console.error('Error creating gallery image:', error);
-        setShowToast(true);
-        setMessage(`Error: ${error instanceof Error ? error.message : 'Something went wrong'}`);
-        setRole('error');
       }
+    catch (error) {
+      console.error('Error creating gallery image:', error);
+      setShowToast(true);
+      setMessage(`Error: ${error instanceof Error ? error.message : 'Something went wrong'}`);
+      setRole('error');
     }
-  };
+  }
 
   return (
     <div className="relative items-center w-full h-full border rounded-xl">
-      {/* <div className="absolute text-2xl cursor-pointer left-3 top-3">
+      <div className="absolute text-2xl cursor-pointer left-3 top-3">
         {' '}
-        <div className="p-1 text-white bg-gray-200 rounded-full " onClick={() => handleBack?.()}>
+        <div className="p-1 text-white bg-gray-200 rounded-full " onClick={() => { handleBack?.(); setImageUrl(null) }}>
           {' '}
           <FaLongArrowAltLeft className="rounded-full " />
         </div>
-      </div> */}
+      </div>
       <div className="">
         <div>
           <ImageUploader imageUrl={imageUrl} handleImageUrl={handleImageUrl} />

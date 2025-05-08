@@ -158,6 +158,11 @@ export type CreatePriceInput = {
   roomId: Scalars['Int']['input'];
 };
 
+export type CreateRoomAmenityInput = {
+  amenity: Scalars['String']['input'];
+  roomId: Scalars['Int']['input'];
+};
+
 export type CreateRoomImageInput = {
   caption: Scalars['String']['input'];
   roomId: Scalars['Float']['input'];
@@ -306,6 +311,7 @@ export type HomestayImage = {
   createdAt: Scalars['DateTime']['output'];
   homestayId: Scalars['Float']['output'];
   id: Scalars['ID']['output'];
+  isSelected: Scalars['Boolean']['output'];
   updatedAt: Scalars['DateTime']['output'];
   url: Scalars['String']['output'];
 };
@@ -343,6 +349,7 @@ export type Mutation = {
   createPrice: Price;
   createPriceRule: DynamicPriceRuleModel;
   createRoom: Room;
+  createRoomAmenity: RoomAmenity;
   createRoomImage: RoomImage;
   createRules: HomestayRules;
   createSearchQuery: SearchQueries;
@@ -361,8 +368,10 @@ export type Mutation = {
   removePrice: Price;
   removePriceRule: DynamicPricingRule;
   removeRoom: Room;
+  removeRoomAmenity: RoomAmenity;
   resendVerificationMail: Scalars['Boolean']['output'];
   resetPassword: UsersAndToken;
+  selectHomestayImage: HomestayImage;
   signUpWithGoogle: UsersAndToken;
   signupUser: UsersAndToken;
   updateAddress: Address;
@@ -374,6 +383,7 @@ export type Mutation = {
   updatePrice: Price;
   updatePriceRule: DynamicPricingRule;
   updateRoom: Room;
+  updateRoomAmenity: RoomAmenity;
   updateRoomImage: RoomImage;
   updateRules: HomestayRules;
   updateSearchQuery: SearchQueries;
@@ -436,6 +446,11 @@ export type MutationCreatePriceRuleArgs = {
 
 export type MutationCreateRoomArgs = {
   createRoomInput: CreateRoomInput;
+};
+
+
+export type MutationCreateRoomAmenityArgs = {
+  createAmenityInput: CreateRoomAmenityInput;
 };
 
 
@@ -519,6 +534,11 @@ export type MutationRemoveRoomArgs = {
 };
 
 
+export type MutationRemoveRoomAmenityArgs = {
+  roomAmenityId: Scalars['Int']['input'];
+};
+
+
 export type MutationResendVerificationMailArgs = {
   id: Scalars['Float']['input'];
 };
@@ -526,6 +546,12 @@ export type MutationResendVerificationMailArgs = {
 
 export type MutationResetPasswordArgs = {
   input: ResetPasswordInput;
+};
+
+
+export type MutationSelectHomestayImageArgs = {
+  homestayId: Scalars['Float']['input'];
+  selectHomestayImageId: Scalars['Float']['input'];
 };
 
 
@@ -589,6 +615,11 @@ export type MutationUpdateRoomArgs = {
 };
 
 
+export type MutationUpdateRoomAmenityArgs = {
+  updateAmenityInput: UpdateRoomAmenityInput;
+};
+
+
 export type MutationUpdateRoomImageArgs = {
   data: UpdateRoomImageInput;
   roomImageId: Scalars['Int']['input'];
@@ -649,9 +680,10 @@ export type Query = {
   bookingsByHomestay: Array<Booking>;
   bookingsWithKey: Array<Booking>;
   checkValidBooking: ValidInvalidBooking;
-  findAllAmenities: Array<Amenity>;
+  findAllAmenities: Array<RoomAmenity>;
   findAmenityByHomestayId: Array<Amenity>;
-  findAnAmenityById: Amenity;
+  findAmenityByRoomId: RoomAmenity;
+  findAnAmenityById: RoomAmenity;
   getAddressByHomestayId?: Maybe<Address>;
   getAllHomestays: Array<Homestay>;
   getAllSearchQueries: Array<SearchQueries>;
@@ -661,7 +693,7 @@ export type Query = {
   getHomestayById?: Maybe<Homestay>;
   getHomestayBySlug?: Maybe<Homestay>;
   getHomestayByToken?: Maybe<Homestay>;
-  getHomestayWallpaperByHomestayId?: Maybe<HomestayImage>;
+  getHomestayWallpaperByHomestayId?: Maybe<Array<HomestayImage>>;
   getHomestaysBySearch: Array<Homestay>;
   getHostelSearchSuggestions?: Maybe<Array<SearchQueries>>;
   getRoomImagesByRoomId?: Maybe<Array<RoomImage>>;
@@ -707,6 +739,11 @@ export type QueryCheckValidBookingArgs = {
 
 export type QueryFindAmenityByHomestayIdArgs = {
   homestayId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindAmenityByRoomIdArgs = {
+  roomId: Scalars['Int']['input'];
 };
 
 
@@ -851,8 +888,18 @@ export type Room = {
   image?: Maybe<Array<RoomImage>>;
   maxOccupancy?: Maybe<Scalars['String']['output']>;
   price?: Maybe<Price>;
+  roomAmenity?: Maybe<RoomAmenity>;
   roomNumber?: Maybe<Scalars['String']['output']>;
   status: RoomStatus;
+  updatedAt: Scalars['DateTime']['output'];
+};
+
+export type RoomAmenity = {
+  __typename?: 'RoomAmenity';
+  amenity: Scalars['String']['output'];
+  createdAt: Scalars['DateTime']['output'];
+  roomAmenityId: Scalars['ID']['output'];
+  roomId: Scalars['Float']['output'];
   updatedAt: Scalars['DateTime']['output'];
 };
 
@@ -1014,6 +1061,12 @@ export type UpdatePriceInput = {
   roomId?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type UpdateRoomAmenityInput = {
+  amenity?: InputMaybe<Scalars['String']['input']>;
+  roomAmenityId: Scalars['Int']['input'];
+  roomId?: InputMaybe<Scalars['Int']['input']>;
+};
+
 export type UpdateRoomImageInput = {
   caption: Scalars['String']['input'];
   id: Scalars['Float']['input'];
@@ -1126,6 +1179,14 @@ export type BookingsByHomestayQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type BookingsByHomestayQuery = { __typename?: 'Query', bookingsByHomestay: Array<{ __typename?: 'Booking', id: string, bookingKey: string, startDate: any, endDate: any, status: BookingStatus, createdAt: any, updatedAt: any, room: { __typename?: 'Room', id: string, caption: string, roomNumber?: string | null, capacity: RoomCapacity, status: RoomStatus, attachBathroom?: boolean | null, maxOccupancy?: string | null, price?: { __typename?: 'Price', baseAmount: number, currency: Currency, discountAmount?: number | null, discountType?: DiscountType | null, isDiscountActive: boolean } | null, image?: Array<{ __typename?: 'RoomImage', url: string, caption?: string | null }> | null }, guest: { __typename?: 'User', id: string, email: string, fullName: string, phoneNumber?: string | null } }> };
 
+export type SelectHomestayImageMutationVariables = Exact<{
+  selectHomestayImageId: Scalars['Float']['input'];
+  homestayId: Scalars['Float']['input'];
+}>;
+
+
+export type SelectHomestayImageMutation = { __typename?: 'Mutation', selectHomestayImage: { __typename?: 'HomestayImage', id: string, caption?: string | null, url: string, isSelected: boolean } };
+
 export type GetHomestayDetailsBasicQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1150,7 +1211,7 @@ export type GetHomestayWallpaperByHomestayIdQueryVariables = Exact<{
 }>;
 
 
-export type GetHomestayWallpaperByHomestayIdQuery = { __typename?: 'Query', getHomestayWallpaperByHomestayId?: { __typename?: 'HomestayImage', id: string, homestayId: number, url: string, caption?: string | null, createdAt: any, updatedAt: any } | null };
+export type GetHomestayWallpaperByHomestayIdQuery = { __typename?: 'Query', getHomestayWallpaperByHomestayId?: Array<{ __typename?: 'HomestayImage', id: string, homestayId: number, url: string, caption?: string | null, isSelected: boolean, createdAt: any, updatedAt: any }> | null };
 
 export type UpdateHomestayImageMutationVariables = Exact<{
   homestayImageId: Scalars['Int']['input'];
@@ -1158,7 +1219,7 @@ export type UpdateHomestayImageMutationVariables = Exact<{
 }>;
 
 
-export type UpdateHomestayImageMutation = { __typename?: 'Mutation', updateHomestayImage: { __typename?: 'HomestayImage', id: string, homestayId: number, url: string, caption?: string | null, createdAt: any, updatedAt: any } };
+export type UpdateHomestayImageMutation = { __typename?: 'Mutation', updateHomestayImage: { __typename?: 'HomestayImage', id: string, homestayId: number, url: string, isSelected: boolean, caption?: string | null, createdAt: any, updatedAt: any } };
 
 export type CreateAddressMutationVariables = Exact<{
   input: CreateAddressInput;
@@ -1338,12 +1399,38 @@ export type CreateRoomMutationVariables = Exact<{
 
 export type CreateRoomMutation = { __typename?: 'Mutation', createRoom: { __typename?: 'Room', id: string, status: RoomStatus } };
 
+export type CreateRoomAmenityMutationVariables = Exact<{
+  createAmenityInput: CreateRoomAmenityInput;
+}>;
+
+
+export type CreateRoomAmenityMutation = { __typename?: 'Mutation', createRoomAmenity: { __typename?: 'RoomAmenity', roomAmenityId: string, roomId: number, amenity: string } };
+
 export type DeleteRoomMutationVariables = Exact<{
   id: Scalars['Int']['input'];
 }>;
 
 
-export type DeleteRoomMutation = { __typename?: 'Mutation', removeRoom: { __typename?: 'Room', id: string, status: RoomStatus, capacity: RoomCapacity, caption: string, roomNumber?: string | null, attachBathroom?: boolean | null, homestayId: number, createdAt: any, updatedAt: any } };
+export type DeleteRoomMutation = { __typename?: 'Mutation', removeRoom: { __typename?: 'Room', id: string, createdAt: any, updatedAt: any } };
+
+export type FindAllAmenitiesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FindAllAmenitiesQuery = { __typename?: 'Query', findAllAmenities: Array<{ __typename?: 'RoomAmenity', roomAmenityId: string, roomId: number, amenity: string }> };
+
+export type FindAnAmenityByIdQueryVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type FindAnAmenityByIdQuery = { __typename?: 'Query', findAnAmenityById: { __typename?: 'RoomAmenity', roomAmenityId: string, roomId: number, amenity: string } };
+
+export type FindAmenityByRoomIdQueryVariables = Exact<{
+  roomId: Scalars['Int']['input'];
+}>;
+
+
+export type FindAmenityByRoomIdQuery = { __typename?: 'Query', findAmenityByRoomId: { __typename?: 'RoomAmenity', roomAmenityId: string, roomId: number, amenity: string } };
 
 export type GetRoomWithPriceAndGalleryQueryVariables = Exact<{
   id: Scalars['Int']['input'];
@@ -1356,6 +1443,13 @@ export type GetRoomsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetRoomsQuery = { __typename?: 'Query', roomsByHomestay: Array<{ __typename?: 'Room', id: string, status: RoomStatus, capacity: RoomCapacity, caption: string, roomNumber?: string | null, attachBathroom?: boolean | null, homestayId: number, createdAt: any, updatedAt: any, image?: Array<{ __typename?: 'RoomImage', id: string, caption?: string | null, url: string, roomId: number, createdAt: any, updatedAt: any }> | null, price?: { __typename?: 'Price', currency: Currency, baseAmount: number, isDynamicPricing: boolean, discountAmount?: number | null, discountType?: DiscountType | null } | null, booking?: Array<{ __typename?: 'Booking', id: string, startDate: any, endDate: any, status: BookingStatus, guestId: number }> | null }> };
+
+export type RemoveRoomAmenityMutationVariables = Exact<{
+  roomAmenityId: Scalars['Int']['input'];
+}>;
+
+
+export type RemoveRoomAmenityMutation = { __typename?: 'Mutation', removeRoomAmenity: { __typename?: 'RoomAmenity', roomAmenityId: string, roomId: number, amenity: string } };
 
 export type UpdatePriceMutationVariables = Exact<{
   updatePriceInput: UpdatePriceInput;
@@ -1370,6 +1464,13 @@ export type UpdateRoomMutationVariables = Exact<{
 
 
 export type UpdateRoomMutation = { __typename?: 'Mutation', updateRoom: { __typename?: 'Room', id: string, status: RoomStatus, capacity: RoomCapacity, caption: string, roomNumber?: string | null, attachBathroom?: boolean | null, homestayId: number, createdAt: any, updatedAt: any } };
+
+export type UpdateRoomAmenityMutationVariables = Exact<{
+  updateAmenityInput: UpdateRoomAmenityInput;
+}>;
+
+
+export type UpdateRoomAmenityMutation = { __typename?: 'Mutation', updateRoomAmenity: { __typename?: 'RoomAmenity', roomAmenityId: string, roomId: number, amenity: string } };
 
 export type CreateRulesMutationVariables = Exact<{
   input: CreateRulesInput;
@@ -1447,7 +1548,7 @@ export type GetHomestayBySlugQueryVariables = Exact<{
 }>;
 
 
-export type GetHomestayBySlugQuery = { __typename?: 'Query', getHomestayBySlug?: { __typename?: 'Homestay', id: string, name: string, description?: string | null, slug: string, moderatedBySuperAdmin: boolean, moderatedByCommunityOwner: boolean, image?: Array<{ __typename?: 'HomestayImage', url: string }> | null, address?: { __typename?: 'Address', country: string, city?: string | null, subCity?: string | null, street?: string | null, latitude?: number | null, longitude?: number | null } | null, contact?: { __typename?: 'ContactDetails', phone: string, altPhone?: string | null, email: string } | null, rooms?: Array<{ __typename?: 'Room', id: string, caption: string, capacity: RoomCapacity, roomNumber?: string | null, status: RoomStatus, image?: Array<{ __typename?: 'RoomImage', url: string, id: string, caption?: string | null }> | null, price?: { __typename?: 'Price', baseAmount: number, currency: Currency, isDynamicPricing: boolean, discountAmount?: number | null, discountType?: DiscountType | null } | null }> | null } | null };
+export type GetHomestayBySlugQuery = { __typename?: 'Query', getHomestayBySlug?: { __typename?: 'Homestay', id: string, name: string, description?: string | null, slug: string, moderatedBySuperAdmin: boolean, moderatedByCommunityOwner: boolean, image?: Array<{ __typename?: 'HomestayImage', url: string }> | null, address?: { __typename?: 'Address', country: string, city?: string | null, subCity?: string | null, street?: string | null, latitude?: number | null, longitude?: number | null } | null, contact?: { __typename?: 'ContactDetails', phone: string, altPhone?: string | null, email: string } | null, rooms?: Array<{ __typename?: 'Room', id: string, caption: string, capacity: RoomCapacity, roomNumber?: string | null, status: RoomStatus, roomAmenity?: { __typename?: 'RoomAmenity', amenity: string } | null, image?: Array<{ __typename?: 'RoomImage', url: string, id: string, caption?: string | null }> | null, price?: { __typename?: 'Price', baseAmount: number, currency: Currency, isDynamicPricing: boolean, discountAmount?: number | null, discountType?: DiscountType | null } | null }> | null } | null };
 
 export type LogInUserMutationVariables = Exact<{
   input: LoginInput;
@@ -1539,15 +1640,16 @@ export type GetFeaturedHomestaysQueryVariables = Exact<{
 }>;
 
 
-export type GetFeaturedHomestaysQuery = { __typename?: 'Query', getAllHomestays: Array<{ __typename?: 'Homestay', id: string, name: string, description?: string | null, slug: string, address?: { __typename?: 'Address', country: string, city?: string | null, subCity?: string | null, street?: string | null, latitude?: number | null, longitude?: number | null } | null, image?: Array<{ __typename?: 'HomestayImage', url: string, caption?: string | null }> | null, rooms?: Array<{ __typename?: 'Room', id: string, caption: string, capacity: RoomCapacity, roomNumber?: string | null, status: RoomStatus, createdAt: any, updatedAt: any, homestayId: number, image?: Array<{ __typename?: 'RoomImage', url: string, id: string, caption?: string | null, createdAt: any, updatedAt: any, roomId: number }> | null, price?: { __typename?: 'Price', baseAmount: number, currency: Currency, isDynamicPricing: boolean, discountAmount?: number | null, discountType?: DiscountType | null } | null }> | null, services?: { __typename?: 'Services', service: string } | null }> };
+export type GetFeaturedHomestaysQuery = { __typename?: 'Query', getAllHomestays: Array<{ __typename?: 'Homestay', id: string, name: string, description?: string | null, slug: string, address?: { __typename?: 'Address', country: string, city?: string | null, subCity?: string | null, street?: string | null, latitude?: number | null, longitude?: number | null } | null, image?: Array<{ __typename?: 'HomestayImage', url: string, caption?: string | null, isSelected: boolean }> | null, rooms?: Array<{ __typename?: 'Room', id: string, caption: string, capacity: RoomCapacity, roomNumber?: string | null, status: RoomStatus, createdAt: any, updatedAt: any, homestayId: number, image?: Array<{ __typename?: 'RoomImage', url: string, id: string, caption?: string | null, createdAt: any, updatedAt: any, roomId: number }> | null, price?: { __typename?: 'Price', baseAmount: number, currency: Currency, isDynamicPricing: boolean, discountAmount?: number | null, discountType?: DiscountType | null } | null }> | null, services?: { __typename?: 'Services', service: string } | null }> };
 
 
 export const BookingsByHomestayDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"BookingsByHomestay"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bookingsByHomestay"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"bookingKey"}},{"kind":"Field","name":{"kind":"Name","value":"startDate"}},{"kind":"Field","name":{"kind":"Name","value":"endDate"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"room"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"roomNumber"}},{"kind":"Field","name":{"kind":"Name","value":"capacity"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"attachBathroom"}},{"kind":"Field","name":{"kind":"Name","value":"maxOccupancy"}},{"kind":"Field","name":{"kind":"Name","value":"price"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"baseAmount"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"discountAmount"}},{"kind":"Field","name":{"kind":"Name","value":"discountType"}},{"kind":"Field","name":{"kind":"Name","value":"isDiscountActive"}}]}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"guest"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"fullName"}},{"kind":"Field","name":{"kind":"Name","value":"phoneNumber"}}]}}]}}]}}]} as unknown as DocumentNode<BookingsByHomestayQuery, BookingsByHomestayQueryVariables>;
+export const SelectHomestayImageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"selectHomestayImage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"selectHomestayImageId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"homestayId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"selectHomestayImage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"selectHomestayImageId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"selectHomestayImageId"}}},{"kind":"Argument","name":{"kind":"Name","value":"homestayId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"homestayId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"isSelected"}}]}}]}}]} as unknown as DocumentNode<SelectHomestayImageMutation, SelectHomestayImageMutationVariables>;
 export const GetHomestayDetailsBasicDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getHomestayDetailsBasic"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getHomestayByToken"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"moderatedBySuperAdmin"}},{"kind":"Field","name":{"kind":"Name","value":"moderatedByCommunityOwner"}},{"kind":"Field","name":{"kind":"Name","value":"address"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"country"}},{"kind":"Field","name":{"kind":"Name","value":"city"}},{"kind":"Field","name":{"kind":"Name","value":"subCity"}},{"kind":"Field","name":{"kind":"Name","value":"street"}}]}}]}}]}}]} as unknown as DocumentNode<GetHomestayDetailsBasicQuery, GetHomestayDetailsBasicQueryVariables>;
 export const CreateHomestayImageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateHomestayImage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateHomestayWallpaperInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createHomestayImage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"homestayId"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}}]}}]}}]} as unknown as DocumentNode<CreateHomestayImageMutation, CreateHomestayImageMutationVariables>;
 export const DeleteHomestayImageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteHomestayImage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"homestayImageId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteHomestayImage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"homestayImageId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"homestayImageId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"homestayId"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<DeleteHomestayImageMutation, DeleteHomestayImageMutationVariables>;
-export const GetHomestayWallpaperByHomestayIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetHomestayWallpaperByHomestayId"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"homestayId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getHomestayWallpaperByHomestayId"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"homestayId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"homestayId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"homestayId"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<GetHomestayWallpaperByHomestayIdQuery, GetHomestayWallpaperByHomestayIdQueryVariables>;
-export const UpdateHomestayImageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateHomestayImage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"homestayImageId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateHomestayWallpaperInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateHomestayImage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"homestayImageId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"homestayImageId"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"homestayId"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<UpdateHomestayImageMutation, UpdateHomestayImageMutationVariables>;
+export const GetHomestayWallpaperByHomestayIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetHomestayWallpaperByHomestayId"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"homestayId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getHomestayWallpaperByHomestayId"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"homestayId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"homestayId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"homestayId"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"isSelected"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<GetHomestayWallpaperByHomestayIdQuery, GetHomestayWallpaperByHomestayIdQueryVariables>;
+export const UpdateHomestayImageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateHomestayImage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"homestayImageId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateHomestayWallpaperInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateHomestayImage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"homestayImageId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"homestayImageId"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"homestayId"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"isSelected"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<UpdateHomestayImageMutation, UpdateHomestayImageMutationVariables>;
 export const CreateAddressDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createAddress"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateAddressInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createAddress"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateAddressMutation, CreateAddressMutationVariables>;
 export const CreateContactsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createContacts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateContactInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createContact"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateContactsMutation, CreateContactsMutationVariables>;
 export const CreateHomestayDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createHomestay"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateHomestayInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createHomestay"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ownerId"}}]}}]}}]} as unknown as DocumentNode<CreateHomestayMutation, CreateHomestayMutationVariables>;
@@ -1573,11 +1675,17 @@ export const GetRoomImagesByRoomIdDocument = {"kind":"Document","definitions":[{
 export const UpdateRoomImageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateRoomImage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"roomImageId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateRoomImageInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateRoomImage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"roomImageId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"roomImageId"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"roomId"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<UpdateRoomImageMutation, UpdateRoomImageMutationVariables>;
 export const CreatePriceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatePrice"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createPriceInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreatePriceInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createPrice"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createPriceInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createPriceInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"baseAmount"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"roomId"}},{"kind":"Field","name":{"kind":"Name","value":"isDynamicPricing"}},{"kind":"Field","name":{"kind":"Name","value":"discountAmount"}},{"kind":"Field","name":{"kind":"Name","value":"discountType"}},{"kind":"Field","name":{"kind":"Name","value":"isDiscountActive"}}]}}]}}]} as unknown as DocumentNode<CreatePriceMutation, CreatePriceMutationVariables>;
 export const CreateRoomDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateRoom"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createRoomInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateRoomInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createRoom"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createRoomInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createRoomInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]} as unknown as DocumentNode<CreateRoomMutation, CreateRoomMutationVariables>;
-export const DeleteRoomDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"deleteRoom"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removeRoom"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"capacity"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"roomNumber"}},{"kind":"Field","name":{"kind":"Name","value":"attachBathroom"}},{"kind":"Field","name":{"kind":"Name","value":"homestayId"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<DeleteRoomMutation, DeleteRoomMutationVariables>;
+export const CreateRoomAmenityDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateRoomAmenity"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createAmenityInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateRoomAmenityInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createRoomAmenity"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createAmenityInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createAmenityInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"roomAmenityId"}},{"kind":"Field","name":{"kind":"Name","value":"roomId"}},{"kind":"Field","name":{"kind":"Name","value":"amenity"}}]}}]}}]} as unknown as DocumentNode<CreateRoomAmenityMutation, CreateRoomAmenityMutationVariables>;
+export const DeleteRoomDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"deleteRoom"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removeRoom"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<DeleteRoomMutation, DeleteRoomMutationVariables>;
+export const FindAllAmenitiesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindAllAmenities"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findAllAmenities"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"roomAmenityId"}},{"kind":"Field","name":{"kind":"Name","value":"roomId"}},{"kind":"Field","name":{"kind":"Name","value":"amenity"}}]}}]}}]} as unknown as DocumentNode<FindAllAmenitiesQuery, FindAllAmenitiesQueryVariables>;
+export const FindAnAmenityByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindAnAmenityById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findAnAmenityById"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"roomAmenityId"}},{"kind":"Field","name":{"kind":"Name","value":"roomId"}},{"kind":"Field","name":{"kind":"Name","value":"amenity"}}]}}]}}]} as unknown as DocumentNode<FindAnAmenityByIdQuery, FindAnAmenityByIdQueryVariables>;
+export const FindAmenityByRoomIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindAmenityByRoomId"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"roomId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findAmenityByRoomId"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"roomId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"roomId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"roomAmenityId"}},{"kind":"Field","name":{"kind":"Name","value":"roomId"}},{"kind":"Field","name":{"kind":"Name","value":"amenity"}}]}}]}}]} as unknown as DocumentNode<FindAmenityByRoomIdQuery, FindAmenityByRoomIdQueryVariables>;
 export const GetRoomWithPriceAndGalleryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetRoomWithPriceAndGallery"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"room"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"capacity"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"maxOccupancy"}},{"kind":"Field","name":{"kind":"Name","value":"roomNumber"}},{"kind":"Field","name":{"kind":"Name","value":"attachBathroom"}},{"kind":"Field","name":{"kind":"Name","value":"homestayId"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"roomId"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"price"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"baseAmount"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"discountAmount"}},{"kind":"Field","name":{"kind":"Name","value":"discountType"}},{"kind":"Field","name":{"kind":"Name","value":"isDiscountActive"}},{"kind":"Field","name":{"kind":"Name","value":"isDynamicPricing"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]} as unknown as DocumentNode<GetRoomWithPriceAndGalleryQuery, GetRoomWithPriceAndGalleryQueryVariables>;
 export const GetRoomsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetRooms"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"roomsByHomestay"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"capacity"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"roomNumber"}},{"kind":"Field","name":{"kind":"Name","value":"attachBathroom"}},{"kind":"Field","name":{"kind":"Name","value":"homestayId"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"roomId"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"price"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"baseAmount"}},{"kind":"Field","name":{"kind":"Name","value":"isDynamicPricing"}},{"kind":"Field","name":{"kind":"Name","value":"discountAmount"}},{"kind":"Field","name":{"kind":"Name","value":"discountType"}}]}},{"kind":"Field","name":{"kind":"Name","value":"booking"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"startDate"}},{"kind":"Field","name":{"kind":"Name","value":"endDate"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"guestId"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<GetRoomsQuery, GetRoomsQueryVariables>;
+export const RemoveRoomAmenityDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RemoveRoomAmenity"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"roomAmenityId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removeRoomAmenity"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"roomAmenityId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"roomAmenityId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"roomAmenityId"}},{"kind":"Field","name":{"kind":"Name","value":"roomId"}},{"kind":"Field","name":{"kind":"Name","value":"amenity"}}]}}]}}]} as unknown as DocumentNode<RemoveRoomAmenityMutation, RemoveRoomAmenityMutationVariables>;
 export const UpdatePriceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdatePrice"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updatePriceInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdatePriceInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePrice"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"updatePriceInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updatePriceInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"baseAmount"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"isDynamicPricing"}},{"kind":"Field","name":{"kind":"Name","value":"discountAmount"}},{"kind":"Field","name":{"kind":"Name","value":"discountType"}},{"kind":"Field","name":{"kind":"Name","value":"isDiscountActive"}}]}}]}}]} as unknown as DocumentNode<UpdatePriceMutation, UpdatePriceMutationVariables>;
 export const UpdateRoomDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateRoom"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateRoomInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateRoomInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateRoom"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"updateRoomInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateRoomInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"capacity"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"roomNumber"}},{"kind":"Field","name":{"kind":"Name","value":"attachBathroom"}},{"kind":"Field","name":{"kind":"Name","value":"homestayId"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<UpdateRoomMutation, UpdateRoomMutationVariables>;
+export const UpdateRoomAmenityDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateRoomAmenity"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateAmenityInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateRoomAmenityInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateRoomAmenity"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"updateAmenityInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateAmenityInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"roomAmenityId"}},{"kind":"Field","name":{"kind":"Name","value":"roomId"}},{"kind":"Field","name":{"kind":"Name","value":"amenity"}}]}}]}}]} as unknown as DocumentNode<UpdateRoomAmenityMutation, UpdateRoomAmenityMutationVariables>;
 export const CreateRulesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createRules"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateRulesInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createRules"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createRulesInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"rules"}}]}}]}}]} as unknown as DocumentNode<CreateRulesMutation, CreateRulesMutationVariables>;
 export const GetRulesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getRules"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getRulesByHomestay"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"rules"}}]}}]}}]} as unknown as DocumentNode<GetRulesQuery, GetRulesQueryVariables>;
 export const UpdateRulesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateRules"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateRulesInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"rulesId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateRules"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"rulesId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"rulesId"}}},{"kind":"Argument","name":{"kind":"Name","value":"updateRulesInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"rules"}}]}}]}}]} as unknown as DocumentNode<UpdateRulesMutation, UpdateRulesMutationVariables>;
@@ -1588,7 +1696,7 @@ export const VerifyEmailDocument = {"kind":"Document","definitions":[{"kind":"Op
 export const ConfirmBookingDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ConfirmBooking"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"bookingKey"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"confirmBooking"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"bookingKey"},"value":{"kind":"Variable","name":{"kind":"Name","value":"bookingKey"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]} as unknown as DocumentNode<ConfirmBookingMutation, ConfirmBookingMutationVariables>;
 export const GetBookingByKeyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetBookingByKey"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"bookingKey"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bookingsWithKey"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"bookingKey"},"value":{"kind":"Variable","name":{"kind":"Name","value":"bookingKey"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"roomId"}},{"kind":"Field","name":{"kind":"Name","value":"bookingKey"}},{"kind":"Field","name":{"kind":"Name","value":"guestId"}},{"kind":"Field","name":{"kind":"Name","value":"startDate"}},{"kind":"Field","name":{"kind":"Name","value":"endDate"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"room"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"capacity"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"roomNumber"}},{"kind":"Field","name":{"kind":"Name","value":"attachBathroom"}},{"kind":"Field","name":{"kind":"Name","value":"homestayId"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}}]}},{"kind":"Field","name":{"kind":"Name","value":"price"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"baseAmount"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"guest"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"fullName"}},{"kind":"Field","name":{"kind":"Name","value":"phoneNumber"}},{"kind":"Field","name":{"kind":"Name","value":"isVerified"}},{"kind":"Field","name":{"kind":"Name","value":"userType"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]} as unknown as DocumentNode<GetBookingByKeyQuery, GetBookingByKeyQueryVariables>;
 export const CheckValidBookingDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"CheckValidBooking"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"roomIds"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"startDate"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DateTime"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"endDate"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DateTime"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"checkValidBooking"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"roomIds"},"value":{"kind":"Variable","name":{"kind":"Name","value":"roomIds"}}},{"kind":"Argument","name":{"kind":"Name","value":"startDate"},"value":{"kind":"Variable","name":{"kind":"Name","value":"startDate"}}},{"kind":"Argument","name":{"kind":"Name","value":"endDate"},"value":{"kind":"Variable","name":{"kind":"Name","value":"endDate"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"isValid"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"totalPrice"}},{"kind":"Field","name":{"kind":"Name","value":"totalDays"}},{"kind":"Field","name":{"kind":"Name","value":"bookingSummary"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"roomId"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"totalPriceOfRoom"}},{"kind":"Field","name":{"kind":"Name","value":"priceType"}}]}}]}}]}}]} as unknown as DocumentNode<CheckValidBookingQuery, CheckValidBookingQueryVariables>;
-export const GetHomestayBySlugDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getHomestayBySlug"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"slug"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getHomestayBySlug"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"slug"},"value":{"kind":"Variable","name":{"kind":"Name","value":"slug"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"moderatedBySuperAdmin"}},{"kind":"Field","name":{"kind":"Name","value":"moderatedByCommunityOwner"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"address"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"country"}},{"kind":"Field","name":{"kind":"Name","value":"city"}},{"kind":"Field","name":{"kind":"Name","value":"subCity"}},{"kind":"Field","name":{"kind":"Name","value":"street"}},{"kind":"Field","name":{"kind":"Name","value":"latitude"}},{"kind":"Field","name":{"kind":"Name","value":"longitude"}}]}},{"kind":"Field","name":{"kind":"Name","value":"contact"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"altPhone"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"Field","name":{"kind":"Name","value":"rooms"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"capacity"}},{"kind":"Field","name":{"kind":"Name","value":"roomNumber"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}}]}},{"kind":"Field","name":{"kind":"Name","value":"price"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"baseAmount"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"isDynamicPricing"}},{"kind":"Field","name":{"kind":"Name","value":"discountAmount"}},{"kind":"Field","name":{"kind":"Name","value":"discountType"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetHomestayBySlugQuery, GetHomestayBySlugQueryVariables>;
+export const GetHomestayBySlugDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getHomestayBySlug"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"slug"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getHomestayBySlug"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"slug"},"value":{"kind":"Variable","name":{"kind":"Name","value":"slug"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"moderatedBySuperAdmin"}},{"kind":"Field","name":{"kind":"Name","value":"moderatedByCommunityOwner"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"address"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"country"}},{"kind":"Field","name":{"kind":"Name","value":"city"}},{"kind":"Field","name":{"kind":"Name","value":"subCity"}},{"kind":"Field","name":{"kind":"Name","value":"street"}},{"kind":"Field","name":{"kind":"Name","value":"latitude"}},{"kind":"Field","name":{"kind":"Name","value":"longitude"}}]}},{"kind":"Field","name":{"kind":"Name","value":"contact"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"altPhone"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"Field","name":{"kind":"Name","value":"rooms"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"capacity"}},{"kind":"Field","name":{"kind":"Name","value":"roomNumber"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"roomAmenity"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amenity"}}]}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}}]}},{"kind":"Field","name":{"kind":"Name","value":"price"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"baseAmount"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"isDynamicPricing"}},{"kind":"Field","name":{"kind":"Name","value":"discountAmount"}},{"kind":"Field","name":{"kind":"Name","value":"discountType"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetHomestayBySlugQuery, GetHomestayBySlugQueryVariables>;
 export const LogInUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"logInUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LoginInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"loginUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userType"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}}]}}]}}]}}]} as unknown as DocumentNode<LogInUserMutation, LogInUserMutationVariables>;
 export const GetSearchQueriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getSearchQueries"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"query"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"searchQueries"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"query"},"value":{"kind":"Variable","name":{"kind":"Name","value":"query"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"country"}},{"kind":"Field","name":{"kind":"Name","value":"city"}},{"kind":"Field","name":{"kind":"Name","value":"subCity"}}]}}]}}]} as unknown as DocumentNode<GetSearchQueriesQuery, GetSearchQueriesQueryVariables>;
 export const SearchHomestayDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"searchHomestay"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SearchHomestayInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getHomestaysBySearch"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"address"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"city"}},{"kind":"Field","name":{"kind":"Name","value":"country"}},{"kind":"Field","name":{"kind":"Name","value":"subCity"}},{"kind":"Field","name":{"kind":"Name","value":"street"}}]}},{"kind":"Field","name":{"kind":"Name","value":"contact"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"altPhone"}}]}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"rooms"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}}]}},{"kind":"Field","name":{"kind":"Name","value":"price"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"baseAmount"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"slug"}}]}}]}}]} as unknown as DocumentNode<SearchHomestayQuery, SearchHomestayQueryVariables>;
@@ -1602,7 +1710,7 @@ export const CreateAmenityDocument = {"kind":"Document","definitions":[{"kind":"
 export const FindAmenityByHomestayIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindAmenityByHomestayId"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"homestayId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findAmenityByHomestayId"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"homestayId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"homestayId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"amenity"}},{"kind":"Field","name":{"kind":"Name","value":"homestayId"}}]}}]}}]} as unknown as DocumentNode<FindAmenityByHomestayIdQuery, FindAmenityByHomestayIdQueryVariables>;
 export const RemoveAmenityDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RemoveAmenity"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removeAmenity"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"amenity"}},{"kind":"Field","name":{"kind":"Name","value":"homestayId"}}]}}]}}]} as unknown as DocumentNode<RemoveAmenityMutation, RemoveAmenityMutationVariables>;
 export const UpdateAmenityDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateAmenity"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateAmenityInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateAmenityInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateAmenity"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"updateAmenityInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateAmenityInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"amenity"}},{"kind":"Field","name":{"kind":"Name","value":"homestayId"}}]}}]}}]} as unknown as DocumentNode<UpdateAmenityMutation, UpdateAmenityMutationVariables>;
-export const GetFeaturedHomestaysDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetFeaturedHomestays"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAllHomestays"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pageSize"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"address"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"country"}},{"kind":"Field","name":{"kind":"Name","value":"city"}},{"kind":"Field","name":{"kind":"Name","value":"subCity"}},{"kind":"Field","name":{"kind":"Name","value":"street"}},{"kind":"Field","name":{"kind":"Name","value":"latitude"}},{"kind":"Field","name":{"kind":"Name","value":"longitude"}}]}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}}]}},{"kind":"Field","name":{"kind":"Name","value":"rooms"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"capacity"}},{"kind":"Field","name":{"kind":"Name","value":"roomNumber"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"homestayId"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"roomId"}}]}},{"kind":"Field","name":{"kind":"Name","value":"price"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"baseAmount"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"isDynamicPricing"}},{"kind":"Field","name":{"kind":"Name","value":"discountAmount"}},{"kind":"Field","name":{"kind":"Name","value":"discountType"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"services"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"service"}}]}}]}}]}}]} as unknown as DocumentNode<GetFeaturedHomestaysQuery, GetFeaturedHomestaysQueryVariables>;
+export const GetFeaturedHomestaysDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetFeaturedHomestays"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAllHomestays"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pageSize"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"address"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"country"}},{"kind":"Field","name":{"kind":"Name","value":"city"}},{"kind":"Field","name":{"kind":"Name","value":"subCity"}},{"kind":"Field","name":{"kind":"Name","value":"street"}},{"kind":"Field","name":{"kind":"Name","value":"latitude"}},{"kind":"Field","name":{"kind":"Name","value":"longitude"}}]}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"isSelected"}}]}},{"kind":"Field","name":{"kind":"Name","value":"rooms"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"capacity"}},{"kind":"Field","name":{"kind":"Name","value":"roomNumber"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"homestayId"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"roomId"}}]}},{"kind":"Field","name":{"kind":"Name","value":"price"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"baseAmount"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"isDynamicPricing"}},{"kind":"Field","name":{"kind":"Name","value":"discountAmount"}},{"kind":"Field","name":{"kind":"Name","value":"discountType"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"services"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"service"}}]}}]}}]}}]} as unknown as DocumentNode<GetFeaturedHomestaysQuery, GetFeaturedHomestaysQueryVariables>;
 
 export const BookingsByHomestay = gql`
     query BookingsByHomestay {
@@ -1640,6 +1748,19 @@ export const BookingsByHomestay = gql`
       fullName
       phoneNumber
     }
+  }
+}
+    `;
+export const SelectHomestayImage = gql`
+    mutation selectHomestayImage($selectHomestayImageId: Float!, $homestayId: Float!) {
+  selectHomestayImage(
+    selectHomestayImageId: $selectHomestayImageId
+    homestayId: $homestayId
+  ) {
+    id
+    caption
+    url
+    isSelected
   }
 }
     `;
@@ -1688,6 +1809,7 @@ export const GetHomestayWallpaperByHomestayId = gql`
     homestayId
     url
     caption
+    isSelected
     createdAt
     updatedAt
   }
@@ -1699,6 +1821,7 @@ export const UpdateHomestayImage = gql`
     id
     homestayId
     url
+    isSelected
     caption
     createdAt
     updatedAt
@@ -2057,18 +2180,48 @@ export const CreateRoom = gql`
   }
 }
     `;
+export const CreateRoomAmenity = gql`
+    mutation CreateRoomAmenity($createAmenityInput: CreateRoomAmenityInput!) {
+  createRoomAmenity(createAmenityInput: $createAmenityInput) {
+    roomAmenityId
+    roomId
+    amenity
+  }
+}
+    `;
 export const DeleteRoom = gql`
     mutation deleteRoom($id: Int!) {
   removeRoom(id: $id) {
     id
-    status
-    capacity
-    caption
-    roomNumber
-    attachBathroom
-    homestayId
     createdAt
     updatedAt
+  }
+}
+    `;
+export const FindAllAmenities = gql`
+    query FindAllAmenities {
+  findAllAmenities {
+    roomAmenityId
+    roomId
+    amenity
+  }
+}
+    `;
+export const FindAnAmenityById = gql`
+    query FindAnAmenityById($id: Int!) {
+  findAnAmenityById(id: $id) {
+    roomAmenityId
+    roomId
+    amenity
+  }
+}
+    `;
+export const FindAmenityByRoomId = gql`
+    query FindAmenityByRoomId($roomId: Int!) {
+  findAmenityByRoomId(roomId: $roomId) {
+    roomAmenityId
+    roomId
+    amenity
   }
 }
     `;
@@ -2145,6 +2298,15 @@ export const GetRooms = gql`
   }
 }
     `;
+export const RemoveRoomAmenity = gql`
+    mutation RemoveRoomAmenity($roomAmenityId: Int!) {
+  removeRoomAmenity(roomAmenityId: $roomAmenityId) {
+    roomAmenityId
+    roomId
+    amenity
+  }
+}
+    `;
 export const UpdatePrice = gql`
     mutation UpdatePrice($updatePriceInput: UpdatePriceInput!) {
   updatePrice(updatePriceInput: $updatePriceInput) {
@@ -2170,6 +2332,15 @@ export const UpdateRoom = gql`
     homestayId
     createdAt
     updatedAt
+  }
+}
+    `;
+export const UpdateRoomAmenity = gql`
+    mutation UpdateRoomAmenity($updateAmenityInput: UpdateRoomAmenityInput!) {
+  updateRoomAmenity(updateAmenityInput: $updateAmenityInput) {
+    roomAmenityId
+    roomId
+    amenity
   }
 }
     `;
@@ -2327,6 +2498,9 @@ export const GetHomestayBySlug = gql`
       capacity
       roomNumber
       status
+      roomAmenity {
+        amenity
+      }
       image {
         url
         id
@@ -2522,6 +2696,7 @@ export const GetFeaturedHomestays = gql`
     image {
       url
       caption
+      isSelected
     }
     rooms {
       id

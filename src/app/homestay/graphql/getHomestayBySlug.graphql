@@ -30,6 +30,9 @@ query getHomestayBySlug($slug: String!) {
       capacity 
       roomNumber
       status
+      roomAmenity{
+        amenity
+      }
       image {
         url 
         id 

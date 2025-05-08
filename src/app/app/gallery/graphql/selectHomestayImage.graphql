@@ -1,0 +1,8 @@
+mutation selectHomestayImage($selectHomestayImageId:Float!,$homestayId:Float!){
+  selectHomestayImage(selectHomestayImageId:$selectHomestayImageId,homestayId:$homestayId){
+    id
+    caption
+    url
+    isSelected
+  }
+}
