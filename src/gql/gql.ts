@@ -60,6 +60,10 @@ type Documents = {
     "mutation createRules($input: CreateRulesInput!) {\n  createRules(createRulesInput: $input) {\n    id\n    rules\n  }\n}": typeof types.CreateRulesDocument,
     "query getRules {\n  getRulesByHomestay {\n    id\n    rules\n  }\n}": typeof types.GetRulesDocument,
     "mutation updateRules($input: UpdateRulesInput!, $rulesId: Int!) {\n  updateRules(rulesId: $rulesId, updateRulesInput: $input) {\n    id\n    rules\n  }\n}": typeof types.UpdateRulesDocument,
+    "query GetServiceByHomestayId($homestayId: Float!) {\n  findServiceByHomestayId(homestayId: $homestayId) {\n    id\n    service\n    homestayId\n    createdAt\n    updatedAt\n  }\n}": typeof types.GetServiceByHomestayIdDocument,
+    "mutation CreateService($createServiceInput: CreateServiceDto!) {\n  createService(createServiceInput: $createServiceInput) {\n    id\n    service\n    homestayId\n    createdAt\n    updatedAt\n  }\n}": typeof types.CreateServiceDocument,
+    "mutation RemoveService($id: Float!) {\n  removeService(id: $id) {\n    id\n    service\n    homestayId\n  }\n}": typeof types.RemoveServiceDocument,
+    "mutation UpdateService($updateServiceInput: UpdateServiceDto!) {\n  updateService(updateServiceInput: $updateServiceInput) {\n    id\n    service\n    homestayId\n    createdAt\n    updatedAt\n  }\n}": typeof types.UpdateServiceDocument,
     "mutation ForgotPassword($email: String!) {\n  forgotPassword(email: $email) {\n    id\n  }\n}": typeof types.ForgotPasswordDocument,
     "mutation ResetPassword($input: ResetPasswordInput!) {\n  resetPassword(input: $input) {\n    email\n    id\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}": typeof types.ResetPasswordDocument,
     "mutation resendVerificationMail($id: Float!) {\n  resendVerificationMail(id: $id)\n}": typeof types.ResendVerificationMailDocument,
@@ -130,6 +134,10 @@ const documents: Documents = {
     "mutation createRules($input: CreateRulesInput!) {\n  createRules(createRulesInput: $input) {\n    id\n    rules\n  }\n}": types.CreateRulesDocument,
     "query getRules {\n  getRulesByHomestay {\n    id\n    rules\n  }\n}": types.GetRulesDocument,
     "mutation updateRules($input: UpdateRulesInput!, $rulesId: Int!) {\n  updateRules(rulesId: $rulesId, updateRulesInput: $input) {\n    id\n    rules\n  }\n}": types.UpdateRulesDocument,
+    "query GetServiceByHomestayId($homestayId: Float!) {\n  findServiceByHomestayId(homestayId: $homestayId) {\n    id\n    service\n    homestayId\n    createdAt\n    updatedAt\n  }\n}": types.GetServiceByHomestayIdDocument,
+    "mutation CreateService($createServiceInput: CreateServiceDto!) {\n  createService(createServiceInput: $createServiceInput) {\n    id\n    service\n    homestayId\n    createdAt\n    updatedAt\n  }\n}": types.CreateServiceDocument,
+    "mutation RemoveService($id: Float!) {\n  removeService(id: $id) {\n    id\n    service\n    homestayId\n  }\n}": types.RemoveServiceDocument,
+    "mutation UpdateService($updateServiceInput: UpdateServiceDto!) {\n  updateService(updateServiceInput: $updateServiceInput) {\n    id\n    service\n    homestayId\n    createdAt\n    updatedAt\n  }\n}": types.UpdateServiceDocument,
     "mutation ForgotPassword($email: String!) {\n  forgotPassword(email: $email) {\n    id\n  }\n}": types.ForgotPasswordDocument,
     "mutation ResetPassword($input: ResetPasswordInput!) {\n  resetPassword(input: $input) {\n    email\n    id\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}": types.ResetPasswordDocument,
     "mutation resendVerificationMail($id: Float!) {\n  resendVerificationMail(id: $id)\n}": types.ResendVerificationMailDocument,
@@ -352,6 +360,22 @@ export function graphql(source: "query getRules {\n  getRulesByHomestay {\n    i
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "mutation updateRules($input: UpdateRulesInput!, $rulesId: Int!) {\n  updateRules(rulesId: $rulesId, updateRulesInput: $input) {\n    id\n    rules\n  }\n}"): (typeof documents)["mutation updateRules($input: UpdateRulesInput!, $rulesId: Int!) {\n  updateRules(rulesId: $rulesId, updateRulesInput: $input) {\n    id\n    rules\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query GetServiceByHomestayId($homestayId: Float!) {\n  findServiceByHomestayId(homestayId: $homestayId) {\n    id\n    service\n    homestayId\n    createdAt\n    updatedAt\n  }\n}"): (typeof documents)["query GetServiceByHomestayId($homestayId: Float!) {\n  findServiceByHomestayId(homestayId: $homestayId) {\n    id\n    service\n    homestayId\n    createdAt\n    updatedAt\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation CreateService($createServiceInput: CreateServiceDto!) {\n  createService(createServiceInput: $createServiceInput) {\n    id\n    service\n    homestayId\n    createdAt\n    updatedAt\n  }\n}"): (typeof documents)["mutation CreateService($createServiceInput: CreateServiceDto!) {\n  createService(createServiceInput: $createServiceInput) {\n    id\n    service\n    homestayId\n    createdAt\n    updatedAt\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation RemoveService($id: Float!) {\n  removeService(id: $id) {\n    id\n    service\n    homestayId\n  }\n}"): (typeof documents)["mutation RemoveService($id: Float!) {\n  removeService(id: $id) {\n    id\n    service\n    homestayId\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation UpdateService($updateServiceInput: UpdateServiceDto!) {\n  updateService(updateServiceInput: $updateServiceInput) {\n    id\n    service\n    homestayId\n    createdAt\n    updatedAt\n  }\n}"): (typeof documents)["mutation UpdateService($updateServiceInput: UpdateServiceDto!) {\n  updateService(updateServiceInput: $updateServiceInput) {\n    id\n    service\n    homestayId\n    createdAt\n    updatedAt\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

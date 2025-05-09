@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
@@ -54,7 +54,7 @@ export default Home;
 const FormContent = ({rulesData}: {rulesData: HomestayRules | undefined}) => {
   const { setMessage, setRole, setShowToast } = useToastStore();
   const { user } = useUserStore();
-  const editorRef = useRef(rulesData?.rules ?? '');
+  const editorRef = useRef(rulesData?.rules ?? 'Write the rules here');
 
 
 
@@ -112,18 +112,16 @@ const FormContent = ({rulesData}: {rulesData: HomestayRules | undefined}) => {
     }
   };
 
-
   return (
     <div>
-      <div className="card-body card card-bordered  bg-white grid gap-10">
-        <div className=" grid  h-auto relative">
+      <div className="bg-white">
          <RichTextEditor 
           editorRef={editorRef}
-          onChange={(value) => {
+            onChange={(value) => {
           editorRef.current = value;
          }} />
-        </div>
-        <div className="flex justify-end w-full mt-5 relative">
+        { !editorRef.current.includes("<br>") &&  
+          <div className="flex justify-end w-full mt-5 relative">
           <Button
             label={rulesData?.id ? 'Update Rules' : 'Create Rules'}
             loading={isCreating || isUpdating}
@@ -131,6 +129,7 @@ const FormContent = ({rulesData}: {rulesData: HomestayRules | undefined}) => {
             onClick={() => handleSubmit()}
           />
         </div>
+        }
       </div>
     </div>
   );

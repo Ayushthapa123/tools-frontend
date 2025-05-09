@@ -14,6 +14,7 @@ import { motion } from 'framer-motion';
 import { useRoomStore } from 'src/store/roomStore';
 import { AmenityDisplay } from 'src/features/amenity/DisplayAmenity';
 import ShowDetails from 'src/components/room-details/ShowDetails';
+import { Services } from 'src/features/services';
 
 interface HomestayInfoProps {
   name: string;
@@ -82,23 +83,23 @@ export const HomestayInfo = ({
           <div className="">
             {/* Property Header */}
             <div className="">
-              <h1 className="text-2xl font-bold text-gray-800">{name}</h1>
+              <h1 className="text-2xl font-bold text-primary">{name}</h1>
             </div>
             {/* Tabs Navigation */}
             <div className="border-b border-gray-200">
-              <nav className=" flex space-x-8">
+              <nav className=" flex  space-x-2">
                 <button
                   onClick={() => setActiveTab('rooms')}
-                  className={`border-b-2 py-4 px-1 text-sm font-medium ${activeTab === 'rooms'
+                  className={`whitespace-nowrap border-b-2 py-4  text-sm font-medium ${activeTab === 'rooms'
                     ? 'border-blue text-blue'
                     : 'border-transparent text-gray-600 hover:border-gray-300 hover:text-gray-700'
                     }`}
                 >
                   Available Rooms
                 </button>
-                <button
+                <button 
                   onClick={() => setActiveTab('description')}
-                  className={`border-b-2 py-4 px-1 text-sm font-medium ${activeTab === 'description'
+                  className={`border-b-2 py-4 text-sm font-medium ${activeTab === 'description'
                     ? 'border-blue text-blue'
                     : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
                     }`}
@@ -107,22 +108,31 @@ export const HomestayInfo = ({
                 </button>
                 <button
                   onClick={() => setActiveTab('contact')}
-                  className={`border-b-2 py-4 px-1 text-sm font-medium ${activeTab === 'contact'
+                  className={`text-nowrap border-b-2 py-4 px-1 text-sm font-medium ${activeTab === 'contact'
                     ? 'border-blue text-blue'
                     : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
                     }`}
                 >
                   Contact Info
                 </button>
-                <button
-                  onClick={() => setActiveTab('amenity')}
-                  className={`border-b-2 py-4 px-1 text-sm font-medium ${activeTab === 'amenity'
-                    ? 'border-blue text-blue'
-                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                    }`}
-                >
-                  Amenities
-                </button>
+                  <button
+                    onClick={() => setActiveTab('amenity')}
+                    className={`border-b-2 py-4 px-1 text-sm font-medium ${activeTab === 'amenity'
+                      ? 'border-blue text-blue'
+                      : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                      }`}
+                  >
+                    Amenities
+              </button>
+              <button
+                onClick={() => setActiveTab('services')}
+                className={`border-b-2 py-4 px-1 text-sm font-medium ${activeTab === 'services'
+                  ? 'border-blue text-blue'
+                  : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                  }`}
+              >
+                Services
+              </button>
               </nav>
             </div>
             {/* Tab Content */}
@@ -182,6 +192,15 @@ export const HomestayInfo = ({
                 <div className="rounded-lg bg-white p-4">
                   <div className="prose max-w-none">
                     <AmenityDisplay homestayId={homestayId} key={homestayId} showAll={true} />
+                  </div>
+                </div>
+            )}
+            
+            {/* Services Tab */}
+              {activeTab === 'services' && (
+                <div className="rounded-lg bg-white p-4">
+                  <div className="prose max-w-none">
+                    <Services homestayId={homestayId} key={homestayId} />
                   </div>
                 </div>
               )}

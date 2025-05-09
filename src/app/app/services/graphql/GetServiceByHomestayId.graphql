@@ -1,0 +1,9 @@
+query GetServiceByHomestayId($homestayId: Float!) {
+  findServiceByHomestayId(homestayId: $homestayId) {
+    id
+    service
+    homestayId
+    createdAt
+    updatedAt
+  }
+}

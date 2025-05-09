@@ -84,7 +84,7 @@ export default function Layout({
                 <Navbar />
               </div>
 
-              {!userData?.isVerified ? <CheckMailForVerification /> : (
+              {userData ? !userData?.isVerified ? <CheckMailForVerification /> : (
                 <div className=" pt-15    h-[calc(100vh-70px)] w-full  md:flex">
                   {user.userType !== "GUEST" &&
                     <div className="fixed z-50 hidden  lg:relative lg:flex">
@@ -96,7 +96,9 @@ export default function Layout({
                     className={`  relative h-[calc(100vh-70px)] w-full overflow-y-scroll   bg-slate-50 p-3 md:p-5`}>
                     {children}
                   </div>
-                </div>)}
+              </div>)
+              :""  
+              }
             </>
           ) : (
             <>
