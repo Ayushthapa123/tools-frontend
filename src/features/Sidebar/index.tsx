@@ -17,6 +17,7 @@ import RulesIcon from '../../components/icons/Rules';
 import { useUserStore } from 'src/store/userStore';   
 import { LogInUser, LogInUserMutation, LogInUserMutationVariables, LogOutMutationVariables, LogOut, LogOutMutation, UserType } from 'src/gql/graphql';
 import BookingIcon from '../../components/icons/Booking';
+import { RiToolsFill } from "react-icons/ri";
 import { FaHotel, FaRegLightbulb } from 'react-icons/fa';
 import { useMutation } from '@tanstack/react-query';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
@@ -88,6 +89,7 @@ const Sidebar = () => {
 
         { icon: <RulesIcon className='text-primary'/>, text: 'Rules', href: '/app/rules', show: user.userType === UserType.HomestayOwner },
         { icon: <FaRegLightbulb />, text: 'Amenities', href: '/app/amenities', show: user.userType === UserType.HomestayOwner },
+        { icon: <RiToolsFill />, text: 'Services', href: '/app/services', show: user.userType === UserType.HomestayOwner },
       ],
     },
 

@@ -1,0 +1,7 @@
+mutation RemoveService($id: Float!) {
+  removeService(id: $id) {
+    id
+    service
+    homestayId
+  }
+}

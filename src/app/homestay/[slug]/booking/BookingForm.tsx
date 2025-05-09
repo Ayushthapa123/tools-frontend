@@ -104,6 +104,7 @@ export const BookingForm = ({ homestayId, homeStaySlug, onSuccess, rooms }: Book
 
   const onSubmit = async (data: BookingFormData) => {
     if (currentStep === 1) {
+      if(data.phone.length != 10)
       setFormData(data);
       setCurrentStep(2);
     } else {
@@ -178,7 +179,30 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit ,setValue,watch,getVa
   
   const { user } = useUserStore();
   const { roomIds } = useRoomStore();
+  const [ errorMessage, setErrorMessage ] = useState<string | null>(null)
+  
+  const handleValidPhoneCheck = (phone: string) => {
+    console.log("ph", phone)
+    if (phone.length == 10 || phone == null || phone == "") {
+      setErrorMessage(null)
+    }
+    if ( phone.length != 10) {
+      setErrorMessage("Invalid Phone number.")
+    }
+  }
 
+  const handleValidGuesCheck = (guest: string) => {
+    console.log("g",typeof(guest))
+    if (guest == null || guest == "") {
+      setErrorMessage(null)
+    }
+    if (Number(guest) < 1) {
+      setErrorMessage("Invalid number of guests.")
+    } else {
+      setErrorMessage(null)
+    }
+  }
+  console.log("ee",errorMessage)
 
   useEffect(() => {
     if (user.userId) {
@@ -296,7 +320,8 @@ const {roomIds:roomIdsFromStore}=useRoomStore()
         placeholder="Phone Number"
         control={control}
         label="Phone Number"
-        required
+          required
+          onChange={(e)=>handleValidPhoneCheck(e.target.value)}
         helpertext={errors.phone?.type === 'required' ? 'Phone number is required' : ''}
         error={!!errors.phone}
       />
@@ -305,7 +330,8 @@ const {roomIds:roomIdsFromStore}=useRoomStore()
         name="numberOfGuests"
         type="number"
         placeholder="Number of Guests"
-        control={control}
+          control={control}
+          onChange={(e)=>handleValidGuesCheck(e.target.value)}
         label="Number of Guests"
         required
         helpertext={errors.numberOfGuests?.type === 'required' ? 'Number of guests is required' : ''}
@@ -327,7 +353,7 @@ const {roomIds:roomIdsFromStore}=useRoomStore()
         onChange={(e)=>handleCheckInDateChange(e.target.value)}
       />
 
-      <TextInput
+        <TextInput
         name="checkOutDate"
         type="date"
         placeholder="Check-out Date"
@@ -365,17 +391,24 @@ const {roomIds:roomIdsFromStore}=useRoomStore()
       helpertext={errors.password?.type === 'required' ? 'Password is required' : ''}
       error={!!errors.password}
     />
-    </div>}
+      </div>}
+      {
+        errorMessage && <div>
+          <p className='text-error'>{errorMessage}</p>
+        </div>
+      }
 
-    <div className="mt-6">
-      <Button
-        label="Next"
-        type="submit"
-        loading={false}
-        className="w-full font-teko font-bold"
-        disabled={!validity?.isValid}
-      />
-    </div>
+      {
+        !errorMessage && <div className="mt-6">
+        <Button
+          label="Next"
+          type="submit"
+          loading={false}
+          className="w-full font-teko font-bold"
+          disabled={!validity?.isValid}
+        />
+      </div>
+    }
   </form>
 );
 }

@@ -1,21 +1,21 @@
 import type { Metadata } from 'next';
-import { Sora, Teko } from 'next/font/google';
+// import { Sora, Teko } from 'next/font/google';
 import './globals.css';
 import Head from 'next/head';
 import { TopLevelWrapper } from 'src/features/TopLevelWrapper';
 import PWARegister from 'src/components/PWARegister';
 
-const sora = Sora({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
-  variable: '--font-sora',
-});
+// const sora = Sora({
+//   subsets: ['latin'],
+//   weight: ['300', '400', '500', '600', '700'],
+//   variable: '--font-sora',
+// });
 
-const teko = Teko({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
-  variable: '--font-teko',
-});
+// const teko = Teko({
+//   subsets: ['latin'],
+//   weight: ['300', '400', '500', '600', '700'],
+//   variable: '--font-teko',
+// });
 
 // export const metadata: Metadata = {
 //   title: 'Homestay Management Software',
@@ -48,7 +48,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#ffffff" />
         <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
       </Head>
-      <body className={`${sora.variable} ${teko.variable} font-sans bg-base-body`}>
+      <body className={`font-sora bg-base-body`}>
         <TopLevelWrapper>{children}</TopLevelWrapper>
       </body>
     </html>

@@ -123,6 +123,10 @@ export const AmenitySelector = ({
           amenity: Array.isArray(amenitiesArray) ? amenitiesArray.join(',') : amenitiesArray,
           homestayId: homestayId
         }
+      }).then((res) => {
+        if (res) {
+          existingAmenities = selectedAmenities;
+        }
       });
 
       // Show success message

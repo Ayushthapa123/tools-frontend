@@ -15,11 +15,11 @@ import MainContent from './MainContent';
 import { CommonNav } from 'src/features/NavBar/CommonNav';
 import { useSearchParams } from 'next/navigation';
 import LoadingSpinner from 'src/components/Loading';
-export function HostelPage({ slug,  }: { slug: string}) {
+export function HostelPage({ slug,checkInDat,checkOutDat  }: { slug: string,checkInDat:string,checkOutDat:string}) {
 
   const searchParams = useSearchParams();
-  const checkInDate = searchParams.get('checkInDate') ?? '';
-  const checkOutDate = searchParams.get('checkOutDate') ?? '';
+  const checkInDate = checkInDat ?? new Date().toISOString().split("T")[0];
+  const checkOutDate = checkOutDat ?? new Date(Date.now() + 86400000).toISOString().split('T')[0];
 
   const searchHostels = useGraphqlClientRequest<
     GetHomestayBySlugQuery,

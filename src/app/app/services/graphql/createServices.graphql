@@ -1,0 +1,9 @@
+mutation CreateService($createServiceInput: CreateServiceDto!) {
+  createService(createServiceInput: $createServiceInput) {
+    id
+    service
+    homestayId
+    createdAt
+    updatedAt
+  }
+}
