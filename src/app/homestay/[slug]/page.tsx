@@ -1,3 +1,4 @@
+"use client";
 import { Metadata, ResolvingMetadata } from 'next';
 import { HostelPage } from './HostelPage';
 
@@ -64,12 +65,14 @@ type Props = {
 
 export default function Home({ params }: { params: { slug: string } }) {
   const slug = params?.slug;
+  const checkInDate = useSearchParams().get("checkInDate") ?? "";
+  const checkOutDate = useSearchParams().get("checkOutDate") ?? "";
   const slugArray = slug.split('-');
 
 
   return (
     <div className="w-full ">
-       <HostelPage slug={slug}  /> 
+      <HostelPage slug={slug} checkInDat={checkInDate} checkOutDat={ checkOutDate} /> 
     </div>
   );
 }

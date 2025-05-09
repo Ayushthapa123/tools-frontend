@@ -67,7 +67,7 @@ export const SearchResults = (props: IResults) => {
 
           return (
             <div key={hostel.slug}>
-              <Link href={`/homestay/${hostel.slug}`}>
+              <Link href={`/homestay/${hostel.slug}?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}>
                 <HostelCard
                   name={hostel.name}
                   country={hostel.address?.country ?? ''}
@@ -81,6 +81,7 @@ export const SearchResults = (props: IResults) => {
                   oneSeater={null}
                   twoSeater={null}
                   threeSeater={null}
+                  
                 />
               </Link>
             </div>

@@ -16,9 +16,9 @@ const config: Config = {
     extend: {
       fontFamily: {
         // Primary font
-        sans: ['var(--font-sora)', 'system-ui', 'sans-serif'],
+        sora: ['var(--font-sora)', 'system-ui', 'sans-serif'],
         // Secondary font
-        display: ['var(--font-teko)', 'system-ui', 'sans-serif'],
+        teko: ['var(--font-teko)', 'system-ui', 'sans-serif'],
         // Keeping mono for code blocks if needed
         mono: ['DM Mono', 'monospace'],
       },
