@@ -7,6 +7,7 @@ import { GetServiceByHomestayIdQueryVariables } from 'src/gql/graphql';
 import { useQuery } from '@tanstack/react-query';
 import { GetServiceByHomestayId } from 'src/gql/graphql';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import LoadingSpinner from 'src/components/Loading';
 
 interface ServicesProps {
   homestayId?: number;
@@ -33,12 +34,14 @@ const { data: homestayServices, isLoading: loadingHomestayServices } = useQuery(
   enabled: !!homestayId
 });
   
+  if(loadingHomestayServices) return <LoadingSpinner color='primary' size='sm' />
+  
   
 
   return (
     <div className="bg-white rounded-lg">
         <div className="grid grid-cols-1 lg:grid-cols-2">
-            {homestayServices?.service?.split(',').map((service) => (
+            {homestayServices? homestayServices?.service?.split(',').map((service) => (
               <div key={service} >
                 <ul className="space-y-2">
                     <li key={service} className="flex items-start">
@@ -47,7 +50,7 @@ const { data: homestayServices, isLoading: loadingHomestayServices } = useQuery(
                     </li>
                 </ul>
               </div>
-            ))}
+            )):<div>No services listed.</div>}
         </div>
     </div>
   );

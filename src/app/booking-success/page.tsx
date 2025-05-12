@@ -255,7 +255,7 @@ function BookingSuccessPageContent() {
             </div>
             <div>
               <h3 className="text-sm font-medium text-base-content/70">Address</h3>
-              <p className="mt-1 text-lg font-semibold"></p>
+                <p className="mt-1 text-lg font-semibold"></p>
             </div>
           </div>
         </div>

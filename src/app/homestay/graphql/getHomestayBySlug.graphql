@@ -9,6 +9,7 @@ query getHomestayBySlug($slug: String!) {
     moderatedByCommunityOwner
     image{
       url 
+      isSelected
     }
     address {
       country
