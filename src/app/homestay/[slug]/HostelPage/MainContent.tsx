@@ -67,6 +67,9 @@ export default function MainContent(props: Iprops) {
     'Clean private bathroom with hot shower',
     'Free parking',
   ].filter(amenity => amenitiesArray.includes(amenity));
+console.log("img",hostel?.image)
+  const selectedImg = hostel?.image?.filter((img) => img.isSelected === true);
+  console.log("issel",selectedImg)
   return (
     <div className="bg-gray-50 pb-4">
       {showDetails ? (
@@ -98,7 +101,7 @@ export default function MainContent(props: Iprops) {
                 <div className="relative mb-4 h-[500px] w-full overflow-hidden rounded-2xl bg-gray-200">
                   <div className="group relative h-full w-full">
                     <Image
-                      src={hostel?.image?.[ 0 ]?.url ?? '/images/default-image.png'}
+                      src={selectedImg?.[0]?.url ?? hostel?.image?.[ mainImage ]?.url ?? '/images/default-image.png'}
                       alt={`Room image ${mainImage + 1}`}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
