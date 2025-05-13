@@ -20,7 +20,6 @@ export const AmenityDisplay: React.FC<AmenityDisplayProps> = ({
   const queryAmenity = useGraphqlClientRequest<FindAmenityByHomestayIdQuery, FindAmenityByHomestayIdQueryVariables>(FindAmenityByHomestayId.loc?.source.body!)
   const fetchData = async () => {
     const res = await queryAmenity({homestayId});
-    console.log("fetching amenity", res);
     return res.findAmenityByHomestayId[0] ?? null;
   };    
 

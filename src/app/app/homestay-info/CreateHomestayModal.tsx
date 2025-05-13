@@ -21,7 +21,7 @@ interface IProps {
 
 }
 
-export const CreateHostelModal = () => {
+export const CreateHomestayModal = () => {
   const { setMessage, setRole, setShowToast } = useToastStore();
   const {
     control,
@@ -41,13 +41,13 @@ export const CreateHostelModal = () => {
     document.getElementById('my_modal_4')?.showModal();
   }, []); // This useEffect will run only once on component mount
 
-  const [hostelType, setHostelType] = useState<'STAY' | 'TRAVEL' | 'BOTH'>('STAY');
+  const [homestayType, setHomestayType] = useState<'STAY' | 'TRAVEL' | 'BOTH'>('STAY');
   
-  const handleHostelType = (hType: 'TRAVEL' | 'STAY') => {
+  const handleHomestayType = (hType: 'TRAVEL' | 'STAY') => {
   if (hType == 'TRAVEL') {
-      setHostelType('TRAVEL');
+        setHomestayType('TRAVEL');
     } else {
-      setHostelType('STAY');
+      setHomestayType('STAY');
     }
   };
   const [steps, setSteps] = useState(0);
@@ -65,18 +65,18 @@ export const CreateHostelModal = () => {
     { label: 'Both', value: 'BOTH' },
   ];
 
-  const mutateCreateHostelInfo = useGraphqlClientRequest<
+  const mutateCreateHomestayInfo = useGraphqlClientRequest<
     CreateHomestayMutation,
     CreateHomestayMutationVariables
   >(CreateHomestay.loc?.source.body!);
 
-  const { mutateAsync: createHostel } = useMutation({ mutationFn: mutateCreateHostelInfo });
+  const { mutateAsync: createHomestay } = useMutation({ mutationFn: mutateCreateHomestayInfo });
 
   const handleSubmit = () => {
     const name = getValues('name');
     const description = descriptionRef.current;
 
-    createHostel({
+    createHomestay({
       input: {
         name: name ?? '',
         description: description ?? '',
@@ -85,7 +85,7 @@ export const CreateHostelModal = () => {
     }).then(res => {
       if (res?.createHomestay?.id) {
         setShowToast(true);
-        setMessage('hostel created');
+        setMessage('homestay created');
         setRole('success');
         //
         window.location.reload();

@@ -37,14 +37,14 @@ export default function Gallery() {
   const { setMessage, setRole, setShowToast } = useToastStore();
 
   //homestay id
-  const queryHostelData = useGraphqlClientRequest<
+  const queryHomestayData = useGraphqlClientRequest<
     GetHomestayByTokenQuery,
     GetHomestayByTokenQueryVariables
   >(GetHomestayByToken.loc?.source?.body!);
 
   //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
   const fetchData = async () => {
-    const res = await queryHostelData();
+    const res = await queryHomestayData();
     return res.getHomestayByToken;
   };
 
@@ -59,7 +59,6 @@ export default function Gallery() {
     GetHomestayWallpaperByHomestayIdQueryVariables
   >(GetHomestayWallpaperByHomestayId.loc?.source?.body!);
 
-  console.log("hstyid", homestayData?.id);
   const fetchWallpapers = async () => {
     const res = await queryWallpapers({ homestayId: Number(homestayData?.id) });
     return res.getHomestayWallpaperByHomestayId;

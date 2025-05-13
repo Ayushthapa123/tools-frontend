@@ -368,7 +368,7 @@ export type Mutation = {
   forgotPassword: ForgotPasswordResponse;
   loginUser: UsersAndToken;
   logout: LogoutResponse;
-  refreshTokens: UsersHostelIdAndToken;
+  refreshTokens: UsersHomestayIdAndToken;
   removeAmenity: Amenity;
   removeBooking: Booking;
   removePrice: Price;
@@ -717,9 +717,9 @@ export type Query = {
   getHomestayById?: Maybe<Homestay>;
   getHomestayBySlug?: Maybe<Homestay>;
   getHomestayByToken?: Maybe<Homestay>;
+  getHomestaySearchSuggestions?: Maybe<Array<SearchQueries>>;
   getHomestayWallpaperByHomestayId?: Maybe<Array<HomestayImage>>;
   getHomestaysBySearch: Array<Homestay>;
-  getHostelSearchSuggestions?: Maybe<Array<SearchQueries>>;
   getRoomImagesByRoomId?: Maybe<Array<RoomImage>>;
   getRulesByHomestay: HomestayRules;
   getRulesById: HomestayRules;
@@ -814,6 +814,11 @@ export type QueryGetHomestayBySlugArgs = {
 };
 
 
+export type QueryGetHomestaySearchSuggestionsArgs = {
+  query: Scalars['String']['input'];
+};
+
+
 export type QueryGetHomestayWallpaperByHomestayIdArgs = {
   homestayId: Scalars['Int']['input'];
 };
@@ -821,11 +826,6 @@ export type QueryGetHomestayWallpaperByHomestayIdArgs = {
 
 export type QueryGetHomestaysBySearchArgs = {
   input: SearchHomestayInput;
-};
-
-
-export type QueryGetHostelSearchSuggestionsArgs = {
-  query: Scalars['String']['input'];
 };
 
 
@@ -1193,8 +1193,8 @@ export type UsersAndToken = {
   userType: UserType;
 };
 
-export type UsersHostelIdAndToken = {
-  __typename?: 'UsersHostelIdAndToken';
+export type UsersHomestayIdAndToken = {
+  __typename?: 'UsersHomestayIdAndToken';
   token: Token;
   user: User;
 };
@@ -1655,7 +1655,7 @@ export type LogOutMutation = { __typename?: 'Mutation', logout: { __typename?: '
 export type RefreshTokenMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type RefreshTokenMutation = { __typename?: 'Mutation', refreshTokens: { __typename?: 'UsersHostelIdAndToken', user: { __typename?: 'User', email: string, fullName: string, id: string, userType: UserType, homestayId?: number | null }, token: { __typename?: 'Token', refreshToken: string, accessToken: string } } };
+export type RefreshTokenMutation = { __typename?: 'Mutation', refreshTokens: { __typename?: 'UsersHomestayIdAndToken', user: { __typename?: 'User', email: string, fullName: string, id: string, userType: UserType, homestayId?: number | null }, token: { __typename?: 'Token', refreshToken: string, accessToken: string } } };
 
 export type SignupUserMutationVariables = Exact<{
   input: SignupInput;

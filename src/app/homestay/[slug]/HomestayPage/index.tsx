@@ -15,7 +15,7 @@ import MainContent from './MainContent';
 import { CommonNav } from 'src/features/NavBar/CommonNav';
 import { useSearchParams } from 'next/navigation';
 import LoadingSpinner from 'src/components/Loading';
-export function HostelPage({ slug,checkInDat,checkOutDat  }: { slug: string,checkInDat:string,checkOutDat:string}) {
+export function HomestayPage({ slug,checkInDat,checkOutDat  }: { slug: string,checkInDat:string,checkOutDat:string}) {
 
   const searchParams = useSearchParams();
   const checkInDate = checkInDat ?? new Date().toISOString().split("T")[0];
@@ -33,7 +33,7 @@ export function HostelPage({ slug,checkInDat,checkOutDat  }: { slug: string,chec
     return res.getHomestayBySlug;
   };
 
-  const { data: hostel } = useQuery({
+  const { data: homestay } = useQuery({
     queryKey: ['getHomestayBySlug'],
     queryFn: fetchData,
   });
@@ -42,8 +42,8 @@ export function HostelPage({ slug,checkInDat,checkOutDat  }: { slug: string,chec
       <CommonNav />
       <div className="w-full ">
         <div>
-          {!hostel && <LoadingSpinner/>}
-          <div>{hostel && <MainContent hostel={hostel as Homestay} checkInDate={checkInDate} checkOutDate={checkOutDate} />}</div>
+          {!homestay && <LoadingSpinner/>}
+          <div>{homestay && <MainContent homestay={homestay as Homestay} checkInDate={checkInDate} checkOutDate={checkOutDate} />}</div>
           <Footer />
         </div>
       </div>

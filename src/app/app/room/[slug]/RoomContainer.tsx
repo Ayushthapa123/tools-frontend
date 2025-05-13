@@ -60,7 +60,6 @@ export default function RoomContainer({ params }: { params: { slug: string } }) 
     queryFn: fetchData,
     enabled: isEdit,
   });
-  console.log(room);
   return <Suspense><div>{!isLoading && <RoomForm params={params} room={room as Room | undefined} />}</div></Suspense>;
 }
 
@@ -126,7 +125,7 @@ function RoomForm({ params, room }: { params: { slug: string }, room: Room | und
 
   const onSubmit = async (data: CreateRoomInput) => {
     if (currentStep === 1) {
-      const input = { ...data, homestayId: Number(user.hostelId) };
+      const input = { ...data, homestayId: Number(user.homestayId) }; 
       if (!isEdit) {
 
         mutateAsync({ createRoomInput: input }).then(res => {

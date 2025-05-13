@@ -3,7 +3,6 @@
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useState } from 'react';
 import { MdApartment } from 'react-icons/md';
-import Footer from 'src/features/Footer';
 // import { SearchBox } from 'src/features/Header/SearchBox';
 import { SearchResults } from './SearchResults';
 import { SearchBox } from 'src/features/landing-page/Header/SearchBox';
@@ -14,7 +13,6 @@ export function SearchPage() {
   const checkInDate = params.get('checkInDate') ?? '';
   const checkOutDate = params.get('checkOutDate') ?? '';
 
-  const [hostelType, setHostelType] = useState(params.get('hostelType') ?? '');
   const [genderType, setGenderType] = useState(params.get('genderType') ?? '');
   const [city, setCity] = useState(params.get('city') ?? '');
   const [subCity, setSubCity] = useState(params.get('subCity') ?? '');
@@ -65,7 +63,6 @@ export function SearchPage() {
               subCity={subCity}
               country={country}
               genderType={genderType}
-              hostelType={hostelType}
               handleCount={handleCount}
               checkInDate={checkInDate}
               checkOutDate={checkOutDate}

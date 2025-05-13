@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Terms and Conditions | homestay.com',
   description:
-    'Read the terms and conditions for using homestay.com, a complete hostel management system. Understand your rights and responsibilities while using our platform.',
+    'Read the terms and conditions for using homestay.com, a complete homestay management system. Understand your rights and responsibilities while using our platform.',
   manifest: '/manifest.json',
   authors: [{ name: 'Ayush Thapa' }],
   openGraph: {
@@ -23,7 +23,7 @@ export default function TermsAndConditions() {
             <h2 className="mb-4 text-2xl font-semibold">1. Introduction</h2>
             <p>
               Welcome to <strong>homestay.com</strong>. These terms and conditions outline the
-              rules and regulations for using our hostel management system. By accessing and using
+              rules and regulations for using our homestay management system. By accessing and using
               this platform, you agree to these terms in full. Please do not continue to use
               <strong>homestay.com</strong> if you do not accept all the terms and conditions
               stated on this page.
@@ -49,7 +49,7 @@ export default function TermsAndConditions() {
           <section>
             <h2 className="mb-4 text-2xl font-semibold">3. Use of Services</h2>
             <p>
-              <strong>homestay.com</strong> is intended solely for managing hostel operations and
+              <strong>homestay.com</strong> is intended solely for managing homestay operations and
               related activities. You agree not to use the platform for:
             </p>
             <ul className="ml-6 list-disc">

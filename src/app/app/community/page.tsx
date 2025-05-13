@@ -7,7 +7,7 @@ export default function Home() {
     <div className="w-full ">
       <div className="flex w-full items-center justify-center ">
         <div className="  w-full  max-w-[1400px]">
-          <div>What kind of community does your hostel have ?</div>
+          <div>What kind of community does your homestay have ?</div>
           <div>Options with multiselect </div>
           <p>
             Stay community types: community types: tech, medical, engineering, sports, gym, entrance
@@ -16,15 +16,15 @@ export default function Home() {
           <p>Travel community types: Hiking, fun, musical, </p>
           <div>
             <p>
-              All Hostels will have community: community modal with name, communityTypes:string[],
+              All Homestays will have community: community modal with name, communityTypes:string[],
               description etc.{' '}
             </p>
             <p>
               User will be able to signup for the community with the help of homestay. Once
-              joined, he will be able to see the posts, activities etc. from that hostel and homestay.com. 
+              joined, he will be able to see the posts, activities etc. from that homestay and homestay.com. 
             </p>
             <p>
-              In the case of travellers. This community feature can help hostels to get that
+              In the case of travellers. This community feature can help homestays to get that
               traveller as regular customer.{' '}
             </p>
           </div>

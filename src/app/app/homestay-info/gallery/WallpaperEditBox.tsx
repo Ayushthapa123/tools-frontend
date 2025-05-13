@@ -76,7 +76,6 @@ export const WallpaperEditBox = (props: IcoverEdit) => {
         if (response?.createHomestayImage?.id) {
           await queryClient.invalidateQueries({ queryKey: [ String(invalidateKey) ] });
           await queryClient.invalidateQueries({queryKey:["getHomestayWallpaper"]})
-          console.log("after submitting", response?.createHomestayImage);
           setShowToast(true);
           setMessage('Image Created Successfully');
           setImageUrl(null);

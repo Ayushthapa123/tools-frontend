@@ -128,7 +128,6 @@ export const OwnProfile = (props: { userType: string }) => {
         setLoading(false);
         return;
       }
-      console.log("formData", formData);
       let response;
       try {
         response = await axios.post(
@@ -146,9 +145,7 @@ export const OwnProfile = (props: { userType: string }) => {
         setRole('error');
         return;
       }
-      console.log("response", response);
       setImageUrl(response.data.imageUrl);
-      console.log("imageUrl", imageUrl);
 
       const imageUploaded = await updateUser({
         input: {
@@ -158,7 +155,6 @@ export const OwnProfile = (props: { userType: string }) => {
       });
 
       if (imageUploaded?.updateUser?.profilePicture) {
-        console.log("imageUploaded", imageUploaded);
         setShowToast(true);
         setMessage('Profile picture updated successfully!');
         setRole('success');

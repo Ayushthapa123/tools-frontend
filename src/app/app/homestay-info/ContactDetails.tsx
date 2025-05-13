@@ -23,10 +23,10 @@ import {
 import LoadingSpinner from 'src/components/Loading';
 
 interface Iprops {
-  hostelId: number;
+  homestayId: number; 
 }
 export const ContactDetails = (props: Iprops) => {
-  const { hostelId } = props;
+  const { homestayId } = props;
   const queryContactData = useGraphqlClientRequest<
     GetContactsByHomestayIdQuery,
     GetContactsByHomestayIdQueryVariables
@@ -34,11 +34,11 @@ export const ContactDetails = (props: Iprops) => {
 
   //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
   const fetchData = async () => {
-    const res = await queryContactData({ homestayId: hostelId });
+    const res = await queryContactData({ homestayId: homestayId });
     return res.getContactByHomestayId;
   };
 
-  const { data: hostelData, isLoading } = useQuery({
+  const { data: homestayData, isLoading } = useQuery({
     queryKey: ['getContacts'],
     queryFn: fetchData,
   });
@@ -46,12 +46,12 @@ export const ContactDetails = (props: Iprops) => {
   return (
     <div className="    w-full">
       {!isLoading ? (
-        <HostelInfoForm
-          hostelId={hostelId}
-          contactId={hostelData?.id}
-          phone={hostelData?.phone}
-          altPhone={hostelData?.altPhone}
-          email={hostelData?.email}
+        <HomestayInfoForm
+          homestayId={homestayId}
+          contactId={homestayData?.id}
+          phone={homestayData?.phone}
+          altPhone={homestayData?.altPhone}
+          email={homestayData?.email}
         />
       ) : (
         <div className=" relative h-[50vh] w-full">
@@ -63,7 +63,7 @@ export const ContactDetails = (props: Iprops) => {
 };
 
 interface IProps {
-  hostelId: number;
+  homestayId: number;
   contactId?: string | null;
 
   email?: string | null;
@@ -72,8 +72,8 @@ interface IProps {
   altPhone?: string | null;
 }
 
-const HostelInfoForm: FC<IProps> = props => {
-  const { altPhone, contactId, email, phone, hostelId } = props;
+const HomestayInfoForm: FC<IProps> = props => {
+  const { altPhone, contactId, email, phone, homestayId } = props;
 
   const queryClient = useQueryClient();
 
@@ -90,12 +90,14 @@ const HostelInfoForm: FC<IProps> = props => {
     },
   });
 
-  const mutateCreateHostelContact = useGraphqlClientRequest<
+  const mutateCreateHomestayContact = useGraphqlClientRequest<
     CreateContactsMutation,
     CreateContactsMutationVariables
   >(CreateContacts.loc?.source.body!);
 
-  const { mutateAsync: createContact,isPending:isCreating } = useMutation({ mutationFn: mutateCreateHostelContact });
+  const { mutateAsync: createContact, isPending: isCreating } = useMutation({
+    mutationFn: mutateCreateHomestayContact,
+  });
 
   const mutateUpdateContact = useGraphqlClientRequest<
     UpdateContactMutation,
@@ -138,7 +140,7 @@ const HostelInfoForm: FC<IProps> = props => {
     } else {
       createContact({
         input: {
-          homestayId: hostelId,
+          homestayId: homestayId,
           email: email ?? '',
           phone: phone ?? '',
           altPhone,
@@ -150,7 +152,7 @@ const HostelInfoForm: FC<IProps> = props => {
           setRole('success');
           //
           queryClient.invalidateQueries({ queryKey: ['getContacts'] });
-          queryClient.invalidateQueries({ queryKey: ['getHostelByToken'] });
+          queryClient.invalidateQueries({ queryKey: ['getHomestayByToken'] });
         } else {
           setShowToast(true);
           setMessage('Something Went Wrong!');

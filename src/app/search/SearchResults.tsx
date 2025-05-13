@@ -1,18 +1,17 @@
 'use client';
-import { HostelCard } from './cards/HostelCard';
+import { HomestayCard } from './cards/HomestayCard';
 
 import { useEffect } from 'react';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import { SearchHomestay, SearchHomestayQuery, SearchHomestayQueryVariables } from 'src/gql/graphql';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
-import { HostelCardSkeleton } from './cards/HostelCardSkeleteon';
+import { HomestayCardSkeleton } from './cards/HomestayCardSkeleteon';
 
 interface IResults {
   country: string;
   city: string;
   subCity: string;
-  hostelType: string;
   genderType: string;
   handleCount: (c: number) => void;
   checkInDate: string;
@@ -22,7 +21,7 @@ interface IResults {
 }
 
 export const SearchResults = (props: IResults) => {
-  const { country, city, subCity, hostelType, genderType, handleCount, checkInDate, checkOutDate, lat, lng } =
+  const { country, city, subCity, genderType, handleCount, checkInDate, checkOutDate, lat, lng } =
     props;
   const searchHomestay = useGraphqlClientRequest<SearchHomestayQuery, SearchHomestayQueryVariables>(
     SearchHomestay.loc?.source?.body!,
@@ -41,46 +40,44 @@ export const SearchResults = (props: IResults) => {
     return res.getHomestaysBySearch;
   };
 
-  const { data: hostels, isLoading } = useQuery({
+  const { data: homestays, isLoading } = useQuery({
     queryKey: ['getHomestays', country, city, subCity, genderType],
     queryFn: fetchData,
   });
-  //for shostels
-  console.log('hostels', hostels);
 
   useEffect(() => {
-    handleCount(hostels?.length ?? 0);
-  }, [handleCount, hostels]);
+    handleCount(homestays?.length ?? 0);
+  }, [handleCount, homestays]);
 
   return (
     <div className="w-full ">
       {isLoading && (
           <div className="flex justify-center items-center w-full gap-3 ">
-            <HostelCardSkeleton />
-            <HostelCardSkeleton />
-            <HostelCardSkeleton />
+            <HomestayCardSkeleton />
+            <HomestayCardSkeleton />
+            <HomestayCardSkeleton />
           </div>
         )}
       <div className="grid w-full grid-cols-1 md:grid-cols-2 xl:grid-cols-3  gap-3">
-        {hostels?.map(hostel => {
-          const imgUrl = hostel?.image?.[0]?.url || '/images/default-image.png';
+          {homestays?.map(homestay => {
+          const imgUrl = homestay?.image?.[0]?.url || '/images/default-image.png';
 
           return (
-            <div key={hostel.slug}>
-              <Link href={`/homestay/${hostel.slug}?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}>
-                <HostelCard
-                  name={hostel.name}
-                  country={hostel.address?.country ?? ''}
-                  city={hostel.address?.city ?? ''}
-                  subCity={hostel.address?.subCity ?? ''}
-                  description={hostel.description ?? ''}
-                  amount={hostel?.rooms?.[0]?.price?.baseAmount ?? 0}
-                  currency={hostel?.rooms?.[0]?.price?.currency ?? ''}
+            <div key={homestay.slug}>
+              <Link href={`/homestay/${homestay.slug}?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}>
+                  <HomestayCard
+                  name={homestay.name}
+                  country={homestay.address?.country ?? ''}
+                  city={homestay.address?.city ?? ''}
+                  subCity={homestay.address?.subCity ?? ''}
+                  description={homestay.description ?? ''}
+                  amount={homestay?.rooms?.[0]?.price?.baseAmount ?? 0}
+                  currency={homestay?.rooms?.[0]?.price?.currency ?? ''}
                   imgUrl={imgUrl}
-                  isOriginalHostel
                   oneSeater={null}
                   twoSeater={null}
                   threeSeater={null}
+                  isOriginalHomestay
                   
                 />
               </Link>

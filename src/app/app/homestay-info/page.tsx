@@ -1,5 +1,5 @@
 import React from 'react';
-import { HostelInfo } from './HostelInfo';
+import { HomestayInfo } from './HomestayInfo';
 
 export default function Home() {
   return (
@@ -10,7 +10,7 @@ export default function Home() {
             Homestay Related Informations
           </h2>
           <div className="">
-            <HostelInfo />
+            <HomestayInfo />
             {/* <hr className=" divider" /> */}
           </div>
         </div>

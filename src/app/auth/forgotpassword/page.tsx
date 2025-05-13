@@ -44,7 +44,6 @@ export default function ForgotUserPassword() {
     setError('');
     try {
       const response = await forgotPassword({ email: data.email });
-      console.log(response);
       if (response?.forgotPassword?.id) {
         setSuccess(true);
       } else {

@@ -1,4 +1,4 @@
-export const hostelServices = [
+export const homestayServices = [
   { id: 1, name: 'Airport Transfer' },
   { id: 2, name: 'Laundry Service' },
   { id: 3, name: 'Tour Booking' },

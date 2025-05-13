@@ -4,7 +4,7 @@ import { FaSwimmingPool } from 'react-icons/fa';
 import { MdBathroom, MdBreakfastDining } from 'react-icons/md';
 import { TiWiFi } from 'react-icons/ti';
 
-export const HostelCard = () => {
+export const HomestayCard = () => {
   const facilities = [];
   return (
     <div className="  card-bordered flex h-[230px] w-full cursor-pointer gap-4 rounded-3xl p-3 ">

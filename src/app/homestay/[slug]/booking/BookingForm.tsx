@@ -182,7 +182,6 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit ,setValue,watch,getVa
   const [ errorMessage, setErrorMessage ] = useState<string | null>(null)
   
   const handleValidPhoneCheck = (phone: string) => {
-    console.log("ph", phone)
     if (phone.length == 10 || phone == null || phone == "") {
       setErrorMessage(null)
     }
@@ -192,7 +191,6 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit ,setValue,watch,getVa
   }
 
   const handleValidGuesCheck = (guest: string) => {
-    console.log("g",typeof(guest))
     if (guest == null || guest == "") {
       setErrorMessage(null)
     }
@@ -202,7 +200,6 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit ,setValue,watch,getVa
       setErrorMessage(null)
     }
   }
-  console.log("ee",errorMessage)
 
   useEffect(() => {
     if (user.userId) {
@@ -238,7 +235,6 @@ const { data: validity,isLoading } = useQuery({
   // useEffect(() => {
   //   fetchData();
   // },[roomIds])
-console.log('vvvvvvvvvvvvvvv',validity)
 
 const {roomIds:roomIdsFromStore}=useRoomStore()
 
@@ -454,7 +450,6 @@ const StepTwo = ({ selectedRoom, selectedRooms, formData, handleBack, handleSubm
   const { user } = useUserStore();
   const { roomIds } = useRoomStore();
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>("stripe");
-  console.log("selectedrooms", selectedRooms);
   const queryValidity = useGraphqlClientRequest<
   CheckValidBookingQuery,
   CheckValidBookingQueryVariables

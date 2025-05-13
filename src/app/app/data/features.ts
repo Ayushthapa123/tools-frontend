@@ -116,7 +116,7 @@ export const travelAmenities = [
   },
 ];
 
-export const stayHostelAmenities = [
+export const stayHomestayAmenities = [
   {
     id: 1,
     name: 'High-Speed Wi-Fi',
@@ -299,8 +299,8 @@ export const stayHostelAmenities = [
   },
 ];
 
-export const allAmenities = [...stayHostelAmenities, ...travelAmenities];
-export const stayHostelServices = [
+export const allAmenities = [...stayHomestayAmenities, ...travelAmenities];
+export const stayHomestayServices = [
   {
     id: 1,
     name: 'Housekeeping',
@@ -393,7 +393,7 @@ export const stayHostelServices = [
   },
 ];
 
-export const travelHostelServices = [
+export const travelHomestayServices = [
   {
     id: 19,
     name: 'Daily Housekeeping',
@@ -481,4 +481,4 @@ export const travelHostelServices = [
   },
 ];
 
-export const hostelServices = [...stayHostelServices, ...travelHostelServices];
+export const homestayServices = [...stayHomestayServices, ...travelHomestayServices];

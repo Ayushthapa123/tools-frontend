@@ -41,7 +41,7 @@ export const  AddressDetails = (props: Iprops) => {
     return res.getAddressByHomestayId;
   };
 
-  const { data: hostelData, isLoading } = useQuery({
+  const { data: homestayData, isLoading } = useQuery({
     queryKey: ['getAddress'],
     queryFn: fetchData,
   });
@@ -49,15 +49,15 @@ export const  AddressDetails = (props: Iprops) => {
   return (
     <div className="    w-full">
       {!isLoading ? (
-        <HostelInfoForm
+        <HomestayInfoForm
           homestayId={homestayId}
-          addressId={hostelData?.id}
-          country={hostelData?.country}
-          city={hostelData?.city}
-          subCity={hostelData?.subCity}
-          street={hostelData?.street}
-          lat={hostelData?.latitude}
-          lng={hostelData?.longitude}
+          addressId={homestayData?.id}
+          country={homestayData?.country}
+          city={homestayData?.city}
+          subCity={homestayData?.subCity}
+          street={homestayData?.street}
+          lat={homestayData?.latitude}
+          lng={homestayData?.longitude}
         />
       ) : (
         <div className=" h-[50vh] w-full">
@@ -81,7 +81,7 @@ interface IProps {
   lng?: number | null;
 }
 
-const HostelInfoForm: FC<IProps> = props => {
+const HomestayInfoForm: FC<IProps> = props => {
   const { homestayId, addressId, city, country, street, subCity, lat, lng } = props;
 
   const [clickedLatLng, setClickedLatLng] = useState<{ lat: number | null; lng: number | null } | null>({ lat: lat ?? null, lng: lng ?? null });
@@ -109,13 +109,13 @@ const HostelInfoForm: FC<IProps> = props => {
     },
   });
 
-  const mutateCreateHostelAddress = useGraphqlClientRequest<
+  const mutateCreateHomestayAddress = useGraphqlClientRequest<
     CreateAddressMutation,
     CreateAddressMutationVariables
   >(CreateAddress.loc?.source.body!);
 
   const { mutateAsync: createAddress, isPending: isCreating } = useMutation({
-    mutationFn: mutateCreateHostelAddress,
+    mutationFn: mutateCreateHomestayAddress,
   });
 
   const mutateUpdateAddress = useGraphqlClientRequest<
@@ -189,7 +189,7 @@ const HostelInfoForm: FC<IProps> = props => {
           setRole('success');
           //
           queryClient.invalidateQueries({ queryKey: ['getAddress'] });
-          queryClient.invalidateQueries({ queryKey: ['getHostelByToken'] });
+          queryClient.invalidateQueries({ queryKey: ['getHomestayByToken'] });
         } else {
           setShowToast(true);
           setMessage('Something Went Wrong!');

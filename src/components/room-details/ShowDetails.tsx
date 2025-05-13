@@ -8,7 +8,7 @@ import { BiArea } from "react-icons/bi";
 import { BsCheckCircleFill } from "react-icons/bs";
 import { Badge } from "src/components/Badge";
 import Image from "next/image";
-import { RoomDetailModal } from "src/components/Modal/RoomDetailModal";
+import { RoomDetailModal } from "src/components/room-details/RoomDetailModal";
 export default function ShowDetails({ room, setShowDetails }: { room: Room, setShowDetails: (showDetails: boolean) => void }) {
   // Statically mocked details for now
   const mockRoom = {

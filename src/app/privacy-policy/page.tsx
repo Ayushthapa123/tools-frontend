@@ -58,8 +58,8 @@ export default function PrivacyPolicy() {
       <ul className="mb-4 list-inside list-disc">
         <li>Create and manage your account and user profile.</li>
         <li>
-          Facilitate hostel management features, including reservations, room assignments, and
-          communications with hostel staff.
+          Facilitate homestay management features, including reservations, room assignments, and
+          communications with homestay staff.
         </li>
         <li>Process transactions and deliver the services you request.</li>
         <li>

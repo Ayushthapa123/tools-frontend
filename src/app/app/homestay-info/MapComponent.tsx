@@ -40,7 +40,6 @@ interface Iprops {
   const autocompleteRef = useRef<any>(null);
 
   const handleMapClick = (event: any) => {
-    console.log("eeeeeeeeeeeeeeeeeeeeee",event);
     if (event.latLng) {
       const lat = event.latLng.lat();
       const lng = event.latLng.lng();
@@ -50,7 +49,6 @@ interface Iprops {
 
   const handlePlaceChanged = () => {
     const place = autocompleteRef.current.getPlace();
-    console.log("eeeeeeeeeeeeeeeeeeeeee",place);
     if (place.geometry && place.geometry.location) {
       const lat = place.geometry.location.lat();
       const lng = place.geometry.location.lng();

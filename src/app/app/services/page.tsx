@@ -1,5 +1,5 @@
 "use client";
-import { hostelServices } from "../data/services";
+import { homestayServices as hServices } from "../data/services"; 
 import { Input } from "src/components/Input";
 import { useState, useEffect } from "react";
 import Button from "src/components/Button";
@@ -17,14 +17,14 @@ export default function ServicesPage() {
   const queryClient = useQueryClient();
 
   // find homestay id
-  const queryHostelData = useGraphqlClientRequest<
+  const queryHomestayData = useGraphqlClientRequest<
     GetHomestayByTokenQuery,
     GetHomestayByTokenQueryVariables
   >(GetHomestayByToken.loc?.source?.body!);
 
   //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
   const fetchData = async () => {
-    const res = await queryHostelData();
+    const res = await queryHomestayData();
     return res.getHomestayByToken;
   };
 
@@ -120,7 +120,7 @@ export default function ServicesPage() {
     <div className="mx-auto p-6 bg-white rounded-xl shadow-lg border border-gray-100 mt-1">
       <h2 className="text-2xl font-bold mb-4 text-primary">Select Services</h2>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6 items-center">
-        {hostelServices?.map((service) => (
+        {hServices?.map((service) => (
           <label
             key={service.id}
             className={`flex items-start gap-3 p-3 rounded-lg cursor-pointer transition-colors border border-gray-200 hover:bg-blue-50 ${selectedServices.includes(service.name) ? "bg-blue-100 border-blue-400" : "bg-white"

@@ -44,7 +44,6 @@ export const CheckMailForVerification = () => {
     }
     try {
       const res = await resendVerificationMail({ id: user.userId });
-      console.log(res);
       if (res?.resendVerificationMail) {
         setShowToast(true);
         setMessage('Verification email resent successfully!');

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { HostelCard } from "src/app/search/cards/HostelCard";
-import { HostelCardSkeleton } from "src/app/search/cards/HostelCardSkeleteon";
+import { HomestayCard } from "src/app/search/cards/HomestayCard";
+import { HomestayCardSkeleton } from "src/app/search/cards/HomestayCardSkeleteon";
 import { useGraphqlClientRequest } from "src/client/useGraphqlClientRequest";
 import { GetFeaturedHomestays, GetFeaturedHomestaysQuery, GetFeaturedHomestaysQueryVariables } from "src/gql/graphql";
 
@@ -30,31 +30,30 @@ export const FeaturedHomestay = () => {
 
       {isLoading && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
-          <HostelCardSkeleton />
-          <HostelCardSkeleton />
-          <HostelCardSkeleton />
+          <HomestayCardSkeleton /> 
+          <HomestayCardSkeleton />
+          <HomestayCardSkeleton />
         </div>
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
-        {homestays?.map(hostel => {
-        const mainWallpaper = hostel.image?.filter(img => img.isSelected)[ 0 ]
+        {homestays?.map(homestay => {
+        const mainWallpaper = homestay.image?.filter(img => img.isSelected)[ 0 ]
           var imgUrl = mainWallpaper?.url ?? '/images/default-image.png';
           if(imgUrl == "https://example.com/image.jpg") imgUrl = "/images/default-image.png"
-          console.log(hostel.name, imgUrl);
           return (
-            <div key={hostel.slug} className="transform transition-all duration-300 hover:translate-y-[-4px]">
-              <Link href={`/homestay/${hostel.slug}`}>
-                <HostelCard
-                  name={hostel.name}
-                  country={hostel.address?.country ?? ''}
-                  city={hostel.address?.city ?? ''}
-                  subCity={hostel.address?.subCity ?? ''}
-                  description={hostel.description ?? ''}
-                  amount={hostel?.rooms?.[0]?.price?.baseAmount ?? 0}
-                  currency={hostel?.rooms?.[0]?.price?.currency ?? ''}
+            <div key={homestay.slug} className="transform transition-all duration-300 hover:translate-y-[-4px]">
+              <Link href={`/homestay/${homestay.slug}`}>
+                  <HomestayCard 
+                  name={homestay.name}
+                  country={homestay.address?.country ?? ''}
+                  city={homestay.address?.city ?? ''}
+                  subCity={homestay.address?.subCity ?? ''}
+                  description={homestay.description ?? ''}
+                  amount={homestay?.rooms?.[0]?.price?.baseAmount ?? 0}
+                  currency={homestay?.rooms?.[0]?.price?.currency ?? ''}
                   imgUrl={String(imgUrl)}
-                  isOriginalHostel
+                  isOriginalHomestay
                   oneSeater={null}
                   twoSeater={null}
                   threeSeater={null}

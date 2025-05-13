@@ -42,7 +42,7 @@ export default function Layout({
           setAccessToken(res.refreshTokens.token.accessToken);
           setUser({
             userId: Number(res.refreshTokens.user.id),
-            hostelId: res.refreshTokens.user.homestayId ?? null,
+            homestayId: res.refreshTokens.user.homestayId ?? null, 
             userEmail: res.refreshTokens.user.email,
             userName: res.refreshTokens.user.fullName,
             userType: res.refreshTokens.user.userType,
@@ -51,7 +51,6 @@ export default function Layout({
             router.push('/app/my-profile');
           }
         } else {
-          // localStorage.removeItem('refreshToken');
           router.push('/login');
         }
       });

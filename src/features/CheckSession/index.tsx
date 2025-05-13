@@ -29,7 +29,7 @@ export const CheckSession = () => {
             userName: res.refreshTokens?.user.fullName,
             userEmail: res.refreshTokens.user.email,
             userId: Number(res.refreshTokens.user.id), 
-            hostelId:Number(res.refreshTokens.user.homestayId),
+            homestayId:Number(res.refreshTokens.user.homestayId),
             userType:res.refreshTokens.user.userType
           });
           // if usetype is guest then don't push to app page

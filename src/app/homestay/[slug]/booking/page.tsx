@@ -27,13 +27,13 @@ const handleRoomSelect=(roomId:string)=>{
   setRoomIds([...roomIds,roomId])
 }
 
-  const searchHostels = useGraphqlClientRequest<
+  const searchHomestays = useGraphqlClientRequest<
     GetHomestayBySlugQuery,
     GetHomestayBySlugQueryVariables
   >(GetHomestayBySlug.loc?.source?.body!);
 
   const fetchData = async () => {
-    const res = await searchHostels({
+    const res = await searchHomestays({
       slug: params.slug,
     });
     return res.getHomestayBySlug;
