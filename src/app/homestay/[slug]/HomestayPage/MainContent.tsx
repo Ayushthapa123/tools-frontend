@@ -27,35 +27,33 @@ import { MapComponent } from 'src/features/GoogleMap';
 import ShowDetails from '../../../../components/room-details/ShowDetails';
 
 interface Iprops {
-  hostel: Homestay | undefined | null;
+  homestay: Homestay | undefined | null;
   checkInDate: string;
   checkOutDate: string;
 }
 
 export default function MainContent(props: Iprops) {
-  const { hostel, checkInDate, checkOutDate } = props;
-  console.log("homestay",hostel)
+  const { homestay, checkInDate, checkOutDate } = props;
   const [mainImage, setMainImage] = useState(0);
   const [ isGalleryOpen, setIsGalleryOpen ] = useState(false);
   const [ showDetails, setShowDetails ] = useState(false);
   const [ selectedRoom, setSelectedRoom ] = useState<Room | null>(null);
 
-  const roomImages = hostel?.rooms?.[0]?.image ?? [];
-  const editorRef = useRef(hostel?.description ?? '');
+  const roomImages = homestay?.rooms?.[0]?.image ?? [];
+  const editorRef = useRef(homestay?.description ?? '');
   const { roomIds } = useRoomStore();
 
   // for amenities 
   const queryAmenity = useGraphqlClientRequest<FindAmenityByHomestayIdQuery, FindAmenityByHomestayIdQueryVariables>(FindAmenityByHomestayId.loc?.source.body!)
   const fetchData = async () => {
-    const res = await queryAmenity({homestayId: Number(hostel?.id )?? 0 });
-    console.log("fetching amenity", res);
+    const res = await queryAmenity({homestayId: Number(homestay?.id )?? 0 });
     return res.findAmenityByHomestayId[0] ?? null;
   };    
 
   const { data:amenities, error, isLoading: loading } = useQuery({
     queryKey: [ 'getAmenity' ],
     queryFn: fetchData,
-    enabled: !!Number(hostel?.id),
+    enabled: !!Number(homestay?.id),
   });
 // Parse the amenities string into an array
   const amenitiesArray = amenities ? amenities.amenity.split(',').filter(Boolean) : [];
@@ -67,8 +65,8 @@ export default function MainContent(props: Iprops) {
     'Clean private bathroom with hot shower',
     'Free parking',
   ].filter(amenity => amenitiesArray.includes(amenity));
-console.log("img",hostel?.image)
-  const selectedImg = hostel?.image?.filter((img) => img.isSelected === true);
+console.log("img",homestay?.image)
+  const selectedImg = homestay?.image?.filter((img) => img.isSelected === true);
   console.log("issel",selectedImg)
   return (
     <div className="bg-gray-50 pb-4">
@@ -78,16 +76,16 @@ console.log("img",hostel?.image)
         </div>
       ): (
         <div className="container mx-auto">
-          <BreadCrumbs name={hostel?.name ?? ''} />
+          <BreadCrumbs name={homestay?.name ?? ''} />
           <div className="box-border w-full lg:flex lg:gap-8 lg:px-10">
             <div className="box-border flex-grow overflow-x-hidden overflow-y-hidden rounded-xl bg-white p-3 shadow-sm md:p-4 md:px-4">
               <div className="mb-6">
                 <div className="flex items-start justify-between">
                   <div>
-                    <h1 className="text-3xl font-bold text-gray-800">{hostel?.name}</h1>
+                    <h1 className="text-3xl font-bold text-gray-800">{homestay?.name}</h1>
                     <div className="mt-2 flex items-center text-gray-600">
                       <CiLocationOn className="mr-1 text-2xl text-secondary" />
-                      <span className="text-lg">{hostel?.address?.city}, {hostel?.address?.country}</span>
+                      <span className="text-lg">{homestay?.address?.city}, {homestay?.address?.country}</span>
                     </div>
                   </div>
                   {/* <div className="flex space-x-3">
@@ -101,7 +99,7 @@ console.log("img",hostel?.image)
                 <div className="relative mb-4 h-[500px] w-full overflow-hidden rounded-2xl bg-gray-200">
                   <div className="group relative h-full w-full">
                     <Image
-                      src={selectedImg?.[0]?.url ?? hostel?.image?.[ mainImage ]?.url ?? '/images/default-image.png'}
+                      src={selectedImg?.[0]?.url ?? homestay?.image?.[ mainImage ]?.url ?? '/images/default-image.png'}
                       alt={`Room image ${mainImage + 1}`}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -111,7 +109,7 @@ console.log("img",hostel?.image)
                 </div>
 
                 <div className="mb-8 grid grid-cols-6 gap-3">
-                  {hostel?.image?.slice(0, 6).map((img, index) => (
+                  {homestay?.image?.slice(0, 6).map((img, index) => (
                     <div
                       key={img.id}
                       className={`relative h-24 w-full cursor-pointer overflow-hidden rounded-lg bg-gray-200 transition-all duration-200 hover:opacity-90
@@ -205,11 +203,11 @@ console.log("img",hostel?.image)
                   <h3 className="mb-4 text-lg font-semibold text-gray-800">Map On Google</h3>
                   <div className=" w-full h-[250px] overflow-y-hidden ">
                     <MapProvider>
-                      {hostel?.address?.latitude && hostel?.address?.longitude && (
+                      {homestay?.address?.latitude && homestay?.address?.longitude && (
                         <MapComponent
-                          lat={hostel.address.latitude}
-                          lng={hostel.address.longitude}
-                          description={hostel.name}
+                          lat={homestay.address.latitude}
+                          lng={homestay.address.longitude}
+                          description={homestay.name}
                         />
                       )}
                     </MapProvider>
@@ -222,19 +220,19 @@ console.log("img",hostel?.image)
           <div className="mt-10 rounded-xl bg-white p-4 shadow-sm w-[93vw] mx-auto">
             <div className='flex items-center justify-between'>
               <h2 className="mb-6 text-2xl font-semibold text-gray-800">Available Rooms</h2>
-              <Link href={`/homestay/${hostel?.slug}/booking?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`} className='mb-3'>
+              <Link href={`/homestay/${homestay?.slug}/booking?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`} className='mb-3'>
                 <Button label='View Bookings' className='w-fit bg-primary' />
               </Link>
             </div>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              {hostel?.rooms?.map((room) => (
+              {homestay?.rooms?.map((room) => (
                 <div key={room.id} className="overflow-hidden rounded-xl border border-gray-200 transition-all duration-300 hover:shadow-md">
                   <RoomCardFull
                     room={room}
                     setSelectedRoom={setSelectedRoom}
                     setShowDetails={setShowDetails}
                     isSelected={roomIds.includes(room.id)}
-                    slug={hostel?.slug}
+                    slug={homestay?.slug}
                     checkInDate={checkInDate}
                     checkOutDate={checkOutDate}
                   />

@@ -5,7 +5,6 @@ import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 
 import DashboardIcon from '../../components/icons/Dashboard';
-import HostelInfoIcon from '../../components/icons/HostelInfo';
 import RoomIcon from '../../components/icons/Room';
 
 import LogoutIcon from '../../components/icons/LogOut';

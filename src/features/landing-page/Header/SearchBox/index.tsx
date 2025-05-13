@@ -80,7 +80,6 @@ export const SearchBox = () => {
 
   const handlePlaceChanged = () => {
     const place = autocompleteRef.current.getPlace();
-    console.log("eeeeeeeeeeeeeeeeeeeeee",place);
     if (place.geometry && place.geometry.location) {
       const lat = place.geometry.location.lat();
       const lng = place.geometry.location.lng();

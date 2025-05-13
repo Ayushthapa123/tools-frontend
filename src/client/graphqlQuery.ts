@@ -1,18 +1,13 @@
 import axios, { AxiosError } from 'axios';
 
 const GRAPHQL_ENDPOINT = process.env.NEXT_PUBLIC_GRAPHQL_SERVER_ENDPOINT!
-// process.env.NODE_ENV === "production"
-//   ? "https://app.tuteeline.com/api/graphql"
-// : // "http://localhost:3001/api/graphql";
 
+  // ! this is not used anymore. Instead we have used axios because it is more flexible for resta and graphQL.
 export const graphqlQuery = <TData, TVariables>(
   query: string,
   options?: { [key: string]: any },
 ): ((variables?: TVariables) => Promise<TData>) => {
   // it is safe to call React Hooks here.
-
-  // const { accesstoken } = useAuthStore();
-  // const accesstoken = "kjalsdkjf;alksjflkasdjf";
 
   const headers: HeadersInit = {};
   if (options?.accessToken) {

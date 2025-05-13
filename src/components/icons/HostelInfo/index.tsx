@@ -6,8 +6,8 @@ interface IconProps {
   className?: string;
 }
 
-const HostelInfoIcon: React.FC<IconProps> = ({ className = '' }) => {
+const HomestayInfoIcon: React.FC<IconProps> = ({ className = '' }) => {
   return <FaInfoCircle className={`text-primary ${className}`} />;
 };
 
-export default HostelInfoIcon;
+export default HomestayInfoIcon;

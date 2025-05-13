@@ -160,7 +160,6 @@ export const Main = (props: Iprops) => {
       }
 
       const responseData = await response.json();
-      console.log('Image uploaded successfully:', responseData.imageUrl);
     } catch (error) {
       console.error('Error uploading image:', error);
     }

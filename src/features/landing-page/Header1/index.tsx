@@ -16,8 +16,8 @@ export const Header = () => {
               <h1 className="capitalize ">All In one Homestay Management Software</h1>
               <p className="py-6">
                 homestay offers a comprehensive platform that allows you to seamlessly upload and
-                manage all the details of your hostel online. By leveraging our user-friendly
-                interface, you can ensure that potential guests can easily find your hostel, check
+                manage all the details of your homestay online. By leveraging our user-friendly
+                interface, you can ensure that potential guests can easily find your homestay, check
                 availability, and reach out to you directly.
               </p>
               <Link href={'/signup'}>

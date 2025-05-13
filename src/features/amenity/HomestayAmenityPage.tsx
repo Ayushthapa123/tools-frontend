@@ -13,7 +13,6 @@ export const HomestayAmenitiesPage = ({ homestayId }: { homestayId: number }) =>
   const queryAmenity = useGraphqlClientRequest<FindAmenityByHomestayIdQuery, FindAmenityByHomestayIdQueryVariables>(FindAmenityByHomestayId.loc?.source.body!)
   const fetchData = async () => {
     const res = await queryAmenity({homestayId});
-    console.log("fetching amenity", res);
     return res.findAmenityByHomestayId[0] ?? null;
   };    
 
@@ -23,7 +22,6 @@ export const HomestayAmenitiesPage = ({ homestayId }: { homestayId: number }) =>
     enabled: !!homestayId,
   });
   if (loading) return <p>Loading...</p>;
-  console.log("amm", data);
   if (error) return <p>Error: {error.message}</p>;
 
   // Get existing amenities or provide empty array if none

@@ -38,7 +38,6 @@ const { data: rules ,isLoading} = useQuery({
   queryFn: fetchData,
   enabled: isEdit,
 });
-console.log(rules);
   return <Suspense><div>{!isLoading &&<RulesForm rules={rules as DynamicPricingRule[] | undefined} roomId={roomId} />}</div></Suspense>;
 }
 

@@ -4,12 +4,11 @@ import Footer from 'src/features/Footer';
 import { Suspense } from 'react';
 
 import { Metadata } from 'next';
-// import HostelPage from './HostelPage';
 
 export const metadata: Metadata = {
   title: 'Homestay Lists',
   description:
-    'Homestay is a hostel searching portal specially focused on providing the best hostels for students and young professionals in their city',
+    'Homestay is a hotel searching portal specially focused on providing the best homestay',
   manifest: '/manifest.json',
   authors: [{ name: 'Ayush Thapa' }],
   openGraph: {
@@ -28,7 +27,6 @@ export default function Home() {
       </div>
 
       <div className="w-full py-10 md:px-10">
-        {/* <HostelPage /> */}
       </div>
       <Footer />
     </div>

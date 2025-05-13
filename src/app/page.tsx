@@ -8,11 +8,11 @@ import Footer from 'src/features/Footer';
 export const metadata: Metadata = {
   title: 'Hotel Management System-Manage Your Hotel Informations Online',
   description:
-    'homestay offers a comprehensive platform that allows you to seamlessly upload and manage all the details of your hostel online. By leveraging our user-friendly interface, you can ensure that potential guests can easily find your hostel, check availability, and reach out to you directly',
+    'homestay offers a comprehensive platform that allows you to seamlessly upload and manage all the details of your homestay online. By leveraging our user-friendly interface, you can ensure that potential guests can easily find your homestay, check availability, and reach out to you directly',
   authors: [{ name: 'Ayush Thapa' }],
   openGraph: {
     images: '/home-stay-logo.png',
-    title: 'homestay- Manage Your Hostel Informations Online',
+    title: 'homestay- Manage Your Homestay Informations Online',
   },
 };
 

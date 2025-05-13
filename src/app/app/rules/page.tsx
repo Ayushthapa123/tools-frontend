@@ -97,7 +97,7 @@ const FormContent = ({rulesData}: {rulesData: HomestayRules | undefined}) => {
       });
     } else {
       createRules({
-        input: { rules: editorRef.current, homestayId: Number(user.hostelId) },
+        input: { rules: editorRef.current, homestayId: Number(user.homestayId) }, 
       }).then(res => {
         if (res.createRules.id) {
           setShowToast(true);

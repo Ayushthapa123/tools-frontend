@@ -5,14 +5,14 @@ import { HomestayAmenitiesPage } from "src/features/amenity/HomestayAmenityPage"
 import { GetHomestayByToken, GetHomestayByTokenQuery, GetHomestayByTokenQueryVariables } from "src/gql/graphql";
 
 export default function AmenityPage() {
-  const queryHostelData = useGraphqlClientRequest<
+  const queryHomestayData = useGraphqlClientRequest<
     GetHomestayByTokenQuery,
     GetHomestayByTokenQueryVariables
   >(GetHomestayByToken.loc?.source?.body!);
 
   //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
   const fetchData = async () => {
-    const res = await queryHostelData();
+    const res = await queryHomestayData();
     return res.getHomestayByToken;
   };
 

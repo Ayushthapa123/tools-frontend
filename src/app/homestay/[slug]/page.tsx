@@ -1,15 +1,8 @@
 "use client";
-import { Metadata, ResolvingMetadata } from 'next';
-import { HostelPage } from './HostelPage';
+import { HomestayPage } from './HomestayPage'; 
 
-import { gql } from 'graphql-request';
-import { graphqlClient } from 'src/client/graphqlClient';
 import { useSearchParams } from 'next/navigation';
 
-type Props = {
-  params: { id: string; slug: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
 
 // export async function generateMetadata(
 //   { params, searchParams }: Props,
@@ -43,7 +36,6 @@ type Props = {
 //       return null; // Return null in case of an error
 //     });
 
-//   console.log('rrrrrrrrrrrrrr', res);
 
 //   // Safeguard against errors by checking if res exists
 //   if (!res) {
@@ -67,12 +59,11 @@ export default function Home({ params }: { params: { slug: string } }) {
   const slug = params?.slug;
   const checkInDate = useSearchParams().get("checkInDate") ?? "";
   const checkOutDate = useSearchParams().get("checkOutDate") ?? "";
-  const slugArray = slug.split('-');
 
 
   return (
     <div className="w-full ">
-      <HostelPage slug={slug} checkInDat={checkInDate} checkOutDat={ checkOutDate} /> 
+      <HomestayPage slug={slug} checkInDat={checkInDate} checkOutDat={ checkOutDate} /> 
     </div>
   );
 }

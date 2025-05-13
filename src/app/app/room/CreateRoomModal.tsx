@@ -76,7 +76,7 @@ export const RoomForm = ({
   const { mutateAsync } = useMutation({ mutationFn: mutateCreateRoom });
 
   const onSubmit = async (data: ICreateRoom) => {
-    const input = { ...data, homestayId: Number(user.hostelId) };
+    const input = { ...data, homestayId: Number(user.homestayId) };
     mutateAsync({ createRoomInput: input }).then(res => {
       if (res?.createRoom?.id) {
         setShowToast(true);

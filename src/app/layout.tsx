@@ -20,7 +20,7 @@ import PWARegister from 'src/components/PWARegister';
 // export const metadata: Metadata = {
 //   title: 'Homestay Management Software',
 //   description:
-//     'homestay offers a comprehensive platform that allows you to seamlessly upload and manage all the details of your hostel online. By leveraging our user-friendly interface, you can ensure that potential guests can easily find your hostel, check availability, and reach out to you directly',
+//     'homestay offers a comprehensive platform that allows you to seamlessly upload and manage all the details of your homestay online. By leveraging our user-friendly interface, you can ensure that potential guests can easily find your homestay, check availability, and reach out to you directly',
 //   manifest: '/manifest.json',
 //   icons: {
 //     icon: '/logo512.png',

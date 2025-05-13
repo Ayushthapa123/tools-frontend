@@ -8,8 +8,6 @@ import { GrLocation } from 'react-icons/gr';
 import { MdBathroom, MdBreakfastDining, MdSafetyDivider } from 'react-icons/md';
 import { TiWiFi } from 'react-icons/ti';
 import Button from 'src/components/Button';
-import SignupModal from 'src/components/Modal/SignUpModal';
-import RichTextEditor from 'src/components/RichTextEditor';
 
 interface Iprops {
   name: string;
@@ -19,13 +17,13 @@ interface Iprops {
   imgUrl: string;
   amount?: number;
   currency?: string;
-  isOriginalHostel?: boolean;
+  isOriginalHomestay?: boolean;
   oneSeater?: boolean | null;
   twoSeater?: boolean | null;
   description?: string;
   threeSeater?: boolean | null;
 }
-export const HostelCard = (props: Iprops) => {
+export const HomestayCard = (props: Iprops) => {
   const [ isModalOpen, setIsModalOpen ] = useState(false);
   const {
     name,

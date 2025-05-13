@@ -2,7 +2,7 @@
 
 import { IoMdNotifications } from 'react-icons/io';
 import { Drawer } from '../Drawer';
-import { CreateHostelModal } from 'src/app/app/homestay-info/CreateHostelModal';
+import { CreateHomestayModal } from 'src/app/app/homestay-info/CreateHomestayModal';
 import { useUserStore } from 'src/store/userStore';
 import { LogoIcon } from '../Logo/LogoIcon';
 import { useEffect, useState } from 'react';
@@ -15,14 +15,14 @@ const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
-    if (!user?.hostelId && user?.userType === 'HOMESTAY_OWNER') {
+    if (!user?.homestayId && user?.userType === 'HOMESTAY_OWNER') {
       setShowModal(true);
     }
-  }, [user?.hostelId, user?.userType]);
+  }, [user?.homestayId, user?.userType]);
   return (
     <nav className="h-[70px]  bg-white px-4  shadow-sm">
       <div className="flex items-center justify-between mx-5  md:mx-10">
-        {!user?.hostelId && showModal && <CreateHostelModal />}
+        {!user?.homestayId && showModal && <CreateHomestayModal />}
         {/* Left side - Logo */}
         <div className="relative flex items-center">
           <LogoIcon />

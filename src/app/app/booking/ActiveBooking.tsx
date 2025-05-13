@@ -58,22 +58,6 @@ export const ActiveBookings = () => {
     const event = arg.event;
     const booking = event.extendedProps;
     
-    console.log('Booking Details:', {
-      bookingKey: booking.bookingKey,
-      status: booking.status,
-      dates: {
-        start: event.start,
-        end: event.end
-      },
-      guest: {
-        name: booking.guest.name,
-        email: booking.guest.email,
-      },
-      room: {
-        name: booking.room.name,
-        roomNumber: booking.room.roomNumber,
-      }
-    });
   };
 
   return (

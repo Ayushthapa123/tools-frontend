@@ -28,19 +28,19 @@ import { MapProvider } from 'src/features/MapProvider';
 import { WallpaperGallery } from './gallery/WallpaperGallery';
 // import HomestayAmenitiesPage from 'src/features/amenity/HomestayAmenityPage';
 
-export const HostelInfo = () => {
-  const queryHostelData = useGraphqlClientRequest<
+export const HomestayInfo = () => { 
+  const queryHomestayData = useGraphqlClientRequest<
     GetHomestayByTokenQuery,
     GetHomestayByTokenQueryVariables
   >(GetHomestayByToken.loc?.source?.body!);
 
   //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
   const fetchData = async () => {
-    const res = await queryHostelData();
+    const res = await queryHomestayData();
     return res.getHomestayByToken;
   };
 
-  const { data: hostelData, isLoading } = useQuery({
+  const { data: homestayData, isLoading } = useQuery({
     queryKey: ['getHomestayByToken'],
     queryFn: fetchData,
   });
@@ -48,10 +48,10 @@ export const HostelInfo = () => {
   return (
     <div className="">
       {!isLoading ? (
-        <HostelInfoForm
-          hostelId={hostelData?.id}
-          name={hostelData?.name}
-          description={hostelData?.description}
+        <HomestayInfoForm
+          homestayId={homestayData?.id}
+          name={homestayData?.name}
+          description={homestayData?.description}
        
         />
       ) : (
@@ -60,12 +60,12 @@ export const HostelInfo = () => {
         </div>
       )}
 
-      {hostelData?.id && (
+      {homestayData?.id && (
         <div>
           
           {
             <div className="bg-white card-body card card-bordered">
-              <HostelTabs hostelId={Number(hostelData.id)} />
+              <HomestayTabs homestayId={Number(homestayData.id)} />
             </div>
           }
         </div>
@@ -74,10 +74,10 @@ export const HostelInfo = () => {
   );
 };
 
-const HostelTabs = ({ hostelId }: { hostelId: number }) => {
+const HomestayTabs = ({ homestayId }: { homestayId: number }) => {
   const tabs = [
-    { title: 'Contact Details', id: 1, comp: <ContactDetails hostelId={hostelId} /> },
-    { title: 'Address Details', id: 2, comp: <MapProvider><AddressDetails homestayId={hostelId} /></MapProvider> },
+    { title: 'Contact Details', id: 1, comp: <ContactDetails homestayId={homestayId} /> },
+    { title: 'Address Details', id: 2, comp: <MapProvider><AddressDetails homestayId={homestayId} /></MapProvider> },
   ];
   const [activeTab, setActiveTab] = useState(1);
 
@@ -110,15 +110,15 @@ const HostelTabs = ({ hostelId }: { hostelId: number }) => {
 };
 
 interface IProps {
-  hostelId?: string | null;
+  homestayId?: string | null;
 
   name?: string | null;
 
   description?: string | null;
 }
 
-export const HostelInfoForm: FC<IProps> = props => {
-  const { name, description, hostelId } = props;
+export const HomestayInfoForm: FC<IProps> = props => { 
+  const { name, description, homestayId } = props;
 
   const queryClient = useQueryClient();
 
@@ -138,13 +138,13 @@ export const HostelInfoForm: FC<IProps> = props => {
   });
 
 
-  const mutateUpdateHostelInfo = useGraphqlClientRequest<
+  const mutateUpdateHomestayInfo = useGraphqlClientRequest<
     UpdateHomestayMutation,
     UpdateHomestayMutationVariables
   >(UpdateHomestay.loc?.source.body!);
 
-  const { mutateAsync: updateHostel, isPending } = useMutation({
-    mutationFn: mutateUpdateHostelInfo,
+  const { mutateAsync: updateHomestay, isPending } = useMutation({
+    mutationFn: mutateUpdateHomestayInfo,
   });
 
 
@@ -153,10 +153,10 @@ export const HostelInfoForm: FC<IProps> = props => {
     const name = data.name ?? undefined;
     const description = descriptionRef.current ?? "";
  
-    if (hostelId) {
+    if (homestayId) {
       //
-      updateHostel({
-        homestayId: Number(hostelId),
+      updateHomestay({
+        homestayId: Number(homestayId),
         input: {
       
           ...(name && {
@@ -209,7 +209,7 @@ export const HostelInfoForm: FC<IProps> = props => {
       <div className="flex justify-end ">
         <div className=" mt-10 w-fit md:w-[200px]">
           <Button
-            label={`${hostelId ? 'Update Homestay Info' : 'Create Homestay Info'}`}
+            label={`${homestayId ? 'Update Homestay Info' : 'Create Homestay Info'}`}
             type="submit"
             loading={isPending}
           />

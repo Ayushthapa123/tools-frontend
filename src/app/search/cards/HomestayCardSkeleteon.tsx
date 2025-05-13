@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const HostelCardSkeleton = () => {
+export const HomestayCardSkeleton = () => {
   return (
     <div className="card-bordered mb-2 flex h-full w-full cursor-pointer flex-col gap-4 rounded-3xl bg-white/80 opacity-90 animate-pulse">
       {/* Image Section */}
