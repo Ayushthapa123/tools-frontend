@@ -24,7 +24,7 @@ import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import { MapComponent } from 'src/features/GoogleMap';
-import ShowDetails from '../../../../components/room-details/ShowDetails';
+import ShowDetails from '../../room-details/ShowDetails';
 
 interface Iprops {
   homestay: Homestay | undefined | null;

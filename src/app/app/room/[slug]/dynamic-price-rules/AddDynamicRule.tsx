@@ -21,7 +21,7 @@ import {
 } from 'src/gql/graphql';
 import { useToastStore } from 'src/store/toastStore';
 
-export const DynamicRulesModal = ({
+export const AddDynamicRule = ({
   roomId,
   rules
 }: {

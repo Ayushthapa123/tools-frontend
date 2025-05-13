@@ -1,6 +1,6 @@
 import React from 'react'
 import { DynamicPricingRule } from 'src/gql/graphql'
-import { DynamicRulesModal } from './DynamicRulesModal'
+import { AddDynamicRule } from './AddDynamicRule'
 import formatDate from 'src/utils/date'
 
 
@@ -31,7 +31,7 @@ export default function DynamicRulesCard({rule, roomId}: {rule: DynamicPricingRu
             {rule.isActive ? 'Active' : 'Inactive'}
           </span>
         </div>
-        <DynamicRulesModal roomId={roomId} rules={rule} />
+        <AddDynamicRule roomId={roomId} rules={rule} />
       </div>
     </div>
   )

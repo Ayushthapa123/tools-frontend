@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { ActiveRooms } from './ActiveRooms';
 import { MapProvider } from 'src/features/MapProvider';
 import Button from 'src/components/Button';
-import { CreateRoomModal } from './CreateRoomModal';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -32,14 +32,16 @@ const LocationTabs = () => {
       comp: <div>Inactive Rooms</div>,
     },
   ];
-  const [ activeTab, setActiveTab ] = useState(1);
+  const [activeTab, setActiveTab] = useState(1);
 
   return (
     <div className="w-full py-5 ">
-      <div role="tablist" className="tabs-boxed bg-transparent justify-between tabs z-[99] my-3 flex flex-row flex-wrap py-2">
-        <div className="flex flex-wrap flex-row">
+      <div
+        role="tablist"
+        className="tabs-boxed tabs z-[99] my-3 flex flex-row flex-wrap justify-between bg-transparent py-2">
+        <div className="flex flex-row flex-wrap">
           {tabs.map(tab => (
-            <div key={tab.id} >
+            <div key={tab.id}>
               <a
                 role="tab"
                 className={`  tab  text-base font-medium ${tab.id == activeTab ? 'tab-active text-white' : ' text-primary'}`}
@@ -49,23 +51,19 @@ const LocationTabs = () => {
             </div>
           ))}
         </div>
-        {
-          activeTab == 1 && (
+        {activeTab == 1 && (
+          <div>
             <div>
-              <CreateRoomModal />
+              <Link href="/app/room/new">
+                <Button label="Add Room"></Button>
+              </Link>
             </div>
-          )
-        }
+          </div>
+        )}
       </div>
 
       {tabs.map((tab, index) => (
-        <div key={index}>
-          {tab.id == activeTab && (
-            <div>
-              {tab.comp}
-            </div>
-          )}
-        </div>
+        <div key={index}>{tab.id == activeTab && <div>{tab.comp}</div>}</div>
       ))}
     </div>
   );

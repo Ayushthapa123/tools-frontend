@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode, useState } from 'react';
-import Button from '../Button';
+import Button from '../../../components/Button';
 interface Iprops {
   open: boolean;
   title?: string;
@@ -11,7 +11,7 @@ interface Iprops {
   handleClose: () => void;
 }
 
-export const RoomDetailModal = (props: Iprops) => {
+export const RoomDetailView = (props: Iprops) => {
   const { handleClose, open } = props;
 
   return <div>{open && <ModalContents {...props} onClose={handleClose} open={open} />}</div>;

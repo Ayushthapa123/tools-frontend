@@ -1,5 +1,4 @@
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
-import { CreateRoomModal } from './CreateRoomModal';
 import { RoomCard } from './RoomCard';
 import {
   GetRooms,
@@ -43,9 +42,7 @@ export const ActiveRooms = () => {
           </div>
         ))}
       </div>
-      {/* <div className="flex w-full justify-center">
-        <CreateRoomModal />
-      </div> */}
+    
     </div>
   );
 };

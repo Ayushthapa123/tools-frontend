@@ -8,7 +8,7 @@ import { BiArea } from "react-icons/bi";
 import { BsCheckCircleFill } from "react-icons/bs";
 import { Badge } from "src/components/Badge";
 import Image from "next/image";
-import { RoomDetailModal } from "src/components/room-details/RoomDetailModal";
+import { RoomDetailView } from "src/app/homestay/room-details/RoomDetailView";
 export default function ShowDetails({ room, setShowDetails }: { room: Room, setShowDetails: (showDetails: boolean) => void }) {
   // Statically mocked details for now
   const mockRoom = {
@@ -25,7 +25,7 @@ export default function ShowDetails({ room, setShowDetails }: { room: Room, setS
   };
 
   return (
-    <RoomDetailModal
+    <RoomDetailView
       open={true}
       title="Room Details"
       handleClose={() => {
@@ -107,6 +107,6 @@ export default function ShowDetails({ room, setShowDetails }: { room: Room, setS
           </div>
         </div>
       </div>
-    </RoomDetailModal>
+    </RoomDetailView>
   );
 }

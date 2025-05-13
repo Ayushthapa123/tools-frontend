@@ -15,7 +15,7 @@ import {
 } from 'src/gql/graphql';
 
 import { Suspense } from 'react';
-import { DynamicRulesModal } from './DynamicRulesModal';
+import { AddDynamicRule } from './AddDynamicRule';
 import DynamicRulesCard from './DynamicRulesCard';
 
 export default function DynamicPriceContainer({ roomId }: { roomId: number }) {
@@ -46,7 +46,7 @@ const { data: rules ,isLoading} = useQuery({
   return (
     <div className="w-full h-fit ">
       <div className="bg-white  rounded-lg shadow">
-     <div className='flex justify-end '><DynamicRulesModal roomId={roomId} rules={undefined} /></div>
+     <div className='flex justify-end '><AddDynamicRule roomId={roomId} rules={undefined} /></div>
      <div className='overflow-y-auto h-fit'>
      {rules?.map((rule: DynamicPricingRule) => (
       <div key={rule.id}>

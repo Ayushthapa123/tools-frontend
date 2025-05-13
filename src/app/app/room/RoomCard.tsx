@@ -8,7 +8,6 @@ import {
   DeleteRoomMutationVariables,
 } from 'src/gql/graphql';
 import { useToastStore } from 'src/store/toastStore';
-import { UpdateRoomModal } from './UpdateRoomModal';
 import Link from 'next/link';
 import EditIcon from 'src/components/icons/Edit';
 import Image from 'next/image';

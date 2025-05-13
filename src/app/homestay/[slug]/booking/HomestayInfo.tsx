@@ -13,7 +13,7 @@ import { FaInfoCircle } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { useRoomStore } from 'src/store/roomStore';
 import { AmenityDisplay } from 'src/features/amenity/DisplayAmenity';
-import ShowDetails from 'src/components/room-details/ShowDetails';
+import ShowDetails from 'src/app/homestay/room-details/ShowDetails';
 import { Services } from 'src/features/services';
 
 interface HomestayInfoProps {
