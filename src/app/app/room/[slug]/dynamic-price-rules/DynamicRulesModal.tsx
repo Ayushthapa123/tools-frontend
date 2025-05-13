@@ -34,9 +34,11 @@ export const DynamicRulesModal = ({
   };
   return (
     <div>
-      <IconButton onClick={() => setOpen(true)} className='text-white bg-blue-500 border border-blue-500'>
+      <div className='rounded-lg mx-4 mt-1 hover:bg-slate-300  bg-slate-100'>
+      <IconButton onClick={() => setOpen(true)} className='text-black'>
         {rules?.id ? 'Edit Rule' : 'Add New Rule'}
       </IconButton>
+      </div>
       {open && (
         <RuleForm
           open
@@ -160,8 +162,8 @@ export const RuleForm = ({
         onSave={handleSubmit(onSubmit)}
         title={isEdit ? 'Update Rule' : 'Add New Rule'}
         actionLabel={isEdit ? 'Update' : 'Create'}>
-        <div className="bg-white">
-          <form className="bg-white text-left space-y-4 p-4">
+        <div className="bg-base-100">
+          <form className="bg-base-100 text-left space-y-4 p-4">
             <div className="mb-3">
               <TextInput
                 name="name"

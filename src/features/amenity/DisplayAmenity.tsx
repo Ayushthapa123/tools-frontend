@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { BiCheckCircle } from 'react-icons/bi';
 import { BsCheckCircle } from 'react-icons/bs';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import LoadingSpinner from 'src/components/Loading';
 import { FindAmenityByHomestayId, FindAmenityByHomestayIdQuery, FindAmenityByHomestayIdQueryVariables } from 'src/gql/graphql';
 import { getAmenityCategories } from 'src/utils/amenityData';
 
@@ -72,6 +73,13 @@ export const AmenityDisplay: React.FC<AmenityDisplayProps> = ({
     return highlightedAmenities.slice(0, 8);
   };
   
+  if (loading) {
+    return (
+      <div>
+        <LoadingSpinner color='primary' size='sm'  />
+      </div>
+    )
+  }
   // If there are no amenities, show a message
   if (amenitiesArray.length === 0) {
     return (

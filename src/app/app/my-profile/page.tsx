@@ -75,11 +75,11 @@ function PageContent() {
         <h2 className=" text-xl font-semibold text-primary">My Profile Details</h2>
         {/* <p className=' text-gray-500 '>View your profile details</p> */}
       </div>
-      <div role="tablist" className="tabs tabs-boxed  mb-10 hidden w-auto md:block ">
+      <div role="tablist" className="tabs tabs-boxed  mb-10 hidden w-auto md:block bg-transparent">
         {tabs?.filter(tab => tab.visible).map(tab => (
           <a
             role="tab"
-            className={`tab text-xl font-bold text-primary ${activeTab == tab.id ? '  tab-active' : ''}`}
+            className={`tab text-xl mx-1 px-2 font-bold text-primary ${activeTab == tab.id ? '  tab-active' : 'border border-slate-300'}`}
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}>
             {tab.name}

@@ -84,7 +84,7 @@ export default function Layout({
                 <Navbar />
               </div>
 
-              {userData ? !userData?.isVerified ? <CheckMailForVerification /> : (
+              {userData ? userData?.isVerified == false ? <CheckMailForVerification /> : (
                 <div className=" pt-15    h-[calc(100vh-70px)] w-full  md:flex">
                   {user.userType !== "GUEST" &&
                     <div className="fixed z-50 hidden  lg:relative lg:flex">

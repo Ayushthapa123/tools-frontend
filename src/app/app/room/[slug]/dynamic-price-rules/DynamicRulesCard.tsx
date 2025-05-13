@@ -16,14 +16,14 @@ export default function DynamicRulesCard({rule, roomId}: {rule: DynamicPricingRu
       <div className="flex items-center justify-between px-6 py-3">
         <div className="flex items-center gap-6">
           <span className="text-gray-900 font-medium w-40">{rule.name}</span>
-          <span className="text-gray-600 w-28">NPR {rule.amount}/night</span>
-          <span className="text-gray-600 w-40">
+          <span className="text-gray-600 w-32">NPR {rule.amount} / night</span>
+          <span className="text-gray-600 w-80">
             {formatDate(rule.startDate)} - {formatDate(rule.endDate)}
           </span>
           <span className={`px-2 py-1 rounded-full text-xs font-medium w-16 text-center ${getPriorityColor(rule.priority)}`}>
             {rule.priority}
           </span>
-          <span className={`px-2 py-1 rounded-full text-xs font-medium w-20 text-center ${
+          <span className={`px-2 py-1 rounded-full text-xs font-medium w-8 text-center ${
             rule.isActive 
               ? 'bg-green-100 text-green-800' 
               : 'bg-gray-100 text-gray-800'

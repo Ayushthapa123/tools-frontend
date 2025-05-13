@@ -52,9 +52,11 @@ const Navbar = () => {
           </div>
           <UserProfile />
 
-          <div className="left-0 top-[70px]  lg:hidden ">
-            <Drawer />
-          </div>
+          {
+            user.userType!=='GUEST' && <div className="left-0 top-[70px]  lg:hidden ">
+             <Drawer />
+           </div>
+         }
         </div>
       </div>
     </nav>

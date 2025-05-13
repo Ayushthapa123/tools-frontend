@@ -7,6 +7,7 @@ import LogoutIcon from 'src/components/icons/LogOut';
 import { MyBookingsQuery } from 'src/gql/graphql';
 import { useUserStore } from 'src/store/userStore';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import Button from 'src/components/Button';
 
 // Update the interface to match the exact GraphQL schema
 
@@ -39,8 +40,8 @@ const BookingCard = ({ booking }: { booking: Booking  }) => {
       <div className="card-body">
         <div className="flex justify-between items-start mb-4">
           <h3 className="card-title text-lg font-bold">{booking.room.caption}</h3>
-          <div className={`badge ${getStatusColor(booking.status)}`}>
-            {booking.status.toLowerCase()}
+          <div className={`badge ${getStatusColor(booking.status)} p-3`}>
+            <span className=''>{booking.status.toLowerCase()}</span>
           </div>
         </div>
 
@@ -76,9 +77,9 @@ const BookingCard = ({ booking }: { booking: Booking  }) => {
                 {booking.paymentPlatformName}
               </div>
             </div>
-            <button className="btn btn-primary btn-sm">
-              View Details
-            </button>
+            <div>
+            <Button label='View details' />
+            </div>
           </div>
         </div>
       </div>

@@ -31,7 +31,7 @@ export const OwnProfile = (props: { userType: string }) => {
   const [ openPersonalModal, setOpenPersonalModal ] = useState(false);
   const [ openProfilePictureModal, setOpenProfilePictureModal ] = useState(false);
   // Form for personal details
-  const { control, handleSubmit, formState: { errors }, reset } = useForm({
+  const { control,register, handleSubmit, formState: { errors }, reset } = useForm({
     defaultValues: {
       fullName: user.userName || '',
       city: '',
@@ -254,14 +254,43 @@ export const OwnProfile = (props: { userType: string }) => {
             label="Phone Number"
             required
             error={!!errors.phoneNumber}
-            helpertext={errors.phoneNumber ? 'Phone number is required' : ''}
+            helpertext={errors.phoneNumber?.message}
+            rules={{
+              required: 'Phone number is required',
+              pattern: {
+                value: /^[0-9]+$/,
+                message: 'Only digits are allowed',
+              },
+              minLength: {
+                value: 10,
+                message: 'Phone number must be at least 10 digits',
+              },
+              maxLength: {
+                value: 10,
+                message: 'Phone number must not exceed 10 digits',
+              },
+            }}
           />
           <TextInput
             name="altPhoneNumber"
             control={control}
             label="Alternative Phone Number"
             error={!!errors.altPhoneNumber}
-            helpertext={errors.altPhoneNumber ? 'Alternative phone number is required' : ''}
+            helpertext={errors.altPhoneNumber?.message}
+            rules={{
+              pattern: {
+                value: /^[0-9]+$/,
+                message: 'Only digits are allowed',
+              },
+              minLength: {
+                value: 10,
+                message: 'Phone number must be at least 10 digits',
+              },
+              maxLength: {
+                value: 10,
+                message: 'Phone number must not exceed 10 digits',
+              },
+            }}
           />
           <ReactSelect
             name="gender"

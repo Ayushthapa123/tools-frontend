@@ -79,7 +79,7 @@ export default function ChangePasswordPage({ userId }: { userId: number }) {
           currentPassword: data.currentPassword,
           newPassword: data.newPassword,
         },
-      });
+      })
 
       if (response?.changePassword) {
         setSuccess(true);
@@ -90,7 +90,7 @@ export default function ChangePasswordPage({ userId }: { userId: number }) {
         setTimeout(() => {
           router.push('/');
         }, 1500);
-      } else {
+      } else{
         setError('Failed to change password');
       }
     } catch (err: any) {
@@ -101,11 +101,11 @@ export default function ChangePasswordPage({ userId }: { userId: number }) {
   };
 
   return (
-    <section className="flex w-full flex-col justify-center bg-base-100 rounded-xl p-5 align-middle">
+    <section className="flex w-full flex-col justify-center rounded-xl p-5 align-middle">
       <div className="container mx-auto">
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
-            <div className="relative mx-auto max-w-[550px] rounded-lg bg-white px-8 py-8">
+            <div className="relative mx-auto max-w-[550px] rounded-lg bg-white px-8 py-8 border">
               <h2 className="mb-6 text-2xl font-bold text-gray-800">Change Password</h2>
               
               {error && <p className="mb-4 text-error">{error}</p>}
@@ -141,11 +141,15 @@ export default function ChangePasswordPage({ userId }: { userId: number }) {
                       label="New Password"
                       required
                       helpertext={
-                        errors.newPassword?.type === 'required'
-                          ? 'New password is required'
-                          : 'Password must be at least 8 characters'
+                        errors.newPassword?.message
                       }
                       error={!!errors.newPassword}
+                      rules={{
+                        minLength: {
+                          value: 8,
+                          message:"Password mustn't be less than 8 characters."
+                        }
+                      }}
                     />
                   </div>
 

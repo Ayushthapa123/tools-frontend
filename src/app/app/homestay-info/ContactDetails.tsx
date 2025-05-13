@@ -1,5 +1,5 @@
 'use client';
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
 import Button from 'src/components/Button';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -81,6 +81,7 @@ const HostelInfoForm: FC<IProps> = props => {
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<IProps>({
     defaultValues: {
@@ -159,6 +160,35 @@ const HostelInfoForm: FC<IProps> = props => {
       });
     }
   };
+  const [ phoneNumber, setPhoneNumber ] = useState<string | null>(null);
+  const [ altPhoneNumber, setAltPhoneNumber ] = useState<string | null>(null);
+  useEffect(() => {
+    setPhoneNumber(phone??null);
+    setAltPhoneNumber(altPhone??null) 
+  },[])
+  
+  const handlePhoneNumChange = (phone: string) => {
+    setPhoneNumber(phone);
+    setValue("phone",phone)
+  }
+
+  const handleAltPhoneNumChange = (phone: string) => {
+    console.log("ph",phone,typeof(phone))
+    setAltPhoneNumber(phone);
+    setValue("altPhone",phone)
+  }
+  
+  const getErrorMessage = (phone: string|null, altPhone: string|null) => {
+    if (!phone) {
+      return "Enter phone number"
+    }
+    else if (phone?.length != 10) {
+      return "Invalid phone number";
+    } else if (altPhone && altPhone?.length != 10) {
+      return "Invalid alt phone number";
+    }
+    return true;
+  }
 
   return (
     <form className=" w-full" onSubmit={handleSubmit(handleSubmitForm)}>
@@ -182,6 +212,7 @@ const HostelInfoForm: FC<IProps> = props => {
             placeholder="Phone no"
             control={control}
             label="Phone Number"
+            onChange={(e)=>handlePhoneNumChange(e.target.value)}
             required
             helpertext={errors.phone?.type === 'required' ? 'Phone Is Required' : ''}
             error={!!errors.phone}
@@ -193,6 +224,7 @@ const HostelInfoForm: FC<IProps> = props => {
             name="altPhone"
             type="text"
             placeholder="Alternative Phone"
+            onChange={(e)=>handleAltPhoneNumChange(e.target.value)}
             control={control}
             label="Alternative Phone"
             error={!!errors.altPhone}
@@ -200,9 +232,13 @@ const HostelInfoForm: FC<IProps> = props => {
         </div>
       </div>
 
+      <div className='mt-4'>
+        <span className='text-error text-sm'><p className='inline-block'>{(phoneNumber || altPhoneNumber ) && getErrorMessage(phoneNumber,altPhoneNumber)}</p></span>
+      </div>
+
       <div className=" flex w-full justify-end">
         <div className=" mt-10 w-[200px]">
-          <Button label={`${contactId ? 'Update Contact Info' : 'Create Contact'}`} type="submit"  loading={isCreating || isUpdating}/>
+          <Button label={`${contactId ? 'Update Contact Info' : 'Create Contact'}`} type="submit" loading={isCreating || isUpdating} disabled={ getErrorMessage(phoneNumber,altPhoneNumber)!= true } />
         </div>
       </div>
     </form>

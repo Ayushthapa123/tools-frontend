@@ -19,10 +19,10 @@ export const CheckSession = () => {
 
   useEffect(() => {
     const refreshToken = localStorage.getItem('refreshToken');
-    if (!refreshToken) {
-      return;
-    } else {
-      alert('hi')
+    // if (!refreshToken) {
+    //   return;
+    // } else {
+    //   alert('hi')
       getAccessToken({ }).then(res => {
         if (res?.refreshTokens?.token?.accessToken) {
           setUser({
@@ -40,7 +40,7 @@ export const CheckSession = () => {
           localStorage.removeItem('refreshToken');
         }
       });
-    }
+    // }
   }, [getAccessToken, router, setUser]);
   return <div></div>;
 };

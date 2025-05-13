@@ -87,7 +87,7 @@ const ImageUploader = (props: Iprops) => {
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}>
-        <input type="file" className="hidden" onChange={handleFileChange} />
+        <input type="file" className="hidden" onChange={handleFileChange} accept='.jpg,.jpeg,.png' />
         {imageUrl ? (
           <div className="relative w-full h-full ">
             <div
@@ -112,7 +112,7 @@ const ImageUploader = (props: Iprops) => {
                 <LoadingSpinner color="primary" size="lg" />
               </div>
             )}
-            <input id="fileInput" type="file" className="hidden" onChange={handleFileChange} />
+            <input id="fileInput" type="file" className="hidden" onChange={handleFileChange} accept='.jpg , .jpeg, .png' />
           </>
         )}
       </div>

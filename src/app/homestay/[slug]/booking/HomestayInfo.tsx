@@ -87,10 +87,10 @@ export const HomestayInfo = ({
             </div>
             {/* Tabs Navigation */}
             <div className="border-b border-gray-200">
-              <nav className=" flex  space-x-2">
+              <nav className=" flex justify-between space-x-2">
                 <button
                   onClick={() => setActiveTab('rooms')}
-                  className={`whitespace-nowrap border-b-2 py-4  text-sm font-medium ${activeTab === 'rooms'
+                  className={` border-b-2 py-4  text-sm font-medium ${activeTab === 'rooms'
                     ? 'border-blue text-blue'
                     : 'border-transparent text-gray-600 hover:border-gray-300 hover:text-gray-700'
                     }`}
