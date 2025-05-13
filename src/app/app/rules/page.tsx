@@ -54,7 +54,8 @@ export default Home;
 const FormContent = ({rulesData}: {rulesData: HomestayRules | undefined}) => {
   const { setMessage, setRole, setShowToast } = useToastStore();
   const { user } = useUserStore();
-  const editorRef = useRef(rulesData?.rules ?? 'Write the rules here');
+  const editorRef = useRef(rulesData?.rules ?? '');
+  console.log("txt",editorRef.current)
 
 
 
@@ -111,16 +112,18 @@ const FormContent = ({rulesData}: {rulesData: HomestayRules | undefined}) => {
       });
     }
   };
-
+  const [rules,setRules] = useState("")
   return (
     <div>
-      <div className="bg-white">
+      <div className="">
          <RichTextEditor 
           editorRef={editorRef}
-            onChange={(value) => {
+          onChange={(value) => {
+            setRules(value);
           editorRef.current = value;
-         }} />
-        { !editorRef.current.includes("<br>") &&  
+          }}
+        />
+        { !rules.includes("<br>") &&  
           <div className="flex justify-end w-full mt-5 relative">
           <Button
             label={rulesData?.id ? 'Update Rules' : 'Create Rules'}

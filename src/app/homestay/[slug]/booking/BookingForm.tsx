@@ -103,8 +103,9 @@ export const BookingForm = ({ homestayId, homeStaySlug, onSuccess, rooms }: Book
   });
 
   const onSubmit = async (data: BookingFormData) => {
+    console.log("check data", data);
     if (currentStep === 1) {
-      if(data.phone.length != 10)
+      if (data.phone.length != 10) return;
       setFormData(data);
       setCurrentStep(2);
     } else {
@@ -183,7 +184,8 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit ,setValue,watch,getVa
   
   const handleValidPhoneCheck = (phone: string) => {
     if (phone.length == 10 || phone == null || phone == "") {
-      setErrorMessage(null)
+      setErrorMessage(null);
+      setValue("phone",phone)
     }
     if ( phone.length != 10) {
       setErrorMessage("Invalid Phone number.")
@@ -191,13 +193,17 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit ,setValue,watch,getVa
   }
 
   const handleValidGuesCheck = (guest: string) => {
-    if (guest == null || guest == "") {
-      setErrorMessage(null)
-    }
-    if (Number(guest) < 1) {
-      setErrorMessage("Invalid number of guests.")
-    } else {
-      setErrorMessage(null)
+    if (errorMessage != "Invalid Phone number.") {
+      if (guest == null || guest == "") {
+        setErrorMessage(null);
+        setValue("numberOfGuests",Number(guest))
+      }
+      if (Number(guest) < 1) {
+        setErrorMessage("Invalid number of guests.")
+      } else {
+        setErrorMessage(null);
+        setValue("numberOfGuests",Number(guest))
+      }
     }
   }
 
@@ -317,9 +323,9 @@ const {roomIds:roomIdsFromStore}=useRoomStore()
         control={control}
         label="Phone Number"
           required
+          helpertext={errors.phone?.type === 'required' ? 'Phone number is required' : ''}
+          error={!!errors.phone}
           onChange={(e)=>handleValidPhoneCheck(e.target.value)}
-        helpertext={errors.phone?.type === 'required' ? 'Phone number is required' : ''}
-        error={!!errors.phone}
       />
 
       <TextInput
@@ -327,11 +333,11 @@ const {roomIds:roomIdsFromStore}=useRoomStore()
         type="number"
         placeholder="Number of Guests"
           control={control}
+          label="Number of Guests"
+          required
+          helpertext={errors.numberOfGuests?.type === 'required' ? 'Number of guests is required' : ''}
+          error={!!errors.numberOfGuests}
           onChange={(e)=>handleValidGuesCheck(e.target.value)}
-        label="Number of Guests"
-        required
-        helpertext={errors.numberOfGuests?.type === 'required' ? 'Number of guests is required' : ''}
-        error={!!errors.numberOfGuests}
       />
 
       <TextInput

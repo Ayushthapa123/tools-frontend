@@ -150,17 +150,23 @@ export default function Gallery() {
 
       {/* Main Image Section */}
       <div className="mb-6">
-        <div className="relative h-[500px] w-full overflow-hidden rounded-2xl bg-gray-200">
-          <div className="relative h-full w-full">
-            <Image
-              src={mainWallpaper?.url ?? '/images/default-image.png'}
-              alt={`Main image1}`}
-              fill
-              className="object-cover transition-transform duration-500"
-              quality={90}
-            />
-          </div>
-        </div>
+        {
+          mainWallpaper? (<div className="relative h-[500px] w-full overflow-hidden rounded-2xl bg-gray-200">
+            <div className="relative h-full w-full">
+              <Image
+                src={mainWallpaper?.url}
+                alt={`Main image1}`}
+                fill
+                className="object-cover transition-transform duration-500"
+                quality={90}
+              />
+            </div>
+          </div>) : (
+              <div>
+                <span className='text-gray-500'>No wallpaper to display</span>
+              </div>
+          )
+        }
       </div>
 
       {/* Thumbnail Images Section */}
@@ -191,7 +197,7 @@ export default function Gallery() {
       </div>
 
       {
-        wallpaperData?.length && wallpaperData?.length < 6 && (
+         Number(wallpaperData?.length) < 6 && (
           <div className="bg-white card-body card card-bordered my-4 ">
             <WallpaperGallery homestayId={Number(homestayData?.id)} galleryType="ROOM" galleryKey="getRoomImages" />
           </div>

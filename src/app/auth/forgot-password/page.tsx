@@ -9,7 +9,7 @@ import Button from 'src/components/Button';
 import { FullLogo } from 'src/features/Logo/FullLogoWithText';
 import { Logo } from 'src/features/Logo';
 import TextInput from 'src/features/react-hook-form/TextField';
-import { ResetPasswordMutationVariables } from 'src/gql/graphql';
+import { LogInUser, LogInUserMutation, LogInUserMutationVariables, ResetPasswordMutationVariables } from 'src/gql/graphql';
 import { ResetPassword } from 'src/gql/graphql';
 import { ResetPasswordMutation } from 'src/gql/graphql';
 
@@ -25,6 +25,12 @@ function ForgotPasswordByTokenInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
+
+  const mutateLoginRequest = useGraphqlClientRequest<LogInUserMutation, LogInUserMutationVariables>(
+      LogInUser.loc?.source.body!,
+    );
+  
+    const { mutateAsync:LoginUser } = useMutation({ mutationFn: mutateLoginRequest });
 
   const {
     handleSubmit,
@@ -80,9 +86,15 @@ function ForgotPasswordByTokenInner() {
           token: token,
         },
       });
+      console.log("check",response)
 
       if (response?.resetPassword?.id) {
         setSuccess(true);
+        const login = await LoginUser({ input: { email: response?.resetPassword?.email, password: data?.password } });
+        if (login?.loginUser?.id) {
+          console.log("logged in");
+          router.push("/")
+        }
       } else {
         setError('Failed to reset password');
       }
