@@ -48,7 +48,6 @@ const TextInput = <T extends FieldValues>(props: TextFieldProps<T>) => {
           helpertext={helpertext}
           error={Boolean(error)}
           height={size} 
-         
           // ref={ref} // Forward the ref here, ensuring it is the last one set for the input
         />
       )}

@@ -112,7 +112,7 @@ const FormContent = ({rulesData}: {rulesData: HomestayRules | undefined}) => {
       });
     }
   };
-  const [rules,setRules] = useState("")
+  const [rules,setRules] = useState<string|null>(null)
   return (
     <div>
       <div className="">
@@ -123,7 +123,7 @@ const FormContent = ({rulesData}: {rulesData: HomestayRules | undefined}) => {
           editorRef.current = value;
           }}
         />
-        { !rules.includes("<br>") &&  
+        {rules  &&  
           <div className="flex justify-end w-full mt-5 relative">
           <Button
             label={rulesData?.id ? 'Update Rules' : 'Create Rules'}

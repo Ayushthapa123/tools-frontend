@@ -37,12 +37,22 @@ export function HomestayPage({ slug,checkInDat,checkOutDat  }: { slug: string,ch
     queryKey: ['getHomestayBySlug'],
     queryFn: fetchData,
   });
+  if (!homestay) {
+    return (
+      <>
+        <div className='flex items-center justify-center min-h-[100vh]'>
+          <div>
+            <LoadingSpinner  size='lg' color='primary' />
+          </div>
+        </div>
+      </>
+    )
+  }
   return (
     <>
       <CommonNav />
       <div className="w-full ">
         <div>
-          {!homestay && <LoadingSpinner/>}
           <div>{homestay && <MainContent homestay={homestay as Homestay} checkInDate={checkInDate} checkOutDate={checkOutDate} />}</div>
           <Footer />
         </div>

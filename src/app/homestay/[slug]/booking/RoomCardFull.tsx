@@ -121,7 +121,7 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
             )}
             <div className="flex items-center rounded-full bg-blue/40 px-3 py-1 text-sm text-black">
               <BiArea className="mr-1 text-xl text-secondary" />
-              25m²
+              {Math.floor(Math.random() * (30 - 20 + 1)) + 20}m²
             </div>
           </div>
 
@@ -170,7 +170,6 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
             <div className="flex items-center">
               <div onClick={
                 (e) => {
-                  e.stopPropagation();
                   handleRoomSelect(room.id);
                 }
               }>

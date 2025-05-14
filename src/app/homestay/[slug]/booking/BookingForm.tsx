@@ -101,6 +101,7 @@ export const BookingForm = ({ homestayId, homeStaySlug, onSuccess, rooms }: Book
       checkOutDate: checkOutDate instanceof Date ? checkOutDate.toISOString().split('T')[0] : checkOutDate,
     },
   });
+  watch("phone");
 
   const onSubmit = async (data: BookingFormData) => {
     console.log("check data", data);
@@ -182,7 +183,7 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit ,setValue,watch,getVa
   const { roomIds } = useRoomStore();
   const [ errorMessage, setErrorMessage ] = useState<string | null>(null)
   
-  const handleValidPhoneCheck = (phone: string) => {
+  const handlePhoneCheck = (phone:string) => {
     if (phone.length == 10 || phone == null || phone == "") {
       setErrorMessage(null);
       setValue("phone",phone)
@@ -190,22 +191,8 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit ,setValue,watch,getVa
     if ( phone.length != 10) {
       setErrorMessage("Invalid Phone number.")
     }
-  }
-
-  const handleValidGuesCheck = (guest: string) => {
-    if (errorMessage != "Invalid Phone number.") {
-      if (guest == null || guest == "") {
-        setErrorMessage(null);
-        setValue("numberOfGuests",Number(guest))
-      }
-      if (Number(guest) < 1) {
-        setErrorMessage("Invalid number of guests.")
-      } else {
-        setErrorMessage(null);
-        setValue("numberOfGuests",Number(guest))
-      }
     }
-  }
+
 
   useEffect(() => {
     if (user.userId) {
@@ -237,13 +224,6 @@ const { data: validity,isLoading } = useQuery({
   queryFn: fetchData,
   enabled:roomIds.length > 0 && !!checkInDateValue && !!checkOutDateValue
 });
-  
-  // useEffect(() => {
-  //   fetchData();
-  // },[roomIds])
-
-const {roomIds:roomIdsFromStore}=useRoomStore()
-
 
   return (
   <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -296,7 +276,20 @@ const {roomIds:roomIdsFromStore}=useRoomStore()
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-gray-300 pt-4">
       <TextInput
         name="fullName"
-        type="text"
+          type="text"
+          onKeyDown={(e) => {
+            const regex = /^[a-zA-Z\s\b]+$/; 
+            if (
+              !regex.test(e.key) &&
+              e.key !== 'Backspace' &&
+              e.key !== 'Delete' &&
+              e.key !== 'ArrowLeft' &&
+              e.key !== 'ArrowRight' &&
+              e.key !== 'Tab'
+            ) {
+              e.preventDefault();
+            }
+          }}
         placeholder="Full Name"
         control={control}
         label="Full Name"
@@ -318,14 +311,14 @@ const {roomIds:roomIdsFromStore}=useRoomStore()
 
       <TextInput
         name="phone"
-        type="tel"
+        type="number"
         placeholder="Phone Number"
         control={control}
+        onChange={(e)=>handlePhoneCheck(e.target.value)}
         label="Phone Number"
           required
           helpertext={errors.phone?.type === 'required' ? 'Phone number is required' : ''}
           error={!!errors.phone}
-          onChange={(e)=>handleValidPhoneCheck(e.target.value)}
       />
 
       <TextInput
@@ -333,11 +326,13 @@ const {roomIds:roomIdsFromStore}=useRoomStore()
         type="number"
         placeholder="Number of Guests"
           control={control}
+          min={0}
+          max={100}
           label="Number of Guests"
           required
           helpertext={errors.numberOfGuests?.type === 'required' ? 'Number of guests is required' : ''}
           error={!!errors.numberOfGuests}
-          onChange={(e)=>handleValidGuesCheck(e.target.value)}
+          // onChange={(e)=>handleValidGuestCheck(e.target.value)}
       />
 
       <TextInput

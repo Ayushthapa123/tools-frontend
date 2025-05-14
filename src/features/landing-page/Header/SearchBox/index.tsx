@@ -26,7 +26,8 @@ export const SearchBox = () => {
   const [city, setCity] = useState(params.get('city') ?? '');
   const [subCity, setSubCity] = useState(params.get('subCity') ?? '');
   const [country, setCountry] = useState(params.get('country') ?? '');
-  const [query, setQuery] = useState(params.get('query') ?? '');
+  const [ query, setQuery ] = useState(params.get('query') ?? '');
+  const [searchText,setSearchText] = useState<string | number | readonly string[] | undefined>()
   const router = useRouter();
 
   const [clickedLatLng, setClickedLatLng] = useState<{ lat: number | null; lng: number | null } | null>(null);
@@ -80,17 +81,23 @@ export const SearchBox = () => {
 
   const handlePlaceChanged = () => {
     const place = autocompleteRef.current.getPlace();
+    console.log("place",place)
     if (place.geometry && place.geometry.location) {
       const lat = place.geometry.location.lat();
       const lng = place.geometry.location.lng();
       setClickedLatLng({ lat, lng });
     }
   };
-
+  console.log("text",searchText)
+  const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+    const sanitizedValue = inputValue.replace(/[^a-zA-Z0-9 ,\-]/,'')
+    setSearchText(sanitizedValue);
+  }
 
   return (
-    <div className="relative flex w-full flex-col items-center justify-center px-3 ">
-      <div className="relative z-50 flex w-full max-w-6xl flex-col gap-2  space-y-[6px] rounded-2xl border bg-gray-50 px-[10px] py-[10px] focus-within:border-gray-300 sm:flex-row sm:space-y-0 sm:rounded-full sm:pl-6">
+    <div className="relative flex w-fit flex-col items-center justify-center px-3 ">
+      <div className="relative z-50 flex w-full max-w-6xl flex-col gap-2  space-y-[6px] rounded-2xl border bg-gray-50 px-[10px] py-[10px] focus-within:border-gray-300 sm:py-1 sm:pr-1 sm:flex-row sm:space-y-0 sm:rounded-full sm:pl-6">
         {/* <input
           type="text"
           placeholder="Search By Location"
@@ -102,20 +109,21 @@ export const SearchBox = () => {
           onClick={() => setShowSearchSuggestions(true)}
         /> */}
 
-      <Autocomplete
-        onLoad={autocomplete => (autocompleteRef.current = autocomplete)}
-        className=' '
-        onPlaceChanged={handlePlaceChanged}>
-        <input
-          type="text"
-          placeholder="Search Your Location"
-          className=" rounded-lg border p-2  mt-2 border-white w-full  bg-gray-50"
-         
-        />
-      </Autocomplete>
+        <Autocomplete
+          onLoad={autocomplete => (autocompleteRef.current = autocomplete)}
+          className=' '
+          onPlaceChanged={handlePlaceChanged}>
+          <input
+            type="text"
+            placeholder="Search Your Location"
+            value={searchText}
+            className=" rounded-lg border p-2  mt-2 border-white w-full  bg-gray-50"
+            onChange={handleLocationChange}
+          />
+        </Autocomplete>
 
-        <div className=" flex ">
-          <label className="relative mb-1 mt-4 block whitespace-nowrap text-sm font-medium text-primary">
+        <div className=" flex items-center">
+          <label className="relative mb-3 mt-4 block whitespace-nowrap text-sm font-medium text-primary">
             Check In:
           </label>
 
@@ -128,8 +136,8 @@ export const SearchBox = () => {
           />
         </div>
 
-        <div className=" flex ">
-          <label className="relative mb-1 mt-4 block whitespace-nowrap text-sm font-medium text-primary">
+        <div className=" flex items-center ">
+          <label className="relative mb-3 mt-4 block whitespace-nowrap text-sm font-medium text-primary">
             Check-Out:
           </label>
           <Input
@@ -142,9 +150,10 @@ export const SearchBox = () => {
         </div>
 
         <button
-          className="flex flex-row items-center justify-center rounded-full border border-transparent bg-primary px-3 py-2 text-base font-medium tracking-wide text-white transition duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 md:min-w-[130px] md:px-8"
+          disabled={searchText==null || searchText == ""}
+          className="flex flex-row items-center justify-center rounded-full border border-transparent bg-primary px-3 py-2 md:py-1 text-base font-medium tracking-wide text-white transition duration-150 ease-in-out disabled:cursor-not-allowed md:min-w-24 md:px-6"
           onClick={() => handleSearch()}>
-          <span className="block sm:hidden md:block">Search</span>
+          <span className="block sm:hidden md:block text-xl">Search</span>
           <span className="hidden text-xl sm:flex  md:hidden">
             <BiSearch />
           </span>

@@ -40,8 +40,8 @@ export const CommonNav = () => {
   const { mutateAsync: getAccessToken } = useMutation({ mutationFn: mutateRefreshToken });
 
   useEffect(() => {
-    const refreshToken = localStorage.getItem('refreshToken');
-    if (refreshToken) {
+    // const refreshToken = localStorage.getItem('refreshToken');
+    // if (refreshToken) {
       getAccessToken({  }).then(res => {
         if (res?.refreshTokens?.token?.accessToken) {
           setAccessToken(res.refreshTokens.token.accessToken);
@@ -54,7 +54,7 @@ export const CommonNav = () => {
           });
         }
       });
-    }
+    // }
   }, [ getAccessToken, router, setAccessToken, setUser ]);
 
   return (
@@ -90,11 +90,12 @@ export const CommonNav = () => {
                 </div> */}
 
                 <button
-                  className="flex flex-row items-center justify-center rounded-full border border-transparent bg-primary font-medium tracking-wide transition duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 md:min-w-fit py-0"
+                  
+                  className="flex flex-row items-center justify-center rounded-full border border-transparent bg-primary font-medium tracking-wide transition duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 lg:min-w-fit py-0"
                 >
                   <motion.div className="  font-semibold " transition={{ duration: 0.3 }}>
                     <Link href={"/signup"}>
-                      <span className="block sm:hidden md:block text-white">Signup</span>
+                      <span className="block md:block text-white">Signup</span>
                     </Link>
                   </motion.div>
                 </button>

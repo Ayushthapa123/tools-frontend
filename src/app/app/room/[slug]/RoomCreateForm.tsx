@@ -77,12 +77,16 @@ export const RoomCreateForm = ({ control, errors }: { control: any; errors: any 
       </div>
         <div className="mb-2">
           <TextInput
+            type="number"
+            min={0}
             name="maxOccupancy"
             placeholder="Max Occupancy"
             control={control}
             label="Max Occupancy"
             helpertext={errors.maxOccupancy?.type === 'required' ? 'Max Occupancy is Required' : ''}
             error={!!errors.maxOccupancy}
+            datatype="number"
+
           />
         </div>
       </div>

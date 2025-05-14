@@ -164,18 +164,21 @@ const HomestayInfoForm: FC<IProps> = props => {
   };
   const [ phoneNumber, setPhoneNumber ] = useState<string | null>(null);
   const [ altPhoneNumber, setAltPhoneNumber ] = useState<string | null>(null);
+  const [ someInputFieldChanged, setSomeInputFieldChanged ] = useState<boolean>(false);
   useEffect(() => {
     setPhoneNumber(phone??null);
     setAltPhoneNumber(altPhone??null) 
   },[])
   
-  const handlePhoneNumChange = (phone: string) => {
-    setPhoneNumber(phone);
-    setValue("phone",phone)
+  const handlePhoneNumChange = (ph: string) => {
+    setSomeInputFieldChanged(true)
+    setPhoneNumber(ph);
+    setValue("phone",ph)
   }
+  console.log(phone,",,",phoneNumber)
 
   const handleAltPhoneNumChange = (phone: string) => {
-    console.log("ph",phone,typeof(phone))
+    setSomeInputFieldChanged(true)
     setAltPhoneNumber(phone);
     setValue("altPhone",phone)
   }
@@ -202,6 +205,7 @@ const HomestayInfoForm: FC<IProps> = props => {
             placeholder="Homestay Email"
             control={control}
             label="Homestay Email"
+            onKeyDown={()=>setSomeInputFieldChanged(true)}
             required
             helpertext={errors.email?.type === 'required' ? 'Email Is Required' : ''}
             error={!!errors.email}
@@ -240,7 +244,7 @@ const HomestayInfoForm: FC<IProps> = props => {
 
       <div className=" flex w-full justify-end">
         <div className=" mt-10 w-[200px]">
-          <Button label={`${contactId ? 'Update Contact Info' : 'Create Contact'}`} type="submit" loading={isCreating || isUpdating} disabled={ getErrorMessage(phoneNumber,altPhoneNumber)!= true } />
+          <Button label={`${contactId ? 'Update Contact Info' : 'Create Contact'}`} type="submit" loading={isCreating || isUpdating} disabled={ getErrorMessage(phoneNumber,altPhoneNumber)!= true  || !someInputFieldChanged} />
         </div>
       </div>
     </form>

@@ -53,7 +53,7 @@ export default function RoomContainer({ params }: { params: { slug: string } }) 
 
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey: [ "getRoomWithPriceAndGallery" ] })
-  }, [ params.slug ])
+  }, [params.slug, queryClient])
 
   const { data: room, isLoading } = useQuery({
     queryKey: [ 'getRoomWithPriceAndGallery' ],
@@ -104,7 +104,7 @@ function RoomForm({ params, room }: { params: { slug: string }, room: Room | und
         attachBathroom: room.attachBathroom ?? false,
       });
     }
-  }, [ room ]);
+  }, [reset, room]);
   //This ensures the form updates when room is fetched from the backend.
 
 
