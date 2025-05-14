@@ -1,14 +1,12 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, {  } from 'react';
 
 import Navbar from 'src/features/NavBar';
 import { Drawer } from 'src/features/Drawer';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import { GetUserById, GetUserByIdQueryVariables, GetUserByIdQuery, RefreshToken, RefreshTokenMutation, RefreshTokenMutationVariables } from 'src/gql/graphql';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { LayoutSkeleton } from '../../features/Skeletons/LayoutSkeleton';
-import { useRouter } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
 import { useAccessTokenStore } from 'src/store/accessTokenStore';
 import GlobalToast from 'src/features/GlobalToast';
 
@@ -23,39 +21,10 @@ export default function Layout({
   params: { pageTitle: string };
   children: React.ReactNode;
 }) {
-  const router = useRouter();
-  const mutateRefreshToken = useGraphqlClientRequest<
-    RefreshTokenMutation,
-    RefreshTokenMutationVariables
-  >(RefreshToken.loc?.source.body!);
 
-  const { setAccessToken, accessToken } = useAccessTokenStore();
-  const { setUser,user } = useUserStore();
+  const { user } = useUserStore();
 
-  const { mutateAsync: getAccessToken } = useMutation({ mutationFn: mutateRefreshToken });
 
-  useEffect(() => {
-    // const refreshToken = localStorage.getItem('refreshToken');
-   
-      getAccessToken({}).then(res => {
-        if (res?.refreshTokens?.token?.accessToken) {
-          setAccessToken(res.refreshTokens.token.accessToken);
-          setUser({
-            userId: Number(res.refreshTokens.user.id),
-            homestayId: res.refreshTokens.user.homestayId ?? null, 
-            userEmail: res.refreshTokens.user.email,
-            userName: res.refreshTokens.user.fullName,
-            userType: res.refreshTokens.user.userType,
-          });
-          if (res.refreshTokens.user.userType === 'GUEST') {
-            router.push('/app/my-profile');
-          }
-        } else {
-          router.push('/login');
-        }
-      });
-    
-  }, [getAccessToken, router, setAccessToken, setUser]);
 
   // Fetch user profile by userId
   const queryUser = useGraphqlClientRequest<GetUserByIdQuery, GetUserByIdQueryVariables>(GetUserById.loc?.source.body!);
@@ -77,7 +46,7 @@ export default function Layout({
     <ThemeProvider>
         <div className=" w-full ">
           <GlobalToast />
-          {accessToken ? (
+        
             <>
               <div className=" relative  z-[999] h-[70px] shadow-sm">
                 <Navbar />
@@ -90,7 +59,6 @@ export default function Layout({
                     <Drawer />
                   </div>}
 
-
                   <div
                     className={`  relative h-[calc(100vh-70px)] w-full overflow-y-scroll   bg-slate-50 p-3 md:p-5`}>
                     {children}
@@ -99,11 +67,7 @@ export default function Layout({
               :""  
               }
             </>
-          ) : (
-            <>
-              <LayoutSkeleton />
-            </>
-          )}
+       
         </div>
       </ThemeProvider>
   );

@@ -181,10 +181,10 @@ const SignIn = () => {
               <a
                 href="/auth/forgotpassword"
                 className="text-dark mb-2 inline-block text-base hover:text-primary hover:underline ">
-                Forget Password?
+                Forgot Password?
               </a>
               <p className="text-base">
-                <span className="pr-0.5">Dont have an account yet? </span>
+                <span className="pr-0.5">Don&apos;t have an account yet? </span>
                 <Link href="/signup" className="text-blue hover:underline ">
                   Get one here
                 </Link>

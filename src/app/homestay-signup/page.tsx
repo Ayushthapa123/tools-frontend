@@ -7,7 +7,6 @@ import React, { Suspense, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import TextInput from 'src/features/react-hook-form/TextField';
-import { FcGoogle } from 'react-icons/fc';
 
 import {
   GetGoogleOauthUrl,
@@ -20,7 +19,6 @@ import {
 import { useAccessTokenStore } from 'src/store/accessTokenStore';
 
 import { useSearchParams } from 'next/navigation';
-import Button from 'src/components/Button';
 import { FullLogo } from 'src/features/Logo/FullLogoWithText';
 
 export default function Home() {
@@ -36,6 +34,7 @@ export default function Home() {
 type signupData = {
   fullName: string;
   email: string;
+  phoneNumber: string;
   password: string;
   confirmPassword: string;
 };
@@ -100,6 +99,8 @@ function SignUp() {
         password: data.password,
         fullName: data.fullName,
         userType: 'HOMESTAY_OWNER',
+        phoneNumber: data.phoneNumber,
+        
       },
     }).then(res => {
       if (res?.signupUser?.id) {
@@ -179,6 +180,19 @@ function SignUp() {
                       required
                       helpertext={errors.email?.type === 'required' ? 'Email Is Required' : ''}
                       error={!!errors.email}
+                    />
+                  </div>
+                  <div className="mt-5 ">
+                    <TextInput
+                      name="phoneNumber"
+                      type="text"
+                      placeholder="Enter Phone Number"
+                      control={control}
+                      label="Phone Number"
+                      // endAdornment={<MailOutlineOutlinedIcon />}
+                    
+                      helpertext={errors.phoneNumber?.type === 'required' ? 'Phone Number Is Required' : ''}
+                      error={!!errors.phoneNumber}
                     />
                   </div>
                   <div className="mt-5 ">

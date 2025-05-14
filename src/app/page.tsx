@@ -22,7 +22,6 @@ export default function Home() {
       {/* <Image src={'/bg.png'} fill alt=''/> */}
       <main className="relative ">
         <div className="">
-          <CheckSession />
           <CommonNav />
           <Header />
           <Footer />
