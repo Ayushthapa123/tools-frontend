@@ -15,8 +15,8 @@ yarn.lock
 /.vscode
 /node_modules
 /.next
-/.cursor
-/.cursor/*
+.cursor
+.cursor/*
 
 
 # Ignore any files/folders specific to your development setup
