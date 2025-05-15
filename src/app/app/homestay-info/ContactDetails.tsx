@@ -82,6 +82,7 @@ const HomestayInfoForm: FC<IProps> = props => {
     control,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<IProps>({
     defaultValues: {
@@ -90,6 +91,7 @@ const HomestayInfoForm: FC<IProps> = props => {
       email,
     },
   });
+  const changingEmail =  watch("email")
 
   const mutateCreateHomestayContact = useGraphqlClientRequest<
     CreateContactsMutation,
@@ -124,7 +126,7 @@ const HomestayInfoForm: FC<IProps> = props => {
             altPhone,
           }),
           ...(email && {
-            email,
+            email:email.trim(),
           }),
         },
       }).then(res => {
@@ -142,7 +144,7 @@ const HomestayInfoForm: FC<IProps> = props => {
       createContact({
         input: {
           homestayId: homestayId,
-          email: email ?? '',
+          email: email?.trim() ?? '',
           phone: phone ?? '',
           altPhone,
         },
@@ -183,7 +185,10 @@ const HomestayInfoForm: FC<IProps> = props => {
     setValue("altPhone",phone)
   }
   
-  const getErrorMessage = (phone: string|null, altPhone: string|null) => {
+  const getErrorMessage = (phone: string | null, altPhone: string | null, email: string | null | undefined) => {
+    console.log("em",email)
+    if (email && !(/^(?:[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*|"[^"]+")@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/.test(email)))
+      return "Invalid email address"
     if (!phone) {
       return "Enter phone number"
     }
@@ -240,12 +245,12 @@ const HomestayInfoForm: FC<IProps> = props => {
       </div>
 
       <div className='mt-4'>
-        <span className='text-error text-sm'><p className='inline-block'>{(phoneNumber || altPhoneNumber ) && getErrorMessage(phoneNumber,altPhoneNumber)}</p></span>
+        <span className='text-error text-sm'><p className='inline-block'>{(phoneNumber || altPhoneNumber ) && getErrorMessage(phoneNumber,altPhoneNumber,changingEmail)}</p></span>
       </div>
 
       <div className=" flex w-full justify-end">
         <div className=" mt-10 w-[200px]">
-          <Button label={`${contactId ? 'Update Contact Info' : 'Create Contact'}`} type="submit" loading={isCreating || isUpdating} disabled={ getErrorMessage(phoneNumber,altPhoneNumber)!= true  || !someInputFieldChanged} />
+          <Button label={`${contactId ? 'Update Contact Info' : 'Create Contact'}`} type="submit" loading={isCreating || isUpdating} disabled={ getErrorMessage(phoneNumber,altPhoneNumber,changingEmail)!= true  || !someInputFieldChanged} />
         </div>
       </div>
     </form>

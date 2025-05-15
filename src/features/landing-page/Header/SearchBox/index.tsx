@@ -86,16 +86,16 @@ export const SearchBox = () => {
       const lat = place.geometry.location.lat();
       const lng = place.geometry.location.lng();
       setClickedLatLng({ lat, lng });
+      setSearchText(place?.name);
     }
   };
-  console.log("text",searchText)
   const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     const sanitizedValue = inputValue.replace(/[^a-zA-Z0-9 ,\-]/,'')
     setSearchText(sanitizedValue);
   }
 
-  const isValidSearch=(clickedLatLng?.lat || clickedLatLng?.lng) && checkInDate && checkOutDate
+  const isValidSearch = (clickedLatLng?.lat || clickedLatLng?.lng) && checkInDate && checkOutDate;
 
   return (
     <div className="relative flex w-fit flex-col items-center justify-center px-3 ">

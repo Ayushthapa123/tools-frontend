@@ -24,7 +24,6 @@ interface RoomCardProps {
 
 export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate, setShowDetails, setSelectedRoom }: RoomCardProps) => {
   const { setRoomIds, roomIds } = useRoomStore();
-  const sectionRef = useRef<HTMLDivElement>(null);
   const router = useRouter()
   const pathName = usePathname();
   const [ isBookingPage, setIsBookingPage ] = useState(false);
@@ -35,12 +34,6 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
   }, [ pathName ]);
 
   const handleRoomSelect = (roomId: string) => {
-    if (sectionRef.current) {
-      sectionRef.current.scrollIntoView({
-        behavior: "smooth",
-        block:"start"
-      })
-    }
     if (roomIds.includes(roomId)) {
       setRoomIds(roomIds.filter((id) => id !== roomId));
     } else {
@@ -51,7 +44,6 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
 
   return (
     <div
-      ref={sectionRef}
       className={`group relative flex flex-col xl:flex-row h-full overflow-hidden rounded-xl bg-base-100 transition-all duration-300 ${isSelected
           ? 'border border-blue ring-2 ring-blue-200'
           : 'border border-gray-200 hover:border-gray-300 hover:shadow-lg'
