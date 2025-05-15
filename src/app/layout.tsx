@@ -4,6 +4,7 @@ import './globals.css';
 import Head from 'next/head';
 import { TopLevelWrapper } from 'src/features/TopLevelWrapper';
 import PWARegister from 'src/components/PWARegister';
+import { CheckSession } from 'src/features/CheckSession';
 
 // const sora = Sora({
 //   subsets: ['latin'],
@@ -49,6 +50,7 @@ export default function RootLayout({
         <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
       </Head>
       <body className={`font-sora bg-base-body`}>
+
         <TopLevelWrapper>{children}</TopLevelWrapper>
       </body>
     </html>

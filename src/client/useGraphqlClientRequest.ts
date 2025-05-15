@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const GRAPHQL_ENDPOINT =
-  process.env.NEXT_PUBLIC_GRAPHQL_SERVER_ENDPOINT!;
+  `${process.env.NEXT_PUBLIC_API_URL!}/graphql`;
 
 export const useGraphqlClientRequest = <TData, TVariables>(
   query: string,

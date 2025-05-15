@@ -80,9 +80,9 @@ export const SearchBox = () => {
   const autocompleteRef = useRef<any>(null);
 
   const handlePlaceChanged = () => {
-    const place = autocompleteRef.current.getPlace();
-    console.log("place",place)
-    if (place.geometry && place.geometry.location) {
+    const place = autocompleteRef.current.getPlace(); 
+    handleQuery(place?.name ?? '')
+    if (place?.geometry && place?.geometry.location) {
       const lat = place.geometry.location.lat();
       const lng = place.geometry.location.lng();
       setClickedLatLng({ lat, lng });
@@ -94,6 +94,8 @@ export const SearchBox = () => {
     const sanitizedValue = inputValue.replace(/[^a-zA-Z0-9 ,\-]/,'')
     setSearchText(sanitizedValue);
   }
+
+  const isValidSearch=(clickedLatLng?.lat || clickedLatLng?.lng) && checkInDate && checkOutDate
 
   return (
     <div className="relative flex w-fit flex-col items-center justify-center px-3 ">
@@ -119,6 +121,8 @@ export const SearchBox = () => {
             value={searchText}
             className=" rounded-lg border p-2  mt-2 border-white w-full  bg-gray-50"
             onChange={handleLocationChange}
+            defaultValue={query}
+            required
           />
         </Autocomplete>
 
@@ -150,10 +154,10 @@ export const SearchBox = () => {
         </div>
 
         <button
-          disabled={searchText==null || searchText == ""}
-          className="flex flex-row items-center justify-center rounded-full border border-transparent bg-primary px-3 py-2 md:py-1 text-base font-medium tracking-wide text-white transition duration-150 ease-in-out disabled:cursor-not-allowed md:min-w-24 md:px-6"
-          onClick={() => handleSearch()}>
-          <span className="block sm:hidden md:block text-xl">Search</span>
+          className="flex flex-row items-center justify-center rounded-full border border-transparent bg-primary px-3 py-2 text-base font-medium tracking-wide text-white transition duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 md:min-w-[130px] md:px-8"
+          onClick={() => handleSearch()}
+          disabled={!isValidSearch}>
+          <span className="block sm:hidden md:block">Search</span>
           <span className="hidden text-xl sm:flex  md:hidden">
             <BiSearch />
           </span>

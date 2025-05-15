@@ -17,7 +17,6 @@ import {
   SignupUserMutation,
   SignupUserMutationVariables,
 } from 'src/gql/graphql';
-import { useAccessTokenStore } from 'src/store/accessTokenStore';
 
 import { useSearchParams } from 'next/navigation';
 import Button from 'src/components/Button';
@@ -39,12 +38,12 @@ type signupData = {
   email: string;
   password: string;
   confirmPassword: string;
+  phoneNumber?: string;
 };
 function SignUp() {
   const [ loading, setLoading ] = useState(false);
   const [ error, setError ] = useState('');
 
-  const { setAccessToken } = useAccessTokenStore();
 
   const router = useRouter();
 
@@ -104,9 +103,8 @@ function SignUp() {
       },
     }).then(res => {
       if (res?.signupUser?.id) {
-        setAccessToken(res.signupUser.token.accessToken);
         // localStorage.setItem('refreshToken', res.signupUser.token.refreshToken);
-        router.push('/app');
+        router.push('/');
       } else {
         setError('Failed to signup!');
       }
@@ -187,6 +185,17 @@ function SignUp() {
                   </div>
                   <div className="mt-5 ">
                     <TextInput
+                      name="phoneNumber"
+                      type="text"
+                      placeholder="Enter Phone Number"
+                      control={control}
+                      label="Phone Number"
+                      helpertext={errors.phoneNumber?.type === 'required' ? 'Phone Number Is Required' : ''}
+                      error={!!errors.phoneNumber}
+                    />
+                  </div>
+                  <div className="mt-5 ">
+                    <TextInput
                       name="password"
                       type="password"
                       placeholder="Enter Password"
@@ -236,6 +245,12 @@ function SignUp() {
                 <span className="pr-0.5">Already a member?</span>
                 <Link href="/login" className="text-blue ml-1 hover:underline">
                   Log In
+                </Link>
+              </p>
+              <p className="text-body-color text-base">
+                <span className="pr-0.5">Signup As a Homestay Owner?</span>
+                <Link href="/homestay-signup" className="text-blue ml-1 hover:underline">
+                  Signup
                 </Link>
               </p>
 
