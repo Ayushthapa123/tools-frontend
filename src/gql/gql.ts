@@ -11,8 +11,8 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * 3. It does not support dead code elimination, so it will add unused operations.
  *
  * Therefore it is highly recommended to use the babel or swc plugin for production.
+ * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
-<<<<<<< HEAD
 type Documents = {
     "query BookingsByHomestay {\n  bookingsByHomestay {\n    id\n    bookingKey\n    startDate\n    endDate\n    status\n    createdAt\n    updatedAt\n    room {\n      id\n      caption\n      roomNumber\n      capacity\n      status\n      attachBathroom\n      maxOccupancy\n      price {\n        baseAmount\n        currency\n        discountAmount\n        discountType\n        isDiscountActive\n      }\n      image {\n        url\n        caption\n      }\n    }\n    guest {\n      id\n      email\n      fullName\n      phoneNumber\n    }\n  }\n}": typeof types.BookingsByHomestayDocument,
     "mutation selectHomestayImage($selectHomestayImageId: Float!, $homestayId: Float!) {\n  selectHomestayImage(\n    selectHomestayImageId: $selectHomestayImageId\n    homestayId: $homestayId\n  ) {\n    id\n    caption\n    url\n    isSelected\n  }\n}": typeof types.SelectHomestayImageDocument,
@@ -88,9 +88,6 @@ type Documents = {
     "query GetFeaturedHomestays($pageSize: Int!) {\n  getAllHomestays(pageSize: $pageSize) {\n    id\n    name\n    description\n    slug\n    address {\n      country\n      city\n      subCity\n      street\n      latitude\n      longitude\n    }\n    image {\n      url\n      caption\n      isSelected\n    }\n    rooms {\n      id\n      caption\n      capacity\n      roomNumber\n      status\n      createdAt\n      updatedAt\n      homestayId\n      image {\n        url\n        id\n        caption\n        createdAt\n        updatedAt\n        roomId\n      }\n      price {\n        baseAmount\n        currency\n        isDynamicPricing\n        discountAmount\n        discountType\n      }\n    }\n    services {\n      service\n    }\n  }\n}": typeof types.GetFeaturedHomestaysDocument,
 };
 const documents: Documents = {
-=======
-const documents = {
->>>>>>> main
     "query BookingsByHomestay {\n  bookingsByHomestay {\n    id\n    bookingKey\n    startDate\n    endDate\n    status\n    createdAt\n    updatedAt\n    room {\n      id\n      caption\n      roomNumber\n      capacity\n      status\n      attachBathroom\n      maxOccupancy\n      price {\n        baseAmount\n        currency\n        discountAmount\n        discountType\n        isDiscountActive\n      }\n      image {\n        url\n        caption\n      }\n    }\n    guest {\n      id\n      email\n      fullName\n      phoneNumber\n    }\n  }\n}": types.BookingsByHomestayDocument,
     "mutation selectHomestayImage($selectHomestayImageId: Float!, $homestayId: Float!) {\n  selectHomestayImage(\n    selectHomestayImageId: $selectHomestayImageId\n    homestayId: $homestayId\n  ) {\n    id\n    caption\n    url\n    isSelected\n  }\n}": types.SelectHomestayImageDocument,
     "query getHomestayDetailsBasic {\n  getHomestayByToken {\n    name\n    slug\n    moderatedBySuperAdmin\n    moderatedByCommunityOwner\n    address {\n      country\n      city\n      subCity\n      street\n    }\n  }\n}": types.GetHomestayDetailsBasicDocument,
