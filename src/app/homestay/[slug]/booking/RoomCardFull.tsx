@@ -28,6 +28,7 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
   const router = useRouter()
   const pathName = usePathname();
   const [ isBookingPage, setIsBookingPage ] = useState(false);
+  console.log("room ",room)
 
   useEffect(() => {
     setIsBookingPage(pathName.includes("booking"));
@@ -124,10 +125,28 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
               {Math.floor(Math.random() * (30 - 20 + 1)) + 20}m²
             </div>
           </div>
+            
+          {
+            room.roomAmenity ? (
+                <div className="grid grid-cols-2 gap-2 mt-2">
+                
+                {room.roomAmenity?.amenity.split(",").slice(0,4).map((amm) => {
+              return (
+                <div key={amm} className="flex items-center justify-start gap-2">
+                  <BsCheckCircleFill className="mr-2 text-green-500" />
+                  <span className="mr-1">{ amm}</span>
+                  </div>
+              )
+            })}
+            </div>) : (
+                <div className="flex items-center justify-start mt-8">
+                  <span>No room amenities listed.</span>
+                </div> 
+           )
+          }
 
-          <div className="mt-4 grid grid-cols-2 gap-y-2 text-sm text-gray-600">
+          {/* <div className="mt-4 grid grid-cols-2 gap-y-2 text-sm text-gray-600">
             <div className="flex items-center">
-              <BsCheckCircleFill className="mr-2 text-green-500" />
               <span>Free WiFi</span>
             </div>
             <div className="flex items-center">
@@ -142,7 +161,7 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
               <BsCheckCircleFill className="mr-2 text-green-500" />
               <span>Room Service</span>
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div className="mt-5 flex items-center justify-between gap-2">

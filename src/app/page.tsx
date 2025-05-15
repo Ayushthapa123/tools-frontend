@@ -21,9 +21,9 @@ export default function Home() {
     <div className="  relative  mx-auto h-auto w-full max-w-[2100px] bg-base-100 ">
       {/* <Image src={'/bg.png'} fill alt=''/> */}
       <main className="relative ">
+          <CommonNav />
         <div className="">
           <CheckSession />
-          <CommonNav />
           <Header />
           <Footer />
           {/* <Header1 /> */}
