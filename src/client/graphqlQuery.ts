@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 
-const GRAPHQL_ENDPOINT = process.env.NEXT_PUBLIC_GRAPHQL_SERVER_ENDPOINT!
+const GRAPHQL_ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL!}/graphql`;
 
   // ! this is not used anymore. Instead we have used axios because it is more flexible for resta and graphQL.
 export const graphqlQuery = <TData, TVariables>(

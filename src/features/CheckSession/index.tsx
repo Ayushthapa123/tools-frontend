@@ -18,11 +18,7 @@ export const CheckSession = () => {
   const { mutateAsync: getAccessToken } = useMutation({ mutationFn: mutateRefreshToken });
 
   useEffect(() => {
-    const refreshToken = localStorage.getItem('refreshToken');
-    // if (!refreshToken) {
-    //   return;
-    // } else {
-    //   alert('hi')
+
       getAccessToken({ }).then(res => {
         if (res?.refreshTokens?.token?.accessToken) {
           setUser({
@@ -32,15 +28,11 @@ export const CheckSession = () => {
             homestayId:Number(res.refreshTokens.user.homestayId),
             userType:res.refreshTokens.user.userType
           });
-          // if usetype is guest then don't push to app page
-          if (res.refreshTokens.user.userType !== 'GUEST') {
-            // router.push('/app');
-          }
-        } else {
-          localStorage.removeItem('refreshToken');
+     
+        }else{
+          // router.push('/login')
         }
       });
-    // }
   }, [getAccessToken, router, setUser]);
-  return <div></div>;
+  return <div/>;
 };

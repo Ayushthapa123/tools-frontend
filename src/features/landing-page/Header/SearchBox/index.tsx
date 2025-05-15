@@ -79,14 +79,16 @@ export const SearchBox = () => {
   const autocompleteRef = useRef<any>(null);
 
   const handlePlaceChanged = () => {
-    const place = autocompleteRef.current.getPlace();
-    if (place.geometry && place.geometry.location) {
+    const place = autocompleteRef.current.getPlace(); 
+    handleQuery(place?.name ?? '')
+    if (place?.geometry && place?.geometry.location) {
       const lat = place.geometry.location.lat();
       const lng = place.geometry.location.lng();
       setClickedLatLng({ lat, lng });
     }
   };
 
+  const isValidSearch=(clickedLatLng?.lat || clickedLatLng?.lng) && checkInDate && checkOutDate
 
   return (
     <div className="relative flex w-full flex-col items-center justify-center px-3 ">
@@ -110,6 +112,8 @@ export const SearchBox = () => {
           type="text"
           placeholder="Search Your Location"
           className=" rounded-lg border p-2  mt-2 border-white w-full  bg-gray-50"
+          defaultValue={query} 
+          required
          
         />
       </Autocomplete>
@@ -143,7 +147,8 @@ export const SearchBox = () => {
 
         <button
           className="flex flex-row items-center justify-center rounded-full border border-transparent bg-primary px-3 py-2 text-base font-medium tracking-wide text-white transition duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 md:min-w-[130px] md:px-8"
-          onClick={() => handleSearch()}>
+          onClick={() => handleSearch()}
+          disabled={!isValidSearch}>
           <span className="block sm:hidden md:block">Search</span>
           <span className="hidden text-xl sm:flex  md:hidden">
             <BiSearch />
