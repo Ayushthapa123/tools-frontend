@@ -13,6 +13,7 @@ import { useUserStore } from 'src/store/userStore';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useRoomStore } from 'src/store/roomStore';
 import LoadingSpinner from 'src/components/Loading';
+import { useBookingDetailsStore } from 'src/store/bookingDetailsStore';
 interface BookingFormProps {
   homestayId: string;
   homeStaySlug: string;
@@ -86,6 +87,7 @@ export const BookingForm = ({ homestayId, homeStaySlug, onSuccess, rooms }: Book
     const checkInDate=new Date(checkInDateValue)
    window.location.href = `/homestay/${homeStaySlug}/booking?checkInDate=${checkInDate.toISOString().split('T')[0]}&checkOutDate=${dateString}`
   }
+  const {bookingDetails}=useBookingDetailsStore()
 
   const {
     control,
@@ -99,6 +101,12 @@ export const BookingForm = ({ homestayId, homeStaySlug, onSuccess, rooms }: Book
     defaultValues: {
       checkInDate: checkInDate instanceof Date ? checkInDate.toISOString().split('T')[0] : checkInDate,
       checkOutDate: checkOutDate instanceof Date ? checkOutDate.toISOString().split('T')[0] : checkOutDate,
+      fullName:bookingDetails.fullName || '',
+      email:bookingDetails.email || '',
+      phone:bookingDetails.phoneNumber || '',
+      numberOfGuests:bookingDetails.numberOfGuest || 1,
+      specialRequests:bookingDetails.specialRequest || '',
+
     },
   });
 
@@ -181,6 +189,7 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit ,setValue,watch,getVa
   const { user } = useUserStore();
   const { roomIds } = useRoomStore();
   const [ errorMessage, setErrorMessage ] = useState<string | null>(null)
+  const { setBookingDetails, resetBookingDetails,bookingDetails } = useBookingDetailsStore();
   
   const handleValidPhoneCheck = (phone: string) => {
     if (phone.length == 10 || phone == null || phone == "") {
@@ -207,12 +216,16 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit ,setValue,watch,getVa
     }
   }
 
-  useEffect(() => {
-    if (user.userId) {
-      setValue('fullName', user.userName);
-      setValue('email', user.userEmail);
-    }
-  }, [user.userId, setValue, user.userName, user.userEmail]);
+  // useEffect(() => {
+  //   if (user.userId) {
+  //     setBookingDetails({
+  //       ...bookingDetails,
+  //       fullName: user.userName,
+  //       email: user.userEmail,
+       
+  //     })
+  //   }
+  // }, [user.userId, setValue, user.userName, user.userEmail, setBookingDetails, bookingDetails]);
   
 
 
@@ -243,6 +256,51 @@ const { data: validity,isLoading } = useQuery({
   // },[roomIds])
 
 const {roomIds:roomIdsFromStore}=useRoomStore()
+
+const handleFullNameChange=(name:string)=>{ 
+  // validate the name
+  setBookingDetails({
+    ...bookingDetails,
+    fullName:name
+  })
+  setValue('fullName',name)
+}
+
+const handleEmailChange=(email:string)=>{
+  // validate the email
+  setBookingDetails({
+    ...bookingDetails,
+    email:email
+  })
+  setValue('email',email)
+} 
+
+const handlePhoneChange=(phone:string)=>{
+  // validate the phone
+  setBookingDetails({
+    ...bookingDetails,
+    phoneNumber:phone
+  })
+  setValue('phone',phone)
+} 
+
+const handleNumberOfGuestChange=(guest:string)=>{
+  // validate the number of guests
+  setBookingDetails({
+    ...bookingDetails,
+    numberOfGuest:Number(guest)
+  })
+  setValue('numberOfGuests',Number(guest))
+} 
+
+const handleSpecialRequestChange=(request:string)=>{
+  // validate the special request
+  setBookingDetails({
+    ...bookingDetails,
+    specialRequest:request
+  })
+  setValue('specialRequests',request)
+} 
 
 
   return (
@@ -302,7 +360,9 @@ const {roomIds:roomIdsFromStore}=useRoomStore()
         label="Full Name"
         required
         helpertext={errors.fullName?.type === 'required' ? 'Name is required' : ''}
-        error={!!errors.fullName}
+        error={!!errors.fullName} 
+        value={bookingDetails.fullName || user.userName} 
+        onChange={(e)=>handleFullNameChange(e.target.value)}
       />
 
       <TextInput
@@ -313,7 +373,9 @@ const {roomIds:roomIdsFromStore}=useRoomStore()
         label="Email Address"
         required
         helpertext={errors.email?.type === 'required' ? 'Email is required' : ''}
-        error={!!errors.email}
+        error={!!errors.email} 
+        value={bookingDetails.email || user.userEmail}
+        onChange={(e)=>handleEmailChange(e.target.value)}
       />
 
       <TextInput
@@ -325,7 +387,8 @@ const {roomIds:roomIdsFromStore}=useRoomStore()
           required
           helpertext={errors.phone?.type === 'required' ? 'Phone number is required' : ''}
           error={!!errors.phone}
-          onChange={(e)=>handleValidPhoneCheck(e.target.value)}
+          value={bookingDetails.phoneNumber}
+          onChange={(e)=>handlePhoneChange(e.target.value)}
       />
 
       <TextInput
@@ -337,7 +400,8 @@ const {roomIds:roomIdsFromStore}=useRoomStore()
           required
           helpertext={errors.numberOfGuests?.type === 'required' ? 'Number of guests is required' : ''}
           error={!!errors.numberOfGuests}
-          onChange={(e)=>handleValidGuesCheck(e.target.value)}
+          value={bookingDetails.numberOfGuest}
+          onChange={(e)=>handleNumberOfGuestChange(e.target.value)}
       />
 
       <TextInput
@@ -376,7 +440,9 @@ const {roomIds:roomIdsFromStore}=useRoomStore()
       control={control}
       label="Special Requests"
       rows={3}
-      error={!!errors.specialRequests}
+      error={!!errors.specialRequests} 
+      value={bookingDetails.specialRequest}
+      onChange={(e)=>handleSpecialRequestChange(e.target.value)}
     />
 
 { !user.userId&&<div>
@@ -399,7 +465,6 @@ const {roomIds:roomIdsFromStore}=useRoomStore()
           <p className='text-error'>{errorMessage}</p>
         </div>
       }
-
       {
         !errorMessage && <div className="mt-6">
         <Button

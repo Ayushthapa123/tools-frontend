@@ -15,17 +15,16 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { CommonNav } from 'src/features/NavBar/CommonNav';
 import { useRoomStore } from 'src/store/roomStore';
 import Footer from 'src/features/Footer';
-import {RxCross2} from "react-icons/rx"
+import { RxCross2 } from 'react-icons/rx';
 import { useEffect } from 'react';
-
 
 export default function BookingPage({ params }: { params: { slug: string } }) {
   const router = useRouter();
-const {roomIds,setRoomIds}=useRoomStore()
+  const { roomIds, setRoomIds } = useRoomStore();
 
-const handleRoomSelect=(roomId:string)=>{
-  setRoomIds([...roomIds,roomId])
-}
+  const handleRoomSelect = (roomId: string) => {
+    setRoomIds([...roomIds, roomId]);
+  };
 
   const searchHomestays = useGraphqlClientRequest<
     GetHomestayBySlugQuery,
@@ -44,22 +43,18 @@ const handleRoomSelect=(roomId:string)=>{
     queryFn: fetchData,
   });
 
-
-
   const handleBookingSuccess = () => {
     router.push('/my-bookings');
   };
 
-
-// it should invoked only once
-  useEffect(()=> {
-    // if selected rooms are not among the current room of that homestay remove them. 
-if(homestay?.rooms){
-    const currentRooms = homestay?.rooms?.map(room => room.id) || [];
-    const selectedRooms = roomIds.filter(id => currentRooms.includes(id));
-    setRoomIds(selectedRooms);
-}
-
+  // it should invoked only once
+  useEffect(() => {
+    // if selected rooms are not among the current room of that homestay remove them.
+    if (homestay?.rooms) {
+      const currentRooms = homestay?.rooms?.map(room => room.id) || [];
+      const selectedRooms = roomIds.filter(id => currentRooms.includes(id));
+      setRoomIds(selectedRooms);
+    }
   }, [homestay?.rooms]);
 
   if (isLoading) {
@@ -78,8 +73,6 @@ if(homestay?.rooms){
     );
   }
 
-
-
   return (
     <div className="bg-gray-50 ">
       <CommonNav />
@@ -87,10 +80,10 @@ if(homestay?.rooms){
       <div className="container mx-auto p-4">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 ">
           {/* Left Column - Homestay Information */}
-          <div className="rounded-lg bg-white p-6 pr-1 shadow-md md:min-h-[780px] overflow-y-scroll">
+          <div className="overflow-y-scroll rounded-lg bg-white p-6 pr-1 shadow-md md:min-h-[780px]">
             <HomestayInfo
               name={homestay.name}
-              homestayId = {Number(homestay.id)}
+              homestayId={Number(homestay.id)}
               description={homestay.description || ''}
               address={{
                 city: homestay.address?.city || '',
@@ -104,7 +97,7 @@ if(homestay?.rooms){
               }}
               images={homestay.rooms?.flatMap(room => room.image?.map(img => img.url) || []) || []}
               rooms={homestay.rooms as Room[]}
-              selectedRoomId={roomIds[0]}  // TODO: some change needed
+              selectedRoomId={roomIds[0]} // TODO: some change needed
               slug={params.slug}
               onRoomSelect={handleRoomSelect}
             />
@@ -122,8 +115,10 @@ if(homestay?.rooms){
                 homeStaySlug={params.slug}
               />
             ) : (
-                <div className="h-[50vh] w-full text-redHover flex items-center justify-center flex-col gap-4">
-                  <p><RxCross2 className='text-4xl'/></p>
+              <div className="flex h-[50vh] w-full flex-col items-center justify-center gap-4 text-redHover">
+                <p>
+                  <RxCross2 className="text-4xl" />
+                </p>
                 <p>Please select a room to proceed with booking</p>
               </div>
             )}
@@ -131,7 +126,7 @@ if(homestay?.rooms){
         </div>
       </div>
       <div>
-        <Footer/>
+        <Footer />
       </div>
     </div>
   );
