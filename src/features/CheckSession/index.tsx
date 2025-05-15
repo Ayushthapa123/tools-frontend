@@ -29,6 +29,8 @@ export const CheckSession = () => {
             userType:res.refreshTokens.user.userType
           });
      
+        }else{
+          // router.push('/login')
         }
       });
   }, [getAccessToken, router, setUser]);

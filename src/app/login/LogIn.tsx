@@ -85,7 +85,7 @@ const LogIn = () => {
           if (res.loginUser.userType !== 'GUEST') {
             router.push('/app');
           } else {
-            router.push('/app/my-profile');
+            router.push('/');
           }
         } else {
           setError('Failed to login!');
