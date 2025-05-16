@@ -37,7 +37,8 @@ export const RoomCreateForm = ({ control, errors }: { control: any; errors: any 
             label="Room Number"
             required
             helpertext={errors.roomNumber?.type === 'required' ? 'Room Number is Required' : ''}
-            error={!!errors.roomNumber}
+            error={!!errors.roomNumber} 
+            type="text"
           />
         </div>
        

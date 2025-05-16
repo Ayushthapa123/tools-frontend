@@ -399,6 +399,7 @@ const handleSpecialRequestChange=(request:string)=>{
       <TextInput
         name="fullName"
         type="text"
+        customType='name'
         placeholder="Full Name"
         control={control}
         label="Full Name"
@@ -406,12 +407,13 @@ const handleSpecialRequestChange=(request:string)=>{
         helpertext={errors.fullName?.type === 'required' ? 'Name is required' : ''}
         error={!!errors.fullName} 
         value={bookingDetails.fullName || user.userName} 
-        onChange={(e)=>handleFullNameChange(e.target.value)}
+        onChange={(e)=>handleFullNameChange(e.target.value)} 
       />
 
       <TextInput
         name="email"
         type="email"
+        customType='email'
         placeholder="Email Address"
         control={control}
         label="Email Address"
@@ -422,12 +424,13 @@ const handleSpecialRequestChange=(request:string)=>{
         onChange={(e)=>handleEmailChange(e.target.value)}
       />
 
-        <TextInput
-          name="phone"
-          type="number"
-          placeholder="Phone Number"
-          control={control}
-          label="Phone Number"
+      <TextInput
+        name="phone"
+        type="tel"
+        customType='tel'
+        placeholder="Phone Number"
+        control={control}
+        label="Phone Number"
           required
           helpertext={errors.phone?.type === 'required' ? 'Phone number is required' : ''}
           error={!!errors.phone}
@@ -435,10 +438,11 @@ const handleSpecialRequestChange=(request:string)=>{
           onChange={(e)=>handlePhoneChange(e.target.value)}
       />
 
-        <TextInput
-          name="numberOfGuests"
-          type="number"
-          placeholder="Number of Guests"
+      <TextInput
+        name="numberOfGuests"
+        type="number"
+        customType='number'
+        placeholder="Number of Guests"
           control={control}
           min={0}
           max={100}

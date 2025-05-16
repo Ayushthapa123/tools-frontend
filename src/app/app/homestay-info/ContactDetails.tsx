@@ -220,8 +220,8 @@ const HomestayInfoForm: FC<IProps> = props => {
         <div>
           <TextInput
             name="phone"
-            type="number"
-            placeholder="Phone no"
+            placeholder="Phone no" 
+            type="tel"
             control={control}
             label="Phone Number"
             onChange={(e)=>handlePhoneNumChange(e.target.value)}
@@ -234,7 +234,7 @@ const HomestayInfoForm: FC<IProps> = props => {
         <div>
           <TextInput
             name="altPhone"
-            type="number"
+            type="tel"
             placeholder="Alternative Phone"
             onChange={(e)=>handleAltPhoneNumChange(e.target.value)}
             control={control}
