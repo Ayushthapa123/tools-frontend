@@ -54,10 +54,10 @@ export default Home;
 const FormContent = ({rulesData}: {rulesData: HomestayRules | undefined}) => {
   const { setMessage, setRole, setShowToast } = useToastStore();
   const { user } = useUserStore();
-  const editorRef = useRef(rulesData?.rules ?? '');
-
-
-
+  const editorRef = useRef<string>(rulesData?.rules ?? "<p><br></p>");
+  editorRef.current = rulesData?.rules == "<p><br></p>" || rulesData?.rules == null ? "<ol><li> </li></ol>" : rulesData?.rules;
+  const [ rules, setRules ] = useState<string | null>(editorRef.current)
+  
   const mutateCreateRules = useGraphqlClientRequest<
     CreateRulesMutation,
     CreateRulesMutationVariables
@@ -80,7 +80,7 @@ const FormContent = ({rulesData}: {rulesData: HomestayRules | undefined}) => {
   const handleSubmit = () => {
     if (rulesData?.id) {
       updateRules({
-        input: { rules: editorRef.current },
+        input: { rules: rules },
         rulesId: Number(rulesData?.id),
       }).then(res => {
         if (res.updateRules.id) {
@@ -96,12 +96,12 @@ const FormContent = ({rulesData}: {rulesData: HomestayRules | undefined}) => {
       });
     } else {
       createRules({
-        input: { rules: editorRef.current, homestayId: Number(user.homestayId) }, 
+        input: { rules:rules ?? "", homestayId: Number(user.homestayId) }, 
       }).then(res => {
         if (res.createRules.id) {
           setShowToast(true);
           setRole('success');
-          setMessage('Rules Created');
+          setMessage('Rules Created successfully.');
           queryClient.invalidateQueries({ queryKey: ['getRules'] });
         } else {
           setShowToast(false);
@@ -111,23 +111,23 @@ const FormContent = ({rulesData}: {rulesData: HomestayRules | undefined}) => {
       });
     }
   };
-  const [rules,setRules] = useState("")
   return (
     <div>
       <div className="">
-         <RichTextEditor 
+        <RichTextEditor 
           editorRef={editorRef}
           onChange={(value) => {
-            setRules(value);
-          editorRef.current = value;
+            setRules(value)
+            editorRef.current = value; 
           }}
         />
-        { !rules.includes("<br>") &&  
+        { rules  &&  
           <div className="flex justify-end w-full mt-5 relative">
           <Button
             label={rulesData?.id ? 'Update Rules' : 'Create Rules'}
             loading={isCreating || isUpdating}
-            className=" w-min"
+              className=" w-min"
+              disabled={rules === "<ol><li><br></li></ol>" || rulesData?.rules == rules }
             onClick={() => handleSubmit()}
           />
         </div>

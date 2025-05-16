@@ -1,0 +1,6 @@
+query FindRoomsByRoomIds($roomIds:[Int!]!){
+  findRoomsByRoomIds(roomIds:$roomIds){
+    roomNumbers
+    name
+  }
+}

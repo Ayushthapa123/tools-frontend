@@ -66,7 +66,7 @@ export const SearchBox = () => {
         <button
           className="flex  flex-row items-center justify-center rounded-full border border-transparent px-3 py-2 text-base font-medium tracking-wide text-white transition duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 md:min-w-[130px] md:px-8"
           onClick={() => handleSearch()}>
-          <span className="block sm:hidden md:block">Search</span>
+          <span className="block sm:hidden md:block">Search button</span>
           <span className="hidden sm:flex text-xl  md:hidden">
             <BiSearch />
           </span>

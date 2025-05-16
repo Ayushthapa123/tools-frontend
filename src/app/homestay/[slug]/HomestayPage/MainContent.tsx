@@ -8,7 +8,7 @@ import { FoodTable } from 'src/app/detail-page/FoodTable';
 import Button from 'src/components/Button';
 import { FindAmenityByHomestayId, FindAmenityByHomestayIdQueryVariables, FindAmenityByHomestayIdQuery, Homestay, Room } from 'src/gql/graphql';
 import { MapProvider } from 'src/features/MapProvider';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { BsAirplane } from 'react-icons/bs';
 import { FcWiFiLogo } from 'react-icons/fc';
 import WifiIcon from 'src/components/icons/Wifi';
@@ -38,6 +38,8 @@ export default function MainContent(props: Iprops) {
   const [ isGalleryOpen, setIsGalleryOpen ] = useState(false);
   const [ showDetails, setShowDetails ] = useState(false);
   const [ selectedRoom, setSelectedRoom ] = useState<Room | null>(null);
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const isFirstRender = useRef<Boolean>(true)
 
   const roomImages = homestay?.rooms?.[0]?.image ?? [];
   const editorRef = useRef(homestay?.description ?? '');
@@ -74,7 +76,7 @@ export default function MainContent(props: Iprops) {
         </div>
       ): (
         <div className="container mx-auto">
-          <BreadCrumbs name={homestay?.name ?? ''} />
+          <BreadCrumbs name={homestay?.name ?? ''} slug={homestay?.slug} />
           <div className="box-border w-full lg:flex lg:gap-8 lg:px-10">
             <div className="box-border flex-grow overflow-x-hidden overflow-y-hidden rounded-xl bg-white p-3 shadow-sm md:p-4 md:px-4">
               <div className="mb-6">
@@ -145,61 +147,61 @@ export default function MainContent(props: Iprops) {
                           <div className=" flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600">
                             {amenity.includes('Wi-Fi') ? <WifiIcon className='text-secondary mr-3' /> : amenity.includes('Air conditioning / Heating') ? <FaThermometerHalf className='text-secondary mr-3' /> : amenity.includes('Free breakfast') ? <MdOutlineFreeBreakfast className='text-secondary mr-3' /> : amenity.includes('Clean private bathroom with hot shower') ? <FaShower className='text-secondary mr-3' /> : amenity.includes('Free parking') ? <FaParking className='text-secondary mr-3' /> : amenity.includes('Free airport transfer') ? <FaPlane className='text-secondary mr-3' /> : <FaUmbrellaBeach className='text-secondary mr-3' />}
                           </div>
-                          <span className="text-xs text-gray-700">{amenity}</span>
+                          <span className="text-sm text-gray-700">{amenity}</span>
                         </div>
                       ))
                     }
                   </div>
                 </div>
 
-                <div className="rounded-xl bg-white p-6 shadow-sm">
-                  <h3 className="mb-4 text-lg font-semibold text-gray-800">Rules</h3>
+                <div className="rounded-xl bg-white p-6 shadow-sm py-3">
+                  <h3 className=" text-lg font-semibold text-gray-800">Rules</h3>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="rounded-lg bg-gray-50 p-3">
                       <p className="text-xs font-medium text-gray-500">Check In</p>
-                      <p className="mt-1 text-base font-medium text-gray-800">10:00 AM</p>
+                      <p className="mt-1 text-base font-medium text-gray-800">8:00 AM</p>
                     </div>
                     <div className="rounded-lg bg-gray-50 p-3">
                       <p className="text-xs font-medium text-gray-500">Check Out</p>
-                      <p className="mt-1 text-base font-medium text-gray-800">1:00 PM</p>
+                      <p className="mt-1 text-base font-medium text-gray-800">7:00 AM</p>
                     </div>
                   </div>
                 </div>
 
                 <div className="rounded-xl bg-white p-6 shadow-sm">
                   <h3 className="mb-4 border-b border-gray-200 pb-2 text-lg font-semibold text-gray-800">Contact Us</h3>
-                  <div className="space-y-4">
-                    <div className="flex items-center">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600">
-                        <FaPhoneFlip className='text-secondary' />
+                  <div className="">
+                    <div className="flex items-center gap-0">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600 mb-3">
+                        <FaPhoneFlip className='text-secondary h-7 w-7 lg:h-6 lg:w-6' />
                       </div>
-                      <p className="ml-3 text-gray-700">+977 783 705 178</p>
+                      <p className="ml-3 text-gray-700 text-base">+977 783 705 178</p>
                     </div>
                     <div className="flex items-center">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600">
-                        <MdEmail className='text-secondary' />
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600 mb-3">
+                        <MdEmail className='text-secondary h-8 w-7 lg:h-6 lg:w-6' />
                       </div>
-                      <p className="ml-3 text-gray-700">demo123@gmail.com</p>
+                      <p className="ml-3 text-gray-700 text-base">demo123@gmail.com</p>
                     </div>
                     <div className="flex items-start">
                       <div className="mr-3 pt-2 font-medium text-gray-700">Socials:</div>
                       <div className="flex items-center space-x-4">
                         <a href="#" className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-colors hover:bg-blue-100">
-                          <GrInstagram className='text-secondary' />
+                          <GrInstagram className='text-secondary h-7 w-7 lg:h-6 lg:w-6' />
                         </a>
                         <a href="#" className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-colors hover:bg-blue-100">
-                          <FaFacebook className='text-secondary' />
+                          <FaFacebook className='text-secondary h-7 w-7 lg:h-6 lg:w-6' />
                         </a>
                         <a href="#" className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-colors hover:bg-blue-100">
-                          <GrYoutube className='text-secondary' />
+                          <GrYoutube className='text-secondary h-7 w-7 lg:h-6 lg:w-6' />
                         </a>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className="rounded-xl bg-white p-6 pt-2 shadow-sm">
-                  <h3 className="mb-4 text-lg font-semibold text-gray-800">Map On Google</h3>
-                  <div className=" w-full h-[250px] overflow-y-hidden ">
+                  <h3 className="mb-2 text-lg font-semibold text-gray-800">Map On Google</h3>
+                  <div className=" w-full h-[250px] overflow-y-hidden rounded-md">
                     <MapProvider>
                       {homestay?.address?.latitude && homestay?.address?.longitude && (
                         <MapComponent
@@ -215,14 +217,14 @@ export default function MainContent(props: Iprops) {
             </div>
           </div>
 
-          <div className="mt-10 rounded-xl bg-white p-4 shadow-sm w-[93vw] mx-auto">
+          <div className="mt-10 rounded-xl bg-white p-4 shadow-sm w-[93vw] mx-auto" >
             <div className='flex items-center justify-between'>
               <h2 className="mb-6 text-2xl font-semibold text-gray-800">Available Rooms</h2>
               <Link href={`/homestay/${homestay?.slug}/booking?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`} className='mb-3'>
                 <Button label='View Bookings' className='w-fit bg-primary' />
               </Link>
             </div>
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2" ref={sectionRef}>
               {homestay?.rooms?.map((room) => (
                 <div key={room.id} className="overflow-hidden rounded-xl border border-gray-200 transition-all duration-300 hover:shadow-md">
                   <RoomCardFull

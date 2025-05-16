@@ -24,12 +24,14 @@ export default function ForgotUserPassword() {
   const {
     handleSubmit,
     control,
+    watch,
     formState: { errors },
   } = useForm<ForgotPasswordData>({
     defaultValues: {
       email: '',
     },
   });
+  const email = watch("email");
 
   const mutateForgotPassword = useGraphqlClientRequest<ForgotPasswordMutation, ForgotPasswordMutationVariables>(
     ForgotPassword.loc?.source.body!
@@ -124,7 +126,7 @@ export default function ForgotUserPassword() {
                     <div className="mb-6">
                       <Button
                         label="Continue"
-                        disabled={loading}
+                        disabled={loading || !email}
                         className={`${
                           loading ? 'cursor-not-allowed opacity-30' : 'opacity-100'
                         } bg-primary w-full rounded-md px-4 py-2 font-bold`}
