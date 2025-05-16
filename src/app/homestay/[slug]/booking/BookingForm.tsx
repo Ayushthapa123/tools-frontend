@@ -13,7 +13,7 @@ import { useUserStore } from 'src/store/userStore';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useRoomStore } from 'src/store/roomStore';
 import LoadingSpinner from 'src/components/Loading';
-import { MdEmail } from 'react-icons/md';
+import { useBookingDetailsStore } from 'src/store/bookingDetailsStore';
 interface BookingFormProps {
   homestayId: string;
   homeStaySlug: string;
@@ -91,6 +91,7 @@ export const BookingForm = ({ homestayId, homeStaySlug, onSuccess, rooms }: Book
     const checkInDate = new Date(checkInDateValue)
     window.location.href = `/homestay/${homeStaySlug}/booking?checkInDate=${checkInDate.toISOString().split('T')[ 0 ]}&checkOutDate=${dateString}`
   }
+  const {bookingDetails}=useBookingDetailsStore()
 
   const {
     control,
@@ -102,8 +103,14 @@ export const BookingForm = ({ homestayId, homeStaySlug, onSuccess, rooms }: Book
     getValues
   } = useForm<BookingFormData>({
     defaultValues: {
-      checkInDate: checkInDate instanceof Date ? checkInDate.toISOString().split('T')[ 0 ] : checkInDate,
-      checkOutDate: checkOutDate instanceof Date ? checkOutDate.toISOString().split('T')[ 0 ] : checkOutDate,
+      checkInDate: checkInDate instanceof Date ? checkInDate.toISOString().split('T')[0] : checkInDate,
+      checkOutDate: checkOutDate instanceof Date ? checkOutDate.toISOString().split('T')[0] : checkOutDate,
+      fullName:bookingDetails.fullName || '',
+      email:bookingDetails.email || '',
+      phone:bookingDetails.phoneNumber || '',
+      numberOfGuests:bookingDetails.numberOfGuest || 1,
+      specialRequests:bookingDetails.specialRequest || '',
+
     },
   });
 
@@ -120,7 +127,6 @@ export const BookingForm = ({ homestayId, homeStaySlug, onSuccess, rooms }: Book
   const { mutateAsync: signUp } = useMutation({ mutationFn: mutateSignupRequest });
 
   const onSubmit = async (data: BookingFormData) => {
-    console.log("check data", data);
     if (currentStep === 1) {
       if (data.password) {
         signUp({ input: { email: data.email, fullName: data.fullName, userType: "GUEST", password: data.password } }).then((res) => {
@@ -216,6 +222,33 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit, setValue, watch, get
 
   const { user } = useUserStore();
   const { roomIds } = useRoomStore();
+  const [ errorMessage, setErrorMessage ] = useState<string | null>(null)
+  const { setBookingDetails, resetBookingDetails,bookingDetails } = useBookingDetailsStore();
+  
+  const handleValidPhoneCheck = (phone: string) => {
+    if (phone.length == 10 || phone == null || phone == "") {
+      setErrorMessage(null);
+      setValue("phone",phone)
+    }
+    if ( phone.length != 10) {
+      setErrorMessage("Invalid Phone number.")
+    }
+  }
+
+  const handleValidGuesCheck = (guest: string) => {
+    if (errorMessage != "Invalid Phone number.") {
+      if (guest == null || guest == "") {
+        setErrorMessage(null);
+        setValue("numberOfGuests",Number(guest))
+      }
+      if (Number(guest) < 1) {
+        setErrorMessage("Invalid number of guests.")
+      } else {
+        setErrorMessage(null);
+        setValue("numberOfGuests",Number(guest))
+      }
+    }
+  }
 
 
   const handleErrorMessages = () => {
@@ -227,13 +260,17 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit, setValue, watch, get
   }
 
 
-  useEffect(() => {
-    if (user.userId) {
-      setValue('fullName', user.userName);
-      setValue('email', user.userEmail);
-    }
-  }, [ user.userId, setValue, user.userName, user.userEmail ]);
-
+  // useEffect(() => {
+  //   if (user.userId) {
+  //     setBookingDetails({
+  //       ...bookingDetails,
+  //       fullName: user.userName,
+  //       email: user.userEmail,
+       
+  //     })
+  //   }
+  // }, [user.userId, setValue, user.userName, user.userEmail, setBookingDetails, bookingDetails]);
+  
 
 
   // Check for validity here.
@@ -244,19 +281,71 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit, setValue, watch, get
   >(CheckValidBooking.loc?.source?.body!);
 
 
-  const fetchData = async () => {
-    const res = await queryValidity({
-      roomIds: roomIds.map(id => parseInt(id)),
-      startDate: new Date(checkInDateValue),
-      endDate: new Date(checkOutDateValue),
-    });
-    return res.checkValidBooking;
-  };
-  const { data: validity, isLoading } = useQuery({
-    queryKey: [ 'checkValidBooking', roomIds, checkInDateValue, checkOutDateValue ],
-    queryFn: fetchData,
-    enabled: roomIds.length > 0 && !!checkInDateValue && !!checkOutDateValue
+const fetchData = async () => {
+  const res = await queryValidity({
+    roomIds: roomIds.map(id => parseInt(id)),
+    startDate: new Date(checkInDateValue),
+    endDate: new Date(checkOutDateValue),
   });
+  return res.checkValidBooking;
+};
+const { data: validity,isLoading } = useQuery({
+  queryKey: ['checkValidBooking',roomIds,checkInDateValue,checkOutDateValue],
+  queryFn: fetchData,
+  enabled:roomIds.length > 0 && !!checkInDateValue && !!checkOutDateValue
+});
+  
+  // useEffect(() => {
+  //   fetchData();
+  // },[roomIds])
+
+const {roomIds:roomIdsFromStore}=useRoomStore()
+
+const handleFullNameChange=(name:string)=>{ 
+  // validate the name
+  setBookingDetails({
+    ...bookingDetails,
+    fullName:name
+  })
+  setValue('fullName',name)
+}
+
+const handleEmailChange=(email:string)=>{
+  // validate the email
+  setBookingDetails({
+    ...bookingDetails,
+    email:email
+  })
+  setValue('email',email)
+} 
+
+const handlePhoneChange=(phone:string)=>{
+  // validate the phone
+  setBookingDetails({
+    ...bookingDetails,
+    phoneNumber:phone
+  })
+  setValue('phone',phone)
+} 
+
+const handleNumberOfGuestChange=(guest:string)=>{
+  // validate the number of guests
+  setBookingDetails({
+    ...bookingDetails,
+    numberOfGuest:Number(guest)
+  })
+  setValue('numberOfGuests',Number(guest))
+} 
+
+const handleSpecialRequestChange=(request:string)=>{
+  // validate the special request
+  setBookingDetails({
+    ...bookingDetails,
+    specialRequest:request
+  })
+  setValue('specialRequests',request)
+} 
+
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -288,59 +377,50 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit, setValue, watch, get
                 <div>
                   <h3 className="font-bold text-lg text-success">Room Available!</h3>
                   <p className="text-success">{validity.message}</p>
-                </div>
-                <div>
-                  <div className="stats stats-vertical lg:stats-horizontal shadow mt-2 bg-white">
-                    <div className="stat">
-                      <div className="stat-title text-gray-600">Duration</div>
-                      <div className="stat-value text-base text-success">{validity.totalDays} Days</div>
-                    </div>
-                    <div className="stat">
-                      <div className="stat-title text-gray-600">Total Price</div>
-                      <div className="stat-value text-base text-success">NPR {validity.totalPrice}</div>
-                    </div>
+                  </div>
+              <div>
+                <div className="stats stats-vertical lg:stats-horizontal shadow mt-2 bg-white">
+                  <div className="stat">
+                    <div className="stat-title text-gray-600">Duration</div>
+                    <div className="stat-value text-base text-success">{validity.totalDays} Days</div>
+                  </div>
+                  <div className="stat">
+                    <div className="stat-title text-gray-600">Total Price</div>
+                    <div className="stat-value text-base text-success">NPR {validity.totalPrice}</div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      ) : null}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-gray-300 pt-4">
-        <TextInput
-          name="fullName"
-          type="text"
-          onKeyDown={(e) => {
-            const regex = /^[a-zA-Z\s\b]+$/;
-            if (
-              !regex.test(e.key) &&
-              e.key !== 'Backspace' &&
-              e.key !== 'Delete' &&
-              e.key !== 'ArrowLeft' &&
-              e.key !== 'ArrowRight' &&
-              e.key !== 'Tab'
-            ) {
-              e.preventDefault();
-            }
-          }}
-          placeholder="Full Name"
-          control={control}
-          label="Full Name"
-          required
-          helpertext={errors.fullName?.type === 'required' ? 'Name is required' : ''}
-          error={!!errors.fullName}
-        />
+      </div>
+    ) : null}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-gray-300 pt-4">
+      <TextInput
+        name="fullName"
+        type="text"
+        placeholder="Full Name"
+        control={control}
+        label="Full Name"
+        required
+        helpertext={errors.fullName?.type === 'required' ? 'Name is required' : ''}
+        error={!!errors.fullName} 
+        value={bookingDetails.fullName || user.userName} 
+        onChange={(e)=>handleFullNameChange(e.target.value)}
+      />
 
-        <TextInput
-          name="email"
-          type="email"
-          placeholder="Email Address"
-          control={control}
-          label="Email Address"
-          required
-          helpertext={errors.email?.type === 'required' ? 'Email is required' : ''}
-          error={!!errors.email}
-        />
+      <TextInput
+        name="email"
+        type="email"
+        placeholder="Email Address"
+        control={control}
+        label="Email Address"
+        required
+        helpertext={errors.email?.type === 'required' ? 'Email is required' : ''}
+        error={!!errors.email} 
+        value={bookingDetails.email || user.userEmail}
+        onChange={(e)=>handleEmailChange(e.target.value)}
+      />
 
         <TextInput
           name="phone"
@@ -351,7 +431,9 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit, setValue, watch, get
           required
           helpertext={errors.phone?.type === 'required' ? 'Phone number is required' : ''}
           error={!!errors.phone}
-        />
+          value={bookingDetails.phoneNumber}
+          onChange={(e)=>handlePhoneChange(e.target.value)}
+      />
 
         <TextInput
           name="numberOfGuests"
@@ -364,7 +446,9 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit, setValue, watch, get
           required
           helpertext={errors.numberOfGuests?.type === 'required' ? 'Number of guests is required' : ''}
           error={!!errors.numberOfGuests}
-        />
+          value={bookingDetails.numberOfGuest}
+          onChange={(e)=>handleNumberOfGuestChange(e.target.value)}
+      />
 
         <TextInput
           name="checkInDate"
@@ -396,14 +480,16 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit, setValue, watch, get
         />
       </div>
 
-      <TextArea
-        name="specialRequests"
-        placeholder="Special Requests"
-        control={control}
-        label="Special Requests"
-        rows={3}
-        error={!!errors.specialRequests}
-      />
+    <TextArea
+      name="specialRequests"
+      placeholder="Special Requests"
+      control={control}
+      label="Special Requests"
+      rows={3}
+      error={!!errors.specialRequests} 
+      value={bookingDetails.specialRequest}
+      onChange={(e)=>handleSpecialRequestChange(e.target.value)}
+    />
 
       {!user.userId && <div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -426,7 +512,6 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit, setValue, watch, get
           <p className='text-error'>{handleErrorMessages()}</p>
         </div>
       }
-
       {
         !handleErrorMessages() && <div className="mt-6">
           <Button

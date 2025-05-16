@@ -86,13 +86,11 @@ function ForgotPasswordByTokenInner() {
           token: token,
         },
       });
-      console.log("check",response)
 
       if (response?.resetPassword?.id) {
         setSuccess(true);
         const login = await LoginUser({ input: { email: response?.resetPassword?.email, password: data?.password } });
         if (login?.loginUser?.id) {
-          console.log("logged in");
           router.push("/")
         }
       } else {
