@@ -168,6 +168,7 @@ function SignUp() {
                       required
                       helpertext={errors.email?.type === 'required' ? 'Name Is Required' : ''}
                       error={!!errors.email}
+                      customType='name'
                     />
                   </div>
                   <div className="mt-5 ">
@@ -186,7 +187,7 @@ function SignUp() {
                   <div className="mt-5 ">
                     <TextInput
                       name="phoneNumber"
-                      type="text"
+                      type="tel"
                       placeholder="Enter Phone Number"
                       control={control}
                       label="Phone Number"

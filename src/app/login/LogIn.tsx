@@ -21,7 +21,7 @@ import {
 } from 'src/gql/graphql';
 import { useAccessTokenStore } from 'src/store/accessTokenStore';
 import { useUserStore } from 'src/store/userStore';
-
+import { regex } from 'src/utils/regex';
 type loginData = {
   email: string;
   password: string;
@@ -106,7 +106,7 @@ const LogIn = () => {
   };
   const checkEmailValidity = () => {
     const email = getValues().email;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = regex.email;
     return emailRegex.test(email);
   };
 

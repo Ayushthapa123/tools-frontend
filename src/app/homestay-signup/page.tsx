@@ -20,6 +20,7 @@ import { useAccessTokenStore } from 'src/store/accessTokenStore';
 
 import { useSearchParams } from 'next/navigation';
 import { FullLogo } from 'src/features/Logo/FullLogoWithText';
+import Button from 'src/components/Button';
 
 export default function Home() {
   return (
@@ -166,7 +167,8 @@ function SignUp() {
                       label="Name"
                       required
                       helpertext={errors.email?.type === 'required' ? 'Name Is Required' : ''}
-                      error={!!errors.email}
+                      error={!!errors.email} 
+                      customType='name'
                     />
                   </div>
                   <div className="mt-5 ">
@@ -185,7 +187,7 @@ function SignUp() {
                   <div className="mt-5 ">
                     <TextInput
                       name="phoneNumber"
-                      type="text"
+                      type="tel"
                       placeholder="Enter Phone Number"
                       control={control}
                       label="Phone Number"
@@ -210,7 +212,7 @@ function SignUp() {
                       error={!!errors.password}
                     />
                     {getValues('password') && getValues('password').length < 8 && (
-                      <span className=" text-[11px] text-gray-500">
+                      <span className=" text-[11px] text-error">
                         password must be at least 8 character long
                       </span>
                     )}
@@ -234,14 +236,14 @@ function SignUp() {
                 </div>
 
                 <div className="mb-5 flex justify-center">
-                  <button
+                  <Button
                     type="submit"
                     disabled={loading || !isValid}
                     className={`${
                       loading || !isValid ? 'cursor-not-allowed opacity-30' : 'opacity-100'
-                    } bg-secondary rounded-md px-4 py-2 font-bold w-full   `}>
-                    Sign In
-                  </button>
+                    } bg-secondary rounded-md px-4 py-2 font-bold w-full   `}
+                    label="Sign Up"
+                  />
                 </div>
               </form>
 

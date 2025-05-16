@@ -196,6 +196,7 @@ export const HomestayInfoForm: FC<IProps> = props => {
             required
             helpertext={errors.name?.type === 'required' ? 'Name Is Required' : ''}
             error={!!errors.name}
+            customType='name'
           />
         </div>
 
