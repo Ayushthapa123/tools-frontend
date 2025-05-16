@@ -65,9 +65,7 @@ export default function MainContent(props: Iprops) {
     'Clean private bathroom with hot shower',
     'Free parking',
   ].filter(amenity => amenitiesArray.includes(amenity));
-console.log("img",homestay?.image)
   const selectedImg = homestay?.image?.filter((img) => img.isSelected === true);
-  console.log("issel",selectedImg)
   return (
     <div className="bg-gray-50 pb-4">
       {showDetails ? (

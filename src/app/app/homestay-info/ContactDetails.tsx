@@ -175,7 +175,6 @@ const HomestayInfoForm: FC<IProps> = props => {
   }
 
   const handleAltPhoneNumChange = (phone: string) => {
-    console.log("ph",phone,typeof(phone))
     setAltPhoneNumber(phone);
     setValue("altPhone",phone)
   }

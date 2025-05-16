@@ -111,7 +111,6 @@ export const BookingForm = ({ homestayId, homeStaySlug, onSuccess, rooms }: Book
   });
 
   const onSubmit = async (data: BookingFormData) => {
-    console.log("check data", data);
     if (currentStep === 1) {
       if (data.phone.length != 10) return;
       setFormData(data);

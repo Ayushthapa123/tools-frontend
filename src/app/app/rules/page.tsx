@@ -55,7 +55,6 @@ const FormContent = ({rulesData}: {rulesData: HomestayRules | undefined}) => {
   const { setMessage, setRole, setShowToast } = useToastStore();
   const { user } = useUserStore();
   const editorRef = useRef(rulesData?.rules ?? '');
-  console.log("txt",editorRef.current)
 
 
 
