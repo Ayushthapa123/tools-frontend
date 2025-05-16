@@ -103,8 +103,8 @@ const ImageUploader = (props: Iprops) => {
             <p className="mt-2 text-gray-400">or</p>
             <label
               htmlFor="fileInput"
-              className="px-4 py-2 mt-2  text-gray-600 bg-blue-500 rounded hover:bg-blue-600">
-              Browse Pictures
+              className="px-4 py-2 mt-2  text-gray-600 bg-blue-500 rounded hover:bg-blue-600 cursor-pointer">
+              Click here to upload<input id="fileInput" type="file" className="hidden" onChange={handleFileChange} accept='.jpg , .jpeg, .png'  />
             </label>
             {loading && (
               <div className="w-10 h-10">

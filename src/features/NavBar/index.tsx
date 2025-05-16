@@ -1,5 +1,5 @@
 // components/Navbar.js
-
+"use client";
 import { IoMdNotifications } from 'react-icons/io';
 import { Drawer } from '../Drawer';
 import { CreateHomestayModal } from 'src/app/app/homestay-info/CreateHomestayModal';

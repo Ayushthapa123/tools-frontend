@@ -32,7 +32,7 @@ const MapComponent = (props: Iprops) => {
   };
 
   return (
-    <div className="w-full relative h-[250px]">
+    <div className="">
       <GoogleMap
         mapContainerStyle={defaultMapContainerStyle}
         center={defaultMapCenter}

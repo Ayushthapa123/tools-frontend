@@ -39,11 +39,13 @@ export function SearchPage() {
     setCount(count);
   };
   return (
-    <div className="w-full ">
+    <div className=" ">
       <div className="mx-auto mt-4 h-full max-w-[1800px] pt-3 min-h-10">
-        <Suspense>
-          <MapProvider><SearchBox /></MapProvider>
-        </Suspense>
+        <div className='lg:min-w-[400px] mx-auto flex items-center justify-center'>
+          <Suspense>
+            <MapProvider><SearchBox /></MapProvider>
+          </Suspense>
+        </div>
 
         <div className="flex border-b p-10 py-5 ">
           <div className="flex-grow flex items-center justify-between">

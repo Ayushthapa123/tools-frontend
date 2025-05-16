@@ -23,6 +23,7 @@ export default function ShowDetails({ room, setShowDetails }: { room: Room, setS
     amenities: [ "Free WiFi", "AC", "TV", "Room Service" ],
     area: "25m²"
   };
+  console.log("room",room)
 
   return (
     <RoomDetailView

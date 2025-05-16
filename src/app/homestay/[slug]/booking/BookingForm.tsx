@@ -7,7 +7,7 @@ import Button from 'src/components/Button';
 import { useToastStore } from 'src/store/toastStore';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
-import { CheckValidBooking, CheckValidBookingQuery, CheckValidBookingQueryVariables, Room, RoomCapacity, RoomStatus } from 'src/gql/graphql';
+import { BookingConfirmationEmailDto, CheckValidBooking, CheckValidBookingQuery, CheckValidBookingQueryVariables, FindRoomsByRoomIds, FindRoomsByRoomIdsQuery, FindRoomsByRoomIdsQueryVariables, Room, RoomCapacity, RoomStatus, SendMmailAfterBooking, SendMmailAfterBookingMutation, SendMmailAfterBookingMutationVariables, SignupUser, SignupUserMutation, SignupUserMutationVariables } from 'src/gql/graphql';
 import { useEffect, useState } from 'react';
 import { useUserStore } from 'src/store/userStore';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -52,40 +52,44 @@ interface StepOneProps {
   roomIds: string[];
   checkInDateValue: string | Date;
   checkOutDateValue: string | Date;
+  watchedNoOfGuests: number;
+  watchedPhone: string;
+  watchedEmail: string;
+
   handleCheckInDateChange: (date: string | Date) => void;
   handleCheckOutDateChange: (date: string | Date) => void;
 }
 
 export const BookingForm = ({ homestayId, homeStaySlug, onSuccess, rooms }: BookingFormProps) => {
   const { setMessage, setRole, setShowToast } = useToastStore();
-  const {roomIds} = useRoomStore()
-  const [currentStep, setCurrentStep] = useState(1);
-  const [formData, setFormData] = useState<BookingFormData | null>(null);
+  const { roomIds } = useRoomStore()
+  const [ currentStep, setCurrentStep ] = useState(1);
+  const [ formData, setFormData ] = useState<BookingFormData | null>(null);
   // const selectedRoom = rooms.find(room => roomIds.includes(room.id));
-  const selectedRoom = rooms.map((room)=> roomIds.includes(room.id))
+  const selectedRoom = rooms.map((room) => roomIds.includes(room.id))
   const selectedRooms = rooms.filter((room) => roomIds.includes(room.id)).map((room) => room);
-  const router=useRouter()
+  const router = useRouter()
 
   const searchParams = useSearchParams();
-  const checkInDate = searchParams.get('checkInDate') ? new Date(searchParams.get('checkInDate') ?? '') : new Date().toISOString().split('T')[0];
-  const checkOutDate = searchParams.get('checkOutDate') ? new Date(searchParams.get('checkOutDate') ?? '') : new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[0];
- 
-  const [checkInDateValue,setCheckInDateValue]=useState<string | Date>(checkInDate)
-  const [checkOutDateValue,setCheckOutDateValue]=useState<string | Date>(checkOutDate)
+  const checkInDate = searchParams.get('checkInDate') ? new Date(searchParams.get('checkInDate') ?? '') : new Date().toISOString().split('T')[ 0 ];
+  const checkOutDate = searchParams.get('checkOutDate') ? new Date(searchParams.get('checkOutDate') ?? '') : new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[ 0 ];
 
-  const handleCheckInDateChange=(date:string | Date)=>{
+  const [ checkInDateValue, setCheckInDateValue ] = useState<string | Date>(checkInDate)
+  const [ checkOutDateValue, setCheckOutDateValue ] = useState<string | Date>(checkOutDate)
+
+  const handleCheckInDateChange = (date: string | Date) => {
     // setCheckInDateValue(date) 
-    const checkoutDate=new Date(checkOutDate)
-    const dateString=date instanceof Date ? date.toISOString().split('T')[0] : new Date(date).toISOString().split('T')[0]
+    const checkoutDate = new Date(checkOutDate)
+    const dateString = date instanceof Date ? date.toISOString().split('T')[ 0 ] : new Date(date).toISOString().split('T')[ 0 ]
     // also change the search params 
-    window.location.href = `/homestay/${homeStaySlug}/booking?checkInDate=${dateString}&checkOutDate=${checkoutDate.toISOString().split('T')[0]}`
+    window.location.href = `/homestay/${homeStaySlug}/booking?checkInDate=${dateString}&checkOutDate=${checkoutDate.toISOString().split('T')[ 0 ]}`
   }
-  const handleCheckOutDateChange=(date:string | Date)=>{
+  const handleCheckOutDateChange = (date: string | Date) => {
     // setCheckOutDateValue(date)
-    const dateString=date instanceof Date ? date.toISOString().split('T')[0] : new Date(date).toISOString().split('T')[0]
+    const dateString = date instanceof Date ? date.toISOString().split('T')[ 0 ] : new Date(date).toISOString().split('T')[ 0 ]
     // also change the search params 
-    const checkInDate=new Date(checkInDateValue)
-   window.location.href = `/homestay/${homeStaySlug}/booking?checkInDate=${checkInDate.toISOString().split('T')[0]}&checkOutDate=${dateString}`
+    const checkInDate = new Date(checkInDateValue)
+    window.location.href = `/homestay/${homeStaySlug}/booking?checkInDate=${checkInDate.toISOString().split('T')[ 0 ]}&checkOutDate=${dateString}`
   }
   const {bookingDetails}=useBookingDetailsStore()
 
@@ -110,8 +114,37 @@ export const BookingForm = ({ homestayId, homeStaySlug, onSuccess, rooms }: Book
     },
   });
 
+  const watchedEmail = watch("email");
+  const watchedPhone = watch("phone");
+  const watchedNoOfGuests = watch("numberOfGuests");
+
+  // new user id should be created if user isn't signed in during booking
+  const mutateSignupRequest = useGraphqlClientRequest<
+    SignupUserMutation,
+    SignupUserMutationVariables
+  >(SignupUser.loc?.source.body!);
+
+  const { mutateAsync: signUp } = useMutation({ mutationFn: mutateSignupRequest });
+
   const onSubmit = async (data: BookingFormData) => {
     if (currentStep === 1) {
+      if (data.password) {
+        signUp({ input: { email: data.email, fullName: data.fullName, userType: "GUEST", password: data.password } }).then((res) => {
+          if (res?.signupUser?.id) {
+            setShowToast(true);
+            setMessage("User signed in successfully.")
+            setRole('success');
+          } else {
+            console.log("res",res)
+            setMessage("Check your email")
+            setShowToast(true);
+            setRole('error');
+            setCurrentStep(1);
+            
+            return;
+          }
+        })
+      }
       if (data.phone.length != 10) return;
       setFormData(data);
       setCurrentStep(2);
@@ -148,7 +181,7 @@ export const BookingForm = ({ homestayId, homeStaySlug, onSuccess, rooms }: Book
             style={{ width: `${(currentStep / 2) * 100}%` }}
           />
         </div>
-       
+
       </div>
 
       {currentStep === 1 ? (
@@ -160,6 +193,9 @@ export const BookingForm = ({ homestayId, homeStaySlug, onSuccess, rooms }: Book
           setValue={setValue}
           watch={watch}
           getValues={getValues}
+          watchedPhone={watchedPhone}
+          watchedEmail={watchedEmail}
+          watchedNoOfGuests={watchedNoOfGuests}
           roomIds={roomIds}
           checkInDateValue={checkInDateValue}
           checkOutDateValue={checkOutDateValue}
@@ -168,23 +204,22 @@ export const BookingForm = ({ homestayId, homeStaySlug, onSuccess, rooms }: Book
         />
       ) : (
         <StepTwo
-            selectedRoom={selectedRoom}
-            selectedRooms={selectedRooms}
+          selectedRoom={selectedRoom}
+          selectedRooms={selectedRooms}
           formData={formData}
           handleBack={handleBack}
           handleSubmit={handleSubmit}
           onSubmit={onSubmit}
           checkInDateValue={checkInDateValue}
           checkOutDateValue={checkOutDateValue}
-        
         />
       )}
     </div>
   );
-}; 
+};
 
-const StepOne = ({ control, handleSubmit, errors, onSubmit ,setValue,watch,getValues,checkInDateValue,checkOutDateValue,handleCheckInDateChange,handleCheckOutDateChange }: StepOneProps) => {
-  
+const StepOne = ({ control, handleSubmit, errors, onSubmit, setValue, watch, getValues, checkInDateValue, checkOutDateValue, handleCheckInDateChange, handleCheckOutDateChange, watchedEmail, watchedNoOfGuests, watchedPhone }: StepOneProps) => {
+
   const { user } = useUserStore();
   const { roomIds } = useRoomStore();
   const [ errorMessage, setErrorMessage ] = useState<string | null>(null)
@@ -215,6 +250,16 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit ,setValue,watch,getVa
     }
   }
 
+
+  const handleErrorMessages = () => {
+    if (watchedEmail && !(/^(?:[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*|"[^"]+")@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/.test(watchedEmail))) {
+      return "Invalid email address."
+    }
+    if (watchedPhone && (watchedPhone.length != 10)) return "Invalid phone number.";
+    return false;
+  }
+
+
   // useEffect(() => {
   //   if (user.userId) {
   //     setBookingDetails({
@@ -231,9 +276,9 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit ,setValue,watch,getVa
   // Check for validity here.
 
   const queryValidity = useGraphqlClientRequest<
-  CheckValidBookingQuery,
-  CheckValidBookingQueryVariables
->(CheckValidBooking.loc?.source?.body!);
+    CheckValidBookingQuery,
+    CheckValidBookingQueryVariables
+  >(CheckValidBooking.loc?.source?.body!);
 
 
 const fetchData = async () => {
@@ -303,33 +348,33 @@ const handleSpecialRequestChange=(request:string)=>{
 
 
   return (
-  <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-    {isLoading && <LoadingSpinner color='primary' size='sm' key={"load-booking-spinner"} />}
-    
-    {!validity?.isValid ? (
-      <div className="bg-red-50 border-l-4 border-error p-4 rounded-md shadow-md mb-4">
-        <div className="flex items-center gap-3">
-          <svg xmlns="http://www.w3.org/2000/svg" className="text-red-500 shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <div className="flex-1">
-            <h3 className="font-bold text-lg text-error">Room Unavailable</h3>
-            <div className="mt-1">
-              <p className="text-error">Room is already booked for the selected dates.</p>
-              {/* <p className="font-medium text-error/80 mt-1">{validity?.message}</p> */}
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      {isLoading && <LoadingSpinner color='primary' size='sm' key={"load-booking-spinner"} />}
+
+      {!validity?.isValid ? (
+        <div className="bg-red-50 border-l-4 border-error p-4 rounded-md shadow-md mb-4">
+          <div className="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" className="text-red-500 shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div className="flex-1">
+              <h3 className="font-bold text-lg text-error">Room Unavailable</h3>
+              <div className="mt-1">
+                <p className="text-error">Room is already booked for the selected dates.</p>
+                {/* <p className="font-medium text-error/80 mt-1">{validity?.message}</p> */}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    ) : validity ? (
-      <div className="bg-emerald-50 border-l-4 border-success p-4 rounded-md shadow-md mb-4">
-        <div className="flex items-center gap-3">
-          <svg xmlns="http://www.w3.org/2000/svg" className="text-success  shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <div className="flex-1">
-            <div className="w-full flex items-center justify-between gap-4">
-                  <div>
+      ) : validity ? (
+        <div className="bg-emerald-50 border-l-4 border-success p-4 rounded-md shadow-md mb-4">
+          <div className="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" className="text-success  shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div className="flex-1">
+              <div className="w-full flex items-center justify-between gap-4">
+                <div>
                   <h3 className="font-bold text-lg text-success">Room Available!</h3>
                   <p className="text-success">{validity.message}</p>
                   </div>
@@ -377,12 +422,12 @@ const handleSpecialRequestChange=(request:string)=>{
         onChange={(e)=>handleEmailChange(e.target.value)}
       />
 
-      <TextInput
-        name="phone"
-        type="tel"
-        placeholder="Phone Number"
-        control={control}
-        label="Phone Number"
+        <TextInput
+          name="phone"
+          type="number"
+          placeholder="Phone Number"
+          control={control}
+          label="Phone Number"
           required
           helpertext={errors.phone?.type === 'required' ? 'Phone number is required' : ''}
           error={!!errors.phone}
@@ -390,11 +435,13 @@ const handleSpecialRequestChange=(request:string)=>{
           onChange={(e)=>handlePhoneChange(e.target.value)}
       />
 
-      <TextInput
-        name="numberOfGuests"
-        type="number"
-        placeholder="Number of Guests"
+        <TextInput
+          name="numberOfGuests"
+          type="number"
+          placeholder="Number of Guests"
           control={control}
+          min={0}
+          max={100}
           label="Number of Guests"
           required
           helpertext={errors.numberOfGuests?.type === 'required' ? 'Number of guests is required' : ''}
@@ -403,35 +450,35 @@ const handleSpecialRequestChange=(request:string)=>{
           onChange={(e)=>handleNumberOfGuestChange(e.target.value)}
       />
 
-      <TextInput
-        name="checkInDate"
-        type="date"
-        placeholder="Check-in Date"
-        control={control}
-        label="Check-in Date"
-        // required
-        helpertext={errors.checkInDate?.type === 'required' ? 'Check-in date is required' : ''}
-        error={!!errors.checkInDate}
-        value={checkInDateValue instanceof Date ? checkInDateValue.toISOString().split('T')[0] : checkInDateValue}
+        <TextInput
+          name="checkInDate"
+          type="date"
+          placeholder="Check-in Date"
+          control={control}
+          label="Check-in Date"
+          // required
+          helpertext={errors.checkInDate?.type === 'required' ? 'Check-in date is required' : ''}
+          error={!!errors.checkInDate}
+          value={checkInDateValue instanceof Date ? checkInDateValue.toISOString().split('T')[ 0 ] : checkInDateValue}
 
-        min={checkInDateValue instanceof Date ? checkInDateValue.toISOString().split('T')[0] : checkInDateValue}
-        onChange={(e)=>handleCheckInDateChange(e.target.value)}
-      />
+          min={checkInDateValue instanceof Date ? checkInDateValue.toISOString().split('T')[ 0 ] : checkInDateValue}
+          onChange={(e) => handleCheckInDateChange(e.target.value)}
+        />
 
         <TextInput
-        name="checkOutDate"
-        type="date"
-        placeholder="Check-out Date"
-        control={control}
-        label="Check-out Date"
-        // required
-        helpertext={errors.checkOutDate?.type === 'required' ? 'Check-out date is required' : ''}
-        error={!!errors.checkOutDate}
-        value={checkOutDateValue instanceof Date ? checkOutDateValue.toISOString().split('T')[0] : checkOutDateValue}
-        min={checkInDateValue instanceof Date ? checkInDateValue.toISOString().split('T')[0] : checkInDateValue}
-        onChange={(e)=>handleCheckOutDateChange(e.target.value)}
-      />
-    </div>
+          name="checkOutDate"
+          type="date"
+          placeholder="Check-out Date"
+          control={control}
+          label="Check-out Date"
+          // required
+          helpertext={errors.checkOutDate?.type === 'required' ? 'Check-out date is required' : ''}
+          error={!!errors.checkOutDate}
+          value={checkOutDateValue instanceof Date ? checkOutDateValue.toISOString().split('T')[ 0 ] : checkOutDateValue}
+          min={checkInDateValue instanceof Date ? checkInDateValue.toISOString().split('T')[ 0 ] : checkInDateValue}
+          onChange={(e) => handleCheckOutDateChange(e.target.value)}
+        />
+      </div>
 
     <TextArea
       name="specialRequests"
@@ -444,39 +491,40 @@ const handleSpecialRequestChange=(request:string)=>{
       onChange={(e)=>handleSpecialRequestChange(e.target.value)}
     />
 
-{ !user.userId&&<div>
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <h3>Please Enter the password for customer Creation</h3>
-    </div>
-    <TextInput
-      name="password"
-      type="password"
-      placeholder="Password"  
-      control={control}
-      label="Password"
-      required
-      helpertext={errors.password?.type === 'required' ? 'Password is required' : ''}
-      error={!!errors.password}
-    />
+      {!user.userId && <div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <h3>Please Enter the password for customer Creation</h3>
+        </div>
+        <TextInput
+          name="password"
+          type="password"
+          min={8}
+          placeholder="Password"
+          control={control}
+          label="Password"
+          required
+          helpertext={errors.password?.type === 'required' ? 'Password is required' : ''}
+          error={!!errors.password}
+        />
       </div>}
       {
-        errorMessage && <div>
-          <p className='text-error'>{errorMessage}</p>
+        handleErrorMessages() && <div>
+          <p className='text-error'>{handleErrorMessages()}</p>
         </div>
       }
       {
-        !errorMessage && <div className="mt-6">
-        <Button
-          label="Next"
-          type="submit"
-          loading={false}
-          className="w-full font-teko font-bold"
-          disabled={!validity?.isValid}
-        />
-      </div>
-    }
-  </form>
-);
+        !handleErrorMessages() && <div className="mt-6">
+          <Button
+            label="Next"
+            type="submit"
+            loading={false}
+            className="w-full font-teko font-bold"
+            disabled={!validity?.isValid}
+          />
+        </div>
+      }
+    </form>
+  );
 }
 interface StepTwoProps {
   selectedRoom: any;
@@ -516,30 +564,51 @@ const paymentMethods = [
   },
 ];
 
-const StepTwo = ({ selectedRoom, selectedRooms, formData, handleBack, handleSubmit, onSubmit,checkInDateValue,checkOutDateValue }: StepTwoProps) => {
+const StepTwo = ({ selectedRoom, selectedRooms, formData, handleBack, handleSubmit, onSubmit, checkInDateValue, checkOutDateValue }: StepTwoProps) => {
   const { user } = useUserStore();
   const { roomIds } = useRoomStore();
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>("stripe");
+  const { setMessage,setRole,setShowToast} = useToastStore();
+  const [ selectedPaymentMethod, setSelectedPaymentMethod ] = useState<string | null>("stripe");
   const queryValidity = useGraphqlClientRequest<
-  CheckValidBookingQuery,
-  CheckValidBookingQueryVariables
->(CheckValidBooking.loc?.source?.body!);
+    CheckValidBookingQuery,
+    CheckValidBookingQueryVariables
+  >(CheckValidBooking.loc?.source?.body!);
 
-const [isPaymentUrlLoading, setIsPaymentUrlLoading] = useState(false);
+  const [ isPaymentUrlLoading, setIsPaymentUrlLoading ] = useState(false);
 
-const fetchData = async () => {
-  const res = await queryValidity({
-    roomIds: roomIds.map(id => parseInt(id)),
-    startDate: new Date(checkInDateValue),
-    endDate: new Date(checkOutDateValue),
+  const fetchData = async () => {
+    const res = await queryValidity({
+      roomIds: roomIds.map(id => parseInt(id)),
+      startDate: new Date(checkInDateValue),
+      endDate: new Date(checkOutDateValue),
+    });
+    return res.checkValidBooking;
+  };
+  const { data: validity, isLoading } = useQuery({
+    queryKey: [ 'checkValidBooking', roomIds, checkInDateValue, checkOutDateValue ],
+    queryFn: fetchData,
+    enabled: roomIds.length > 0 && !!checkInDateValue && !!checkOutDateValue
   });
-  return res.checkValidBooking;
-};
-const { data: validity,isLoading } = useQuery({
-  queryKey: ['checkValidBooking',roomIds,checkInDateValue,checkOutDateValue],
-  queryFn: fetchData,
-  enabled:roomIds.length > 0 && !!checkInDateValue && !!checkOutDateValue
-});
+
+  // graphql for emailSendAfterBooking Query
+  const sendEmail = useGraphqlClientRequest<SendMmailAfterBookingMutation,SendMmailAfterBookingMutationVariables>(SendMmailAfterBooking.loc?.source.body!)
+  const {mutateAsync:sendEmailAfterSuccessfullBooking } = useMutation({mutationFn:sendEmail,})
+
+  // get room and homestay details
+  const fetchRoomDetails = useGraphqlClientRequest<FindRoomsByRoomIdsQuery, FindRoomsByRoomIdsQueryVariables>(FindRoomsByRoomIds.loc?.source.body!);
+  const numericRoomIds: number[] = roomIds.map(id => Number(id));
+  const queryFetchRoomDetailsFunc = async () => {
+    const res = await fetchRoomDetails({ roomIds: numericRoomIds });
+    return res.findRoomsByRoomIds;
+  }
+
+  const { data: RoomDetails } = useQuery({
+    queryKey: [ 'roomDetails' ],
+    queryFn:queryFetchRoomDetailsFunc,
+  })
+  console.log("roomids",roomIds)
+  console.log("room details",RoomDetails)
+
   const handleCheckout = async () => {
     if (!selectedPaymentMethod) return;
     setIsPaymentUrlLoading(true);
@@ -550,7 +619,7 @@ const { data: validity,isLoading } = useQuery({
       },
 
       body: JSON.stringify({
-        amount: (Number(validity?.totalPrice) * 100) ,
+        amount: (Number(validity?.totalPrice) * 100),
         currency: 'NPR',
         roomIds: roomIds,
         quantity: 1,
@@ -561,10 +630,20 @@ const { data: validity,isLoading } = useQuery({
 
         startDate: formData?.checkInDate,
         endDate: formData?.checkOutDate,
-       
+
         paymentMethod: selectedPaymentMethod,
       }),
     });
+    const emailSent = await sendEmailAfterSuccessfullBooking({email:formData?.email ?? "",data:{checkInDate:String(formData?.checkInDate),checkOutDate:String(formData?.checkOutDate),roomName:RoomDetails?.roomNumbers ?? [],guestName:"guest",homestayName:RoomDetails?.name ?? "",paidAmount:validity?.totalPrice ?? 0}})
+    if (emailSent.sendMailAfterBooking) {
+      setShowToast(true);
+      setMessage("Check your mail.");
+      setRole('success');
+    } else {
+      setShowToast(true);
+      setMessage("Error in sending mail.");
+      setRole('error');
+    }
     setIsPaymentUrlLoading(false);
     const data = await response.json();
     if (data.url) {
@@ -579,25 +658,25 @@ const { data: validity,isLoading } = useQuery({
       <div className="bg-base-100 p-4 rounded-lg">
         <h3 className="font-semibold mb-2">Selected Room</h3>
         <div className='grid grid-cols-2 gap-2'>
-        {selectedRooms.map((selRoom) => (
-          <div key={`selRoom-${selRoom?.caption}`}>
-            <p className='font-semibold text-base'>{selRoom?.caption}</p>
-            <p className='text-xs'>Capacity: <span className='text-gray-700'>{selRoom?.capacity}</span></p>
-            {/* {selRoom?.roomNumber && <p>Room Number: {selRoom.roomNumber}</p>} */}
-            {selRoom?.attachBathroom && <p>With Attached Bathroom</p>}
-        </div>
-        ))}
+          {selectedRooms.map((selRoom) => (
+            <div key={`selRoom-${selRoom?.caption}`}>
+              <p className='font-semibold text-base'>{selRoom?.caption}</p>
+              <p className='text-xs'>Capacity: <span className='text-gray-700'>{selRoom?.capacity}</span></p>
+              {/* {selRoom?.roomNumber && <p>Room Number: {selRoom.roomNumber}</p>} */}
+              {selRoom?.attachBathroom && <p>With Attached Bathroom</p>}
+            </div>
+          ))}
         </div>
       </div>
 
       <div className="bg-base-100 p-4 rounded-lg">
         <h3 className="font-semibold mb-2">Booking Details</h3>
-        <strong>Name:</strong><span> {formData?.fullName}</span><br/>
-        <strong>Email:</strong><span> {formData?.email}</span><br/>
-        <strong>Phone:</strong><span> {formData?.phone}</span><br/>
-        <strong>Number of Guests:</strong><span> {formData?.numberOfGuests}</span><br/>
-        <strong>Check-in Date:</strong><span> {checkInDateValue instanceof Date ? checkInDateValue.toISOString().split('T')[0] : checkInDateValue}</span><br/>
-        <strong>Check-out Date:</strong><span> {checkOutDateValue instanceof Date ? checkOutDateValue.toISOString().split('T')[0] : checkOutDateValue }</span><br/>
+        <strong>Name:</strong><span> {formData?.fullName}</span><br />
+        <strong>Email:</strong><span> {formData?.email}</span><br />
+        <strong>Phone:</strong><span> {formData?.phone}</span><br />
+        <strong>Number of Guests:</strong><span> {formData?.numberOfGuests}</span><br />
+        <strong>Check-in Date:</strong><span> {checkInDateValue instanceof Date ? checkInDateValue.toISOString().split('T')[ 0 ] : checkInDateValue}</span><br />
+        <strong>Check-out Date:</strong><span> {checkOutDateValue instanceof Date ? checkOutDateValue.toISOString().split('T')[ 0 ] : checkOutDateValue}</span><br />
         {formData?.specialRequests && (
           <>
             <strong>Special Requests:</strong><span> {formData.specialRequests}</span>
@@ -606,7 +685,7 @@ const { data: validity,isLoading } = useQuery({
       </div>
       <div className="bg-base-100 p-4 rounded-lg">
         <h3 className="font-semibold mb-2">Payment Details</h3>
-        <strong>Total Days:</strong><span> {validity?.totalDays}</span><br/>
+        <strong>Total Days:</strong><span> {validity?.totalDays}</span><br />
         <strong>Total Price:</strong><span> NPR {validity?.totalPrice}</span>
       </div>
 

@@ -41,11 +41,12 @@ export const CommonNav = () => {
 
 
                 <button
-                  className="flex flex-row items-center justify-center rounded-full border border-transparent bg-primary font-medium tracking-wide transition duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 md:min-w-fit py-0"
+                  
+                  className="flex flex-row items-center justify-center rounded-full border border-transparent bg-primary font-medium tracking-wide transition duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 lg:min-w-fit py-0"
                 >
                   <motion.div className="  font-semibold " transition={{ duration: 0.3 }}>
                     <Link href={"/signup"}>
-                      <span className="block sm:hidden md:block text-white">Signup</span>
+                      <span className="block md:block text-white">Signup</span>
                     </Link>
                   </motion.div>
                 </button>

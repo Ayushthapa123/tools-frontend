@@ -20,6 +20,7 @@ import { useUserStore } from 'src/store/userStore';
 import { ThemeProvider } from 'src/features/themes/ThemeProvider';
 import { CheckMailForVerification } from '../auth/verify-email/CheckMailForVerification';
 import LoadingSpinner from 'src/components/Loading';
+import { CommonNav } from 'src/features/NavBar/CommonNav';
 import { useRouter } from 'next/navigation';
 
 export default function Layout({
@@ -81,7 +82,7 @@ export default function Layout({
         <GlobalToast />
         <>
           <div className=" relative  z-[999] h-[70px] shadow-sm">
-            <Navbar />
+            <CommonNav />
           </div>
           {userData ? (
             userData?.isVerified == false ? (

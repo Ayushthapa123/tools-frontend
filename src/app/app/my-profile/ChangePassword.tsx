@@ -26,7 +26,6 @@ export default function ChangePasswordPage({ userId }: { userId: number }) {
   const {
     handleSubmit,
     control,
-    getValues,
     watch,
     formState: { errors },
   } = useForm<ChangePasswordFormData>({
@@ -49,25 +48,20 @@ export default function ChangePasswordPage({ userId }: { userId: number }) {
     mutationFn: mutateChangePassword,
   });
 
-  const checkPasswordValidity = () => {
-    const newPassword = getValues().newPassword;
-    const confirmPassword = getValues().confirmPassword;
+  const currentPassword = watch("currentPassword")
+  const newPassword = watch("newPassword");
+  const confirmPassword = watch("confirmPassword");
 
-    if (newPassword.length < 8) {
-      return false;
-    } else if (confirmPassword !== newPassword) {
-      return false;
-    } else {
+  const checkChangePasswordButtonDisability = () => {
+    if (currentPassword == null || currentPassword == "" || newPassword == null || newPassword == "" || confirmPassword == null || confirmPassword == "") {
       return true;
     }
-  };
+    else {
+      return false;
+    }
+  }
 
   const onSubmit = async (data: ChangePasswordFormData) => {
-    if (!checkPasswordValidity()) {
-      setError('Please check your password requirements');
-      return;
-    }
-
     setLoading(true);
     setError('');
     setSuccess(false);
@@ -147,7 +141,7 @@ export default function ChangePasswordPage({ userId }: { userId: number }) {
                       rules={{
                         minLength: {
                           value: 8,
-                          message:"Password mustn't be less than 8 characters."
+                          message:"Password must not be less than 8 characters."
                         }
                       }}
                     />
@@ -164,13 +158,11 @@ export default function ChangePasswordPage({ userId }: { userId: number }) {
                       helpertext={
                         errors.confirmPassword?.type === 'required'
                           ? 'Please confirm your new password'
-                          : getValues().newPassword !== getValues().confirmPassword
+                          : newPassword !== confirmPassword
                           ? 'Passwords do not match'
                           : ''
                       }
-                      error={!!errors.confirmPassword || 
-                        (getValues().newPassword !== getValues().confirmPassword && 
-                         getValues().confirmPassword !== '')}
+                      error={!!errors.confirmPassword}
                     />
                   </div>
 
@@ -180,6 +172,7 @@ export default function ChangePasswordPage({ userId }: { userId: number }) {
                       type="submit"
                       loading={loading}
                       className="w-full md:w-auto"
+                      disabled={checkChangePasswordButtonDisability()}
                     />
                   </div>
                 </div>
