@@ -24,12 +24,7 @@ query GetAllHomestays($pageSize: Int, $pageNumber: Int) {
       altPhone
       email
     }
-    googleMapLocation {
-      id
-      description
-      lat
-      lng
-    }
+
     rooms {
       id
       status
