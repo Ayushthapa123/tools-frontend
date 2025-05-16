@@ -1017,9 +1017,19 @@ export type Services = {
 };
 
 export type SignupInput = {
+  altPhoneNumber?: InputMaybe<Scalars['String']['input']>;
+  city?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  dateOfBirth?: InputMaybe<Scalars['DateTime']['input']>;
   email: Scalars['String']['input'];
   fullName: Scalars['String']['input'];
+  gender?: InputMaybe<Gender>;
+  isVerified?: InputMaybe<Scalars['Boolean']['input']>;
   password: Scalars['String']['input'];
+  passwordHash?: InputMaybe<Scalars['String']['input']>;
+  phoneNumber?: InputMaybe<Scalars['String']['input']>;
+  profilePicture?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   userType: Scalars['String']['input'];
 };
 
