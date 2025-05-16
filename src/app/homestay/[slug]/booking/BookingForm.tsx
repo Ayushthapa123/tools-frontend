@@ -7,12 +7,13 @@ import Button from 'src/components/Button';
 import { useToastStore } from 'src/store/toastStore';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
-import { CheckValidBooking, CheckValidBookingQuery, CheckValidBookingQueryVariables, Room, RoomCapacity, RoomStatus, SignupUser, SignupUserMutation, SignupUserMutationVariables } from 'src/gql/graphql';
+import { BookingConfirmationEmailDto, CheckValidBooking, CheckValidBookingQuery, CheckValidBookingQueryVariables, FindRoomsByRoomIds, FindRoomsByRoomIdsQuery, FindRoomsByRoomIdsQueryVariables, Room, RoomCapacity, RoomStatus, SendMmailAfterBooking, SendMmailAfterBookingMutation, SendMmailAfterBookingMutationVariables, SignupUser, SignupUserMutation, SignupUserMutationVariables } from 'src/gql/graphql';
 import { useEffect, useState } from 'react';
 import { useUserStore } from 'src/store/userStore';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useRoomStore } from 'src/store/roomStore';
 import LoadingSpinner from 'src/components/Loading';
+import { MdEmail } from 'react-icons/md';
 interface BookingFormProps {
   homestayId: string;
   homeStaySlug: string;
@@ -481,6 +482,7 @@ const paymentMethods = [
 const StepTwo = ({ selectedRoom, selectedRooms, formData, handleBack, handleSubmit, onSubmit, checkInDateValue, checkOutDateValue }: StepTwoProps) => {
   const { user } = useUserStore();
   const { roomIds } = useRoomStore();
+  const { setMessage,setRole,setShowToast} = useToastStore();
   const [ selectedPaymentMethod, setSelectedPaymentMethod ] = useState<string | null>("stripe");
   const queryValidity = useGraphqlClientRequest<
     CheckValidBookingQuery,
@@ -502,6 +504,26 @@ const StepTwo = ({ selectedRoom, selectedRooms, formData, handleBack, handleSubm
     queryFn: fetchData,
     enabled: roomIds.length > 0 && !!checkInDateValue && !!checkOutDateValue
   });
+
+  // graphql for emailSendAfterBooking Query
+  const sendEmail = useGraphqlClientRequest<SendMmailAfterBookingMutation,SendMmailAfterBookingMutationVariables>(SendMmailAfterBooking.loc?.source.body!)
+  const {mutateAsync:sendEmailAfterSuccessfullBooking } = useMutation({mutationFn:sendEmail,})
+
+  // get room and homestay details
+  const fetchRoomDetails = useGraphqlClientRequest<FindRoomsByRoomIdsQuery, FindRoomsByRoomIdsQueryVariables>(FindRoomsByRoomIds.loc?.source.body!);
+  const numericRoomIds: number[] = roomIds.map(id => Number(id));
+  const queryFetchRoomDetailsFunc = async () => {
+    const res = await fetchRoomDetails({ roomIds: numericRoomIds });
+    return res.findRoomsByRoomIds;
+  }
+
+  const { data: RoomDetails } = useQuery({
+    queryKey: [ 'roomDetails' ],
+    queryFn:queryFetchRoomDetailsFunc,
+  })
+  console.log("roomids",roomIds)
+  console.log("room details",RoomDetails)
+
   const handleCheckout = async () => {
     if (!selectedPaymentMethod) return;
     setIsPaymentUrlLoading(true);
@@ -527,6 +549,16 @@ const StepTwo = ({ selectedRoom, selectedRooms, formData, handleBack, handleSubm
         paymentMethod: selectedPaymentMethod,
       }),
     });
+    const emailSent = await sendEmailAfterSuccessfullBooking({email:formData?.email ?? "",data:{checkInDate:String(formData?.checkInDate),checkOutDate:String(formData?.checkOutDate),roomName:RoomDetails?.roomNumbers ?? [],guestName:"guest",homestayName:RoomDetails?.name ?? "",paidAmount:validity?.totalPrice ?? 0}})
+    if (emailSent.sendMailAfterBooking) {
+      setShowToast(true);
+      setMessage("Check your mail.");
+      setRole('success');
+    } else {
+      setShowToast(true);
+      setMessage("Error in sending mail.");
+      setRole('error');
+    }
     setIsPaymentUrlLoading(false);
     const data = await response.json();
     if (data.url) {
