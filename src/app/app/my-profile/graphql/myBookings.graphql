@@ -1,5 +1,6 @@
 query MyBookings {
   myBookings {
+    data {
     id
     roomId
     bookingKey
@@ -27,6 +28,11 @@ query MyBookings {
       id
       fullName
       email
+    }
+    }
+    error {
+      message
+      code
     }
   }
 }

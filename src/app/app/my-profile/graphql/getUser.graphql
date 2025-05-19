@@ -1,5 +1,6 @@
 query getUserById($id: Float!) {
   getUserById(id: $id) {
+    data {
     id
     isVerified
     fullName
@@ -12,4 +13,9 @@ query getUserById($id: Float!) {
     profilePicture
     homestayId
   }
+  error {
+    message
+    code
+  }
 } 
+}

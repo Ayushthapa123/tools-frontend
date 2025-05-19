@@ -62,14 +62,14 @@ export const OwnProfile = (props: { userType: string }) => {
 
   // Update form values when userData changes
   useEffect(() => {
-    if (userData) {
+    if (userData?.data) {
       reset({
-        fullName: userData.fullName || '',
-        city: userData.city || '',
-        altPhoneNumber: userData.altPhoneNumber || '',
-        phoneNumber: userData.phoneNumber || '',
-        gender: userData.gender || '',
-        dateOfBirth: userData.dateOfBirth || '',
+        fullName: userData.data.fullName || '',
+        city: userData.data.city || '',
+        altPhoneNumber: userData.data.altPhoneNumber || '',
+        phoneNumber: userData.data.phoneNumber || '',
+        gender: userData.data.gender || '',
+        dateOfBirth: userData.data.dateOfBirth || '',
       });
     }
   }, [ userData, reset ]);
@@ -88,7 +88,7 @@ export const OwnProfile = (props: { userType: string }) => {
           id: user.userId,
         }
       });
-      if (res?.updateUser?.id) {
+      if (res?.updateUser?.data?.id) {
         setShowToast(true);
         setMessage('Profile updated successfully!');
         setRole('success');
@@ -114,7 +114,7 @@ export const OwnProfile = (props: { userType: string }) => {
     });
   };
 
-  const [imageUrl,setImageUrl] = useState(userData?.profilePicture || '')
+  const [imageUrl,setImageUrl] = useState(userData?.data?.profilePicture || '')
   const onSubmitProfilePicture = async (data: any) => {
     setLoading(true);
     try {
@@ -154,7 +154,7 @@ export const OwnProfile = (props: { userType: string }) => {
         }
       });
 
-      if (imageUploaded?.updateUser?.profilePicture) {
+      if (imageUploaded?.updateUser?.data?.id) {
         setShowToast(true);
         setMessage('Profile picture updated successfully!');
         setRole('success');
@@ -181,8 +181,8 @@ export const OwnProfile = (props: { userType: string }) => {
             <div className="avatar placeholder relative h-[80px] w-[80px] lg:h-[130px] lg:w-[130px]">
 
               {
-                userData?.profilePicture || imageUrl ? (
-                  <Image className=" rounded-full border border-black" src={userData?.profilePicture || imageUrl || ""} alt="user avatar" fill />
+                userData?.data?.profilePicture || imageUrl ? (
+                  <Image className=" rounded-full border border-black" src={userData?.data?.profilePicture || imageUrl || ""} alt="user avatar" fill />
                 ) : (
                   <div className="w-full h-full rounded-full bg-neutral text-neutral-content">
                     <span className="text-[50px]">{user.userName.charAt(0)}</span>
@@ -190,7 +190,7 @@ export const OwnProfile = (props: { userType: string }) => {
                 )
               }
               <button
-                className={`absolute bottom-1 right-0 rounded-full p-1 text-[21px] ${userData?.profilePicture || imageUrl ? 'text-white' : 'text-primary'} lg:bottom-[5px] lg:right-[14px]`}
+                className={`absolute bottom-1 right-0 rounded-full p-1 text-[21px] ${userData?.data?.profilePicture || imageUrl ? 'text-white' : 'text-primary'} lg:bottom-[5px] lg:right-[14px]`}
                 onClick={() => setOpenProfilePictureModal(true)}>
                 <FaCamera />
               </button>

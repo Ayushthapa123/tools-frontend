@@ -42,7 +42,7 @@ export default function Home() {
           </p>
         </div>
         <div className="">
-          <Link href={`${process.env.NEXT_PUBLIC_APP_URL}/homestay/${data?.slug}`}>
+          <Link href={`${process.env.NEXT_PUBLIC_APP_URL}/homestay/${data?.data?.slug}`}>
             <Button
               label="See Homestay Profile"
               className="rounded-lg bg-secondary"

@@ -1,5 +1,6 @@
 query GetPriceRulesByRoom($roomId: Int!) {
 priceRulesByRoom(roomId: $roomId) {
+    data {
     id
     name
     description
@@ -9,7 +10,9 @@ priceRulesByRoom(roomId: $roomId) {
     isWeekend
     isActive
     priority
+    }
     
+
   
   }
 }

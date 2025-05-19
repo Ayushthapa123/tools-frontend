@@ -1,8 +1,14 @@
 mutation CreateHomestayImage($data: CreateHomestayWallpaperInput!) {
   createHomestayImage(data: $data) {
-    id
-    homestayId
-    url
-    caption
+    data {
+      id
+      homestayId
+      url
+      caption
+    }
+    error {
+      message
+      code
+    }
   }
 }

@@ -1,11 +1,13 @@
 query GetHomestayWallpaperByHomestayId($homestayId: Int!) {
   getHomestayWallpaperByHomestayId(homestayId: $homestayId) {
-    id
-    homestayId
-    url
-    caption
-    isSelected
-    createdAt
-    updatedAt
+    data {
+      id
+      homestayId
+      url
+      caption
+      isSelected
+      createdAt
+      updatedAt
+  }
   }
 }

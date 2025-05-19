@@ -1,7 +1,13 @@
 query FindAmenityByHomestayId($homestayId:Int!){
   findAmenityByHomestayId(homestayId:$homestayId){
+    data {
     id
     amenity
     homestayId
+    }
+    error {
+      message
+      code
+    }
   }
 }

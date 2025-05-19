@@ -1,6 +1,12 @@
 query getRules {
   getRulesByHomestay {
-    id
-    rules
+    data {
+      id
+      rules
+    }
+    error {
+      message
+      code
+    }
   }
 }

@@ -7,6 +7,7 @@ import {
   GetHomestayBySlugQuery,
   GetHomestayBySlugQueryVariables,
   Room,
+  RoomData,
 } from 'src/gql/graphql';
 import LoadingSpinner from 'src/components/Loading';
 import { BookingForm } from './BookingForm';
@@ -50,12 +51,12 @@ export default function BookingPage({ params }: { params: { slug: string } }) {
   // it should invoked only once
   useEffect(() => {
     // if selected rooms are not among the current room of that homestay remove them.
-    if (homestay?.rooms) {
-      const currentRooms = homestay?.rooms?.map(room => room.id) || [];
+    if (homestay?.data?.rooms) {
+      const currentRooms = homestay?.data?.rooms?.map(room => room.id) || [];
       const selectedRooms = roomIds.filter(id => currentRooms.includes(id));
       setRoomIds(selectedRooms);
     }
-  }, [homestay?.rooms]);
+  }, [homestay?.data?.rooms]);
 
   if (isLoading) {
     return (
@@ -82,21 +83,21 @@ export default function BookingPage({ params }: { params: { slug: string } }) {
           {/* Left Column - Homestay Information */}
           <div className="overflow-y-scroll rounded-lg bg-white p-6 pr-1 shadow-md md:min-h-[780px]">
             <HomestayInfo
-              name={homestay.name}
-              homestayId={Number(homestay.id)}
-              description={homestay.description || ''}
+              name={homestay.data?.name || ''}
+              homestayId={Number(homestay.data?.id)}
+              description={homestay.data?.description || ''}
               address={{
-                city: homestay.address?.city || '',
-                country: homestay.address?.country || '',
-                street: homestay.address?.street || '',
-                subCity: homestay.address?.subCity || '',
+                city: homestay.data?.address?.city || '',
+                country: homestay.data?.address?.country || '',
+                street: homestay.data?.address?.street || '',
+                subCity: homestay.data?.address?.subCity || '',
               }}
               contact={{
-                phone: homestay.contact?.phone || '',
-                email: homestay.contact?.email || '',
+                phone: homestay.data?.contact?.phone || '',
+                email: homestay.data?.contact?.email || '',
               }}
-              images={homestay.rooms?.flatMap(room => room.image?.map(img => img.url) || []) || []}
-              rooms={homestay.rooms as Room[]}
+              images={homestay.data?.rooms?.flatMap(room => room.image?.map(img => img.url) || []) || []}
+              rooms={homestay.data?.rooms as RoomData[]}
               selectedRoomId={roomIds[0]} // TODO: some change needed
               slug={params.slug}
               onRoomSelect={handleRoomSelect}
@@ -108,10 +109,10 @@ export default function BookingPage({ params }: { params: { slug: string } }) {
             <h2 className="mb-6 text-2xl font-bold">Book Your Stay</h2>
             {roomIds.length > 0 ? (
               <BookingForm
-                homestayId={String(homestay.id)}
+                homestayId={String(homestay.data?.id)}
                 // roomIds={roomIds  }
                 onSuccess={handleBookingSuccess}
-                rooms={homestay.rooms || []}
+                rooms={homestay.data?.rooms || []}
                 homeStaySlug={params.slug}
               />
             ) : (

@@ -42,7 +42,7 @@ function  BookingFailedPageContent() {
 //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
 const fetchData = async () => {
   const res = await queryBooking({bookingKey:bookingKey!});
-  return res.bookingsWithKey[0];
+  return res.bookingsWithKey;
 };
 
 const { data: booking } = useQuery({
@@ -100,7 +100,7 @@ const { data: booking } = useQuery({
               <div>
                 <h3 className="text-sm font-medium text-base-content/70">Booking Key</h3>
                 <p className="mt-1 text-lg font-semibold">
-                  {booking?.bookingKey}
+                  {booking?.data?.[0]?.bookingKey}
                 </p>
               </div>
               <div>
@@ -112,13 +112,13 @@ const { data: booking } = useQuery({
               <div>
                 <h3 className="text-sm font-medium text-base-content/70">Check-in</h3>
                 <p className="mt-1 text-lg font-semibold">
-                  {formatDate(booking?.startDate)} 
+                    {formatDate(booking?.data?.[0]?.startDate)} 
                 </p>
               </div>
               <div>
                 <h3 className="text-sm font-medium text-base-content/70">Check-out</h3>
                 <p className="mt-1 text-lg font-semibold">
-                  {formatDate(booking?.endDate)} 
+                  {formatDate(booking?.data?.[0]?.endDate)} 
                 </p>
               </div>
             </div>
@@ -144,9 +144,9 @@ const { data: booking } = useQuery({
               </div>
               <div className="md:w-2/3">
                 <h3 className="text-lg font-semibold mb-2">
-                  {booking?.room?.caption}
+                  {booking?.data?.[0]?.room?.caption}
                 </h3>
-                <p className="text-base-content/70 mb-4">Room Number:{booking?.room?.roomNumber}</p>
+                <p className="text-base-content/70 mb-4">Room Number:{booking?.data?.[0]?.room?.roomNumber}</p>
                 <div>
                   <h4 className="text-sm font-medium text-base-content/70 mb-2">
                     Amenities
@@ -177,25 +177,25 @@ const { data: booking } = useQuery({
               <div>
                 <h3 className="text-sm font-medium text-base-content/70">Full Name</h3>
                 <p className="mt-1 text-lg font-semibold">
-                  {booking?.guest?.fullName}
+                  {booking?.data?.[0]?.guest?.fullName}
                 </p>
               </div>
               <div>
                 <h3 className="text-sm font-medium text-base-content/70">Email</h3>
                 <p className="mt-1 text-lg font-semibold">
-                  {booking?.guest?.email}
+                  {booking?.data?.[0]?.guest?.email}
                 </p>
               </div>
               <div>
                 <h3 className="text-sm font-medium text-base-content/70">Phone</h3>
                 <p className="mt-1 text-lg font-semibold">
-                  {booking?.guest?.phoneNumber}
+                  {booking?.data?.[0]?.guest?.phoneNumber}
                 </p>
               </div>
               <div>
                 <h3 className="text-sm font-medium text-base-content/70">Address</h3>
                 <p className="mt-1 text-lg font-semibold">
-                
+                  {/* {booking?.data?.[0]?.guest?.address} */}
                 </p>
               </div>
             </div>

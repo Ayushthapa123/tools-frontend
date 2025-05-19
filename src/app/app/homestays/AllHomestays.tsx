@@ -29,7 +29,7 @@ export const AllHomestays = () => {
       <hr className="divider w-full" />
 
       <div className="grid gap-[1rem]  bg-slate-100 ">
-        {homestays?.map(homestay => (
+        {homestays?.data?.map(homestay => (
           <div key={homestay.id}>
             <HomeStayCard homestay={homestay as Homestay} />
           </div>

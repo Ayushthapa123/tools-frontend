@@ -42,7 +42,7 @@ export const WallpaperGallery = (props: Iprops) => {
   const handleBack = () => {
     setShowEditBox(false);
   };
-  const mainImage = wallpaperData?.filter(img => img.isSelected)[0];
+  const mainImage = wallpaperData?.data?.filter(img => img?.isSelected)[0];
 
 
   return (

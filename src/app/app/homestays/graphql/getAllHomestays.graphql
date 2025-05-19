@@ -1,5 +1,6 @@
 query GetAllHomestays($pageSize: Int, $pageNumber: Int) {
   getAllHomestays(pageSize: $pageSize, pageNumber: $pageNumber) {
+    data {
     id
     name
     description
@@ -53,6 +54,11 @@ query GetAllHomestays($pageSize: Int, $pageNumber: Int) {
       id
       caption
       url
+    }
+    }
+    error {
+      message
+      code
     }
 
  

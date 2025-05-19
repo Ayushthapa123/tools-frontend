@@ -4,14 +4,10 @@ import {  useQuery } from '@tanstack/react-query';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 
 import {
-  DynamicPricingRule,
-
+  DynamicPricingRuleData,
   GetPriceRulesByRoom,
-
   GetPriceRulesByRoomQuery,
-
   GetPriceRulesByRoomQueryVariables,
-
 } from 'src/gql/graphql';
 
 import { Suspense } from 'react';
@@ -38,17 +34,17 @@ const { data: rules ,isLoading} = useQuery({
   queryFn: fetchData,
   enabled: isEdit,
 });
-  return <Suspense><div>{!isLoading &&<RulesForm rules={rules as DynamicPricingRule[] | undefined} roomId={roomId} />}</div></Suspense>;
+  return <Suspense><div>{!isLoading &&<RulesForm rules={rules as DynamicPricingRuleData[] | undefined} roomId={roomId} />}</div></Suspense>;
 }
 
-  function RulesForm({ roomId, rules }: { roomId: number, rules: DynamicPricingRule[] | undefined | null }) {
+  function RulesForm({ roomId, rules }: { roomId: number, rules: DynamicPricingRuleData[] | undefined | null }) {
 
   return (
     <div className="w-full h-fit ">
       <div className="bg-white  rounded-lg shadow">
      <div className='flex justify-end '><AddDynamicRule roomId={roomId} rules={undefined} /></div>
      <div className='overflow-y-auto h-fit'>
-     {rules?.map((rule: DynamicPricingRule) => (
+     {rules?.map((rule: DynamicPricingRuleData) => (
       <div key={rule.id}>
       <DynamicRulesCard rule={rule} roomId={roomId}/>
       </div>

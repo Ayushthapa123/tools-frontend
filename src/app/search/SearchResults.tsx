@@ -60,19 +60,19 @@ export const SearchResults = (props: IResults) => {
         )}
       <div className="grid w-full grid-cols-1 md:grid-cols-2 xl:grid-cols-3  gap-3">
           {homestays?.map(homestay => {
-          const imgUrl = homestay?.image?.[0]?.url || '/images/default-image.png';
+          const imgUrl = homestay?.data?.image?.[0]?.url || '/images/default-image.png';
 
           return (
-            <div key={homestay.slug}>
-              <Link href={`/homestay/${homestay.slug}?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}>
+            <div key={homestay.data?.slug}>
+              <Link href={`/homestay/${homestay.data?.slug}?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}>
                   <HomestayCard
-                  name={homestay.name}
-                  country={homestay.address?.country ?? ''}
-                  city={homestay.address?.city ?? ''}
-                  subCity={homestay.address?.subCity ?? ''}
-                  description={homestay.description ?? ''}
-                  amount={homestay?.rooms?.[0]?.price?.baseAmount ?? 0}
-                  currency={homestay?.rooms?.[0]?.price?.currency ?? ''}
+                  name={homestay.data?.name || ''}
+                  country={homestay.data?.address?.country ?? ''}
+                  city={homestay.data?.address?.city ?? ''}
+                  subCity={homestay.data?.address?.subCity ?? ''}
+                  description={homestay.data?.description ?? ''}
+                  amount={homestay?.data?.rooms?.[0]?.price?.baseAmount ?? 0}
+                  currency={homestay?.data?.rooms?.[0]?.price?.currency ?? ''}
                   imgUrl={imgUrl}
                   oneSeater={null}
                   twoSeater={null}

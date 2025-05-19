@@ -85,7 +85,7 @@ export default function Layout({
             <CommonNav />
           </div>
           {userData ? (
-            userData?.isVerified == false ? (
+            userData?.data?.isVerified == false ? (
               <CheckMailForVerification />
             ) : (
               <div className=" pt-15    h-[calc(100vh-70px)] w-full  md:flex">

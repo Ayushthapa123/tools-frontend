@@ -1,10 +1,16 @@
 mutation UpdateRoomImage($roomImageId: Int!, $data: UpdateRoomImageInput!) {
   updateRoomImage(roomImageId: $roomImageId, data: $data) {
-    id
-    roomId
-    url
-    caption
-    createdAt
-    updatedAt
+    data {
+      id
+      roomId
+      url
+      caption
+      createdAt
+      updatedAt
+  }
+  error {
+    message
+    code
+    }
   }
 }

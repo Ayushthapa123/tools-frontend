@@ -31,10 +31,10 @@ export default function RoomAmenityPage({ handleBack, roomId }: { handleBack: ()
   })
 
   useEffect(() => {
-    if (data?.amenity) {
-      setSelectedRoomAmenity(data.amenity.split(","));
+    if (data?.data?.amenity) {
+      setSelectedRoomAmenity(data.data.amenity.split(","));
     }
-  }, [data?.amenity]);
+  }, [data?.data?.amenity]);
 
   //create room amenity 
   const mutateRoomAmenity = useGraphqlClientRequest<
@@ -64,9 +64,9 @@ export default function RoomAmenityPage({ handleBack, roomId }: { handleBack: ()
   };
 
   const handleSave = () => {
-    if (!data?.roomAmenityId) {
+    if (!data?.data?.roomAmenityId) {
       mutateAsync({ createAmenityInput: { roomId, amenity: selectedRoomAmenity.join(",") } }).then((res) => {
-        if (res?.createRoomAmenity.roomAmenityId) {
+        if (res?.createRoomAmenity.data?.roomAmenityId) {
           setShowToast(true);
           queryClient.invalidateQueries({ queryKey: ['getRoomAmenities'] });
           setMessage('Amenities Created Successfully!');
@@ -80,8 +80,8 @@ export default function RoomAmenityPage({ handleBack, roomId }: { handleBack: ()
       })
     }
     else {
-      updateAmenity({updateAmenityInput:{roomAmenityId:Number(data?.roomAmenityId), amenity:selectedRoomAmenity.join(",")}}).then((res) => {
-        if (res?.updateRoomAmenity.roomAmenityId) {
+      updateAmenity({updateAmenityInput:{roomAmenityId:Number(data?.data?.roomAmenityId), amenity:selectedRoomAmenity.join(",")}}).then((res) => {
+        if (res?.updateRoomAmenity.data?.roomAmenityId) {
           setShowToast(true);
           queryClient.invalidateQueries({ queryKey: ['getRoomAmenities'] });
           setMessage('Amenities Updated Successfully!');

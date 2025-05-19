@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useMutation } from '@tanstack/react-query';
@@ -83,7 +82,7 @@ export const CreateHomestayModal = () => {
     
       },
     }).then(res => {
-      if (res?.createHomestay?.id) {
+      if (res?.createHomestay?.data?.id) {
         setShowToast(true);
         setMessage('homestay created');
         setRole('success');

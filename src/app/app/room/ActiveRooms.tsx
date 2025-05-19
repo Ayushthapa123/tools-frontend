@@ -28,16 +28,16 @@ export const ActiveRooms = () => {
     <div className="w-full ">
       {isLoading && <div> <LoadingSpinner /></div>}
       <div className="grid gap-[1rem] grid-cols-2 md:grid-cols-3 px-2 md:gap-">
-        {rooms?.map(room => (
+        {rooms?.data?.map(room => (
           <div key={room.id} className='md:mb-4'>
             <RoomCard
-              id={room.id}
+              id={room.id ?? ''}
               caption={room.caption ?? ''}
               roomNumber={room.roomNumber ?? ''}
               status={room.status ?? ''}
               price={room.price?.baseAmount ?? 0}
               currency={room.price?.currency ?? ''}
-              imageUrl={room.image?.[0]?.url ?? ''}
+             imageUrl={room.image?.[0]?.url ?? ''}
             />
           </div>
         ))}

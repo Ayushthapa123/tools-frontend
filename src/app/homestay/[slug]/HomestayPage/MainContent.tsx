@@ -6,7 +6,7 @@ import { CgWebsite } from 'react-icons/cg';
 import Link from 'next/link';
 import { FoodTable } from 'src/app/detail-page/FoodTable';
 import Button from 'src/components/Button';
-import { FindAmenityByHomestayId, FindAmenityByHomestayIdQueryVariables, FindAmenityByHomestayIdQuery, Homestay, Room } from 'src/gql/graphql';
+import { FindAmenityByHomestayId, FindAmenityByHomestayIdQueryVariables, FindAmenityByHomestayIdQuery, Homestay, RoomData, HomestayImageData } from 'src/gql/graphql';
 import { MapProvider } from 'src/features/MapProvider';
 import { useEffect, useRef, useState } from 'react';
 import { BsAirplane } from 'react-icons/bs';
@@ -37,28 +37,28 @@ export default function MainContent(props: Iprops) {
   const [mainImage, setMainImage] = useState(0);
   const [ isGalleryOpen, setIsGalleryOpen ] = useState(false);
   const [ showDetails, setShowDetails ] = useState(false);
-  const [ selectedRoom, setSelectedRoom ] = useState<Room | null>(null);
+  const [ selectedRoom, setSelectedRoom ] = useState<RoomData | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null)
   const isFirstRender = useRef<Boolean>(true)
 
-  const roomImages = homestay?.rooms?.[0]?.image ?? [];
-  const editorRef = useRef(homestay?.description ?? '');
+  const roomImages = homestay?.data?.rooms?.[0]?.image ?? [];
+  const editorRef = useRef(homestay?.data?.description ?? '');
   const { roomIds } = useRoomStore();
 
   // for amenities 
   const queryAmenity = useGraphqlClientRequest<FindAmenityByHomestayIdQuery, FindAmenityByHomestayIdQueryVariables>(FindAmenityByHomestayId.loc?.source.body!)
   const fetchData = async () => {
-    const res = await queryAmenity({homestayId: Number(homestay?.id )?? 0 });
-    return res.findAmenityByHomestayId[0] ?? null;
+    const res = await queryAmenity({homestayId: Number(homestay?.data?.id )?? 0 });
+    return res.findAmenityByHomestayId ?? null;
   };    
 
   const { data:amenities, error, isLoading: loading } = useQuery({
     queryKey: [ 'getAmenity' ],
     queryFn: fetchData,
-    enabled: !!Number(homestay?.id),
+    enabled: !!Number(homestay?.data?.id),
   });
 // Parse the amenities string into an array
-  const amenitiesArray = amenities ? amenities.amenity.split(',').filter(Boolean) : [];
+  const amenitiesArray = amenities ? amenities.data?.amenity.split(',').filter(Boolean) : [];
   
   const essentialAmenities = [
     'Wi-Fi (Free)',
@@ -66,26 +66,26 @@ export default function MainContent(props: Iprops) {
     'Free breakfast',
     'Clean private bathroom with hot shower',
     'Free parking',
-  ].filter(amenity => amenitiesArray.includes(amenity));
-  const selectedImg = homestay?.image?.filter((img) => img.isSelected === true);
+  ].filter(amenity => amenitiesArray?.includes(amenity));
+  const selectedImg = homestay?.data?.image?.filter((img) => img.isSelected === true);
   return (
     <div className="bg-gray-50 pb-4">
       {showDetails ? (
         <div className=''>
-          <ShowDetails setShowDetails={setShowDetails} room={selectedRoom as Room} />
+          <ShowDetails setShowDetails={setShowDetails} room={selectedRoom as RoomData} />
         </div>
       ): (
         <div className="container mx-auto">
-          <BreadCrumbs name={homestay?.name ?? ''} slug={homestay?.slug} />
+          <BreadCrumbs name={homestay?.data?.name ?? ''} slug={homestay?.data?.slug} />
           <div className="box-border w-full lg:flex lg:gap-8 lg:px-10">
             <div className="box-border flex-grow overflow-x-hidden overflow-y-hidden rounded-xl bg-white p-3 shadow-sm md:p-4 md:px-4">
               <div className="mb-6">
                 <div className="flex items-start justify-between">
                   <div>
-                    <h1 className="text-3xl font-bold text-gray-800">{homestay?.name}</h1>
+                    <h1 className="text-3xl font-bold text-gray-800">{homestay?.data?.name}</h1>
                     <div className="mt-2 flex items-center text-gray-600">
                       <CiLocationOn className="mr-1 text-2xl text-secondary" />
-                      <span className="text-lg">{homestay?.address?.city}, {homestay?.address?.country}</span>
+                      <span className="text-lg">{homestay?.data?.address?.city}, {homestay?.data?.address?.country}</span>
                     </div>
                   </div>
                   {/* <div className="flex space-x-3">
@@ -99,7 +99,7 @@ export default function MainContent(props: Iprops) {
                 <div className="relative mb-4 h-[500px] w-full overflow-hidden rounded-2xl bg-gray-200">
                   <div className="group relative h-full w-full">
                     <Image
-                      src={selectedImg?.[0]?.url ?? homestay?.image?.[ mainImage ]?.url ?? '/images/default-image.png'}
+                      src={selectedImg?.[0]?.url ?? homestay?.data?.image?.[ mainImage ]?.url ?? '/images/default-image.png'}
                       alt={`Room image ${mainImage + 1}`}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -109,7 +109,7 @@ export default function MainContent(props: Iprops) {
                 </div>
 
                 <div className="mb-8 grid grid-cols-6 gap-3">
-                  {homestay?.image?.slice(0, 6).map((img, index) => (
+                  {homestay?.data?.image?.slice(0, 6).map((img: HomestayImageData, index: number) => (
                     <div
                       key={img.id}
                       className={`relative h-24 w-full cursor-pointer overflow-hidden rounded-lg bg-gray-200 transition-all duration-200 hover:opacity-90
@@ -203,11 +203,11 @@ export default function MainContent(props: Iprops) {
                   <h3 className="mb-2 text-lg font-semibold text-gray-800">Map On Google</h3>
                   <div className=" w-full h-[250px] overflow-y-hidden rounded-md">
                     <MapProvider>
-                      {homestay?.address?.latitude && homestay?.address?.longitude && (
+                      {homestay?.data?.address?.latitude && homestay?.data?.address?.longitude && (
                         <MapComponent
-                          lat={homestay.address.latitude}
-                          lng={homestay.address.longitude}
-                          description={homestay.name}
+                          lat={homestay.data.address.latitude}
+                          lng={homestay.data.address.longitude}
+                          description={homestay.data.name}
                         />
                       )}
                     </MapProvider>
@@ -220,19 +220,19 @@ export default function MainContent(props: Iprops) {
           <div className="mt-10 rounded-xl bg-white p-4 shadow-sm w-[93vw] mx-auto" >
             <div className='flex items-center justify-between'>
               <h2 className="mb-6 text-2xl font-semibold text-gray-800">Available Rooms</h2>
-              <Link href={`/homestay/${homestay?.slug}/booking?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`} className='mb-3'>
+              <Link href={`/homestay/${homestay?.data?.slug}/booking?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`} className='mb-3'>
                 <Button label='View Bookings' className='w-fit bg-primary' />
               </Link>
             </div>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2" ref={sectionRef}>
-              {homestay?.rooms?.map((room) => (
+              {homestay?.data?.rooms?.map((room: RoomData) => (
                 <div key={room.id} className="overflow-hidden rounded-xl border border-gray-200 transition-all duration-300 hover:shadow-md">
                   <RoomCardFull
                     room={room}
                     setSelectedRoom={setSelectedRoom}
                     setShowDetails={setShowDetails}
                     isSelected={roomIds.includes(room.id)}
-                    slug={homestay?.slug}
+                    slug={homestay?.data?.slug ?? ''}
                     checkInDate={checkInDate}
                     checkOutDate={checkOutDate}
                   />

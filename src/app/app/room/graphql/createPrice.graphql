@@ -1,5 +1,6 @@
 mutation CreatePrice($createPriceInput: CreatePriceInput!) {
   createPrice(createPriceInput: $createPriceInput) {
+    data {
     id
     baseAmount
     currency
@@ -9,4 +10,9 @@ mutation CreatePrice($createPriceInput: CreatePriceInput!) {
     discountType
     isDiscountActive
   }
+  error {
+    message
+    code
+  }
+}
 }

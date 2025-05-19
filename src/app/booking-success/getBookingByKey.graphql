@@ -1,5 +1,6 @@
 query GetBookingByKey($bookingKey: String!) {
   bookingsWithKey(bookingKey: $bookingKey) {
+    data {
     id
     roomId
     bookingKey
@@ -39,4 +40,9 @@ query GetBookingByKey($bookingKey: String!) {
       updatedAt
     }
   }
+  error {
+    message
+    code
+  }
+}
 }

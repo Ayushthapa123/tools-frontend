@@ -41,7 +41,7 @@ const { data: homestayServices, isLoading: loadingHomestayServices } = useQuery(
   return (
     <div className="bg-white rounded-lg">
         <div className="grid grid-cols-1 lg:grid-cols-2">
-            {homestayServices? homestayServices?.service?.split(',').map((service) => (
+            {homestayServices? homestayServices?.data?.service?.split(',').map((service) => (
               <div key={service} >
                 <ul className="space-y-2">
                     <li key={service} className="flex items-start">

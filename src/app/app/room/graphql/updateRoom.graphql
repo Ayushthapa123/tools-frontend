@@ -1,5 +1,6 @@
 mutation UpdateRoom($updateRoomInput: UpdateRoomInput!) {
   updateRoom(updateRoomInput: $updateRoomInput) {
+    data {
     id
     status
     capacity
@@ -11,4 +12,9 @@ mutation UpdateRoom($updateRoomInput: UpdateRoomInput!) {
     createdAt
     updatedAt
   }
+  error {
+    message
+    code
+  }
+}
 }

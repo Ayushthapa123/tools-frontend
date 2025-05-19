@@ -40,7 +40,7 @@ export const GalleryCard = (props: Iprops) => {
 
   const handleDeleteGallery = (galleryId: number) => {
     deleteGallery({ roomImageId: galleryId }).then(res => {
-      if (res?.deleteRoomImage?.id) {
+        if (res?.deleteRoomImage?.data?.[0]?.id) {
         queryClient.invalidateQueries({ queryKey: [String(invalidateKey)] });
         setShowToast(true);
         setMessage('Image Deleted Success');

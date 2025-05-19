@@ -21,7 +21,7 @@ export const AmenityDisplay: React.FC<AmenityDisplayProps> = ({
   const queryAmenity = useGraphqlClientRequest<FindAmenityByHomestayIdQuery, FindAmenityByHomestayIdQueryVariables>(FindAmenityByHomestayId.loc?.source.body!)
   const fetchData = async () => {
     const res = await queryAmenity({homestayId});
-    return res.findAmenityByHomestayId[0] ?? null;
+    return res.findAmenityByHomestayId ?? null;
   };    
 
   const { data:amenities, error, isLoading: loading } = useQuery({
@@ -34,11 +34,11 @@ export const AmenityDisplay: React.FC<AmenityDisplayProps> = ({
   const amenityCategories = getAmenityCategories();
   
   // Parse the amenities string into an array
-  const amenitiesArray = amenities ? amenities.amenity.split(',').filter(Boolean) : [];
+  const amenitiesArray = amenities ? amenities.data?.amenity.split(',').filter(Boolean) : [];
   
   // Check which categories have amenities
   const categoriesWithAmenities = Object.entries(amenityCategories).map(([category, items]) => {
-    const categoryAmenities = items.filter(item => amenitiesArray.includes(item));
+    const categoryAmenities = items.filter(item => amenitiesArray?.includes(item));
     return {
       category,
       amenities: categoryAmenities,
@@ -54,7 +54,7 @@ export const AmenityDisplay: React.FC<AmenityDisplayProps> = ({
       'Air conditioning / Heating',
       'Free breakfast',
       'Clean private bathroom with hot shower'
-    ].filter(amenity => amenitiesArray.includes(amenity));
+    ].filter(amenity => amenitiesArray?.includes(amenity));
     
     // Then take a few from each category with amenities to showcase variety
     const highlightedAmenities = [...essentialAmenities];
@@ -80,7 +80,7 @@ export const AmenityDisplay: React.FC<AmenityDisplayProps> = ({
     )
   }
   // If there are no amenities, show a message
-  if (amenitiesArray.length === 0) {
+  if (amenitiesArray?.length === 0) {
     return (
       <div className={`p-4 bg-gray-50 rounded-lg text-center text-gray-500 `}>
         No amenities information available
@@ -124,7 +124,7 @@ export const AmenityDisplay: React.FC<AmenityDisplayProps> = ({
         // Compact view with highlights and count
         <div>
           <div className="flex justify-between items-center mb-3">
-            <span className="text-sm text-gray-500">{amenitiesArray.length} total</span>
+            <span className="text-sm text-gray-500">{amenitiesArray?.length} total</span>
           </div>
           
           <div className="grid grid-cols-2 gap-3 mb-4">
@@ -136,12 +136,12 @@ export const AmenityDisplay: React.FC<AmenityDisplayProps> = ({
             ))}
           </div>
           
-          {amenitiesArray.length > 8 && (
+          {amenitiesArray?.length && amenitiesArray?.length > 8 && (
             <button 
               onClick={() => setExpandedView(true)}
               className="w-full py-2 mt-2 border border-gray-200 rounded-md text-blue-600 hover:bg-blue-50 transition-colors text-center"
             >
-              Show all {amenitiesArray.length} amenities
+              Show all {amenitiesArray?.length} amenities
             </button>
           )}
         </div>

@@ -49,9 +49,9 @@ export const HomestayInfo = () => {
     <div className="">
       {!isLoading ? (
         <HomestayInfoForm
-          homestayId={homestayData?.id}
-          name={homestayData?.name}
-          description={homestayData?.description}
+          homestayId={homestayData?.data?.id}
+          name={homestayData?.data?.name}
+          description={homestayData?.data?.description}
        
         />
       ) : (
@@ -60,12 +60,12 @@ export const HomestayInfo = () => {
         </div>
       )}
 
-      {homestayData?.id && (
+      {homestayData?.data?.id && (
         <div>
           
           {
             <div className="bg-white card-body card card-bordered">
-              <HomestayTabs homestayId={Number(homestayData.id)} />
+              <HomestayTabs homestayId={Number(homestayData.data.id)} />
             </div>
           }
         </div>
@@ -168,7 +168,7 @@ export const HomestayInfoForm: FC<IProps> = props => {
      
         },
       }).then(res => {
-        if (res?.updateHomestay?.id) {
+        if (res?.updateHomestay?.data?.id) {
           setShowToast(true);
           setMessage('Homestay Updated');
           setRole('success');

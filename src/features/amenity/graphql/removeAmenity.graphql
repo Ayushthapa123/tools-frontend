@@ -1,7 +1,13 @@
 mutation RemoveAmenity($id:Int!){
   removeAmenity(id:$id){
+    data {
     id
     amenity
     homestayId
+    }
+    error {
+      message
+      code
+    }
   }
 }

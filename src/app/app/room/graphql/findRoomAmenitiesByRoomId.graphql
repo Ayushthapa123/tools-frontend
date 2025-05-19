@@ -1,7 +1,13 @@
 query FindAmenityByRoomId($roomId: Int!) {
   findAmenityByRoomId(roomId: $roomId) {
-    roomAmenityId
-    roomId
-    amenity
+    data {
+      roomAmenityId
+      roomId
+      amenity
+    }
+    error {
+      message
+      code
+    }
   }
 } 

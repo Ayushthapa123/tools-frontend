@@ -1,7 +1,13 @@
 mutation CreateRoomAmenity($createAmenityInput: CreateRoomAmenityInput!) {
   createRoomAmenity(createAmenityInput: $createAmenityInput) {
-    roomAmenityId
-    roomId
-    amenity
+    data {
+      roomAmenityId
+      roomId
+      amenity
+    }
+    error {
+      message
+      code
+    }
   }
 } 

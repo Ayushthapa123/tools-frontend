@@ -1,5 +1,5 @@
 import Button from "src/components/Button";
-import { Room } from "src/gql/graphql";
+import { RoomData } from "src/gql/graphql";
 import { Modal } from "src/components/Modal";
 import RoomIcon from "src/components/icons/Room";
 import { FaShower } from "react-icons/fa";
@@ -9,7 +9,7 @@ import { BsCheckCircleFill } from "react-icons/bs";
 import { Badge } from "src/components/Badge";
 import Image from "next/image";
 import { RoomDetailView } from "src/app/homestay/room-details/RoomDetailView";
-export default function ShowDetails({ room, setShowDetails }: { room: Room, setShowDetails: (showDetails: boolean) => void }) {
+export default function ShowDetails({ room, setShowDetails }: { room: RoomData, setShowDetails: (showDetails: boolean) => void }) {
   // Statically mocked details for now
   const mockRoom = {
     caption: "Deluxe King Room",

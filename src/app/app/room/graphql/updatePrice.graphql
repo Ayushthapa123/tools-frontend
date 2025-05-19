@@ -1,5 +1,6 @@
 mutation UpdatePrice($updatePriceInput: UpdatePriceInput!) {
   updatePrice(updatePriceInput: $updatePriceInput) {
+    data {
     id
     baseAmount
     currency
@@ -8,4 +9,9 @@ mutation UpdatePrice($updatePriceInput: UpdatePriceInput!) {
     discountType
     isDiscountActive
   }
+  error {
+    message
+    code
+  }
+}
 }

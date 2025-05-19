@@ -47,13 +47,13 @@ export const  AddressDetails = (props: Iprops) => {
       {!isLoading ? (
         <HomestayInfoForm
           homestayId={homestayId}
-          addressId={homestayData?.id}
-          country={homestayData?.country}
-          city={homestayData?.city}
-          subCity={homestayData?.subCity}
-          street={homestayData?.street}
-          lat={homestayData?.latitude}
-          lng={homestayData?.longitude}
+          addressId={homestayData?.data?.id}
+          country={homestayData?.data?.country}
+          city={homestayData?.data?.city}
+          subCity={homestayData?.data?.subCity}
+          street={homestayData?.data?.street}
+          lat={homestayData?.data?.latitude}
+          lng={homestayData?.data?.longitude}
         />
       ) : (
         <div className=" h-[50vh] w-full">
@@ -156,7 +156,7 @@ const HomestayInfoForm: FC<IProps> = props => {
           }),
         },
       }).then(res => {
-        if (res?.updateAddress?.id) {
+        if (res?.updateAddress?.data?.id) {
           setShowToast(true);
           setMessage('Address Updated');
           setRole('success');
@@ -179,7 +179,7 @@ const HomestayInfoForm: FC<IProps> = props => {
           longitude: clickedLatLng?.lng,
         },
       }).then(res => {
-        if (res?.createAddress?.id) {
+        if (res?.createAddress?.data?.id) {
           setShowToast(true);
           setMessage('Address created');
           setRole('success');

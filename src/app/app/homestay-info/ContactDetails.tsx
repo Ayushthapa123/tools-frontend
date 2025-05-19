@@ -48,10 +48,10 @@ export const ContactDetails = (props: Iprops) => {
       {!isLoading ? (
         <HomestayInfoForm
           homestayId={homestayId}
-          contactId={homestayData?.id}
-          phone={homestayData?.phone}
-          altPhone={homestayData?.altPhone}
-          email={homestayData?.email}
+          contactId={homestayData?.data?.id}
+          phone={homestayData?.data?.phone}
+          altPhone={homestayData?.data?.altPhone}
+          email={homestayData?.data?.email}
         />
       ) : (
         <div className=" relative h-[50vh] w-full">
@@ -130,7 +130,7 @@ const HomestayInfoForm: FC<IProps> = props => {
           }),
         },
       }).then(res => {
-        if (res?.updateContact?.id) {
+        if (res?.updateContact?.data?.id) {
           setShowToast(true);
           setMessage('Contact Updated');
           setRole('success');
@@ -149,7 +149,7 @@ const HomestayInfoForm: FC<IProps> = props => {
           altPhone,
         },
       }).then(res => {
-        if (res?.createContact?.id) {
+        if (res?.createContact?.data?.id) {
           setShowToast(true);
           setMessage('Contact created');
           setRole('success');
@@ -164,41 +164,9 @@ const HomestayInfoForm: FC<IProps> = props => {
       });
     }
   };
-  const [ phoneNumber, setPhoneNumber ] = useState<string | null>(null);
-  const [ altPhoneNumber, setAltPhoneNumber ] = useState<string | null>(null);
-  const [ someInputFieldChanged, setSomeInputFieldChanged ] = useState<boolean>(false);
-  useEffect(() => {
-    setPhoneNumber(phone??null);
-    setAltPhoneNumber(altPhone??null) 
-  },[])
-  
-  const handlePhoneNumChange = (ph: string) => {
-    setSomeInputFieldChanged(true)
-    setPhoneNumber(ph);
-    setValue("phone",ph)
-  }
-  console.log(phone,",,",phoneNumber)
 
-  const handleAltPhoneNumChange = (phone: string) => {
-    setSomeInputFieldChanged(true)
-    setAltPhoneNumber(phone);
-    setValue("altPhone",phone)
-  }
   
-  const getErrorMessage = (phone: string | null, altPhone: string | null, email: string | null | undefined) => {
-    console.log("em",email)
-    if (email && !(/^(?:[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*|"[^"]+")@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/.test(email)))
-      return "Invalid email address"
-    if (!phone) {
-      return "Enter phone number"
-    }
-    else if (phone?.length != 10) {
-      return "Invalid phone number";
-    } else if (altPhone && altPhone?.length != 10) {
-      return "Invalid alt phone number";
-    }
-    return true;
-  }
+
 
   return (
     <form className=" w-full" onSubmit={handleSubmit(handleSubmitForm)}>
@@ -210,7 +178,7 @@ const HomestayInfoForm: FC<IProps> = props => {
             placeholder="Homestay Email"
             control={control}
             label="Homestay Email"
-            onKeyDown={()=>setSomeInputFieldChanged(true)}
+            // onKeyDown={()=>setSomeInputFieldChanged(true)}
             required
             helpertext={errors.email?.type === 'required' ? 'Email Is Required' : ''}
             error={!!errors.email}
@@ -224,7 +192,7 @@ const HomestayInfoForm: FC<IProps> = props => {
             type="tel"
             control={control}
             label="Phone Number"
-            onChange={(e)=>handlePhoneNumChange(e.target.value)}
+            // onChange={(e)=>handlePhoneNumChange(e.target.value)}
             required
             helpertext={errors.phone?.type === 'required' ? 'Phone Is Required' : ''}
             error={!!errors.phone}
@@ -236,7 +204,7 @@ const HomestayInfoForm: FC<IProps> = props => {
             name="altPhone"
             type="tel"
             placeholder="Alternative Phone"
-            onChange={(e)=>handleAltPhoneNumChange(e.target.value)}
+            // onChange={(e)=>handleAltPhoneNumChange(e.target.value)}
             control={control}
             label="Alternative Phone"
             error={!!errors.altPhone}
@@ -245,12 +213,14 @@ const HomestayInfoForm: FC<IProps> = props => {
       </div>
 
       <div className='mt-4'>
-        <span className='text-error text-sm'><p className='inline-block'>{(phoneNumber || altPhoneNumber ) && getErrorMessage(phoneNumber,altPhoneNumber,changingEmail)}</p></span>
+        {/* <span className='text-error text-sm'><p className='inline-block'>{(phoneNumber || altPhoneNumber ) && getErrorMessage(phoneNumber,altPhoneNumber,changingEmail)}</p></span> */}
       </div>
 
       <div className=" flex w-full justify-end">
         <div className=" mt-10 w-[200px]">
-          <Button label={`${contactId ? 'Update Contact Info' : 'Create Contact'}`} type="submit" loading={isCreating || isUpdating} disabled={ getErrorMessage(phoneNumber,altPhoneNumber,changingEmail)!= true  || !someInputFieldChanged} />
+          <Button label={`${contactId ? 'Update Contact Info' : 'Create Contact'}`} type="submit" loading={isCreating || isUpdating} 
+          // disabled={ getErrorMessage(phoneNumber,altPhoneNumber,changingEmail)!= true  || !someInputFieldChanged}
+           />
         </div>
       </div>
     </form>
