@@ -122,6 +122,7 @@ export const SearchBox = () => {
             className=" rounded-lg border p-2  mt-2 border-white w-full  bg-gray-50"
             onChange={handleLocationChange}
             defaultValue={query}
+            autoComplete='on'
             required
           />
         </Autocomplete>

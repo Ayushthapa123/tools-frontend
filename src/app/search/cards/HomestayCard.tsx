@@ -66,7 +66,7 @@ export const HomestayCard = (props: Iprops) => {
         <div className='flex justify-between items-center flex-wrap gap-2'>
           <p className="text-capitalize mb-1 text-xs text-primary/70 flex items-center gap-2">
             <GrLocation className='text-secondary'/>
-            <span>
+            <span className='text-gray-600 text-sm'>
               {subCity} {city}, {country}
             </span>
           </p>
@@ -74,7 +74,7 @@ export const HomestayCard = (props: Iprops) => {
             {/* <span className='text-sm text-secondary/80 font-semibold'>{currency} {amount}</span> */}
           </div>
         </div>
-        <h3 className="mb-1 ml-1 text-lg font-medium text-gray-700">{name}</h3>
+        <h3 className="mb-1 ml-1 text-lg font-medium text-gray-800">{name}</h3>
 
         <div className="">
           {/* <RichTextEditor editorRef={editorRef} readOnly={true} /> */}

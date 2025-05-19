@@ -37,9 +37,6 @@ export default function ChangePasswordPage({ userId }: { userId: number }) {
     },
   });
 
-  // Watch password fields for validation
-  watch('newPassword');
-  watch('confirmPassword');
 
   const mutateChangePassword = useGraphqlClientRequest<ChangePasswordMutation, ChangePasswordMutationVariables>(
     ChangePassword.loc?.source.body!
@@ -127,6 +124,10 @@ export default function ChangePasswordPage({ userId }: { userId: number }) {
                           : ''
                       }
                       error={!!errors.currentPassword}
+                      autoFocus
+                      onBlur={(e) => {
+                        e.target.value = e.target.value.trim();
+                      }}
                     />
                   </div>
 
@@ -142,7 +143,9 @@ export default function ChangePasswordPage({ userId }: { userId: number }) {
                         errors.newPassword?.message
                       }
                       error={!!errors.newPassword}
-                    
+                      onBlur={(e) => {
+                        e.target.value = e.target.value.trim();
+                      }}
                     />
                   </div>
 
@@ -151,6 +154,9 @@ export default function ChangePasswordPage({ userId }: { userId: number }) {
                       name="confirmPassword"
                       type="password"
                       placeholder="Confirm New Password"
+                      onBlur={(e) => {
+                        e.target.value = e.target.value.trim();
+                      }}
                       control={control}
                       label="Confirm New Password"
                       required

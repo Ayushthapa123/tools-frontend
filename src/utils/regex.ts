@@ -3,7 +3,7 @@
 export const regex = {
   email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   phone: /^\d{10}$/,
-  password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, 
+  password: /^(?!\s)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}(?<!\s)$/, 
   number: /^\d+$/,
   numberWithDecimal: /^\d*\.?\d+$/,
   numberWithDecimalAndNegative: /^-?\d*\.?\d+$/,

@@ -19,6 +19,7 @@ const DatePicker = ({ name, control, label }: DatePickerProps) => {
             value={value ? new Date(value).toISOString().split('T')[0] : ''}
             onChange={(e) => onChange(e.target.value ? new Date(e.target.value) : null)}
             className="rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            max={new Date().toISOString().split("T")[0]}
           />
         </div>
       )}

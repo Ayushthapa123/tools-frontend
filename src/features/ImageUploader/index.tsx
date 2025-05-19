@@ -3,11 +3,15 @@ import axios from 'axios';
 import Image from 'next/image';
 import { MdOutlineCancelPresentation } from 'react-icons/md';
 import LoadingSpinner from 'src/components/Loading';
+import { enqueueSnackbar } from 'notistack';
 
 interface Iprops {
   handleImageUrl: (url: string | null) => void;
   imageUrl: string | null;
 }
+
+const MAX_FILE_SIZE = 10;
+
 const ImageUploader = (props: Iprops) => {
   const { handleImageUrl, imageUrl } = props;
   const [loading, setLoading] = useState(false);
@@ -22,6 +26,9 @@ const ImageUploader = (props: Iprops) => {
     try {
       const formData = new FormData();
       if (file) {
+        if (file.size > MAX_FILE_SIZE)
+          enqueueSnackbar(`File must be smaller than ${MAX_FILE_SIZE} MB. `,{variant:"error"})
+          return;
         formData.append('image', file);
       } else {
         // alert('no file selected');

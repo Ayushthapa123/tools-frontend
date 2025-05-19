@@ -152,10 +152,11 @@ const SignIn = () => {
                       required
                       helpertext={errors.email?.type === 'required' ? 'Email Is Required' : ''}
                       error={!!errors.email}
+                      autoFocus
                     />
                   </div>
                   <div className="mt-3 ">
-                    <TextInput
+                    <TextInput  
                       name="password"
                       type="password"
                       placeholder="Enter Password"
@@ -174,7 +175,7 @@ const SignIn = () => {
                   <Button label='Log in' disabled={loading || !isValid}
                     className={`${
                       loading || !isValid ? 'cursor-not-allowed opacity-30' : 'opacity-100'
-                    } rounded-md bg-primary px-4 py-2 font-bold   `}/>
+                    } rounded-md bg-primary px-4 py-2 font-bold   `} />
                 </div>
               </form>
 

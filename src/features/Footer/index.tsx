@@ -35,7 +35,7 @@ const Footer = () => {
             </svg>
           </a>
         </div>
-        <p className="text-body-color text-base text-center">&copy; 2025 All rights reserved to Nepal Homestay</p>
+        <p className="text-body-color text-base text-center">&copy; 2025 All Rights Reserved to Nepal Homestay</p>
       </div>
     </footer>
   );

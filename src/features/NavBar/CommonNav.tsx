@@ -20,7 +20,7 @@ export const CommonNav = () => {
       id="common-nav">
       <div className="flex w-full justify-between ">
         <div className="relative flex w-auto">
-          <div className="relative h-[60px] w-[150px] md:h-[70px] md:w-[210px] ">
+          <div className="relative h-[60px] w-[150px] md:h-[70px] md:w-fit ">
             <Logo />
             {/* <h1>Home Stay</h1> */}
           </div>
@@ -33,7 +33,7 @@ export const CommonNav = () => {
                 <div className="flex gap-1 md:gap-2">
                   <Link href={'/login'}>
                     <motion.div className="  font-semibold " transition={{ duration: 0.3 }}>
-                      <div className="py-3 text-[1rem] p1-1">Login</div>
+                      <div className="py-3 text-[1rem] p1-1 hover:underline" >Login</div>
                     </motion.div>
                   </Link>
                 </div>

@@ -21,6 +21,7 @@ export const RoomCreateForm = ({ control, errors }: { control: any; errors: any 
         <div className="mb-2">
           <TextInput
             name="caption"
+            type="text"
             placeholder="Room Caption"
             control={control}
             label="Room Caption"
@@ -38,7 +39,6 @@ export const RoomCreateForm = ({ control, errors }: { control: any; errors: any 
             required
             helpertext={errors.roomNumber?.type === 'required' ? 'Room Number is Required' : ''}
             error={!!errors.roomNumber} 
-            type="text"
           />
         </div>
        

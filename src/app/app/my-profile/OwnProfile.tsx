@@ -5,7 +5,7 @@ import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import { GetUserById, GetUserByIdQuery, GetUserByIdQueryVariables, LogOut, LogOutMutation, LogOutMutationVariables, UpdateUser, UpdateUserMutation, UpdateUserMutationVariables } from 'src/gql/graphql';
 import LogoutIcon from 'src/components/icons/LogOut';
 import { useUserStore } from 'src/store/userStore';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState, useEffect } from 'react';
 import { Modal } from 'src/components/Modal';
 import TextInput from 'src/features/react-hook-form/TextField';
@@ -15,10 +15,12 @@ import DatePicker from 'src/features/react-hook-form/DatePicker';
 import { useToastStore } from 'src/store/toastStore';
 import axios from 'axios';
 import { enqueueSnackbar } from 'notistack';
+import { useGraphQLQuery } from 'src/hooks/useGraphqlQuery';
 
 export const OwnProfile = (props: { userType: string }) => {
   const { user } = useUserStore();
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [ loading, setLoading ] = useState(false);
   const mutateLogOutRequest = useGraphqlClientRequest<LogOutMutation, LogOutMutationVariables>(
     LogOut.loc?.source.body!,
@@ -27,18 +29,31 @@ export const OwnProfile = (props: { userType: string }) => {
   const mutateUpdateUser = useGraphqlClientRequest<UpdateUserMutation, UpdateUserMutationVariables>(
     UpdateUser.loc?.source.body!
   );
-  const { mutateAsync: updateUser } = useMutation({ mutationFn: mutateUpdateUser });
+  const { mutateAsync: updateUser } = useMutation({ mutationFn: mutateUpdateUser});
   const [ openPersonalModal, setOpenPersonalModal ] = useState(false);
   const [ openProfilePictureModal, setOpenProfilePictureModal ] = useState(false);
+
+   // Fetch user profile by userId
+   const queryUser = useGraphqlClientRequest<GetUserByIdQuery, GetUserByIdQueryVariables>(GetUserById.loc?.source.body!);
+   const fetchUser = async () => {
+     const res = await queryUser({ id: Number(user.userId) });
+     return res.getUserById;
+   };
+   const { data: userData } = useQuery({
+     queryKey: [ 'getUser' ],
+     queryFn: fetchUser,
+     enabled: !!user.userId && user.userId !== null,
+   });
+  
   // Form for personal details
   const { control,register, handleSubmit, formState: { errors }, reset } = useForm({
     defaultValues: {
       fullName: user.userName || '',
-      city: '',
-      altPhoneNumber: '',
-      phoneNumber: '',
-      gender: '',
-      dateOfBirth: '',
+      city: userData?.city ||  '',
+      altPhoneNumber:userData?.altPhoneNumber || '',
+      phoneNumber: userData?.phoneNumber || '',
+      gender: userData?.gender || '',
+      dateOfBirth: userData?.dateOfBirth || '',
     },
   });
   
@@ -46,18 +61,6 @@ export const OwnProfile = (props: { userType: string }) => {
     defaultValues: {
       profilePicture: '',
     },
-  });
-
-  // Fetch user profile by userId
-  const queryUser = useGraphqlClientRequest<GetUserByIdQuery, GetUserByIdQueryVariables>(GetUserById.loc?.source.body!);
-  const fetchUser = async () => {
-    const res = await queryUser({ id: Number(user.userId) });
-    return res.getUserById;
-  };
-  const { data: userData } = useQuery({
-    queryKey: [ 'getUser' ],
-    queryFn: fetchUser,
-    enabled: !!user.userId && user.userId !== null,
   });
 
   // Update form values when userData changes
@@ -72,7 +75,7 @@ export const OwnProfile = (props: { userType: string }) => {
         dateOfBirth: userData.dateOfBirth || '',
       });
     }
-  }, [ userData, reset ]);
+  }, [ userData, reset , openPersonalModal ]);
 
   const genderOptions = [
     { label: 'Male', value: 'MALE' },
@@ -89,7 +92,8 @@ export const OwnProfile = (props: { userType: string }) => {
         }
       });
       if (res?.updateUser?.id) {
-        enqueueSnackbar('Profile updated successfully!',{variant:'success'})
+        enqueueSnackbar('Profile updated successfully!', { variant: 'success' });
+        queryClient.invalidateQueries({queryKey:["getUser"]})
       } else {
         enqueueSnackbar('Something went wrong!',{variant:'error'})
       }
@@ -162,7 +166,7 @@ export const OwnProfile = (props: { userType: string }) => {
       <div className=" w-full mt-[100px] min-h-[calc(100vh-400px)]">
         <div className=" mb-4 flex gap-5 flex-col lg:flex-row">
           <div className='flex items-center justify-center'>
-            <div className="avatar placeholder relative h-[80px] w-[80px] lg:h-[130px] lg:w-[130px]">
+            <div className="avatar placeholder relative h-[80px] w-[80px] lg:h-[130px] lg:w-[130px] hover:cursor-pointer group transition-all ease-in-out duration-300">
 
               {
                 userData?.profilePicture || imageUrl ? (
@@ -174,7 +178,7 @@ export const OwnProfile = (props: { userType: string }) => {
                 )
               }
               <button
-                className={`absolute bottom-1 right-0 rounded-full p-1 text-[21px] ${userData?.profilePicture || imageUrl ? 'text-white' : 'text-primary'} lg:bottom-[5px] lg:right-[14px]`}
+                className={`hidden group-hover:block absolute bottom-1 right-0 rounded-full p-1 text-[21px] ${userData?.profilePicture || imageUrl ? 'text-white' : 'text-primary'} lg:bottom-[5px] lg:right-[14px]`}
                 onClick={() => setOpenProfilePictureModal(true)}>
                 <FaCamera />
               </button>
@@ -221,11 +225,17 @@ export const OwnProfile = (props: { userType: string }) => {
             helpertext={errors.fullName ? 'Full name is required' : ''}
             type="text"
             customType='name'
+            minLength={0}
+            maxLength={50}
           />
           <TextInput
             name="city"
+            type='text'
             control={control}
             label="City"
+            customType='name'
+            minLength={0}
+            maxLength={50}
             required
             error={!!errors.city}
             helpertext={errors.city ? 'City is required' : ''}
@@ -248,6 +258,7 @@ export const OwnProfile = (props: { userType: string }) => {
             helpertext={errors.altPhoneNumber?.message}
             type="tel"
             customType='tel'
+            pattern="\d{10}"
           />
           <ReactSelect
             name="gender"
