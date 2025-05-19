@@ -24,22 +24,16 @@ interface RoomCardProps {
 
 export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate, setShowDetails, setSelectedRoom }: RoomCardProps) => {
   const { setRoomIds, roomIds } = useRoomStore();
-  const sectionRef = useRef<HTMLDivElement>(null);
   const router = useRouter()
   const pathName = usePathname();
   const [ isBookingPage, setIsBookingPage ] = useState(false);
+  console.log("room ",room)
 
   useEffect(() => {
     setIsBookingPage(pathName.includes("booking"));
   }, [ pathName ]);
 
   const handleRoomSelect = (roomId: string) => {
-    if (sectionRef.current) {
-      sectionRef.current.scrollIntoView({
-        behavior: "smooth",
-        block:"start"
-      })
-    }
     if (roomIds.includes(roomId)) {
       setRoomIds(roomIds.filter((id) => id !== roomId));
     } else {
@@ -50,7 +44,6 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
 
   return (
     <div
-      ref={sectionRef}
       className={`group relative flex flex-col xl:flex-row h-full overflow-hidden rounded-xl bg-base-100 transition-all duration-300 ${isSelected
           ? 'border border-blue ring-2 ring-blue-200'
           : 'border border-gray-200 hover:border-gray-300 hover:shadow-lg'
@@ -121,13 +114,31 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
             )}
             <div className="flex items-center rounded-full bg-blue/40 px-3 py-1 text-sm text-black">
               <BiArea className="mr-1 text-xl text-secondary" />
-              25m²
+              {Math.floor(Math.random() * (30 - 20 + 1)) + 20}m²
             </div>
           </div>
+            
+          {
+            room.roomAmenity ? (
+                <div className="grid grid-cols-2 gap-2 mt-2">
+                
+                {room.roomAmenity?.amenity.split(",").slice(0,4).map((amm) => {
+              return (
+                <div key={amm} className="flex items-center justify-start gap-2">
+                  <BsCheckCircleFill className="mr-2 text-green-500" />
+                  <span className="mr-1">{ amm}</span>
+                  </div>
+              )
+            })}
+            </div>) : (
+                <div className="flex items-center justify-start mt-8">
+                  <span>No room amenities listed.</span>
+                </div> 
+           )
+          }
 
-          <div className="mt-4 grid grid-cols-2 gap-y-2 text-sm text-gray-600">
+          {/* <div className="mt-4 grid grid-cols-2 gap-y-2 text-sm text-gray-600">
             <div className="flex items-center">
-              <BsCheckCircleFill className="mr-2 text-green-500" />
               <span>Free WiFi</span>
             </div>
             <div className="flex items-center">
@@ -142,7 +153,7 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
               <BsCheckCircleFill className="mr-2 text-green-500" />
               <span>Room Service</span>
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div className="mt-5 flex items-center justify-between gap-2">
@@ -170,7 +181,6 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
             <div className="flex items-center">
               <div onClick={
                 (e) => {
-                  e.stopPropagation();
                   handleRoomSelect(room.id);
                 }
               }>

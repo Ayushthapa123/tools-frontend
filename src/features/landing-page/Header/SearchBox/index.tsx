@@ -26,7 +26,8 @@ export const SearchBox = () => {
   const [city, setCity] = useState(params.get('city') ?? '');
   const [subCity, setSubCity] = useState(params.get('subCity') ?? '');
   const [country, setCountry] = useState(params.get('country') ?? '');
-  const [query, setQuery] = useState(params.get('query') ?? '');
+  const [ query, setQuery ] = useState(params.get('query') ?? '');
+  const [searchText,setSearchText] = useState<string | number | readonly string[] | undefined>()
   const router = useRouter();
 
   const [clickedLatLng, setClickedLatLng] = useState<{ lat: number | null; lng: number | null } | null>(null);
@@ -85,14 +86,20 @@ export const SearchBox = () => {
       const lat = place.geometry.location.lat();
       const lng = place.geometry.location.lng();
       setClickedLatLng({ lat, lng });
+      setSearchText(place?.name);
     }
   };
+  const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+    const sanitizedValue = inputValue.replace(/[^a-zA-Z0-9 ,\-]/,'')
+    setSearchText(sanitizedValue);
+  }
 
-  const isValidSearch=(clickedLatLng?.lat || clickedLatLng?.lng) && checkInDate && checkOutDate
+  const isValidSearch = (clickedLatLng?.lat || clickedLatLng?.lng) && checkInDate && checkOutDate;
 
   return (
-    <div className="relative flex w-full flex-col items-center justify-center px-3 ">
-      <div className="relative z-50 flex w-full max-w-6xl flex-col gap-2  space-y-[6px] rounded-2xl border bg-gray-50 px-[10px] py-[10px] focus-within:border-gray-300 sm:flex-row sm:space-y-0 sm:rounded-full sm:pl-6">
+    <div className="relative flex w-fit flex-col items-center justify-center px-3 ">
+      <div className="relative z-50 flex w-full max-w-6xl flex-col gap-2  space-y-[6px] rounded-2xl border bg-gray-50 px-[10px] py-[10px] focus-within:border-gray-300 sm:py-1 sm:pr-1 sm:flex-row sm:space-y-0 sm:rounded-full sm:pl-6">
         {/* <input
           type="text"
           placeholder="Search By Location"
@@ -104,22 +111,23 @@ export const SearchBox = () => {
           onClick={() => setShowSearchSuggestions(true)}
         /> */}
 
-      <Autocomplete
-        onLoad={autocomplete => (autocompleteRef.current = autocomplete)}
-        className=' '
-        onPlaceChanged={handlePlaceChanged}>
-        <input
-          type="text"
-          placeholder="Search Your Location"
-          className=" rounded-lg border p-2  mt-2 border-white w-full  bg-gray-50"
-          defaultValue={query} 
-          required
-         
-        />
-      </Autocomplete>
+        <Autocomplete
+          onLoad={autocomplete => (autocompleteRef.current = autocomplete)}
+          className=' '
+          onPlaceChanged={handlePlaceChanged}>
+          <input
+            type="text"
+            placeholder="Search Your Location"
+            value={searchText}
+            className=" rounded-lg border p-2  mt-2 border-white w-full  bg-gray-50"
+            onChange={handleLocationChange}
+            defaultValue={query}
+            required
+          />
+        </Autocomplete>
 
-        <div className=" flex ">
-          <label className="relative mb-1 mt-4 block whitespace-nowrap text-sm font-medium text-primary">
+        <div className=" flex items-center">
+          <label className="relative mb-3 mt-4 block whitespace-nowrap text-sm font-medium text-primary">
             Check In:
           </label>
 
@@ -132,8 +140,8 @@ export const SearchBox = () => {
           />
         </div>
 
-        <div className=" flex ">
-          <label className="relative mb-1 mt-4 block whitespace-nowrap text-sm font-medium text-primary">
+        <div className=" flex items-center ">
+          <label className="relative mb-3 mt-4 block whitespace-nowrap text-sm font-medium text-primary">
             Check-Out:
           </label>
           <Input

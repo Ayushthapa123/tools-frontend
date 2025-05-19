@@ -145,6 +145,7 @@ export const CreateHomestayModal = () => {
                       required
                       helpertext={errors.name?.type === 'required' ? 'Name Is Required' : ''}
                       error={!!errors.name}
+                      customType='name'
                     />
                   </div>
 

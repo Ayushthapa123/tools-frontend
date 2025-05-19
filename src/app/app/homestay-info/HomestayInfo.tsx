@@ -119,6 +119,9 @@ interface IProps {
 
 export const HomestayInfoForm: FC<IProps> = props => { 
   const { name, description, homestayId } = props;
+  const [ homestayName, setHomestayName ] = useState<string | null>(null);
+  const [ homestayDescription, setHomestayDescription ] = useState<string | null>(description ?? null);
+
 
   const queryClient = useQueryClient();
 
@@ -146,9 +149,6 @@ export const HomestayInfoForm: FC<IProps> = props => {
   const { mutateAsync: updateHomestay, isPending } = useMutation({
     mutationFn: mutateUpdateHomestayInfo,
   });
-
-
-
   const handleSubmitForm = (data: IProps) => {
     const name = data.name ?? undefined;
     const description = descriptionRef.current ?? "";
@@ -194,8 +194,10 @@ export const HomestayInfoForm: FC<IProps> = props => {
             control={control}
             label="Homestay Name"
             required
+            onKeyDown={(e)=>setHomestayName(e.key)}
             helpertext={errors.name?.type === 'required' ? 'Name Is Required' : ''}
             error={!!errors.name}
+            customType='name'
           />
         </div>
 
@@ -204,7 +206,7 @@ export const HomestayInfoForm: FC<IProps> = props => {
 
       </div>
       <div>
-       <RichTextEditor editorRef={descriptionRef}  />
+       <RichTextEditor editorRef={descriptionRef} onChange={(e)=>setHomestayDescription(e)} />
       </div>
       <div className="flex justify-end ">
         <div className=" mt-10 w-fit md:w-[200px]">
@@ -212,6 +214,7 @@ export const HomestayInfoForm: FC<IProps> = props => {
             label={`${homestayId ? 'Update Homestay Info' : 'Create Homestay Info'}`}
             type="submit"
             loading={isPending}
+            disabled={(homestayName==null && (homestayDescription == description))}
           />
         </div>
       </div>

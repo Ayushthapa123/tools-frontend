@@ -144,12 +144,7 @@ export default function ChangePasswordPage({ userId }: { userId: number }) {
                         errors.newPassword?.message
                       }
                       error={!!errors.newPassword}
-                      rules={{
-                        minLength: {
-                          value: 8,
-                          message:"Password mustn't be less than 8 characters."
-                        }
-                      }}
+                    
                     />
                   </div>
 

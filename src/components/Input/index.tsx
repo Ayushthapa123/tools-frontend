@@ -33,6 +33,7 @@ const Input = forwardRef<HTMLInputElement, InputComponentProps>(
             ref={ref} // Forward the ref to the input element
             className={`${height==='lg'?'h-[3rem]':'h-[2.7rem]'} w-full rounded-md border border-[#B6C2E2] px-3 py-2 focus:border-indigo-500 focus:outline-none`}
             type={type === 'password' && isPasswordVisible ? 'text' : type}
+          maxLength={150}
             {...restProps}
           />
           {type === 'password' && (
