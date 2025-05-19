@@ -165,6 +165,8 @@ export const RuleForm = ({
                 required
                 error={!!errors.name}
                 helpertext={errors.name?.message}
+                customType='name'
+                type="text"
               />
             </div>
 
@@ -190,6 +192,8 @@ export const RuleForm = ({
                 required
                 error={!!errors.amount}
                 helpertext={errors.amount?.message}
+                customType='price'
+                
               />
             </div>
 
@@ -220,6 +224,7 @@ export const RuleForm = ({
                 type="number"
                 error={!!errors.priority}
                 helpertext={errors.priority?.message}
+                customType='number'
               />
             </div>
 

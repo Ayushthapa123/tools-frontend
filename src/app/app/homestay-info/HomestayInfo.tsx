@@ -193,6 +193,7 @@ export const HomestayInfoForm: FC<IProps> = props => {
             onKeyDown={(e)=>setHomestayName(e.key)}
             helpertext={errors.name?.type === 'required' ? 'Name Is Required' : ''}
             error={!!errors.name}
+            customType='name'
           />
         </div>
 

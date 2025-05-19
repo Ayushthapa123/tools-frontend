@@ -2,7 +2,7 @@
 import React, { FC, useMemo, useState } from 'react';
 
 import Button from 'src/components/Button';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import TextInput from 'src/features/react-hook-form/TextField';
@@ -25,27 +25,23 @@ import ReactSelect from 'src/features/react-hook-form/ReactSelect';
 import LoadingSpinner from 'src/components/Loading';
 import { MapComponent } from './MapComponent';
 import { enqueueSnackbar } from 'notistack';
+import { useGraphQLQuery } from 'src/hooks/useGraphqlQuery';
 
 interface Iprops {
   homestayId: number;
 }
 export const  AddressDetails = (props: Iprops) => {
   const { homestayId } = props;
-  const queryAddressData = useGraphqlClientRequest<
-    GetAddressByHomestayIdQuery,
-    GetAddressByHomestayIdQueryVariables
-  >(GetAddressByHomestayId.loc?.source?.body!);
 
-  //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
-  const fetchData = async () => {
-    const res = await queryAddressData({ homestayId: homestayId });
-    return res.getAddressByHomestayId;
-  };
 
-  const { data: homestayData, isLoading } = useQuery({
-    queryKey: ['getAddress'],
-    queryFn: fetchData,
+  const { data: homestayDataFull, isLoading} = useGraphQLQuery<GetAddressByHomestayIdQuery, GetAddressByHomestayIdQueryVariables>({
+    queryKey: ['getAddress', homestayId],
+    query: GetAddressByHomestayId.loc!.source.body,
+    variables: { homestayId },
+    enabled: !!homestayId
   });
+
+  const homestayData = homestayDataFull?.getAddressByHomestayId
 
   return (
     <div className="    w-full">

@@ -219,6 +219,8 @@ export const OwnProfile = (props: { userType: string }) => {
             required
             error={!!errors.fullName}
             helpertext={errors.fullName ? 'Full name is required' : ''}
+            type="text"
+            customType='name'
           />
           <TextInput
             name="city"
@@ -234,22 +236,9 @@ export const OwnProfile = (props: { userType: string }) => {
             label="Phone Number"
             required
             error={!!errors.phoneNumber}
-            helpertext={errors.phoneNumber?.message}
-            rules={{
-              required: 'Phone number is required',
-              pattern: {
-                value: /^[0-9]+$/,
-                message: 'Only digits are allowed',
-              },
-              minLength: {
-                value: 10,
-                message: 'Phone number must be at least 10 digits',
-              },
-              maxLength: {
-                value: 10,
-                message: 'Phone number must not exceed 10 digits',
-              },
-            }}
+            helpertext={errors.phoneNumber?.message} 
+            type="tel"
+            customType='tel'
           />
           <TextInput
             name="altPhoneNumber"
@@ -257,20 +246,8 @@ export const OwnProfile = (props: { userType: string }) => {
             label="Alternative Phone Number"
             error={!!errors.altPhoneNumber}
             helpertext={errors.altPhoneNumber?.message}
-            rules={{
-              pattern: {
-                value: /^[0-9]+$/,
-                message: 'Only digits are allowed',
-              },
-              minLength: {
-                value: 10,
-                message: 'Phone number must be at least 10 digits',
-              },
-              maxLength: {
-                value: 10,
-                message: 'Phone number must not exceed 10 digits',
-              },
-            }}
+            type="tel"
+            customType='tel'
           />
           <ReactSelect
             name="gender"

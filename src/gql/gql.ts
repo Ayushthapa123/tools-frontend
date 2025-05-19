@@ -11,7 +11,6 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * 3. It does not support dead code elimination, so it will add unused operations.
  *
  * Therefore it is highly recommended to use the babel or swc plugin for production.
- * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
     "query BookingsByHomestay {\n  bookingsByHomestay {\n    id\n    bookingKey\n    startDate\n    endDate\n    status\n    createdAt\n    updatedAt\n    room {\n      id\n      caption\n      roomNumber\n      capacity\n      status\n      attachBathroom\n      maxOccupancy\n      price {\n        baseAmount\n        currency\n        discountAmount\n        discountType\n        isDiscountActive\n      }\n      image {\n        url\n        caption\n      }\n    }\n    guest {\n      id\n      email\n      fullName\n      phoneNumber\n    }\n  }\n}": typeof types.BookingsByHomestayDocument,
