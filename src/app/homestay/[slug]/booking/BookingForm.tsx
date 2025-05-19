@@ -14,6 +14,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useRoomStore } from 'src/store/roomStore';
 import LoadingSpinner from 'src/components/Loading';
 import { useBookingDetailsStore } from 'src/store/bookingDetailsStore';
+import { enqueueSnackbar } from 'notistack';
 interface BookingFormProps {
   homestayId: string;
   homeStaySlug: string;
@@ -61,7 +62,6 @@ interface StepOneProps {
 }
 
 export const BookingForm = ({ homestayId, homeStaySlug, onSuccess, rooms }: BookingFormProps) => {
-  const { setMessage, setRole, setShowToast } = useToastStore();
   const { roomIds } = useRoomStore()
   const [ currentStep, setCurrentStep ] = useState(1);
   const [ formData, setFormData ] = useState<BookingFormData | null>(null);
@@ -131,14 +131,9 @@ export const BookingForm = ({ homestayId, homeStaySlug, onSuccess, rooms }: Book
       if (data.password) {
         signUp({ input: { email: data.email, fullName: data.fullName, userType: "GUEST", password: data.password } }).then((res) => {
           if (res?.signupUser?.id) {
-            setShowToast(true);
-            setMessage("User signed in successfully.")
-            setRole('success');
+            enqueueSnackbar("User signed in successfully.",{variant:'success'})
           } else {
-            console.log("res",res)
-            setMessage("Check your email")
-            setShowToast(true);
-            setRole('error');
+            enqueueSnackbar("please check your email.",{variant:"error"})
             setCurrentStep(1);
             
             return;
@@ -151,14 +146,9 @@ export const BookingForm = ({ homestayId, homeStaySlug, onSuccess, rooms }: Book
     } else {
       try {
         // Here you would typically make the API call to create the booking
-        setMessage('Booking successful!');
-        setRole('success');
-        setShowToast(true);
-        onSuccess();
-      } catch (error) {
-        setMessage('Failed to create booking. Please try again.');
-        setRole('error');
-        setShowToast(true);
+        enqueueSnackbar("Booking successfull.", { variant: 'success' })
+      } catch {
+        enqueueSnackbar("Failed. Please try again.", { variant: "error" })
       }
     }
   };
@@ -571,7 +561,6 @@ const paymentMethods = [
 const StepTwo = ({ selectedRoom, selectedRooms, formData, handleBack, handleSubmit, onSubmit, checkInDateValue, checkOutDateValue }: StepTwoProps) => {
   const { user } = useUserStore();
   const { roomIds } = useRoomStore();
-  const { setMessage,setRole,setShowToast} = useToastStore();
   const [ selectedPaymentMethod, setSelectedPaymentMethod ] = useState<string | null>("stripe");
   const queryValidity = useGraphqlClientRequest<
     CheckValidBookingQuery,
@@ -640,13 +629,9 @@ const StepTwo = ({ selectedRoom, selectedRooms, formData, handleBack, handleSubm
     });
     const emailSent = await sendEmailAfterSuccessfullBooking({email:formData?.email ?? "",data:{checkInDate:String(formData?.checkInDate),checkOutDate:String(formData?.checkOutDate),roomName:RoomDetails?.roomNumbers ?? [],guestName:"guest",homestayName:RoomDetails?.name ?? "",paidAmount:validity?.totalPrice ?? 0}})
     if (emailSent.sendMailAfterBooking) {
-      setShowToast(true);
-      setMessage("Check your mail.");
-      setRole('success');
+      enqueueSnackbar("Please check your mail.",{variant:'success'})
     } else {
-      setShowToast(true);
-      setMessage("Error in sending mail.");
-      setRole('error');
+      enqueueSnackbar("Error in sending mail.",{variant:"error"})
     }
     setIsPaymentUrlLoading(false);
     const data = await response.json();

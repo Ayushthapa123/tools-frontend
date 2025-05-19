@@ -22,6 +22,7 @@ import {
   GetHomestayByTokenQueryVariables
 } from 'src/gql/graphql';
 import { WallpaperGallery } from '../homestay-info/gallery/WallpaperGallery';
+import { enqueueSnackbar } from 'notistack';
 
 
 interface HomestayImage {
@@ -34,7 +35,6 @@ export default function Gallery() {
   const [ selectedImage, setSelectedImage ] = useState<HomestayImage | null>(null);
   const [ showModal, setShowModal ] = useState(false);
   const queryClient = useQueryClient();
-  const { setMessage, setRole, setShowToast } = useToastStore();
 
   //homestay id
   const queryHomestayData = useGraphqlClientRequest<
@@ -112,14 +112,10 @@ export default function Gallery() {
 
       if (response?.deleteHomestayImage?.id) {
         queryClient.invalidateQueries({ queryKey: [ 'getHomestayWallpaper' ] });
-        setShowToast(true);
-        setMessage('Image deleted successfully');
-        setRole('success');
+        enqueueSnackbar("Homestay Deleted.",{variant:"error"})
       }
     } catch (error) {
-      setShowToast(true);
-      setMessage('Failed to delete image');
-      setRole('error');
+      enqueueSnackbar("Something went wrong",{variant:"warning"})
     }
   };
 
@@ -132,15 +128,11 @@ export default function Gallery() {
 
       if (response?.selectHomestayImage?.id) {
         queryClient.invalidateQueries({ queryKey: [ 'getHomestayWallpaper' ] });
-        setShowToast(true);
-        setMessage('Wallpaper selected successfully');
-        setRole('success');
+        enqueueSnackbar("Wallpaper selected successfully.",{variant:'success'})
         setShowModal(false);
       }
     } catch (error) {
-      setShowToast(true);
-      setMessage('Failed to select wallpaper');
-      setRole('error');
+      enqueueSnackbar("Failed to select wallpaper",{variant:'error'})
     }
   };
 

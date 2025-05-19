@@ -14,6 +14,7 @@ import { useForm } from 'react-hook-form';
 import DatePicker from 'src/features/react-hook-form/DatePicker';
 import { useToastStore } from 'src/store/toastStore';
 import axios from 'axios';
+import { enqueueSnackbar } from 'notistack';
 
 export const OwnProfile = (props: { userType: string }) => {
   const { user } = useUserStore();
@@ -27,7 +28,6 @@ export const OwnProfile = (props: { userType: string }) => {
     UpdateUser.loc?.source.body!
   );
   const { mutateAsync: updateUser } = useMutation({ mutationFn: mutateUpdateUser });
-  const { setShowToast, setMessage, setRole } = useToastStore();
   const [ openPersonalModal, setOpenPersonalModal ] = useState(false);
   const [ openProfilePictureModal, setOpenProfilePictureModal ] = useState(false);
   // Form for personal details
@@ -89,18 +89,12 @@ export const OwnProfile = (props: { userType: string }) => {
         }
       });
       if (res?.updateUser?.id) {
-        setShowToast(true);
-        setMessage('Profile updated successfully!');
-        setRole('success');
+        enqueueSnackbar('Profile updated successfully!',{variant:'success'})
       } else {
-        setShowToast(true);
-        setMessage('Something went wrong!');
-        setRole('error');
+        enqueueSnackbar('Something went wrong!',{variant:'error'})
       }
     } catch (err) {
-      setShowToast(true);
-      setMessage('Something went wrong!');
-      setRole('error');
+      enqueueSnackbar('Something went wrong!',{variant:'error'})
     } finally {
       setOpenPersonalModal(false);
     }
@@ -122,9 +116,7 @@ export const OwnProfile = (props: { userType: string }) => {
       if (data.profilePicture && data.profilePicture[0]) {
         formData.append('image', data.profilePicture[0]);
       } else {
-        setShowToast(true);
-        setMessage('Please select a file.');
-        setRole('error');
+        enqueueSnackbar('Please select a file.',{variant:'warning'})
         setLoading(false);
         return;
       }
@@ -140,9 +132,7 @@ export const OwnProfile = (props: { userType: string }) => {
           },
         );
       } catch (err) {
-        setShowToast(true);
-        setMessage('Image upload failed!');
-        setRole('error');
+        enqueueSnackbar('Image upload failed!',{variant:'error'})
         return;
       }
       setImageUrl(response.data.imageUrl);
@@ -155,19 +145,13 @@ export const OwnProfile = (props: { userType: string }) => {
       });
 
       if (imageUploaded?.updateUser?.profilePicture) {
-        setShowToast(true);
-        setMessage('Profile picture updated successfully!');
-        setRole('success');
+        enqueueSnackbar('Profile picture updated successfully!',{variant:'success'})
         setOpenProfilePictureModal(false); // Optionally close modal
       } else {
-        setShowToast(true);
-        setMessage('Something went wrong upload!');
-        setRole('error');
+        enqueueSnackbar('Something went wrong during upload!',{ variant:'error'})
       }
     } catch (err) {
-      setShowToast(true);
-      setMessage('Something went wrong file!');
-      setRole('error');
+      enqueueSnackbar('Something went wrong file!',{variant:'error'})
     } finally {
       setLoading(false);
     }

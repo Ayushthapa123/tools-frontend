@@ -9,12 +9,12 @@ import { roomAmenities } from "../../data/roomAmenity";
 import { Input } from "src/components/Input";
 import Button from "src/components/Button";
 import LoadingSpinner from "src/components/Loading";
+import { enqueueSnackbar } from "notistack";
 
 export default function RoomAmenityPage({ handleBack, roomId }: { handleBack: () => void, roomId: number }) {
   
   const [ selectedRoomAmenity, setSelectedRoomAmenity ] = useState<string[]>([]);
   const router = useRouter();
-  const { setRole, setShowToast, setMessage } = useToastStore();
   const queryClient = useQueryClient();
 
   // room amenity fetching
@@ -67,30 +67,22 @@ export default function RoomAmenityPage({ handleBack, roomId }: { handleBack: ()
     if (!data?.roomAmenityId) {
       mutateAsync({ createAmenityInput: { roomId, amenity: selectedRoomAmenity.join(",") } }).then((res) => {
         if (res?.createRoomAmenity.roomAmenityId) {
-          setShowToast(true);
           queryClient.invalidateQueries({ queryKey: ['getRoomAmenities'] });
-          setMessage('Amenities Created Successfully!');
-          setRole('success');
+          enqueueSnackbar('Amenities Created Successfully!',{variant:'success'})
         }
         else {
-          setShowToast(true);
-          setMessage('Amenities Not Created!');
-          setRole('error');
+          enqueueSnackbar('Amenities Not Created!',{variant:'error'})
         }
       })
     }
     else {
       updateAmenity({updateAmenityInput:{roomAmenityId:Number(data?.roomAmenityId), amenity:selectedRoomAmenity.join(",")}}).then((res) => {
         if (res?.updateRoomAmenity.roomAmenityId) {
-          setShowToast(true);
           queryClient.invalidateQueries({ queryKey: ['getRoomAmenities'] });
-          setMessage('Amenities Updated Successfully!');
-          setRole('success');
+          enqueueSnackbar('Amenities Updated Successfully!',{variant:'success'})
         }
         else {
-          setShowToast(true);
-          setMessage('Amenities Not Updated!');
-          setRole('error');
+          enqueueSnackbar('Amenities Not Updated!',{variant:'error'})
         }
       })
     }

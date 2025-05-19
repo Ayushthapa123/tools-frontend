@@ -20,6 +20,7 @@ import {
   DynamicPricingRule,
 } from 'src/gql/graphql';
 import { useToastStore } from 'src/store/toastStore';
+import { enqueueSnackbar } from 'notistack';
 
 export const AddDynamicRule = ({
   roomId,
@@ -62,7 +63,6 @@ export const RuleForm = ({
   roomId: number | string;
   rules: DynamicPricingRule | undefined;
 }) => {
-  const { setRole, setShowToast, setMessage } = useToastStore();
   const queryClient = useQueryClient();
   const isEdit = Boolean(rules?.id);
 
@@ -115,9 +115,7 @@ export const RuleForm = ({
           },
         });
         if (result?.updatePriceRule?.id) {
-          setShowToast(true);
-          setMessage('Rule Updated!');
-          setRole('success');
+          enqueueSnackbar("Rules updated",{variant:'success'})
           queryClient.invalidateQueries({ queryKey: ['getPriceRulesByRoom'] });
           handleClose();
         }
@@ -136,21 +134,15 @@ export const RuleForm = ({
           },
         });
         if (result?.createPriceRule?.data?.id) {
-          setShowToast(true);
-          setMessage('Rule Created!');
-          setRole('success');
+          enqueueSnackbar('Rules created',{variant:'success'})
           queryClient.invalidateQueries({ queryKey: ['getPriceRulesByRoom'] });
           handleClose();
         }else {
-          setShowToast(true);
-          setMessage(result?.createPriceRule.error?.message?? 'Something went wrong!');
-          setRole('error');
+          enqueueSnackbar("Something went wrong.",{variant:'error'})
         }
       }
     } catch (error) {
-      setShowToast(true);
-      setMessage('Something went wrong!');
-      setRole('error');
+      enqueueSnackbar("Something went wrong.",{variant:'error'})
     }
   };
 
