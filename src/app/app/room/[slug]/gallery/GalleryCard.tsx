@@ -10,6 +10,7 @@ import {
 } from 'src/gql/graphql';
 import { useToastStore } from 'src/store/toastStore';
 import { GalleryEditBox } from './GalleryEditBox';
+import { enqueueSnackbar } from 'notistack';
 
 interface Iprops {
   galleryId: number;
@@ -22,7 +23,6 @@ export const GalleryCard = (props: Iprops) => {
   const { galleryId, roomId, url, invalidateKey } = props;
 
   const [showEditBox, setShowEditBox] = useState(false);
-  const { setRole, setMessage, setShowToast } = useToastStore();
   const queryClient = useQueryClient();
   const handleBack = () => {
     setShowEditBox(false);
@@ -42,13 +42,9 @@ export const GalleryCard = (props: Iprops) => {
     deleteGallery({ roomImageId: galleryId }).then(res => {
       if (res?.deleteRoomImage?.id) {
         queryClient.invalidateQueries({ queryKey: [String(invalidateKey)] });
-        setShowToast(true);
-        setMessage('Image Deleted Success');
-        setRole('success');
+        enqueueSnackbar('Image Deleted Successfully.',{variant:'success'})
       } else {
-        setShowToast(true);
-        setMessage('Something went wrong');
-        setRole('error');
+        enqueueSnackbar("Something went wrong",{variant:'error'})
       }
     });
   };

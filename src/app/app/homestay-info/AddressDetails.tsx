@@ -24,6 +24,7 @@ import {
 import ReactSelect from 'src/features/react-hook-form/ReactSelect';
 import LoadingSpinner from 'src/components/Loading';
 import { MapComponent } from './MapComponent';
+import { enqueueSnackbar } from 'notistack';
 
 interface Iprops {
   homestayId: number;
@@ -92,7 +93,6 @@ const HomestayInfoForm: FC<IProps> = props => {
 
   const queryClient = useQueryClient();
 
-  const { setMessage, setRole, setShowToast } = useToastStore();
   const {
     control,
     handleSubmit,
@@ -161,13 +161,9 @@ const HomestayInfoForm: FC<IProps> = props => {
         },
       }).then(res => {
         if (res?.updateAddress?.id) {
-          setShowToast(true);
-          setMessage('Address Updated');
-          setRole('success');
+          enqueueSnackbar("Address updated.",{variant:'success'})
         } else {
-          setShowToast(true);
-          setMessage('Something went wrong!');
-          setRole('error');
+          enqueueSnackbar("Something went wrong.",{variant:'error'})
         }
       });
     } else {
@@ -184,16 +180,11 @@ const HomestayInfoForm: FC<IProps> = props => {
         },
       }).then(res => {
         if (res?.createAddress?.id) {
-          setShowToast(true);
-          setMessage('Address created');
-          setRole('success');
-          //
-          queryClient.invalidateQueries({ queryKey: ['getAddress'] });
-          queryClient.invalidateQueries({ queryKey: ['getHomestayByToken'] });
+           enqueueSnackbar("Address Created",{variant:'success'})
+           queryClient.invalidateQueries({ queryKey: ['getAddress'] });
+           queryClient.invalidateQueries({ queryKey: ['getHomestayByToken'] });
         } else {
-          setShowToast(true);
-          setMessage('Something Went Wrong!');
-          setRole('error');
+          enqueueSnackbar("Something went wrong",{variant:'error'})
         }
       });
     }

@@ -13,6 +13,7 @@ import EditIcon from 'src/components/icons/Edit';
 import Image from 'next/image';
 import { Badge } from 'src/components/Badge';
 import { FiEdit } from 'react-icons/fi';
+import { enqueueSnackbar } from 'notistack';
 
 interface Iprops {
   id: number | string;
@@ -34,19 +35,13 @@ export const RoomCard = (props: Iprops) => {
   const { mutateAsync } = useMutation({ mutationFn: mutateCreateNearbyPlace });
   const queryClient = useQueryClient();
 
-  const { setMessage, setRole, setShowToast } = useToastStore();
-
   const onSubmit = async () => {
     await mutateAsync({ id: Number(id) }).then(res => {
       if (res?.removeRoom) {
-        setShowToast(true);
-        setMessage('Room Deleted!');
-        setRole('success');
+        enqueueSnackbar("Room deleted.",{variant:"success"})
         queryClient.invalidateQueries({ queryKey: [ 'getRooms' ] });
       } else {
-        setShowToast(true);
-        setMessage('Something went wrong!');
-        setRole('error');
+        enqueueSnackbar("Couldn't delete room.",{variant:"error"})
       }
     });
   };

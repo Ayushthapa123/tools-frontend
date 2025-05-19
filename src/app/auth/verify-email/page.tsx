@@ -7,20 +7,18 @@ import { useEffect, useRef, Suspense } from "react"
 import { MdMarkEmailRead, MdError, MdEmail } from "react-icons/md"
 import Link from "next/link"
 import { useToastStore } from "src/store/toastStore"
+import { enqueueSnackbar } from "notistack"
 
 function VerifyUserEmailInner() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { setMessage, setRole, setShowToast } = useToastStore();
 
   const queryVerification = useGraphqlClientRequest<VerifyEmailMutation, VerifyEmailMutationVariables>(VerifyEmail.loc?.source.body!)
   const { mutate: verifyUser, status, error } = useMutation({
     mutationFn: queryVerification,
     onSuccess: (data) => {
       if (data?.verifyEmail) {
-        setShowToast(true);
-        setMessage("Email verified successfully!");
-        setRole("success");
+        enqueueSnackbar("Email verified successfully!",{variant:'success'})
         router.push('/app/my-profile');
       }
     }

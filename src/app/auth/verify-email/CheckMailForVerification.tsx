@@ -11,11 +11,11 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useUserStore } from 'src/store/userStore';
 import { useToastStore } from 'src/store/toastStore';
+import { enqueueSnackbar } from 'notistack';
 
 export const CheckMailForVerification = () => {
   const router = useRouter();
   const { user } = useUserStore();
-  const { setShowToast, setMessage, setRole } = useToastStore();
   const mutateLogOutRequest = useGraphqlClientRequest<LogOutMutation, LogOutMutationVariables>(
     LogOut.loc?.source.body!,
   );
@@ -37,26 +37,18 @@ export const CheckMailForVerification = () => {
 
   const handleResendEmail = async () => {
     if (!user.userId) {
-      setShowToast(true);
-      setMessage('User ID not found. Please log in again.');
-      setRole('error');
+      enqueueSnackbar('User ID not found. Please log in again.',{variant:"error"})
       return;
     }
     try {
       const res = await resendVerificationMail({ id: user.userId });
       if (res?.resendVerificationMail) {
-        setShowToast(true);
-        setMessage('Verification email resent successfully!');
-        setRole('success');
+        enqueueSnackbar('Verification email resent successfully!',{variant:'success'})
       } else {
-        setShowToast(true);
-        setMessage('Failed to resend verification email.');
-        setRole('error');
+        enqueueSnackbar('Failed to resend verification email.',{variant:"error"})
       }
     } catch (err: any) {
-      setShowToast(true);
-      setMessage(err?.message || 'An error occurred while resending email.');
-      setRole('error');
+      enqueueSnackbar('An error occurred while resending email.',{variant:"error"})
     }
   };
 

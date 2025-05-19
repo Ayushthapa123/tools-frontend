@@ -26,6 +26,7 @@ import RichTextEditor from 'src/components/RichTextEditor';
 import {  MapComponent } from './MapComponent';
 import { MapProvider } from 'src/features/MapProvider';
 import { WallpaperGallery } from './gallery/WallpaperGallery';
+import { enqueueSnackbar } from 'notistack';
 // import HomestayAmenitiesPage from 'src/features/amenity/HomestayAmenityPage';
 
 export const HomestayInfo = () => { 
@@ -127,7 +128,6 @@ export const HomestayInfoForm: FC<IProps> = props => {
 
   const descriptionRef = useRef(description);
 
-  const { setMessage, setRole, setShowToast } = useToastStore();
   const {
     control,
     handleSubmit,
@@ -169,13 +169,9 @@ export const HomestayInfoForm: FC<IProps> = props => {
         },
       }).then(res => {
         if (res?.updateHomestay?.id) {
-          setShowToast(true);
-          setMessage('Homestay Updated');
-          setRole('success');
+          enqueueSnackbar("Homestay updated successfully.",{variant:'success'})
         } else {
-          setShowToast(true);
-          setMessage('Something went wrong!');
-          setRole('error');
+          enqueueSnackbar("Something went wrong.",{variant:'warning'})
         }
       });
     } 

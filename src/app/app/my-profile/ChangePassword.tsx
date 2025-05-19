@@ -9,6 +9,7 @@ import Button from 'src/components/Button';
 import TextInput from 'src/features/react-hook-form/TextField';
 import { ChangePassword, ChangePasswordMutation, ChangePasswordMutationVariables } from 'src/gql/graphql';
 import { useToastStore } from 'src/store/toastStore';
+import { enqueueSnackbar } from 'notistack';
 
 type ChangePasswordFormData = {
   currentPassword: string;
@@ -18,7 +19,6 @@ type ChangePasswordFormData = {
 
 export default function ChangePasswordPage({ userId }: { userId: number }) {
   const router = useRouter();
-  const { setMessage, setRole, setShowToast } = useToastStore();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -78,9 +78,7 @@ export default function ChangePasswordPage({ userId }: { userId: number }) {
       if (response?.changePassword) {
         setSuccess(true);
         setError('');
-        setShowToast(true);
-        setMessage('Password changed successfully!');
-        setRole('success');
+        enqueueSnackbar('Password changed successfully!',{variant:'success'})
         setTimeout(() => {
           router.push('/');
         }, 1500);

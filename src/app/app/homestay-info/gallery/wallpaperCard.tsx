@@ -12,6 +12,7 @@ import {
 import { useToastStore } from 'src/store/toastStore';
 import { WallpaperEditBox } from './WallpaperEditBox';
 import { useRouter } from 'next/navigation';
+import { enqueueSnackbar } from 'notistack';
 
 interface Iprops {
   galleryId: number;
@@ -24,7 +25,6 @@ export const WallpaperCard = (props: Iprops) => {
   const { galleryId, homestayId, url, invalidateKey } = props;
 
   const [ showEditBox, setShowEditBox ] = useState(false);
-  const { setRole, setMessage, setShowToast } = useToastStore();
   const queryClient = useQueryClient();
   const handleBack = () => {
     setShowEditBox(false);
@@ -45,14 +45,10 @@ export const WallpaperCard = (props: Iprops) => {
     deleteGallery({ homestayImageId: galleryId }).then(res => {
       if (res?.deleteHomestayImage?.id) {
         queryClient.invalidateQueries({ queryKey: [ String(invalidateKey) ] });
-        setShowToast(true);
-        setMessage('Image Deleted Success');
-        setRole('success');
+        enqueueSnackbar("Image deleted successfully.",{variant:'success'})
         window.refresh();
       } else {
-        setShowToast(true);
-        setMessage('Something went wrong');
-        setRole('error');
+        enqueueSnackbar("Something went wrong",{variant:"error"})
       }
     });
   };

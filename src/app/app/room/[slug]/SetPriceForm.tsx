@@ -10,9 +10,9 @@ import ReactSelect from "src/features/react-hook-form/ReactSelect";
 import DynamicPriceContainer from "./dynamic-price-rules/DynamicPriceContainer";
 import { Toggle } from "src/features/react-hook-form/Toggle";
 import { useToastStore } from "src/store/toastStore";
+import { enqueueSnackbar } from "notistack";
 
 export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Price | undefined, roomId: number , onNext: () => void , handleBack: () => void,}) => {
-  const { setRole, setShowToast, setMessage } = useToastStore();
    
     const router = useRouter();
     const queryClient = useQueryClient();
@@ -71,15 +71,11 @@ export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Pri
             } 
           });  
           if (result?.createPrice?.id) {
-            setShowToast(true);
-            setMessage('Price Created!');
-            setRole('success');
+            enqueueSnackbar("Price created.",{variant:"success"})
             queryClient.invalidateQueries({ queryKey: ['getRoom'] });
             // onNext();
           } else {
-            setShowToast(true);
-            setMessage('Something went wrong!');
-            setRole('error');
+            enqueueSnackbar("Something went wrong.",{variant:'error'})
           }
         } else {
           mutateUpdatePriceAsync({ 
@@ -98,18 +94,14 @@ export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Pri
             } 
           }).then(res => {
             if (res?.updatePrice?.id) {
-              setShowToast(true);
-              setRole('success');
-              setMessage('Price Updated!');
+             enqueueSnackbar("Price updated.",{variant:'success'})
               queryClient.invalidateQueries({ queryKey: ['getRoom'] });
               // onNext();
             }
           });
         }
       } catch (error) {
-        setShowToast(true);
-        setMessage('An error occurred!');
-        setRole('error');
+        enqueueSnackbar("Something went wrong.",{variant:'error'})
       }
     };
     const currencyOptions = [

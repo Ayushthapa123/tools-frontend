@@ -10,6 +10,7 @@ import {
 import { useToastStore } from 'src/store/toastStore';
 import Link from 'next/link';
 import EditIcon from 'src/components/icons/Edit';
+import { enqueueSnackbar } from 'notistack';
 
 interface Iprops {
   id: number | string;
@@ -49,19 +50,14 @@ export const BookingCard = (props: Iprops) => {
 
   const { mutateAsync } = useMutation({ mutationFn: mutateDeleteRoom });
   const queryClient = useQueryClient();
-  const { setMessage, setRole, setShowToast } = useToastStore();
 
   const onSubmit = async () => {
     mutateAsync({ id: Number(id) }).then((res) => {
       if (res?.removeRoom) {
-        setShowToast(true);
-        setMessage('Room Deleted!');
-        setRole('success');
+        enqueueSnackbar("Room Deleted",{variant:'error'})
         queryClient.invalidateQueries({ queryKey: ['getRooms'] });
       } else {
-        setShowToast(true);
-        setMessage('Something went wrong!');
-        setRole('error');
+        enqueueSnackbar("Something went wrong", { variant: 'warning' })
       }
     });
   };

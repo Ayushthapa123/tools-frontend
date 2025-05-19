@@ -21,6 +21,7 @@ import {
   UpdateContactMutationVariables,
 } from 'src/gql/graphql';
 import LoadingSpinner from 'src/components/Loading';
+import { enqueueSnackbar } from 'notistack';
 
 interface Iprops {
   homestayId: number; 
@@ -77,7 +78,6 @@ const HomestayInfoForm: FC<IProps> = props => {
 
   const queryClient = useQueryClient();
 
-  const { setMessage, setRole, setShowToast } = useToastStore();
   const {
     control,
     handleSubmit,
@@ -131,13 +131,9 @@ const HomestayInfoForm: FC<IProps> = props => {
         },
       }).then(res => {
         if (res?.updateContact?.id) {
-          setShowToast(true);
-          setMessage('Contact Updated');
-          setRole('success');
+          enqueueSnackbar("Contact updated",{variant:'success'})
         } else {
-          setShowToast(true);
-          setMessage('Something went wrong!');
-          setRole('error');
+          enqueueSnackbar("Something went wrong",{variant:'error'})
         }
       });
     } else {
@@ -150,16 +146,11 @@ const HomestayInfoForm: FC<IProps> = props => {
         },
       }).then(res => {
         if (res?.createContact?.id) {
-          setShowToast(true);
-          setMessage('Contact created');
-          setRole('success');
-          //
+         enqueueSnackbar("Contacts created",{variant:"success"})
           queryClient.invalidateQueries({ queryKey: ['getContacts'] });
           queryClient.invalidateQueries({ queryKey: ['getHomestayByToken'] });
         } else {
-          setShowToast(true);
-          setMessage('Something Went Wrong!');
-          setRole('error');
+          enqueueSnackbar("something went wrong.", { variant: "error" });
         }
       });
     }
