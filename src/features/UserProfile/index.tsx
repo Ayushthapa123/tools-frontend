@@ -30,8 +30,8 @@ export const UserProfile = () => {
           <div className="avatar placeholder h-full w-full">
             <div className="h-full w-full rounded-full bg-primary text-neutral-content">
                 { 
-                  userData?.profilePicture ? (
-                    <Image src={userData?.profilePicture} alt="user avatar" fill className='rounded-full'/>
+                  userData?.data?.profilePicture ? (
+                    <Image src={userData?.data?.profilePicture} alt="user avatar" fill className='rounded-full'/>
                   ) : (
                     <span className="text-3xl text-white">{user.userName.charAt(0)}</span>
                   )

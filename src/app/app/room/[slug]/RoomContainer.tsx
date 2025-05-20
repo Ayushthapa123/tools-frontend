@@ -15,7 +15,7 @@ import {
   GetRoomWithPriceAndGallery,
   GetRoomWithPriceAndGalleryQuery,
   GetRoomWithPriceAndGalleryQueryVariables,
-  Price,
+  PriceData,
   Room,
   RoomCapacity,
   RoomImage,
@@ -81,13 +81,13 @@ function RoomForm({ params, room }: { params: { slug: string }, room: Room | und
     reset
   } = useForm<CreateRoomInput>({
     defaultValues: {
-      roomNumber: room?.roomNumber,
-      caption: room?.caption,
-      capacity: room?.capacity ?? RoomCapacity.OneBed,
-      description: room?.description,
-      status: room?.status ?? RoomStatus.Available,
-      maxOccupancy: room?.maxOccupancy,
-      attachBathroom: room?.attachBathroom,
+      roomNumber: room?.data?.[0]?.roomNumber,
+      caption: room?.data?.[0]?.caption,
+      capacity: room?.data?.[0]?.capacity ?? RoomCapacity.OneBed,
+      description: room?.data?.[0]?.description,
+      status: room?.data?.[0]?.status ?? RoomStatus.Available,
+      maxOccupancy: room?.data?.[0]?.maxOccupancy,
+      attachBathroom: room?.data?.[0]?.attachBathroom,
 
     },
   });
@@ -95,13 +95,13 @@ function RoomForm({ params, room }: { params: { slug: string }, room: Room | und
   useEffect(() => {
     if (room) {
       reset({
-        roomNumber: room.roomNumber,
-        caption: room.caption,
-        capacity: room.capacity ?? RoomCapacity.OneBed,
-        description: room.description,
-        status: room.status ?? RoomStatus.Available,
-        maxOccupancy: room.maxOccupancy ?? "1",
-        attachBathroom: room.attachBathroom ?? false,
+        roomNumber: room.data?.[0]?.roomNumber,
+        caption: room.data?.[0]?.caption,
+        capacity: room.data?.[0]?.capacity ?? RoomCapacity.OneBed,
+        description: room.data?.[0]?.description,
+        status: room.data?.[0]?.status ?? RoomStatus.Available,
+        maxOccupancy: room.data?.[0]?.maxOccupancy ?? "1",
+        attachBathroom: room.data?.[0]?.attachBathroom ?? false,
       });
     }
   }, [reset, room]);
@@ -129,21 +129,32 @@ function RoomForm({ params, room }: { params: { slug: string }, room: Room | und
       if (!isEdit) {
 
         mutateAsync({ createRoomInput: input }).then(res => {
-          if (res?.createRoom?.id) {
+          if (res?.createRoom?.data?.[0]?.id) {
             enqueueSnackbar("Room created successfully.",{variant:'success'})
             queryClient.invalidateQueries({ queryKey: [ 'getRooms' ] });
-            router.push(`/app/room/${res?.createRoom?.id}?step=2`);
+            router.push(`/app/room/${res?.createRoom?.data?.[0]?.id}?step=2`);
             setCurrentStep(2);
           } else {
             enqueueSnackbar("Something went wrong.",{variant:'error'})
           }
         });
       } else {
-        mutateUpdateRoomAsync({ updateRoomInput: { ...input, id: Number(room?.id) } }).then(res => {
-          if (res?.updateRoom?.id) {
+        mutateUpdateRoomAsync({ updateRoomInput: { ...input, id: Number(room?.data?.[0]?.id) } }).then(res => {
+          if (res?.updateRoom?.data?.[0]?.id) {
             enqueueSnackbar("Room updated successfully.",{variant:'success'})
             queryClient.invalidateQueries({ queryKey: [ 'getRooms' ] });
-            router.push(`/app/room/${res?.updateRoom?.id}?step=2`);
+            router.push(`/app/room/${res?.updateRoom?.data?.[0]?.id}?step=2`);
+            setCurrentStep(2);
+          } else {
+            enqueueSnackbar("Something went wrong.",{variant:'error'})
+          }
+        });
+        mutateUpdateRoomAsync({ updateRoomInput: { ...input, id: Number(room?.data?.[0]?.id) } }).then(res => {
+          if (res?.updateRoom?.data?.[0]?.id) {
+            enqueueSnackbar("Room updated successfully.",{variant:'success'})
+
+            queryClient.invalidateQueries({ queryKey: [ 'getRooms' ] });
+            router.push(`/app/room/${res?.updateRoom?.data?.[0]?.id}?step=2`);
             setCurrentStep(2);
           } else {
             enqueueSnackbar("Something went wrong.",{variant:'error'})
@@ -204,9 +215,9 @@ function RoomForm({ params, room }: { params: { slug: string }, room: Room | und
             </div>
           </div>
         </form>
-        {currentStep === 2 && <SetPriceForm price={room?.price as Price | undefined} roomId={Number(room?.id)} onNext={handleNext} handleBack={handleBack} />}
-        {currentStep === 3 && <UploadPhotos handleBack={handleBack} handleNext={handleNext} roomImages={room?.image as RoomImage[]} roomId={Number(room?.id)} />}
-        {currentStep === 4 && <RoomAmenity handleBack={handleBack} roomId={Number(room?.id)} />}
+        {currentStep === 2 && <SetPriceForm price={room?.data?.[0]?.price as PriceData | undefined} roomId={Number(room?.data?.[0]?.id)} onNext={handleNext} handleBack={handleBack} />}
+        {currentStep === 3 && <UploadPhotos handleBack={handleBack} handleNext={handleNext} roomImages={room?.data?.[0]?.image as RoomImage[]} roomId={Number(room?.data?.[0]?.id)} />}
+        {currentStep === 4 && <RoomAmenity handleBack={handleBack} roomId={Number(room?.data?.[0]?.id)} />}
       </div>
     </div>
   );

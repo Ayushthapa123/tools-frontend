@@ -43,7 +43,7 @@ export const WallpaperCard = (props: Iprops) => {
 
   const handleDeleteGallery = (galleryId: number) => {
     deleteGallery({ homestayImageId: galleryId }).then(res => {
-      if (res?.deleteHomestayImage?.id) {
+      if (res?.deleteHomestayImage?.data?.[0]?.id) {
         queryClient.invalidateQueries({ queryKey: [ String(invalidateKey) ] });
         enqueueSnackbar("Image deleted successfully.",{variant:'success'})
         window.refresh();

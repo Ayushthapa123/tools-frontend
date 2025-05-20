@@ -43,10 +43,10 @@ export const SearchSuggestions = (props: Iprops) => {
             <div
               className="relative flex min-w-60 cursor-pointer gap-1 p-1 shadow-sm"
               onClick={() => {
-                handleCountry(q.country);
-                handleCity(q.city);
-                handleSubCity(q.subCity ?? '');
-                handleQuery(q.subCity ? q.subCity : q.city);
+                handleCountry(q.data?.[0]?.country ?? '');
+                handleCity(q.data?.[0]?.city ?? '');
+                handleSubCity(q.data?.[0]?.subCity ?? '');
+                handleQuery(q.data?.[0]?.subCity ? q.data?.[0]?.subCity : q.data?.[0]?.city ?? '');
                 handleClose();
               }}>
               <div className="flex flex-col justify-center">
@@ -54,9 +54,9 @@ export const SearchSuggestions = (props: Iprops) => {
               </div>
               <div className="flex flex-col">
                 <p className="m-0 p-0 text-primary">
-                  <span>{q.subCity ? `${q.subCity},` : ''}</span> <span>{q.city}</span>
+                  <span>{q.data?.[0]?.subCity ? `${q.data?.[0]?.subCity},` : ''}</span> <span>{q.data?.[0]?.city}</span>
                 </p>
-                <p className="text-sm text-gray-500">{q.country}</p>
+                <p className="text-sm text-gray-500">{q.data?.[0]?.country}</p>
               </div>
             </div>
           </div>

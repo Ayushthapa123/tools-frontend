@@ -1,5 +1,6 @@
 query getHomestayDetailsBasic {
  getHomestayByToken {
+ data {
    name
    slug
    moderatedBySuperAdmin 
@@ -12,4 +13,5 @@ query getHomestayDetailsBasic {
      street
    }
  }
+}
 }

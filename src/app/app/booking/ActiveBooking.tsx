@@ -31,7 +31,7 @@ export const ActiveBookings = () => {
   });
 
   // Transform bookings into calendar events
-  const events = bookings?.map(booking => ({
+  const events = bookings?.data?.map(booking => ({
     id: booking.id,
     title: `Booking #${booking.bookingKey}`,
     start: booking.startDate,
@@ -47,9 +47,9 @@ export const ActiveBookings = () => {
         email: booking.guest?.email,
       },
       room: {
-        name: booking.room?.caption,
-        roomNumber: booking.room?.roomNumber,
-        price:booking.room?.price
+        name: booking?.room?.caption,
+        roomNumber: booking?.room?.roomNumber,
+        price:booking?.room?.price
       }
     }
   })) || [];

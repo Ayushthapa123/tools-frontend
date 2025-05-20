@@ -1,9 +1,15 @@
 mutation UpdateService($updateServiceInput: UpdateServiceDto!) {
   updateService(updateServiceInput: $updateServiceInput) {
-    id
-    service
-    homestayId
-    createdAt
-    updatedAt
+    data {
+      id
+      service
+      homestayId
+      createdAt
+      updatedAt
+    }
+    error {
+      message
+      code
+    }
   }
 }

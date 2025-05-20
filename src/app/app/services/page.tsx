@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import Button from "src/components/Button";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useGraphqlClientRequest } from "src/client/useGraphqlClientRequest";
-import { useToastStore } from "src/store/toastStore";
 import { useRouter } from "next/navigation";
 import LoadingSpinner from "src/components/Loading";
 import { CreateService, CreateServiceMutation, CreateServiceMutationVariables, GetHomestayByToken, GetHomestayByTokenQuery, GetHomestayByTokenQueryVariables, GetServiceByHomestayId, GetServiceByHomestayIdQuery, GetServiceByHomestayIdQueryVariables, UpdateService, UpdateServiceMutation, UpdateServiceMutationVariables } from "src/gql/graphql";
@@ -40,21 +39,21 @@ export default function ServicesPage() {
   >(GetServiceByHomestayId.loc?.source?.body!);
 
   const fetchServicesData = async () => {
-    const res = await queryServicesData({ homestayId: Number(homestay?.id) });
+    const res = await queryServicesData({ homestayId: Number(homestay?.data?.id) });
     return res.findServiceByHomestayId;
   };
 
   const { data: homestayServices, isLoading: loadingHomestayServices } = useQuery({
     queryKey: [ 'getServiceByHomestayId' ],
     queryFn: fetchServicesData,
-    enabled: !!homestay?.id
+    enabled: !!homestay?.data?.id
   });
 
   useEffect(() => {
-    if (homestayServices?.service) {
-      setSelectedServices(homestayServices.service.split(","));
+    if (homestayServices?.data?.service) {
+      setSelectedServices(homestayServices.data?.service.split(","));
     }
-  }, [ homestayServices?.service ]);
+  }, [ homestayServices?.data?.service ]);
 
   // Create service mutation
   const createService = useGraphqlClientRequest<CreateServiceMutation, CreateServiceMutationVariables>(CreateService.loc?.source?.body!);
@@ -72,14 +71,14 @@ export default function ServicesPage() {
   const { mutateAsync: updateServiceAsync } = useMutation({ mutationFn: updateService });
 
   const handleSave = () => {
-    if (!homestayServices?.id) {
+    if (!homestayServices?.data?.id) {
       createServiceAsync({
         createServiceInput: {
-          homestayId: Number(homestay?.id),
+          homestayId: Number(homestay?.data?.id),
           service: selectedServices.join(",")
         }
       }).then((res) => {
-        if (res?.createService.id) {
+        if (res?.createService.data?.id) {
           router.push('/app/services');
           queryClient.invalidateQueries({ queryKey: [ 'getServices' ] });
           enqueueSnackbar('Services Created Successfully!',{variant:"success"})
@@ -90,11 +89,11 @@ export default function ServicesPage() {
     } else {
       updateServiceAsync({
         updateServiceInput: {
-          id: Number(homestayServices.id),
+          id: Number(homestayServices.data?.id),
           service: selectedServices.join(",")
         }
       }).then((res) => {
-        if (res?.updateService.id) {
+        if (res?.updateService.data?.id) {
           router.push('/app/services');
           queryClient.invalidateQueries({ queryKey: [ 'getServices' ] });
           enqueueSnackbar('Services Updated Successfully!',{variant:'success'})

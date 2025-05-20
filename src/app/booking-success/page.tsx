@@ -169,7 +169,7 @@ function BookingSuccessPageContent() {
           <div className="card-body">
             <h2 className="card-title mb-4 text-xl font-semibold">Booking Summary</h2>
 
-            {bookings.map(booking => {
+            {bookings.data?.map(booking => {
               return (
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2" key={booking.id}>
                   <div>
@@ -198,7 +198,7 @@ function BookingSuccessPageContent() {
       <div className="card mb-8 bg-base-100 shadow-xl">
         <div className="card-body">
           <h2 className="card-title mb-4 text-xl font-semibold">Room Details</h2>
-          {bookings.map(booking => {
+          {bookings.data?.map(booking => {
             return (
               <div className="flex flex-col gap-6 md:flex-row" key={booking.id}>
               <div className="md:w-1/3">
@@ -212,9 +212,9 @@ function BookingSuccessPageContent() {
                 </div>
               </div>
               <div className="md:w-2/3">
-                <h3 className="mb-2 text-lg font-semibold">{booking.room?.caption}</h3>
+                <h3 className="mb-2 text-lg font-semibold">{booking?.room?.caption}</h3>
                 <p className="mb-4 text-base-content/70">
-                  Room Number:{booking.room?.roomNumber}
+                  Room Number:{booking?.room?.roomNumber}
                 </p>
                 <div>
                   <h4 className="mb-2 text-sm font-medium text-base-content/70">{/* Amenities */}</h4>
@@ -243,19 +243,19 @@ function BookingSuccessPageContent() {
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <div>
               <h3 className="text-sm font-medium text-base-content/70">Full Name</h3>
-              <p className="mt-1 text-lg font-semibold">{bookings?.[0]?.guest?.fullName}</p>
+                <p className="mt-1 text-lg font-semibold">{bookings?.data?.[0]?.guest?.fullName}</p>
             </div>
             <div>
               <h3 className="text-sm font-medium text-base-content/70">Email</h3>
-              <p className="mt-1 text-lg font-semibold">{bookings?.[0]?.guest?.email}</p>
+              <p className="mt-1 text-lg font-semibold">{bookings?.data?.[0]?.guest?.email}</p>
             </div>
             <div>
               <h3 className="text-sm font-medium text-base-content/70">Phone</h3>
-              <p className="mt-1 text-lg font-semibold">{bookings?.[0]?.guest?.phoneNumber}</p>
+                <p className="mt-1 text-lg font-semibold">{bookings?.data?.[0]?.guest?.phoneNumber}</p>
             </div>
             <div>
               <h3 className="text-sm font-medium text-base-content/70">Address</h3>
-                <p className="mt-1 text-lg font-semibold"></p>
+                {/* <p className="mt-1 text-lg font-semibold">{bookings?.[0]?.data?.guest} </p> */}
             </div>
           </div>
         </div>

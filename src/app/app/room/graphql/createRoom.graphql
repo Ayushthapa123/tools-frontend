@@ -1,7 +1,12 @@
 mutation CreateRoom($createRoomInput: CreateRoomInput!) {
   createRoom(createRoomInput: $createRoomInput) {
-    id
-    status
-  
+    data {
+      id
+      status
+    }
+    error {
+      message
+      code
+    }
   }
 }

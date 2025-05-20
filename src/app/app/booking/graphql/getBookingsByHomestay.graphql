@@ -1,38 +1,44 @@
 query BookingsByHomestay {
   bookingsByHomestay {
-    id
-    bookingKey
-    startDate
-    endDate
-    status
-    createdAt
-    updatedAt
-    room {
+    data {
       id
-      caption
-      roomNumber
-      capacity
+      bookingKey
+      startDate
+      endDate
       status
-      attachBathroom
-      maxOccupancy
-      price {
-        baseAmount
-        currency
-        discountAmount
-        discountType
-        isDiscountActive
-      }
-      image {
-        url
+      createdAt
+      updatedAt
+      room {
+        id
         caption
+        roomNumber
+        capacity
+        status
+        attachBathroom
+        maxOccupancy
+        price {
+          baseAmount
+          currency
+          discountAmount
+          discountType
+          isDiscountActive
+        }
+        image {
+          url
+          caption
+        }
+      }
+      guest {
+        id
+        email
+        fullName
+        phoneNumber
       }
     }
-    guest {
-      id
-      email
-      fullName
-      phoneNumber
-   
+    error {
+      message
+      code
+      path
     }
   }
 }

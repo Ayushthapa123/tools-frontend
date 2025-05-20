@@ -1,8 +1,14 @@
 mutation CreateRoomImage($data: CreateRoomImageInput!) {
   createRoomImage(data: $data) {
-    id
-    roomId
-    url
-    caption
+    data {
+      id
+      roomId
+      url
+      caption
+    }
+    error {
+      message
+      code
+    }
   }
 }

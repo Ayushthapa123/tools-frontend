@@ -1,5 +1,6 @@
 mutation UpdatePriceRule($updatePriceInput: UpdateDynamicPriceRuleInput!) {
   updatePriceRule(updatePriceInput: $updatePriceInput) {
+    data {
     id
     name
     description
@@ -11,5 +12,6 @@ mutation UpdatePriceRule($updatePriceInput: UpdateDynamicPriceRuleInput!) {
     isActive
     priority
     updatedAt
+    }
   }
 }

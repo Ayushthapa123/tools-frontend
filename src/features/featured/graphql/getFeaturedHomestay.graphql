@@ -1,5 +1,6 @@
 query GetFeaturedHomestays($pageSize: Int!) {
   getAllHomestays(pageSize: $pageSize) {
+    data {
     id
     name
     description
@@ -47,4 +48,9 @@ query GetFeaturedHomestays($pageSize: Int!) {
       service
     }
   }
+  error {
+    message
+    code
+  }
+}
 }

@@ -1,8 +1,6 @@
-
 'use client';
 
 import { useMutation } from '@tanstack/react-query';
-import Image from 'next/image';
 import { enqueueSnackbar } from 'notistack';
 
 import { useEffect, useRef, useState } from 'react';
@@ -11,11 +9,8 @@ import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import Button from 'src/components/Button';
 import RichTextEditor from 'src/components/RichTextEditor';
 
-import ReactSelect from 'src/features/react-hook-form/ReactSelect';
-import TextArea from 'src/features/react-hook-form/TextArea';
 import TextInput from 'src/features/react-hook-form/TextField';
 import { CreateHomestay, CreateHomestayMutation, CreateHomestayMutationVariables } from 'src/gql/graphql';
-import { useToastStore } from 'src/store/toastStore';
 
 interface IProps {
   name?: string | null;
@@ -83,7 +78,7 @@ export const CreateHomestayModal = () => {
     
       },
     }).then(res => {
-      if (res?.createHomestay?.id) {
+      if (res?.createHomestay?.data?.id) {
         enqueueSnackbar("Homestay created successfully.",{variant:"success"})
         window.location.reload();
       } else {

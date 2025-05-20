@@ -1,7 +1,13 @@
 query FindAllAmenities {
   findAllAmenities {
-    roomAmenityId
-    roomId
-    amenity
+    data {
+      roomAmenityId
+      roomId
+      amenity
+    }
+    error {
+      message
+      code
+    }
   }
 } 

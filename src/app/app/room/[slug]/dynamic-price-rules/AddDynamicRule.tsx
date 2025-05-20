@@ -17,7 +17,7 @@ import {
   UpdatePriceRule,
   UpdatePriceRuleMutation,
   UpdatePriceRuleMutationVariables,
-  DynamicPricingRule,
+  DynamicPricingRuleData,
 } from 'src/gql/graphql';
 import { useToastStore } from 'src/store/toastStore';
 import { enqueueSnackbar } from 'notistack';
@@ -27,7 +27,7 @@ export const AddDynamicRule = ({
   rules
 }: {
   roomId: number | string;
-  rules: DynamicPricingRule | undefined;
+  rules: DynamicPricingRuleData | undefined;
 }) => {
   const [open, setOpen] = useState(false);
   const handleClose = () => {
@@ -61,7 +61,7 @@ export const RuleForm = ({
   handleClose: () => void;
   open: boolean;
   roomId: number | string;
-  rules: DynamicPricingRule | undefined;
+  rules: DynamicPricingRuleData | undefined;
 }) => {
   const queryClient = useQueryClient();
   const isEdit = Boolean(rules?.id);
@@ -70,7 +70,7 @@ export const RuleForm = ({
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<DynamicPricingRule>({
+  } = useForm<DynamicPricingRuleData>({
     defaultValues: {
       name: rules?.name ?? '',
       description: rules?.description ?? '',
@@ -97,7 +97,7 @@ export const RuleForm = ({
   const { mutateAsync: createRule } = useMutation({ mutationFn: mutateCreateRule });
   const { mutateAsync: updateRule } = useMutation({ mutationFn: mutateUpdateRule });
 
-  const onSubmit = async (data: DynamicPricingRule) => {
+  const onSubmit = async (data: DynamicPricingRuleData) => {
     try {
       if (isEdit) {
         const result = await updateRule({
@@ -114,7 +114,7 @@ export const RuleForm = ({
             roomId: Number(roomId),
           },
         });
-        if (result?.updatePriceRule?.id) {
+        if (result?.updatePriceRule?.data?.id) {
           enqueueSnackbar("Rules updated",{variant:'success'})
           queryClient.invalidateQueries({ queryKey: ['getPriceRulesByRoom'] });
           handleClose();

@@ -4,7 +4,7 @@ import { useGraphqlClientRequest } from "src/client/useGraphqlClientRequest";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import TextInput from "src/features/react-hook-form/TextField";
-import { Price, CreatePriceInput, CreatePriceMutation, CreatePriceMutationVariables, UpdatePriceMutation, UpdatePriceMutationVariables, CreatePrice, UpdatePrice, Currency, DiscountType } from "src/gql/graphql";
+import { Price, CreatePriceInput, CreatePriceMutation, CreatePriceMutationVariables, UpdatePriceMutation, UpdatePriceMutationVariables, CreatePrice, UpdatePrice, Currency, DiscountType, PriceData } from "src/gql/graphql";
 import Button from "src/components/Button";
 import ReactSelect from "src/features/react-hook-form/ReactSelect";
 import DynamicPriceContainer from "./dynamic-price-rules/DynamicPriceContainer";
@@ -12,7 +12,7 @@ import { Toggle } from "src/features/react-hook-form/Toggle";
 import { useToastStore } from "src/store/toastStore";
 import { enqueueSnackbar } from "notistack";
 
-export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Price | undefined, roomId: number , onNext: () => void , handleBack: () => void,}) => {
+export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: PriceData | undefined, roomId: number , onNext: () => void , handleBack: () => void,}) => {
    
     const router = useRouter();
     const queryClient = useQueryClient();
@@ -26,8 +26,8 @@ export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Pri
       watch
     } = useForm<CreatePriceInput>({
       defaultValues: {
-        baseAmount: price?.baseAmount,
-        currency: price?.currency ?? Currency.Npr,
+          baseAmount: price?.baseAmount,  
+          currency: price?.currency ?? Currency.Npr,
         isDynamicPricing: price?.isDynamicPricing ?? false,
         // dynamicAmount: price?.dynamicAmount,
         // dynamicPriceStart: price?.dynamicPriceStart,
@@ -70,7 +70,7 @@ export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Pri
               isDiscountActive: data.isDiscountActive
             } 
           });  
-          if (result?.createPrice?.id) {
+          if (result?.createPrice?.data?.id) {
             enqueueSnackbar("Price created.",{variant:"success"})
             queryClient.invalidateQueries({ queryKey: ['getRoom'] });
             // onNext();
@@ -93,7 +93,7 @@ export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Pri
               isDiscountActive: data.isDiscountActive
             } 
           }).then(res => {
-            if (res?.updatePrice?.id) {
+            if (res?.updatePrice?.data?.id) {
              enqueueSnackbar("Price updated.",{variant:'success'})
               queryClient.invalidateQueries({ queryKey: ['getRoom'] });
               // onNext();

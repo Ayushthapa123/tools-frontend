@@ -8,7 +8,6 @@ import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import TextInput from 'src/features/react-hook-form/TextField';
 import { countries } from '../data/countries';
 
-import { useToastStore } from 'src/store/toastStore';
 
 import {
   CreateAddress,
@@ -48,13 +47,13 @@ export const  AddressDetails = (props: Iprops) => {
       {!isLoading ? (
         <HomestayInfoForm
           homestayId={homestayId}
-          addressId={homestayData?.id}
-          country={homestayData?.country}
-          city={homestayData?.city}
-          subCity={homestayData?.subCity}
-          street={homestayData?.street}
-          lat={homestayData?.latitude}
-          lng={homestayData?.longitude}
+          addressId={homestayData?.data?.id}
+          country={homestayData?.data?.country}
+          city={homestayData?.data?.city}
+          subCity={homestayData?.data?.subCity}
+          street={homestayData?.data?.street}
+          lat={homestayData?.data?.latitude}
+          lng={homestayData?.data?.longitude}
         />
       ) : (
         <div className=" h-[50vh] w-full">
@@ -156,7 +155,7 @@ const HomestayInfoForm: FC<IProps> = props => {
           }),
         },
       }).then(res => {
-        if (res?.updateAddress?.id) {
+        if (res?.updateAddress?.data?.id) {
           enqueueSnackbar("Address updated.",{variant:'success'})
         } else {
           enqueueSnackbar("Something went wrong.",{variant:'error'})
@@ -175,7 +174,7 @@ const HomestayInfoForm: FC<IProps> = props => {
           longitude: clickedLatLng?.lng,
         },
       }).then(res => {
-        if (res?.createAddress?.id) {
+        if (res?.createAddress?.data?.id) {
            enqueueSnackbar("Address Created",{variant:'success'})
            queryClient.invalidateQueries({ queryKey: ['getAddress'] });
            queryClient.invalidateQueries({ queryKey: ['getHomestayByToken'] });

@@ -1,5 +1,6 @@
 query getHomestayBySlug($slug: String!) {
   getHomestayBySlug(slug: $slug) {
+    data {
     id
     name
     description
@@ -53,4 +54,9 @@ query getHomestayBySlug($slug: String!) {
     }
  
   }
+  error {
+    message
+    code
+  }
+}
 }

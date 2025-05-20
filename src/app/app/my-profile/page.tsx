@@ -3,9 +3,6 @@
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import {
 
-  GetUserByAccessToken,
-  GetUserByAccessTokenQuery,
-  GetUserByAccessTokenQueryVariables,
 } from 'src/gql/graphql';
 import { useQuery } from '@tanstack/react-query';
 import { useAccessTokenStore } from 'src/store/accessTokenStore';
@@ -33,25 +30,11 @@ function PageContent() {
   const searchParams = useSearchParams();
   const param = searchParams.get('id');
 
-  const { accessToken } = useAccessTokenStore();
   const { user } = useUserStore();
 
-  const queryUser = useGraphqlClientRequest<
-    GetUserByAccessTokenQuery,
-    GetUserByAccessTokenQueryVariables
-  >(GetUserByAccessToken.loc?.source?.body!);
 
-  //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
-  const fetchData = async () => {
-    const res = await queryUser({ token: accessToken });
-    return res.getUserByAccessToken;
-  };
 
-  const { data: userData } = useQuery({
-    queryKey: ['getUserByToken'],
-    queryFn: fetchData,
-    staleTime: 900000, //slate time for 15 minute
-  });
+
 
   //get the payment profile
 

@@ -1,7 +1,12 @@
 mutation VerifyHomestay($homestayId: Int!, $status: Boolean!) {
   verifyHomestay(homestayId: $homestayId, status: $status) {
+    data {
     id
     name
-    
+    }
+    error {
+      message
+      code
+    }
   }
 }

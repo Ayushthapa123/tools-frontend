@@ -1,7 +1,13 @@
 mutation deleteRoom($id: Int!) {
   removeRoom(id: $id) {
-    id
-    createdAt
-    updatedAt
+    data {
+      id
+      createdAt
+      updatedAt
+    }
+    error {
+      message
+      code
+    }
   }
 }

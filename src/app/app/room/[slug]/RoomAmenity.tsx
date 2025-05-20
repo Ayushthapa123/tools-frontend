@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useGraphqlClientRequest } from "src/client/useGraphqlClientRequest";
 import { CreateRoomAmenity, CreateRoomAmenityMutation, CreateRoomAmenityMutationVariables, FindAmenityByRoomId, FindAmenityByRoomIdQuery, FindAmenityByRoomIdQueryVariables, UpdateRoomAmenity, UpdateRoomAmenityMutation, UpdateRoomAmenityMutationVariables } from "src/gql/graphql";
-import { useToastStore } from "src/store/toastStore";
 import { roomAmenities } from "../../data/roomAmenity";
 import { Input } from "src/components/Input";
 import Button from "src/components/Button";
@@ -31,10 +30,10 @@ export default function RoomAmenityPage({ handleBack, roomId }: { handleBack: ()
   })
 
   useEffect(() => {
-    if (data?.amenity) {
-      setSelectedRoomAmenity(data.amenity.split(","));
+    if (data?.data?.amenity) {
+      setSelectedRoomAmenity(data.data.amenity.split(","));
     }
-  }, [data?.amenity]);
+  }, [data?.data?.amenity]);
 
   //create room amenity 
   const mutateRoomAmenity = useGraphqlClientRequest<
@@ -64,9 +63,9 @@ export default function RoomAmenityPage({ handleBack, roomId }: { handleBack: ()
   };
 
   const handleSave = () => {
-    if (!data?.roomAmenityId) {
+    if (!data?.data?.roomAmenityId) {
       mutateAsync({ createAmenityInput: { roomId, amenity: selectedRoomAmenity.join(",") } }).then((res) => {
-        if (res?.createRoomAmenity.roomAmenityId) {
+        if (res?.createRoomAmenity.data?.roomAmenityId) {
           queryClient.invalidateQueries({ queryKey: ['getRoomAmenities'] });
           enqueueSnackbar('Amenities Created Successfully!',{variant:'success'})
         }
@@ -76,8 +75,8 @@ export default function RoomAmenityPage({ handleBack, roomId }: { handleBack: ()
       })
     }
     else {
-      updateAmenity({updateAmenityInput:{roomAmenityId:Number(data?.roomAmenityId), amenity:selectedRoomAmenity.join(",")}}).then((res) => {
-        if (res?.updateRoomAmenity.roomAmenityId) {
+      updateAmenity({updateAmenityInput:{roomAmenityId:Number(data?.data?.roomAmenityId), amenity:selectedRoomAmenity.join(",")}}).then((res) => {
+        if (res?.updateRoomAmenity.data?.roomAmenityId) {
           queryClient.invalidateQueries({ queryKey: ['getRoomAmenities'] });
           enqueueSnackbar('Amenities Updated Successfully!',{variant:'success'})
         }

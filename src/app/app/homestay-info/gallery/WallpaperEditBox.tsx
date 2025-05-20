@@ -73,7 +73,7 @@ export const WallpaperEditBox = (props: IcoverEdit) => {
           }
         });
 
-        if (response?.createHomestayImage?.id) {
+        if (response?.createHomestayImage?.data?.[0]?.id) {
           await queryClient.invalidateQueries({ queryKey: [ String(invalidateKey) ] });
           await queryClient.invalidateQueries({queryKey:["getHomestayWallpaper"]})
           enqueueSnackbar('Image Created Successfully',{variant:'success'})

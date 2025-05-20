@@ -1,5 +1,6 @@
 query searchHomestay($input: SearchHomestayInput!) {
   getHomestaysBySearch(input: $input) {
+    data {
     name
     description
     address {
@@ -31,4 +32,9 @@ query searchHomestay($input: SearchHomestayInput!) {
     slug
    
   }
+  error {
+    message
+    code
+  }
+}
 }

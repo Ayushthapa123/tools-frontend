@@ -1,5 +1,11 @@
 mutation updateAddress($input: UpdateAddressInput!, $addressId: Float!) {
  updateAddress(data: $input, addressId: $addressId) {
-   id
+   data {
+    id
+   }
+   error {
+    message
+    code
+   }
  }
 }

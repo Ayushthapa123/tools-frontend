@@ -1,5 +1,6 @@
 mutation UpdateHomestayImage($homestayImageId: Int!, $data: UpdateHomestayWallpaperInput!) {
   updateHomestayImage(homestayImageId: $homestayImageId, data: $data) {
+  data {
     id
     homestayId
     url
@@ -8,4 +9,9 @@ mutation UpdateHomestayImage($homestayImageId: Int!, $data: UpdateHomestayWallpa
     createdAt
     updatedAt
   }
+  error {
+    message
+    code
+  }
+}
 }

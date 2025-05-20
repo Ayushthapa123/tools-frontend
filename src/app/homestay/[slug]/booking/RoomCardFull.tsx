@@ -1,4 +1,4 @@
-import { Room, RoomStatus } from "src/gql/graphql";
+import { RoomData, RoomStatus } from "src/gql/graphql";
 import Image from "next/image";
 import { useRoomStore } from "src/store/roomStore";
 import Button from "src/components/Button";
@@ -13,13 +13,13 @@ import { BiArea } from "react-icons/bi";
 import { useRouter } from "next/navigation";
 
 interface RoomCardProps {
-  room: Room;
+  room: RoomData;
   isSelected: boolean;
   slug: string;
   checkInDate: string;
   checkOutDate: string;
   setShowDetails: (showDetails: boolean) => void;
-  setSelectedRoom: (room: Room) => void;
+  setSelectedRoom: (room: RoomData) => void;
 }
 
 export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate, setShowDetails, setSelectedRoom }: RoomCardProps) => {

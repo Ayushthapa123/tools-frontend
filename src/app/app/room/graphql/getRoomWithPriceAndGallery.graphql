@@ -1,5 +1,6 @@
 query GetRoomWithPriceAndGallery($id: Int!) {
   room(id: $id) {
+    data {
     id
     status
     capacity 
@@ -32,4 +33,10 @@ query GetRoomWithPriceAndGallery($id: Int!) {
       updatedAt
     }
   }
+  error {
+    message
+    code
+  }
 }
+}
+

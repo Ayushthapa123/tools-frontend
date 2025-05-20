@@ -4,10 +4,8 @@ import { useForm } from 'react-hook-form';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import TextInput from 'src/features/react-hook-form/TextField';
 
-import { useToastStore } from 'src/store/toastStore';
 
 import React, { FC, useRef, useState } from 'react';
-import TextArea from 'src/features/react-hook-form/TextArea';
 import Button from 'src/components/Button';
 import { ContactDetails } from './ContactDetails';
 
@@ -20,14 +18,10 @@ import {
   UpdateHomestayMutationVariables,
 } from 'src/gql/graphql';
 import { AddressDetails } from './AddressDetails';
-// import { SocialsDetails } from './SocialsDetails';
 import LoadingSpinner from 'src/components/Loading';
 import RichTextEditor from 'src/components/RichTextEditor';
-import {  MapComponent } from './MapComponent';
 import { MapProvider } from 'src/features/MapProvider';
-import { WallpaperGallery } from './gallery/WallpaperGallery';
 import { enqueueSnackbar } from 'notistack';
-// import HomestayAmenitiesPage from 'src/features/amenity/HomestayAmenityPage';
 
 export const HomestayInfo = () => { 
   const queryHomestayData = useGraphqlClientRequest<
@@ -50,9 +44,9 @@ export const HomestayInfo = () => {
     <div className="">
       {!isLoading ? (
         <HomestayInfoForm
-          homestayId={homestayData?.id}
-          name={homestayData?.name}
-          description={homestayData?.description}
+          homestayId={homestayData?.data?.id}
+          name={homestayData?.data?.name}
+          description={homestayData?.data?.description}
        
         />
       ) : (
@@ -61,12 +55,12 @@ export const HomestayInfo = () => {
         </div>
       )}
 
-      {homestayData?.id && (
+      {homestayData?.data?.id && (
         <div>
           
           {
             <div className="bg-white card-body card card-bordered">
-              <HomestayTabs homestayId={Number(homestayData.id)} />
+              <HomestayTabs homestayId={Number(homestayData.data.id)} />
             </div>
           }
         </div>
@@ -168,7 +162,7 @@ export const HomestayInfoForm: FC<IProps> = props => {
      
         },
       }).then(res => {
-        if (res?.updateHomestay?.id) {
+        if (res?.updateHomestay?.data?.id) {
           enqueueSnackbar("Homestay updated successfully.",{variant:'success'})
         } else {
           enqueueSnackbar("Something went wrong.",{variant:'warning'})

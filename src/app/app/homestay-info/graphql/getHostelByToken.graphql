@@ -1,6 +1,7 @@
 query getHomestayByToken {
  getHomestayByToken {
-   id
+   data {
+    id
    name
    description
    slug
@@ -8,4 +9,10 @@ query getHomestayByToken {
   moderatedByCommunityOwner
  
  }
+ error {
+  message
+  code
+ }
+ }
 }
+

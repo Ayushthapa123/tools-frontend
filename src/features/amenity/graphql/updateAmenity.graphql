@@ -1,7 +1,13 @@
 mutation UpdateAmenity($updateAmenityInput:UpdateAmenityInput!){
   updateAmenity(updateAmenityInput:$updateAmenityInput){
+    data {
     id
     amenity
     homestayId
+    }
+    error {
+      message
+      code
+    }
   }
 }

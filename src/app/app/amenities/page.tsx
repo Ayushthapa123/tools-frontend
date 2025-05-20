@@ -23,7 +23,7 @@ export default function AmenityPage() {
   return (
     <>
       <div>
-        <HomestayAmenitiesPage homestayId={Number(homestay?.id)} key={homestay?.id} />
+        <HomestayAmenitiesPage homestayId={Number(homestay?.data?.id)} key={homestay?.data?.id} />
       </div>
     </>
   )

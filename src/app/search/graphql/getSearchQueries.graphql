@@ -1,7 +1,13 @@
 query getSearchQueries($query: String!) {
   searchQueries(query: $query) {
-    country
-    city
-    subCity
+    data {
+      country
+      city
+      subCity
+    }
+    error {
+      message
+      code
+    }
   }
 }

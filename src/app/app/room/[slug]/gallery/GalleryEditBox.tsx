@@ -59,7 +59,7 @@ export const GalleryEditBox = (props: IcoverEdit) => {
     if (imageUrl && galleryId) {
       //update
       updateGallery({ roomImageId: galleryId, data: { url: imageUrl, caption: '', id: galleryId } }).then(res => {
-        if (res?.updateRoomImage?.id) {
+        if (res?.updateRoomImage?.data?.[0]?.id) {
           queryClient.invalidateQueries({ queryKey: [String(invalidateKey)] });
           enqueueSnackbar('Image Updated Success',{variant:'success'})
           handleBack?.();
@@ -70,7 +70,7 @@ export const GalleryEditBox = (props: IcoverEdit) => {
     } else if (imageUrl && roomId) {
       //create
       createGallery({ data: { roomId: roomId, url: imageUrl, caption: '' } }).then(res => {
-          if (res.createRoomImage.id) {
+          if (res.createRoomImage.data?.[0]?.id) {
           queryClient.invalidateQueries({ queryKey: [String(invalidateKey)] });
 
           enqueueSnackbar('Image Created Success',{variant:'success'})

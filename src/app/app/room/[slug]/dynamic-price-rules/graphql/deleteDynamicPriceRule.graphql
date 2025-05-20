@@ -1,6 +1,12 @@
 mutation RemovePriceRule($id: Int!) {
   removePriceRule(id: $id) {
-    id
-    name
+    data {
+      id
+      name
+    }
+    error {
+      message 
+      code
+    }
   }
 }

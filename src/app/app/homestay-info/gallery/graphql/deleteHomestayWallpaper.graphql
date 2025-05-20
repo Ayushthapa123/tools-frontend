@@ -1,10 +1,16 @@
 mutation DeleteHomestayImage($homestayImageId: Int!) {
   deleteHomestayImage(homestayImageId: $homestayImageId) {
-    id
-    homestayId
-    url
-    caption
-    createdAt
-    updatedAt
+    data {
+      id
+      homestayId
+      url
+      caption
+      createdAt
+      updatedAt
+    }
+    error {
+      message
+      code
+    }
   }
 }

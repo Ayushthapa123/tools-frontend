@@ -1,5 +1,6 @@
 query GetRooms {
   roomsByHomestay {
+    data {
     id
     status
     capacity
@@ -34,4 +35,9 @@ query GetRooms {
     createdAt
     updatedAt
   }
+  error {
+    message
+    code
+  }
+}
 }

@@ -16,7 +16,6 @@ import {
   HomestayRules,
 
 } from 'src/gql/graphql';
-import { useToastStore } from 'src/store/toastStore';
 import { useUserStore } from 'src/store/userStore';
 import Button from 'src/components/Button';
 import RichTextEditor from 'src/components/RichTextEditor';
@@ -54,8 +53,8 @@ export default Home;
 
 const FormContent = ({rulesData}: {rulesData: HomestayRules | undefined}) => {
   const { user } = useUserStore();
-  const editorRef = useRef<string>(rulesData?.rules ?? "<p><br></p>");
-  editorRef.current = rulesData?.rules == "<p><br></p>" || rulesData?.rules == null ? "<ol><li> </li></ol>" : rulesData?.rules;
+  const editorRef = useRef<string>(rulesData?.data?.rules ?? "<p><br></p>");
+  editorRef.current = rulesData?.data?.rules == "<p><br></p>" || rulesData?.data?.rules == null ? "<ol><li> </li></ol>" : rulesData?.data?.rules;
   const [ rules, setRules ] = useState<string | null>(editorRef.current)
   
   const mutateCreateRules = useGraphqlClientRequest<
@@ -78,12 +77,12 @@ const FormContent = ({rulesData}: {rulesData: HomestayRules | undefined}) => {
 
   const queryClient = useQueryClient();
   const handleSubmit = () => {
-    if (rulesData?.id) {
+    if (rulesData?.data?.id) {
       updateRules({
         input: { rules: rules },
-        rulesId: Number(rulesData?.id),
+        rulesId: Number(rulesData?.data?.id),
       }).then(res => {
-        if (res.updateRules.id) {
+        if (res.updateRules.data?.id) {
           enqueueSnackbar('Rules Updated',{variant:"success"})
           queryClient.invalidateQueries({ queryKey: ['getRules'] });
         } else {
@@ -94,7 +93,7 @@ const FormContent = ({rulesData}: {rulesData: HomestayRules | undefined}) => {
       createRules({
         input: { rules:rules ?? "", homestayId: Number(user.homestayId) }, 
       }).then(res => {
-        if (res.createRules.id) {
+        if (res.createRules.data?.id) {
          enqueueSnackbar('Rules Created successfully.',{variant:"success"})
           queryClient.invalidateQueries({ queryKey: ['getRules'] });
         } else {
@@ -116,10 +115,10 @@ const FormContent = ({rulesData}: {rulesData: HomestayRules | undefined}) => {
         { rules  &&  
           <div className="flex justify-end w-full mt-5 relative">
           <Button
-            label={rulesData?.id ? 'Update Rules' : 'Create Rules'}
+            label={rulesData?.data?.id ? 'Update Rules' : 'Create Rules'}
             loading={isCreating || isUpdating}
               className=" w-min"
-              disabled={rules === "<ol><li><br></li></ol>" || rulesData?.rules == rules }
+              disabled={rules === "<ol><li><br></li></ol>" || rulesData?.data?.rules == rules }
             onClick={() => handleSubmit()}
           />
         </div>

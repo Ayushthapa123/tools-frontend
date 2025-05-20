@@ -21,7 +21,7 @@ interface Iprops {
 export const HomeStayCard = (props: Iprops) => {
   const { homestay } = props;
 
-  const editorRef = useRef(homestay?.description)
+  const editorRef = useRef(homestay?.data?.description)
 
 const {user}=useUserStore()
 
@@ -35,7 +35,7 @@ const {user}=useUserStore()
   const queryClient = useQueryClient();
 
   const handleVerification = async (status: boolean) => {
-    mutateAsync({ homestayId: Number(homestay?.id), status }).then(res => {
+    mutateAsync({ homestayId: Number(homestay?.data?.id), status }).then(res => {
       if (res?.verifyHomestay) {
         enqueueSnackbar(`Homestay ${status ? 'Verified' : 'Unverified'}!`,{variant:'success'})
         queryClient.invalidateQueries({ queryKey: ['getAllHomestays'] });
@@ -58,12 +58,12 @@ const {user}=useUserStore()
     }
   };
 
-  const firstRoom = homestay?.rooms?.[0];
-  const location = homestay?.address ? 
-    `${homestay?.address.city || ''}${homestay?.address.subCity ? `, ${homestay?.address.subCity}` : ''}` : 
+  const firstRoom = homestay?.data?.rooms?.[0];
+  const location = homestay?.data?.address ? 
+    `${homestay?.data?.address.city || ''}${homestay?.data?.address.subCity ? `, ${homestay?.data?.address.subCity}` : ''}` : 
     'Location not specified';
 
-  const isVerified = user.userType===UserType.Superadmin?homestay?.moderatedBySuperAdmin:homestay?.moderatedByCommunityOwner
+  const isVerified = user.userType===UserType.Superadmin?homestay?.data?.moderatedBySuperAdmin:homestay?.data?.moderatedByCommunityOwner
 
 
   return (
@@ -71,8 +71,8 @@ const {user}=useUserStore()
       {/* Image Section */}
       <figure className="w-1/3 relative group">
         <Image
-          src={homestay?.image?.[0]?.url || '/default-image.png'}
-          alt={homestay?.name || ''}
+          src={homestay?.data?.image?.[0]?.url || '/default-image.png'}
+          alt={homestay?.data?.name || ''}
           fill
           className="object-cover transition-transform duration-300 group-hover:scale-105"
         />
@@ -83,7 +83,7 @@ const {user}=useUserStore()
       <div className="card-body w-2/3 p-6">
         <div className="flex justify-between items-start">
           <div className="space-y-1">
-            <h2 className="card-title text-2xl font-bold text-gray-800">{homestay?.name || ''}</h2>
+            <h2 className="card-title text-2xl font-bold text-gray-800">{homestay?.data?.name || ''}</h2>
             <div className="flex items-center gap-2">
               <div className="flex items-center text-sm text-gray-500">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -116,7 +116,7 @@ const {user}=useUserStore()
 
         <div className="space-y-4">
           {/* Description */}
-          {homestay?.description && (
+          {homestay?.data?.description && (
            <RichTextEditor editorRef={editorRef}  readOnly={true} />
           )}
 
@@ -146,29 +146,29 @@ const {user}=useUserStore()
           )}
 
           {/* Contact Information */}
-          {homestay?.contact && (
+          {homestay?.data?.contact && (
             <div className="grid grid-cols-2 gap-4">
               <div className="flex items-center p-2 bg-base-200 rounded-lg">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-                <span className="text-gray-700">{homestay?.contact?.email}</span>
+                <span className="text-gray-700">{homestay?.data?.contact?.email}</span>
               </div>
               <div className="flex items-center p-2 bg-base-200 rounded-lg">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
-                <span className="text-gray-700">{homestay?.contact?.phone}</span>
+                <span className="text-gray-700">{homestay?.data?.contact?.phone}</span>
               </div>
             </div>
           )}
 
           {/* Amenities */}
-          {homestay?.amenities && (
+          {homestay?.data?.amenities && (
             <div className="space-y-2">
               <h3 className="text-sm font-semibold text-gray-500">Amenities</h3>
               <div className="flex flex-wrap gap-2">
-                {Object.entries(homestay?.amenities || {}).map(([key, value]) => {
+                {Object.entries(homestay?.data?.amenities || {}).map(([key, value]) => {
                   if (value) {
                     return (
                       <div key={key} className="badge badge-primary badge-outline">

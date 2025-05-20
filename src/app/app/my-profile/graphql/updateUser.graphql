@@ -1,5 +1,6 @@
 mutation updateUser($input: UpdateUserInput!) {
   updateUser(input: $input) {
+    data {
     id
     fullName
     email
@@ -9,5 +10,10 @@ mutation updateUser($input: UpdateUserInput!) {
     gender
     dateOfBirth
     profilePicture
+    }
+    error {
+      message
+      code
+    }
   }
 } 

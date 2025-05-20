@@ -1,10 +1,10 @@
 import React from 'react'
-import { DynamicPricingRule } from 'src/gql/graphql'
+import { DynamicPricingRuleData } from 'src/gql/graphql'
 import { AddDynamicRule } from './AddDynamicRule'
 import formatDate from 'src/utils/date'
 
 
-export default function DynamicRulesCard({rule, roomId}: {rule: DynamicPricingRule, roomId: number}) {
+export default function DynamicRulesCard({rule, roomId}: {rule: DynamicPricingRuleData, roomId: number}) {
   const getPriorityColor = (priority: number) => {
     if (priority >= 3) return 'bg-red-100 text-red-800'
     if (priority >= 2) return 'bg-yellow-100 text-yellow-800'

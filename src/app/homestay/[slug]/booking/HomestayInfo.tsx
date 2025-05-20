@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { CustomChip } from 'src/components/Chip';
 import RichTextEditor from 'src/components/RichTextEditor';
-import { Room, RoomCapacity, RoomStatus } from 'src/gql/graphql';
+import { RoomData, RoomCapacity, RoomStatus } from 'src/gql/graphql';
 import { RoomCardFull } from './RoomCardFull';
 import { useSearchParams } from 'next/navigation';
 import { CiLocationOn } from 'react-icons/ci';
@@ -31,7 +31,7 @@ interface HomestayInfoProps {
     email: string;
   };
   images?: string[];
-  rooms?: Room[];
+  rooms?: RoomData[];
   selectedRoomId?: string;
   slug: string;
   onRoomSelect?: (roomId: string) => void;
@@ -61,7 +61,7 @@ export const HomestayInfo = ({
   const isFirstRender = useRef(true);
   const [ activeTab, setActiveTab ] = useState('rooms');
   const [ showDetails, setShowDetails ] = useState(false);
-  const [ selectedRoom, setSelectedRoom ] = useState<Room | null>(null);
+  const [ selectedRoom, setSelectedRoom ] = useState<RoomData | null>(null);
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -78,7 +78,7 @@ export const HomestayInfo = ({
 
   return (
     <>
-      {showDetails && <ShowDetails setShowDetails={setShowDetails} room={selectedRoom as Room} />}
+      {showDetails && <ShowDetails setShowDetails={setShowDetails} room={selectedRoom as RoomData} />}
         <div>
           <div className="">
             {/* Property Header */}
