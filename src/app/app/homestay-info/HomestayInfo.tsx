@@ -4,10 +4,8 @@ import { useForm } from 'react-hook-form';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import TextInput from 'src/features/react-hook-form/TextField';
 
-import { useToastStore } from 'src/store/toastStore';
 
 import React, { FC, useRef, useState } from 'react';
-import TextArea from 'src/features/react-hook-form/TextArea';
 import Button from 'src/components/Button';
 import { ContactDetails } from './ContactDetails';
 
@@ -20,13 +18,10 @@ import {
   UpdateHomestayMutationVariables,
 } from 'src/gql/graphql';
 import { AddressDetails } from './AddressDetails';
-// import { SocialsDetails } from './SocialsDetails';
 import LoadingSpinner from 'src/components/Loading';
 import RichTextEditor from 'src/components/RichTextEditor';
-import {  MapComponent } from './MapComponent';
 import { MapProvider } from 'src/features/MapProvider';
-import { WallpaperGallery } from './gallery/WallpaperGallery';
-// import HomestayAmenitiesPage from 'src/features/amenity/HomestayAmenityPage';
+import { enqueueSnackbar } from 'notistack';
 
 export const HomestayInfo = () => { 
   const queryHomestayData = useGraphqlClientRequest<
@@ -127,7 +122,6 @@ export const HomestayInfoForm: FC<IProps> = props => {
 
   const descriptionRef = useRef(description);
 
-  const { setMessage, setRole, setShowToast } = useToastStore();
   const {
     control,
     handleSubmit,
@@ -169,13 +163,9 @@ export const HomestayInfoForm: FC<IProps> = props => {
         },
       }).then(res => {
         if (res?.updateHomestay?.data?.id) {
-          setShowToast(true);
-          setMessage('Homestay Updated');
-          setRole('success');
+          enqueueSnackbar("Homestay updated successfully.",{variant:'success'})
         } else {
-          setShowToast(true);
-          setMessage('Something went wrong!');
-          setRole('error');
+          enqueueSnackbar("Something went wrong.",{variant:'warning'})
         }
       });
     } 

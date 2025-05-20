@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { enqueueSnackbar } from 'notistack';
 
 import { useState } from 'react';
 import { FaLongArrowAltLeft } from 'react-icons/fa';
@@ -28,8 +29,6 @@ export const GalleryEditBox = (props: IcoverEdit) => {
   const { galleryType, handleBack, galleryId, roomId, invalidateKey } = props;
 
   const queryClient = useQueryClient();
-  const { setMessage, setRole, setShowToast } = useToastStore();
-
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const handleImageUrl = (url: string | null) => {
     setImageUrl(url);
@@ -62,14 +61,10 @@ export const GalleryEditBox = (props: IcoverEdit) => {
       updateGallery({ roomImageId: galleryId, data: { url: imageUrl, caption: '', id: galleryId } }).then(res => {
         if (res?.updateRoomImage?.data?.[0]?.id) {
           queryClient.invalidateQueries({ queryKey: [String(invalidateKey)] });
-          setShowToast(true);
-          setMessage('Image Updated Success');
-          setRole('success');
+          enqueueSnackbar('Image Updated Success',{variant:'success'})
           handleBack?.();
         } else {
-          setShowToast(true);
-          setMessage('Something went wrong');
-          setRole('error');
+          enqueueSnackbar("Couldn't upload image",{variant:"error"})
         }
       });
     } else if (imageUrl && roomId) {
@@ -78,15 +73,11 @@ export const GalleryEditBox = (props: IcoverEdit) => {
           if (res.createRoomImage.data?.[0]?.id) {
           queryClient.invalidateQueries({ queryKey: [String(invalidateKey)] });
 
-          setShowToast(true);
-          setMessage('Image Created Success');
-          setRole('success');
+          enqueueSnackbar('Image Created Success',{variant:'success'})
           handleBack?.();
           setImageUrl(null);
         } else {
-          setShowToast(true);
-          setMessage('Something went wrong');
-          setRole('error');
+          enqueueSnackbar('Something went wrong.',{variant:'error'});
           handleBack?.();
         }
       });

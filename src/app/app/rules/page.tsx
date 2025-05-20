@@ -16,10 +16,10 @@ import {
   HomestayRules,
 
 } from 'src/gql/graphql';
-import { useToastStore } from 'src/store/toastStore';
 import { useUserStore } from 'src/store/userStore';
 import Button from 'src/components/Button';
 import RichTextEditor from 'src/components/RichTextEditor';
+import { enqueueSnackbar } from 'notistack';
 
 const Home: React.FC = () => {
  
@@ -52,7 +52,6 @@ export default Home;
 
 
 const FormContent = ({rulesData}: {rulesData: HomestayRules | undefined}) => {
-  const { setMessage, setRole, setShowToast } = useToastStore();
   const { user } = useUserStore();
   const editorRef = useRef<string>(rulesData?.data?.rules ?? "<p><br></p>");
   editorRef.current = rulesData?.data?.rules == "<p><br></p>" || rulesData?.data?.rules == null ? "<ol><li> </li></ol>" : rulesData?.data?.rules;
@@ -83,15 +82,11 @@ const FormContent = ({rulesData}: {rulesData: HomestayRules | undefined}) => {
         input: { rules: rules },
         rulesId: Number(rulesData?.data?.id),
       }).then(res => {
-          if (res.updateRules.data?.id) {
-          setShowToast(true);
-          setRole('success');
-          setMessage('Rules Updated');
+        if (res.updateRules.data?.id) {
+          enqueueSnackbar('Rules Updated',{variant:"success"})
           queryClient.invalidateQueries({ queryKey: ['getRules'] });
         } else {
-          setShowToast(false);
-          setRole('error');
-          setMessage('Something went wrong!');
+          enqueueSnackbar('Something went wrong!',{variant:"error"})
         }
       });
     } else {
@@ -99,14 +94,10 @@ const FormContent = ({rulesData}: {rulesData: HomestayRules | undefined}) => {
         input: { rules:rules ?? "", homestayId: Number(user.homestayId) }, 
       }).then(res => {
         if (res.createRules.data?.id) {
-          setShowToast(true);
-          setRole('success');
-          setMessage('Rules Created successfully.');
+         enqueueSnackbar('Rules Created successfully.',{variant:"success"})
           queryClient.invalidateQueries({ queryKey: ['getRules'] });
         } else {
-          setShowToast(false);
-          setRole('error');
-          setMessage('Something went wrong!');
+          enqueueSnackbar('Something went wrong!',{variant:'error'})
         }
       });
     }

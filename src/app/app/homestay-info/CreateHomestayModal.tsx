@@ -1,7 +1,7 @@
 'use client';
 
 import { useMutation } from '@tanstack/react-query';
-import Image from 'next/image';
+import { enqueueSnackbar } from 'notistack';
 
 import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -9,11 +9,8 @@ import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import Button from 'src/components/Button';
 import RichTextEditor from 'src/components/RichTextEditor';
 
-import ReactSelect from 'src/features/react-hook-form/ReactSelect';
-import TextArea from 'src/features/react-hook-form/TextArea';
 import TextInput from 'src/features/react-hook-form/TextField';
 import { CreateHomestay, CreateHomestayMutation, CreateHomestayMutationVariables } from 'src/gql/graphql';
-import { useToastStore } from 'src/store/toastStore';
 
 interface IProps {
   name?: string | null;
@@ -21,7 +18,6 @@ interface IProps {
 }
 
 export const CreateHomestayModal = () => {
-  const { setMessage, setRole, setShowToast } = useToastStore();
   const {
     control,
     watch,
@@ -83,15 +79,10 @@ export const CreateHomestayModal = () => {
       },
     }).then(res => {
       if (res?.createHomestay?.data?.id) {
-        setShowToast(true);
-        setMessage('homestay created');
-        setRole('success');
-        //
+        enqueueSnackbar("Homestay created successfully.",{variant:"success"})
         window.location.reload();
       } else {
-        setShowToast(true);
-        setMessage('Something Went Wrong!');
-        setRole('error');
+        enqueueSnackbar("Something went wrong.",{variant:'error'})
       }
     });
   };

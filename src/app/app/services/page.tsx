@@ -5,15 +5,14 @@ import { useState, useEffect } from "react";
 import Button from "src/components/Button";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useGraphqlClientRequest } from "src/client/useGraphqlClientRequest";
-import { useToastStore } from "src/store/toastStore";
 import { useRouter } from "next/navigation";
 import LoadingSpinner from "src/components/Loading";
 import { CreateService, CreateServiceMutation, CreateServiceMutationVariables, GetHomestayByToken, GetHomestayByTokenQuery, GetHomestayByTokenQueryVariables, GetServiceByHomestayId, GetServiceByHomestayIdQuery, GetServiceByHomestayIdQueryVariables, UpdateService, UpdateServiceMutation, UpdateServiceMutationVariables } from "src/gql/graphql";
+import { enqueueSnackbar } from "notistack";
 
 export default function ServicesPage() {
   const [ selectedServices, setSelectedServices ] = useState<string[]>([]);
   const router = useRouter();
-  const { setRole, setShowToast, setMessage } = useToastStore();
   const queryClient = useQueryClient();
 
   // find homestay id
@@ -80,15 +79,11 @@ export default function ServicesPage() {
         }
       }).then((res) => {
         if (res?.createService.data?.id) {
-          setShowToast(true);
           router.push('/app/services');
           queryClient.invalidateQueries({ queryKey: [ 'getServices' ] });
-          setMessage('Services Created Successfully!');
-          setRole('success');
+          enqueueSnackbar('Services Created Successfully!',{variant:"success"})
         } else {
-          setShowToast(true);
-          setMessage('Services Not Created!');
-          setRole('error');
+          enqueueSnackbar('Services Not Created!',{variant:"error"})
         }
       });
     } else {
@@ -99,15 +94,11 @@ export default function ServicesPage() {
         }
       }).then((res) => {
         if (res?.updateService.data?.id) {
-          setShowToast(true);
           router.push('/app/services');
           queryClient.invalidateQueries({ queryKey: [ 'getServices' ] });
-          setMessage('Services Updated Successfully!');
-          setRole('success');
+          enqueueSnackbar('Services Updated Successfully!',{variant:'success'})
         } else {
-          setShowToast(true);
-          setMessage('Services Not Updated!');
-          setRole('error');
+          enqueueSnackbar('Services Not Updated!',{variant:"error"})
         }
       });
     }

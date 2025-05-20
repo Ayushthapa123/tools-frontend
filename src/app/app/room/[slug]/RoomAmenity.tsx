@@ -4,17 +4,16 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useGraphqlClientRequest } from "src/client/useGraphqlClientRequest";
 import { CreateRoomAmenity, CreateRoomAmenityMutation, CreateRoomAmenityMutationVariables, FindAmenityByRoomId, FindAmenityByRoomIdQuery, FindAmenityByRoomIdQueryVariables, UpdateRoomAmenity, UpdateRoomAmenityMutation, UpdateRoomAmenityMutationVariables } from "src/gql/graphql";
-import { useToastStore } from "src/store/toastStore";
 import { roomAmenities } from "../../data/roomAmenity";
 import { Input } from "src/components/Input";
 import Button from "src/components/Button";
 import LoadingSpinner from "src/components/Loading";
+import { enqueueSnackbar } from "notistack";
 
 export default function RoomAmenityPage({ handleBack, roomId }: { handleBack: () => void, roomId: number }) {
   
   const [ selectedRoomAmenity, setSelectedRoomAmenity ] = useState<string[]>([]);
   const router = useRouter();
-  const { setRole, setShowToast, setMessage } = useToastStore();
   const queryClient = useQueryClient();
 
   // room amenity fetching
@@ -67,30 +66,22 @@ export default function RoomAmenityPage({ handleBack, roomId }: { handleBack: ()
     if (!data?.data?.roomAmenityId) {
       mutateAsync({ createAmenityInput: { roomId, amenity: selectedRoomAmenity.join(",") } }).then((res) => {
         if (res?.createRoomAmenity.data?.roomAmenityId) {
-          setShowToast(true);
           queryClient.invalidateQueries({ queryKey: ['getRoomAmenities'] });
-          setMessage('Amenities Created Successfully!');
-          setRole('success');
+          enqueueSnackbar('Amenities Created Successfully!',{variant:'success'})
         }
         else {
-          setShowToast(true);
-          setMessage('Amenities Not Created!');
-          setRole('error');
+          enqueueSnackbar('Amenities Not Created!',{variant:'error'})
         }
       })
     }
     else {
       updateAmenity({updateAmenityInput:{roomAmenityId:Number(data?.data?.roomAmenityId), amenity:selectedRoomAmenity.join(",")}}).then((res) => {
         if (res?.updateRoomAmenity.data?.roomAmenityId) {
-          setShowToast(true);
           queryClient.invalidateQueries({ queryKey: ['getRoomAmenities'] });
-          setMessage('Amenities Updated Successfully!');
-          setRole('success');
+          enqueueSnackbar('Amenities Updated Successfully!',{variant:'success'})
         }
         else {
-          setShowToast(true);
-          setMessage('Amenities Not Updated!');
-          setRole('error');
+          enqueueSnackbar('Amenities Not Updated!',{variant:'error'})
         }
       })
     }

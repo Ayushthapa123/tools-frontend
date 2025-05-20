@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import { enqueueSnackbar } from 'notistack';
 
 import { useState } from 'react';
 import { FaLongArrowAltLeft } from 'react-icons/fa';
@@ -36,7 +37,6 @@ export const WallpaperEditBox = (props: IcoverEdit) => {
   const router = useRouter();
 
   const queryClient = useQueryClient();
-  const { setMessage, setRole, setShowToast } = useToastStore();
 
   const [ imageUrl, setImageUrl ] = useState<string | null>(null);
   const handleImageUrl = (url: string | null) => {
@@ -76,10 +76,8 @@ export const WallpaperEditBox = (props: IcoverEdit) => {
         if (response?.createHomestayImage?.data?.[0]?.id) {
           await queryClient.invalidateQueries({ queryKey: [ String(invalidateKey) ] });
           await queryClient.invalidateQueries({queryKey:["getHomestayWallpaper"]})
-          setShowToast(true);
-          setMessage('Image Created Successfully');
+          enqueueSnackbar('Image Created Successfully',{variant:'success'})
           setImageUrl(null);
-          setRole('success');
           handleBack?.();
           router.push(window.location.pathname)
 
@@ -88,10 +86,7 @@ export const WallpaperEditBox = (props: IcoverEdit) => {
         }
       }
     catch (error) {
-      console.error('Error creating gallery image:', error);
-      setShowToast(true);
-      setMessage(`Error: ${error instanceof Error ? error.message : 'Something went wrong'}`);
-      setRole('error');
+     enqueueSnackbar("Something went wrong.",{variant:'error'})
     }
   }
 

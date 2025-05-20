@@ -6,7 +6,6 @@ import { Modal } from 'src/components/Modal';
 import { FaTrash } from 'react-icons/fa';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
-import { useToastStore } from 'src/store/toastStore';
 import {
   GetHomestayWallpaperByHomestayId,
   GetHomestayWallpaperByHomestayIdQuery,
@@ -22,6 +21,7 @@ import {
   GetHomestayByTokenQueryVariables
 } from 'src/gql/graphql';
 import { WallpaperGallery } from '../homestay-info/gallery/WallpaperGallery';
+import { enqueueSnackbar } from 'notistack';
 
 
 interface HomestayImage {
@@ -34,7 +34,6 @@ export default function Gallery() {
   const [ selectedImage, setSelectedImage ] = useState<HomestayImage | null >(null);
   const [ showModal, setShowModal ] = useState(false);
   const queryClient = useQueryClient();
-  const { setMessage, setRole, setShowToast } = useToastStore();
 
   //homestay id
   const queryHomestayData = useGraphqlClientRequest<
@@ -115,18 +114,13 @@ export default function Gallery() {
 
       if (response?.deleteHomestayImage?.data?.[0]?.id) {
         queryClient.invalidateQueries({ queryKey: [ 'getHomestayWallpaper' ] });
-        setShowToast(true);
-        setMessage('Image deleted successfully');
-        setRole('success');
+        enqueueSnackbar("Homestay Deleted.",{variant:"error"})
       }
     } catch (error) {
-        setShowToast(true);
-        setMessage('Failed to delete image');
-        setRole('error');
-      }
+      enqueueSnackbar("Something went wrong",{variant:"warning"})
     }
   };
-
+  }
   const handleSelectWallpaper = async () => {
     try {
       const response = await selectWallpaper({
@@ -136,15 +130,11 @@ export default function Gallery() {
 
       if (response?.selectHomestayImage?.data?.[0]?.id) {
         queryClient.invalidateQueries({ queryKey: [ 'getHomestayWallpaper' ] });
-        setShowToast(true);
-        setMessage('Wallpaper selected successfully');
-        setRole('success');
+        enqueueSnackbar("Wallpaper selected successfully.",{variant:'success'})
         setShowModal(false);
       }
     } catch (error) {
-      setShowToast(true);
-      setMessage('Failed to select wallpaper');
-      setRole('error');
+      enqueueSnackbar("Failed to select wallpaper",{variant:'error'})
     }
   };
 

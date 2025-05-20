@@ -32,6 +32,7 @@ import UploadPhotos from './UploadPhotosForm';
 import { RoomCreateForm } from './RoomCreateForm';
 import Button from 'src/components/Button';
 import RoomAmenity from './RoomAmenity';
+import { enqueueSnackbar } from 'notistack';
 
 
 export default function RoomContainer({ params }: { params: { slug: string } }) {
@@ -70,7 +71,6 @@ function RoomForm({ params, room }: { params: { slug: string }, room: Room | und
   const [ currentStep, setCurrentStep ] = useState(Number(searchParams.get('step')) || 1);
 
   const { user } = useUserStore();
-  const { setRole, setShowToast, setMessage } = useToastStore();
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -130,31 +130,34 @@ function RoomForm({ params, room }: { params: { slug: string }, room: Room | und
 
         mutateAsync({ createRoomInput: input }).then(res => {
           if (res?.createRoom?.data?.[0]?.id) {
-            setShowToast(true);
-            setMessage('Room Created!');
-            setRole('success');
+            enqueueSnackbar("Room created successfully.",{variant:'success'})
             queryClient.invalidateQueries({ queryKey: [ 'getRooms' ] });
             router.push(`/app/room/${res?.createRoom?.data?.[0]?.id}?step=2`);
             setCurrentStep(2);
           } else {
-            setShowToast(true);
-            setMessage('Something went wrong!');
-            setRole('error');
+            enqueueSnackbar("Something went wrong.",{variant:'error'})
           }
         });
       } else {
         mutateUpdateRoomAsync({ updateRoomInput: { ...input, id: Number(room?.data?.[0]?.id) } }).then(res => {
           if (res?.updateRoom?.data?.[0]?.id) {
-            setShowToast(true);
-            setMessage('Room Updated!');
-            setRole('success');
+            enqueueSnackbar("Room updated successfully.",{variant:'success'})
             queryClient.invalidateQueries({ queryKey: [ 'getRooms' ] });
             router.push(`/app/room/${res?.updateRoom?.data?.[0]?.id}?step=2`);
             setCurrentStep(2);
           } else {
-            setShowToast(true);
-            setMessage('Something went wrong!');
-            setRole('error');
+            enqueueSnackbar("Something went wrong.",{variant:'error'})
+          }
+        });
+        mutateUpdateRoomAsync({ updateRoomInput: { ...input, id: Number(room?.data?.[0]?.id) } }).then(res => {
+          if (res?.updateRoom?.data?.[0]?.id) {
+            enqueueSnackbar("Room updated successfully.",{variant:'success'})
+
+            queryClient.invalidateQueries({ queryKey: [ 'getRooms' ] });
+            router.push(`/app/room/${res?.updateRoom?.data?.[0]?.id}?step=2`);
+            setCurrentStep(2);
+          } else {
+            enqueueSnackbar("Something went wrong.",{variant:'error'})
           }
         });
       }

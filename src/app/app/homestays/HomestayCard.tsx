@@ -12,6 +12,7 @@ import Image from 'next/image';
 import RichTextEditor from 'src/components/RichTextEditor';
 import { useRef } from 'react';
 import { useUserStore } from 'src/store/userStore';
+import { enqueueSnackbar } from 'notistack';
 
 interface Iprops {
   homestay: Homestay | null | undefined;
@@ -32,21 +33,14 @@ const {user}=useUserStore()
 
   const { mutateAsync } = useMutation({ mutationFn: mutateCreateNearbyPlace });
   const queryClient = useQueryClient();
-  const { setMessage, setRole, setShowToast } = useToastStore();
-
- 
 
   const handleVerification = async (status: boolean) => {
     mutateAsync({ homestayId: Number(homestay?.data?.id), status }).then(res => {
       if (res?.verifyHomestay) {
-        setShowToast(true);
-        setMessage(`Homestay ${status ? 'Verified' : 'Unverified'}!`);
-        setRole('success');
+        enqueueSnackbar(`Homestay ${status ? 'Verified' : 'Unverified'}!`,{variant:'success'})
         queryClient.invalidateQueries({ queryKey: ['getAllHomestays'] });
       } else {
-        setShowToast(true);
-        setMessage('Something went wrong!');
-        setRole('error');
+        enqueueSnackbar("Something went wrong",{variant:"error"})
       }
     });
   };

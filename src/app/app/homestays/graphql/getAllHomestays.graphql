@@ -25,7 +25,6 @@ query GetAllHomestays($pageSize: Int, $pageNumber: Int) {
       altPhone
       email
     }
-
     rooms {
       id
       status
