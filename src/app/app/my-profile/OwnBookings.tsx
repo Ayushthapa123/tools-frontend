@@ -53,13 +53,10 @@ const BookingCard = ({ booking }: { booking: BookingData  }) => {
 
           <div className="flex items-center gap-2">
             <FaCalendar className="text-primary" />
-            <span className="text-sm">From: {formatDate(booking?.startDate)}</span>
+            <span className="text-sm">{formatDate(booking?.startDate)} <span className=' text-secondary'>To</span> {formatDate(booking?.endDate)}</span>
           </div>
 
-          <div className="flex items-center gap-2">
-            <FaCalendar className="text-primary" />
-            <span className="text-sm">To: {formatDate(booking?.endDate)}</span>
-          </div>
+        
 
           <div className="flex items-center gap-2">
             <FaMapMarkerAlt className="text-primary" />

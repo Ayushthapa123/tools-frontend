@@ -5,7 +5,7 @@ import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import { GetUserById, GetUserByIdQuery, GetUserByIdQueryVariables, LogOut, LogOutMutation, LogOutMutationVariables, UpdateUser, UpdateUserMutation, UpdateUserMutationVariables } from 'src/gql/graphql';
 import LogoutIcon from 'src/components/icons/LogOut';
 import { useUserStore } from 'src/store/userStore';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState, useEffect } from 'react';
 import { Modal } from 'src/components/Modal';
 import TextInput from 'src/features/react-hook-form/TextField';
@@ -54,7 +54,7 @@ export const OwnProfile = (props: { userType: string }) => {
     return res.getUserById;
   };
   const { data: userData } = useQuery({
-    queryKey: [ 'getUser' ],
+    queryKey: ["getUserById"],
     queryFn: fetchUser,
     enabled: !!user.userId && user.userId !== null,
   });
@@ -78,6 +78,7 @@ export const OwnProfile = (props: { userType: string }) => {
     { label: 'Female', value: 'FEMALE' },
     { label: 'Other', value: 'OTHER' },
   ];
+  const queryClient = useQueryClient();
 
   const onSubmitPersonal = async (data: any) => {
     try {
@@ -89,6 +90,7 @@ export const OwnProfile = (props: { userType: string }) => {
       });
       if (res?.updateUser?.data?.id) {
         enqueueSnackbar('Profile updated successfully!',{variant:'success'})
+        queryClient.invalidateQueries({ queryKey: ["getUserById"] });
       } else {
         enqueueSnackbar('Something went wrong!',{variant:'error'})
       }
@@ -168,7 +170,7 @@ export const OwnProfile = (props: { userType: string }) => {
                   <Image className=" rounded-full border border-black" src={userData?.data?.profilePicture || imageUrl || ""} alt="user avatar" fill />
                 ) : (
                   <div className="w-full h-full rounded-full bg-neutral text-neutral-content">
-                    <span className="text-[50px]">{user.userName.charAt(0)}</span>
+                    <span className="text-[50px]">{userData?.data?.fullName?.charAt(0)}</span>
                   </div>
                 )
               }
@@ -181,8 +183,8 @@ export const OwnProfile = (props: { userType: string }) => {
           </div>
           <div className="flex-grow ">
             <div className="relative top-[10px] lg:top-[30px]">
-              <h2 className=" font-bold text-[25px] ">{user.userName}<span className='text-xs md:text-base text-secondary'> ({user.userType})</span></h2>{' '}
-              <h2 className="  font-medium text-[20px] text-secondary">{user.userEmail}</h2>
+                <h2 className=" font-bold text-[25px] ">{userData?.data?.fullName}<span className='text-xs md:text-base text-secondary'> ({user.userType})</span></h2>{' '}
+              <h2 className="  font-medium text-[20px] text-secondary">{userData?.data?.email}</h2>
             </div>
           </div>
           <div className=" relative">

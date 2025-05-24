@@ -3,7 +3,8 @@ import axios from 'axios';
 import Image from 'next/image';
 import { MdOutlineCancelPresentation } from 'react-icons/md';
 import LoadingSpinner from 'src/components/Loading';
-
+import { enqueueSnackbar } from 'notistack';
+import { useQueryClient } from '@tanstack/react-query';
 interface Iprops {
   handleImageUrl: (url: string | null) => void;
   imageUrl: string | null;
@@ -12,10 +13,35 @@ const ImageUploader = (props: Iprops) => {
   const { handleImageUrl, imageUrl } = props;
   const [loading, setLoading] = useState(false);
 
-  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [isDragging, setIsDragging] = useState<boolean>(false); 
+
+  const queryClient = useQueryClient();
+
+  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB in bytes
+
+  const validateFile = (file: File): boolean => {
+    if (!file.type.startsWith('image/')) {
+      enqueueSnackbar('Please upload only image files (jpg, jpeg, png)', {
+        variant: 'error',
+      });
+      return false;
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+      enqueueSnackbar('File size should be less than 5MB', {
+        variant: 'error',
+      });
+      return false;
+    }
+
+    return true;
+  };
 
   const handleFileChange = (event: any) => {
-    handleUpload(event.target.files[0]);
+    const file = event.target.files[0];
+    if (file && validateFile(file)) {
+      handleUpload(file);
+    }
   };
 
   const handleUpload = async (file: File) => {
@@ -28,7 +54,7 @@ const ImageUploader = (props: Iprops) => {
       }
       setLoading(true);
 
-      const response = await axios.post(
+       await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL!}/upload/image`,
         formData,
         {
@@ -37,10 +63,12 @@ const ImageUploader = (props: Iprops) => {
             
           },
         },
-      );
-      setLoading(false);
+      ).then((res) => {
+        setLoading(false);
+        queryClient.invalidateQueries({ queryKey: ['getHomestayWallpaper'] });
+        handleImageUrl(res.data.imageUrl);
+      });
 
-      handleImageUrl(response.data.imageUrl);
     } catch (error) {
       setLoading(false);
       console.error('Error uploading image:', error);
@@ -68,7 +96,10 @@ const ImageUploader = (props: Iprops) => {
 
     const files = Array.from(e.dataTransfer.files);
     if (files && files.length > 0) {
-      handleUpload(files[0]);
+      const file = files[0];
+      if (validateFile(file)) {
+        handleUpload(file);
+      }
     }
   };
 
@@ -103,7 +134,7 @@ const ImageUploader = (props: Iprops) => {
             <p className="mt-2 text-gray-400">or</p>
             <label
               htmlFor="fileInput"
-              className="px-4 py-2 mt-2  text-gray-600 bg-blue-500 rounded hover:bg-blue-600 cursor-pointer">
+              className="px-4 py-2  text-primary bg-gray-100 rounded hover:bg-blue-600 cursor-pointer border-dotted">
               Click here to upload<input id="fileInput" type="file" className="hidden" onChange={handleFileChange} accept='.jpg , .jpeg, .png'  />
             </label>
             {loading && (

@@ -104,7 +104,7 @@ export const BookingCard = (props: Iprops) => {
           <p><span className="font-semibold">Payment Status:</span> {paymentStatus}</p>
         </div>
         <div>
-          <p><span className="font-semibold">Check In:</span> {checkInDate}</p>
+          <p><span className="font-semibold">Date:</span> {checkInDate} to {checkOutDate}</p>
           <p><span className="font-semibold">Check Out:</span> {checkOutDate}</p>
         </div>
         <div>

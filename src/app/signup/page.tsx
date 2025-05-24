@@ -161,10 +161,10 @@ function SignUp() {
                   <div className="">
                     <TextInput
                       name="fullName"
-                      type="text"
+                      type="text" 
                       placeholder="Full Name"
                       control={control}
-                      label="Name"
+                      label="Full Name"
                       required
                       helpertext={errors.email?.type === 'required' ? 'Name Is Required' : ''}
                       error={!!errors.email}
@@ -175,6 +175,7 @@ function SignUp() {
                     <TextInput
                       name="email"
                       type="email"
+                      customType='email'
                       placeholder="example@email.co.uk"
                       control={control}
                       label="Email Address"

@@ -1,12 +1,13 @@
 "use client";
 import { useMutation } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import { BiCheck, BiCheckSquare, BiSquare } from 'react-icons/bi';
+import { BiCheckSquare, BiSquare } from 'react-icons/bi';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import Button from 'src/components/Button';
-import { CreateAmenity, CreateAmenityDocument, CreateAmenityMutation, CreateAmenityMutationVariables, UpdateAmenity, UpdateAmenityDocument, UpdateAmenityMutation, UpdateAmenityMutationVariables } from 'src/gql/graphql';
+import { CreateAmenity, CreateAmenityMutation, CreateAmenityMutationVariables, UpdateAmenity, UpdateAmenityDocument, UpdateAmenityMutation, UpdateAmenityMutationVariables } from 'src/gql/graphql';
 import { getAmenityCategories } from 'src/utils/amenityData';
-export const AmenitySelector = ({
+import { enqueueSnackbar } from 'notistack';
+  export const AmenitySelector = ({
   homestayId,
   existingAmenities = "",
   loading,
@@ -25,9 +26,6 @@ export const AmenitySelector = ({
 
   // State to track selected amenities
   const [ selectedAmenities, setSelectedAmenities ] = useState(existingAmenities);
-
-  // State to show success message
-  const [ saveSuccess, setSaveSuccess ] = useState(false);
 
   // State to track which categories are expanded/collapsed
   const [ expandedCategories, setExpandedCategories ] = useState<Record<string, boolean>>(
@@ -71,10 +69,6 @@ export const AmenitySelector = ({
       }
     });
 
-    // Clear any previous success message when making changes
-    if (saveSuccess) {
-      setSaveSuccess(false);
-    }
   };
 
   // Toggle category expansion
@@ -92,21 +86,18 @@ export const AmenitySelector = ({
         ? selectedAmenities.split(',').filter(Boolean)
         : selectedAmenities;
 
-      const updatedRes = await updateAmenities({
+    updateAmenities({
         updateAmenityInput: {
           id: amenityId,
           amenity: Array.isArray(amenitiesArray) ? amenitiesArray.join(',') : amenitiesArray,
           homestayId: homestayId
         }
+      }).then((res) => {
+        if (res.updateAmenity.data?.id) {
+          enqueueSnackbar("Amenities updated.",{variant:'success'})
+        }
       });
 
-      // Show success message
-      setSaveSuccess(true);
-
-      // Hide success message after 3 seconds
-      setTimeout(() => {
-        setSaveSuccess(false);
-      }, 3000);
     } catch (err) {
       console.error("Error updating amenities:", err);
     }
@@ -124,18 +115,12 @@ export const AmenitySelector = ({
           homestayId: homestayId
         }
       }).then((res) => {
-        if (res) {
-          existingAmenities = selectedAmenities;
+        if (res.createAmenity.data?.id) {
+          enqueueSnackbar("Amenities created.",{variant:'success'})
         }
       });
 
-      // Show success message
-      setSaveSuccess(true);
 
-      // Hide success message after 3 seconds
-      setTimeout(() => {
-        setSaveSuccess(false);
-      }, 3000);
     } catch (err) {
       console.error("Error creating amenities:", err);
     }
@@ -157,7 +142,6 @@ export const AmenitySelector = ({
           currentSelected.push(amenity);
         }
       });
-
       return currentSelected.join(',');
     });
   };
@@ -193,22 +177,11 @@ export const AmenitySelector = ({
     ).length;
   };
 
-  // Calculate if all items in a category are selected
-  const isAllCategorySelected = (category: string) => {
-    return getCategorySelectedCount(category) === amenityCategories[ category ].length;
-  };
-
-  // Calculate if some (but not all) items in a category are selected
-  const isSomeCategorySelected = (category: string) => {
-    const count = getCategorySelectedCount(category);
-    return count > 0 && count < amenityCategories[ category ].length;
-  };
 
   return (
     <div className="p-6 w-full mx-auto bg-white/80 rounded-lg shadow-md border border-gray-100">
       <h1 className="text-2xl font-bold mb-2 text-gray-800">Homestay Amenities</h1>
       <p className="mb-6 text-gray-600">Select all amenities available at your property.</p>
-
       {Object.keys(amenityCategories).map((category:any) => (
         <div key={category} className="mb-6 border-b border-gray-100 pb-4 last:border-b-0">
           <div
@@ -216,17 +189,7 @@ export const AmenitySelector = ({
             onClick={() => toggleCategory(category)}
           >
             <div className="flex items-center">
-              {/* <div className="mr-3">
-                {isAllCategorySelected(category) ? (
-                  <BiCheckSquare className="h-5 w-5 text-blue-600" />
-                ) : isSomeCategorySelected(category) ? (
-                  <div className="h-5 w-5 border-2 border-blue-600 rounded flex items-center justify-center">
-                    <div className="h-2 w-2 bg-blue-600 rounded-sm"></div>
-                  </div>
-                ) : (
-                  <BiSquare className="h-5 w-5 text-gray-400" />
-                )}
-              </div> */}
+   
               <h2 className="text-lg font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">
                 {category}
                 <span className="ml-2 text-sm font-normal text-gray-500">
@@ -253,11 +216,6 @@ export const AmenitySelector = ({
               >
                 Clear
               </button>
-              {/* <div className="text-gray-400 transition-transform duration-200" style={{
-                transform: expandedCategories[category] ? 'rotate(180deg)' : 'rotate(0deg)'
-              }}>
-                ▼
-              </div> */}
             </div>
           </div>
 
@@ -296,13 +254,6 @@ export const AmenitySelector = ({
           )}
         </div>
       ))}
-
-      {saveSuccess && (
-        <div className="p-4 mb-4 bg-green-50 border border-green-200 text-green-700 rounded-md flex items-center">
-          <BiCheck className="h-5 w-5 mr-2" />
-          Amenities saved successfully!
-        </div>
-      )}
 
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-6 pt-4 border-t border-gray-100">
         <div className="text-sm text-gray-500 mb-4 sm:mb-0">

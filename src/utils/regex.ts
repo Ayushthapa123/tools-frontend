@@ -1,7 +1,5 @@
-// hello world
-
 export const regex = {
-  email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+  email: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/,
   phone: /^\d{10}$/,
   password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, 
   number: /^\d+$/,
@@ -26,7 +24,8 @@ export const regex = {
   dateWithTimeAndTimeZone: /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} \d{2}:\d{2}$/,
 
   // String 
-  name: /^[a-zA-Z\s]{3,}$/, // only letters and spaces. at least 3 characters
+  name: /^[a-zA-Z](?:[a-zA-Z\s]{1,}[a-zA-Z])$/,
+  // only letters and spaces. at least 3 characters
   nameWithSpaces: /^[a-zA-Z\s]+$/,
   nameWithSpacesAndNumbers: /^[a-zA-Z\s\d]+$/,
   nameWithSpacesAndNumbersAndSpecialCharacters: /^[a-zA-Z\s\d\W]+$/,

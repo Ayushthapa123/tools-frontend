@@ -22,7 +22,7 @@ import {
 } from 'src/gql/graphql';
 import { WallpaperGallery } from '../homestay-info/gallery/WallpaperGallery';
 import { enqueueSnackbar } from 'notistack';
-
+import LoadingSpinner from 'src/components/Loading';
 
 interface HomestayImage {
   id: string;
@@ -71,7 +71,7 @@ export default function Gallery() {
   const wallpaperData = wallpaperDat?.data?.filter(img => img?.url !== ("https:/example.com/image.jpg"));
   // remove this line after removing example.com from db
 
-  const mainWallpaper = wallpaperData?.filter(img => img?.isSelected)[ 0 ];
+  const mainWallpaper = wallpaperData?.filter(img => img?.isSelected)[ 0 ] || wallpaperData?.[0];
 
   // Delete wallpaper mutation
   const mutateDeleteWallpaper = useGraphqlClientRequest<
@@ -114,7 +114,7 @@ export default function Gallery() {
 
       if (response?.deleteHomestayImage?.data?.[0]?.id) {
         queryClient.invalidateQueries({ queryKey: [ 'getHomestayWallpaper' ] });
-        enqueueSnackbar("Homestay Deleted.",{variant:"error"})
+        enqueueSnackbar("Homestay Deleted.",{variant:"success"})
       }
     } catch (error) {
       enqueueSnackbar("Something went wrong",{variant:"warning"})
@@ -157,7 +157,7 @@ export default function Gallery() {
             </div>
           </div>) : (
               <div>
-                <span className='text-gray-500'>No wallpaper to display</span>
+              <LoadingSpinner />
               </div>
           )
         }

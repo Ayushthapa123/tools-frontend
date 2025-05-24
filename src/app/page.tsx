@@ -1,8 +1,6 @@
-import { Header as Header1 } from 'src/features/landing-page/Header1';
 import { CommonNav } from 'src/features/NavBar/CommonNav';
 
 import type { Metadata } from 'next';
-import { CheckSession } from 'src/features/CheckSession';
 import { Header } from 'src/features/landing-page/Header';
 import Footer from 'src/features/Footer';
 export const metadata: Metadata = {

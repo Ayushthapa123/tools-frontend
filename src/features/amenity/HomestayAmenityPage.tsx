@@ -1,10 +1,10 @@
 // Example page where you'd use the AmenitySelector component
 import { useQuery } from '@tanstack/react-query';
-import React, { useState, useEffect } from 'react';
+import React, {  } from 'react';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import { FindAmenityByHomestayId, FindAmenityByHomestayIdDocument, FindAmenityByHomestayIdQuery, FindAmenityByHomestayIdQueryVariables } from 'src/gql/graphql';
 import { AmenitySelector } from './AmenitySelector';
-import { AmenityDisplay } from './DisplayAmenity';
+import LoadingSpinner from 'src/components/Loading';
 
 
 
@@ -21,7 +21,7 @@ export const HomestayAmenitiesPage = ({ homestayId }: { homestayId: number }) =>
     queryFn: fetchData,
     enabled: !!homestayId,
   });
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <LoadingSpinner />;
   if (error) return <p>Error: {error.message}</p>;
 
   // Get existing amenities or provide empty array if none

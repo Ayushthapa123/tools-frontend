@@ -1,10 +1,7 @@
-import type { Metadata } from 'next';
 // import { Sora, Teko } from 'next/font/google';
 import './globals.css';
 import Head from 'next/head';
 import { TopLevelWrapper } from 'src/features/TopLevelWrapper';
-import PWARegister from 'src/components/PWARegister';
-import { CheckSession } from 'src/features/CheckSession';
 
 // const sora = Sora({
 //   subsets: ['latin'],

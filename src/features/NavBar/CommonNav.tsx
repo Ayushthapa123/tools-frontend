@@ -10,9 +10,7 @@ import { UserProfile } from '../UserProfile';
 
 export const CommonNav = () => {
 
-
   const { user } = useUserStore();
-
 
   return (
     <div

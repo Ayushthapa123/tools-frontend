@@ -40,7 +40,7 @@ function SignUp() {
   const { mutateAsync: signUp } = useMutation({ mutationFn: mutateSignupRequest });
 
   useEffect(() => {
-    if (token)
+    if (token) {
       signUp({
         input: {
           token: token,
@@ -52,6 +52,9 @@ function SignUp() {
           router.push('/app');
         }
       });
+    }else {
+      router.push('/login');
+    }
   }, [router, setAccessToken, signUp, token]);
 
   return <section className=""></section>;

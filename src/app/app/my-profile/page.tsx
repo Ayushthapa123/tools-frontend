@@ -1,12 +1,5 @@
 'use client';
 
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
-import {
-
-} from 'src/gql/graphql';
-import { useQuery } from '@tanstack/react-query';
-import { useAccessTokenStore } from 'src/store/accessTokenStore';
-
 import { Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { OwnProfile } from './OwnProfile';
@@ -25,19 +18,13 @@ export default function Page() {
 }
 
 function PageContent() {
-  // const router = useRouter();
-  // const asPath = router.asPath;
+
   const searchParams = useSearchParams();
   const param = searchParams.get('id');
 
   const { user } = useUserStore();
 
-
-
-
-
   //get the payment profile
-
 
   const [activeTab, setActiveTab] = useState(param == 'plans' ? 2 : param == 'payment-info' ? 3 : 1);
 
