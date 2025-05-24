@@ -146,6 +146,8 @@ const LogIn = () => {
                       required
                       helpertext={errors.email?.type === 'required' ? 'Email Is Required' : ''}
                       error={!!errors.email}
+                      tabIndex={1}
+                      autoFocus
                     />
                   </div>
                   <div className="mt-3 ">

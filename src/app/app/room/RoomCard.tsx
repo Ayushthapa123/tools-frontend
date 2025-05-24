@@ -1,19 +1,9 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import IconButton from 'src/components/IconButton';
 import DeleteIcon from 'src/components/icons/Delete';
-import {
-  DeleteRoom,
-  DeleteRoomMutation,
-  DeleteRoomMutationVariables,
-} from 'src/gql/graphql';
-import { useToastStore } from 'src/store/toastStore';
 import Link from 'next/link';
-import EditIcon from 'src/components/icons/Edit';
 import Image from 'next/image';
 import { Badge } from 'src/components/Badge';
 import { FiEdit } from 'react-icons/fi';
-import { enqueueSnackbar } from 'notistack';
 
 interface Iprops {
   id: number | string;
@@ -23,28 +13,18 @@ interface Iprops {
   price: number;
   currency: string;
   imageUrl: string;
+  setShowDeleteModal: (state: boolean) => void;
+  setDeletedRoomId: (val:number|string|null)=>void;
 }
 
 export const RoomCard = (props: Iprops) => {
-  const { id, caption, roomNumber, status, price, currency, imageUrl } = props;
-  const mutateCreateNearbyPlace = useGraphqlClientRequest<
-    DeleteRoomMutation,
-    DeleteRoomMutationVariables
-  >(DeleteRoom.loc?.source.body!);
+  const { id, caption, roomNumber, status, price, currency, imageUrl,setShowDeleteModal, setDeletedRoomId } = props;
+  
 
-  const { mutateAsync } = useMutation({ mutationFn: mutateCreateNearbyPlace });
-  const queryClient = useQueryClient();
-
-  const onSubmit = async () => {
-    await mutateAsync({ id: Number(id) }).then(res => {
-      if (res?.removeRoom) {
-        enqueueSnackbar("Room deleted.",{variant:"success"})
-        queryClient.invalidateQueries({ queryKey: [ 'getRooms' ] });
-      } else {
-        enqueueSnackbar("Couldn't delete room.",{variant:"error"})
-      }
-    });
-  };
+  const onClickDelete = () => {
+    setDeletedRoomId(id)
+    setShowDeleteModal(true);
+  }
 
   // const getStatusColor = (status: string) => {
   //   switch (status.toLowerCase()) {
@@ -98,7 +78,7 @@ export const RoomCard = (props: Iprops) => {
             </a>
           </Link>
           <IconButton
-            onClick={onSubmit}
+            onClick={onClickDelete}
             size="small"
             color="error"
             className="bg-white/80 shadow-md backdrop-blur"

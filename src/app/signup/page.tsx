@@ -169,6 +169,8 @@ function SignUp() {
                       helpertext={errors.email?.type === 'required' ? 'Name Is Required' : ''}
                       error={!!errors.email}
                       customType='name'
+                      tabIndex={1}
+                      autoFocus
                     />
                   </div>
                   <div className="mt-5 ">

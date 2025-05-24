@@ -144,7 +144,8 @@ export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Pri
                 type="number"
                 helpertext={errors.baseAmount?.type === 'required' ? 'Amount is Required' : ''}
                 error={!!errors.baseAmount} 
-                customType='price'
+                  customType='price'
+                  min={0}
               />
             </div>
             </div>

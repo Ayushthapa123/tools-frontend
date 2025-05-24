@@ -6,6 +6,7 @@ import { OwnProfile } from './OwnProfile';
 import { useUserStore } from 'src/store/userStore';
 import { OwnBookings } from './OwnBookings';
 import ChangePassword from './ChangePassword';
+import Button from 'src/components/Button';
 
 export default function Page() {
   return (
@@ -26,7 +27,8 @@ function PageContent() {
 
   //get the payment profile
 
-  const [activeTab, setActiveTab] = useState(param == 'plans' ? 2 : param == 'payment-info' ? 3 : 1);
+
+  const [activeTab, setActiveTab] = useState(1);
 
 
   const mobileTabs = [
@@ -45,15 +47,13 @@ function PageContent() {
         <h2 className=" text-xl font-semibold text-primary">My Profile Details</h2>
         {/* <p className=' text-gray-500 '>View your profile details</p> */}
       </div>
-      <div role="tablist" className="tabs tabs-boxed  mb-10 hidden w-auto md:block bg-transparent">
+      <div className=" mb-10 hidden w-fit bg-transparent md:flex">
         {tabs?.filter(tab => tab.visible).map(tab => (
-          <a
-            role="tab"
-            className={`tab text-xl mx-1 px-2 font-bold text-primary ${activeTab == tab.id ? '  tab-active' : 'border border-slate-300'}`}
+          <Button
+            label={tab.name}
+            className={`text-xl mx-1 px-2 font-bold backgro text-gray-500 ${activeTab == tab.id ? ' text-white tab-active' : 'border border-slate-300'}`}
             key={tab.id}
-            onClick={() => setActiveTab(tab.id)}>
-            {tab.name}
-          </a>
+            onClick={() => setActiveTab(tab.id)}/>
         ))}
       </div>
 

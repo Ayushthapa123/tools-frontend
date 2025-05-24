@@ -14,10 +14,12 @@ import { useForm } from 'react-hook-form';
 import DatePicker from 'src/features/react-hook-form/DatePicker';
 import axios from 'axios';
 import { enqueueSnackbar } from 'notistack';
+import { useGraphQLQuery } from 'src/hooks/useGraphqlQuery';
 
 export const OwnProfile = (props: { userType: string }) => {
   const { user } = useUserStore();
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [ loading, setLoading ] = useState(false);
   const mutateLogOutRequest = useGraphqlClientRequest<LogOutMutation, LogOutMutationVariables>(
     LogOut.loc?.source.body!,
@@ -26,18 +28,33 @@ export const OwnProfile = (props: { userType: string }) => {
   const mutateUpdateUser = useGraphqlClientRequest<UpdateUserMutation, UpdateUserMutationVariables>(
     UpdateUser.loc?.source.body!
   );
-  const { mutateAsync: updateUser } = useMutation({ mutationFn: mutateUpdateUser });
+  const { mutateAsync: updateUser } = useMutation({ mutationFn: mutateUpdateUser});
   const [ openPersonalModal, setOpenPersonalModal ] = useState(false);
   const [ openProfilePictureModal, setOpenProfilePictureModal ] = useState(false);
+
+
+    // Fetch user profile by userId
+    const queryUser = useGraphqlClientRequest<GetUserByIdQuery, GetUserByIdQueryVariables>(GetUserById.loc?.source.body!);
+    const fetchUser = async () => {
+      const res = await queryUser({ id: Number(user.userId) });
+      return res.getUserById;
+    };
+    const { data: userData } = useQuery({
+      queryKey: ["getUserById"],
+      queryFn: fetchUser,
+      enabled: !!user.userId && user.userId !== null,
+    });
+  
+  
   // Form for personal details
   const { control,register, handleSubmit, formState: { errors }, reset } = useForm({
     defaultValues: {
       fullName: user.userName || '',
-      city: '',
-      altPhoneNumber: '',
-      phoneNumber: '',
-      gender: '',
-      dateOfBirth: '',
+      city: userData?.data?.city ||  '',
+      altPhoneNumber:userData?.data?.altPhoneNumber || '',
+      phoneNumber: userData?.data?.phoneNumber || '',
+      gender: userData?.data?.gender || '',
+      dateOfBirth: userData?.data?.dateOfBirth || '',
     },
   });
   
@@ -47,17 +64,6 @@ export const OwnProfile = (props: { userType: string }) => {
     },
   });
 
-  // Fetch user profile by userId
-  const queryUser = useGraphqlClientRequest<GetUserByIdQuery, GetUserByIdQueryVariables>(GetUserById.loc?.source.body!);
-  const fetchUser = async () => {
-    const res = await queryUser({ id: Number(user.userId) });
-    return res.getUserById;
-  };
-  const { data: userData } = useQuery({
-    queryKey: ["getUserById"],
-    queryFn: fetchUser,
-    enabled: !!user.userId && user.userId !== null,
-  });
 
   // Update form values when userData changes
   useEffect(() => {
@@ -71,14 +77,13 @@ export const OwnProfile = (props: { userType: string }) => {
         dateOfBirth: userData.data.dateOfBirth || '',
       });
     }
-  }, [ userData, reset ]);
+  }, [ userData, reset , openPersonalModal ]);
 
   const genderOptions = [
     { label: 'Male', value: 'MALE' },
     { label: 'Female', value: 'FEMALE' },
     { label: 'Other', value: 'OTHER' },
   ];
-  const queryClient = useQueryClient();
 
   const onSubmitPersonal = async (data: any) => {
     try {
@@ -163,7 +168,7 @@ export const OwnProfile = (props: { userType: string }) => {
       <div className=" w-full mt-[100px] min-h-[calc(100vh-400px)]">
         <div className=" mb-4 flex gap-5 flex-col lg:flex-row">
           <div className='flex items-center justify-center'>
-            <div className="avatar placeholder relative h-[80px] w-[80px] lg:h-[130px] lg:w-[130px]">
+            <div className="avatar placeholder relative h-[80px] w-[80px] lg:h-[130px] lg:w-[130px] hover:cursor-pointer group transition-all ease-in-out duration-300">
 
               {
                 userData?.data?.profilePicture || imageUrl ? (
@@ -175,7 +180,7 @@ export const OwnProfile = (props: { userType: string }) => {
                 )
               }
               <button
-                className={`absolute bottom-1 right-0 rounded-full p-1 text-[21px] ${userData?.data?.profilePicture || imageUrl ? 'text-white' : 'text-primary'} lg:bottom-[5px] lg:right-[14px]`}
+                className={`hidden group-hover:block absolute bottom-1 right-0 rounded-full p-1 text-[21px] ${userData?.data?.profilePicture || imageUrl ? 'text-white' : 'text-primary'} lg:bottom-[5px] lg:right-[14px]`}
                 onClick={() => setOpenProfilePictureModal(true)}>
                 <FaCamera />
               </button>
@@ -222,11 +227,17 @@ export const OwnProfile = (props: { userType: string }) => {
             helpertext={errors.fullName ? 'Full name is required' : ''}
             type="text"
             customType='name'
+            minLength={0}
+            maxLength={50}
           />
           <TextInput
             name="city"
+            type='text'
             control={control}
             label="City"
+            customType='name'
+            minLength={0}
+            maxLength={50}
             required
             error={!!errors.city}
             helpertext={errors.city ? 'City is required' : ''}
@@ -249,6 +260,7 @@ export const OwnProfile = (props: { userType: string }) => {
             helpertext={errors.altPhoneNumber?.message}
             type="tel"
             customType='tel'
+            pattern="\d{10}"
           />
           <ReactSelect
             name="gender"

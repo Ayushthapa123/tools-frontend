@@ -45,6 +45,13 @@ export default function MainContent(props: Iprops) {
   const editorRef = useRef(homestay?.data?.description ?? '');
   const { roomIds } = useRoomStore();
 
+  //socials 
+  const facebookUrl = homestay?.data?.socials?.facebook ?? "#";
+  const instagramUrl = homestay?.data?.socials?.instaGram ?? "#";
+  const youtubeUrl = homestay?.data?.socials?.youTube ?? "#";
+
+  // contact
+
   // for amenities 
   const queryAmenity = useGraphqlClientRequest<FindAmenityByHomestayIdQuery, FindAmenityByHomestayIdQueryVariables>(FindAmenityByHomestayId.loc?.source.body!)
   const fetchData = async () => {
@@ -170,29 +177,29 @@ export default function MainContent(props: Iprops) {
 
                 <div className="rounded-xl bg-white p-6 shadow-sm">
                   <h3 className="mb-4 border-b border-gray-200 pb-2 text-lg font-semibold text-gray-800">Contact Us</h3>
-                  <div className="">
+                  <div className="flex flex-col items-start gap-0 md:flex-row lg:flex-col md:gap-4 lg:gap-0">
                     <div className="flex items-center gap-0">
                       <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600 mb-3">
                         <FaPhoneFlip className='text-secondary h-7 w-7 lg:h-6 lg:w-6' />
                       </div>
-                      <p className="ml-3 text-gray-700 text-base">+977 783 705 178</p>
+                        <p className="ml-3 text-gray-700 text-base">{ homestay?.data?.contact?.phone ?? "No number"}</p>
                     </div>
                     <div className="flex items-center">
                       <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600 mb-3">
                         <MdEmail className='text-secondary h-8 w-7 lg:h-6 lg:w-6' />
                       </div>
-                      <p className="ml-3 text-gray-700 text-base">demo123@gmail.com</p>
+                          <p className="ml-3 text-gray-700 text-base">{ homestay?.data?.contact?.email ?? "No email"}</p>
                     </div>
-                    <div className="flex items-start">
+                    <div className="flex items-start md:ml-4 lg:ml-0">
                       <div className="mr-3 pt-2 font-medium text-gray-700">Socials:</div>
                       <div className="flex items-center space-x-4">
-                        <a href="#" className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-colors hover:bg-blue-100">
+                        <a href={instagramUrl} className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-colors hover:bg-blue-100">
                           <GrInstagram className='text-secondary h-7 w-7 lg:h-6 lg:w-6' />
                         </a>
-                        <a href="#" className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-colors hover:bg-blue-100">
+                        <a href={facebookUrl} className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-colors hover:bg-blue-100">
                           <FaFacebook className='text-secondary h-7 w-7 lg:h-6 lg:w-6' />
                         </a>
-                        <a href="#" className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-colors hover:bg-blue-100">
+                        <a href={youtubeUrl} className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-colors hover:bg-blue-100">
                           <GrYoutube className='text-secondary h-7 w-7 lg:h-6 lg:w-6' />
                         </a>
                       </div>

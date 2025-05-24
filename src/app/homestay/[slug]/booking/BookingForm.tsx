@@ -88,8 +88,13 @@ export const BookingForm = ({ homestayId, homeStaySlug, onSuccess, rooms }: Book
     // setCheckOutDateValue(date)
     const dateString = date instanceof Date ? date.toISOString().split('T')[ 0 ] : new Date(date).toISOString().split('T')[ 0 ]
     // also change the search params 
-    const checkInDate = new Date(checkInDateValue)
-    window.location.href = `/homestay/${homeStaySlug}/booking?checkInDate=${checkInDate.toISOString().split('T')[ 0 ]}&checkOutDate=${dateString}`
+    const checkInDate = new Date(checkInDateValue);
+    const dateStringObj = new Date(dateString);
+    if (dateStringObj <= checkInDate) {
+      enqueueSnackbar("checkout-date must be greater than checkin-date", { variant: "error" });
+      return;
+    }
+    window.location.href = `/homestay/${homeStaySlug}/booking?checkInDate=${checkInDate.toISOString().split('T')[ 0 ]}&checkOutDate=${dateString}`;
   }
   const {bookingDetails}=useBookingDetailsStore()
 
@@ -215,32 +220,6 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit, setValue, watch, get
   const [ errorMessage, setErrorMessage ] = useState<string | null>(null)
   const { setBookingDetails, resetBookingDetails,bookingDetails } = useBookingDetailsStore();
   
-  const handleValidPhoneCheck = (phone: string) => {
-    if (phone.length == 10 || phone == null || phone == "") {
-      setErrorMessage(null);
-      setValue("phone",phone)
-    }
-    if ( phone.length != 10) {
-      setErrorMessage("Invalid Phone number.")
-    }
-  }
-
-  const handleValidGuesCheck = (guest: string) => {
-    if (errorMessage != "Invalid Phone number.") {
-      if (guest == null || guest == "") {
-        setErrorMessage(null);
-        setValue("numberOfGuests",Number(guest))
-      }
-      if (Number(guest) < 1) {
-        setErrorMessage("Invalid number of guests.")
-      } else {
-        setErrorMessage(null);
-        setValue("numberOfGuests",Number(guest))
-      }
-    }
-  }
-
-
   const handleErrorMessages = () => {
     if (watchedEmail && !(/^(?:[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*|"[^"]+")@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/.test(watchedEmail))) {
       return "Invalid email address."
@@ -248,21 +227,6 @@ const StepOne = ({ control, handleSubmit, errors, onSubmit, setValue, watch, get
     if (watchedPhone && (watchedPhone.length != 10)) return "Invalid phone number.";
     return false;
   }
-
-
-  // useEffect(() => {
-  //   if (user.userId) {
-  //     setBookingDetails({
-  //       ...bookingDetails,
-  //       fullName: user.userName,
-  //       email: user.userEmail,
-       
-  //     })
-  //   }
-  // }, [user.userId, setValue, user.userName, user.userEmail, setBookingDetails, bookingDetails]);
-  
-
-
   // Check for validity here.
 
   const queryValidity = useGraphqlClientRequest<
@@ -285,11 +249,11 @@ const { data: validity,isLoading } = useQuery({
   enabled:roomIds.length > 0 && !!checkInDateValue && !!checkOutDateValue
 });
   
-  // useEffect(() => {
-  //   fetchData();
-  // },[roomIds])
-
-const {roomIds:roomIdsFromStore}=useRoomStore()
+  
+  useEffect(()=>{
+    setValue("fullName", user.userName);
+    setValue("email",user.userEmail)
+  },[])
 
 const handleFullNameChange=(name:string)=>{ 
   // validate the name
@@ -454,7 +418,6 @@ const handleSpecialRequestChange=(request:string)=>{
           helpertext={errors.checkInDate?.type === 'required' ? 'Check-in date is required' : ''}
           error={!!errors.checkInDate}
           value={checkInDateValue instanceof Date ? checkInDateValue.toISOString().split('T')[ 0 ] : checkInDateValue}
-
           min={checkInDateValue instanceof Date ? checkInDateValue.toISOString().split('T')[ 0 ] : checkInDateValue}
           onChange={(e) => handleCheckInDateChange(e.target.value)}
         />
@@ -469,7 +432,6 @@ const handleSpecialRequestChange=(request:string)=>{
           helpertext={errors.checkOutDate?.type === 'required' ? 'Check-out date is required' : ''}
           error={!!errors.checkOutDate}
           value={checkOutDateValue instanceof Date ? checkOutDateValue.toISOString().split('T')[ 0 ] : checkOutDateValue}
-          min={checkInDateValue instanceof Date ? checkInDateValue.toISOString().split('T')[ 0 ] : checkInDateValue}
           onChange={(e) => handleCheckOutDateChange(e.target.value)}
         />
       </div>
