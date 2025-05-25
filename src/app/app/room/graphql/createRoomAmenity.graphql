@@ -1,7 +1,7 @@
 mutation CreateRoomAmenity($createAmenityInput: CreateRoomAmenityInput!) {
   createRoomAmenity(createAmenityInput: $createAmenityInput) {
     data {
-      roomAmenityId
+      id
       roomId
       amenity
     }

@@ -1,5 +1,5 @@
-query BookingsByHomestay {
-  bookingsByHomestay {
+query BookingsByHostel {
+  bookingsByHostel {
     data {
       id
       bookingKey
@@ -17,7 +17,7 @@ query BookingsByHomestay {
         attachBathroom
         maxOccupancy
         price {
-          baseAmount
+          baseAmountPerDay
           currency
           discountAmount
           discountType

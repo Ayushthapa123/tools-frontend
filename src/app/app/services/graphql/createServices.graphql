@@ -2,10 +2,9 @@ mutation CreateService($createServiceInput: CreateServiceDto!) {
   createService(createServiceInput: $createServiceInput) {
     data {
       id
-      service
-      homestayId
-      createdAt
-      updatedAt
+      services
+      hostelId
+  
     }
     error {
       message

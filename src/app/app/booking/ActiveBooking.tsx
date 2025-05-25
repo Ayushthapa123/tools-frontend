@@ -1,12 +1,12 @@
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import {
-  BookingsByHomestay,
+  BookingsByHostel, 
   PaymentPlatformName,
 } from 'src/gql/graphql';
 import { useQuery } from '@tanstack/react-query';
 import {
-  BookingsByHomestayQuery,
-  BookingsByHomestayQueryVariables,
+  BookingsByHostelQuery,
+  BookingsByHostelQueryVariables,
 } from 'src/gql/graphql';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -15,14 +15,14 @@ import interactionPlugin from '@fullcalendar/interaction';
 
 export const ActiveBookings = () => {
   const querySignupUrl = useGraphqlClientRequest<
-    BookingsByHomestayQuery,
-    BookingsByHomestayQueryVariables
-  >(BookingsByHomestay.loc?.source?.body!);
+    BookingsByHostelQuery,
+    BookingsByHostelQueryVariables
+  >(BookingsByHostel.loc?.source?.body!);
 
   //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
   const fetchData = async () => {
     const res = await querySignupUrl();
-    return res.bookingsByHomestay;
+    return res.bookingsByHostel;
   };
 
   const { data: bookings } = useQuery({

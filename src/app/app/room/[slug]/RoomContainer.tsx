@@ -81,13 +81,13 @@ function RoomForm({ params, room }: { params: { slug: string }, room: Room | und
     reset
   } = useForm<CreateRoomInput>({
     defaultValues: {
-      roomNumber: room?.data?.[0]?.roomNumber,
-      caption: room?.data?.[0]?.caption,
-      capacity: room?.data?.[0]?.capacity ?? RoomCapacity.OneBed,
-      description: room?.data?.[0]?.description,
-      status: room?.data?.[0]?.status ?? RoomStatus.Available,
-      maxOccupancy: room?.data?.[0]?.maxOccupancy,
-      attachBathroom: room?.data?.[0]?.attachBathroom,
+      roomNumber: room?.data?.roomNumber,
+      caption: room?.data?.caption,
+      capacity: room?.data?.capacity ?? RoomCapacity.OneBed,   
+      description: room?.data?.description,
+      status: room?.data?.status ?? RoomStatus.Available,
+      maxOccupancy: room?.data?.maxOccupancy,
+      attachBathroom: room?.data?.attachBathroom,
 
     },
   });
@@ -95,13 +95,13 @@ function RoomForm({ params, room }: { params: { slug: string }, room: Room | und
   useEffect(() => {
     if (room) {
       reset({
-        roomNumber: room.data?.[0]?.roomNumber,
-        caption: room.data?.[0]?.caption,
-        capacity: room.data?.[0]?.capacity ?? RoomCapacity.OneBed,
-        description: room.data?.[0]?.description,
-        status: room.data?.[0]?.status ?? RoomStatus.Available,
-        maxOccupancy: room.data?.[0]?.maxOccupancy ?? "1",
-        attachBathroom: room.data?.[0]?.attachBathroom ?? false,
+        roomNumber: room.data?.roomNumber,
+        caption: room.data?.caption,
+        capacity: room.data?.capacity ?? RoomCapacity.OneBed,
+        description: room.data?.description,
+        status: room.data?.status ?? RoomStatus.Available,
+        maxOccupancy: room.data?.maxOccupancy ?? "1",
+        attachBathroom: room.data?.attachBathroom ?? false,
       });
     }
   }, [reset, room]);
@@ -125,36 +125,36 @@ function RoomForm({ params, room }: { params: { slug: string }, room: Room | und
 
   const onSubmit = async (data: CreateRoomInput) => {
     if (currentStep === 1) {
-      const input = { ...data, homestayId: Number(user.homestayId) }; 
+      const input = { ...data, hostelId: Number(user.hostelId) }; 
       if (!isEdit) {
 
         mutateAsync({ createRoomInput: input }).then(res => {
-          if (res?.createRoom?.data?.[0]?.id) {
+          if (res?.createRoom?.data?.id) {
             enqueueSnackbar("Room created successfully.",{variant:'success'})
             queryClient.invalidateQueries({ queryKey: [ 'getRooms' ] });
-            router.push(`/app/room/${res?.createRoom?.data?.[0]?.id}?step=2`);
+            router.push(`/app/room/${res?.createRoom?.data?.id}?step=2`); 
             setCurrentStep(2);
           } else {
             enqueueSnackbar("Something went wrong.",{variant:'error'})
           }
         });
       } else {
-        mutateUpdateRoomAsync({ updateRoomInput: { ...input, id: Number(room?.data?.[0]?.id) } }).then(res => {
-          if (res?.updateRoom?.data?.[0]?.id) {
+        mutateUpdateRoomAsync({ updateRoomInput: { ...input, id: Number(room?.data?.id) } }).then(res => {
+          if (res?.updateRoom?.data?.id) {
             enqueueSnackbar("Room updated successfully.",{variant:'success'})
             queryClient.invalidateQueries({ queryKey: [ 'getRooms' ] });
-            router.push(`/app/room/${res?.updateRoom?.data?.[0]?.id}?step=2`);
+            router.push(`/app/room/${res?.updateRoom?.data?.id}?step=2`);
             setCurrentStep(2);
           } else {
             enqueueSnackbar("Something went wrong.",{variant:'error'})
           }
         });
-        mutateUpdateRoomAsync({ updateRoomInput: { ...input, id: Number(room?.data?.[0]?.id) } }).then(res => {
-          if (res?.updateRoom?.data?.[0]?.id) {
+        mutateUpdateRoomAsync({ updateRoomInput: { ...input, id: Number(room?.data?.id) } }).then(res => {
+          if (res?.updateRoom?.data?.id) {
             enqueueSnackbar("Room updated successfully.",{variant:'success'})
 
             queryClient.invalidateQueries({ queryKey: [ 'getRooms' ] });
-            router.push(`/app/room/${res?.updateRoom?.data?.[0]?.id}?step=2`);
+            router.push(`/app/room/${res?.updateRoom?.data?.id}?step=2`);
             setCurrentStep(2);
           } else {
             enqueueSnackbar("Something went wrong.",{variant:'error'})
@@ -215,9 +215,9 @@ function RoomForm({ params, room }: { params: { slug: string }, room: Room | und
             </div>
           </div>
         </form>
-        {currentStep === 2 && <SetPriceForm price={room?.data?.[0]?.price as PriceData | undefined} roomId={Number(room?.data?.[0]?.id)} onNext={handleNext} handleBack={handleBack} />}
-        {currentStep === 3 && <UploadPhotos handleBack={handleBack} handleNext={handleNext} roomImages={room?.data?.[0]?.image as RoomImage[]} roomId={Number(room?.data?.[0]?.id)} />}
-        {currentStep === 4 && <RoomAmenity handleBack={handleBack} roomId={Number(room?.data?.[0]?.id)} />}
+        {currentStep === 2 && <SetPriceForm price={room?.data?.price as PriceData | undefined} roomId={Number(room?.data?.id)} onNext={handleNext} handleBack={handleBack} />}
+        {currentStep === 3 && <UploadPhotos handleBack={handleBack} handleNext={handleNext} roomImages={room?.data?.image as RoomImage[]} roomId={Number(room?.data?.id)} />}
+        {currentStep === 4 && <RoomAmenity handleBack={handleBack} roomId={Number(room?.data?.id)} />}
       </div>
     </div>
   );

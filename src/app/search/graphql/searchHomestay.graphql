@@ -1,5 +1,5 @@
-query searchHomestay($input: SearchHomestayInput!) {
-  getHomestaysBySearch(input: $input) {
+query searchHostel($input: SearchHostelInput!) { 
+  getHostelsBySearch(input: $input) {
     data {
     name
     description
@@ -14,7 +14,7 @@ query searchHomestay($input: SearchHomestayInput!) {
       email
       altPhone
     }
-    image {
+    gallery {
       url
     }
     rooms {
@@ -24,7 +24,8 @@ query searchHomestay($input: SearchHomestayInput!) {
         caption
       }
       price {
-        baseAmount 
+        baseAmountPerDay 
+        baseAmountPerMonth
         currency
       }
     }

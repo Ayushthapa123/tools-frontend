@@ -7,66 +7,67 @@ import { FaTrash } from 'react-icons/fa';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import {
-  GetHomestayWallpaperByHomestayId,
-  GetHomestayWallpaperByHomestayIdQuery,
-  GetHomestayWallpaperByHomestayIdQueryVariables,
-  DeleteHomestayImage,
-  DeleteHomestayImageMutation,
-  DeleteHomestayImageMutationVariables,
-  SelectHomestayImage,
-  SelectHomestayImageMutation,
-  SelectHomestayImageMutationVariables,
-  GetHomestayByTokenQuery,
-  GetHomestayByToken,
-  GetHomestayByTokenQueryVariables
+  GetGalleryByHostelId,
+  GetGalleryByHostelIdQuery,
+  GetGalleryByHostelIdQueryVariables,
+  DeleteRoomImage,
+  DeleteRoomImageMutation,
+  DeleteRoomImageMutationVariables,
+  SelectGallery,
+
+  SelectGalleryMutationVariables,
+  GetHostelByTokenQuery,
+  GetHostelByToken,
+  GetHostelByTokenQueryVariables,
+  SelectGalleryMutation
 } from 'src/gql/graphql';
-import { WallpaperGallery } from '../homestay-info/gallery/WallpaperGallery';
+import { WallpaperGallery } from '../hostel-info/gallery/WallpaperGallery';
 import { enqueueSnackbar } from 'notistack';
 import LoadingSpinner from 'src/components/Loading';
 
-interface HomestayImage {
+interface GalleryImage {
   id: string;
   url: string;
   isSelected: boolean;
 }
 
 export default function Gallery() {
-  const [ selectedImage, setSelectedImage ] = useState<HomestayImage | null >(null);
+  const [ selectedImage, setSelectedImage ] = useState<GalleryImage | null >(null);
   const [ showModal, setShowModal ] = useState(false);
   const queryClient = useQueryClient();
 
-  //homestay id
-  const queryHomestayData = useGraphqlClientRequest<
-    GetHomestayByTokenQuery,
-    GetHomestayByTokenQueryVariables
-  >(GetHomestayByToken.loc?.source?.body!);
+  //hostel id
+  const queryHostelData = useGraphqlClientRequest<
+    GetHostelByTokenQuery,
+    GetHostelByTokenQueryVariables
+  >(GetHostelByToken.loc?.source?.body!);
 
   //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
   const fetchData = async () => {
-    const res = await queryHomestayData();
-    return res.getHomestayByToken;
+    const res = await queryHostelData();
+    return res.getHostelByToken;
   };
 
-  const { data: homestayData, isLoading } = useQuery({
-    queryKey: [ 'getHomestayByToken' ],
+  const { data: hostelData, isLoading } = useQuery({
+    queryKey: [ 'getHostelByToken' ],
     queryFn: fetchData,
   });
 
-  // Get homestay wallpapers query
+  // Get hostel wallpapers query
   const queryWallpapers = useGraphqlClientRequest<
-    GetHomestayWallpaperByHomestayIdQuery,
-    GetHomestayWallpaperByHomestayIdQueryVariables
-  >(GetHomestayWallpaperByHomestayId.loc?.source?.body!);
+    GetGalleryByHostelIdQuery,
+    GetGalleryByHostelIdQueryVariables
+  >(GetGalleryByHostelId.loc?.source?.body!);
 
   const fetchWallpapers = async () => {
-    const res = await queryWallpapers({ homestayId: Number(homestayData?.data?.id) });
-    return res.getHomestayWallpaperByHomestayId;
+    const res = await queryWallpapers({ hostelId: Number(hostelData?.data?.id) });
+    return res.getGalleryByHostelId;
   };
 
   const { data: wallpaperDat } = useQuery({
-    queryKey: [ 'getHomestayWallpaper' ],
+    queryKey: [ 'getGalleryByHostelId' ],
     queryFn: fetchWallpapers,
-    enabled: !!homestayData?.data?.id,
+    enabled: !!hostelData?.data?.id,
   });
   const wallpaperData = wallpaperDat?.data?.filter(img => img?.url !== ("https:/example.com/image.jpg"));
   // remove this line after removing example.com from db
@@ -74,26 +75,26 @@ export default function Gallery() {
   const mainWallpaper = wallpaperData?.filter(img => img?.isSelected)[ 0 ] || wallpaperData?.[0];
 
   // Delete wallpaper mutation
-  const mutateDeleteWallpaper = useGraphqlClientRequest<
-    DeleteHomestayImageMutation,
-    DeleteHomestayImageMutationVariables
-  >(DeleteHomestayImage.loc?.source.body!);
+  const mutateDeleteGallery = useGraphqlClientRequest<
+    DeleteRoomImageMutation,
+    DeleteRoomImageMutationVariables
+  >(DeleteRoomImage.loc?.source.body!);
 
-  const { mutateAsync: deleteWallpaper } = useMutation({
-    mutationFn: mutateDeleteWallpaper,
+  const { mutateAsync: deleteGallery } = useMutation({
+    mutationFn: mutateDeleteGallery,
   });
 
   // Select wallpaper mutation
-  const mutateSelectWallpaper = useGraphqlClientRequest<
-    SelectHomestayImageMutation,
-    SelectHomestayImageMutationVariables
-  >(SelectHomestayImage.loc?.source.body!);
+  const mutateSelectGallery = useGraphqlClientRequest<
+    SelectGalleryMutation,
+    SelectGalleryMutationVariables
+  >(SelectGallery.loc?.source.body!);
 
-  const { mutateAsync: selectWallpaper } = useMutation({
-    mutationFn: mutateSelectWallpaper,
+  const { mutateAsync: selectGallery } = useMutation({
+    mutationFn: mutateSelectGallery,
   });
 
-  const handleImageClick = (img: HomestayImage | undefined) => {
+  const handleImageClick = (img: GalleryImage | undefined) => {
     if (img) {
       setSelectedImage(img);
       setShowModal(true);
@@ -104,43 +105,43 @@ export default function Gallery() {
     setShowModal(false);
   };
 
-  const handleDelete = async (img: HomestayImage | undefined, e: React.MouseEvent) => {
+  const handleDelete = async (img: GalleryImage | undefined, e: React.MouseEvent) => {
     if (img) {
       e.stopPropagation();
       try {
-        const response = await deleteWallpaper({
-        homestayImageId: Number(img.id)
+        const response = await deleteGallery({
+        roomImageId: Number(img.id)
       });
 
-      if (response?.deleteHomestayImage?.data?.[0]?.id) {
-        queryClient.invalidateQueries({ queryKey: [ 'getHomestayWallpaper' ] });
-        enqueueSnackbar("Homestay Deleted.",{variant:"success"})
+      if (response?.deleteRoomImage?.data?.id) {
+        queryClient.invalidateQueries({ queryKey: [ 'getGalleryByHostelId' ] });
+        enqueueSnackbar("Room Deleted.",{variant:"success"})
       }
     } catch (error) {
       enqueueSnackbar("Something went wrong",{variant:"warning"})
     }
   };
   }
-  const handleSelectWallpaper = async () => {
+  const handleSelectGallery = async () => {
     try {
-      const response = await selectWallpaper({
-        selectHomestayImageId: Number(selectedImage?.id),
-        homestayId: Number(homestayData?.data?.id)
+      const response = await selectGallery({
+        galleryId: Number(selectedImage?.id),
+        hostelId: Number(hostelData?.data?.id)
       });
 
-      if (response?.selectHomestayImage?.data?.[0]?.id) {
-        queryClient.invalidateQueries({ queryKey: [ 'getHomestayWallpaper' ] });
-        enqueueSnackbar("Wallpaper selected successfully.",{variant:'success'})
+      if (response?.selectGallery?.data?.id) {
+        queryClient.invalidateQueries({ queryKey: [ 'getGalleryByHostelId' ] });
+        enqueueSnackbar("Image selected successfully.",{variant:'success'})
         setShowModal(false);
       }
     } catch (error) {
-      enqueueSnackbar("Failed to select wallpaper",{variant:'error'})
+      enqueueSnackbar("Failed to select image",{variant:'error'})
     }
   };
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="mb-8 text-3xl font-bold text-primary">Homestay Images</h1>
+      <h1 className="mb-8 text-3xl font-bold text-primary">Gallery</h1>
 
       {/* Main Image Section */}
       <div className="mb-6">
@@ -193,7 +194,7 @@ export default function Gallery() {
       {
          Number(wallpaperData?.length) < 6 && (
           <div className="bg-white card-body card card-bordered my-4 ">
-            <WallpaperGallery homestayId={Number(homestayData?.data?.id)} galleryType="ROOM" galleryKey="getRoomImages" />
+            <WallpaperGallery hostelId={Number(hostelData?.data?.id)} galleryType="ROOM" galleryKey="getRoomImages" />
           </div>
         )
       }
@@ -203,7 +204,7 @@ export default function Gallery() {
           title='Are you sure you want to make this image your wallpaper?'
           open={showModal}
           handleClose={handleModalClose}
-          onSave={handleSelectWallpaper}
+          onSave={handleSelectGallery}
         >
           <div className='relative h-[200px] rounded-lg w-full'>
             <Image

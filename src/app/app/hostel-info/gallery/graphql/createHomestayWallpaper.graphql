@@ -1,0 +1,14 @@
+mutation CreateGallery($data: CreateGalleryInput!) {
+  createGallery(data: $data) {
+    data {
+      id
+      hostelId
+      url
+      caption
+    }
+    error {
+      message
+      code
+    }
+  }
+}

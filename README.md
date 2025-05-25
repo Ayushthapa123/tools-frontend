@@ -1,6 +1,6 @@
-# 🏡 HomeStay App
+# 🏡 Hostel App
 
-A modern web application for managing homestay bookings and accommodations built with Next.js/Nest.js and TypeScript. This platform helps connect hosts with guests, manage bookings, and provide a seamless homestay experience.
+A modern web application for managing hostel bookings and accommodations built with Next.js/Nest.js and TypeScript. This platform helps connect hosts with guests, manage bookings, and provide a seamless hostel experience.
 
 ## 📖 Table of Contents
 - [Features](#-features)
@@ -23,7 +23,7 @@ A modern web application for managing homestay bookings and accommodations built
 - Analytics and reporting dashboard
 
 ### For Guests
-- Search and filter homestay options
+- Search and filter hostel options
 - Real-time availability checking
 - Secure booking and payment system
 - Interactive maps for location viewing
@@ -134,7 +134,7 @@ NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_google_maps_key
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd homestay-app
+cd hostel-app
 ```
 
 2. Install dependencies:

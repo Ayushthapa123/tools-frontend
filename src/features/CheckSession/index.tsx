@@ -25,7 +25,7 @@ export const CheckSession = () => {
             userName: res.refreshTokens?.user.fullName,
             userEmail: res.refreshTokens.user.email,
             userId: Number(res.refreshTokens.user.id), 
-            homestayId:Number(res.refreshTokens.user.homestayId),
+            hostelId:Number(res.refreshTokens.user.hostelId),
             userType:res.refreshTokens.user.userType
           });
      

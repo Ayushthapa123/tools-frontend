@@ -1,5 +1,5 @@
 query GetRooms {
-  roomsByHomestay {
+  roomsByHostel {
     data {
     id
     status
@@ -7,7 +7,7 @@ query GetRooms {
     caption
     roomNumber
     attachBathroom
-    homestayId
+    hostelId
     image {
       id
       caption
@@ -18,20 +18,14 @@ query GetRooms {
     }
     price {
       currency 
-      baseAmount
+      baseAmountPerDay
+      baseAmountPerMonth
       isDynamicPricing
      
       discountAmount
       discountType
     }
     
-    booking {
-      id
-      startDate
-      endDate
-      status
-      guestId
-    }
     createdAt
     updatedAt
   }

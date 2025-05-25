@@ -99,7 +99,7 @@ function SignUp() {
         email: data.email,
         password: data.password,
         fullName: data.fullName,
-        userType: 'HOMESTAY_OWNER',
+        userType: 'HOSTEL_OWNER',
         phoneNumber: data.phoneNumber,
         
       },

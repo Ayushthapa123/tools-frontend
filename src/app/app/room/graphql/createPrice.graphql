@@ -2,7 +2,8 @@ mutation CreatePrice($createPriceInput: CreatePriceInput!) {
   createPrice(createPriceInput: $createPriceInput) {
     data {
     id
-    baseAmount
+    baseAmountPerDay
+    baseAmountPerMonth
     currency
     roomId
     isDynamicPricing

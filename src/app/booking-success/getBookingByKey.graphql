@@ -17,7 +17,7 @@ query GetBookingByKey($bookingKey: String!) {
       caption
       roomNumber
       attachBathroom
-      homestayId
+      hostelId
       createdAt
       updatedAt
       image {
@@ -25,7 +25,8 @@ query GetBookingByKey($bookingKey: String!) {
         caption
       } 
       price {
-        baseAmount
+        baseAmountPerDay
+        baseAmountPerMonth
         currency
       }
     }

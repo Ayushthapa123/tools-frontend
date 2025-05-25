@@ -1,7 +1,7 @@
 mutation RemoveRoomAmenity($roomAmenityId: Int!) {
   removeRoomAmenity(roomAmenityId: $roomAmenityId) {
     data {
-      roomAmenityId
+      id
       roomId
       amenity
     }

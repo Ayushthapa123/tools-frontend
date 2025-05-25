@@ -5,9 +5,9 @@ import React from 'react';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import Button from 'src/components/Button';
 import {
-  GetHomestayDetailsBasic,
-  GetHomestayDetailsBasicQuery,
-  GetHomestayDetailsBasicQueryVariables,
+  GetHostelDetailsBasic, 
+  GetHostelDetailsBasicQuery,
+  GetHostelDetailsBasicQueryVariables,
 } from 'src/gql/graphql';
 import { useUserStore } from 'src/store/userStore';
 
@@ -15,17 +15,17 @@ export default function Home() {
   const { user } = useUserStore();
 
   const querySignupUrl = useGraphqlClientRequest<
-    GetHomestayDetailsBasicQuery,
-    GetHomestayDetailsBasicQueryVariables
-  >(GetHomestayDetailsBasic.loc?.source?.body!);
+    GetHostelDetailsBasicQuery,
+    GetHostelDetailsBasicQueryVariables
+  >(GetHostelDetailsBasic.loc?.source?.body!);
 
   const fetchData = async () => {
     const res = await querySignupUrl();
-    return res.getHomestayByToken;
+    return res.getHostelByToken;
   };
 
   const { data } = useQuery({
-    queryKey: ['getHomestayDetailsBasic'],
+    queryKey: ['getHostelDetailsBasic'],
     queryFn: fetchData,
   });
 
@@ -42,9 +42,9 @@ export default function Home() {
           </p>
         </div>
         <div className="">
-          <Link href={`${process.env.NEXT_PUBLIC_APP_URL}/homestay/${data?.data?.slug}`}>
+          <Link href={`${process.env.NEXT_PUBLIC_APP_URL}/hostel/${data?.data?.slug}`}>
             <Button
-              label="See Homestay Profile"
+              label="See Hostel Profile"
               className="rounded-lg bg-secondary"
               variant="primary"
             />
@@ -53,7 +53,7 @@ export default function Home() {
       </div>
 
       <div className="card w-full border bg-base-100 p-4 text-base-content shadow">
-        <h3 className="text-lg font-semibold">Homestay Profiles</h3>
+        <h3 className="text-lg font-semibold">Hostel Profiles</h3>
       </div>
     </div>
   );

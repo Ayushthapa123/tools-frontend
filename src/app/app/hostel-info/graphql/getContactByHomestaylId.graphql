@@ -1,0 +1,15 @@
+query getContactsByHostelId($hostelId: Float!) {
+ getContactByHostelId(hostelId: $hostelId) {
+   data {
+    id
+  email 
+  phone 
+  altPhone
+  
+ }
+ error {
+  message
+  code
+ }
+ }
+}

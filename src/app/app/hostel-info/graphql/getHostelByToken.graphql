@@ -1,0 +1,18 @@
+query getHostelByToken {
+ getHostelByToken {
+   data {
+    id
+   name
+   description
+   slug
+  verifiedBySuperAdmin 
+  verifiedByCommunityOwner
+ 
+ }
+ error {
+  message
+  code
+ }
+ }
+}
+

@@ -13,11 +13,11 @@ export const Header = () => {
         <div className=" min-h-[50vh] ">
           <div className="">
             <div className="max-w-screen-xl">
-              <h1 className="capitalize ">All In one Homestay Management Software</h1>
+              <h1 className="capitalize ">All In one Hostel Management Software</h1>
               <p className="py-6">
-                homestay offers a comprehensive platform that allows you to seamlessly upload and
-                manage all the details of your homestay online. By leveraging our user-friendly
-                interface, you can ensure that potential guests can easily find your homestay, check
+                hosteladmin offers a comprehensive platform that allows you to seamlessly upload and
+                manage all the details of your hostel online. By leveraging our user-friendly
+                interface, you can ensure that potential guests can easily find your hostel, check
                 availability, and reach out to you directly.
               </p>
               <Link href={'/signup'}>

@@ -2,8 +2,8 @@ mutation RemoveService($id: Float!) {
   removeService(id: $id) {
     data {
       id
-      service
-      homestayId
+      services
+      hostelId
     }
     error {
       message

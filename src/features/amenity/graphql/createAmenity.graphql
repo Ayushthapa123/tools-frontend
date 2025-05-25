@@ -2,8 +2,8 @@ mutation CreateAmenity($createAmenityInput:CreateAmenityInput!){
   createAmenity(createAmenityInput:$createAmenityInput){
     data {
     id
-    amenity
-    homestayId
+    amenities
+    hostelId
     }
     error {
       message

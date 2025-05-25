@@ -252,8 +252,8 @@ function SignUp() {
                 </Link>
               </p>
               <p className="text-body-color text-base">
-                <span className="pr-0.5">Signup As a Homestay Owner?</span>
-                <Link href="/homestay-signup" className="text-blue ml-1 hover:underline">
+                <span className="pr-0.5">Signup As a Hostel Owner?</span>
+                <Link href="/hostel-signup" className="text-blue ml-1 hover:underline">
                   Signup
                 </Link>
               </p>

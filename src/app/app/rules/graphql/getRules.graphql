@@ -1,5 +1,5 @@
 query getRules {
-  getRulesByHomestay {
+  getRulesByHostel {
     data {
       id
       rules

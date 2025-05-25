@@ -55,7 +55,7 @@ export function SearchPage() {
               </span>
               {subCity ? `${subCity}` : ''} {city ? city + ",":""} {country}
             </h2>
-            <p className=""> <span className='text-secondary/80'>{count} Homestays Found!</span></p>
+            <p className=""> <span className='text-secondary/80'>{count} Hostels Found!</span></p>
           </div>
         </div>
         <div className=" relative flex h-auto  w-full overflow-y-hidden">

@@ -27,7 +27,7 @@ export const ActiveRooms = () => {
   //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
   const fetchData = async () => {
     const res = await querySignupUrl();
-    return res.roomsByHomestay;
+    return res.roomsByHostel;
   };
 
   const { data: rooms,isLoading } = useQuery({

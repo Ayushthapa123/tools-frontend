@@ -1,7 +1,7 @@
 query FindAmenityByRoomId($roomId: Int!) {
   findAmenityByRoomId(roomId: $roomId) {
     data {
-      roomAmenityId
+      id
       roomId
       amenity
     }

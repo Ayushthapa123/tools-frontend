@@ -43,7 +43,7 @@
 //   const { user } = useUserStore();
 
 //   const fetchGoogleLocation = async () => {
-//     const res = await queryGetMapLocation({ id: Number(user.homestayId) });
+//     const res = await queryGetMapLocation({ id: Number(user.hostelId) });
 //     return res.googleMapLocation;
 //   };
 
@@ -150,7 +150,7 @@
 //       });
 //     } else {
 //       createAsync({
-//         homestayId: Number(user.homestayId),
+//         hostelId: Number(user.hostelId),
 //         data: {
 //           description: des ?? '',
 //           lat: Number(clickedLatLng?.lat),

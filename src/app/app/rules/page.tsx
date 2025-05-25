@@ -13,7 +13,7 @@ import {
   UpdateRules,
   UpdateRulesMutation,
   UpdateRulesMutationVariables,
-  HomestayRules,
+  HostelRules,
 
 } from 'src/gql/graphql';
 import { useUserStore } from 'src/store/userStore';
@@ -29,7 +29,7 @@ const Home: React.FC = () => {
 
   const fetchRules = async () => {
     const res = await queryGetRules();
-    return res.getRulesByHomestay;
+      return res.getRulesByHostel;
   };
 
   const { data: rulesData , isLoading} = useQuery({
@@ -42,7 +42,7 @@ const Home: React.FC = () => {
   return (
     <div className="w-full">
     {!isLoading&&<div>
-      <FormContent rulesData={rulesData as HomestayRules} />
+      <FormContent rulesData={rulesData as HostelRules} />
       </div>}
     </div>
   );
@@ -51,7 +51,7 @@ const Home: React.FC = () => {
 export default Home;
 
 
-const FormContent = ({rulesData}: {rulesData: HomestayRules | undefined}) => {
+const FormContent = ({rulesData}: {rulesData: HostelRules | undefined}) => {
   const { user } = useUserStore();
   const editorRef = useRef<string>(rulesData?.data?.rules ?? "<p><br></p>");
   editorRef.current = rulesData?.data?.rules == "<p><br></p>" || rulesData?.data?.rules == null ? "<ol><li> </li></ol>" : rulesData?.data?.rules;
@@ -91,7 +91,7 @@ const FormContent = ({rulesData}: {rulesData: HomestayRules | undefined}) => {
       });
     } else {
       createRules({
-        input: { rules:rules ?? "", homestayId: Number(user.homestayId) }, 
+        input: { rules:rules ?? "", hostelId: Number(user.hostelId) }, 
       }).then(res => {
         if (res.createRules.data?.id) {
          enqueueSnackbar('Rules Created successfully.',{variant:"success"})

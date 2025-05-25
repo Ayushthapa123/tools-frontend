@@ -1,12 +1,12 @@
 'use client';
-import { HomestayCard } from './cards/HomestayCard';
+import { HostelCard } from './cards/HostelCard';
 
 import { useEffect } from 'react';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
-import { SearchHomestay, SearchHomestayQuery, SearchHomestayQueryVariables } from 'src/gql/graphql';
+import { SearchHostel, SearchHostelQuery, SearchHostelQueryVariables } from 'src/gql/graphql';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
-import { HomestayCardSkeleton } from './cards/HomestayCardSkeleteon';
+import { HostelCardSkeleton } from './cards/HostelCardSkeleteon';
 
 interface IResults {
   country: string;
@@ -23,12 +23,12 @@ interface IResults {
 export const SearchResults = (props: IResults) => {
   const { country, city, subCity, genderType, handleCount, checkInDate, checkOutDate, lat, lng } =
     props;
-  const searchHomestay = useGraphqlClientRequest<SearchHomestayQuery, SearchHomestayQueryVariables>(
-    SearchHomestay.loc?.source?.body!,
+  const searchHostel = useGraphqlClientRequest<SearchHostelQuery, SearchHostelQueryVariables>(
+    SearchHostel.loc?.source?.body!,
   );
 
   const fetchData = async () => {
-    const res = await searchHomestay({
+    const res = await searchHostel({
       input: {
         city,
         subCity,
@@ -37,47 +37,46 @@ export const SearchResults = (props: IResults) => {
         longitude: lng,
       },
     });
-    return res.getHomestaysBySearch;
+    return res.getHostelsBySearch;
   };
 
-  const { data: homestays, isLoading } = useQuery({
-    queryKey: ['getHomestays', country, city, subCity, genderType],
+  const { data: hostels, isLoading } = useQuery({
+    queryKey: ['getHostels', country, city, subCity, genderType],
     queryFn: fetchData,
   });
 
   useEffect(() => {
-    handleCount(homestays?.length ?? 0);
-  }, [handleCount, homestays]);
+    handleCount(hostels?.length ?? 0);
+  }, [handleCount, hostels]);
 
   return (
     <div className="w-full ">
       {isLoading && (
           <div className="flex justify-center items-center w-full gap-3 ">
-            <HomestayCardSkeleton />
-            <HomestayCardSkeleton />
-            <HomestayCardSkeleton />
+            <HostelCardSkeleton />
+            <HostelCardSkeleton />
+            <HostelCardSkeleton />
           </div>
         )}
       <div className="grid w-full grid-cols-1 md:grid-cols-2 xl:grid-cols-3  gap-3">
-          {homestays?.map(homestay => {
-          const imgUrl = homestay?.data?.image?.[0]?.url || '/images/default-image.png';
+            {hostels?.map(hostel => {
+          const imgUrl = hostel?.data?.gallery?.[0]?.url || '/images/default-image.png';
 
           return (
-            <div key={homestay.data?.slug}>
-              <Link href={`/homestay/${homestay.data?.slug}?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}>
-                  <HomestayCard
-                  name={homestay.data?.name || ''}
-                  country={homestay.data?.address?.country ?? ''}
-                  city={homestay.data?.address?.city ?? ''}
-                  subCity={homestay.data?.address?.subCity ?? ''}
-                  description={homestay.data?.description ?? ''}
-                  amount={homestay?.data?.rooms?.[0]?.price?.baseAmount ?? 0}
-                  currency={homestay?.data?.rooms?.[0]?.price?.currency ?? ''}
+            <div key={hostel.data?.slug}>
+              <Link href={`/hostel/${hostel.data?.slug}?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}>
+                  <HostelCard
+                  name={hostel.data?.name || ''}
+                  country={hostel.data?.address?.country ?? ''}
+                  city={hostel.data?.address?.city ?? ''}
+                  subCity={hostel.data?.address?.subCity ?? ''}
+                  description={hostel.data?.description ?? ''}
+                  amount={hostel?.data?.rooms?.[0]?.price?.baseAmountPerDay ?? 0}
+                  currency={hostel?.data?.rooms?.[0]?.price?.currency ?? ''}
                   imgUrl={imgUrl}
                   oneSeater={null}
                   twoSeater={null}
                   threeSeater={null}
-                  isOriginalHomestay
                   
                 />
               </Link>

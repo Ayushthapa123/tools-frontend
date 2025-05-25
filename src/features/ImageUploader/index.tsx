@@ -71,7 +71,7 @@ const ImageUploader = (props: Iprops) => {
         },
       ).then((res) => {
         setLoading(false);
-        queryClient.invalidateQueries({ queryKey: ['getHomestayWallpaper'] });
+        queryClient.invalidateQueries({ queryKey: ['getHostelWallpaper'] }); 
         handleImageUrl(res.data.imageUrl);
       });
 

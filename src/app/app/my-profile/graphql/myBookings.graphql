@@ -21,7 +21,8 @@ query MyBookings {
       maxOccupancy
       price {
         currency 
-        baseAmount
+        baseAmountPerDay
+        baseAmountPerMonth
       }
     }
     guest {

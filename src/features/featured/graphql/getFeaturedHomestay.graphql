@@ -1,5 +1,5 @@
-query GetFeaturedHomestays($pageSize: Int!) {
-  getAllHomestays(pageSize: $pageSize) {
+query GetFeaturedHostels($pageSize: Int!) {
+  getAllHostels(pageSize: $pageSize) {
     data {
     id
     name
@@ -13,7 +13,7 @@ query GetFeaturedHomestays($pageSize: Int!) {
       latitude
       longitude
     }
-    image {
+    gallery {
       url
       caption
       isSelected
@@ -26,7 +26,7 @@ query GetFeaturedHomestays($pageSize: Int!) {
       status
       createdAt
       updatedAt
-      homestayId
+      hostelId
       image {
         url 
         id 
@@ -36,7 +36,8 @@ query GetFeaturedHomestays($pageSize: Int!) {
         roomId
       }
       price {
-        baseAmount 
+        baseAmountPerDay 
+        baseAmountPerMonth
         currency
         isDynamicPricing
     
@@ -44,8 +45,8 @@ query GetFeaturedHomestays($pageSize: Int!) {
         discountType
       }
     }
-    services {
-      service
+    service {
+      services
     }
   }
   error {

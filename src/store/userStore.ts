@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 type user = {
   userId: number | null;
-  homestayId: number | null;
+  hostelId: number | null;
   userName: string;
   userEmail: string;
   userType: string;
@@ -18,7 +18,7 @@ type Actions = {
 export const useUserStore = create<Store & Actions>()(set => ({
   user: {
     userId: null,
-    homestayId: null,
+    hostelId: null,
     userName: '',
     userEmail: '',
     userType: '',

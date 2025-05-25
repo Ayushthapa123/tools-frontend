@@ -1,13 +1,13 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy | homestay.com',
-  description: 'Understand how homestay.com collects, uses, and safeguards your information.',
+  title: 'Privacy Policy | HOSTELADMIN.com',
+  description: 'Understand how HOSTELADMIN.com collects, uses, and safeguards your information.',
   manifest: '/manifest.json',
   authors: [{ name: 'Ayush Thapa' }],
   openGraph: {
     images: '/logo512.png',
-    title: 'Privacy Policy | homestay.com',
+    title: 'Privacy Policy | HOSTELADMIN.com',
   },
 };
 
@@ -18,7 +18,7 @@ export default function PrivacyPolicy() {
       <p className="mb-4">Last Updated: 2024/7/7</p>
 
       <p className="mb-4">
-        Welcome to <strong>homestay.com</strong>. At homestay.com, we are committed to
+        Welcome to <strong>HOSTELADMIN.com</strong>. At HOSTELADMIN.com, we are committed to
         protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and
         safeguard your information when you use our platform, including both our web application and
         mobile app (collectively, the “Service”). By using our Service, you agree to the terms of
@@ -58,8 +58,8 @@ export default function PrivacyPolicy() {
       <ul className="mb-4 list-inside list-disc">
         <li>Create and manage your account and user profile.</li>
         <li>
-          Facilitate homestay management features, including reservations, room assignments, and
-          communications with homestay staff.
+          Facilitate hostel management features, including reservations, room assignments, and
+          communications with hostel staff.
         </li>
         <li>Process transactions and deliver the services you request.</li>
         <li>
@@ -110,16 +110,16 @@ export default function PrivacyPolicy() {
       <h2 className="mb-4 mt-6 text-2xl font-semibold">7. Contact Us</h2>
       <p className="mb-4">For questions or concerns about this Privacy Policy, contact us at:</p>
       <address className="mb-4 not-italic">
-        <strong>homestay.com</strong>
+        <strong>HOSTELADMIN.com</strong>
         <br />
         Email:{' '}
-        <a href="mailto:support@homestay.com" className="text-blue-600">
-          support@homestay.com
+        <a href="mailto:support@HOSTELADMIN.com" className="text-blue-600">
+          support@HOSTELADMIN.com
         </a>
       </address>
 
       <p className="text-sm text-gray-500">
-        This privacy policy was created by the homestay.com team.
+        This privacy policy was created by the HOSTELADMIN.com team.
       </p>
     </div>
   );

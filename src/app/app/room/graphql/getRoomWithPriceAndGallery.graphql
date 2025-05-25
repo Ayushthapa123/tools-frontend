@@ -9,7 +9,7 @@ query GetRoomWithPriceAndGallery($id: Int!) {
     maxOccupancy
     roomNumber
     attachBathroom
-    homestayId
+    hostelId
     createdAt
     updatedAt
     image {
@@ -22,7 +22,8 @@ query GetRoomWithPriceAndGallery($id: Int!) {
     }
     price {
       id
-      baseAmount
+      baseAmountPerDay
+      baseAmountPerMonth
       currency
       discountAmount
       discountType

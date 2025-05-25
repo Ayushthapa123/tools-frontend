@@ -1,7 +1,7 @@
 mutation UpdateRoomAmenity($updateAmenityInput: UpdateRoomAmenityInput!) {
   updateRoomAmenity(updateAmenityInput: $updateAmenityInput) {
     data {
-      roomAmenityId
+      id
       roomId
       amenity
     }

@@ -1,5 +1,5 @@
 "use client";
-import { homestayServices as hServices } from "../data/services"; 
+import { hostelServices as hServices } from "../data/services"; 
 import { Input } from "src/components/Input";
 import { useState, useEffect } from "react";
 import Button from "src/components/Button";
@@ -7,7 +7,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useGraphqlClientRequest } from "src/client/useGraphqlClientRequest";
 import { useRouter } from "next/navigation";
 import LoadingSpinner from "src/components/Loading";
-import { CreateService, CreateServiceMutation, CreateServiceMutationVariables, GetHomestayByToken, GetHomestayByTokenQuery, GetHomestayByTokenQueryVariables, GetServiceByHomestayId, GetServiceByHomestayIdQuery, GetServiceByHomestayIdQueryVariables, UpdateService, UpdateServiceMutation, UpdateServiceMutationVariables } from "src/gql/graphql";
+import { CreateService, CreateServiceMutation, CreateServiceMutationVariables, GetHostelByToken, GetHostelByTokenQuery, GetHostelByTokenQueryVariables, GetServiceByHostelId, GetServiceByHostelIdQuery, GetServiceByHostelIdQueryVariables, UpdateService, UpdateServiceMutation, UpdateServiceMutationVariables } from "src/gql/graphql";
 import { enqueueSnackbar } from "notistack";
 
 export default function ServicesPage() {
@@ -15,45 +15,45 @@ export default function ServicesPage() {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  // find homestay id
-  const queryHomestayData = useGraphqlClientRequest<
-    GetHomestayByTokenQuery,
-    GetHomestayByTokenQueryVariables
-  >(GetHomestayByToken.loc?.source?.body!);
+  // find hostel id
+  const queryHostelData = useGraphqlClientRequest<
+    GetHostelByTokenQuery,
+    GetHostelByTokenQueryVariables
+  >(GetHostelByToken.loc?.source?.body!);
 
   //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
   const fetchData = async () => {
-    const res = await queryHomestayData();
-    return res.getHomestayByToken;
+    const res = await queryHostelData();
+    return res.getHostelByToken;
   };
 
-  const { data: homestay, isLoading: loadingHomestay } = useQuery({
-    queryKey: [ 'getHomestayByToken' ],
+  const { data: hostel, isLoading: loadingHostel } = useQuery({
+    queryKey: [ 'getHostelByToken' ],
     queryFn: fetchData,
   });
 
   // Fetch services
   const queryServicesData = useGraphqlClientRequest<
-    GetServiceByHomestayIdQuery,
-    GetServiceByHomestayIdQueryVariables
-  >(GetServiceByHomestayId.loc?.source?.body!);
+    GetServiceByHostelIdQuery,
+    GetServiceByHostelIdQueryVariables
+  >(GetServiceByHostelId.loc?.source?.body!);
 
   const fetchServicesData = async () => {
-    const res = await queryServicesData({ homestayId: Number(homestay?.data?.id) });
-    return res.findServiceByHomestayId;
+    const res = await queryServicesData({ hostelId: Number(hostel?.data?.id) });
+    return res.findServiceByHostelId;
   };
 
-  const { data: homestayServices, isLoading: loadingHomestayServices } = useQuery({
-    queryKey: [ 'getServiceByHomestayId' ],
+  const { data: hostelServices, isLoading: loadingHostelServices } = useQuery({
+    queryKey: [ 'getServiceByHostelId' ],
     queryFn: fetchServicesData,
-    enabled: !!homestay?.data?.id
+    enabled: !!hostel?.data?.id
   });
 
   useEffect(() => {
-    if (homestayServices?.data?.service) {
-      setSelectedServices(homestayServices.data?.service.split(","));
+    if (hostelServices?.data?.services) {
+      setSelectedServices(hostelServices.data?.services.split(","));
     }
-  }, [ homestayServices?.data?.service ]);
+  }, [ hostelServices?.data?.services ]);
 
   // Create service mutation
   const createService = useGraphqlClientRequest<CreateServiceMutation, CreateServiceMutationVariables>(CreateService.loc?.source?.body!);
@@ -71,11 +71,11 @@ export default function ServicesPage() {
   const { mutateAsync: updateServiceAsync } = useMutation({ mutationFn: updateService });
 
   const handleSave = () => {
-    if (!homestayServices?.data?.id) {
+    if (!hostelServices?.data?.id) {
       createServiceAsync({
         createServiceInput: {
-          homestayId: Number(homestay?.data?.id),
-          service: selectedServices.join(",")
+          hostelId: Number(hostel?.data?.id),
+          services: selectedServices.join(",")
         }
       }).then((res) => {
         if (res?.createService.data?.id) {
@@ -89,9 +89,10 @@ export default function ServicesPage() {
     } else {
       updateServiceAsync({
         updateServiceInput: {
-          id: Number(homestayServices.data?.id),
-          service: selectedServices.join(",")
-        }
+          id: Number(hostelServices.data?.id),
+          services: selectedServices.join(",")
+        },
+      
       }).then((res) => {
         if (res?.updateService.data?.id) {
           router.push('/app/services');
@@ -103,7 +104,7 @@ export default function ServicesPage() {
       });
     }
   };
-  if (loadingHomestay || loadingHomestayServices) {
+  if (loadingHostel || loadingHostelServices) {
     return <LoadingSpinner color="primary" size="lg" />;
   }
 

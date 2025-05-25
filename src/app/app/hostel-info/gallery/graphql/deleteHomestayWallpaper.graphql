@@ -1,0 +1,16 @@
+mutation DeleteGallery($galleryId: Int!) {
+  deleteGallery(galleryId: $galleryId) {
+    data {
+      id
+      hostelId
+      url
+      caption
+      createdAt
+      updatedAt
+    }
+    error {
+      message
+      code
+    }
+  }
+}

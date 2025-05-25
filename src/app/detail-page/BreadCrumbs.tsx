@@ -12,7 +12,7 @@ export const BreadCrumbs = (props: Iprops) => {
               <a href="/">Home</a>
             </li>
             <li>
-              <a href="/search">Homestay</a>
+              <a href="/search">Hostel</a>
             </li>
             <li>{props.name}</li>
           </ul>

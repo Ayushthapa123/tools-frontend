@@ -1,0 +1,13 @@
+query GetGalleryByHostelId($hostelId: Int!) {
+  getGalleryByHostelId(hostelId: $hostelId) {
+    data {
+      id
+      hostelId
+      url
+      caption
+      isSelected
+      createdAt
+      updatedAt
+  }
+  }
+}

@@ -2,7 +2,7 @@
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target": {
         "namespace": "android_app",
-        "package_name": "com.homestay.twa",
+        "package_name": "com.hosteladmin.twa",
         "sha256_cert_fingerprints": ["D0:11:28:78:55:64:72:1D:CE:44:B7:FC:32:D3:A1:11:8D:44:28:3E:4F:62:81:F4:6E:CB:47:DA:7F:58:9B:2C"]
       }
     }]

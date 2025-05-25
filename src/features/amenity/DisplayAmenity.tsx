@@ -5,29 +5,29 @@ import { BiCheckCircle } from 'react-icons/bi';
 import { BsCheckCircle } from 'react-icons/bs';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import LoadingSpinner from 'src/components/Loading';
-import { FindAmenityByHomestayId, FindAmenityByHomestayIdQuery, FindAmenityByHomestayIdQueryVariables } from 'src/gql/graphql';
+import { FindAmenityByHostelId, FindAmenityByHostelIdQuery, FindAmenityByHostelIdQueryVariables } from 'src/gql/graphql';
 import { getAmenityCategories } from 'src/utils/amenityData';
 
 interface AmenityDisplayProps {
-  homestayId: number,
+    hostelId: number,
   showAll:boolean,
 }
 
 export const AmenityDisplay: React.FC<AmenityDisplayProps> = ({ 
-  homestayId,
+  hostelId,
   showAll=true
 }) => {
   const [ expandedView, setExpandedView ] = useState(showAll);
-  const queryAmenity = useGraphqlClientRequest<FindAmenityByHomestayIdQuery, FindAmenityByHomestayIdQueryVariables>(FindAmenityByHomestayId.loc?.source.body!)
+  const queryAmenity = useGraphqlClientRequest<FindAmenityByHostelIdQuery, FindAmenityByHostelIdQueryVariables>(FindAmenityByHostelId.loc?.source.body!)
   const fetchData = async () => {
-    const res = await queryAmenity({homestayId});
-    return res.findAmenityByHomestayId ?? null;
+    const res = await queryAmenity({hostelId});
+    return res.findAmenityByHostelId ?? null;
   };    
 
   const { data:amenities, error, isLoading: loading } = useQuery({
     queryKey: [ 'getAmenity' ],
     queryFn: fetchData,
-    enabled: !!homestayId,
+    enabled: !!hostelId,
   });
   
   // Get amenity categories from shared utility

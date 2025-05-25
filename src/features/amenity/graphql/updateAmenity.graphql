@@ -2,8 +2,8 @@ mutation UpdateAmenity($updateAmenityInput:UpdateAmenityInput!){
   updateAmenity(updateAmenityInput:$updateAmenityInput){
     data {
     id
-    amenity
-    homestayId
+    amenities
+    hostelId
     }
     error {
       message

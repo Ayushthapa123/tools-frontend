@@ -1,10 +1,10 @@
-query getHomestayDetailsBasic {
- getHomestayByToken {
+query getHostelDetailsBasic {
+ getHostelByToken {
  data {
    name
    slug
-   moderatedBySuperAdmin 
-  moderatedByCommunityOwner
+   verifiedBySuperAdmin 
+   verifiedByCommunityOwner
   
    address {
      country

@@ -146,7 +146,7 @@ export const OwnBookings = (props: { userType: string }) => {
                 className="btn btn-primary"
                 onClick={() => router.push('/search')}
               >
-                Browse Homestays
+                Browse Hostels
               </button>
             </div>
           </div>

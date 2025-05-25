@@ -14,7 +14,7 @@ export const JoinUs = () => {
       <div className=" absolute top-0 z-10 h-auto  w-full  items-center py-[130px] text-center">
         <div className=" mx-auto lg:w-6/12">
           <h2 className=" text-[25px] font-bold text-primary lg:text-[50px]">
-            Unlock your The Homestay Admin Account to Freedom!
+            Unlock your The Hostel Admin Account to Freedom!
           </h2>
           <h3 className=" text-lg font-medium text-primary md:text-2xl"></h3>
         </div>

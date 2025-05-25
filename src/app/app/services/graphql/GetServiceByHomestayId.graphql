@@ -1,11 +1,9 @@
-query GetServiceByHomestayId($homestayId: Float!) {
-  findServiceByHomestayId(homestayId: $homestayId) {
+query GetServiceByHostelId($hostelId: Float!) {
+  findServiceByHostelId(hostelId: $hostelId) {
     data {
       id
-      service
-      homestayId
-      createdAt
-      updatedAt
+      services
+      hostelId
     }
     error {
       message

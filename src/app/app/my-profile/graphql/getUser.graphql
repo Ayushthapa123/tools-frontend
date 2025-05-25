@@ -11,7 +11,7 @@ query getUserById($id: Float!) {
     gender
     dateOfBirth
     profilePicture
-    homestayId
+    hostelId
   }
   error {
     message

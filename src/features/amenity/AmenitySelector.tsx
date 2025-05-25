@@ -8,12 +8,12 @@ import { CreateAmenity, CreateAmenityMutation, CreateAmenityMutationVariables, U
 import { getAmenityCategories } from 'src/utils/amenityData';
 import { enqueueSnackbar } from 'notistack';
   export const AmenitySelector = ({
-  homestayId,
+  hostelId,
   existingAmenities = "",
   loading,
   amenityId
 }: {
-  homestayId: number,
+  hostelId: number,
   existingAmenities: any,
   loading: boolean,
   amenityId: number
@@ -90,7 +90,7 @@ import { enqueueSnackbar } from 'notistack';
         updateAmenityInput: {
           id: amenityId,
           amenity: Array.isArray(amenitiesArray) ? amenitiesArray.join(',') : amenitiesArray,
-          homestayId: homestayId
+          hostelId: hostelId
         }
       }).then((res) => {
         if (res.updateAmenity.data?.id) {
@@ -112,7 +112,7 @@ import { enqueueSnackbar } from 'notistack';
       await createAmenity({
         createAmenityInput: {
           amenity: Array.isArray(amenitiesArray) ? amenitiesArray.join(',') : amenitiesArray,
-          homestayId: homestayId
+          hostelId: hostelId
         }
       }).then((res) => {
         if (res.createAmenity.data?.id) {
@@ -180,7 +180,7 @@ import { enqueueSnackbar } from 'notistack';
 
   return (
     <div className="p-6 w-full mx-auto bg-white/80 rounded-lg shadow-md border border-gray-100">
-      <h1 className="text-2xl font-bold mb-2 text-gray-800">Homestay Amenities</h1>
+      <h1 className="text-2xl font-bold mb-2 text-gray-800">Hostel Amenities</h1>
       <p className="mb-6 text-gray-600">Select all amenities available at your property.</p>
       {Object.keys(amenityCategories).map((category:any) => (
         <div key={category} className="mb-6 border-b border-gray-100 pb-4 last:border-b-0">

@@ -1,5 +1,5 @@
-mutation selectHomestayImage($selectHomestayImageId:Float!,$homestayId:Float!){
-  selectHomestayImage(selectHomestayImageId:$selectHomestayImageId,homestayId:$homestayId){
+mutation selectGallery($galleryId:Int!,$hostelId:Int!){
+  selectGallery(galleryId:$galleryId,hostelId:$hostelId){
     data {
       id
       caption

@@ -2,7 +2,8 @@ mutation UpdatePrice($updatePriceInput: UpdatePriceInput!) {
   updatePrice(updatePriceInput: $updatePriceInput) {
     data {
     id
-    baseAmount
+    baseAmountPerDay
+    baseAmountPerMonth
     currency
     isDynamicPricing
     discountAmount

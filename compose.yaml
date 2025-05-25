@@ -16,7 +16,7 @@ services:
     ports:
       - 3000:3000
     networks:
-      - homestay
+      - hostel
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
@@ -51,5 +51,5 @@ services:
 #   db-password:
 #     file: db/password.txt
 networks:
-  homestay:
+  hostel:
     external: true

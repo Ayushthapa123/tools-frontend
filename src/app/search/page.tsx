@@ -6,14 +6,14 @@ import Footer from 'src/features/Footer';
 import { CommonNav } from 'src/features/NavBar/CommonNav';
 
 export const metadata: Metadata = {
-  title: 'Homestay  For Students And Young Professionals',
+  title: 'Hostel For Students And Young Professionals',
   description:
-    'Homestays is a hotel searching portal specially focused on providing the best hotels for students and young professionals in their city',
+    'Hostel is a hotel searching portal specially focused on providing the best hotels for students and young professionals in their city',
   manifest: '/manifest.json',
   authors: [{ name: 'Ayush Thapa' }],
   openGraph: {
     images: '/logo512.png',
-    title: 'Search Homestays in your city',
+    title: 'Search Hostels in your city',
   },
 };
 

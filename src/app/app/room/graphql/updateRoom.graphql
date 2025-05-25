@@ -7,7 +7,7 @@ mutation UpdateRoom($updateRoomInput: UpdateRoomInput!) {
     caption
     roomNumber
     attachBathroom
-    homestayId
+    hostelId
  
     createdAt
     updatedAt

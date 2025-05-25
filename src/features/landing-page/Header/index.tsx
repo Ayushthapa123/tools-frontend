@@ -2,7 +2,7 @@
 import { SearchBox } from './SearchBox';
 import { Suspense } from 'react';
 import Image from 'next/image';
-import { FeaturedHomestay } from 'src/features/featured/featuredHomestay';
+import { FeaturedHostel } from 'src/features/featured/featuredHostel';
 import { MapProvider } from 'src/features/MapProvider';
 interface LocationOption {
   id: number;
@@ -19,7 +19,7 @@ export const Header = () => {
         <div className=" hero-overlay min-h-[50vh] bg-opacity-60 z-10 pb-28 lg:pb-0">
           <div className=" inset-0 flex flex-col items-center justify-center px-4 text-center">
             <h1 className=" mb-4 mt-40 md:mt-80 text-4xl font-bold text-white md:text-5xl">
-              Find Your Next Homestay
+              Find Your Next Hostel
             </h1>
             <p className="mb-8 text-base lg:text-lg text-white">
               Get the best prices on 200,000+ properties, in Nepal
@@ -33,7 +33,7 @@ export const Header = () => {
         </div>
       </div>
       <div className='w-full bg-white mx-4 p-4'>
-        <FeaturedHomestay/>
+          <FeaturedHostel/>
       </div>
       <div />
     </div>

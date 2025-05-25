@@ -2,8 +2,8 @@ mutation RemoveAmenity($id:Int!){
   removeAmenity(id:$id){
     data {
     id
-    amenity
-    homestayId
+    amenities
+    hostelId
     }
     error {
       message
