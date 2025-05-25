@@ -89,10 +89,10 @@ export default function ServicesPage() {
     } else {
       updateServiceAsync({
         updateServiceInput: {
-          id: Number(hostelServices.data?.id),
+          id: Number(hostelServices?.data?.id),
+          hostelId: Number(hostel?.data?.id),
           services: selectedServices.join(",")
-        },
-      
+        }
       }).then((res) => {
         if (res?.updateService.data?.id) {
           router.push('/app/services');

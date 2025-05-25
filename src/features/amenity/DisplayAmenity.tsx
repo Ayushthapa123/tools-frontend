@@ -34,7 +34,7 @@ export const AmenityDisplay: React.FC<AmenityDisplayProps> = ({
   const amenityCategories = getAmenityCategories();
   
   // Parse the amenities string into an array
-  const amenitiesArray = amenities ? amenities.data?.amenity.split(',').filter(Boolean) : [];
+  const amenitiesArray = amenities ? amenities.data?.amenities.split(',').filter(Boolean) : [];
   
   // Check which categories have amenities
   const categoriesWithAmenities = Object.entries(amenityCategories).map(([category, items]) => {

@@ -20,6 +20,7 @@ import {
   LogInUser,
   LogInUserMutation,
   LogInUserMutationVariables,
+  UserType,
 } from 'src/gql/graphql';
 import { useAccessTokenStore } from 'src/store/accessTokenStore';
 
@@ -83,7 +84,7 @@ const SignIn = () => {
           //after login what to do before pushing him to dashboard/me
           setAccessToken(res.loginUser.token.accessToken);
           // localStorage.setItem('refreshToken', res.loginUser.token.refreshToken);
-          if (res.loginUser.userType !== 'GUEST') {
+          if (res.loginUser.userType !== UserType.HostelOwner) {
             router.push('/app');
           } else {
             router.push('/app/my-profile');

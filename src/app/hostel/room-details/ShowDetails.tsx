@@ -19,7 +19,7 @@ export default function ShowDetails({ room, setShowDetails }: { room: RoomData, 
     capacity: "2",
     attachBathroom: true,
     description: "A spacious deluxe room with king-size bed, private bathroom, and a beautiful view.",
-    price: { baseAmount: 3500, currency: "NPR" },
+    price: { baseAmountPerDay: 3500, currency: "NPR" },
     amenities: [ "Free WiFi", "AC", "TV", "Room Service" ],
     area: "25m²"
   };
@@ -63,7 +63,7 @@ export default function ShowDetails({ room, setShowDetails }: { room: RoomData, 
                   <span>{room?.caption ?? mockRoom.caption}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xl font-bold text-secondary">{room?.price?.baseAmount ?? mockRoom.price.baseAmount} {room?.price?.currency ?? mockRoom.price.currency}</span>
+                  <span className="text-xl font-bold text-secondary">{room?.price?.baseAmountPerDay ?? mockRoom.price.baseAmountPerDay} {room?.price?.currency ?? mockRoom.price.currency}</span>
                   <span className="text-sm text-gray-500">/night</span>
                 </div>
               </div>
@@ -71,11 +71,7 @@ export default function ShowDetails({ room, setShowDetails }: { room: RoomData, 
                 <div className="w-full bg-slate-200 p-2 rounded-lg gap-1 flex flex-col"><span className="font-semibold text-gray-800 ">Room Number:</span> <p className="text-gray-600 font-medium">{room?.roomNumber}</p></div>
                 <div className="w-full bg-slate-200 p-2 rounded-lg gap-1 flex flex-col"><span className="font-semibold text-gray-800 ">Capacity:</span> <p className="text-gray-600 font-medium">{room?.capacity}</p></div>
                 <div className="w-full bg-slate-200 p-2 rounded-lg gap-1 flex flex-col"><span className="font-semibold text-gray-800 ">Room Area:</span> <p className="text-gray-600 font-medium">25m²</p></div>
-                {/* <div className="flex flex-wrap gap-2 mt-2">
-                  {mockRoom.attachBathroom && (
-                    <span className="badge badge-accent gap-1 p-4"><FaShower /> Private Bathroom</span>
-                  )}
-                </div> */}
+
               </div>
 
             </div>

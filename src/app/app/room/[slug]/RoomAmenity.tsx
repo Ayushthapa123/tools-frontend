@@ -63,9 +63,9 @@ export default function RoomAmenityPage({ handleBack, roomId }: { handleBack: ()
   };
 
   const handleSave = () => {
-    if (!data?.data?.roomAmenityId) {
+    if (!data?.data?.id) {
       mutateAsync({ createAmenityInput: { roomId, amenity: selectedRoomAmenity.join(",") } }).then((res) => {
-        if (res?.createRoomAmenity.data?.roomAmenityId) {
+        if (res?.createRoomAmenity.data?.id) {
           queryClient.invalidateQueries({ queryKey: ['getRoomAmenities'] });
           enqueueSnackbar('Amenities Created Successfully!',{variant:'success'})
         }
@@ -75,8 +75,8 @@ export default function RoomAmenityPage({ handleBack, roomId }: { handleBack: ()
       })
     }
     else {
-      updateAmenity({updateAmenityInput:{roomAmenityId:Number(data?.data?.roomAmenityId), amenity:selectedRoomAmenity.join(",")}}).then((res) => {
-        if (res?.updateRoomAmenity.data?.roomAmenityId) {
+      updateAmenity({updateAmenityInput:{id:Number(data?.data?.id), amenity:selectedRoomAmenity.join(",")}}).then((res) => {
+        if (res?.updateRoomAmenity.data?.id) {
           queryClient.invalidateQueries({ queryKey: ['getRoomAmenities'] });
           enqueueSnackbar('Amenities Updated Successfully!',{variant:'success'})
         }

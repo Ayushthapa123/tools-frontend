@@ -26,7 +26,7 @@ export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Pri
       watch
     } = useForm<CreatePriceInput>({
       defaultValues: {
-          baseAmount: price?.baseAmount,  
+          baseAmountPerMonth: price?.baseAmountPerMonth,  
           currency: price?.currency ?? Currency.Npr,
         isDynamicPricing: price?.isDynamicPricing ?? false,
         // dynamicAmount: price?.dynamicAmount,
@@ -58,7 +58,8 @@ export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Pri
           const result = await mutateAsync({ 
             createPriceInput: { 
               roomId: roomId,
-              baseAmount: Number(data.baseAmount), 
+              baseAmountPerDay: Number(data.baseAmountPerDay),
+              baseAmountPerMonth: Number(data.baseAmountPerMonth), 
               currency: data.currency, 
               isDynamicPricing: data.isDynamicPricing,
               // dynamicAmount: data.dynamicAmount ? Number(data.dynamicAmount) : undefined,
@@ -81,7 +82,7 @@ export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Pri
           mutateUpdatePriceAsync({ 
             updatePriceInput: { 
               id: Number(price?.id),
-              baseAmount: Number(data.baseAmount),
+              baseAmountPerMonth: Number(data.baseAmountPerMonth),
               currency: data.currency,
               isDynamicPricing: data.isDynamicPricing,
               // dynamicAmount: data.dynamicAmount ? Number(data.dynamicAmount) : undefined,
@@ -136,14 +137,14 @@ export const SetPriceForm = ({ price, roomId , onNext, handleBack}: { price: Pri
             </div>
             <div className="mb-3">
               <TextInput
-                name="baseAmount"
+                name="baseAmountPerMonth"
                 placeholder="Price Amount"
                 control={control}
                 label="Base Price"
                 required
                 type="number"
-                helpertext={errors.baseAmount?.type === 'required' ? 'Amount is Required' : ''}
-                error={!!errors.baseAmount} 
+                helpertext={errors.baseAmountPerMonth?.type === 'required' ? 'Amount is Required' : ''}
+                error={!!errors.baseAmountPerMonth} 
                   customType='price'
                   min={0}
               />

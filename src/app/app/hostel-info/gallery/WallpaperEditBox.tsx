@@ -24,10 +24,11 @@ interface IcoverEdit {
   hostelId?: number;
   action?: 'create' | 'update';
   invalidateKey: string;
+  galleryId?: number;
 }
 
 export const WallpaperEditBox = (props: IcoverEdit) => {
-  const { galleryType, handleBack, roomId, hostelId, invalidateKey } = props;
+  const { galleryType, handleBack, roomId, hostelId,galleryId, invalidateKey } = props;
   const router = useRouter();
 
   const queryClient = useQueryClient();

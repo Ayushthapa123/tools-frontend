@@ -19,20 +19,16 @@ import {
   GetHostelByTokenQuery,
   GetHostelByToken,
   GetHostelByTokenQueryVariables,
-  SelectGalleryMutation
+  SelectGalleryMutation,
+  GalleryData
 } from 'src/gql/graphql';
 import { WallpaperGallery } from '../hostel-info/gallery/WallpaperGallery';
 import { enqueueSnackbar } from 'notistack';
 import LoadingSpinner from 'src/components/Loading';
 
-interface GalleryImage {
-  id: string;
-  url: string;
-  isSelected: boolean;
-}
 
 export default function Gallery() {
-  const [ selectedImage, setSelectedImage ] = useState<GalleryImage | null >(null);
+  const [ selectedImage, setSelectedImage ] = useState<GalleryData | null >(null);
   const [ showModal, setShowModal ] = useState(false);
   const queryClient = useQueryClient();
 
@@ -94,7 +90,7 @@ export default function Gallery() {
     mutationFn: mutateSelectGallery,
   });
 
-  const handleImageClick = (img: GalleryImage | undefined) => {
+  const handleImageClick = (img: GalleryData) => {
     if (img) {
       setSelectedImage(img);
       setShowModal(true);
@@ -105,7 +101,7 @@ export default function Gallery() {
     setShowModal(false);
   };
 
-  const handleDelete = async (img: GalleryImage | undefined, e: React.MouseEvent) => {
+  const handleDelete = async (img: GalleryData | undefined, e: React.MouseEvent) => {
     if (img) {
       e.stopPropagation();
       try {

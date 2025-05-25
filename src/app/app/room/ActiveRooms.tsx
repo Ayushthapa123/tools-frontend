@@ -70,7 +70,7 @@ export const ActiveRooms = () => {
               caption={room.caption ?? ''}
               roomNumber={room.roomNumber ?? ''}
               status={room.status ?? ''}
-              price={room.price?.baseAmount ?? 0}
+              price={room.price?.baseAmountPerMonth ?? 0}
               currency={room.price?.currency ?? ''}
               imageUrl={room.image?.[ 0 ]?.url ?? ''}
               setShowDeleteModal={setShowDeleteModal}

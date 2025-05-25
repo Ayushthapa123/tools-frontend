@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     'hosteladmin offers a comprehensive platform that allows you to seamlessly upload and manage all the details of your hostel online. By leveraging our user-friendly interface, you can ensure that potential guests can easily find your hostel, check availability, and reach out to you directly',
   authors: [{ name: 'Ayush Thapa' }],
   openGraph: {
-    images: '/home-stay-logo.png',
+    images: '/logo.png',
     title: 'hostel- Manage Your hostel Informations Online',
   },
 };

@@ -18,7 +18,7 @@ const documents = {
     "query getHostelDetailsBasic {\n  getHostelByToken {\n    data {\n      name\n      slug\n      verifiedBySuperAdmin\n      verifiedByCommunityOwner\n      address {\n        country\n        city\n        subCity\n        street\n      }\n    }\n  }\n}": types.GetHostelDetailsBasicDocument,
     "mutation CreateGallery($data: CreateGalleryInput!) {\n  createGallery(data: $data) {\n    data {\n      id\n      hostelId\n      url\n      caption\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.CreateGalleryDocument,
     "mutation DeleteGallery($galleryId: Int!) {\n  deleteGallery(galleryId: $galleryId) {\n    data {\n      id\n      hostelId\n      url\n      caption\n      createdAt\n      updatedAt\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.DeleteGalleryDocument,
-    "query GetGalleryByHostelId($hostelId: Int!) {\n  getGalleryByHostelId(hostelId: $hostelId) {\n    data {\n      id\n      hostelId\n      url\n      caption\n      isSelected\n      createdAt\n      updatedAt\n    }\n  }\n}": types.GetGalleryByHostelIdDocument,
+    "query GetGalleryByHostelId($hostelId: Int!) {\n  getGalleryByHostelId(hostelId: $hostelId) {\n    data {\n      id\n      hostelId\n      url\n      type\n      caption\n      isSelected\n      createdAt\n      updatedAt\n    }\n  }\n}": types.GetGalleryByHostelIdDocument,
     "mutation UpdateGallery($galleryId: Int!, $data: UpdateGalleryInput!) {\n  updateGallery(galleryId: $galleryId, data: $data) {\n    data {\n      id\n      hostelId\n      url\n      isSelected\n      caption\n      createdAt\n      updatedAt\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.UpdateGalleryDocument,
     "mutation createAddress($input: CreateAddressInput!) {\n  createAddress(data: $input) {\n    data {\n      id\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.CreateAddressDocument,
     "mutation createContacts($input: CreateContactInput!) {\n  createContact(data: $input) {\n    data {\n      id\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.CreateContactsDocument,
@@ -125,7 +125,7 @@ export function graphql(source: "mutation DeleteGallery($galleryId: Int!) {\n  d
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query GetGalleryByHostelId($hostelId: Int!) {\n  getGalleryByHostelId(hostelId: $hostelId) {\n    data {\n      id\n      hostelId\n      url\n      caption\n      isSelected\n      createdAt\n      updatedAt\n    }\n  }\n}"): (typeof documents)["query GetGalleryByHostelId($hostelId: Int!) {\n  getGalleryByHostelId(hostelId: $hostelId) {\n    data {\n      id\n      hostelId\n      url\n      caption\n      isSelected\n      createdAt\n      updatedAt\n    }\n  }\n}"];
+export function graphql(source: "query GetGalleryByHostelId($hostelId: Int!) {\n  getGalleryByHostelId(hostelId: $hostelId) {\n    data {\n      id\n      hostelId\n      url\n      type\n      caption\n      isSelected\n      createdAt\n      updatedAt\n    }\n  }\n}"): (typeof documents)["query GetGalleryByHostelId($hostelId: Int!) {\n  getGalleryByHostelId(hostelId: $hostelId) {\n    data {\n      id\n      hostelId\n      url\n      type\n      caption\n      isSelected\n      createdAt\n      updatedAt\n    }\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

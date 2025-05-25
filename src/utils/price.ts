@@ -1,7 +1,7 @@
 import { Price } from "src/gql/graphql";
 
 export const getTodayPrice = (price: Price) => {
-  const { isDynamicPricing, baseAmount } = price?.data??{isDynamicPricing:false, baseAmount:0};
+  const { isDynamicPricing, baseAmountPerDay } = price?.data??{isDynamicPricing:false, baseAmountPerDay:0};
 
-  return baseAmount;
+  return baseAmountPerDay;
 };

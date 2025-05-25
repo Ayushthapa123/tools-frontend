@@ -4,6 +4,7 @@ query GetGalleryByHostelId($hostelId: Int!) {
       id
       hostelId
       url
+      type
       caption
       isSelected
       createdAt

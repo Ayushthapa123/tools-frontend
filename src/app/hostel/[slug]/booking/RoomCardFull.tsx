@@ -122,7 +122,7 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
             room.roomAmenity ? (
                 <div className="grid grid-cols-2 gap-2 mt-2">
                 
-                {room.roomAmenity?.amenity.split(",").slice(0,4).map((amm) => {
+                {room.roomAmenity?.amenity.split(",").slice(0,4).map((amm:string) => {
               return (
                 <div key={amm} className="flex items-center justify-start gap-2">
                   <BsCheckCircleFill className="mr-2 text-green-500" />

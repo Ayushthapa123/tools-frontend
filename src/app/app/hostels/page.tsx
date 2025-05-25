@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 // import { MapComponent } from './GoogleMap';
-import { AllHostels } from './AllHomestays'; 
+import { AllHostels } from './AllHostels'; 
 import { MapProvider } from 'src/features/MapProvider';
 
 export default function Home() {
