@@ -54,6 +54,16 @@ export type AmenitiesData = {
   id: Scalars['ID']['output'];
 };
 
+export enum Badges {
+  Famous = 'FAMOUS',
+  GoodFood = 'GOOD_FOOD',
+  GoodLocation = 'GOOD_LOCATION',
+  New = 'NEW',
+  PeopleChoice = 'PEOPLE_CHOICE',
+  SocialButterfly = 'SOCIAL_BUTTERFLY',
+  TechSavvy = 'TECH_SAVVY'
+}
+
 export type Booking = {
   __typename?: 'Booking';
   data?: Maybe<BookingData>;
@@ -190,7 +200,22 @@ export type CreateGalleryInput = {
 
 export type CreateHostelInput = {
   description?: InputMaybe<Scalars['String']['input']>;
+  genderType?: InputMaybe<Scalars['String']['input']>;
+  hostelType?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
+};
+
+export type CreateHostelSettingsInput = {
+  active?: Scalars['Boolean']['input'];
+  allowBooking?: Scalars['Boolean']['input'];
+  allowComments?: Scalars['Boolean']['input'];
+  allowMessages?: Scalars['Boolean']['input'];
+  allowPrivateFeedbacks?: Scalars['Boolean']['input'];
+  allowRating?: Scalars['Boolean']['input'];
+  currency?: InputMaybe<Scalars['String']['input']>;
+  deActivate?: Scalars['Boolean']['input'];
+  fontSize?: Scalars['Float']['input'];
+  visibility?: Scalars['String']['input'];
 };
 
 export type CreatePriceInput = {
@@ -247,19 +272,13 @@ export type CreateServiceDto = {
 export type CreateUserInput = {
   altPhoneNumber?: InputMaybe<Scalars['String']['input']>;
   city?: InputMaybe<Scalars['String']['input']>;
-  createdAt: Scalars['DateTime']['input'];
   dateOfBirth?: InputMaybe<Scalars['DateTime']['input']>;
-  deletedAt?: InputMaybe<Scalars['DateTime']['input']>;
   email: Scalars['String']['input'];
   fullName: Scalars['String']['input'];
   gender?: InputMaybe<Gender>;
-  hashedRefreshToken?: InputMaybe<Scalars['String']['input']>;
   hostelId?: InputMaybe<Scalars['Float']['input']>;
-  isVerified?: Scalars['Boolean']['input'];
-  passwordHash?: InputMaybe<Scalars['String']['input']>;
   phoneNumber?: InputMaybe<Scalars['String']['input']>;
   profilePicture?: InputMaybe<Scalars['String']['input']>;
-  updatedAt: Scalars['DateTime']['input'];
   userType?: UserType;
 };
 
@@ -446,6 +465,12 @@ export type HostelRulesData = {
   rules: Scalars['JSON']['output'];
 };
 
+export type HostelSetting = {
+  __typename?: 'HostelSetting';
+  data?: Maybe<HostelSettingData>;
+  error?: Maybe<GraphQlError>;
+};
+
 export type HostelSettingData = {
   __typename?: 'HostelSettingData';
   active: Scalars['Boolean']['output'];
@@ -454,6 +479,7 @@ export type HostelSettingData = {
   allowMessages: Scalars['Boolean']['output'];
   allowPrivateFeedbacks: Scalars['Boolean']['output'];
   allowRating: Scalars['Boolean']['output'];
+  badges: Array<Badges>;
   createdAt: Scalars['DateTime']['output'];
   currency?: Maybe<Scalars['String']['output']>;
   deActivate: Scalars['Boolean']['output'];
@@ -500,12 +526,14 @@ export type Mutation = {
   createRules: HostelRules;
   createSearchQuery: SearchQuery;
   createService: Service;
+  createSettings: HostelSetting;
   createUser: User;
   deleteGallery: Gallery;
   deleteHostel: Hostel;
   deleteRoomImage: RoomImage;
   deleteRules: HostelRules;
   deleteSearchQuery: SearchQuery;
+  deleteSettings: HostelSetting;
   forgotPassword: ForgotPasswordResponse;
   loginUser: UsersAndToken;
   logout: LogoutResponse;
@@ -537,6 +565,7 @@ export type Mutation = {
   updateRules: HostelRules;
   updateSearchQuery: SearchQuery;
   updateService: Service;
+  updateSettings: HostelSetting;
   updateUser: User;
   verifyEmail: VerifyEmailResponse;
   verifyHostel: Hostel;
@@ -624,6 +653,12 @@ export type MutationCreateServiceArgs = {
 };
 
 
+export type MutationCreateSettingsArgs = {
+  data: CreateHostelSettingsInput;
+  hostelId: Scalars['Float']['input'];
+};
+
+
 export type MutationCreateUserArgs = {
   input: CreateUserInput;
 };
@@ -651,6 +686,11 @@ export type MutationDeleteRulesArgs = {
 
 export type MutationDeleteSearchQueryArgs = {
   searchQueryId: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteSettingsArgs = {
+  hostelSettingId: Scalars['Float']['input'];
 };
 
 
@@ -809,6 +849,12 @@ export type MutationUpdateServiceArgs = {
 };
 
 
+export type MutationUpdateSettingsArgs = {
+  data: UpdateHostelSettingsInput;
+  hostelSettingId: Scalars['Float']['input'];
+};
+
+
 export type MutationUpdateUserArgs = {
   input: UpdateUserInput;
 };
@@ -887,6 +933,7 @@ export type Query = {
   getRoomImagesByRoomId?: Maybe<RoomImageList>;
   getRulesByHostel: HostelRules;
   getRulesById: HostelRules;
+  getSettingsByHostelId?: Maybe<HostelSetting>;
   getToleSearchSuggestions?: Maybe<Array<SearchQuery>>;
   getUserByAccessToken?: Maybe<User>;
   getUserById?: Maybe<User>;
@@ -900,7 +947,7 @@ export type Query = {
   pricesRules: DynamicPricingRuleList;
   room: Room;
   roomBookings: BookingList;
-  rooms: Array<Room>;
+  rooms: RoomList;
   roomsByHostel: RoomList;
   searchQueries: Array<SearchQuery>;
   searchQuery: SearchQuery;
@@ -1005,6 +1052,11 @@ export type QueryGetRoomImagesByRoomIdArgs = {
 
 export type QueryGetRulesByIdArgs = {
   rulesId: Scalars['Int']['input'];
+};
+
+
+export type QueryGetSettingsByHostelIdArgs = {
+  hostelId: Scalars['Float']['input'];
 };
 
 
@@ -1210,20 +1262,14 @@ export type ServiceData = {
 export type SignupInput = {
   altPhoneNumber?: InputMaybe<Scalars['String']['input']>;
   city?: InputMaybe<Scalars['String']['input']>;
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   dateOfBirth?: InputMaybe<Scalars['DateTime']['input']>;
-  deletedAt?: InputMaybe<Scalars['DateTime']['input']>;
   email: Scalars['String']['input'];
   fullName: Scalars['String']['input'];
   gender?: InputMaybe<Gender>;
-  hashedRefreshToken?: InputMaybe<Scalars['String']['input']>;
   hostelId?: InputMaybe<Scalars['Float']['input']>;
-  isVerified?: InputMaybe<Scalars['Boolean']['input']>;
   password: Scalars['String']['input'];
-  passwordHash?: InputMaybe<Scalars['String']['input']>;
   phoneNumber?: InputMaybe<Scalars['String']['input']>;
   profilePicture?: InputMaybe<Scalars['String']['input']>;
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   userType: Scalars['String']['input'];
 };
 
@@ -1306,6 +1352,20 @@ export type UpdateHostelInput = {
   slug?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type UpdateHostelSettingsInput = {
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  allowBooking?: InputMaybe<Scalars['Boolean']['input']>;
+  allowComments?: InputMaybe<Scalars['Boolean']['input']>;
+  allowMessages?: InputMaybe<Scalars['Boolean']['input']>;
+  allowPrivateFeedbacks?: InputMaybe<Scalars['Boolean']['input']>;
+  allowRating?: InputMaybe<Scalars['Boolean']['input']>;
+  currency?: InputMaybe<Scalars['String']['input']>;
+  deActivate?: InputMaybe<Scalars['Boolean']['input']>;
+  fontSize?: InputMaybe<Scalars['Float']['input']>;
+  hostelSettingId: Scalars['Int']['input'];
+  visibility?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type UpdatePriceInput = {
   baseAmountPerDay?: InputMaybe<Scalars['Int']['input']>;
   baseAmountPerMonth?: InputMaybe<Scalars['Int']['input']>;
@@ -1363,20 +1423,14 @@ export type UpdateServiceDto = {
 export type UpdateUserInput = {
   altPhoneNumber?: InputMaybe<Scalars['String']['input']>;
   city?: InputMaybe<Scalars['String']['input']>;
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   dateOfBirth?: InputMaybe<Scalars['DateTime']['input']>;
-  deletedAt?: InputMaybe<Scalars['DateTime']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
   fullName?: InputMaybe<Scalars['String']['input']>;
   gender?: InputMaybe<Gender>;
-  hashedRefreshToken?: InputMaybe<Scalars['String']['input']>;
   hostelId?: InputMaybe<Scalars['Float']['input']>;
   id: Scalars['Int']['input'];
-  isVerified?: InputMaybe<Scalars['Boolean']['input']>;
-  passwordHash?: InputMaybe<Scalars['String']['input']>;
   phoneNumber?: InputMaybe<Scalars['String']['input']>;
   profilePicture?: InputMaybe<Scalars['String']['input']>;
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   userType?: InputMaybe<UserType>;
 };
 
@@ -1811,6 +1865,29 @@ export type UpdateServiceMutationVariables = Exact<{
 
 export type UpdateServiceMutation = { __typename?: 'Mutation', updateService: { __typename?: 'Service', data?: { __typename?: 'ServiceData', id: string, services: any, hostelId: number } | null, error?: { __typename?: 'GraphQLError', message: string, code?: string | null } | null } };
 
+export type CreateHostelSettingsMutationVariables = Exact<{
+  hostelId: Scalars['Float']['input'];
+  data: CreateHostelSettingsInput;
+}>;
+
+
+export type CreateHostelSettingsMutation = { __typename?: 'Mutation', createSettings: { __typename?: 'HostelSetting', data?: { __typename?: 'HostelSettingData', id: string } | null, error?: { __typename?: 'GraphQLError', message: string } | null } };
+
+export type GetSettingsQueryVariables = Exact<{
+  hostelId: Scalars['Float']['input'];
+}>;
+
+
+export type GetSettingsQuery = { __typename?: 'Query', getSettingsByHostelId?: { __typename?: 'HostelSetting', data?: { __typename?: 'HostelSettingData', id: string, active: boolean, allowBooking: boolean, allowMessages: boolean, allowPrivateFeedbacks: boolean, allowRating: boolean, currency?: string | null, fontSize: number, visibility: VisibilityType, allowComments: boolean } | null, error?: { __typename?: 'GraphQLError', message: string } | null } | null };
+
+export type UpdateHostelSettingsMutationVariables = Exact<{
+  Id: Scalars['Float']['input'];
+  data: UpdateHostelSettingsInput;
+}>;
+
+
+export type UpdateHostelSettingsMutation = { __typename?: 'Mutation', updateSettings: { __typename?: 'HostelSetting', data?: { __typename?: 'HostelSettingData', id: string } | null, error?: { __typename?: 'GraphQLError', message: string } | null } };
+
 export type ForgotPasswordMutationVariables = Exact<{
   email: Scalars['String']['input'];
 }>;
@@ -2020,6 +2097,9 @@ export const GetServiceByHostelIdDocument = {"kind":"Document","definitions":[{"
 export const CreateServiceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateService"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createServiceInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateServiceDto"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createService"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createServiceInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createServiceInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"services"}},{"kind":"Field","name":{"kind":"Name","value":"hostelId"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<CreateServiceMutation, CreateServiceMutationVariables>;
 export const RemoveServiceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RemoveService"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removeService"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"services"}},{"kind":"Field","name":{"kind":"Name","value":"hostelId"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<RemoveServiceMutation, RemoveServiceMutationVariables>;
 export const UpdateServiceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateService"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateServiceInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateServiceDto"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateService"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"updateServiceInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateServiceInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"services"}},{"kind":"Field","name":{"kind":"Name","value":"hostelId"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateServiceMutation, UpdateServiceMutationVariables>;
+export const CreateHostelSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createHostelSettings"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"hostelId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateHostelSettingsInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createSettings"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"hostelId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"hostelId"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]}}]} as unknown as DocumentNode<CreateHostelSettingsMutation, CreateHostelSettingsMutationVariables>;
+export const GetSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getSettings"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"hostelId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getSettingsByHostelId"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"hostelId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"hostelId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"active"}},{"kind":"Field","name":{"kind":"Name","value":"allowBooking"}},{"kind":"Field","name":{"kind":"Name","value":"allowMessages"}},{"kind":"Field","name":{"kind":"Name","value":"allowPrivateFeedbacks"}},{"kind":"Field","name":{"kind":"Name","value":"allowRating"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"fontSize"}},{"kind":"Field","name":{"kind":"Name","value":"visibility"}},{"kind":"Field","name":{"kind":"Name","value":"allowComments"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]}}]} as unknown as DocumentNode<GetSettingsQuery, GetSettingsQueryVariables>;
+export const UpdateHostelSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateHostelSettings"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"Id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateHostelSettingsInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateSettings"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"hostelSettingId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"Id"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateHostelSettingsMutation, UpdateHostelSettingsMutationVariables>;
 export const ForgotPasswordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ForgotPassword"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"forgotPassword"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<ForgotPasswordMutation, ForgotPasswordMutationVariables>;
 export const ResetPasswordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ResetPassword"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ResetPasswordInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"resetPassword"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userType"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}}]}}]}}]}}]} as unknown as DocumentNode<ResetPasswordMutation, ResetPasswordMutationVariables>;
 export const ResendVerificationMailDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"resendVerificationMail"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"resendVerificationMail"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<ResendVerificationMailMutation, ResendVerificationMailMutationVariables>;
@@ -2997,6 +3077,51 @@ export const UpdateService = gql`
     error {
       message
       code
+    }
+  }
+}
+    `;
+export const CreateHostelSettings = gql`
+    mutation createHostelSettings($hostelId: Float!, $data: CreateHostelSettingsInput!) {
+  createSettings(hostelId: $hostelId, data: $data) {
+    data {
+      id
+    }
+    error {
+      message
+    }
+  }
+}
+    `;
+export const GetSettings = gql`
+    query getSettings($hostelId: Float!) {
+  getSettingsByHostelId(hostelId: $hostelId) {
+    data {
+      id
+      active
+      allowBooking
+      allowMessages
+      allowPrivateFeedbacks
+      allowRating
+      currency
+      fontSize
+      visibility
+      allowComments
+    }
+    error {
+      message
+    }
+  }
+}
+    `;
+export const UpdateHostelSettings = gql`
+    mutation updateHostelSettings($Id: Float!, $data: UpdateHostelSettingsInput!) {
+  updateSettings(hostelSettingId: $Id, data: $data) {
+    data {
+      id
+    }
+    error {
+      message
     }
   }
 }

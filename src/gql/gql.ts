@@ -63,6 +63,9 @@ const documents = {
     "mutation CreateService($createServiceInput: CreateServiceDto!) {\n  createService(createServiceInput: $createServiceInput) {\n    data {\n      id\n      services\n      hostelId\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.CreateServiceDocument,
     "mutation RemoveService($id: Float!) {\n  removeService(id: $id) {\n    data {\n      id\n      services\n      hostelId\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.RemoveServiceDocument,
     "mutation UpdateService($updateServiceInput: UpdateServiceDto!) {\n  updateService(updateServiceInput: $updateServiceInput) {\n    data {\n      id\n      services\n      hostelId\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.UpdateServiceDocument,
+    "mutation createHostelSettings($hostelId: Float!, $data: CreateHostelSettingsInput!) {\n  createSettings(hostelId: $hostelId, data: $data) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}": types.CreateHostelSettingsDocument,
+    "query getSettings($hostelId: Float!) {\n  getSettingsByHostelId(hostelId: $hostelId) {\n    data {\n      id\n      active\n      allowBooking\n      allowMessages\n      allowPrivateFeedbacks\n      allowRating\n      currency\n      fontSize\n      visibility\n      allowComments\n    }\n    error {\n      message\n    }\n  }\n}": types.GetSettingsDocument,
+    "mutation updateHostelSettings($Id: Float!, $data: UpdateHostelSettingsInput!) {\n  updateSettings(hostelSettingId: $Id, data: $data) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}": types.UpdateHostelSettingsDocument,
     "mutation ForgotPassword($email: String!) {\n  forgotPassword(email: $email) {\n    id\n  }\n}": types.ForgotPasswordDocument,
     "mutation ResetPassword($input: ResetPasswordInput!) {\n  resetPassword(input: $input) {\n    email\n    id\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}": types.ResetPasswordDocument,
     "mutation resendVerificationMail($id: Float!) {\n  resendVerificationMail(id: $id)\n}": types.ResendVerificationMailDocument,
@@ -302,6 +305,18 @@ export function graphql(source: "mutation RemoveService($id: Float!) {\n  remove
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "mutation UpdateService($updateServiceInput: UpdateServiceDto!) {\n  updateService(updateServiceInput: $updateServiceInput) {\n    data {\n      id\n      services\n      hostelId\n    }\n    error {\n      message\n      code\n    }\n  }\n}"): (typeof documents)["mutation UpdateService($updateServiceInput: UpdateServiceDto!) {\n  updateService(updateServiceInput: $updateServiceInput) {\n    data {\n      id\n      services\n      hostelId\n    }\n    error {\n      message\n      code\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation createHostelSettings($hostelId: Float!, $data: CreateHostelSettingsInput!) {\n  createSettings(hostelId: $hostelId, data: $data) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}"): (typeof documents)["mutation createHostelSettings($hostelId: Float!, $data: CreateHostelSettingsInput!) {\n  createSettings(hostelId: $hostelId, data: $data) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query getSettings($hostelId: Float!) {\n  getSettingsByHostelId(hostelId: $hostelId) {\n    data {\n      id\n      active\n      allowBooking\n      allowMessages\n      allowPrivateFeedbacks\n      allowRating\n      currency\n      fontSize\n      visibility\n      allowComments\n    }\n    error {\n      message\n    }\n  }\n}"): (typeof documents)["query getSettings($hostelId: Float!) {\n  getSettingsByHostelId(hostelId: $hostelId) {\n    data {\n      id\n      active\n      allowBooking\n      allowMessages\n      allowPrivateFeedbacks\n      allowRating\n      currency\n      fontSize\n      visibility\n      allowComments\n    }\n    error {\n      message\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation updateHostelSettings($Id: Float!, $data: UpdateHostelSettingsInput!) {\n  updateSettings(hostelSettingId: $Id, data: $data) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}"): (typeof documents)["mutation updateHostelSettings($Id: Float!, $data: UpdateHostelSettingsInput!) {\n  updateSettings(hostelSettingId: $Id, data: $data) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

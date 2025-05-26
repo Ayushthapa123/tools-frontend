@@ -15,7 +15,7 @@ export const FullLogo = () => {
               {' '}
               <h1>
                 {' '}
-                Home <span className=" text-secondary"> Stay</span>
+                Hostel <span className=" text-secondary"> Admin</span>
               </h1>
             </div>
           </div>

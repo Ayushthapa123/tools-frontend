@@ -1,0 +1,10 @@
+mutation createHostelSettings($hostelId: Float!, $data: CreateHostelSettingsInput!) {
+  createSettings(hostelId: $hostelId, data: $data) {
+    data {
+      id
+    }
+    error {
+      message
+    }
+  }
+}

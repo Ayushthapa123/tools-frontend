@@ -41,7 +41,7 @@ export const HostelInfo = () => {
   });
 
   return (
-    <div className="">
+    <div className=" w-full">
       {!isLoading ? (
         <HostelInfoForm
           hostelId={hostelData?.data?.id}
@@ -173,7 +173,7 @@ export const HostelInfoForm: FC<IProps> = props => {
 
   return (
     <form
-      className="bg-white card-body card w-fit card-bordered gap-[1rem] mb-4"
+      className="bg-white card-body card w-full card-bordered gap-[1rem] mb-4"
       onSubmit={handleSubmit(handleSubmitForm)}>
       <div className=" grid gap-[1rem] md:grid-cols-2">
         <div>

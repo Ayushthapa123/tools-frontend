@@ -1,0 +1,19 @@
+query getSettings($hostelId: Float!) {
+  getSettingsByHostelId(hostelId: $hostelId) {
+    data {
+    id
+    active
+    allowBooking
+    allowMessages
+    allowPrivateFeedbacks
+    allowRating
+    currency
+    fontSize
+    visibility
+    allowComments
+    } 
+    error {
+      message
+    }
+  }
+}

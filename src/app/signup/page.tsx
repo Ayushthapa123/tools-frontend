@@ -16,6 +16,7 @@ import {
   SignupUser,
   SignupUserMutation,
   SignupUserMutationVariables,
+  UserType,
 } from 'src/gql/graphql';
 
 import { useSearchParams } from 'next/navigation';
@@ -99,7 +100,7 @@ function SignUp() {
         email: data.email,
         password: data.password,
         fullName: data.fullName,
-        userType: 'GUEST',
+        userType: UserType.HostelOwner,
       },
     }).then(res => {
       if (res?.signupUser?.id) {

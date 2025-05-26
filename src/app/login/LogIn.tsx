@@ -113,13 +113,7 @@ const LogIn = () => {
 
   const isValid = checkPasswordValidity() && checkEmailValidity();
 
-  useEffect(() => {
-    //if refreshToken already present push it to the app
-    const refreshToken = localStorage.getItem('refreshToken');
-    if (refreshToken && user?.userType !== 'GUEST') {
-      // router.push('/app');
-    }
-  }, [router, user]);
+
 
   const openSignupUrl = () => {
     // Redirects to signup URL if one is provided

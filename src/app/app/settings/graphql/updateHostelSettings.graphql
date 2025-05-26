@@ -1,0 +1,10 @@
+mutation updateHostelSettings($Id: Float!, $data: UpdateHostelSettingsInput!) {
+  updateSettings(hostelSettingId: $Id, data: $data) {
+    data {
+      id
+    }
+    error {
+      message
+    }
+  }
+}

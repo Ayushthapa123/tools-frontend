@@ -8,6 +8,7 @@ import { LogoIcon } from '../Logo/LogoIcon';
 import { useEffect, useState } from 'react';
 import { UserProfile } from '../UserProfile';
 import { useTheme } from '../themes/ThemeProvider';
+import { UserType } from 'src/gql/graphql';
 
 const Navbar = () => {
   const { user } = useUserStore();
@@ -53,7 +54,7 @@ const Navbar = () => {
           <UserProfile />
 
           {
-            user.userType!=='GUEST' && <div className="left-0 top-[70px]  lg:hidden ">
+            user.userType!==UserType.Student && <div className="left-0 top-[70px]  lg:hidden ">
              <Drawer />
            </div>
          }

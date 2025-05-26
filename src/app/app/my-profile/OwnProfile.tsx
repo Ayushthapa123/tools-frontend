@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { FaCamera, FaEdit } from 'react-icons/fa';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
-import { GetUserById, GetUserByIdQuery, GetUserByIdQueryVariables, LogOut, LogOutMutation, LogOutMutationVariables, UpdateUser, UpdateUserMutation, UpdateUserMutationVariables } from 'src/gql/graphql';
+import { Gender, GetUserById, GetUserByIdQuery, GetUserByIdQueryVariables, LogOut, LogOutMutation, LogOutMutationVariables, UpdateUser, UpdateUserMutation, UpdateUserMutationVariables, UserType } from 'src/gql/graphql';
 import LogoutIcon from 'src/components/icons/LogOut';
 import { useUserStore } from 'src/store/userStore';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -49,7 +49,7 @@ export const OwnProfile = (props: { userType: string }) => {
   // Form for personal details
   const { control,register, handleSubmit, formState: { errors }, reset } = useForm({
     defaultValues: {
-      fullName: user.userName || '',
+      fullName: userData?.data?.fullName || '',
       city: userData?.data?.city ||  '',
       altPhoneNumber:userData?.data?.altPhoneNumber || '',
       phoneNumber: userData?.data?.phoneNumber || '',
@@ -80,9 +80,9 @@ export const OwnProfile = (props: { userType: string }) => {
   }, [ userData, reset , openPersonalModal ]);
 
   const genderOptions = [
-    { label: 'Male', value: 'MALE' },
-    { label: 'Female', value: 'FEMALE' },
-    { label: 'Other', value: 'OTHER' },
+    { label: 'Boys', value: Gender.Boys },
+    { label: 'Girls', value: Gender.Girls },
+    { label: 'Others', value: Gender.Others },
   ];
 
   const onSubmitPersonal = async (data: any) => {
@@ -202,7 +202,7 @@ export const OwnProfile = (props: { userType: string }) => {
         </div>
       </div>
       <div>
-        {props.userType === 'GUEST' && (
+        {props.userType === UserType.Student && (
           <div className=" cursor-pointer w-min" onClick={handleLogout}>
             <span className=" relative text-[25px] text-primary ">
               <LogoutIcon />

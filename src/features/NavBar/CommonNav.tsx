@@ -7,6 +7,8 @@ import { useUserStore } from 'src/store/userStore';
 import { motion } from 'framer-motion';
 
 import { UserProfile } from '../UserProfile';
+import { CreateHostelModal } from 'src/app/app/hostel-info/CreateHostelModal';
+import { UserType } from 'src/gql/graphql';
 
 export const CommonNav = () => {
 
@@ -60,6 +62,7 @@ export const CommonNav = () => {
                 </div>
               </div>
             )}
+            {user.userType === UserType.HostelOwner && !user.hostelId && <CreateHostelModal />}
           </div>
         </div>
       </div>

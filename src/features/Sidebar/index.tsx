@@ -21,6 +21,7 @@ import { FaHotel, FaRegLightbulb } from 'react-icons/fa';
 import { useMutation } from '@tanstack/react-query';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import { GrGallery } from 'react-icons/gr';
+import SettingsIcon from 'src/components/icons/Settings';
 interface MenuItemType {
   icon: JSX.Element;
   text: string;
@@ -108,7 +109,7 @@ const Sidebar = () => {
 
   // this function 
   const bottomItems: MenuItemType[] = [
-    // { icon: <SettingsIcon />, text: 'Settings', href: '/app/settings' },
+    { icon: <SettingsIcon />, text: 'Settings', href: '/app/settings' },
     { icon: <LogoutIcon />, text: 'Log Out', href: '/', handleFunc: logOut },
   ];
 

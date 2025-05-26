@@ -15,6 +15,7 @@ import {
   SignupUser,
   SignupUserMutation,
   SignupUserMutationVariables,
+  UserType,
 } from 'src/gql/graphql';
 import { useAccessTokenStore } from 'src/store/accessTokenStore';
 
@@ -99,7 +100,7 @@ function SignUp() {
         email: data.email,
         password: data.password,
         fullName: data.fullName,
-        userType: 'HOSTEL_OWNER',
+        userType: UserType.HostelOwner,
         phoneNumber: data.phoneNumber,
         
       },

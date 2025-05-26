@@ -12,6 +12,7 @@ import {
   RefreshToken,
   RefreshTokenMutation,
   RefreshTokenMutationVariables,
+  UserType,
 } from 'src/gql/graphql';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import GlobalToast from 'src/features/GlobalToast';
@@ -89,7 +90,7 @@ export default function Layout({
               <CheckMailForVerification />
             ) : (
               <div className=" pt-15    h-[calc(100vh-70px)] w-full  md:flex">
-                {user.userType !== 'GUEST' && (
+                {user.userType !== UserType.Student && (
                   <div className="fixed z-50 hidden  lg:relative lg:flex">
                     <Drawer />
                   </div>
