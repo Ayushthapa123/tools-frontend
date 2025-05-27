@@ -12,7 +12,7 @@ const withPWA = createPWAConfig({
 
 const config = {
   images: {
-    domains: ["images.unsplash.com","s3-np1.datahub.com.np"],
+    domains: ["images.unsplash.com","s3-np1.datahub.com.np","cloudinary.com","res.cloudinary.com"],
   },
 };
 

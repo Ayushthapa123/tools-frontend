@@ -8,12 +8,13 @@ import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import Button from 'src/components/Button';
 import ImageUploader from 'src/features/ImageUploader';
 import {
-  CreateRoomImage,
-  CreateRoomImageMutation,
-  CreateRoomImageMutationVariables,
-  UpdateRoomImage,
-  UpdateRoomImageMutation,
-  UpdateRoomImageMutationVariables,
+  CreateGalleryMutation,
+  CreateGallery,
+
+  CreateGalleryMutationVariables,
+  UpdateGalleryMutation,
+  UpdateGalleryMutationVariables,
+  UpdateGallery,
 } from 'src/gql/graphql';
 import { useToastStore } from 'src/store/toastStore';
 
@@ -42,33 +43,26 @@ export const WallpaperEditBox = (props: IcoverEdit) => {
 
   //create new image
 
-  const mutateCreateGallery = useGraphqlClientRequest<CreateRoomImageMutation, CreateRoomImageMutationVariables>(CreateRoomImage.loc?.source.body!)
+  const mutateCreateGallery = useGraphqlClientRequest<CreateGalleryMutation, CreateGalleryMutationVariables>(CreateGallery.loc?.source.body!)
   const { mutateAsync: createGallery } = useMutation({
     mutationFn: mutateCreateGallery,
     mutationKey: [ String(invalidateKey) ]
   });
 
-  //create new image
-  const mutateUpdateGallery = useGraphqlClientRequest<
-    UpdateRoomImageMutation,
-    UpdateRoomImageMutationVariables
-  >(UpdateRoomImage.loc?.source.body!);
 
-  const { mutateAsync: updateGallery } = useMutation({
-    mutationFn: mutateUpdateGallery,
-  });
+
   const handleSubmit = async () => {
        // create
       try {
         const response = await createGallery({
           data: {
-            roomId: Number(roomId),
+            hostelId: Number(hostelId),
             url: imageUrl ?? '',
             caption: ''
           }
         });
 
-        if (response?.createRoomImage?.data?.id) {
+        if (response?.createGallery?.data?.id) {
           await queryClient.invalidateQueries({ queryKey: [ String(invalidateKey) ] });
           await queryClient.invalidateQueries({queryKey:["getGalleryByHostelId"]})
           enqueueSnackbar('Image Created Successfully',{variant:'success'})

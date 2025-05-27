@@ -61,11 +61,11 @@ export default function Gallery() {
   };
 
   const { data: wallpaperDat } = useQuery({
-    queryKey: [ 'getGalleryByHostelId' ],
+    queryKey: ['getGalleryByHostelId'],
     queryFn: fetchWallpapers,
     enabled: !!hostelData?.data?.id,
   });
-  const wallpaperData = wallpaperDat?.data?.filter(img => img?.url !== ("https:/example.com/image.jpg"));
+  const wallpaperData = wallpaperDat?.data?.filter(img => img?.url);
   // remove this line after removing example.com from db
 
   const mainWallpaper = wallpaperData?.filter(img => img?.isSelected)[ 0 ] || wallpaperData?.[0];
@@ -110,7 +110,7 @@ export default function Gallery() {
       });
 
       if (response?.deleteRoomImage?.data?.id) {
-        queryClient.invalidateQueries({ queryKey: [ 'getGalleryByHostelId' ] });
+        queryClient.invalidateQueries({ queryKey: ['getGalleryByHostelId'] });
         enqueueSnackbar("Room Deleted.",{variant:"success"})
       }
     } catch (error) {
@@ -126,7 +126,7 @@ export default function Gallery() {
       });
 
       if (response?.selectGallery?.data?.id) {
-        queryClient.invalidateQueries({ queryKey: [ 'getGalleryByHostelId' ] });
+        queryClient.invalidateQueries({ queryKey: ['getGalleryByHostelId'] });
         enqueueSnackbar("Image selected successfully.",{variant:'success'})
         setShowModal(false);
       }
@@ -190,7 +190,7 @@ export default function Gallery() {
       {
          Number(wallpaperData?.length) < 6 && (
           <div className="bg-white card-body card card-bordered my-4 ">
-            <WallpaperGallery hostelId={Number(hostelData?.data?.id)} galleryType="ROOM" galleryKey="getRoomImages" />
+            <WallpaperGallery hostelId={Number(hostelData?.data?.id)} galleryType="ROOM" galleryKey="getGalleryByHostelId" />
           </div>
         )
       }

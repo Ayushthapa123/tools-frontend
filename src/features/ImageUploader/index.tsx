@@ -51,14 +51,13 @@ const ImageUploader = (props: Iprops) => {
     try {
       const formData = new FormData();
       if (file) {
-        if (file.size > MAX_FILE_SIZE)
+        if (file.size > MAX_FILE_SIZE) {
           enqueueSnackbar(`File must be smaller than ${MAX_FILE_SIZE} MB. `,{variant:"error"})
           return;
+        }
+      } 
+        setLoading(true);
         formData.append('image', file);
-      } else {
-        // alert('no file selected');
-      }
-      setLoading(true);
 
        await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL!}/upload/image`,

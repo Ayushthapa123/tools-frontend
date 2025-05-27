@@ -21,28 +21,13 @@ interface Iprops {
 }
 export const WallpaperGallery = (props: Iprops) => {
   const { galleryKey, galleryType, hostelId } = props;
-  const queryRoomAvailibility = useGraphqlClientRequest<
-    GetGalleryByHostelIdQuery,
-    GetGalleryByHostelIdQueryVariables
-  >(GetGalleryByHostelId.loc?.source?.body!);
 
-  //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
-  const fetchData = async () => {
-    const res = await queryRoomAvailibility({ hostelId: hostelId });
-    return res.getGalleryByHostelId;
-  };
-
-  const { data: wallpaperData } = useQuery({
-    queryKey: [ String(galleryKey) ],
-    queryFn: fetchData,
-  });
 
   const [ showEditBox, setShowEditBox ] = useState(true);
 
   const handleBack = () => {
     setShowEditBox(false);
   };
-  const mainImage = wallpaperData?.data?.filter(img => img?.isSelected)[0];
 
 
   return (
