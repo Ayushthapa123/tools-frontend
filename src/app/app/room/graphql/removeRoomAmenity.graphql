@@ -10,4 +10,4 @@ mutation RemoveRoomAmenity($roomAmenityId: Int!) {
       code
     }
   }
-} 
+}

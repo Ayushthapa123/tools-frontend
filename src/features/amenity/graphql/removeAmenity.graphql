@@ -1,9 +1,9 @@
-mutation RemoveAmenity($id:Int!){
-  removeAmenity(id:$id){
+mutation RemoveAmenity($id: Int!) {
+  removeAmenity(id: $id) {
     data {
-    id
-    amenities
-    hostelId
+      id
+      amenities
+      hostelId
     }
     error {
       message

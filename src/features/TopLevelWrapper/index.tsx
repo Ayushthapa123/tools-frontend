@@ -2,13 +2,13 @@
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 // import { useSession } from 'next-auth/react';
-import { closeSnackbar, SnackbarProvider} from "notistack";
+import { closeSnackbar, SnackbarProvider } from 'notistack';
 import { ReactNode } from 'react';
 import { CheckSession } from '../CheckSession';
 // import SpinLoading from './Loading/SpinLoading';
 
 import { MaterialDesignContent } from 'notistack';
-import styled from "@emotion/styled"
+import styled from '@emotion/styled';
 
 const StyledMaterialDesignContent = styled(MaterialDesignContent)(() => ({
   '&.notistack-MuiContent-success': {
@@ -20,10 +20,9 @@ export const TopLevelWrapper = ({ children }: { children: ReactNode }) => {
   const queryClient = new QueryClient();
   // const { data } = useSession();
   return (
-    <div className=' bg-white'>
+    <div className=" bg-white">
       <QueryClientProvider client={queryClient}>
-        
-      <CheckSession />
+        <CheckSession />
         <SnackbarProvider
           maxSnack={3}
           anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -31,15 +30,11 @@ export const TopLevelWrapper = ({ children }: { children: ReactNode }) => {
           Components={{
             success: StyledMaterialDesignContent,
           }}
-          action={(snackbarId) => (
-            <button onClick={() => closeSnackbar(snackbarId)}>
-              ❌
-            </button>
-          )}
+          action={snackbarId => <button onClick={() => closeSnackbar(snackbarId)}>❌</button>}
         >
-           {children}  
+          {children}
         </SnackbarProvider>
-        </QueryClientProvider>
+      </QueryClientProvider>
     </div>
   );
 };

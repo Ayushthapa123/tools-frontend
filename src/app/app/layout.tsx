@@ -31,7 +31,7 @@ export default function Layout({
   children: React.ReactNode;
 }) {
   const { user } = useUserStore();
-  const router=useRouter() 
+  const router = useRouter();
   // Fetch user profile by userId
   const queryUser = useGraphqlClientRequest<GetUserByIdQuery, GetUserByIdQueryVariables>(
     GetUserById.loc?.source.body!,
@@ -66,7 +66,7 @@ export default function Layout({
           userType: res.refreshTokens.user.userType,
         });
       } else {
-        router.push('/login')
+        router.push('/login');
       }
     });
   }, [getAccessToken, setUser]);
@@ -97,7 +97,8 @@ export default function Layout({
                 )}
 
                 <div
-                  className={`  relative h-[calc(100vh-70px)] w-full overflow-y-scroll   bg-slate-50 p-3 md:p-5`}>
+                  className={`  relative h-[calc(100vh-70px)] w-full overflow-y-scroll   bg-slate-50 p-3 md:p-5`}
+                >
                   {children}
                 </div>
               </div>

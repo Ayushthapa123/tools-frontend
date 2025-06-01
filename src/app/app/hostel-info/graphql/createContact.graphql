@@ -1,11 +1,11 @@
 mutation createContacts($input: CreateContactInput!) {
- createContact(data: $input) {
-   data {
-    id 
-   }
-   error {
-    message
-    code
-   }
- }
+  createContact(data: $input) {
+    data {
+      id
+    }
+    error {
+      message
+      code
+    }
+  }
 }

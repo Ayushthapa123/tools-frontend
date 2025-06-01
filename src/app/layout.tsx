@@ -34,7 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-        <Head>
+      <Head>
         <link rel="apple-touch-icon" sizes="180x180" href="/logo512.png" />
 
         <link rel="icon" href="/logo512.png" />
@@ -46,8 +46,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#ffffff" />
         <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
       </Head>
-      <body className={`font-sora bg-base-body`}>
-
+      <body className={`bg-base-body font-sora`}>
         <TopLevelWrapper>{children}</TopLevelWrapper>
       </body>
     </html>

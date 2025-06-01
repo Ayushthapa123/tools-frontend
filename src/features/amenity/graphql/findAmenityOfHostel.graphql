@@ -1,9 +1,9 @@
-query FindAmenityByHostelId($hostelId:Int!){ 
-  findAmenityByHostelId(hostelId:$hostelId){
+query FindAmenityByHostelId($hostelId: Int!) {
+  findAmenityByHostelId(hostelId: $hostelId) {
     data {
-    id
-    amenities
-    hostelId
+      id
+      amenities
+      hostelId
     }
     error {
       message

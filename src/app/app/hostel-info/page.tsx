@@ -6,9 +6,7 @@ export default function Home() {
     <div className=" w-full">
       <div className="  flex  w-full items-center   justify-center ">
         <div className="  w-full  ">
-          <h2 className=" mb-[1rem]">
-            Hostel Related Informations
-          </h2>
+          <h2 className=" mb-[1rem]">Hostel Related Informations</h2>
           <div className=" w-full">
             <HostelInfo />
             {/* <hr className=" divider" /> */}

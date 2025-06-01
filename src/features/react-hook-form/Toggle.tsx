@@ -1,4 +1,4 @@
-import { Control, Controller } from "react-hook-form";
+import { Control, Controller } from 'react-hook-form';
 
 interface ToggleProps {
   name: string;
@@ -7,7 +7,7 @@ interface ToggleProps {
   className?: string;
 }
 
-export const Toggle = ({ name, control, label, className = "" }: ToggleProps) => {
+export const Toggle = ({ name, control, label, className = '' }: ToggleProps) => {
   return (
     <Controller
       name={name}
@@ -20,7 +20,7 @@ export const Toggle = ({ name, control, label, className = "" }: ToggleProps) =>
               type="checkbox"
               className="toggle toggle-primary"
               checked={value}
-              onChange={(e) => onChange(e.target.checked)}
+              onChange={e => onChange(e.target.checked)}
             />
           </label>
         </div>
@@ -29,4 +29,4 @@ export const Toggle = ({ name, control, label, className = "" }: ToggleProps) =>
   );
 };
 
-export default Toggle; 
+export default Toggle;

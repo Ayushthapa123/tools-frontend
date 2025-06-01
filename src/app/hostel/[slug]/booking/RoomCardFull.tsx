@@ -1,16 +1,16 @@
-import { RoomData, RoomStatus } from "src/gql/graphql";
-import Image from "next/image";
-import { useRoomStore } from "src/store/roomStore";
-import Button from "src/components/Button";
-import Link from "next/link";
-import { IoBed } from "react-icons/io5";
-import { MdMeetingRoom, MdOutlineKingBed } from "react-icons/md";
-import { FaShower } from "react-icons/fa";
-import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
-import { BsCheckCircleFill } from "react-icons/bs";
-import { BiArea } from "react-icons/bi";
-import { useRouter } from "next/navigation";
+import { RoomData, RoomStatus } from 'src/gql/graphql';
+import Image from 'next/image';
+import { useRoomStore } from 'src/store/roomStore';
+import Button from 'src/components/Button';
+import Link from 'next/link';
+import { IoBed } from 'react-icons/io5';
+import { MdMeetingRoom, MdOutlineKingBed } from 'react-icons/md';
+import { FaShower } from 'react-icons/fa';
+import { usePathname } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
+import { BsCheckCircleFill } from 'react-icons/bs';
+import { BiArea } from 'react-icons/bi';
+import { useRouter } from 'next/navigation';
 
 interface RoomCardProps {
   room: RoomData;
@@ -22,48 +22,57 @@ interface RoomCardProps {
   setSelectedRoom: (room: RoomData) => void;
 }
 
-export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate, setShowDetails, setSelectedRoom }: RoomCardProps) => {
+export const RoomCardFull = ({
+  room,
+  isSelected,
+  slug,
+  checkInDate,
+  checkOutDate,
+  setShowDetails,
+  setSelectedRoom,
+}: RoomCardProps) => {
   const { setRoomIds, roomIds } = useRoomStore();
-  const router = useRouter()
+  const router = useRouter();
   const pathName = usePathname();
-  const [ isBookingPage, setIsBookingPage ] = useState(false);
-  console.log("room ",room)
+  const [isBookingPage, setIsBookingPage] = useState(false);
+  console.log('room ', room);
 
   useEffect(() => {
-    setIsBookingPage(pathName.includes("booking"));
-  }, [ pathName ]);
+    setIsBookingPage(pathName.includes('booking'));
+  }, [pathName]);
 
   const handleRoomSelect = (roomId: string) => {
     if (roomIds.includes(roomId)) {
-      setRoomIds(roomIds.filter((id) => id !== roomId));
+      setRoomIds(roomIds.filter(id => id !== roomId));
     } else {
-      setRoomIds([ ...roomIds, roomId ]);
+      setRoomIds([...roomIds, roomId]);
     }
-    
   };
 
   return (
     <div
-      className={`group relative flex flex-col xl:flex-row h-full overflow-hidden rounded-xl bg-base-100 transition-all duration-300 ${isSelected
-          ? 'border border-blue ring-2 ring-blue-200'
+      className={`group relative flex h-full flex-col overflow-hidden rounded-xl bg-base-100 transition-all duration-300 xl:flex-row ${
+        isSelected
+          ? 'ring-blue-200 border border-blue ring-2'
           : 'border border-gray-200 hover:border-gray-300 hover:shadow-lg'
-        }`}
+      }`}
     >
       {/* Status indicator */}
-      <div className={`absolute left-1 top-2 z-10 rounded-full px-3 py-1 text-xs font-semibold text-white ${room.status === RoomStatus.Available
-          ? 'bg-green-500'
-          : 'bg-red-500'
-        }`}>
+      <div
+        className={`absolute left-1 top-2 z-10 rounded-full px-3 py-1 text-xs font-semibold text-white ${
+          room.status === RoomStatus.Available ? 'bg-green-500' : 'bg-red-500'
+        }`}
+      >
         {room.status}
       </div>
 
       {/* Left side - Image */}
-      <div className="relative h-44 md:h-80 lg:h-60 xl:h-auto xl:w-2/3 min-w-[200px] overflow-hidden">
+      <div className="relative h-44 min-w-[200px] overflow-hidden md:h-80 lg:h-60 xl:h-auto xl:w-2/3">
         {room.image && room.image.length > 0 ? (
           <div className="relative h-full bg-red">
             <Image
-              src={room.image[ 0 ].url}
-              alt={room.caption || "Room image"}
+              src={room.image[0].url}
+              alt={room.caption || 'Room image'}
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
@@ -93,7 +102,7 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
       </div>
 
       {/* Right side - Content */}
-      <div className="flex xl:w-3/5 flex-col justify-between p-3 md:p-5">
+      <div className="flex flex-col justify-between p-3 md:p-5 xl:w-3/5">
         <div>
           <h3 className="text-xl font-semibold text-gray-800">{room.caption}</h3>
 
@@ -117,25 +126,26 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
               {Math.floor(Math.random() * (30 - 20 + 1)) + 20}m²
             </div>
           </div>
-            
-          {
-            room.roomAmenity ? (
-                <div className="grid grid-cols-2 gap-2 mt-2">
-                
-                {room.roomAmenity?.amenity.split(",").slice(0,4).map((amm:string) => {
-              return (
-                <div key={amm} className="flex items-center justify-start gap-2">
-                  <BsCheckCircleFill className="mr-2 text-green-500" />
-                  <span className="mr-1">{ amm}</span>
-                  </div>
-              )
-            })}
-            </div>) : (
-                <div className="flex items-center justify-start mt-8">
-                  <span>No room amenities listed.</span>
-                </div> 
-           )
-          }
+
+          {room.roomAmenity ? (
+            <div className="mt-2 grid grid-cols-2 gap-2">
+              {room.roomAmenity?.amenity
+                .split(',')
+                .slice(0, 4)
+                .map((amm: string) => {
+                  return (
+                    <div key={amm} className="flex items-center justify-start gap-2">
+                      <BsCheckCircleFill className="text-green-500 mr-2" />
+                      <span className="mr-1">{amm}</span>
+                    </div>
+                  );
+                })}
+            </div>
+          ) : (
+            <div className="mt-8 flex items-center justify-start">
+              <span>No room amenities listed.</span>
+            </div>
+          )}
 
           {/* <div className="mt-4 grid grid-cols-2 gap-y-2 text-sm text-gray-600">
             <div className="flex items-center">
@@ -173,61 +183,69 @@ export const RoomCardFull = ({ room, isSelected, slug, checkInDate, checkOutDate
 
           {/* View Full Room Details */}
           <div className="w-fit">
-            <Button label="View Details" className="bg-primary/90 hover:bg-primary w-fit" onClick={() => { setShowDetails(true); setSelectedRoom(room); }}/>
+            <Button
+              label="View Details"
+              className="w-fit bg-primary/90 hover:bg-primary"
+              onClick={() => {
+                setShowDetails(true);
+                setSelectedRoom(room);
+              }}
+            />
           </div>
 
           {/* Action Button */}
           {isSelected && (
             <div className="flex items-center">
-              <div onClick={
-                (e) => {
+              <div
+                onClick={e => {
                   handleRoomSelect(room.id);
-                }
-              }>
-              <Button
-                className="bg-primary/90 hover:bg-primary"
-                label="Selected"
-              />
+                }}
+              >
+                <Button className="bg-primary/90 hover:bg-primary" label="Selected" />
               </div>
             </div>
-          )}{(
-            isBookingPage ? (
-              !isSelected &&
-              <Link
-              href={`/hostel/${slug}/booking?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}
-                  onClick={(e) => {
-                e.stopPropagation();
-                  handleRoomSelect(room.id);
-                  router.refresh();
-              }}>
-                <Button
-                  className="bg-primary/90 hover:bg-primary"
-                  label="Select Room"
-                />
-              </Link>
-            ) : ( !isSelected && 
-              <Link
-                  href={`/hostel/${slug}/booking?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleRoomSelect(room.id)
-                   }}
-              >
-                <Button
-                  className="bg-primary/90 hover:bg-primary"
-                  label="Book Now"
-                />
-              </Link>
-            )
           )}
+          {isBookingPage
+            ? !isSelected && (
+                <Link
+                  href={`/hostel/${slug}/booking?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}
+                  onClick={e => {
+                    e.stopPropagation();
+                    handleRoomSelect(room.id);
+                    router.refresh();
+                  }}
+                >
+                  <Button className="bg-primary/90 hover:bg-primary" label="Select Room" />
+                </Link>
+              )
+            : !isSelected && (
+                <Link
+                  href={`/hostel/${slug}/booking?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}
+                  onClick={e => {
+                    e.stopPropagation();
+                    handleRoomSelect(room.id);
+                  }}
+                >
+                  <Button className="bg-primary/90 hover:bg-primary" label="Book Now" />
+                </Link>
+              )}
         </div>
       </div>
 
       {/* Selected overlay */}
       {isSelected && (
         <div className="absolute right-4 top-4 z-10 rounded-full bg-success p-1 text-white">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+              clipRule="evenodd"
+            />
           </svg>
         </div>
       )}

@@ -145,7 +145,7 @@ export const Main = (props: Iprops) => {
   }
 
   const uploadImage = async (binaryString: string) => {
-    alert('nooo')
+    alert('nooo');
     try {
       const response = await fetch('http://localhost:3003/upload/image', {
         method: 'POST',
@@ -192,13 +192,13 @@ export const Main = (props: Iprops) => {
   const [message, setMessage] = useState('');
 
   return (
-    <div className="flex flex-col w-full gap-5  lg:flex-row">
+    <div className="flex w-full flex-col gap-5  lg:flex-row">
       {showAlert && <Toast role="alert" message={message} />}
       <div className="flex h-[calc(100vh-70px)] w-full flex-col  shadow-lg lg:w-[350px]">
         <div className="p-5 ">
           <h2 className="text-lg font-bold  text-primary">Upload a picture of your home</h2>
         </div>
-        <div className="flex flex-col h-full p-5 ">
+        <div className="flex h-full flex-col p-5 ">
           <div
             className={`relative flex h-[200px] w-full flex-col items-center justify-center rounded-lg border-2 border-dashed ${
               isDragging ? 'border-blue-500' : 'border-gray-300'
@@ -206,16 +206,18 @@ export const Main = (props: Iprops) => {
             onDragEnter={handleDragEnter}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
-            onDrop={handleDrop}>
+            onDrop={handleDrop}
+          >
             <input type="file" className="hidden" onChange={handleChange} />
             {imageUrl ? (
-              <div className="relative w-full h-full ">
+              <div className="relative h-full w-full ">
                 <div
                   className=" absolute right-0 top-0 z-10 cursor-pointer text-[25px]"
-                  onClick={() => removeImage()}>
+                  onClick={() => removeImage()}
+                >
                   <MdOutlineCancelPresentation />
                 </div>
-                <Image src={imageUrl} alt="Uploaded" className="w-auto h-24" fill />
+                <Image src={imageUrl} alt="Uploaded" className="h-24 w-auto" fill />
               </div>
             ) : (
               <>
@@ -223,7 +225,8 @@ export const Main = (props: Iprops) => {
                 <p className="mt-2 text-gray-400">or</p>
                 <label
                   htmlFor="fileInput"
-                  className="px-4 py-2 mt-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-600">
+                  className="bg-blue-500 hover:bg-blue-600 mt-2 rounded px-4 py-2 font-bold text-white"
+                >
                   Browse Pictures
                 </label>
                 <input id="fileInput" type="file" className="hidden" onChange={handleChange} />
@@ -282,18 +285,18 @@ export const Main = (props: Iprops) => {
         </div>
         {resultImage ? (
           <div className=" relative h-[300px]  w-full rounded-lg border-[5px] border-primary bg-slate-200 md:h-[80vh]">
-            <div className="absolute z-10 flex flex-col items-center justify-center text-white align-middle rounded-full shadow  left-3 top-3 h-7 w-7 bg-primary">
+            <div className="absolute left-3 top-3 z-10 flex h-7 w-7 flex-col items-center justify-center  rounded-full bg-primary align-middle text-white shadow">
               1
             </div>
             <div
             // onClick={() => uploadImage()}
             >
-              <div className="absolute z-10 flex flex-col items-center justify-center p-3 text-3xl text-white align-middle rounded-full shadow  right-3 top-3 bg-primary">
+              <div className="absolute right-3 top-3 z-10 flex flex-col items-center justify-center rounded-full bg-primary p-3 align-middle  text-3xl text-white shadow">
                 <IoMdDownload />
               </div>{' '}
             </div>
 
-            <Image src={resultImage} alt="result image" className="w-full h-full " fill />
+            <Image src={resultImage} alt="result image" className="h-full w-full " fill />
           </div>
         ) : (
           <div className="w-full ">
@@ -303,10 +306,10 @@ export const Main = (props: Iprops) => {
               </div>
             ) : (
               <div className=" relative h-[300px]  w-full rounded-lg border-[5px] border-primary bg-slate-200 md:h-[80vh]">
-                <div className="absolute z-10 flex flex-col items-center justify-center text-white align-middle rounded-full shadow  left-3 top-3 h-7 w-7 bg-primary">
+                <div className="absolute left-3 top-3 z-10 flex h-7 w-7 flex-col items-center justify-center  rounded-full bg-primary align-middle text-white shadow">
                   1
                 </div>
-                <div className="absolute z-10 flex flex-col items-center justify-center px-3 text-white align-middle rounded-full shadow  right-3 top-3 bg-primary">
+                <div className="absolute right-3 top-3 z-10 flex flex-col items-center justify-center rounded-full bg-primary px-3  align-middle text-white shadow">
                   Sample{loading}
                 </div>
                 <Image src={'/images/default-image.png'} alt="result image" fill />

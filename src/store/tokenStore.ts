@@ -13,10 +13,10 @@ export const useOrgIDStore = create<Store & Actions>()(
   persist(
     set => ({
       accessToken: '',
-      setAccessToken: (token: string) => set({ accessToken:token }),
+      setAccessToken: (token: string) => set({ accessToken: token }),
     }),
     {
       name: 'id-store',
-    }
+    },
   ),
 );

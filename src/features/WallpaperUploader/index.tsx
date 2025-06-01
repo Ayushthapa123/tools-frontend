@@ -34,7 +34,6 @@ const ImageUploader = (props: Iprops) => {
         {
           headers: {
             'Content-Type': 'multipart/form-data',
-            
           },
         },
       );
@@ -77,7 +76,7 @@ const ImageUploader = (props: Iprops) => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-8">
+    <div className="mx-auto mt-8 max-w-md">
       <div
         className={`relative flex h-[200px] w-full flex-col items-center justify-center rounded-lg border-[3px] border-dashed ${
           isDragging ? 'border-blue-500' : 'border-gray-300'
@@ -85,17 +84,19 @@ const ImageUploader = (props: Iprops) => {
         onDragEnter={handleDragEnter}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
-        onDrop={handleDrop}>
+        onDrop={handleDrop}
+      >
         <input type="file" className="hidden" onChange={handleFileChange} />
         {imageUrl ? (
-          <div className="relative w-full h-full ">
+          <div className="relative h-full w-full ">
             <div
               className=" absolute right-0 top-0 z-10 cursor-pointer text-[25px]"
-              onClick={() => removeImage()}>
+              onClick={() => removeImage()}
+            >
               <MdOutlineCancelPresentation />
             </div>
 
-            <Image src={imageUrl} alt="Uploaded" className="w-auto h-24" fill />
+            <Image src={imageUrl} alt="Uploaded" className="h-24 w-auto" fill />
           </div>
         ) : (
           <>
@@ -103,11 +104,12 @@ const ImageUploader = (props: Iprops) => {
             <p className="mt-2 text-gray-400">or</p>
             <label
               htmlFor="fileInput"
-              className="px-4 py-2 mt-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-600">
+              className="bg-blue-500 hover:bg-blue-600 mt-2 rounded px-4 py-2 font-bold text-white"
+            >
               Browse Pictures
             </label>
             {loading && (
-              <div className="w-10 h-10">
+              <div className="h-10 w-10">
                 <LoadingSpinner color="primary" size="lg" />
               </div>
             )}

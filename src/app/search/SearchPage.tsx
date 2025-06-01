@@ -40,26 +40,31 @@ export function SearchPage() {
   };
   return (
     <div className=" ">
-      <div className="mx-auto mt-4 h-full max-w-[1800px] pt-3 min-h-10">
-        <div className='lg:min-w-[400px] mx-auto flex items-center justify-center'>
+      <div className="mx-auto mt-4 h-full min-h-10 max-w-[1800px] pt-3">
+        <div className="mx-auto flex items-center justify-center lg:min-w-[400px]">
           <Suspense>
-            <MapProvider><SearchBox /></MapProvider>
+            <MapProvider>
+              <SearchBox />
+            </MapProvider>
           </Suspense>
         </div>
 
         <div className="flex border-b p-10 py-5 ">
-          <div className="flex-grow flex items-center justify-between">
+          <div className="flex flex-grow items-center justify-between">
             <h2 className="flex text-4xl capitalize text-primary">
               <span>
                 <MdApartment />
               </span>
-              {subCity ? `${subCity}` : ''} {city ? city + ",":""} {country}
+              {subCity ? `${subCity}` : ''} {city ? city + ',' : ''} {country}
             </h2>
-            <p className=""> <span className='text-secondary/80'>{count} Hostels Found!</span></p>
+            <p className="">
+              {' '}
+              <span className="text-secondary/80">{count} Hostels Found!</span>
+            </p>
           </div>
         </div>
         <div className=" relative flex h-auto  w-full overflow-y-hidden">
-          <div className="relative grid h-auto flex-grow gap-3 p-5 w-[90vw] mx-auto">
+          <div className="relative mx-auto grid h-auto w-[90vw] flex-grow gap-3 p-5">
             <SearchResults
               city={city}
               subCity={subCity}

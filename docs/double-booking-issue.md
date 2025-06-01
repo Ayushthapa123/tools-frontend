@@ -1,8 +1,9 @@
-### How do we resolve? 
-1. Check the room availibility on clicking on "Next" at the end of first step: pass params:  1.roomId,startDate,endDate. 
+### How do we resolve?
 
-2. If found room unavailable or on Idle. Check idle with the help of Idle createdAt time. -> Check this createdAt timing in backend and pass message according to this. 
+1. Check the room availibility on clicking on "Next" at the end of first step: pass params: 1.roomId,startDate,endDate.
 
-3. Before Opening the checkout url check again.  or on calling for checkout url on response send message as room has been taken already. you are late. 
+2. If found room unavailable or on Idle. Check idle with the help of Idle createdAt time. -> Check this createdAt timing in backend and pass message according to this.
 
-4. Also don't forgot to put checkout session expire date as 3 minute in stripe. 
+3. Before Opening the checkout url check again. or on calling for checkout url on response send message as room has been taken already. you are late.
+
+4. Also don't forgot to put checkout session expire date as 3 minute in stripe.

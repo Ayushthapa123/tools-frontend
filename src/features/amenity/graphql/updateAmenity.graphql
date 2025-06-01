@@ -1,9 +1,9 @@
-mutation UpdateAmenity($updateAmenityInput:UpdateAmenityInput!){
-  updateAmenity(updateAmenityInput:$updateAmenityInput){
+mutation UpdateAmenity($updateAmenityInput: UpdateAmenityInput!) {
+  updateAmenity(updateAmenityInput: $updateAmenityInput) {
     data {
-    id
-    amenities
-    hostelId
+      id
+      amenities
+      hostelId
     }
     error {
       message

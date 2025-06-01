@@ -8,7 +8,8 @@
     "build": "next build",
     "buildstart": "next start",
     "lint": "next lint",
-    "gqlgen": "graphql-codegen --config codegen.ts"
+    "gqlgen": "graphql-codegen --config codegen.ts",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@emotion/styled": "^11.14.0",

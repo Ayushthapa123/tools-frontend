@@ -1,5 +1,5 @@
-query FindRoomsByRoomIds($roomIds:[Int!]!){
-  findRoomsByRoomIds(roomIds:$roomIds){
+query FindRoomsByRoomIds($roomIds: [Int!]!) {
+  findRoomsByRoomIds(roomIds: $roomIds) {
     roomNumbers
     name
   }

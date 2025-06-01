@@ -3,6 +3,7 @@
 A modern web application for managing hostel bookings and accommodations built with Next.js/Nest.js and TypeScript. This platform helps connect hosts with guests, manage bookings, and provide a seamless hostel experience.
 
 ## 📖 Table of Contents
+
 - [Features](#-features)
 - [Tech Stack](#️-tech-stack)
 - [Project Structure](#-project-structure)
@@ -16,6 +17,7 @@ A modern web application for managing hostel bookings and accommodations built w
 ## 🚀 Features
 
 ### For Hosts
+
 - Create and manage property listings
 - Interactive calendar for managing availability
 - Real-time booking management
@@ -23,6 +25,7 @@ A modern web application for managing hostel bookings and accommodations built w
 - Analytics and reporting dashboard
 
 ### For Guests
+
 - Search and filter hostel options
 - Real-time availability checking
 - Secure booking and payment system
@@ -30,6 +33,7 @@ A modern web application for managing hostel bookings and accommodations built w
 - Review and rating system
 
 ### Technical Features
+
 - Modern and responsive UI using Tailwind CSS and Material Tailwind
 - Interactive calendar management with FullCalendar integration
 - Google Maps integration for location services
@@ -42,21 +46,25 @@ A modern web application for managing hostel bookings and accommodations built w
 ## 🛠️ Tech Stack
 
 ### Core
+
 - **Framework:** Next.js 14 (React framework for production-grade applications)
 - **Language:** TypeScript (Typed JavaScript for better development experience)
 
 ### Styling
+
 - **Tailwind CSS:** Utility-first CSS framework
 - **Material Tailwind:** Material Design components
 - **DaisyUI:** Component library for Tailwind CSS
 
 ### State Management & Data Fetching
+
 - **Zustand:** Lightweight state management solution
 - **GraphQL:** API query language
 - **React Query:** Powerful data synchronization
 - **React Hook Form:** Performant form management
 
 ### UI Components & Utilities
+
 - **FullCalendar:** Feature-rich calendar component
 - **@react-google-maps/api:** Google Maps integration
 - **React Icons:** Icon library
@@ -95,6 +103,7 @@ src/
 ### Prerequisites
 
 1. **Node.js Installation**
+
    - Download and install Node.js from [nodejs.org](https://nodejs.org/)
    - Recommended version: 18.x or later
    - Verify installation:
@@ -103,6 +112,7 @@ src/
      ```
 
 2. **Yarn Package Manager**
+
    - Install Yarn globally:
      ```bash
      npm install -g yarn
@@ -123,6 +133,7 @@ src/
 ### Environment Setup
 
 1. Create a `.env.local` file in the root directory:
+
 ```env
 NEXT_PUBLIC_API_URL=your_api_url
 NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_google_maps_key
@@ -132,17 +143,20 @@ NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_google_maps_key
 ### Installation Steps
 
 1. Clone the repository:
+
 ```bash
 git clone <repository-url>
 cd hostel-app
 ```
 
 2. Install dependencies:
+
 ```bash
 yarn install
 ```
 
 3. Start the development server:
+
 ```bash
 yarn dev
 ```
@@ -152,6 +166,7 @@ yarn dev
 ## 💻 Development Guide
 
 ### Code Style and Standards
+
 - Use TypeScript for all new files
 - Follow the existing file/folder structure
 - Use functional components with hooks
@@ -160,19 +175,24 @@ yarn dev
 - Use proper TypeScript types/interfaces
 
 ### Working with GraphQL
+
 1. Define your query/mutation in `src/gql`
 2. Generate types:
+
 ```bash
 yarn gqlgen
 ```
+
 3. Use generated hooks in your components
 
 ### State Management
+
 - Use Zustand for global state
 - Use React Query for server state
 - Use local state (useState) for component-specific state
 
 ### Component Development
+
 1. Create new components in appropriate directories
 2. Use TypeScript interfaces for props
 3. Implement proper error boundaries
@@ -181,11 +201,13 @@ yarn gqlgen
 ## 🚀 Deployment
 
 ### Build for Production
+
 ```bash
 yarn build
 ```
 
 ### Start Production Server
+
 ```bash
 yarn start
 ```
@@ -204,6 +226,7 @@ yarn start
 ### Common Issues
 
 1. **Installation Problems**
+
    ```bash
    # Clear yarn cache
    yarn cache clean
@@ -214,6 +237,7 @@ yarn start
    ```
 
 2. **Build Errors**
+
    - Check Node.js version
    - Verify environment variables
    - Clear `.next` directory
@@ -226,10 +250,12 @@ yarn start
 ## ❓ Frequently Asked Questions
 
 1. **How do I add a new page?**
+
    - Create a new directory/file in `src/app`
    - Use the page naming convention
 
 2. **How do I style components?**
+
    - Use Tailwind CSS utilities
    - Create custom styles in `globals.css`
 
@@ -252,6 +278,7 @@ yarn start
 ## 📞 Support
 
 For more information or support:
+
 - GitHub Issues: [Create an issue](<repository-url>/issues)
 - Email: [Your Support Email]
 - Documentation: [Link to documentation]

@@ -34,19 +34,22 @@ const LocationTabs = () => {
     //   id: 3,
     //   comp: <div>Completed Bookings</div>,
     // },
-  
   ];
   const [activeTab, setActiveTab] = useState(1);
 
   return (
     <div className="w-full py-5 ">
-      <div role="tablist" className="tabs-boxed bg-transparent tabs sticky top-0 z-[99] my-3 flex flex-wrap py-2">
+      <div
+        role="tablist"
+        className="tabs-boxed tabs sticky top-0 z-[99] my-3 flex flex-wrap bg-transparent py-2"
+      >
         {tabs.map(tab => (
           <div key={tab.id} className="flex flex-wrap ">
             <a
               role="tab"
               className={`  tab  text-base font-medium ${tab.id == activeTab ? 'tab-active text-white' : ' text-primary'}`}
-              onClick={() => setActiveTab(tab.id)}>
+              onClick={() => setActiveTab(tab.id)}
+            >
               {tab.title}
             </a>
           </div>

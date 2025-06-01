@@ -42,9 +42,8 @@ type signupData = {
   phoneNumber?: string;
 };
 function SignUp() {
-  const [ loading, setLoading ] = useState(false);
-  const [ error, setError ] = useState('');
-
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const router = useRouter();
 
@@ -82,7 +81,7 @@ function SignUp() {
   };
 
   const { data: signupUrl } = useQuery({
-    queryKey: [ 'getGoogleAuthUrl' ],
+    queryKey: ['getGoogleAuthUrl'],
     queryFn: fetchData,
   });
 
@@ -162,14 +161,14 @@ function SignUp() {
                   <div className="">
                     <TextInput
                       name="fullName"
-                      type="text" 
+                      type="text"
                       placeholder="Full Name"
                       control={control}
                       label="Full Name"
                       required
                       helpertext={errors.email?.type === 'required' ? 'Name Is Required' : ''}
                       error={!!errors.email}
-                      customType='name'
+                      customType="name"
                       tabIndex={1}
                       autoFocus
                     />
@@ -178,7 +177,7 @@ function SignUp() {
                     <TextInput
                       name="email"
                       type="email"
-                      customType='email'
+                      customType="email"
                       placeholder="example@email.co.uk"
                       control={control}
                       label="Email Address"
@@ -195,7 +194,9 @@ function SignUp() {
                       placeholder="Enter Phone Number"
                       control={control}
                       label="Phone Number"
-                      helpertext={errors.phoneNumber?.type === 'required' ? 'Phone Number Is Required' : ''}
+                      helpertext={
+                        errors.phoneNumber?.type === 'required' ? 'Phone Number Is Required' : ''
+                      }
                       error={!!errors.phoneNumber}
                     />
                   </div>
@@ -239,22 +240,24 @@ function SignUp() {
 
                 <div className="mb-5 flex justify-center">
                   <Button
-                    label={"Sign up"}
+                    label={'Sign up'}
                     disabled={loading || !isValid}
-                    className={`${loading || !isValid ? 'cursor-not-allowed opacity-30' : 'opacity-100'
-                      } bg-primary w-full rounded-md px-4 py-2  font-bold   `}/>
+                    className={`${
+                      loading || !isValid ? 'cursor-not-allowed opacity-30' : 'opacity-100'
+                    } w-full rounded-md bg-primary px-4 py-2  font-bold   `}
+                  />
                 </div>
               </form>
 
               <p className="text-body-color text-base">
                 <span className="pr-0.5">Already a member?</span>
-                <Link href="/login" className="text-blue ml-1 hover:underline">
+                <Link href="/login" className="ml-1 text-blue hover:underline">
                   Log In
                 </Link>
               </p>
               <p className="text-body-color text-base">
                 <span className="pr-0.5">Signup As a Hostel Owner?</span>
-                <Link href="/hostel-signup" className="text-blue ml-1 hover:underline">
+                <Link href="/hostel-signup" className="ml-1 text-blue hover:underline">
                   Signup
                 </Link>
               </p>
@@ -264,7 +267,8 @@ function SignUp() {
 
                 <button
                   onClick={() => openSignupUrl()}
-                  className="bg-primary flex w-full items-center justify-center rounded-md px-4 py-2 font-bold text-white">
+                  className="flex w-full items-center justify-center rounded-md bg-primary px-4 py-2 font-bold text-white"
+                >
                   <FcGoogle className="mr-2 text-3xl" />
                   Continue With Google
                 </button>
@@ -277,7 +281,8 @@ function SignUp() {
                     height="40"
                     viewBox="0 0 40 40"
                     fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <circle
                       cx="1.39737"
                       cy="38.6026"
@@ -398,7 +403,8 @@ function SignUp() {
                     height="40"
                     viewBox="0 0 29 40"
                     fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <circle
                       cx="2.288"
                       cy="25.9912"

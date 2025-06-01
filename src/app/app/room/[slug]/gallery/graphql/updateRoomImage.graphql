@@ -7,10 +7,10 @@ mutation UpdateRoomImage($roomImageId: Int!, $data: UpdateRoomImageInput!) {
       caption
       createdAt
       updatedAt
-  }
-  error {
-    message
-    code
+    }
+    error {
+      message
+      code
     }
   }
 }

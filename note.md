@@ -1,29 +1,39 @@
-// mutation syntax 
+// query syntax
 
+const { data: hostelDataFull, isLoading} = useGraphQLQuery<GetAddressByHostelIdQuery, GetAddressByHostelIdQueryVariables>({
+queryKey: ['getAddress', hostelId],
+query: GetAddressByHostelId.loc!.source.body,
+variables: { hostelId },
+enabled: !!hostelId
+});
 
-//query syntax 
+// mutation syntax
 
-  const querySignupUrl = useGraphqlClientRequest<
-    GetGoogleOauthUrlQuery,
-    GetGoogleOauthUrlQueryVariables
-  >(GetGoogleOauthUrl.loc?.source?.body!);
+//query syntax
 
-  //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
-  const fetchData = async () => {
-    const res = await querySignupUrl();
-    return res.getGoogleAuthUrl.url;
-  };
+const querySignupUrl = useGraphqlClientRequest<
+GetGoogleOauthUrlQuery,
+GetGoogleOauthUrlQueryVariables
 
-  const { data: signupUrl } = useQuery({
-    queryKey: ['getGoogleAuthUrl'],
-    queryFn: fetchData,
-  });
+> (GetGoogleOauthUrl.loc?.source?.body!);
+
+//initially user is unauthenticated so there will be undefined data/ you should authenticate in \_app
+const fetchData = async () => {
+const res = await querySignupUrl();
+return res.getGoogleAuthUrl.url;
+};
+
+const { data: signupUrl } = useQuery({
+queryKey: ['getGoogleAuthUrl'],
+queryFn: fetchData,
+});
 skdjjsdkj
 
-  // mutation syntax 
+// mutation syntax
 
     const mutateLoginRequest = useGraphqlClientRequest<LogInUserMutation, LogInUserMutationVariables>(
     LogInUser.loc?.source.body!,
-  );
 
-  const { mutateAsync } = useMutation({ mutationFn: mutateLoginRequest });
+);
+
+const { mutateAsync } = useMutation({ mutationFn: mutateLoginRequest });

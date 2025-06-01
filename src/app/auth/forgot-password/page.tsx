@@ -9,7 +9,12 @@ import Button from 'src/components/Button';
 import { FullLogo } from 'src/features/Logo/FullLogoWithText';
 import { Logo } from 'src/features/Logo';
 import TextInput from 'src/features/react-hook-form/TextField';
-import { LogInUser, LogInUserMutation, LogInUserMutationVariables, ResetPasswordMutationVariables } from 'src/gql/graphql';
+import {
+  LogInUser,
+  LogInUserMutation,
+  LogInUserMutationVariables,
+  ResetPasswordMutationVariables,
+} from 'src/gql/graphql';
 import { ResetPassword } from 'src/gql/graphql';
 import { ResetPasswordMutation } from 'src/gql/graphql';
 
@@ -27,10 +32,10 @@ function ForgotPasswordByTokenInner() {
   const token = searchParams.get('token');
 
   const mutateLoginRequest = useGraphqlClientRequest<LogInUserMutation, LogInUserMutationVariables>(
-      LogInUser.loc?.source.body!,
-    );
-  
-    const { mutateAsync:LoginUser } = useMutation({ mutationFn: mutateLoginRequest });
+    LogInUser.loc?.source.body!,
+  );
+
+  const { mutateAsync: LoginUser } = useMutation({ mutationFn: mutateLoginRequest });
 
   const {
     handleSubmit,
@@ -48,9 +53,10 @@ function ForgotPasswordByTokenInner() {
   watch('password');
   watch('confirmPassword');
 
-  const mutateResetPassword = useGraphqlClientRequest<ResetPasswordMutation, ResetPasswordMutationVariables>(
-    ResetPassword.loc?.source.body!
-  );
+  const mutateResetPassword = useGraphqlClientRequest<
+    ResetPasswordMutation,
+    ResetPasswordMutationVariables
+  >(ResetPassword.loc?.source.body!);
 
   const { mutateAsync: resetPassword } = useMutation({
     mutationFn: mutateResetPassword,
@@ -89,9 +95,11 @@ function ForgotPasswordByTokenInner() {
 
       if (response?.resetPassword?.id) {
         setSuccess(true);
-        const login = await LoginUser({ input: { email: response?.resetPassword?.email, password: data?.password } });
+        const login = await LoginUser({
+          input: { email: response?.resetPassword?.email, password: data?.password },
+        });
         if (login?.loginUser?.id) {
-          router.push("/")
+          router.push('/');
         }
       } else {
         setError('Failed to reset password');
@@ -108,12 +116,14 @@ function ForgotPasswordByTokenInner() {
       <section className="flex min-h-screen flex-col justify-center bg-gray-100 p-5 align-middle lg:py-[3rem]">
         <div className="container mx-auto">
           <div className="relative mx-auto max-w-[450px] rounded-lg bg-white px-[1rem] py-[1.5rem] text-center sm:px-12 md:px-[2.5rem]">
-            <div className="text-error">Invalid reset token. Please request a new password reset.</div>
+            <div className="text-error">
+              Invalid reset token. Please request a new password reset.
+            </div>
             <div className="mt-4">
               <Button
                 label="Back to Login"
                 onClick={() => router.push('/login')}
-                className="bg-primary w-full"
+                className="w-full bg-primary"
               />
             </div>
           </div>
@@ -144,7 +154,8 @@ function ForgotPasswordByTokenInner() {
                         className="h-12 w-12 text-success"
                         fill="none"
                         viewBox="0 0 24 24"
-                        stroke="currentColor">
+                        stroke="currentColor"
+                      >
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -154,24 +165,25 @@ function ForgotPasswordByTokenInner() {
                       </svg>
                     </div>
                   </div>
-                  <h2 className="text-2xl font-semibold text-primary mb-4">Password Reset Successful</h2>
-                  <p className="text-gray-600 mb-6">
-                    Your password has been successfully reset. You can now log in with your new password.
+                  <h2 className="mb-4 text-2xl font-semibold text-primary">
+                    Password Reset Successful
+                  </h2>
+                  <p className="mb-6 text-gray-600">
+                    Your password has been successfully reset. You can now log in with your new
+                    password.
                   </p>
                   <Button
                     label="Log In"
                     onClick={() => router.push('/login')}
-                    className="bg-primary w-full"
+                    className="w-full bg-primary"
                   />
                 </div>
               ) : (
                 <>
-                  <h2 className="text-2xl font-semibold text-primary mb-6">Reset Password</h2>
-                  <p className="text-gray-400 mb-8 w-full">
-                    Please enter your new password below.
-                  </p>
+                  <h2 className="mb-6 text-2xl font-semibold text-primary">Reset Password</h2>
+                  <p className="mb-8 w-full text-gray-400">Please enter your new password below.</p>
 
-                  {error && <p className="text-error mb-4">{error}</p>}
+                  {error && <p className="mb-4 text-error">{error}</p>}
 
                   <form className="bg-white text-left" onSubmit={handleSubmit(onSubmit)}>
                     <div className="w-full">
@@ -183,7 +195,9 @@ function ForgotPasswordByTokenInner() {
                           control={control}
                           label="New Password"
                           required
-                          helpertext={errors.password?.type === 'required' ? 'Password Is Required' : ''}
+                          helpertext={
+                            errors.password?.type === 'required' ? 'Password Is Required' : ''
+                          }
                           error={!!errors.password}
                         />
                         {getValues('password') && getValues('password').length < 8 && (
@@ -211,9 +225,7 @@ function ForgotPasswordByTokenInner() {
                         {getValues('password') &&
                           getValues('confirmPassword') &&
                           getValues('password') !== getValues('confirmPassword') && (
-                            <span className="text-[11px] text-error">
-                              Passwords do not match
-                            </span>
+                            <span className="text-[11px] text-error">Passwords do not match</span>
                           )}
                       </div>
 
@@ -223,7 +235,7 @@ function ForgotPasswordByTokenInner() {
                           disabled={loading || !isValid}
                           className={`${
                             loading || !isValid ? 'cursor-not-allowed opacity-30' : 'opacity-100'
-                          } bg-primary w-full rounded-md px-4 py-2 font-bold`}
+                          } w-full rounded-md bg-primary px-4 py-2 font-bold`}
                         />
                       </div>
                     </div>

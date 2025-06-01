@@ -48,13 +48,15 @@ export const SearchSuggestions = (props: Iprops) => {
                 handleSubCity(q.data?.[0]?.subCity ?? '');
                 handleQuery(q.data?.[0]?.subCity ? q.data?.[0]?.subCity : q.data?.[0]?.city ?? '');
                 handleClose();
-              }}>
+              }}
+            >
               <div className="flex flex-col justify-center">
                 <BiBuilding className="text-lg" />
               </div>
               <div className="flex flex-col">
                 <p className="m-0 p-0 text-primary">
-                  <span>{q.data?.[0]?.subCity ? `${q.data?.[0]?.subCity},` : ''}</span> <span>{q.data?.[0]?.city}</span>
+                  <span>{q.data?.[0]?.subCity ? `${q.data?.[0]?.subCity},` : ''}</span>{' '}
+                  <span>{q.data?.[0]?.city}</span>
                 </p>
                 <p className="text-sm text-gray-500">{q.data?.[0]?.country}</p>
               </div>

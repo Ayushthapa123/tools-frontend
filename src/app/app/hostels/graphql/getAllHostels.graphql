@@ -1,66 +1,64 @@
 query GetAllHostels($pageSize: Int, $pageNumber: Int) {
   getAllHostels(pageSize: $pageSize, pageNumber: $pageNumber) {
     data {
-    id
-    name
-    description
-    slug
-    verifiedByCommunityOwner
-    verifiedBySuperAdmin
-    ownerId
-    createdAt
-    updatedAt
-    address {
       id
-      country
-      city
-      subCity
-      street
-      latitude
-      longitude
-    }
-    contact {
-      id
-      phone
-      altPhone
-      email
-    }
-    rooms {
-      id
-      status
-      capacity
-      caption
+      name
       description
-      roomNumber
-      maxOccupancy
-      attachBathroom
-      price {
+      slug
+      verifiedByCommunityOwner
+      verifiedBySuperAdmin
+      ownerId
+      createdAt
+      updatedAt
+      address {
         id
-        baseAmountPerDay
-        baseAmountPerMonth
-        currency
-        discountAmount
-        discountType
-        isDynamicPricing
-        isDiscountActive
+        country
+        city
+        subCity
+        street
+        latitude
+        longitude
       }
-      image {
+      contact {
+        id
+        phone
+        altPhone
+        email
+      }
+      rooms {
+        id
+        status
+        capacity
+        caption
+        description
+        roomNumber
+        maxOccupancy
+        attachBathroom
+        price {
+          id
+          baseAmountPerDay
+          baseAmountPerMonth
+          currency
+          discountAmount
+          discountType
+          isDynamicPricing
+          isDiscountActive
+        }
+        image {
+          id
+          caption
+          url
+        }
+      }
+      gallery {
         id
         caption
         url
       }
     }
-    gallery {
-      id
-      caption
-      url
-    }
-    }
     error {
       message
       code
     }
-
- 
   }
 }

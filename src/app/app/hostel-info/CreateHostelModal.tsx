@@ -3,6 +3,7 @@
 
 import { useMutation } from '@tanstack/react-query';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { enqueueSnackbar } from 'notistack';
 
 import { useEffect, useRef, useState } from 'react';
@@ -14,7 +15,13 @@ import RichTextEditor from 'src/components/RichTextEditor';
 import ReactSelect from 'src/features/react-hook-form/ReactSelect';
 import TextArea from 'src/features/react-hook-form/TextArea';
 import TextInput from 'src/features/react-hook-form/TextField';
-import { CreateHostel, CreateHostelMutation, CreateHostelMutationVariables, HostelGenderType, HostelType } from 'src/gql/graphql';
+import {
+  CreateHostel,
+  CreateHostelMutation,
+  CreateHostelMutationVariables,
+  HostelGenderType,
+  HostelType,
+} from 'src/gql/graphql';
 import { useToastStore } from 'src/store/toastStore';
 
 interface IProps {
@@ -41,16 +48,15 @@ export const CreateHostelModal = () => {
   watch('name');
   const descriptionRef = useRef('');
 
-
   useEffect(() => {
     // Trigger the modal to open when the component mounts
     document.getElementById('my_modal_4')?.showModal();
   }, []); // This useEffect will run only once on component mount
 
-  const [hostelType, setHostelType] = useState<'STAY' | 'TRAVEL' | 'BOTH' | "PG">('STAY');
-  
+  const [hostelType, setHostelType] = useState<'STAY' | 'TRAVEL' | 'BOTH' | 'PG'>('STAY');
+
   const handleHostelType = (hType: 'TRAVEL' | 'STAY') => {
-  if (hType == 'TRAVEL') {
+    if (hType == 'TRAVEL') {
       setHostelType('TRAVEL');
     } else {
       setHostelType('STAY');
@@ -78,6 +84,7 @@ export const CreateHostelModal = () => {
 
   const { mutateAsync: createHostel } = useMutation({ mutationFn: mutateCreateHostelInfo });
 
+  const router = useRouter();
   const handleSubmit = () => {
     const name = getValues('name');
     const genderType = getValues('genderType');
@@ -93,13 +100,12 @@ export const CreateHostelModal = () => {
       },
     }).then(res => {
       if (res?.createHostel?.data?.id) {
-        enqueueSnackbar("Homestay created successfully.",{variant:"success"})
+        enqueueSnackbar('Homestay created successfully.', { variant: 'success' });
+        router.push('/app');
         window.location.reload();
         //
-        window.location.reload();
       } else {
-        enqueueSnackbar("Something went wrong.",{variant:'error'})
-
+        enqueueSnackbar('Something went wrong.', { variant: 'error' });
       }
     });
   };
@@ -109,15 +115,16 @@ export const CreateHostelModal = () => {
   return (
     <div>
       <dialog id="my_modal_4" className="modal ">
-        <div className="w-11/12 max-w-5xl modal-box">
+        <div className="modal-box w-11/12 max-w-5xl">
           {steps == 0 && (
             <div>
               <h3 className="">How Do You Categorize Your Hostel?</h3>
-              <div className="grid md:grid-cols-2 md:gap-10  gap-5">
+              <div className="grid gap-5 md:grid-cols-2  md:gap-10">
                 <div
                   className={`card relative  ${hostelType == 'STAY' ? 'border-[5px] border-primary' : ''} cursor-pointer p-5 shadow-md`}
-                  onClick={() => handleHostelType('STAY')}>
-                  <div className=" relative md:h-[300px] h-[210px] w-full">
+                  onClick={() => handleHostelType('STAY')}
+                >
+                  <div className=" relative h-[210px] w-full md:h-[300px]">
                     <Image src={'/images/students.jpg'} fill alt="college students" />
                   </div>
                   <div className="mt-5 ">
@@ -127,8 +134,9 @@ export const CreateHostelModal = () => {
                 </div>
                 <div
                   className={` card relative cursor-pointer p-5 shadow-md ${hostelType == 'TRAVEL' ? 'border-[5px] border-primary' : ''}`}
-                  onClick={() => handleHostelType('TRAVEL')}>
-                  <div className=" relative md:h-[300px] h-[210px] w-full">
+                  onClick={() => handleHostelType('TRAVEL')}
+                >
+                  <div className=" relative h-[210px] w-full md:h-[300px]">
                     <Image src={'/images/travellers.jpg'} fill alt="college students" />
                   </div>
                   <div className="mt-5 ">
@@ -170,18 +178,19 @@ export const CreateHostelModal = () => {
                       error={!!errors.genderType}
                     />
                   </div>
-
                 </div>
                 <div>
-                <div>
-                  <label htmlFor="description" className="block mb-2">Description</label>
-                  <RichTextEditor editorRef={descriptionRef} />
-                </div>
+                  <div>
+                    <label htmlFor="description" className="mb-2 block">
+                      Description
+                    </label>
+                    <RichTextEditor editorRef={descriptionRef} />
+                  </div>
                 </div>
               </div>
             </div>
           )}
-          <div className=' flex  justify-end gap-[1rem]'>
+          <div className=" flex  justify-end gap-[1rem]">
             <div className=" mt-5 flex  items-end justify-end gap-[1rem]">
               <Button
                 label="Back"

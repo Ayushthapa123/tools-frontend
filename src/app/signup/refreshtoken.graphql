@@ -1,15 +1,15 @@
 mutation refreshToken {
- refreshTokens{
-   user {
-     email
-     fullName
-     id
-     userType
-    hostelId
-   }
-   token {
-     refreshToken
-     accessToken
-   }
- }
+  refreshTokens {
+    user {
+      email
+      fullName
+      id
+      userType
+      hostelId
+    }
+    token {
+      refreshToken
+      accessToken
+    }
+  }
 }

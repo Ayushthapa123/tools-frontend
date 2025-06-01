@@ -1,5 +1,4 @@
-import { UserProfileSkeleton } from "./UserProfileSkeleton";
-
+import { UserProfileSkeleton } from './UserProfileSkeleton';
 
 export const SidebarSkeleton = () => {
   return (
@@ -8,7 +7,7 @@ export const SidebarSkeleton = () => {
         <UserProfileSkeleton />
       </div>
       <div className=" flex flex-col gap-5 p-5">
-        <div className=" flex-grow flex  flex-col gap-3">
+        <div className=" flex flex-grow  flex-col gap-3">
           <div className="skeleton h-[40px] w-full  rounded-lg" />
           <div className="skeleton h-[40px] w-full  rounded-lg" />
           <div className="skeleton h-[40px] w-full  rounded-lg" />
@@ -21,4 +20,4 @@ export const SidebarSkeleton = () => {
       </div>
     </div>
   );
- }
+};

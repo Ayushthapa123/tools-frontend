@@ -5,7 +5,7 @@ mutation RemovePriceRule($id: Int!) {
       name
     }
     error {
-      message 
+      message
       code
     }
   }

@@ -3,7 +3,7 @@ import { MdDining, MdFreeBreakfast, MdLunchDining } from 'react-icons/md';
 
 export const FoodTable = () => {
   return (
-    <div className="w-full h-auto ">
+    <div className="h-auto w-full ">
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
@@ -36,7 +36,7 @@ export const FoodTable = () => {
           <tbody>
             {/* row 1 */}
             <tr className="text-xl font-medium text-accent">
-              <th className="flex px-4 py-2 font-bold text-white uppercase align-middle bg-orange-400 rounded-lg">
+              <th className="flex rounded-lg bg-orange-400 px-4 py-2 align-middle font-bold uppercase text-white">
                 SUNDAY
               </th>
 
@@ -46,7 +46,7 @@ export const FoodTable = () => {
             </tr>
 
             <tr className="text-xl font-medium text-accent">
-              <th className="flex px-4 py-2 font-bold text-white uppercase align-middle rounded-lg bg-light-green-400 ">
+              <th className="bg-light-green-400 flex rounded-lg px-4 py-2 align-middle font-bold uppercase text-white ">
                 Monday
               </th>
 
@@ -55,7 +55,7 @@ export const FoodTable = () => {
               <td>_</td>
             </tr>
             <tr className="text-xl font-medium text-accent">
-              <th className="flex px-4 py-2 font-bold text-white uppercase align-middle bg-red-400 rounded-lg 0 ">
+              <th className="bg-red-400 0 flex rounded-lg px-4 py-2 align-middle font-bold uppercase text-white ">
                 Tuesday
               </th>
 
@@ -64,7 +64,7 @@ export const FoodTable = () => {
               <td>_</td>
             </tr>
             <tr className="text-xl font-medium text-accent">
-              <th className="flex px-4 py-2 font-bold text-white uppercase align-middle bg-green-400 rounded-lg">
+              <th className="bg-green-400 flex rounded-lg px-4 py-2 align-middle font-bold uppercase text-white">
                 Wednesday
               </th>
 
@@ -73,7 +73,7 @@ export const FoodTable = () => {
               <td>_</td>
             </tr>
             <tr className="text-xl font-medium text-accent">
-              <th className="flex px-4 py-2 font-bold text-white uppercase align-middle bg-yellow-400 rounded-lg">
+              <th className="flex rounded-lg bg-yellow-400 px-4 py-2 align-middle font-bold uppercase text-white">
                 Thursday
               </th>
 
@@ -82,7 +82,7 @@ export const FoodTable = () => {
               <td>_</td>
             </tr>
             <tr className="text-xl font-medium text-accent">
-              <th className="flex px-4 py-2 font-bold text-white uppercase align-middle bg-blue-400 rounded-lg">
+              <th className="bg-blue-400 flex rounded-lg px-4 py-2 align-middle font-bold uppercase text-white">
                 Friday
               </th>
 
@@ -91,7 +91,7 @@ export const FoodTable = () => {
               <td>_</td>
             </tr>
             <tr className="text-xl font-medium text-accent">
-              <th className="flex px-4 py-2 font-bold text-white uppercase align-middle rounded-lg bg-neutral-400">
+              <th className="flex rounded-lg bg-neutral-400 px-4 py-2 align-middle font-bold uppercase text-white">
                 Saturday
               </th>
 

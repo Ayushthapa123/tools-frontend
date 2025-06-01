@@ -38,14 +38,16 @@ const LocationTabs = () => {
     <div className="w-full py-5 ">
       <div
         role="tablist"
-        className="tabs-boxed tabs z-[99] my-3 flex flex-row flex-wrap justify-between bg-transparent py-2">
+        className="tabs-boxed tabs z-[99] my-3 flex flex-row flex-wrap justify-between bg-transparent py-2"
+      >
         <div className="flex flex-row flex-wrap">
           {tabs.map(tab => (
             <div key={tab.id}>
               <a
                 role="tab"
                 className={`  tab  text-base font-medium ${tab.id == activeTab ? 'tab-active text-white' : ' text-primary'}`}
-                onClick={() => setActiveTab(tab.id)}>
+                onClick={() => setActiveTab(tab.id)}
+              >
                 {tab.title}
               </a>
             </div>

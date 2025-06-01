@@ -1,15 +1,15 @@
 query GetRoomImagesByRoomId($roomId: Int!) {
   getRoomImagesByRoomId(roomId: $roomId) {
     data {
-    id
-    roomId
-    url
-    caption
-    createdAt
-    updatedAt
-  }
-  error {
-    message
+      id
+      roomId
+      url
+      caption
+      createdAt
+      updatedAt
+    }
+    error {
+      message
       code
     }
   }

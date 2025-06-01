@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 // import { MapComponent } from './GoogleMap';
-import { AllHostels } from './AllHostels'; 
+import { AllHostels } from './AllHostels';
 import { MapProvider } from 'src/features/MapProvider';
 
 export default function Home() {
@@ -34,13 +34,17 @@ const LocationTabs = () => {
 
   return (
     <div className="w-full py-5 ">
-      <div role="tablist" className="tabs-boxed bg-transparent tabs sticky top-0 z-[99] my-3 flex flex-wrap py-2">
+      <div
+        role="tablist"
+        className="tabs-boxed tabs sticky top-0 z-[99] my-3 flex flex-wrap bg-transparent py-2"
+      >
         {tabs.map(tab => (
           <div key={tab.id} className="flex flex-wrap ">
             <a
               role="tab"
               className={`  tab  text-base font-medium ${tab.id == activeTab ? 'tab-active text-white' : ' text-primary'}`}
-              onClick={() => setActiveTab(tab.id)}>
+              onClick={() => setActiveTab(tab.id)}
+            >
               {tab.title}
             </a>
           </div>

@@ -8,12 +8,11 @@ import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import TextInput from 'src/features/react-hook-form/TextField';
 import { countries } from '../data/countries';
 
-
 import {
   CreateAddress,
   CreateAddressMutation,
   CreateAddressMutationVariables,
-  GetAddressByHostelId, 
+  GetAddressByHostelId,
   GetAddressByHostelIdQuery,
   GetAddressByHostelIdQueryVariables,
   UpdateAddress,
@@ -29,24 +28,26 @@ import { useGraphQLQuery } from 'src/hooks/useGraphqlQuery';
 interface Iprops {
   hostelId: number;
 }
-export const  AddressDetails = (props: Iprops) => {
+export const AddressDetails = (props: Iprops) => {
   const { hostelId } = props;
 
-
-  const { data: hostelDataFull, isLoading} = useGraphQLQuery<GetAddressByHostelIdQuery, GetAddressByHostelIdQueryVariables>({
+  const { data: hostelDataFull, isLoading } = useGraphQLQuery<
+    GetAddressByHostelIdQuery,
+    GetAddressByHostelIdQueryVariables
+  >({
     queryKey: ['getAddress', hostelId],
     query: GetAddressByHostelId.loc!.source.body,
     variables: { hostelId },
-    enabled: !!hostelId
+    enabled: !!hostelId,
   });
 
-  const hostelData = hostelDataFull?.getAddressByHostelId
+  const hostelData = hostelDataFull?.getAddressByHostelId;
 
   return (
     <div className="    w-full">
       {!isLoading ? (
         <HostelInfoForm
-            hostelId={hostelId}
+          hostelId={hostelId}
           addressId={hostelData?.data?.id}
           country={hostelData?.data?.country}
           city={hostelData?.data?.city}
@@ -57,7 +58,7 @@ export const  AddressDetails = (props: Iprops) => {
         />
       ) : (
         <div className=" h-[50vh] w-full">
-          <LoadingSpinner color='primary' size='lg' />
+          <LoadingSpinner color="primary" size="lg" />
         </div>
       )}
     </div>
@@ -65,7 +66,7 @@ export const  AddressDetails = (props: Iprops) => {
 };
 
 interface IProps {
-    hostelId: number;
+  hostelId: number;
   addressId?: string | null;
 
   country?: string | null;
@@ -80,7 +81,10 @@ interface IProps {
 const HostelInfoForm: FC<IProps> = props => {
   const { hostelId, addressId, city, country, street, subCity, lat, lng } = props;
 
-  const [clickedLatLng, setClickedLatLng] = useState<{ lat: number | null; lng: number | null } | null>({ lat: lat ?? null, lng: lng ?? null });
+  const [clickedLatLng, setClickedLatLng] = useState<{
+    lat: number | null;
+    lng: number | null;
+  } | null>({ lat: lat ?? null, lng: lng ?? null });
 
   const handleClickLatLng = (lat: number | null, lng: number | null) => {
     setClickedLatLng({ lat, lng });
@@ -157,9 +161,9 @@ const HostelInfoForm: FC<IProps> = props => {
         },
       }).then(res => {
         if (res?.updateAddress?.data?.id) {
-          enqueueSnackbar("Address updated.",{variant:'success'})
+          enqueueSnackbar('Address updated.', { variant: 'success' });
         } else {
-          enqueueSnackbar("Something went wrong.",{variant:'error'})
+          enqueueSnackbar('Something went wrong.', { variant: 'error' });
         }
       });
     } else {
@@ -176,11 +180,11 @@ const HostelInfoForm: FC<IProps> = props => {
         },
       }).then(res => {
         if (res?.createAddress?.data?.id) {
-           enqueueSnackbar("Address Created",{variant:'success'})
-           queryClient.invalidateQueries({ queryKey: ['getAddress'] });
-           queryClient.invalidateQueries({ queryKey: ['getHostelByToken'] });
+          enqueueSnackbar('Address Created', { variant: 'success' });
+          queryClient.invalidateQueries({ queryKey: ['getAddress'] });
+          queryClient.invalidateQueries({ queryKey: ['getHostelByToken'] });
         } else {
-          enqueueSnackbar("Something went wrong",{variant:'error'})
+          enqueueSnackbar('Something went wrong', { variant: 'error' });
         }
       });
     }
@@ -194,8 +198,8 @@ const HostelInfoForm: FC<IProps> = props => {
   }, []);
 
   return (
-    <form className=" w-full h-auto" onSubmit={handleSubmit(handleSubmitForm)}>
-      <div className=" grid w-full gap-5 md:grid-cols-2 h-auto">
+    <form className=" h-auto w-full" onSubmit={handleSubmit(handleSubmitForm)}>
+      <div className=" grid h-auto w-full gap-5 md:grid-cols-2">
         <div>
           <ReactSelect
             name="country"
@@ -242,9 +246,14 @@ const HostelInfoForm: FC<IProps> = props => {
           />
         </div>
       </div>
-  
-      <div className='mt-5 w-full h-[400px] relative overflow-hidden'>
-        <MapComponent  clickedLatLng={clickedLatLng} setClickedLatLng={handleClickLatLng} lat={lat} lng={lng} />
+
+      <div className="relative mt-5 h-[400px] w-full overflow-hidden">
+        <MapComponent
+          clickedLatLng={clickedLatLng}
+          setClickedLatLng={handleClickLatLng}
+          lat={lat}
+          lng={lng}
+        />
       </div>
 
       <div className=" flex w-full justify-end">

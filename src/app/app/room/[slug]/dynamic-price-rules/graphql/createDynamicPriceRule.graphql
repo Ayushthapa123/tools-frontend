@@ -2,28 +2,22 @@
 
 mutation CreatePriceRule($createPriceRuleInput: CreateDynamicPriceRuleInput!) {
   createPriceRule(createPriceRuleInput: $createPriceRuleInput) {
-  data {
-    id
-    name
-    description
-    roomId
-    startDate
-    endDate
-    amount
-    isWeekend
-    isActive
-    priority
-    createdAt
-    updatedAt
-   }
-   error {
-    message
-   }
+    data {
+      id
+      name
+      description
+      roomId
+      startDate
+      endDate
+      amount
+      isWeekend
+      isActive
+      priority
+      createdAt
+      updatedAt
+    }
+    error {
+      message
+    }
   }
- 
 }
-
-
-
-
-

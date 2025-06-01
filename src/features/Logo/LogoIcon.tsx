@@ -11,7 +11,6 @@ export const LogoIcon = () => {
             <div className=" relative inline-block h-16  w-16">
               <Image src="/logo.png" alt="logo" fill />
             </div>
-           
           </div>
         </div>
       </Link>

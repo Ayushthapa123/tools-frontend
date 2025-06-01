@@ -96,7 +96,9 @@ export default function BookingPage({ params }: { params: { slug: string } }) {
                 phone: hostel.data?.contact?.phone || '',
                 email: hostel.data?.contact?.email || '',
               }}
-              images={hostel.data?.rooms?.flatMap(room => room.image?.map(img => img.url) || []) || []}
+              images={
+                hostel.data?.rooms?.flatMap(room => room.image?.map(img => img.url) || []) || []
+              }
               rooms={hostel.data?.rooms as RoomData[]}
               selectedRoomId={roomIds[0]} // TODO: some change needed
               slug={params.slug}

@@ -1,4 +1,3 @@
-
 'use client';
 
 //Map component Component from library
@@ -20,8 +19,8 @@ interface Iprops {
 const MapComponent = (props: Iprops) => {
   const { lat, lng } = props;
   const defaultMapCenter = {
-    lat:lat?? 27.7172,
-    lng: lng??85.324,
+    lat: lat ?? 27.7172,
+    lng: lng ?? 85.324,
   };
 
   const defaultMapOptions = {
@@ -37,10 +36,9 @@ const MapComponent = (props: Iprops) => {
         mapContainerStyle={defaultMapContainerStyle}
         center={defaultMapCenter}
         options={defaultMapOptions}
-      
-        zoom={16}>
+        zoom={16}
+      >
         {<Marker position={{ lat, lng }} />}
-
       </GoogleMap>
     </div>
   );

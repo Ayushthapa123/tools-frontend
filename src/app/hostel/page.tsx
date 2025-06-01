@@ -7,8 +7,7 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Hostel Lists',
-  description:
-    'Hostel is a hotel searching portal specially focused on providing the best hostel',
+  description: 'Hostel is a hotel searching portal specially focused on providing the best hostel',
   manifest: '/manifest.json',
   authors: [{ name: 'Ayush Thapa' }],
   openGraph: {
@@ -26,8 +25,7 @@ export default function Home() {
         </Suspense>
       </div>
 
-      <div className="w-full py-10 md:px-10">
-      </div>
+      <div className="w-full py-10 md:px-10"></div>
       <Footer />
     </div>
   );

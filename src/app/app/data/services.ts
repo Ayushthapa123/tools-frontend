@@ -10,5 +10,5 @@ export const hostelServices = [
   { id: 9, name: 'Car Rental' },
   { id: 10, name: 'Currency Exchange' },
   { id: 11, name: 'Photocopy & Printing' },
-  { id: 12, name: 'Medical Assistance' }
-]; 
+  { id: 12, name: 'Medical Assistance' },
+];

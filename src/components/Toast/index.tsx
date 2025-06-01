@@ -19,7 +19,7 @@ const Toast = (props: Iprops) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-       setShowToast(false);
+      setShowToast(false);
     }, 3000);
 
     return () => clearTimeout(timer);
@@ -35,22 +35,24 @@ const Toast = (props: Iprops) => {
     <>
       {showToast && (
         <div
-          className={`min-w-[300px]  ${role=='alert'?"bg-accent":role=='error'?'bg-error':'bg-primary'} text-sm text-white rounded-xl shadow-lg fixed top-10 right-10`}
-          role="alert">
-          <div className="flex p-4 gap-3">
-            <div className=' relative  text-lg'>
+          className={`min-w-[300px]  ${role == 'alert' ? 'bg-accent' : role == 'error' ? 'bg-error' : 'bg-primary'} fixed right-10 top-10 rounded-xl text-sm text-white shadow-lg`}
+          role="alert"
+        >
+          <div className="flex gap-3 p-4">
+            <div className=" relative  text-lg">
               {role == 'alert'
                 ? toastIcons.alert
                 : role == 'error'
-                ? toastIcons.error
-                : toastIcons.success}
+                  ? toastIcons.error
+                  : toastIcons.success}
             </div>
             <div className=" flex-grow">{message}</div>
             <div className="  flex">
               <button
                 type="button"
-                className=" flex mx-2 flex-shrink-0 justify-center items-center size-5 rounded-lg text-white hover:text-white opacity-50 hover:opacity-100 focus:outline-none focus:opacity-100"
-                onClick={handleClose}>
+                className=" mx-2 flex size-5 flex-shrink-0 items-center justify-center rounded-lg text-white opacity-50 hover:text-white hover:opacity-100 focus:opacity-100 focus:outline-none"
+                onClick={handleClose}
+              >
                 <GrClose />
               </button>
             </div>

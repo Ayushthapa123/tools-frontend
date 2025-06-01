@@ -37,8 +37,8 @@ export const SearchSuggestions = (props: Iprops) => {
       <div className="fixed left-0 top-0 h-[100vh] w-full ">
         <div onClick={() => handleClose()} className="relative h-[100vh] w-full  "></div>
       </div>
-      <div className="card card-body absolute w-full max-w-xs sm:max-w-sm  h-[350px] min-w-[250px] overflow-y-auto bg-white border-slate-400 border z-10">
-        {searchQueries?.map((q, index) => (
+      <div className="card card-body absolute z-10 h-[350px] w-full  min-w-[250px] max-w-xs overflow-y-auto border border-slate-400 bg-white sm:max-w-sm">
+        {searchQueries?.map((q, index) =>
           q.data?.map((item, idx) => (
             <div key={index + '-' + idx}>
               <div
@@ -49,20 +49,21 @@ export const SearchSuggestions = (props: Iprops) => {
                   handleSubCity(item.subCity ?? '');
                   handleQuery(item.subCity ? item.subCity : item.city);
                   handleClose();
-                }}>
+                }}
+              >
                 <div className="flex flex-col justify-center">
                   <BiBuilding className="text-lg" />
                 </div>
                 <div className="flex flex-col">
-                  <p className="m-0 p-0 text-primary capitalize">
+                  <p className="m-0 p-0 capitalize text-primary">
                     <span>{item.subCity ? `${item.subCity},` : ''}</span> <span>{item.city}</span>
                   </p>
-                  <p className="text-sm text-gray-500 capitalize  text-start">{item.country}</p>
+                  <p className="text-start text-sm capitalize  text-gray-500">{item.country}</p>
                 </div>
               </div>
             </div>
-          ))
-        ))}
+          )),
+        )}
       </div>
     </div>
   );

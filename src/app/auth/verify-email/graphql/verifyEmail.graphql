@@ -1,5 +1,5 @@
-mutation VerifyEmail($token:VerifyEmailInput!){
-  verifyEmail(input:$token){
+mutation VerifyEmail($token: VerifyEmailInput!) {
+  verifyEmail(input: $token) {
     id
   }
 }

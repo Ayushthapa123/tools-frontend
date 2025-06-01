@@ -75,7 +75,6 @@ const SignIn = () => {
   const { mutateAsync } = useMutation({ mutationFn: mutateLoginRequest });
 
   const onSubmit = async (data: loginData) => {
-    
     setLoading(true);
 
     mutateAsync({ input: { email: getValues('email'), password: getValues('password') } }).then(
@@ -136,7 +135,7 @@ const SignIn = () => {
               <div className="relative mb-5 flex items-center  gap-1 md:-ml-4">
                 <Logo />
                 <div>
-                <FullLogo/>
+                  <FullLogo />
                 </div>
               </div>
               <p className="  text-error">{error ?? error}</p>
@@ -157,7 +156,7 @@ const SignIn = () => {
                     />
                   </div>
                   <div className="mt-3 ">
-                    <TextInput  
+                    <TextInput
                       name="password"
                       type="password"
                       placeholder="Enter Password"
@@ -173,16 +172,20 @@ const SignIn = () => {
                 </div>
 
                 <div className="mb-5 flex justify-center">
-                  <Button label='Log in' disabled={loading || !isValid}
+                  <Button
+                    label="Log in"
+                    disabled={loading || !isValid}
                     className={`${
                       loading || !isValid ? 'cursor-not-allowed opacity-30' : 'opacity-100'
-                    } rounded-md bg-primary px-4 py-2 font-bold   `} />
+                    } rounded-md bg-primary px-4 py-2 font-bold   `}
+                  />
                 </div>
               </form>
 
               <a
                 href="/auth/forgotpassword"
-                className="text-dark mb-2 inline-block text-base hover:text-primary hover:underline ">
+                className="text-dark mb-2 inline-block text-base hover:text-primary hover:underline "
+              >
                 Forgot Password?
               </a>
               <p className="text-base">
@@ -196,7 +199,8 @@ const SignIn = () => {
 
                 <button
                   onClick={() => openSignupUrl()}
-                  className="flex w-full items-center justify-center rounded-md bg-primary px-4 py-2 font-bold text-white">
+                  className="flex w-full items-center justify-center rounded-md bg-primary px-4 py-2 font-bold text-white"
+                >
                   <FcGoogle className="mr-2 text-3xl" />
                   Continue With Google
                 </button>
@@ -209,7 +213,8 @@ const SignIn = () => {
                     height="40"
                     viewBox="0 0 40 40"
                     fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <circle
                       cx="1.39737"
                       cy="38.6026"
@@ -330,7 +335,8 @@ const SignIn = () => {
                     height="40"
                     viewBox="0 0 29 40"
                     fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <circle
                       cx="2.288"
                       cy="25.9912"

@@ -1,43 +1,42 @@
 query GetRoomWithPriceAndGallery($id: Int!) {
   room(id: $id) {
     data {
-    id
-    status
-    capacity 
-    description
-    caption
-    maxOccupancy
-    roomNumber
-    attachBathroom
-    hostelId
-    createdAt
-    updatedAt
-    image {
       id
+      status
+      capacity
+      description
       caption
-      url
-      roomId
+      maxOccupancy
+      roomNumber
+      attachBathroom
+      hostelId
       createdAt
       updatedAt
-    }
-    price {
-      id
-      baseAmountPerDay
-      baseAmountPerMonth
-      currency
-      discountAmount
-      discountType
-      isDiscountActive
-      isDynamicPricing
- 
-      createdAt
-      updatedAt
-    }
-  }
-  error {
-    message
-    code
-  }
-}
-}
+      image {
+        id
+        caption
+        url
+        roomId
+        createdAt
+        updatedAt
+      }
+      price {
+        id
+        baseAmountPerDay
+        baseAmountPerMonth
+        currency
+        discountAmount
+        discountType
+        isDiscountActive
+        isDynamicPricing
 
+        createdAt
+        updatedAt
+      }
+    }
+    error {
+      message
+      code
+    }
+  }
+}

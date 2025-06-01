@@ -16,12 +16,12 @@ export default function Home() {
           <p>Travel community types: Hiking, fun, musical, </p>
           <div>
             <p>
-                All Hostels will have community: community modal with name, communityTypes:string[],
+              All Hostels will have community: community modal with name, communityTypes:string[],
               description etc.{' '}
             </p>
             <p>
-              User will be able to signup for the community with the help of hostel. Once
-              joined, he will be able to see the posts, activities etc. from that hostel and hostel.com. 
+              User will be able to signup for the community with the help of hostel. Once joined, he
+              will be able to see the posts, activities etc. from that hostel and hostel.com.
             </p>
             <p>
               In the case of travellers. This community feature can help hostels to get that

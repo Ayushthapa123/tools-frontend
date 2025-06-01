@@ -1,11 +1,11 @@
 mutation updateHostel($input: UpdateHostelInput!, $hostelId: Float!) {
- updateHostel(data: $input, hostelId: $hostelId) {
-   data {
-    id
-   }
-   error {
-    message
-    code
-   }
- }
+  updateHostel(data: $input, hostelId: $hostelId) {
+    data {
+      id
+    }
+    error {
+      message
+      code
+    }
+  }
 }

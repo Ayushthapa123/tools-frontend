@@ -2,7 +2,6 @@
 import React, { useRef, useState } from 'react';
 import { GoogleMap, Marker, Autocomplete } from '@react-google-maps/api';
 
-
 import { BiSearch } from 'react-icons/bi';
 import { SearchSuggestions } from './SearchSuggestions';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -26,11 +25,14 @@ export const SearchBox = () => {
   const [city, setCity] = useState(params.get('city') ?? '');
   const [subCity, setSubCity] = useState(params.get('subCity') ?? '');
   const [country, setCountry] = useState(params.get('country') ?? '');
-  const [ query, setQuery ] = useState(params.get('query') ?? '');
-  const [searchText,setSearchText] = useState<string | number | readonly string[] | undefined>()
+  const [query, setQuery] = useState(params.get('query') ?? '');
+  const [searchText, setSearchText] = useState<string | number | readonly string[] | undefined>();
   const router = useRouter();
 
-  const [clickedLatLng, setClickedLatLng] = useState<{ lat: number | null; lng: number | null } | null>(null);
+  const [clickedLatLng, setClickedLatLng] = useState<{
+    lat: number | null;
+    lng: number | null;
+  } | null>(null);
 
   const handleCountry = (country: string) => {
     setCountry(country);
@@ -48,7 +50,6 @@ export const SearchBox = () => {
   const handleClose = () => {
     setShowSearchSuggestions(false);
   };
-
 
   const handleSearch = () => {
     const searchParams = new URLSearchParams();
@@ -80,8 +81,8 @@ export const SearchBox = () => {
   const autocompleteRef = useRef<any>(null);
 
   const handlePlaceChanged = () => {
-    const place = autocompleteRef.current.getPlace(); 
-    handleQuery(place?.name ?? '')
+    const place = autocompleteRef.current.getPlace();
+    handleQuery(place?.name ?? '');
     if (place?.geometry && place?.geometry.location) {
       const lat = place.geometry.location.lat();
       const lng = place.geometry.location.lng();
@@ -91,15 +92,15 @@ export const SearchBox = () => {
   };
   const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
-    const sanitizedValue = inputValue.replace(/[^a-zA-Z0-9 ,\-]/,'')
+    const sanitizedValue = inputValue.replace(/[^a-zA-Z0-9 ,\-]/, '');
     setSearchText(sanitizedValue);
-  }
+  };
 
   const isValidSearch = (clickedLatLng?.lat || clickedLatLng?.lng) && checkInDate && checkOutDate;
 
   return (
     <div className="relative flex w-fit flex-col items-center justify-center px-3 ">
-      <div className="relative z-50 flex w-full max-w-6xl flex-col gap-2  space-y-[6px] rounded-2xl border bg-gray-50 px-[10px] py-[10px] focus-within:border-gray-300 sm:py-1 sm:pr-1 sm:flex-row sm:space-y-0 sm:rounded-full sm:pl-6">
+      <div className="relative z-50 flex w-full max-w-6xl flex-col gap-2  space-y-[6px] rounded-2xl border bg-gray-50 px-[10px] py-[10px] focus-within:border-gray-300 sm:flex-row sm:space-y-0 sm:rounded-full sm:py-1 sm:pl-6 sm:pr-1">
         {/* <input
           type="text"
           placeholder="Search By Location"
@@ -113,16 +114,17 @@ export const SearchBox = () => {
 
         <Autocomplete
           onLoad={autocomplete => (autocompleteRef.current = autocomplete)}
-          className=' '
-          onPlaceChanged={handlePlaceChanged}>
+          className=" "
+          onPlaceChanged={handlePlaceChanged}
+        >
           <input
             type="text"
             placeholder="Search Your Location"
             value={searchText}
-            className=" rounded-lg border p-2  mt-2 border-white w-full  bg-gray-50"
+            className=" mt-2 w-full rounded-lg  border border-white bg-gray-50  p-2"
             onChange={handleLocationChange}
             defaultValue={query}
-            autoComplete='on'
+            autoComplete="on"
             required
           />
         </Autocomplete>
@@ -157,7 +159,8 @@ export const SearchBox = () => {
         <button
           className="flex flex-row items-center justify-center rounded-full border border-transparent bg-primary px-3 py-2 text-base font-medium tracking-wide text-white transition duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 md:min-w-[130px] md:px-8"
           onClick={() => handleSearch()}
-          disabled={!isValidSearch}>
+          disabled={!isValidSearch}
+        >
           <span className="block sm:hidden md:block">Search</span>
           <span className="hidden text-xl sm:flex  md:hidden">
             <BiSearch />

@@ -1,37 +1,37 @@
 query GetRooms {
   roomsByHostel {
     data {
-    id
-    status
-    capacity
-    caption
-    roomNumber
-    attachBathroom
-    hostelId
-    image {
       id
+      status
+      capacity
       caption
-      url
-      roomId
+      roomNumber
+      attachBathroom
+      hostelId
+      image {
+        id
+        caption
+        url
+        roomId
+        createdAt
+        updatedAt
+      }
+      price {
+        currency
+        baseAmountPerDay
+        baseAmountPerMonth
+        isDynamicPricing
+
+        discountAmount
+        discountType
+      }
+
       createdAt
       updatedAt
     }
-    price {
-      currency 
-      baseAmountPerDay
-      baseAmountPerMonth
-      isDynamicPricing
-     
-      discountAmount
-      discountType
+    error {
+      message
+      code
     }
-    
-    createdAt
-    updatedAt
   }
-  error {
-    message
-    code
-  }
-}
 }

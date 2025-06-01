@@ -7,7 +7,11 @@ import { useRouter } from 'next/navigation';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import Button from 'src/components/Button';
 import TextInput from 'src/features/react-hook-form/TextField';
-import { ChangePassword, ChangePasswordMutation, ChangePasswordMutationVariables } from 'src/gql/graphql';
+import {
+  ChangePassword,
+  ChangePasswordMutation,
+  ChangePasswordMutationVariables,
+} from 'src/gql/graphql';
 import { useToastStore } from 'src/store/toastStore';
 import { enqueueSnackbar } from 'notistack';
 
@@ -37,10 +41,10 @@ export default function ChangePasswordPage({ userId }: { userId: number }) {
     },
   });
 
-
-  const mutateChangePassword = useGraphqlClientRequest<ChangePasswordMutation, ChangePasswordMutationVariables>(
-    ChangePassword.loc?.source.body!
-  );  
+  const mutateChangePassword = useGraphqlClientRequest<
+    ChangePasswordMutation,
+    ChangePasswordMutationVariables
+  >(ChangePassword.loc?.source.body!);
 
   const { mutateAsync: changePassword } = useMutation({
     mutationFn: mutateChangePassword,
@@ -76,16 +80,13 @@ export default function ChangePasswordPage({ userId }: { userId: number }) {
           currentPassword: data.currentPassword,
           newPassword: data.newPassword,
         },
-      })
+      });
 
       if (response?.changePassword) {
         setSuccess(true);
         setError('');
-        enqueueSnackbar('Password changed successfully!',{variant:'success'})
-        setTimeout(() => {
-          router.push('/');
-        }, 1500);
-      } else{
+        enqueueSnackbar('Password changed successfully!', { variant: 'success' });
+      } else {
         setError('Failed to change password');
       }
     } catch (err: any) {
@@ -100,13 +101,11 @@ export default function ChangePasswordPage({ userId }: { userId: number }) {
       <div className="container mx-auto">
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
-            <div className="relative mx-auto max-w-[550px] rounded-lg bg-white px-8 py-8 border">
+            <div className="relative mx-auto max-w-[550px] rounded-lg border bg-white px-8 py-8">
               <h2 className="mb-6 text-2xl font-bold text-gray-800">Change Password</h2>
-              
+
               {error && <p className="mb-4 text-error">{error}</p>}
-              {success && (
-                <p className="mb-4 text-green-600">Password changed successfully!</p>
-              )}
+              {success && <p className="text-green-600 mb-4">Password changed successfully!</p>}
 
               <form className="bg-white text-left" onSubmit={handleSubmit(onSubmit)}>
                 <div className="w-full space-y-4">
@@ -125,7 +124,7 @@ export default function ChangePasswordPage({ userId }: { userId: number }) {
                       }
                       error={!!errors.currentPassword}
                       autoFocus
-                      onBlur={(e) => {
+                      onBlur={e => {
                         e.target.value = e.target.value.trim();
                       }}
                     />
@@ -139,11 +138,9 @@ export default function ChangePasswordPage({ userId }: { userId: number }) {
                       control={control}
                       label="New Password"
                       required
-                      helpertext={
-                        errors.newPassword?.message
-                      }
+                      helpertext={errors.newPassword?.message}
                       error={!!errors.newPassword}
-                      onBlur={(e) => {
+                      onBlur={e => {
                         e.target.value = e.target.value.trim();
                       }}
                     />
@@ -154,7 +151,7 @@ export default function ChangePasswordPage({ userId }: { userId: number }) {
                       name="confirmPassword"
                       type="password"
                       placeholder="Confirm New Password"
-                      onBlur={(e) => {
+                      onBlur={e => {
                         e.target.value = e.target.value.trim();
                       }}
                       control={control}
@@ -164,12 +161,14 @@ export default function ChangePasswordPage({ userId }: { userId: number }) {
                         errors.confirmPassword?.type === 'required'
                           ? 'Please confirm your new password'
                           : getValues().newPassword !== getValues().confirmPassword
-                          ? 'Passwords do not match'
-                          : ''
+                            ? 'Passwords do not match'
+                            : ''
                       }
-                      error={!!errors.confirmPassword || 
-                        (getValues().newPassword !== getValues().confirmPassword && 
-                         getValues().confirmPassword !== '')}
+                      error={
+                        !!errors.confirmPassword ||
+                        (getValues().newPassword !== getValues().confirmPassword &&
+                          getValues().confirmPassword !== '')
+                      }
                     />
                   </div>
 

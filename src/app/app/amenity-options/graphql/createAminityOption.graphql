@@ -1,0 +1,10 @@
+mutation createAmenityOption($createAmenityOptionInput: CreateAmenityOptionInput!) {
+  createAmenityOption(createAmenityOptionInput: $createAmenityOptionInput) {
+    data {
+      id
+    }
+    error {
+      message
+    }
+  }
+}

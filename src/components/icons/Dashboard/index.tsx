@@ -1,6 +1,6 @@
 // SettingsIcon.tsx
 import React from 'react';
-import { FaChartBar,} from 'react-icons/fa';
+import { FaChartBar } from 'react-icons/fa';
 
 interface IconProps {
   className?: string;

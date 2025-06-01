@@ -9,7 +9,11 @@ import Button from 'src/components/Button';
 import { Logo } from 'src/features/Logo';
 import { FullLogo } from 'src/features/Logo/FullLogoWithText';
 import TextInput from 'src/features/react-hook-form/TextField';
-import { ForgotPassword, ForgotPasswordMutation, ForgotPasswordMutationVariables } from 'src/gql/graphql';
+import {
+  ForgotPassword,
+  ForgotPasswordMutation,
+  ForgotPasswordMutationVariables,
+} from 'src/gql/graphql';
 
 type ForgotPasswordData = {
   email: string;
@@ -31,11 +35,12 @@ export default function ForgotUserPassword() {
       email: '',
     },
   });
-  const email = watch("email");
+  const email = watch('email');
 
-  const mutateForgotPassword = useGraphqlClientRequest<ForgotPasswordMutation, ForgotPasswordMutationVariables>(
-    ForgotPassword.loc?.source.body!
-  );
+  const mutateForgotPassword = useGraphqlClientRequest<
+    ForgotPasswordMutation,
+    ForgotPasswordMutationVariables
+  >(ForgotPassword.loc?.source.body!);
 
   const { mutateAsync: forgotPassword } = useMutation({
     mutationFn: mutateForgotPassword,
@@ -80,7 +85,8 @@ export default function ForgotUserPassword() {
                         className="h-12 w-12 text-success"
                         fill="none"
                         viewBox="0 0 24 24"
-                        stroke="currentColor">
+                        stroke="currentColor"
+                      >
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -90,27 +96,28 @@ export default function ForgotUserPassword() {
                       </svg>
                     </div>
                   </div>
-                  <h2 className="text-2xl font-semibold text-primary mb-4">Check Your Email</h2>
-                  <p className="text-gray-600 mb-6">
+                  <h2 className="mb-4 text-2xl font-semibold text-primary">Check Your Email</h2>
+                  <p className="mb-6 text-gray-600">
                     Click the link in the email to reset your password.
                   </p>
                   <Button
                     label="Return to Login"
                     onClick={() => router.push('/login')}
-                    className="bg-primary w-full"
+                    className="w-full bg-primary"
                   />
                 </div>
               ) : (
                 <>
-                  <h2 className="text-2xl font-semibold text-primary mb-6">Forgot Password</h2>
-                  <p className="text-gray-400 mb-8 w-full">
-                    Enter your email address and we will send you instructions to reset your password.
+                  <h2 className="mb-6 text-2xl font-semibold text-primary">Forgot Password</h2>
+                  <p className="mb-8 w-full text-gray-400">
+                    Enter your email address and we will send you instructions to reset your
+                    password.
                   </p>
 
-                  {error && <p className="text-error mb-4">{error}</p>}
+                  {error && <p className="mb-4 text-error">{error}</p>}
 
                   <form className="bg-white text-left" onSubmit={handleSubmit(onSubmit)}>
-                    <div className="w-full mb-6">
+                    <div className="mb-6 w-full">
                       <TextInput
                         name="email"
                         type="email"
@@ -129,7 +136,7 @@ export default function ForgotUserPassword() {
                         disabled={loading || !email}
                         className={`${
                           loading ? 'cursor-not-allowed opacity-30' : 'opacity-100'
-                        } bg-primary w-full rounded-md px-4 py-2 font-bold`}
+                        } w-full rounded-md bg-primary px-4 py-2 font-bold`}
                       />
                     </div>
                   </form>

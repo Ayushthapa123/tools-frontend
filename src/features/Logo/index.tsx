@@ -6,7 +6,7 @@ export const Logo = () => {
     <>
       <Link href="/">
         <div style={{ alignItems: 'start' }}>
-          <Image src="/logo.png" alt="logo" height={80} width={80} className=" md:flex md:-my-2" />
+          <Image src="/logo.png" alt="logo" height={80} width={80} className=" md:-my-2 md:flex" />
         </div>
       </Link>
     </>

@@ -147,11 +147,11 @@ const SettingsPage: React.FC = () => {
   return (
     <div className="grid w-full gap-[1rem]">
       <h2>Settings</h2>
-      <div className="bg-white card-body card card-bordered">
+      <div className="card card-body card-bordered bg-white">
         <h2>Basic Settings</h2>
         <hr className="divider" />
         <div className="flex w-full">
-          <div className="flex flex-col justify-center flex-grow">
+          <div className="flex flex-grow flex-col justify-center">
             <h5>Select Currency</h5>
           </div>
           <div className="min-w-[150px] md:min-w-[230px]">
@@ -167,7 +167,7 @@ const SettingsPage: React.FC = () => {
           </div>
         </div>
         <div className="flex w-full">
-          <div className="flex flex-col justify-center flex-grow">
+          <div className="flex flex-grow flex-col justify-center">
             <h5>Base Font Size</h5>
           </div>
           <div className="min-w-[150px] md:min-w-[230px]">
@@ -183,7 +183,7 @@ const SettingsPage: React.FC = () => {
           </div>
         </div>
         <div className="flex w-full">
-          <div className="flex flex-col justify-center flex-grow">
+          <div className="flex flex-grow flex-col justify-center">
             <h5>Active Status</h5>
           </div>
           <div className="min-w-[150px] md:min-w-[230px]">
@@ -198,11 +198,11 @@ const SettingsPage: React.FC = () => {
         </div>
       </div>
 
-      <div className="bg-white card-body card card-bordered">
+      <div className="card card-body card-bordered bg-white">
         <h2>Functionality Settings</h2>
         <hr className="divider" />
         <div className="flex w-full">
-          <div className="flex flex-col justify-center flex-grow">
+          <div className="flex flex-grow flex-col justify-center">
             <h5>Allow Booking</h5>
           </div>
           <div className="min-w-[150px] md:min-w-[230px]">
@@ -216,7 +216,7 @@ const SettingsPage: React.FC = () => {
           </div>
         </div>
         <div className="flex w-full">
-          <div className="flex flex-col justify-center flex-grow">
+          <div className="flex flex-grow flex-col justify-center">
             <h5>Allow Comments</h5>
           </div>
           <div className="min-w-[150px] md:min-w-[230px]">
@@ -230,7 +230,7 @@ const SettingsPage: React.FC = () => {
           </div>
         </div>
         <div className="flex w-full">
-          <div className="flex flex-col justify-center flex-grow">
+          <div className="flex flex-grow flex-col justify-center">
             <h5>Allow Private Feedbacks</h5>
           </div>
           <div className="min-w-[150px] md:min-w-[230px]">
@@ -244,7 +244,7 @@ const SettingsPage: React.FC = () => {
           </div>
         </div>
         <div className="flex w-full">
-          <div className="flex flex-col justify-center flex-grow">
+          <div className="flex flex-grow flex-col justify-center">
             <h5>Allow Messages</h5>
           </div>
           <div className="min-w-[150px] md:min-w-[230px]">
@@ -258,7 +258,7 @@ const SettingsPage: React.FC = () => {
           </div>
         </div>
         <div className="flex w-full">
-          <div className="flex flex-col justify-center flex-grow">
+          <div className="flex flex-grow flex-col justify-center">
             <h5>Allow Ratings</h5>
           </div>
           <div className="min-w-[150px] md:min-w-[230px]">

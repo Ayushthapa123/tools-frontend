@@ -1,17 +1,17 @@
 mutation UpdatePriceRule($updatePriceInput: UpdateDynamicPriceRuleInput!) {
   updatePriceRule(updatePriceInput: $updatePriceInput) {
     data {
-    id
-    name
-    description
-    roomId
-    startDate
-    endDate
-    amount
-    isWeekend
-    isActive
-    priority
-    updatedAt
+      id
+      name
+      description
+      roomId
+      startDate
+      endDate
+      amount
+      isWeekend
+      isActive
+      priority
+      updatedAt
     }
   }
 }

@@ -4,15 +4,20 @@ const withPWA = createPWAConfig({
   dest: 'public',
 
   cacheOnFrontEndNav: true,
-    reloadOnOnline: true,
-    disable: false,
-    register: true,
-    skipWaiting: true,
+  reloadOnOnline: true,
+  disable: false,
+  register: true,
+  skipWaiting: true,
 });
 
 const config = {
   images: {
-    domains: ["images.unsplash.com","s3-np1.datahub.com.np","cloudinary.com","res.cloudinary.com"],
+    domains: [
+      'images.unsplash.com',
+      's3-np1.datahub.com.np',
+      'cloudinary.com',
+      'res.cloudinary.com',
+    ],
   },
 };
 

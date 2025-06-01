@@ -113,8 +113,6 @@ const LogIn = () => {
 
   const isValid = checkPasswordValidity() && checkEmailValidity();
 
-
-
   const openSignupUrl = () => {
     // Redirects to signup URL if one is provided
     // @ts-ignore
@@ -180,7 +178,7 @@ const LogIn = () => {
                   onClick={() => openSignupUrl()}
                   label="Continue With Google"
                   startAdornment={<FcGoogle className="text-3xl " />}
-                  className='bg-primary'
+                  className="bg-primary"
                 />
               </div>
             </div>

@@ -1,35 +1,35 @@
 query MyBookings {
   myBookings {
     data {
-    id
-    roomId
-    bookingKey
-    guestId
-    startDate
-    endDate
-    status
-    paymentPlatformName
-    createdAt
-    updatedAt
-    room {
       id
-      roomNumber
-      capacity
-      caption
+      roomId
+      bookingKey
+      guestId
+      startDate
+      endDate
       status
-      attachBathroom
-      maxOccupancy
-      price {
-        currency 
-        baseAmountPerDay
-        baseAmountPerMonth
+      paymentPlatformName
+      createdAt
+      updatedAt
+      room {
+        id
+        roomNumber
+        capacity
+        caption
+        status
+        attachBathroom
+        maxOccupancy
+        price {
+          currency
+          baseAmountPerDay
+          baseAmountPerMonth
+        }
       }
-    }
-    guest {
-      id
-      fullName
-      email
-    }
+      guest {
+        id
+        fullName
+        email
+      }
     }
     error {
       message

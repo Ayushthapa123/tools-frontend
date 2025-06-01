@@ -6,7 +6,7 @@ interface Iprops {
 export const FeaturesCard = (props: Iprops) => {
   const { title, subTitle, description } = props;
   return (
-    <div className=" card my-36 grid gap-5 text-center py-5 ">
+    <div className=" card my-36 grid gap-5 py-5 text-center ">
       <div>
         <h2 className=" text-primary">{title}</h2>
       </div>

@@ -1,6 +1,5 @@
-import { FiMenu } from "react-icons/fi";
-import Sidebar from "../Sidebar";
-
+import { FiMenu } from 'react-icons/fi';
+import Sidebar from '../Sidebar';
 
 export const Drawer = () => {
   return (
@@ -10,11 +9,9 @@ export const Drawer = () => {
         <div className="drawer-content flex flex-col items-center justify-center">
           {/* Page content here */}
           <label htmlFor="my-drawer-2" className=" drawer-button lg:hidden">
-            <div
-              className="  relative top-[6px] block h-min cursor-pointer rounded-lg bg-slate-100 p-1 "
-              >
+            <div className="  relative top-[6px] block h-min cursor-pointer rounded-lg bg-slate-100 p-1 ">
               <span className=" text-[25px] text-primary">
-                <FiMenu/>
+                <FiMenu />
               </span>
             </div>
           </label>
@@ -23,10 +20,11 @@ export const Drawer = () => {
           <label
             htmlFor="my-drawer-2"
             aria-label="close sidebar"
-            className="drawer-overlay"></label>
-          <Sidebar  />
+            className="drawer-overlay"
+          ></label>
+          <Sidebar />
         </div>
       </div>
     </div>
   );
- }
+};

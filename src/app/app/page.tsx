@@ -5,7 +5,7 @@ import React from 'react';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import Button from 'src/components/Button';
 import {
-  GetHostelDetailsBasic, 
+  GetHostelDetailsBasic,
   GetHostelDetailsBasicQuery,
   GetHostelDetailsBasicQueryVariables,
 } from 'src/gql/graphql';
@@ -31,7 +31,7 @@ export default function Home() {
 
   return (
     <div className="grid w-full gap-4">
-      <div className="card relative flex flex-col lg:flex-row w-full border bg-base-100 p-4 text-base-content shadow">
+      <div className="card relative flex w-full flex-col border bg-base-100 p-4 text-base-content shadow lg:flex-row">
         <div className="w-[70%] flex-grow">
           <h3 className="text-lg font-semibold">
             Welcome Back! <span className="font-bold text-secondary">{user.userName}</span>

@@ -12,26 +12,26 @@ type SimpleQuillProps = {
   readOnly?: boolean;
 };
 
-const RichTextEditor: React.FC<SimpleQuillProps> = ({ editorRef, onChange,readOnly }) => {
+const RichTextEditor: React.FC<SimpleQuillProps> = ({ editorRef, onChange, readOnly }) => {
   const modules = useMemo(
     () => ({
       toolbar: [['bold', 'italic', 'underline'], [{ list: 'bullet' }]], // ✅ fixed here
     }),
-    []
+    [],
   );
 
   return (
     <ReactQuill
       theme={readOnly ? 'bubble' : 'snow'}
       defaultValue={editorRef.current ?? ''}
-      onChange={(val) => {
+      onChange={val => {
         editorRef.current = val;
         onChange?.(val);
       }}
       modules={modules}
-      placeholder='Write here...'
+      placeholder="Write here..."
       readOnly={readOnly}
-      className='p-0 border-base-200 bg-base-100 rounded-md'
+      className="rounded-md border-base-200 bg-base-100 p-0"
     />
   );
 };

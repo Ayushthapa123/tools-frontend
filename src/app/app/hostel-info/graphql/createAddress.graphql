@@ -1,11 +1,11 @@
 mutation createAddress($input: CreateAddressInput!) {
- createAddress(data: $input) {
-   data {
-    id
-   }
-   error {
-    message
-    code
-   }
- }
+  createAddress(data: $input) {
+    data {
+      id
+    }
+    error {
+      message
+      code
+    }
+  }
 }

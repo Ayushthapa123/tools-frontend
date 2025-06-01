@@ -15,7 +15,8 @@ const LoadingSpinner = ({
     <div className=" relative flex h-full w-full flex-col items-center justify-center align-middle">
       {' '}
       <span
-        className={`loading loading-spinner ${color === 'primary' ? 'text-primary' : 'text-white'} ${size === 'lg' ? 'h-16 w-16' : ''} ${className}`}></span>
+        className={`loading loading-spinner ${color === 'primary' ? 'text-primary' : 'text-white'} ${size === 'lg' ? 'h-16 w-16' : ''} ${className}`}
+      ></span>
     </div>
   );
 };

@@ -10,4 +10,4 @@ query FindAllAmenities {
       code
     }
   }
-} 
+}

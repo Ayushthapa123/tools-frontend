@@ -1,0 +1,10 @@
+mutation deleteRoomAmenityOption($id: Int!) {
+  deleteRoomAmenityOption(roomAmenityOptionId: $id) {
+    data {
+      id
+    }
+    error {
+      message
+    }
+  }
+}

@@ -10,4 +10,4 @@ mutation CreateRoomAmenity($createAmenityInput: CreateRoomAmenityInput!) {
       code
     }
   }
-} 
+}

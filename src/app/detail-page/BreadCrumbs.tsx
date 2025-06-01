@@ -19,7 +19,7 @@ export const BreadCrumbs = (props: Iprops) => {
         </div>
       </div>
       <div className="flex w-full flex-col">
-        <hr className="mb-8 -mt-4 w-full border" />
+        <hr className="-mt-4 mb-8 w-full border" />
       </div>
     </>
   );

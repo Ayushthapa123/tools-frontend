@@ -52,20 +52,22 @@ export const SearchResults = (props: IResults) => {
   return (
     <div className="w-full ">
       {isLoading && (
-          <div className="flex justify-center items-center w-full gap-3 ">
-            <HostelCardSkeleton />
-            <HostelCardSkeleton />
-            <HostelCardSkeleton />
-          </div>
-        )}
-      <div className="grid w-full grid-cols-1 md:grid-cols-2 xl:grid-cols-3  gap-3">
-            {hostels?.map(hostel => {
+        <div className="flex w-full items-center justify-center gap-3 ">
+          <HostelCardSkeleton />
+          <HostelCardSkeleton />
+          <HostelCardSkeleton />
+        </div>
+      )}
+      <div className="grid w-full grid-cols-1 gap-3 md:grid-cols-2  xl:grid-cols-3">
+        {hostels?.map(hostel => {
           const imgUrl = hostel?.data?.gallery?.[0]?.url || '/images/default-image.png';
 
           return (
             <div key={hostel.data?.slug}>
-              <Link href={`/hostel/${hostel.data?.slug}?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}>
-                  <HostelCard
+              <Link
+                href={`/hostel/${hostel.data?.slug}?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}
+              >
+                <HostelCard
                   name={hostel.data?.name || ''}
                   country={hostel.data?.address?.country ?? ''}
                   city={hostel.data?.address?.city ?? ''}
@@ -77,7 +79,6 @@ export const SearchResults = (props: IResults) => {
                   oneSeater={null}
                   twoSeater={null}
                   threeSeater={null}
-                  
                 />
               </Link>
             </div>

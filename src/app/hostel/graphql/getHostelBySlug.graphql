@@ -1,63 +1,61 @@
 query getHostelBySlug($slug: String!) {
   getHostelBySlug(slug: $slug) {
     data {
-    id
-    name
-    description
-   
-    slug
-    verifiedBySuperAdmin
-    verifiedByCommunityOwner
-    gallery{
-      url 
-      isSelected
-    }
-    address {
-      country
-      city
-      subCity
-      street
-      latitude
-      longitude
-    }
-
-    contact {
-      phone
-      altPhone
-      email
-    }
-    rooms{
       id
-      caption 
-      capacity 
-      roomNumber
+      name
       description
-      status
-      roomAmenity {
-        amenity
+
+      slug
+      verifiedBySuperAdmin
+      verifiedByCommunityOwner
+      gallery {
+        url
+        isSelected
       }
-      image {
-        url 
-        id 
+      address {
+        country
+        city
+        subCity
+        street
+        latitude
+        longitude
+      }
+
+      contact {
+        phone
+        altPhone
+        email
+      }
+      rooms {
+        id
         caption
+        capacity
+        roomNumber
+        description
+        status
+        roomAmenity {
+          amenity
+        }
+        image {
+          url
+          id
+          caption
+        }
+
+        price {
+          baseAmountPerDay
+          baseAmountPerMonth
+          currency
+          isDynamicPricing
+
+          discountAmount
+          discountType
+        }
       }
-      
-      price {
-        baseAmountPerDay 
-        baseAmountPerMonth
-        currency
-        isDynamicPricing
-     
-        discountAmount
-        discountType
-      }
-      
     }
- 
+    error {
+      message
+      code
+    }
   }
-  error {
-    message
-    code
-  }
-}
 }

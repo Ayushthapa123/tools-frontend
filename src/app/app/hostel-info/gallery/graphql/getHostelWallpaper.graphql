@@ -9,6 +9,6 @@ query GetGalleryByHostelId($hostelId: Int!) {
       isSelected
       createdAt
       updatedAt
-  }
+    }
   }
 }

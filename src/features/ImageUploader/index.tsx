@@ -16,7 +16,7 @@ const ImageUploader = (props: Iprops) => {
   const { handleImageUrl, imageUrl } = props;
   const [loading, setLoading] = useState(false);
 
-  const [isDragging, setIsDragging] = useState<boolean>(false); 
+  const [isDragging, setIsDragging] = useState<boolean>(false);
 
   const queryClient = useQueryClient();
 
@@ -52,28 +52,24 @@ const ImageUploader = (props: Iprops) => {
       const formData = new FormData();
       if (file) {
         if (file.size > MAX_FILE_SIZE) {
-          enqueueSnackbar(`File must be smaller than ${MAX_FILE_SIZE} MB. `,{variant:"error"})
+          enqueueSnackbar(`File must be smaller than ${MAX_FILE_SIZE} MB. `, { variant: 'error' });
           return;
         }
-      } 
-        setLoading(true);
-        formData.append('image', file);
+      }
+      setLoading(true);
+      formData.append('image', file);
 
-       await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL!}/upload/image`,
-        formData,
-        {
+      await axios
+        .post(`${process.env.NEXT_PUBLIC_API_URL!}/upload/image`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
-            
           },
-        },
-      ).then((res) => {
-        setLoading(false);
-        queryClient.invalidateQueries({ queryKey: ['getHostelWallpaper'] }); 
-        handleImageUrl(res.data.imageUrl);
-      });
-
+        })
+        .then(res => {
+          setLoading(false);
+          queryClient.invalidateQueries({ queryKey: ['getHostelWallpaper'] });
+          handleImageUrl(res.data.imageUrl);
+        });
     } catch (error) {
       setLoading(false);
       console.error('Error uploading image:', error);
@@ -113,7 +109,7 @@ const ImageUploader = (props: Iprops) => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-8">
+    <div className="mx-auto mt-8 max-w-md">
       <div
         className={`relative flex h-[200px] w-full flex-col items-center justify-center rounded-lg border-[3px] border-dashed ${
           isDragging ? 'border-blue-500' : 'border-gray-300'
@@ -121,17 +117,24 @@ const ImageUploader = (props: Iprops) => {
         onDragEnter={handleDragEnter}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
-        onDrop={handleDrop}>
-        <input type="file" className="hidden" onChange={handleFileChange} accept='.jpg,.jpeg,.png' />
+        onDrop={handleDrop}
+      >
+        <input
+          type="file"
+          className="hidden"
+          onChange={handleFileChange}
+          accept=".jpg,.jpeg,.png"
+        />
         {imageUrl ? (
-          <div className="relative w-full h-full ">
+          <div className="relative h-full w-full ">
             <div
-              className=" absolute right-0 top-0 z-10 cursor-pointer text-[25px]" 
-              onClick={() => removeImage()}>
+              className=" absolute right-0 top-0 z-10 cursor-pointer text-[25px]"
+              onClick={() => removeImage()}
+            >
               <MdOutlineCancelPresentation />
             </div>
 
-            <Image src={imageUrl} alt="Uploaded" className="w-auto h-24" fill />
+            <Image src={imageUrl} alt="Uploaded" className="h-24 w-auto" fill />
           </div>
         ) : (
           <>
@@ -139,15 +142,29 @@ const ImageUploader = (props: Iprops) => {
             <p className="mt-2 text-gray-400">or</p>
             <label
               htmlFor="fileInput"
-              className="px-4 py-2  text-primary bg-gray-100 rounded hover:bg-blue-600 cursor-pointer border-dotted">
-              Click here to upload<input id="fileInput" type="file" className="hidden" onChange={handleFileChange} accept='.jpg , .jpeg, .png'  />
+              className="hover:bg-blue-600 cursor-pointer  rounded border-dotted bg-gray-100 px-4 py-2 text-primary"
+            >
+              Click here to upload
+              <input
+                id="fileInput"
+                type="file"
+                className="hidden"
+                onChange={handleFileChange}
+                accept=".jpg , .jpeg, .png"
+              />
             </label>
             {loading && (
-              <div className="w-10 h-10">
+              <div className="h-10 w-10">
                 <LoadingSpinner color="primary" size="lg" />
               </div>
             )}
-            <input id="fileInput" type="file" className="hidden" onChange={handleFileChange} accept='.jpg , .jpeg, .png' />
+            <input
+              id="fileInput"
+              type="file"
+              className="hidden"
+              onChange={handleFileChange}
+              accept=".jpg , .jpeg, .png"
+            />
           </>
         )}
       </div>

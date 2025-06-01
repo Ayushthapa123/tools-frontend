@@ -13,6 +13,10 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+    "mutation createAmenityOption($createAmenityOptionInput: CreateAmenityOptionInput!) {\n  createAmenityOption(createAmenityOptionInput: $createAmenityOptionInput) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}": types.CreateAmenityOptionDocument,
+    "mutation deleteAmenityOption($id: Int!) {\n  deleteAmenityOption(amenityOptionId: $id) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}": types.DeleteAmenityOptionDocument,
+    "query AllAmenitiesOption {\n  amenityOptions {\n    data {\n      id\n      name\n      description\n      iconUrl\n      hostelAmenityType\n    }\n    error {\n      code\n    }\n  }\n}": types.AllAmenitiesOptionDocument,
+    "mutation updateAmenityOption($id: Int!, $updateAmenityOptionInput: UpdateAmenityOptionInput!) {\n  updateAmenityOption(\n    amenityOptionId: $id\n    updateAmenityOptionInput: $updateAmenityOptionInput\n  ) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}": types.UpdateAmenityOptionDocument,
     "query BookingsByHostel {\n  bookingsByHostel {\n    data {\n      id\n      bookingKey\n      startDate\n      endDate\n      status\n      createdAt\n      updatedAt\n      room {\n        id\n        caption\n        roomNumber\n        capacity\n        status\n        attachBathroom\n        maxOccupancy\n        price {\n          baseAmountPerDay\n          currency\n          discountAmount\n          discountType\n          isDiscountActive\n        }\n        image {\n          url\n          caption\n        }\n      }\n      guest {\n        id\n        email\n        fullName\n        phoneNumber\n      }\n    }\n    error {\n      message\n      code\n      path\n    }\n  }\n}": types.BookingsByHostelDocument,
     "mutation selectGallery($galleryId: Int!, $hostelId: Int!) {\n  selectGallery(galleryId: $galleryId, hostelId: $hostelId) {\n    data {\n      id\n      caption\n      url\n      isSelected\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.SelectGalleryDocument,
     "query getHostelDetailsBasic {\n  getHostelByToken {\n    data {\n      name\n      slug\n      verifiedBySuperAdmin\n      verifiedByCommunityOwner\n      address {\n        country\n        city\n        subCity\n        street\n      }\n    }\n  }\n}": types.GetHostelDetailsBasicDocument,
@@ -35,6 +39,10 @@ const documents = {
     "query getUserById($id: Float!) {\n  getUserById(id: $id) {\n    data {\n      id\n      isVerified\n      fullName\n      email\n      phoneNumber\n      altPhoneNumber\n      city\n      gender\n      dateOfBirth\n      profilePicture\n      hostelId\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.GetUserByIdDocument,
     "query MyBookings {\n  myBookings {\n    data {\n      id\n      roomId\n      bookingKey\n      guestId\n      startDate\n      endDate\n      status\n      paymentPlatformName\n      createdAt\n      updatedAt\n      room {\n        id\n        roomNumber\n        capacity\n        caption\n        status\n        attachBathroom\n        maxOccupancy\n        price {\n          currency\n          baseAmountPerDay\n          baseAmountPerMonth\n        }\n      }\n      guest {\n        id\n        fullName\n        email\n      }\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.MyBookingsDocument,
     "mutation updateUser($input: UpdateUserInput!) {\n  updateUser(input: $input) {\n    data {\n      id\n      fullName\n      email\n      phoneNumber\n      altPhoneNumber\n      city\n      gender\n      dateOfBirth\n      profilePicture\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.UpdateUserDocument,
+    "mutation createRoomAmenityOption($createRoomAmenityOptionInput: CreateRoomAmenityOptionInput!) {\n  createRoomAmenityOption(\n    createRoomAmenityOptionInput: $createRoomAmenityOptionInput\n  ) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}": types.CreateRoomAmenityOptionDocument,
+    "mutation deleteRoomAmenityOption($id: Int!) {\n  deleteRoomAmenityOption(roomAmenityOptionId: $id) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}": types.DeleteRoomAmenityOptionDocument,
+    "query AllRoomAmenitiesOption {\n  roomAmenityOptions {\n    data {\n      id\n      name\n      description\n      iconUrl\n    }\n    error {\n      code\n    }\n  }\n}": types.AllRoomAmenitiesOptionDocument,
+    "mutation updateRoomAmenityOption($id: Int!, $updateRoomAmenityOptionInput: UpdateRoomAmenityOptionInput!) {\n  updateRoomAmenityOption(\n    roomAmenityOptionId: $id\n    updateRoomAmenityOptionInput: $updateRoomAmenityOptionInput\n  ) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}": types.UpdateRoomAmenityOptionDocument,
     "mutation CreatePriceRule($createPriceRuleInput: CreateDynamicPriceRuleInput!) {\n  createPriceRule(createPriceRuleInput: $createPriceRuleInput) {\n    data {\n      id\n      name\n      description\n      roomId\n      startDate\n      endDate\n      amount\n      isWeekend\n      isActive\n      priority\n      createdAt\n      updatedAt\n    }\n    error {\n      message\n    }\n  }\n}": types.CreatePriceRuleDocument,
     "mutation RemovePriceRule($id: Int!) {\n  removePriceRule(id: $id) {\n    data {\n      id\n      name\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.RemovePriceRuleDocument,
     "query GetPriceRulesByRoom($roomId: Int!) {\n  priceRulesByRoom(roomId: $roomId) {\n    data {\n      id\n      name\n      description\n      amount\n      startDate\n      endDate\n      isWeekend\n      isActive\n      priority\n    }\n  }\n}": types.GetPriceRulesByRoomDocument,
@@ -59,6 +67,10 @@ const documents = {
     "mutation createRules($input: CreateRulesInput!) {\n  createRules(createRulesInput: $input) {\n    data {\n      id\n      rules\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.CreateRulesDocument,
     "query getRules {\n  getRulesByHostel {\n    data {\n      id\n      rules\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.GetRulesDocument,
     "mutation updateRules($input: UpdateRulesInput!, $rulesId: Int!) {\n  updateRules(rulesId: $rulesId, updateRulesInput: $input) {\n    data {\n      id\n      rules\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.UpdateRulesDocument,
+    "mutation createServiceOption($createServiceOptionInput: CreateServiceOptionInput!) {\n  createServiceOption(createServiceOptionInput: $createServiceOptionInput) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}": types.CreateServiceOptionDocument,
+    "mutation deleteServiceOption($id: Int!) {\n  deleteServiceOption(serviceOptionId: $id) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}": types.DeleteServiceOptionDocument,
+    "query AllServiceOptions {\n  serviceOptions {\n    data {\n      id\n      name\n      description\n      iconUrl\n    }\n    error {\n      code\n    }\n  }\n}": types.AllServiceOptionsDocument,
+    "mutation updateServiceOption($id: Int!, $updateServiceOptionInput: UpdateServiceOptionInput!) {\n  updateServiceOption(\n    serviceOptionId: $id\n    updateServiceOptionInput: $updateServiceOptionInput\n  ) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}": types.UpdateServiceOptionDocument,
     "query GetServiceByHostelId($hostelId: Float!) {\n  findServiceByHostelId(hostelId: $hostelId) {\n    data {\n      id\n      services\n      hostelId\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.GetServiceByHostelIdDocument,
     "mutation CreateService($createServiceInput: CreateServiceDto!) {\n  createService(createServiceInput: $createServiceInput) {\n    data {\n      id\n      services\n      hostelId\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.CreateServiceDocument,
     "mutation RemoveService($id: Float!) {\n  removeService(id: $id) {\n    data {\n      id\n      services\n      hostelId\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.RemoveServiceDocument,
@@ -105,6 +117,22 @@ const documents = {
  */
 export function graphql(source: string): unknown;
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation createAmenityOption($createAmenityOptionInput: CreateAmenityOptionInput!) {\n  createAmenityOption(createAmenityOptionInput: $createAmenityOptionInput) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}"): (typeof documents)["mutation createAmenityOption($createAmenityOptionInput: CreateAmenityOptionInput!) {\n  createAmenityOption(createAmenityOptionInput: $createAmenityOptionInput) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation deleteAmenityOption($id: Int!) {\n  deleteAmenityOption(amenityOptionId: $id) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}"): (typeof documents)["mutation deleteAmenityOption($id: Int!) {\n  deleteAmenityOption(amenityOptionId: $id) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query AllAmenitiesOption {\n  amenityOptions {\n    data {\n      id\n      name\n      description\n      iconUrl\n      hostelAmenityType\n    }\n    error {\n      code\n    }\n  }\n}"): (typeof documents)["query AllAmenitiesOption {\n  amenityOptions {\n    data {\n      id\n      name\n      description\n      iconUrl\n      hostelAmenityType\n    }\n    error {\n      code\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation updateAmenityOption($id: Int!, $updateAmenityOptionInput: UpdateAmenityOptionInput!) {\n  updateAmenityOption(\n    amenityOptionId: $id\n    updateAmenityOptionInput: $updateAmenityOptionInput\n  ) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}"): (typeof documents)["mutation updateAmenityOption($id: Int!, $updateAmenityOptionInput: UpdateAmenityOptionInput!) {\n  updateAmenityOption(\n    amenityOptionId: $id\n    updateAmenityOptionInput: $updateAmenityOptionInput\n  ) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -193,6 +221,22 @@ export function graphql(source: "query MyBookings {\n  myBookings {\n    data {\
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "mutation updateUser($input: UpdateUserInput!) {\n  updateUser(input: $input) {\n    data {\n      id\n      fullName\n      email\n      phoneNumber\n      altPhoneNumber\n      city\n      gender\n      dateOfBirth\n      profilePicture\n    }\n    error {\n      message\n      code\n    }\n  }\n}"): (typeof documents)["mutation updateUser($input: UpdateUserInput!) {\n  updateUser(input: $input) {\n    data {\n      id\n      fullName\n      email\n      phoneNumber\n      altPhoneNumber\n      city\n      gender\n      dateOfBirth\n      profilePicture\n    }\n    error {\n      message\n      code\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation createRoomAmenityOption($createRoomAmenityOptionInput: CreateRoomAmenityOptionInput!) {\n  createRoomAmenityOption(\n    createRoomAmenityOptionInput: $createRoomAmenityOptionInput\n  ) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}"): (typeof documents)["mutation createRoomAmenityOption($createRoomAmenityOptionInput: CreateRoomAmenityOptionInput!) {\n  createRoomAmenityOption(\n    createRoomAmenityOptionInput: $createRoomAmenityOptionInput\n  ) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation deleteRoomAmenityOption($id: Int!) {\n  deleteRoomAmenityOption(roomAmenityOptionId: $id) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}"): (typeof documents)["mutation deleteRoomAmenityOption($id: Int!) {\n  deleteRoomAmenityOption(roomAmenityOptionId: $id) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query AllRoomAmenitiesOption {\n  roomAmenityOptions {\n    data {\n      id\n      name\n      description\n      iconUrl\n    }\n    error {\n      code\n    }\n  }\n}"): (typeof documents)["query AllRoomAmenitiesOption {\n  roomAmenityOptions {\n    data {\n      id\n      name\n      description\n      iconUrl\n    }\n    error {\n      code\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation updateRoomAmenityOption($id: Int!, $updateRoomAmenityOptionInput: UpdateRoomAmenityOptionInput!) {\n  updateRoomAmenityOption(\n    roomAmenityOptionId: $id\n    updateRoomAmenityOptionInput: $updateRoomAmenityOptionInput\n  ) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}"): (typeof documents)["mutation updateRoomAmenityOption($id: Int!, $updateRoomAmenityOptionInput: UpdateRoomAmenityOptionInput!) {\n  updateRoomAmenityOption(\n    roomAmenityOptionId: $id\n    updateRoomAmenityOptionInput: $updateRoomAmenityOptionInput\n  ) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -289,6 +333,22 @@ export function graphql(source: "query getRules {\n  getRulesByHostel {\n    dat
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "mutation updateRules($input: UpdateRulesInput!, $rulesId: Int!) {\n  updateRules(rulesId: $rulesId, updateRulesInput: $input) {\n    data {\n      id\n      rules\n    }\n    error {\n      message\n      code\n    }\n  }\n}"): (typeof documents)["mutation updateRules($input: UpdateRulesInput!, $rulesId: Int!) {\n  updateRules(rulesId: $rulesId, updateRulesInput: $input) {\n    data {\n      id\n      rules\n    }\n    error {\n      message\n      code\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation createServiceOption($createServiceOptionInput: CreateServiceOptionInput!) {\n  createServiceOption(createServiceOptionInput: $createServiceOptionInput) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}"): (typeof documents)["mutation createServiceOption($createServiceOptionInput: CreateServiceOptionInput!) {\n  createServiceOption(createServiceOptionInput: $createServiceOptionInput) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation deleteServiceOption($id: Int!) {\n  deleteServiceOption(serviceOptionId: $id) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}"): (typeof documents)["mutation deleteServiceOption($id: Int!) {\n  deleteServiceOption(serviceOptionId: $id) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query AllServiceOptions {\n  serviceOptions {\n    data {\n      id\n      name\n      description\n      iconUrl\n    }\n    error {\n      code\n    }\n  }\n}"): (typeof documents)["query AllServiceOptions {\n  serviceOptions {\n    data {\n      id\n      name\n      description\n      iconUrl\n    }\n    error {\n      code\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation updateServiceOption($id: Int!, $updateServiceOptionInput: UpdateServiceOptionInput!) {\n  updateServiceOption(\n    serviceOptionId: $id\n    updateServiceOptionInput: $updateServiceOptionInput\n  ) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}"): (typeof documents)["mutation updateServiceOption($id: Int!, $updateServiceOptionInput: UpdateServiceOptionInput!) {\n  updateServiceOption(\n    serviceOptionId: $id\n    updateServiceOptionInput: $updateServiceOptionInput\n  ) {\n    data {\n      id\n    }\n    error {\n      message\n    }\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

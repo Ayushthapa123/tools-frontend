@@ -1,17 +1,17 @@
 query getHostelDetailsBasic {
- getHostelByToken {
- data {
-   name
-   slug
-   verifiedBySuperAdmin 
-   verifiedByCommunityOwner
-  
-   address {
-     country
-     city
-     subCity
-     street
-   }
- }
-}
+  getHostelByToken {
+    data {
+      name
+      slug
+      verifiedBySuperAdmin
+      verifiedByCommunityOwner
+
+      address {
+        country
+        city
+        subCity
+        street
+      }
+    }
+  }
 }

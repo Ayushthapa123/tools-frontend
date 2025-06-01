@@ -15,10 +15,17 @@ import MainContent from './MainContent';
 import { CommonNav } from 'src/features/NavBar/CommonNav';
 import { useSearchParams } from 'next/navigation';
 import LoadingSpinner from 'src/components/Loading';
-export function HostelPage({ slug,checkInDat,checkOutDat  }: { slug: string,checkInDat:string,checkOutDat:string}) {
-
+export function HostelPage({
+  slug,
+  checkInDat,
+  checkOutDat,
+}: {
+  slug: string;
+  checkInDat: string;
+  checkOutDat: string;
+}) {
   const searchParams = useSearchParams();
-  const checkInDate = checkInDat ?? new Date().toISOString().split("T")[0];
+  const checkInDate = checkInDat ?? new Date().toISOString().split('T')[0];
   const checkOutDate = checkOutDat ?? new Date(Date.now() + 86400000).toISOString().split('T')[0];
 
   const searchHostels = useGraphqlClientRequest<
@@ -40,20 +47,28 @@ export function HostelPage({ slug,checkInDat,checkOutDat  }: { slug: string,chec
   if (!hostel) {
     return (
       <>
-        <div className='flex items-center justify-center min-h-[100vh]'>
+        <div className="flex min-h-[100vh] items-center justify-center">
           <div>
-            <LoadingSpinner  size='lg' color='primary' />
+            <LoadingSpinner size="lg" color="primary" />
           </div>
         </div>
       </>
-    )
+    );
   }
   return (
     <>
       <CommonNav />
       <div className="w-full ">
         <div>
-          <div>{hostel && <MainContent hostel={hostel as Hostel} checkInDate={checkInDate} checkOutDate={checkOutDate} />}</div>
+          <div>
+            {hostel && (
+              <MainContent
+                hostel={hostel as Hostel}
+                checkInDate={checkInDate}
+                checkOutDate={checkOutDate}
+              />
+            )}
+          </div>
           <Footer />
         </div>
       </div>

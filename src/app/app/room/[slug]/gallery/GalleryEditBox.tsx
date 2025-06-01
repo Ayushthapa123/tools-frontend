@@ -34,8 +34,6 @@ export const GalleryEditBox = (props: IcoverEdit) => {
     setImageUrl(url);
   };
 
- 
-
   //create new image
   const mutateCreateGallery = useGraphqlClientRequest<
     CreateRoomImageMutation,
@@ -58,26 +56,29 @@ export const GalleryEditBox = (props: IcoverEdit) => {
   const handleSubmit = () => {
     if (imageUrl && galleryId) {
       //update
-      updateGallery({ roomImageId: galleryId, data: { url: imageUrl, caption: '', id: galleryId } }).then(res => {
+      updateGallery({
+        roomImageId: galleryId,
+        data: { url: imageUrl, caption: '', id: galleryId },
+      }).then(res => {
         if (res?.updateRoomImage?.data?.id) {
           queryClient.invalidateQueries({ queryKey: [String(invalidateKey)] });
-          enqueueSnackbar('Image Updated Success',{variant:'success'})
+          enqueueSnackbar('Image Updated Success', { variant: 'success' });
           handleBack?.();
         } else {
-          enqueueSnackbar("Couldn't upload image",{variant:"error"})
+          enqueueSnackbar("Couldn't upload image", { variant: 'error' });
         }
       });
     } else if (imageUrl && roomId) {
       //create
       createGallery({ data: { roomId: roomId, url: imageUrl, caption: '' } }).then(res => {
-          if (res.createRoomImage.data?.id) {
+        if (res.createRoomImage.data?.id) {
           queryClient.invalidateQueries({ queryKey: [String(invalidateKey)] });
 
-          enqueueSnackbar('Image Created Success',{variant:'success'})
+          enqueueSnackbar('Image Created Success', { variant: 'success' });
           handleBack?.();
           setImageUrl(null);
         } else {
-          enqueueSnackbar('Something went wrong.',{variant:'error'});
+          enqueueSnackbar('Something went wrong.', { variant: 'error' });
           handleBack?.();
         }
       });
@@ -85,19 +86,19 @@ export const GalleryEditBox = (props: IcoverEdit) => {
   };
 
   return (
-    <div className="relative items-center w-full h-full py-4 border rounded-lg">
-      <div className="absolute text-2xl cursor-pointer left-3 top-3">
+    <div className="relative h-full w-full items-center rounded-lg border py-4">
+      <div className="absolute left-3 top-3 cursor-pointer text-2xl">
         {' '}
-        <div className="p-1 text-white bg-gray-200 rounded-full " onClick={() => handleBack?.()}>
+        <div className="rounded-full bg-gray-200 p-1 text-white " onClick={() => handleBack?.()}>
           {' '}
           <FaLongArrowAltLeft className="rounded-full " />
         </div>
       </div>
       <div className="">
         <div>
-          <ImageUploader imageUrl={imageUrl} handleImageUrl={handleImageUrl}  />
+          <ImageUploader imageUrl={imageUrl} handleImageUrl={handleImageUrl} />
         </div>
-        <div className="max-w-md mx-auto mt-5 ">
+        <div className="mx-auto mt-5 max-w-md ">
           <Button
             label="Upload Image"
             disabled={imageUrl ? false : true}

@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import TextInput from 'src/features/react-hook-form/TextField';
 
-
 import React, { FC, useRef, useState } from 'react';
 import Button from 'src/components/Button';
 import { ContactDetails } from './ContactDetails';
@@ -23,9 +22,9 @@ import RichTextEditor from 'src/components/RichTextEditor';
 import { MapProvider } from 'src/features/MapProvider';
 import { enqueueSnackbar } from 'notistack';
 
-export const HostelInfo = () => { 
+export const HostelInfo = () => {
   const queryHostelData = useGraphqlClientRequest<
-      GetHostelByTokenQuery,
+    GetHostelByTokenQuery,
     GetHostelByTokenQueryVariables
   >(GetHostelByToken.loc?.source?.body!);
 
@@ -47,7 +46,6 @@ export const HostelInfo = () => {
           hostelId={hostelData?.data?.id}
           name={hostelData?.data?.name}
           description={hostelData?.data?.description}
-       
         />
       ) : (
         <div className=" relative h-[50vh] w-full">
@@ -57,9 +55,8 @@ export const HostelInfo = () => {
 
       {hostelData?.data?.id && (
         <div>
-          
           {
-            <div className="bg-white card-body card card-bordered">
+            <div className="card card-body card-bordered bg-white">
               <HostelTabs hostelId={Number(hostelData.data.id)} />
             </div>
           }
@@ -72,19 +69,31 @@ export const HostelInfo = () => {
 const HostelTabs = ({ hostelId }: { hostelId: number }) => {
   const tabs = [
     { title: 'Contact Details', id: 1, comp: <ContactDetails hostelId={hostelId} /> },
-    { title: 'Address Details', id: 2, comp: <MapProvider><AddressDetails hostelId={hostelId} /></MapProvider> },
+    {
+      title: 'Address Details',
+      id: 2,
+      comp: (
+        <MapProvider>
+          <AddressDetails hostelId={hostelId} />
+        </MapProvider>
+      ),
+    },
   ];
   const [activeTab, setActiveTab] = useState(1);
 
   return (
     <div className="w-full ">
-      <div role="tablist" className="tabs-boxed tabs bg-transparent z-[99] mb-2 flex flex-wrap pt-2">
+      <div
+        role="tablist"
+        className="tabs-boxed tabs z-[99] mb-2 flex flex-wrap bg-transparent pt-2"
+      >
         {tabs.map(tab => (
           <a
             key={tab.id}
             role="tab"
             className={` tab  font-medium ${tab.id == activeTab ? 'tab-active text-white ' : ' text-primary'}`}
-            onClick={() => setActiveTab(tab.id)}>
+            onClick={() => setActiveTab(tab.id)}
+          >
             {tab.title}
           </a>
         ))}
@@ -105,18 +114,17 @@ const HostelTabs = ({ hostelId }: { hostelId: number }) => {
 };
 
 interface IProps {
-  hostelId?: string | null; 
+  hostelId?: string | null;
 
   name?: string | null;
 
   description?: string | null;
 }
 
-export const HostelInfoForm: FC<IProps> = props => { 
+export const HostelInfoForm: FC<IProps> = props => {
   const { name, description, hostelId } = props;
-  const [ hostelName, setHostelName ] = useState<string | null>(null);
-  const [ hostelDescription, setHostelDescription ] = useState<string | null>(description ?? null);
-
+  const [hostelName, setHostelName] = useState<string | null>(null);
+  const [hostelDescription, setHostelDescription] = useState<string | null>(description ?? null);
 
   const queryClient = useQueryClient();
 
@@ -128,12 +136,9 @@ export const HostelInfoForm: FC<IProps> = props => {
     formState: { errors },
   } = useForm<IProps>({
     defaultValues: {
-    
       name: name,
-   
     },
   });
-
 
   const mutateUpdateHostelInfo = useGraphqlClientRequest<
     UpdateHostelMutation,
@@ -145,36 +150,35 @@ export const HostelInfoForm: FC<IProps> = props => {
   });
   const handleSubmitForm = (data: IProps) => {
     const name = data.name ?? undefined;
-    const description = descriptionRef.current ?? "";
- 
+    const description = descriptionRef.current ?? '';
+
     if (hostelId) {
       //
       updateHostel({
         hostelId: Number(hostelId),
         input: {
-      
           ...(name && {
             name,
           }),
           ...(description && {
             description,
           }),
-     
         },
       }).then(res => {
         if (res?.updateHostel?.data?.id) {
-          enqueueSnackbar("Hostel updated successfully.",{variant:'success'})
+          enqueueSnackbar('Hostel updated successfully.', { variant: 'success' });
         } else {
-          enqueueSnackbar("Something went wrong.",{variant:'warning'})
+          enqueueSnackbar('Something went wrong.', { variant: 'warning' });
         }
       });
-    } 
+    }
   };
 
   return (
     <form
-      className="bg-white card-body card w-full card-bordered gap-[1rem] mb-4"
-      onSubmit={handleSubmit(handleSubmitForm)}>
+      className="card card-body card-bordered mb-4 w-full gap-[1rem] bg-white"
+      onSubmit={handleSubmit(handleSubmitForm)}
+    >
       <div className=" grid gap-[1rem] md:grid-cols-2">
         <div>
           <TextInput
@@ -184,19 +188,15 @@ export const HostelInfoForm: FC<IProps> = props => {
             control={control}
             label="Hostel Name"
             required
-            onKeyDown={(e)=>setHostelName(e.key)}
+            onKeyDown={e => setHostelName(e.key)}
             helpertext={errors.name?.type === 'required' ? 'Name Is Required' : ''}
             error={!!errors.name}
-            customType='name'
+            customType="name"
           />
         </div>
-
-    
-
-
       </div>
       <div>
-       <RichTextEditor editorRef={descriptionRef} onChange={(e)=>setHostelDescription(e)} />
+        <RichTextEditor editorRef={descriptionRef} onChange={e => setHostelDescription(e)} />
       </div>
       <div className="flex justify-end ">
         <div className=" mt-10 w-fit md:w-[200px]">
@@ -204,7 +204,7 @@ export const HostelInfoForm: FC<IProps> = props => {
             label={`${hostelId ? 'Update Hostel Info' : 'Create Hostel Info'}`}
             type="submit"
             loading={isPending}
-            disabled={(hostelName==null && (hostelDescription == description))}
+            disabled={hostelName == null && hostelDescription == description}
           />
         </div>
       </div>

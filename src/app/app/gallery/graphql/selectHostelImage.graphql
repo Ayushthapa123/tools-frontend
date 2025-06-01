@@ -1,5 +1,5 @@
-mutation selectGallery($galleryId:Int!,$hostelId:Int!){
-  selectGallery(galleryId:$galleryId,hostelId:$hostelId){
+mutation selectGallery($galleryId: Int!, $hostelId: Int!) {
+  selectGallery(galleryId: $galleryId, hostelId: $hostelId) {
     data {
       id
       caption

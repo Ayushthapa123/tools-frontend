@@ -7,12 +7,11 @@ import { useForm } from 'react-hook-form';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import TextInput from 'src/features/react-hook-form/TextField';
 
-
 import {
   CreateContacts,
   CreateContactsMutation,
   CreateContactsMutationVariables,
-  GetContactsByHostelId, 
+  GetContactsByHostelId,
   GetContactsByHostelIdQuery,
   GetContactsByHostelIdQueryVariables,
   UpdateContact,
@@ -23,7 +22,7 @@ import LoadingSpinner from 'src/components/Loading';
 import { enqueueSnackbar } from 'notistack';
 
 interface Iprops {
-  hostelId: number; 
+  hostelId: number;
 }
 export const ContactDetails = (props: Iprops) => {
   const { hostelId } = props;
@@ -55,7 +54,7 @@ export const ContactDetails = (props: Iprops) => {
         />
       ) : (
         <div className=" relative h-[50vh] w-full">
-          <LoadingSpinner  color='primary' size='lg' />
+          <LoadingSpinner color="primary" size="lg" />
         </div>
       )}
     </div>
@@ -90,7 +89,7 @@ const HostelInfoForm: FC<IProps> = props => {
       email,
     },
   });
-  const changingEmail =  watch("email")
+  const changingEmail = watch('email');
 
   const mutateCreateHostelContact = useGraphqlClientRequest<
     CreateContactsMutation,
@@ -106,7 +105,9 @@ const HostelInfoForm: FC<IProps> = props => {
     UpdateContactMutationVariables
   >(UpdateContact.loc?.source.body!);
 
-  const { mutateAsync: updateContact ,isPending:isUpdating} = useMutation({ mutationFn: mutateUpdateContact });
+  const { mutateAsync: updateContact, isPending: isUpdating } = useMutation({
+    mutationFn: mutateUpdateContact,
+  });
 
   const handleSubmitForm = (data: IProps) => {
     const phone = data.phone;
@@ -125,14 +126,14 @@ const HostelInfoForm: FC<IProps> = props => {
             altPhone,
           }),
           ...(email && {
-            email:email.trim(),
+            email: email.trim(),
           }),
         },
       }).then(res => {
         if (res?.updateContact?.data?.id) {
-          enqueueSnackbar("Contact updated",{variant:'success'})
+          enqueueSnackbar('Contact updated', { variant: 'success' });
         } else {
-          enqueueSnackbar("Something went wrong",{variant:'error'})
+          enqueueSnackbar('Something went wrong', { variant: 'error' });
         }
       });
     } else {
@@ -145,18 +146,15 @@ const HostelInfoForm: FC<IProps> = props => {
         },
       }).then(res => {
         if (res?.createContact?.data?.id) {
-         enqueueSnackbar("Contacts created",{variant:"success"})
+          enqueueSnackbar('Contacts created', { variant: 'success' });
           queryClient.invalidateQueries({ queryKey: ['getContacts'] });
           queryClient.invalidateQueries({ queryKey: ['getHostelByToken'] });
         } else {
-          enqueueSnackbar("something went wrong.", { variant: "error" });
+          enqueueSnackbar('something went wrong.', { variant: 'error' });
         }
       });
     }
   };
-
-  
-
 
   return (
     <form className=" w-full" onSubmit={handleSubmit(handleSubmitForm)}>
@@ -178,7 +176,7 @@ const HostelInfoForm: FC<IProps> = props => {
         <div>
           <TextInput
             name="phone"
-            placeholder="Phone no" 
+            placeholder="Phone no"
             type="tel"
             control={control}
             label="Phone Number"
@@ -202,15 +200,18 @@ const HostelInfoForm: FC<IProps> = props => {
         </div>
       </div>
 
-      <div className='mt-4'>
+      <div className="mt-4">
         {/* <span className='text-error text-sm'><p className='inline-block'>{(phoneNumber || altPhoneNumber ) && getErrorMessage(phoneNumber,altPhoneNumber,changingEmail)}</p></span> */}
       </div>
 
       <div className=" flex w-full justify-end">
         <div className=" mt-10 w-[200px]">
-          <Button label={`${contactId ? 'Update Contact Info' : 'Create Contact'}`} type="submit" loading={isCreating || isUpdating} 
-          // disabled={ getErrorMessage(phoneNumber,altPhoneNumber,changingEmail)!= true  || !someInputFieldChanged}
-           />
+          <Button
+            label={`${contactId ? 'Update Contact Info' : 'Create Contact'}`}
+            type="submit"
+            loading={isCreating || isUpdating}
+            // disabled={ getErrorMessage(phoneNumber,altPhoneNumber,changingEmail)!= true  || !someInputFieldChanged}
+          />
         </div>
       </div>
     </form>

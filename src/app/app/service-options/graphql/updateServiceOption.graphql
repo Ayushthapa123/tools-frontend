@@ -1,0 +1,10 @@
+mutation updateServiceOption($id: Int!, $updateServiceOptionInput: UpdateServiceOptionInput!) {
+  updateServiceOption(serviceOptionId: $id, updateServiceOptionInput: $updateServiceOptionInput) {
+    data {
+      id
+    }
+    error {
+      message
+    }
+  }
+}

@@ -102,7 +102,6 @@ function SignUp() {
         fullName: data.fullName,
         userType: UserType.HostelOwner,
         phoneNumber: data.phoneNumber,
-        
       },
     }).then(res => {
       if (res?.signupUser?.id) {
@@ -168,8 +167,8 @@ function SignUp() {
                       label="Name"
                       required
                       helpertext={errors.email?.type === 'required' ? 'Name Is Required' : ''}
-                      error={!!errors.email} 
-                      customType='name'
+                      error={!!errors.email}
+                      customType="name"
                     />
                   </div>
                   <div className="mt-5 ">
@@ -193,8 +192,10 @@ function SignUp() {
                       control={control}
                       label="Phone Number"
                       // endAdornment={<MailOutlineOutlinedIcon />}
-                    
-                      helpertext={errors.phoneNumber?.type === 'required' ? 'Phone Number Is Required' : ''}
+
+                      helpertext={
+                        errors.phoneNumber?.type === 'required' ? 'Phone Number Is Required' : ''
+                      }
                       error={!!errors.phoneNumber}
                     />
                   </div>
@@ -242,7 +243,7 @@ function SignUp() {
                     disabled={loading || !isValid}
                     className={`${
                       loading || !isValid ? 'cursor-not-allowed opacity-30' : 'opacity-100'
-                    } bg-secondary rounded-md px-4 py-2 font-bold w-full   `}
+                    } w-full rounded-md bg-secondary px-4 py-2 font-bold   `}
                     label="Sign Up"
                   />
                 </div>
@@ -272,7 +273,8 @@ function SignUp() {
                     height="40"
                     viewBox="0 0 40 40"
                     fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <circle
                       cx="1.39737"
                       cy="38.6026"
@@ -393,7 +395,8 @@ function SignUp() {
                     height="40"
                     viewBox="0 0 29 40"
                     fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <circle
                       cx="2.288"
                       cy="25.9912"

@@ -2,7 +2,7 @@ import React from 'react';
 
 const combineClasses = (...classes: (string | Record<string, boolean> | undefined)[]): string => {
   return classes
-    .map((item) => {
+    .map(item => {
       if (!item) return '';
       if (typeof item === 'string') return item;
       return Object.entries(item)
@@ -52,7 +52,7 @@ const IconButton: React.FC<IconButtonProps> = ({
     sizeStyles[size],
     colorStyles[color],
     { [disabledStyles]: disabled },
-    className
+    className,
   );
 
   return (
@@ -61,7 +61,8 @@ const IconButton: React.FC<IconButtonProps> = ({
       onClick={onClick}
       disabled={disabled}
       type="button"
-      aria-disabled={disabled}>
+      aria-disabled={disabled}
+    >
       {children}
     </button>
   );

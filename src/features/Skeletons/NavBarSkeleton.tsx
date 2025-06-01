@@ -1,9 +1,8 @@
-import { BsThreeDots } from "react-icons/bs";
-
+import { BsThreeDots } from 'react-icons/bs';
 
 export const NavBarSkeleton = () => {
   return (
-    <div className="skeleton flex w-full items-center justify-between px-10 gap-10 ">
+    <div className="skeleton flex w-full items-center justify-between gap-10 px-10 ">
       <div className="ml-3 flex-grow ">
         <div className="text-23 line-clamp-1 truncate font-semibold text-primary">
           <div className="skeleton h-7 w-full"></div>
@@ -18,4 +17,4 @@ export const NavBarSkeleton = () => {
       </div>
     </div>
   );
- }
+};

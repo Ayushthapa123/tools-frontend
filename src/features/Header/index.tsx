@@ -27,9 +27,8 @@ export const Header = () => {
   hsl(199deg 74% 82%) 100%
 )
 `,
-        }}>
-    
-
+        }}
+      >
         <div className="relative flex h-[200px] w-full items-center justify-center text-center">
           <h1 className="relative px-4 text-[42px]  font-light leading-[1.1] sm:text-5xl sm:leading-[1.1] md:text-6xl md:leading-[1.1]">
             Your Hostel Search, Simplified - <br /> Explore with Us!
@@ -44,13 +43,11 @@ export const Header = () => {
             <div className="flex h-[35vh] w-full flex-col items-center justify-center">
               <div className="mt-4 w-full max-w-7xl px-2 ">
                 <p className="text-center text-2xl text-[#78B7D0] sm:text-3xl md:text-4xl">
-                  Welcome to Hostel.com, your go-to platform for finding the perfect hostel.
-                  Whether it is a cozy stay or a shared space, we make your search quick and easy!
+                  Welcome to Hostel.com, your go-to platform for finding the perfect hostel. Whether
+                  it is a cozy stay or a shared space, we make your search quick and easy!
                 </p>
               </div>
-              <div>
-              
-              </div>
+              <div></div>
             </div>
           </div>
         </div>

@@ -9,8 +9,8 @@ const config: Config = {
     './src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   fontFamily: {
-    sans: [ 'Poppins', 'Inter', 'system-ui', 'sans' ],
-    monospace: [ 'DM Mono', 'monospace' ],
+    sans: ['Poppins', 'Inter', 'system-ui', 'sans'],
+    monospace: ['DM Mono', 'monospace'],
   },
   theme: {
     extend: {
@@ -23,7 +23,6 @@ const config: Config = {
         mono: ['DM Mono', 'monospace'],
       },
       colors: {
-
         primary: '#395B55',
         secondary: '#C2765C',
         accent: '#3B5D50',
@@ -32,7 +31,7 @@ const config: Config = {
         success: '#4C7C59',
         warning: '#F8BC42',
         error: '#C84730',
-        blue: "#449BAF",
+        blue: '#449BAF',
 
         black: '#000000',
         white: '#FFFFFF',
@@ -44,14 +43,11 @@ const config: Config = {
         redHover: '#DE4822',
         redPressed: '#F57959',
         transparent: 'transparent',
-        background: "#F3F1EB",
-        
+        background: '#F3F1EB',
       },
-
-
     },
   },
-  plugins: [ require('daisyui') ],
+  plugins: [require('daisyui')],
   daisyui: {
     themes: [
       {
@@ -70,13 +66,11 @@ const config: Config = {
           'btn-accent': '#F6B042',
           'btn-neutral': '#4A4A4A',
           // Base scale for light mode
-          'base-100': '#F7F1EA',// for background
+          'base-100': '#F7F1EA', // for background
           'base-200': '#EDE7E1', // for hover
           'base-300': '#E5DFD8', // for border
-
-
         },
-      // dark: {
+        // dark: {
         //   primary: '#3B5D50',
         //   secondary: '#EBB52C',
         //   accent: '#3B5D50',

@@ -30,7 +30,7 @@ export const JoinUs = () => {
                 onChange={e => setEmail(e.target.value)}
               />
             </div>
-            <div className=" mx-auto  mt-10 flex max-w-xl cursor-pointer items-center justify-center rounded-lg border-b-[3px] border-b-primary bg-red-500 align-middle shadow-lg">
+            <div className=" bg-red-500  mx-auto mt-10 flex max-w-xl cursor-pointer items-center justify-center rounded-lg border-b-[3px] border-b-primary align-middle shadow-lg">
               <Link href={`/signup?email=${email}`}>
                 <button className=" flex h-[px] max-w-xl flex-row items-center justify-center border border-transparent   px-4 py-4 text-xl font-medium  uppercase tracking-wide text-white transition duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50">
                   Join Now

@@ -1,0 +1,14 @@
+query AllRoomAmenitiesOption {
+  roomAmenityOptions {
+    data {
+      id
+      name
+      description
+      iconUrl
+    
+    }
+    error {
+      code
+    }
+  }
+}

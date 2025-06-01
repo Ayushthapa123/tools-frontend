@@ -5,15 +5,15 @@ function mergeClasses(inputs: ClassValue[]): string {
   const regularClasses = new Set<string>();
   const utilityClasses = new Map<string, string>();
   const classOrder: string[] = [];
-  
+
   function processValue(value: ClassValue) {
     if (!value) return;
-    
+
     if (typeof value === 'string') {
       value.split(' ').forEach(cls => {
         if (!cls) return;
         const trimmedClass = cls.trim();
-        
+
         // Check if it's a Tailwind utility class
         const match = trimmedClass.match(/^([a-z]+(?:-[a-z]+)*(?:[:][a-z]+)?)-/);
         if (match) {
@@ -69,4 +69,4 @@ function mergeClasses(inputs: ClassValue[]): string {
 
 export function cn(...inputs: ClassValue[]) {
   return mergeClasses(inputs);
-} 
+}

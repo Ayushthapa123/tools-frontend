@@ -1,49 +1,49 @@
 query GetBookingByKey($bookingKey: String!) {
   bookingsWithKey(bookingKey: $bookingKey) {
     data {
-    id
-    roomId
-    bookingKey
-    guestId
-    startDate
-    endDate
-    status
-    createdAt
-    updatedAt
-    room {
       id
+      roomId
+      bookingKey
+      guestId
+      startDate
+      endDate
       status
-      capacity
-      caption
-      roomNumber
-      attachBathroom
-      hostelId
       createdAt
       updatedAt
-      image {
-        url
+      room {
+        id
+        status
+        capacity
         caption
-      } 
-      price {
-        baseAmountPerDay
-        baseAmountPerMonth
-        currency
+        roomNumber
+        attachBathroom
+        hostelId
+        createdAt
+        updatedAt
+        image {
+          url
+          caption
+        }
+        price {
+          baseAmountPerDay
+          baseAmountPerMonth
+          currency
+        }
+      }
+      guest {
+        id
+        email
+        fullName
+        phoneNumber
+        isVerified
+        userType
+        createdAt
+        updatedAt
       }
     }
-    guest {
-      id
-      email
-      fullName
-      phoneNumber
-      isVerified
-      userType
-      createdAt
-      updatedAt
+    error {
+      message
+      code
     }
   }
-  error {
-    message
-    code
-  }
-}
 }

@@ -6,9 +6,8 @@ import LogIn from 'src/app/login/LogIn';
 import { BsArrowRight } from 'react-icons/bs';
 
 export const Header = () => {
-
   return (
-    <div className=" grid  min-h-[90vh] w-full lg:grid-cols-2 flex-wrap-reverse ">
+    <div className=" grid  min-h-[90vh] w-full flex-wrap-reverse lg:grid-cols-2 ">
       <div className="p-3 py-10 lg:px-10">
         <div className=" min-h-[50vh] ">
           <div className="">
@@ -22,9 +21,9 @@ export const Header = () => {
               </p>
               <Link href={'/signup'}>
                 {' '}
-                <span className="flex text-lg text-blue-500 hover:text-secondary ">
+                <span className="text-blue-500 flex text-lg hover:text-secondary ">
                   Get Started
-                  <span className='relative top-1'>
+                  <span className="relative top-1">
                     <BsArrowRight />
                   </span>
                 </span>
@@ -32,8 +31,8 @@ export const Header = () => {
             </div>
           </div>
         </div>
-        <div className=''>
-        <IntegratedWith />
+        <div className="">
+          <IntegratedWith />
         </div>
       </div>
       <div className="flex">

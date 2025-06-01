@@ -11,13 +11,13 @@ import { CreateHostelModal } from 'src/app/app/hostel-info/CreateHostelModal';
 import { UserType } from 'src/gql/graphql';
 
 export const CommonNav = () => {
-
   const { user } = useUserStore();
 
   return (
     <div
       className="sticky top-0 z-[999] flex h-[70px] w-full  bg-white  px-3 shadow-sm md:h-[70px] md:px-[30px] "
-      id="common-nav">
+      id="common-nav"
+    >
       <div className="flex w-full justify-between ">
         <div className="relative flex w-auto">
           <div className="relative h-[60px] w-[150px] md:h-[70px] md:w-fit ">
@@ -33,27 +33,20 @@ export const CommonNav = () => {
                 <div className="flex gap-1 md:gap-2">
                   <Link href={'/login'}>
                     <motion.div className="  font-semibold " transition={{ duration: 0.3 }}>
-                      <div className="py-3 text-[1rem] p1-1 hover:underline" >Login</div>
+                      <div className="p1-1 py-3 text-[1rem] hover:underline">Login</div>
                     </motion.div>
                   </Link>
                 </div>
 
-
-
-                <button
-                  
-                  className="flex flex-row items-center justify-center rounded-full border border-transparent bg-primary font-medium tracking-wide transition duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 lg:min-w-fit py-0"
-                >
+                <button className="flex flex-row items-center justify-center rounded-full border border-transparent bg-primary py-0 font-medium tracking-wide transition duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 lg:min-w-fit">
                   <motion.div className="  font-semibold " transition={{ duration: 0.3 }}>
-                    <Link href={"/signup"}>
-                      <span className="block md:block text-white">Signup</span>
+                    <Link href={'/signup'}>
+                      <span className="block text-white md:block">Signup</span>
                     </Link>
                   </motion.div>
                 </button>
               </>
             )}
-
-
 
             {user.userId && (
               <div className=" flex flex-col justify-center ">
@@ -66,6 +59,6 @@ export const CommonNav = () => {
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 };

@@ -1,6 +1,6 @@
 // SettingsIcon.tsx
 import React from 'react';
-import { FaInfoCircle,} from 'react-icons/fa';
+import { FaInfoCircle } from 'react-icons/fa';
 
 interface IconProps {
   className?: string;

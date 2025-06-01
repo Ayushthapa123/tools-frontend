@@ -1,21 +1,21 @@
 query getUserById($id: Float!) {
   getUserById(id: $id) {
     data {
-    id
-    isVerified
-    fullName
-    email
-    phoneNumber
-    altPhoneNumber
-    city
-    gender
-    dateOfBirth
-    profilePicture
-    hostelId
+      id
+      isVerified
+      fullName
+      email
+      phoneNumber
+      altPhoneNumber
+      city
+      gender
+      dateOfBirth
+      profilePicture
+      hostelId
+    }
+    error {
+      message
+      code
+    }
   }
-  error {
-    message
-    code
-  }
-} 
 }

@@ -1,9 +1,9 @@
-mutation CreateAmenity($createAmenityInput:CreateAmenityInput!){
-  createAmenity(createAmenityInput:$createAmenityInput){
+mutation CreateAmenity($createAmenityInput: CreateAmenityInput!) {
+  createAmenity(createAmenityInput: $createAmenityInput) {
     data {
-    id
-    amenities
-    hostelId
+      id
+      amenities
+      hostelId
     }
     error {
       message

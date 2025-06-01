@@ -1,19 +1,19 @@
 mutation CreatePrice($createPriceInput: CreatePriceInput!) {
   createPrice(createPriceInput: $createPriceInput) {
     data {
-    id
-    baseAmountPerDay
-    baseAmountPerMonth
-    currency
-    roomId
-    isDynamicPricing
-    discountAmount
-    discountType
-    isDiscountActive
+      id
+      baseAmountPerDay
+      baseAmountPerMonth
+      currency
+      roomId
+      isDynamicPricing
+      discountAmount
+      discountType
+      isDiscountActive
+    }
+    error {
+      message
+      code
+    }
   }
-  error {
-    message
-    code
-  }
-}
 }

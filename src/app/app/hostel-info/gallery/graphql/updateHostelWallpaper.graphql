@@ -1,17 +1,17 @@
 mutation UpdateGallery($galleryId: Int!, $data: UpdateGalleryInput!) {
   updateGallery(galleryId: $galleryId, data: $data) {
-  data {
-    id
-    hostelId
-    url
-    isSelected
-    caption
-    createdAt
-    updatedAt
+    data {
+      id
+      hostelId
+      url
+      isSelected
+      caption
+      createdAt
+      updatedAt
+    }
+    error {
+      message
+      code
+    }
   }
-  error {
-    message
-    code
-  }
-}
 }

@@ -1,9 +1,8 @@
-import { BsThreeDots } from "react-icons/bs";
-
+import { BsThreeDots } from 'react-icons/bs';
 
 export const UserProfileSkeleton = () => {
   return (
-    <div className="flex items-center skeleton w-full justify-between gap-3 p-5">
+    <div className="skeleton flex w-full items-center justify-between gap-3 p-5">
       <div className="relative h-14 w-14">
         <div className="skeleton h-full w-full rounded-full"></div>
       </div>
@@ -22,4 +21,4 @@ export const UserProfileSkeleton = () => {
       </div>
     </div>
   );
- }
+};

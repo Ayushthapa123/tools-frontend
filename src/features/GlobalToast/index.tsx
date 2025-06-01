@@ -19,7 +19,7 @@ const GlobalToast = () => {
     const timer = setTimeout(() => {
       setShowToast(false);
       setMessage('');
-      setRole('alert')
+      setRole('alert');
     }, 3000);
 
     return () => clearTimeout(timer);
@@ -36,7 +36,8 @@ const GlobalToast = () => {
       {showToast && message && (
         <div
           className={`min-w-[300px]  ${role == 'alert' ? 'bg-accent' : role == 'error' ? 'bg-error' : 'bg-primary'} fixed right-10 top-10 z-[99999] rounded-xl text-sm text-white shadow-lg`}
-          role="alert">
+          role="alert"
+        >
           <div className="flex gap-3 p-[0.7rem] ">
             <div className=" relative  text-lg">
               {role == 'alert'
@@ -49,9 +50,10 @@ const GlobalToast = () => {
             <div className="  flex h-full ">
               <button
                 type="button"
-                className=" mx-2 flex size-5 relative  flex-shrink-0 bg-transparent items-center justify-center rounded-lg text-white opacity-50 hover:text-white hover:opacity-100 focus:opacity-100 focus:outline-none"
-                onClick={handleClose}>
-                <GrClose className=' text-white h-4 w-4 absolute right-3' size='md'  />
+                className=" relative mx-2 flex size-5  flex-shrink-0 items-center justify-center rounded-lg bg-transparent text-white opacity-50 hover:text-white hover:opacity-100 focus:opacity-100 focus:outline-none"
+                onClick={handleClose}
+              >
+                <GrClose className=" absolute right-3 h-4 w-4 text-white" size="md" />
               </button>
             </div>
           </div>

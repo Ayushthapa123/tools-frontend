@@ -24,7 +24,7 @@ import { enqueueSnackbar } from 'notistack';
 
 export const AddDynamicRule = ({
   roomId,
-  rules
+  rules,
 }: {
   roomId: number | string;
   rules: DynamicPricingRuleData | undefined;
@@ -35,19 +35,12 @@ export const AddDynamicRule = ({
   };
   return (
     <div>
-      <div className='rounded-lg mx-4 mt-1 hover:bg-slate-300  bg-slate-100'>
-      <IconButton onClick={() => setOpen(true)} className='text-black'>
-        {rules?.id ? 'Edit Rule' : 'Add New Rule'}
-      </IconButton>
+      <div className="mx-4 mt-1 rounded-lg bg-slate-100  hover:bg-slate-300">
+        <IconButton onClick={() => setOpen(true)} className="text-black">
+          {rules?.id ? 'Edit Rule' : 'Add New Rule'}
+        </IconButton>
       </div>
-      {open && (
-        <RuleForm
-          open
-          handleClose={handleClose}
-          roomId={roomId}
-          rules={rules}
-        />
-      )}
+      {open && <RuleForm open handleClose={handleClose} roomId={roomId} rules={rules} />}
     </div>
   );
 };
@@ -115,7 +108,7 @@ export const RuleForm = ({
           },
         });
         if (result?.updatePriceRule?.data?.id) {
-          enqueueSnackbar("Rules updated",{variant:'success'})
+          enqueueSnackbar('Rules updated', { variant: 'success' });
           queryClient.invalidateQueries({ queryKey: ['getPriceRulesByRoom'] });
           handleClose();
         }
@@ -134,15 +127,15 @@ export const RuleForm = ({
           },
         });
         if (result?.createPriceRule?.data?.id) {
-          enqueueSnackbar('Rules created',{variant:'success'})
+          enqueueSnackbar('Rules created', { variant: 'success' });
           queryClient.invalidateQueries({ queryKey: ['getPriceRulesByRoom'] });
           handleClose();
-        }else {
-          enqueueSnackbar("Something went wrong.",{variant:'error'})
+        } else {
+          enqueueSnackbar('Something went wrong.', { variant: 'error' });
         }
       }
     } catch (error) {
-      enqueueSnackbar("Something went wrong.",{variant:'error'})
+      enqueueSnackbar('Something went wrong.', { variant: 'error' });
     }
   };
 
@@ -153,9 +146,10 @@ export const RuleForm = ({
         handleClose={handleClose}
         onSave={handleSubmit(onSubmit)}
         title={isEdit ? 'Update Rule' : 'Add New Rule'}
-        actionLabel={isEdit ? 'Update' : 'Create'}>
+        actionLabel={isEdit ? 'Update' : 'Create'}
+      >
         <div className="bg-base-100">
-          <form className="bg-base-100 text-left space-y-4 p-4">
+          <form className="space-y-4 bg-base-100 p-4 text-left">
             <div className="mb-3">
               <TextInput
                 name="name"
@@ -165,7 +159,7 @@ export const RuleForm = ({
                 required
                 error={!!errors.name}
                 helpertext={errors.name?.message}
-                customType='name'
+                customType="name"
                 type="text"
               />
             </div>
@@ -192,26 +186,17 @@ export const RuleForm = ({
                 required
                 error={!!errors.amount}
                 helpertext={errors.amount?.message}
-                customType='price'
-                
+                customType="price"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="mb-3">
-                <DatePicker
-                  name="startDate"
-                  control={control}
-                  label="Start Date"
-                />
+                <DatePicker name="startDate" control={control} label="Start Date" />
               </div>
 
               <div className="mb-3">
-                <DatePicker
-                  name="endDate"
-                  control={control}
-                  label="End Date"
-                />
+                <DatePicker name="endDate" control={control} label="End Date" />
               </div>
             </div>
 
@@ -224,25 +209,17 @@ export const RuleForm = ({
                 type="number"
                 error={!!errors.priority}
                 helpertext={errors.priority?.message}
-                customType='number'
+                customType="number"
               />
             </div>
 
             <div className="flex gap-4">
               <div className="mb-3">
-                <Toggle
-                  name="isWeekend"
-                  control={control}
-                  label="Weekend Only"
-                />
+                <Toggle name="isWeekend" control={control} label="Weekend Only" />
               </div>
 
               <div className="mb-3">
-                <Toggle
-                  name="isActive"
-                  control={control}
-                  label="Active"
-                />
+                <Toggle name="isActive" control={control} label="Active" />
               </div>
             </div>
           </form>

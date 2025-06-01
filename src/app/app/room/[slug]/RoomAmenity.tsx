@@ -1,62 +1,79 @@
-"use client"
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useGraphqlClientRequest } from "src/client/useGraphqlClientRequest";
-import { CreateRoomAmenity, CreateRoomAmenityMutation, CreateRoomAmenityMutationVariables, FindAmenityByRoomId, FindAmenityByRoomIdQuery, FindAmenityByRoomIdQueryVariables, UpdateRoomAmenity, UpdateRoomAmenityMutation, UpdateRoomAmenityMutationVariables } from "src/gql/graphql";
-import { roomAmenities } from "../../data/roomAmenity";
-import { Input } from "src/components/Input";
-import Button from "src/components/Button";
-import LoadingSpinner from "src/components/Loading";
-import { enqueueSnackbar } from "notistack";
+'use client';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import {
+  CreateRoomAmenity,
+  CreateRoomAmenityMutation,
+  CreateRoomAmenityMutationVariables,
+  FindAmenityByRoomId,
+  FindAmenityByRoomIdQuery,
+  FindAmenityByRoomIdQueryVariables,
+  UpdateRoomAmenity,
+  UpdateRoomAmenityMutation,
+  UpdateRoomAmenityMutationVariables,
+} from 'src/gql/graphql';
+import { roomAmenities } from '../../data/roomAmenity';
+import { Input } from 'src/components/Input';
+import Button from 'src/components/Button';
+import LoadingSpinner from 'src/components/Loading';
+import { enqueueSnackbar } from 'notistack';
 
-export default function RoomAmenityPage({ handleBack, roomId }: { handleBack: () => void, roomId: number }) {
-  
-  const [ selectedRoomAmenity, setSelectedRoomAmenity ] = useState<string[]>([]);
+export default function RoomAmenityPage({
+  handleBack,
+  roomId,
+}: {
+  handleBack: () => void;
+  roomId: number;
+}) {
+  const [selectedRoomAmenity, setSelectedRoomAmenity] = useState<string[]>([]);
   const router = useRouter();
   const queryClient = useQueryClient();
 
   // room amenity fetching
-  const queryValidity = useGraphqlClientRequest<FindAmenityByRoomIdQuery,FindAmenityByRoomIdQueryVariables>(FindAmenityByRoomId.loc?.source?.body!);
-  const getRoomAmenities=async()=>{
-    const res=await queryValidity({
-      roomId:roomId
-    })
-    return res.findAmenityByRoomId
-  }
-  const {data,isLoading}=useQuery({
-    queryKey:['getRoomAmenities'],
-    queryFn:()=>getRoomAmenities()
-  })
+  const queryValidity = useGraphqlClientRequest<
+    FindAmenityByRoomIdQuery,
+    FindAmenityByRoomIdQueryVariables
+  >(FindAmenityByRoomId.loc?.source?.body!);
+  const getRoomAmenities = async () => {
+    const res = await queryValidity({
+      roomId: roomId,
+    });
+    return res.findAmenityByRoomId;
+  };
+  const { data, isLoading } = useQuery({
+    queryKey: ['getRoomAmenities'],
+    queryFn: () => getRoomAmenities(),
+  });
 
   useEffect(() => {
     if (data?.data?.amenity) {
-      setSelectedRoomAmenity(data.data.amenity.split(","));
+      setSelectedRoomAmenity(data.data.amenity.split(','));
     }
   }, [data?.data?.amenity]);
 
-  //create room amenity 
+  //create room amenity
   const mutateRoomAmenity = useGraphqlClientRequest<
-      CreateRoomAmenityMutation,
-      CreateRoomAmenityMutationVariables
-    >(CreateRoomAmenity.loc?.source.body!);
-  
+    CreateRoomAmenityMutation,
+    CreateRoomAmenityMutationVariables
+  >(CreateRoomAmenity.loc?.source.body!);
+
   const { mutateAsync } = useMutation({ mutationFn: mutateRoomAmenity });
 
-  //update room amenity 
+  //update room amenity
   const updateRoomAmenity = useGraphqlClientRequest<
-      UpdateRoomAmenityMutation,
-      UpdateRoomAmenityMutationVariables
-    >(UpdateRoomAmenity.loc?.source.body!);
-  
-  const { mutateAsync:updateAmenity } = useMutation({ mutationFn: updateRoomAmenity });
-  
+    UpdateRoomAmenityMutation,
+    UpdateRoomAmenityMutationVariables
+  >(UpdateRoomAmenity.loc?.source.body!);
+
+  const { mutateAsync: updateAmenity } = useMutation({ mutationFn: updateRoomAmenity });
+
   const handleToggle = (name: string) => {
-    setSelectedRoomAmenity((prev) =>
-      prev.includes(name) ? prev.filter((item) => item !== name) : [ ...prev, name ]
+    setSelectedRoomAmenity(prev =>
+      prev.includes(name) ? prev.filter(item => item !== name) : [...prev, name],
     );
   };
-
 
   const handleFinish = () => {
     router.push(`/app/room`);
@@ -64,41 +81,40 @@ export default function RoomAmenityPage({ handleBack, roomId }: { handleBack: ()
 
   const handleSave = () => {
     if (!data?.data?.id) {
-      mutateAsync({ createAmenityInput: { roomId, amenity: selectedRoomAmenity.join(",") } }).then((res) => {
-        if (res?.createRoomAmenity.data?.id) {
-          queryClient.invalidateQueries({ queryKey: ['getRoomAmenities'] });
-          enqueueSnackbar('Amenities Created Successfully!',{variant:'success'})
-        }
-        else {
-          enqueueSnackbar('Amenities Not Created!',{variant:'error'})
-        }
-      })
-    }
-    else {
-      updateAmenity({updateAmenityInput:{id:Number(data?.data?.id), amenity:selectedRoomAmenity.join(",")}}).then((res) => {
+      mutateAsync({ createAmenityInput: { roomId, amenity: selectedRoomAmenity.join(',') } }).then(
+        res => {
+          if (res?.createRoomAmenity.data?.id) {
+            queryClient.invalidateQueries({ queryKey: ['getRoomAmenities'] });
+            enqueueSnackbar('Amenities Created Successfully!', { variant: 'success' });
+          } else {
+            enqueueSnackbar('Amenities Not Created!', { variant: 'error' });
+          }
+        },
+      );
+    } else {
+      updateAmenity({
+        updateAmenityInput: { id: Number(data?.data?.id), amenity: selectedRoomAmenity.join(',') },
+      }).then(res => {
         if (res?.updateRoomAmenity.data?.id) {
           queryClient.invalidateQueries({ queryKey: ['getRoomAmenities'] });
-          enqueueSnackbar('Amenities Updated Successfully!',{variant:'success'})
+          enqueueSnackbar('Amenities Updated Successfully!', { variant: 'success' });
+        } else {
+          enqueueSnackbar('Amenities Not Updated!', { variant: 'error' });
         }
-        else {
-          enqueueSnackbar('Amenities Not Updated!',{variant:'error'})
-        }
-      })
+      });
     }
   };
 
-  if(isLoading) return (
-    <LoadingSpinner color='primary' size='lg' />
-  )
+  if (isLoading) return <LoadingSpinner color="primary" size="lg" />;
 
   return (
-    <div className="mx-auto p-6 bg-white rounded-xl shadow-lg border border-gray-100 mt-8">
-      <h2 className="text-2xl font-bold mb-4 text-gray-800">Select Room Amenities</h2>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6 items-center">
-        {roomAmenities?.map((amenity) => (
+    <div className="mx-auto mt-8 rounded-xl border border-gray-100 bg-white p-6 shadow-lg">
+      <h2 className="mb-4 text-2xl font-bold text-gray-800">Select Room Amenities</h2>
+      <div className="mb-6 grid grid-cols-2 items-center gap-4 md:grid-cols-3 lg:grid-cols-4">
+        {roomAmenities?.map(amenity => (
           <label
             key={amenity.id}
-            className={`flex items-start gap-3 p-3 rounded-lg cursor-pointer transition-colors border border-gray-200 hover:bg-blue-50 ${selectedRoomAmenity.includes(amenity.name) ? "bg-blue-100 border-blue-400" : "bg-white"}`}
+            className={`hover:bg-blue-50 flex cursor-pointer items-start gap-3 rounded-lg border border-gray-200 p-3 transition-colors ${selectedRoomAmenity.includes(amenity.name) ? 'bg-blue-100 border-blue-400' : 'bg-white'}`}
           >
             {/* <img src={amenity.iconUrl} alt={amenity.name} className="w-7 h-7" /> */}
             <div className="flex items-center gap-3">
@@ -107,24 +123,28 @@ export default function RoomAmenityPage({ handleBack, roomId }: { handleBack: ()
                   type="checkbox"
                   checked={selectedRoomAmenity.includes(amenity.name)}
                   onChange={() => handleToggle(amenity.name)}
-                  className="w-5 h-5"
-                // style={{ minWidth: 20 }}
+                  className="h-5 w-5"
+                  // style={{ minWidth: 20 }}
                 />
               </div>
               <div>
-                <span className={` text-gray-700 ${selectedRoomAmenity.includes(amenity.name) ? "font-semibold text-primary" : ""}`}>{amenity.name}</span>
+                <span
+                  className={` text-gray-700 ${selectedRoomAmenity.includes(amenity.name) ? 'font-semibold text-primary' : ''}`}
+                >
+                  {amenity.name}
+                </span>
               </div>
             </div>
           </label>
         ))}
       </div>
-      <div className="flex gap-3 justify-between">
+      <div className="flex justify-between gap-3">
         <div>
-        <Button label="Back" onClick={handleBack} className="w-fit" />
+          <Button label="Back" onClick={handleBack} className="w-fit" />
         </div>
         <div className="flex gap-3">
-        <Button label="Save Amenities" variant="primary" onClick={handleSave} />
-        <Button label="Done" variant="primary" onClick={handleFinish} />
+          <Button label="Save Amenities" variant="primary" onClick={handleSave} />
+          <Button label="Done" variant="primary" onClick={handleFinish} />
         </div>
       </div>
     </div>

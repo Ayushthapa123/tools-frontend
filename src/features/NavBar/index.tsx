@@ -1,5 +1,5 @@
 // components/Navbar.js
-"use client";
+'use client';
 import { IoMdNotifications } from 'react-icons/io';
 import { Drawer } from '../Drawer';
 import { CreateHostelModal } from 'src/app/app/hostel-info/CreateHostelModal';
@@ -22,7 +22,7 @@ const Navbar = () => {
   }, [user?.hostelId, user?.userType]);
   return (
     <nav className="h-[70px]  bg-white px-4  shadow-sm">
-      <div className="flex items-center justify-between mx-5  md:mx-10">
+      <div className="mx-5 flex items-center justify-between  md:mx-10">
         {!user?.hostelId && showModal && <CreateHostelModal />}
         {/* Left side - Logo */}
         <div className="relative flex items-center">
@@ -30,7 +30,7 @@ const Navbar = () => {
         </div>
 
         {/* Right side - Notification Icon */}
-        <div className="relative flex gap-3  top-1">
+        <div className="relative top-1 flex  gap-3">
           {/* <label className="swap swap-rotate">
             <input 
               type="checkbox" 
@@ -45,19 +45,19 @@ const Navbar = () => {
               <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z"/>
             </svg>
           </label> */}
-      
-          <div className="relative p-1 rounded-lg cursor-pointer  h-min bg-slate-100 top-1">
+
+          <div className="relative top-1 h-min cursor-pointer  rounded-lg bg-slate-100 p-1">
             <span className=" relative text-[25px] text-primary ">
               <IoMdNotifications />
             </span>
           </div>
           <UserProfile />
 
-          {
-            user.userType!==UserType.Student && <div className="left-0 top-[70px]  lg:hidden ">
-             <Drawer />
-           </div>
-         }
+          {user.userType !== UserType.Student && (
+            <div className="left-0 top-[70px]  lg:hidden ">
+              <Drawer />
+            </div>
+          )}
         </div>
       </div>
     </nav>

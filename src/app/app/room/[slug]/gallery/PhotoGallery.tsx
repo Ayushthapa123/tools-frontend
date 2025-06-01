@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 
 import {
-
   GetRoomImagesByRoomId,
   GetRoomImagesByRoomIdQuery,
   GetRoomImagesByRoomIdQueryVariables,
@@ -56,18 +55,17 @@ export const PhotoGallery = (props: Iprops) => {
           </div>
         ))}
         <div className=" relative h-[300px] md:w-[450px]">
-        {Number(roomData?.data?.length) < 5 && (
-          <GalleryEditBox
-            handleBack={handleBack}
-            galleryType={galleryType}
-            roomId={roomId}
-            action="create"
-            invalidateKey={galleryKey}
-          />
-        )}
+          {Number(roomData?.data?.length) < 5 && (
+            <GalleryEditBox
+              handleBack={handleBack}
+              galleryType={galleryType}
+              roomId={roomId}
+              action="create"
+              invalidateKey={galleryKey}
+            />
+          )}
+        </div>
       </div>
-      </div>
-      
     </div>
   );
 };

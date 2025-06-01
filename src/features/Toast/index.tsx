@@ -35,7 +35,8 @@ const Toast = (props: Iprops) => {
       {showToast && (
         <div
           className={`min-w-[300px]  ${role == 'alert' ? 'bg-accent' : role == 'error' ? 'bg-error' : 'bg-primary'} fixed right-10 top-10 rounded-xl text-sm text-white shadow-lg`}
-          role="alert">
+          role="alert"
+        >
           <div className="flex gap-3 p-4">
             <div className=" relative  text-lg">
               {role == 'alert'
@@ -49,7 +50,8 @@ const Toast = (props: Iprops) => {
               <button
                 type="button"
                 className=" mx-2 flex size-5 flex-shrink-0 items-center justify-center rounded-lg text-white opacity-50 hover:text-white hover:opacity-100 focus:opacity-100 focus:outline-none"
-                onClick={handleClose}>
+                onClick={handleClose}
+              >
                 <GrClose />
               </button>
             </div>

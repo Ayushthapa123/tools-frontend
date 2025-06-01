@@ -1,10 +1,10 @@
 mutation signUpWithGoogle($input: SignupWithGoogleInput!) {
- signUpWithGoogle(input: $input) {
-   id
-   email
-   token {
-     accessToken
-     refreshToken
-   }
- }
+  signUpWithGoogle(input: $input) {
+    id
+    email
+    token {
+      accessToken
+      refreshToken
+    }
+  }
 }

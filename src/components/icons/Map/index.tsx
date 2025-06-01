@@ -1,6 +1,6 @@
 // AddIcon.tsx
 import React from 'react';
-import {GrMapLocation } from 'react-icons/gr';
+import { GrMapLocation } from 'react-icons/gr';
 
 interface IconProps {
   className?: string;

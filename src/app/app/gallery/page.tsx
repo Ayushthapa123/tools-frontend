@@ -14,22 +14,20 @@ import {
   DeleteRoomImageMutation,
   DeleteRoomImageMutationVariables,
   SelectGallery,
-
   SelectGalleryMutationVariables,
   GetHostelByTokenQuery,
   GetHostelByToken,
   GetHostelByTokenQueryVariables,
   SelectGalleryMutation,
-  GalleryData
+  GalleryData,
 } from 'src/gql/graphql';
 import { WallpaperGallery } from '../hostel-info/gallery/WallpaperGallery';
 import { enqueueSnackbar } from 'notistack';
 import LoadingSpinner from 'src/components/Loading';
 
-
 export default function Gallery() {
-  const [ selectedImage, setSelectedImage ] = useState<GalleryData | null >(null);
-  const [ showModal, setShowModal ] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<GalleryData | null>(null);
+  const [showModal, setShowModal] = useState(false);
   const queryClient = useQueryClient();
 
   //hostel id
@@ -45,7 +43,7 @@ export default function Gallery() {
   };
 
   const { data: hostelData, isLoading } = useQuery({
-    queryKey: [ 'getHostelByToken' ],
+    queryKey: ['getHostelByToken'],
     queryFn: fetchData,
   });
 
@@ -68,7 +66,7 @@ export default function Gallery() {
   const wallpaperData = wallpaperDat?.data?.filter(img => img?.url);
   // remove this line after removing example.com from db
 
-  const mainWallpaper = wallpaperData?.filter(img => img?.isSelected)[ 0 ] || wallpaperData?.[0];
+  const mainWallpaper = wallpaperData?.filter(img => img?.isSelected)[0] || wallpaperData?.[0];
 
   // Delete wallpaper mutation
   const mutateDeleteGallery = useGraphqlClientRequest<
@@ -106,32 +104,32 @@ export default function Gallery() {
       e.stopPropagation();
       try {
         const response = await deleteGallery({
-        roomImageId: Number(img.id)
-      });
+          roomImageId: Number(img.id),
+        });
 
-      if (response?.deleteRoomImage?.data?.id) {
-        queryClient.invalidateQueries({ queryKey: ['getGalleryByHostelId'] });
-        enqueueSnackbar("Room Deleted.",{variant:"success"})
+        if (response?.deleteRoomImage?.data?.id) {
+          queryClient.invalidateQueries({ queryKey: ['getGalleryByHostelId'] });
+          enqueueSnackbar('Room Deleted.', { variant: 'success' });
+        }
+      } catch (error) {
+        enqueueSnackbar('Something went wrong', { variant: 'warning' });
       }
-    } catch (error) {
-      enqueueSnackbar("Something went wrong",{variant:"warning"})
     }
   };
-  }
   const handleSelectGallery = async () => {
     try {
       const response = await selectGallery({
         galleryId: Number(selectedImage?.id),
-        hostelId: Number(hostelData?.data?.id)
+        hostelId: Number(hostelData?.data?.id),
       });
 
       if (response?.selectGallery?.data?.id) {
         queryClient.invalidateQueries({ queryKey: ['getGalleryByHostelId'] });
-        enqueueSnackbar("Image selected successfully.",{variant:'success'})
+        enqueueSnackbar('Image selected successfully.', { variant: 'success' });
         setShowModal(false);
       }
     } catch (error) {
-      enqueueSnackbar("Failed to select image",{variant:'error'})
+      enqueueSnackbar('Failed to select image', { variant: 'error' });
     }
   };
 
@@ -141,8 +139,8 @@ export default function Gallery() {
 
       {/* Main Image Section */}
       <div className="mb-6">
-        {
-          mainWallpaper? (<div className="relative h-[500px] w-full overflow-hidden rounded-2xl bg-gray-200">
+        {mainWallpaper ? (
+          <div className="relative h-[500px] w-full overflow-hidden rounded-2xl bg-gray-200">
             <div className="relative h-full w-full">
               <Image
                 src={mainWallpaper?.url ?? ''}
@@ -152,12 +150,12 @@ export default function Gallery() {
                 quality={90}
               />
             </div>
-          </div>) : (
-              <div>
-              <LoadingSpinner />
-              </div>
-          )
-        }
+          </div>
+        ) : (
+          <div>
+            <LoadingSpinner />
+          </div>
+        )}
       </div>
 
       {/* Thumbnail Images Section */}
@@ -167,18 +165,18 @@ export default function Gallery() {
             key={img?.id}
             className={`relative h-24 w-full cursor-pointer overflow-hidden rounded-lg bg-gray-200 transition-all duration-200 hover:opacity-90
               ${img?.id === mainWallpaper?.id ? 'ring-2 ring-primary ring-offset-2' : ''}
-              ${String(selectedImage?.id) === String(img?.id) ? 'ring-2 ring-blue-600 ring-offset-2' : ''}`}
+              ${String(selectedImage?.id) === String(img?.id) ? 'ring-blue-600 ring-2 ring-offset-2' : ''}`}
             onClick={() => handleImageClick(img)}
           >
             <Image
               src={img?.url ?? ''}
               alt={`Thumbnail ${index + 1}`}
               fill
-              className={`object-cover rounded-lg`}
+              className={`rounded-lg object-cover`}
             />
             <button
-                onClick={(e) => handleDelete(img, e)}
-              className="absolute right-2 top-2 rounded-full bg-red-500 p-1.5 text-white hover:text-error/80 duration-200 bg-error hover:bg-white z-50"
+              onClick={e => handleDelete(img, e)}
+              className="bg-red-500 absolute right-2 top-2 z-50 rounded-full bg-error p-1.5 text-white duration-200 hover:bg-white hover:text-error/80"
               aria-label="Delete image"
             >
               <FaTrash className="h-4 w-4" />
@@ -187,27 +185,29 @@ export default function Gallery() {
         ))}
       </div>
 
-      {
-         Number(wallpaperData?.length) < 6 && (
-          <div className="bg-white card-body card card-bordered my-4 ">
-            <WallpaperGallery hostelId={Number(hostelData?.data?.id)} galleryType="ROOM" galleryKey="getGalleryByHostelId" />
-          </div>
-        )
-      }
+      {Number(wallpaperData?.length) < 6 && (
+        <div className="card card-body card-bordered my-4 bg-white ">
+          <WallpaperGallery
+            hostelId={Number(hostelData?.data?.id)}
+            galleryType="ROOM"
+            galleryKey="getGalleryByHostelId"
+          />
+        </div>
+      )}
 
       {showModal && (
         <Modal
-          title='Are you sure you want to make this image your wallpaper?'
+          title="Are you sure you want to make this image your wallpaper?"
           open={showModal}
           handleClose={handleModalClose}
           onSave={handleSelectGallery}
         >
-          <div className='relative h-[200px] rounded-lg w-full'>
+          <div className="relative h-[200px] w-full rounded-lg">
             <Image
               src={selectedImage?.url ?? '/images/default-image.png'}
               alt={`Thumbnail + 1}`}
               fill
-              className="object-cover rounded-lg"
+              className="rounded-lg object-cover"
             />
           </div>
         </Modal>

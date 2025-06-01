@@ -7,7 +7,7 @@ interface IconProps {
 }
 
 const ExportIcon: React.FC<IconProps> = ({ className = '' }) => {
-  return <FaFileExport className={`text-gray-500 btn- ${className}`} />;
+  return <FaFileExport className={`btn- text-gray-500 ${className}`} />;
 };
 
 export default ExportIcon;

@@ -16,13 +16,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { enqueueSnackbar } from 'notistack';
 
 export const ActiveRooms = () => {
-  const [ showDeleteModal, setShowDeleteModal ] = useState(false);
-  const [deletedRoomId,setDeletedRoomId] = useState<number|string|null>(null)
-  const [ deleteRoom, setDeleteRoom ] = useState(false);
-  const querySignupUrl = useGraphqlClientRequest<
-    GetRoomsQuery,
-    GetRoomsQueryVariables
-  >(GetRooms.loc?.source?.body!);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deletedRoomId, setDeletedRoomId] = useState<number | string | null>(null);
+  const [deleteRoom, setDeleteRoom] = useState(false);
+  const querySignupUrl = useGraphqlClientRequest<GetRoomsQuery, GetRoomsQueryVariables>(
+    GetRooms.loc?.source?.body!,
+  );
 
   //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
   const fetchData = async () => {
@@ -30,12 +29,12 @@ export const ActiveRooms = () => {
     return res.roomsByHostel;
   };
 
-  const { data: rooms,isLoading } = useQuery({
+  const { data: rooms, isLoading } = useQuery({
     queryKey: ['getRooms'],
     queryFn: fetchData,
   });
 
-  // deleted room 
+  // deleted room
   const mutateCreateNearbyPlace = useGraphqlClientRequest<
     DeleteRoomMutation,
     DeleteRoomMutationVariables
@@ -44,27 +43,31 @@ export const ActiveRooms = () => {
   const { mutateAsync } = useMutation({ mutationFn: mutateCreateNearbyPlace });
   const queryClient = useQueryClient();
 
-
   useEffect(() => {
     if (deleteRoom) {
       mutateAsync({ id: Number(deletedRoomId) }).then(res => {
         if (res?.removeRoom) {
-          enqueueSnackbar("Room deleted.",{variant:"success"})
-          queryClient.invalidateQueries({ queryKey: [ 'getRooms' ] });
+          enqueueSnackbar('Room deleted.', { variant: 'success' });
+          queryClient.invalidateQueries({ queryKey: ['getRooms'] });
         } else {
-          enqueueSnackbar("Couldn't delete room.",{variant:"error"})
+          enqueueSnackbar("Couldn't delete room.", { variant: 'error' });
         }
       });
       setShowDeleteModal(false);
     }
-  }, [ deleteRoom ])
-  
+  }, [deleteRoom]);
+
   return (
     <div className="w-full ">
-      {isLoading && <div> <LoadingSpinner /></div>}
-      <div className="grid gap-[1rem] grid-cols-2 md:grid-cols-3 px-2 md:gap-">
+      {isLoading && (
+        <div>
+          {' '}
+          <LoadingSpinner />
+        </div>
+      )}
+      <div className="md:gap- grid grid-cols-2 gap-[1rem] px-2 md:grid-cols-3">
         {rooms?.data?.map(room => (
-          <div key={room.id} className='md:mb-4'>
+          <div key={room.id} className="md:mb-4">
             <RoomCard
               id={room.id ?? ''}
               caption={room.caption ?? ''}
@@ -72,26 +75,23 @@ export const ActiveRooms = () => {
               status={room.status ?? ''}
               price={room.price?.baseAmountPerMonth ?? 0}
               currency={room.price?.currency ?? ''}
-              imageUrl={room.image?.[ 0 ]?.url ?? ''}
+              imageUrl={room.image?.[0]?.url ?? ''}
               setShowDeleteModal={setShowDeleteModal}
               setDeletedRoomId={setDeletedRoomId}
             />
           </div>
         ))}
-          {
-          showDeleteModal && (
-            <Modal
-              open={showDeleteModal}
-              handleClose={() => setShowDeleteModal(false)}
-              title='Are you sure to delete this room?'
-              onSave={()=>setDeleteRoom(true)}
-            >
-              Disclaimer: you will not be able to see the details of this room after you delete it.
-            </Modal>
-          )
-        }
+        {showDeleteModal && (
+          <Modal
+            open={showDeleteModal}
+            handleClose={() => setShowDeleteModal(false)}
+            title="Are you sure to delete this room?"
+            onSave={() => setDeleteRoom(true)}
+          >
+            Disclaimer: you will not be able to see the details of this room after you delete it.
+          </Modal>
+        )}
       </div>
-    
     </div>
   );
 };

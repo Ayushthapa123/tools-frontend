@@ -10,24 +10,13 @@ interface IProps<T extends FieldValues> {
   label?: string;
   helpertext?: string;
   error: boolean;
-  rows:number
+  rows: number;
 }
 
-type TextFieldProps<T extends FieldValues> = IProps<T> &
-  InputHTMLAttributes<HTMLTextAreaElement>;
+type TextFieldProps<T extends FieldValues> = IProps<T> & InputHTMLAttributes<HTMLTextAreaElement>;
 
 const TextArea = <T extends FieldValues>(props: TextFieldProps<T>) => {
-  const {
-    control,
-    label,
-    name,
-    rules,
-    helpertext,
-    error,
-    required,
-    rows,
-    ...otherProps
-  } = props;
+  const { control, label, name, rules, helpertext, error, required, rows, ...otherProps } = props;
 
   return (
     <Controller
@@ -41,7 +30,6 @@ const TextArea = <T extends FieldValues>(props: TextFieldProps<T>) => {
           placeholder={props.placeholder}
           required={required}
           rows={rows}
-          
           label={label}
           helpertext={helpertext}
           error={Boolean(error)}

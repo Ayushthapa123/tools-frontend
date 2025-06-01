@@ -10,4 +10,4 @@ query FindAnAmenityById($id: Int!) {
       code
     }
   }
-} 
+}

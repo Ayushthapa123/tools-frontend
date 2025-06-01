@@ -10,4 +10,4 @@ query FindAmenityByRoomId($roomId: Int!) {
       code
     }
   }
-} 
+}

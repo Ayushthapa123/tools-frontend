@@ -39,9 +39,7 @@ export const SearchBox = () => {
       return;
     }
 
-    router.push(
-      `/search?country=${country}&city=${city}&subCity=${subCity}&query=${query}`,
-    );
+    router.push(`/search?country=${country}&city=${city}&subCity=${subCity}&query=${query}`);
     setTimeout(() => {
       if (path.includes('search')) {
         window.location.reload();
@@ -49,8 +47,8 @@ export const SearchBox = () => {
     }, 100);
   };
   return (
-    <div className="relative flex flex-col justify-center items-center w-full px-3 ">
-      <div className="relative z-50 flex space-y-[6px] sm:space-y-0 flex-col sm:flex-row  w-full max-w-6xl rounded-2xl sm:rounded-full border bg-gray-50 px-[10px] sm:pl-6 py-[10px] focus-within:border-gray-300">
+    <div className="relative flex w-full flex-col items-center justify-center px-3 ">
+      <div className="relative z-50 flex w-full max-w-6xl flex-col space-y-[6px]  rounded-2xl border bg-gray-50 px-[10px] py-[10px] focus-within:border-gray-300 sm:flex-row sm:space-y-0 sm:rounded-full sm:pl-6">
         <input
           type="text"
           placeholder="Search By Location"
@@ -61,18 +59,18 @@ export const SearchBox = () => {
           onChange={e => setQuery(e.target.value)}
           onClick={() => setShowSearchSuggestions(true)}
         />
-     
-     
+
         <button
           className="flex  flex-row items-center justify-center rounded-full border border-transparent px-3 py-2 text-base font-medium tracking-wide text-white transition duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 md:min-w-[130px] md:px-8"
-          onClick={() => handleSearch()}>
+          onClick={() => handleSearch()}
+        >
           <span className="block sm:hidden md:block">Search button</span>
-          <span className="hidden sm:flex text-xl  md:hidden">
+          <span className="hidden text-xl sm:flex  md:hidden">
             <BiSearch />
           </span>
         </button>
       </div>
-      <div className=" flex w-full justify-start px-0 sm:pl-6  max-w-6xl py-2">
+      <div className=" flex w-full max-w-6xl justify-start px-0  py-2 sm:pl-6">
         {showSearchSuggestions && (
           <SearchSuggestions
             handleClose={handleClose}

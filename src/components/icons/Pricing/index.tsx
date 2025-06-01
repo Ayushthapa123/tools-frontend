@@ -1,6 +1,6 @@
 // SettingsIcon.tsx
 import React from 'react';
-import { FaDollarSign,} from 'react-icons/fa';
+import { FaDollarSign } from 'react-icons/fa';
 
 interface IconProps {
   className?: string;

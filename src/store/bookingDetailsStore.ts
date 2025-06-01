@@ -28,11 +28,11 @@ const initialBookingDetails: BookingDetails = {
 
 export const useBookingDetailsStore = create<Store & Actions>()(
   persist(
-    (set) => ({
+    set => ({
       ...initialBookingDetails,
       bookingDetails: initialBookingDetails,
-      setBookingDetails: (details) =>
-        set((state) => {
+      setBookingDetails: details =>
+        set(state => {
           const updatedDetails = { ...state, ...details };
           return {
             ...updatedDetails,
@@ -45,7 +45,7 @@ export const useBookingDetailsStore = create<Store & Actions>()(
             },
           };
         }),
-      resetBookingDetails: () => 
+      resetBookingDetails: () =>
         set({
           ...initialBookingDetails,
           bookingDetails: initialBookingDetails,
@@ -53,6 +53,6 @@ export const useBookingDetailsStore = create<Store & Actions>()(
     }),
     {
       name: 'booking-details-storage',
-    }
-  )
+    },
+  ),
 );

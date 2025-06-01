@@ -1,0 +1,10 @@
+mutation createRoomAmenityOption($createRoomAmenityOptionInput: CreateRoomAmenityOptionInput!) {
+  createRoomAmenityOption(createRoomAmenityOptionInput: $createRoomAmenityOptionInput) {
+    data {
+      id
+    }
+    error {
+      message
+    }
+  }
+}

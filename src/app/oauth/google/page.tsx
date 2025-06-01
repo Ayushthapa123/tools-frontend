@@ -52,7 +52,7 @@ function SignUp() {
           router.push('/app');
         }
       });
-    }else {
+    } else {
       router.push('/login');
     }
   }, [router, setAccessToken, signUp, token]);

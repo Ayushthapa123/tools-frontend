@@ -3,7 +3,6 @@
 import { GoogleMap, Marker, Autocomplete } from '@react-google-maps/api';
 import { useState, useRef, useEffect } from 'react';
 
-
 // Map's styling
 const defaultMapContainerStyle = {
   width: '100%',
@@ -19,17 +18,15 @@ const defaultMapOptions = {
   mapTypeId: 'satellite',
 };
 
-
 interface Iprops {
   lat?: number | null;
   lng?: number | null;
   description?: string | null;
   clickedLatLng?: { lat: number | null; lng: number | null } | null;
   setClickedLatLng: (lat: number | null, lng: number | null) => void;
- 
 }
 
- export const MapComponent = (props: Iprops) => {
+export const MapComponent = (props: Iprops) => {
   const { lat, lng, clickedLatLng, setClickedLatLng } = props;
 
   const defaultMapCenter = {
@@ -57,10 +54,9 @@ interface Iprops {
     }
   };
 
-
   return (
     <div className="w-full">
-        {clickedLatLng && (
+      {clickedLatLng && (
         <div className="mt-4">
           <p>Latitude: {clickedLatLng.lat}</p>
           <p>Longitude: {clickedLatLng.lng}</p>
@@ -68,7 +64,8 @@ interface Iprops {
       )}
       <Autocomplete
         onLoad={autocomplete => (autocompleteRef.current = autocomplete)}
-        onPlaceChanged={handlePlaceChanged}>
+        onPlaceChanged={handlePlaceChanged}
+      >
         <input
           type="text"
           placeholder="Search Your Location"
@@ -81,11 +78,13 @@ interface Iprops {
         center={mapCenter}
         options={defaultMapOptions}
         zoom={14}
-        onClick={handleMapClick}>
+        onClick={handleMapClick}
+      >
         {/* Add a Marker at the clicked or searched location */}
-        {clickedLatLng && <Marker position={{ lat: clickedLatLng.lat ?? 0, lng: clickedLatLng.lng ?? 0 }} />}
+        {clickedLatLng && (
+          <Marker position={{ lat: clickedLatLng.lat ?? 0, lng: clickedLatLng.lng ?? 0 }} />
+        )}
       </GoogleMap>
-    
     </div>
   );
 };

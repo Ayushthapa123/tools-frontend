@@ -1,11 +1,11 @@
 mutation signupUser($input: SignupInput!) {
- signupUser(input: $input) {
-   email
-   id
-   userType
-   token {
-     accessToken
-     refreshToken
-   }
- }
+  signupUser(input: $input) {
+    email
+    id
+    userType
+    token {
+      accessToken
+      refreshToken
+    }
+  }
 }

@@ -1,6 +1,6 @@
 mutation logOut {
- logout {
-  success 
-  message
-}
+  logout {
+    success
+    message
+  }
 }

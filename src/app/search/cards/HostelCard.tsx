@@ -23,7 +23,7 @@ interface Iprops {
   threeSeater?: boolean | null;
 }
 export const HostelCard = (props: Iprops) => {
-  const [ isModalOpen, setIsModalOpen ] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const {
     name,
     country,
@@ -41,14 +41,14 @@ export const HostelCard = (props: Iprops) => {
   const editorRef = useRef(description ?? '');
 
   return (
-    <div className="card-bordered mb-2 pb-2 flex h-full w-full cursor-pointer flex-col gap-4 rounded-3xl bg-base-100 group hover:opacity-100 transition ease-in-out duration-200">
+    <div className="group card-bordered mb-2 flex h-full w-full cursor-pointer flex-col gap-4 rounded-3xl bg-base-100 pb-2 transition duration-200 ease-in-out hover:opacity-100">
       <div className="relative h-[300px] w-full rounded-3xl">
         <div className="relative h-full w-full">
           <Image
             src={imgUrl ? imgUrl : '/default-image.png'}
             alt={name}
             fill
-            className="rounded-xl object-cover rounded-bl-none rounded-br-none"
+            className="rounded-xl rounded-bl-none rounded-br-none object-cover"
           />
           {/* <button className="absolute right-2 top-2 rounded-full bg-white/80 p-2 transition hover:bg-red">
             <BiHeart
@@ -62,10 +62,10 @@ export const HostelCard = (props: Iprops) => {
       </div>
 
       <div className="flex-grow overflow-y-auto px-4" style={{ maxHeight: '150px' }}>
-        <div className='flex justify-between items-center flex-wrap gap-2'>
-          <p className="text-capitalize mb-1 text-xs text-primary/70 flex items-center gap-2">
-            <GrLocation className='text-secondary'/>
-            <span className='text-gray-600 text-sm'>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <p className="text-capitalize mb-1 flex items-center gap-2 text-xs text-primary/70">
+            <GrLocation className="text-secondary" />
+            <span className="text-sm text-gray-600">
               {subCity} {city}, {country}
             </span>
           </p>
@@ -75,12 +75,10 @@ export const HostelCard = (props: Iprops) => {
         </div>
         <h3 className="mb-1 ml-1 text-lg font-medium text-gray-800">{name}</h3>
 
-        <div className="">
-          {/* <RichTextEditor editorRef={editorRef} readOnly={true} /> */}
-        </div>
+        <div className="">{/* <RichTextEditor editorRef={editorRef} readOnly={true} /> */}</div>
 
-        <div className="flex items-center justify-between gap-2 mt-2">
-            <Button label={"View full details"} className='bg-primary/90 hover:bg-primary' />
+        <div className="mt-2 flex items-center justify-between gap-2">
+          <Button label={'View full details'} className="bg-primary/90 hover:bg-primary" />
           {/* <div>
             <FaArrowCircleRight className='text-4xl text-gray-400 w-fit group-hover:text-primary/90 transition duration-300 ease-in-out' />
           </div> */}

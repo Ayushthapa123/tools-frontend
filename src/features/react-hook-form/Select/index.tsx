@@ -13,8 +13,7 @@ interface IProps<T extends FieldValues> {
   error: boolean;
 }
 
-type SelectFieldProps<T extends FieldValues> = IProps<T> &
-  SelectHTMLAttributes<HTMLSelectElement>;
+type SelectFieldProps<T extends FieldValues> = IProps<T> & SelectHTMLAttributes<HTMLSelectElement>;
 
 const SelectInput = <T extends FieldValues>(props: SelectFieldProps<T>) => {
   const {

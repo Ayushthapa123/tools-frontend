@@ -1,14 +1,12 @@
-
-
 export const TestSkeleton = () => {
   return (
     <div>
-      <div className="flex flex-col gap-4 w-full">
-        <div className="skeleton h-32 w-full flex p-10 gap-7">
-          <div className="skeleton w-16 h-16  shrink-0"></div>
-          <div className="skeleton flex-grow h-16 "></div>
+      <div className="flex w-full flex-col gap-4">
+        <div className="skeleton flex h-32 w-full gap-7 p-10">
+          <div className="skeleton h-16 w-16  shrink-0"></div>
+          <div className="skeleton h-16 flex-grow "></div>
         </div>
       </div>
     </div>
   );
- }
+};

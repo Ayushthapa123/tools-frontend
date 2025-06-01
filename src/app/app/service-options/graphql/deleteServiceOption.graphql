@@ -1,0 +1,10 @@
+mutation deleteServiceOption($id: Int!) {
+  deleteServiceOption(serviceOptionId: $id) {
+    data {
+      id
+    }
+    error {
+      message
+    }
+  }
+}

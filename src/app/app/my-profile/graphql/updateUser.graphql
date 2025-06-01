@@ -1,19 +1,19 @@
 mutation updateUser($input: UpdateUserInput!) {
   updateUser(input: $input) {
     data {
-    id
-    fullName
-    email
-    phoneNumber
-    altPhoneNumber
-    city
-    gender
-    dateOfBirth
-    profilePicture
+      id
+      fullName
+      email
+      phoneNumber
+      altPhoneNumber
+      city
+      gender
+      dateOfBirth
+      profilePicture
     }
     error {
       message
       code
     }
   }
-} 
+}

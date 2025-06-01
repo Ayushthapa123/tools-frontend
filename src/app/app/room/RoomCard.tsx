@@ -14,17 +14,26 @@ interface Iprops {
   currency: string;
   imageUrl: string;
   setShowDeleteModal: (state: boolean) => void;
-  setDeletedRoomId: (val:number|string|null)=>void;
+  setDeletedRoomId: (val: number | string | null) => void;
 }
 
 export const RoomCard = (props: Iprops) => {
-  const { id, caption, roomNumber, status, price, currency, imageUrl,setShowDeleteModal, setDeletedRoomId } = props;
-  
+  const {
+    id,
+    caption,
+    roomNumber,
+    status,
+    price,
+    currency,
+    imageUrl,
+    setShowDeleteModal,
+    setDeletedRoomId,
+  } = props;
 
   const onClickDelete = () => {
-    setDeletedRoomId(id)
+    setDeletedRoomId(id);
     setShowDeleteModal(true);
-  }
+  };
 
   // const getStatusColor = (status: string) => {
   //   switch (status.toLowerCase()) {
@@ -40,14 +49,14 @@ export const RoomCard = (props: Iprops) => {
   // };
 
   return (
-    <div className="relative bg-white border border-gray-100 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl  transition-all duration-300 group">
+    <div className="group relative overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-lg  transition-all duration-300 hover:shadow-xl">
       {/* Image Section */}
       <div className="relative h-48 w-full">
         <Image
           src={imageUrl || '/placeholder-room.jpg'}
           alt={caption}
           fill
-          className="object-cover rounded-t-2xl"
+          className="rounded-t-2xl object-cover"
           priority
         />
         <div className="absolute left-2 top-1 z-10">
@@ -56,24 +65,30 @@ export const RoomCard = (props: Iprops) => {
       </div>
 
       {/* Content Section */}
-      <div className="p-4 flex flex-col gap-3 min-h-[80px]">
+      <div className="flex min-h-[80px] flex-col gap-3 p-4">
         <div className="">
-          <h3 className="mb-2 text-lg font-bold text-gray-900 truncate" title={caption}>{caption}</h3>
-          <div className='flex gap-2 justify-start items-start lg:justify-between lg:items-center flex-col lg:flex-row'>
-          <p className="m-0 text-gray-500 text-sm">
-            <span className="font-medium">Room Number:</span> {roomNumber}
-          </p>
-          <p className="m-0 text-sm font-extrabold text-primary">
-            {currency} {price.toLocaleString()}
-          </p>
+          <h3 className="mb-2 truncate text-lg font-bold text-gray-900" title={caption}>
+            {caption}
+          </h3>
+          <div className="flex flex-col items-start justify-start gap-2 lg:flex-row lg:items-center lg:justify-between">
+            <p className="m-0 text-sm text-gray-500">
+              <span className="font-medium">Room Number:</span> {roomNumber}
+            </p>
+            <p className="m-0 text-sm font-extrabold text-primary">
+              {currency} {price.toLocaleString()}
+            </p>
           </div>
         </div>
         {/* Action Buttons */}
-        <div className="absolute top-2 right-3 flex gap-2 z-20">
+        <div className="absolute right-3 top-2 z-20 flex gap-2">
           <Link href={`/app/room/${id}`} passHref legacyBehavior>
             <a aria-label="Edit Room">
-              <IconButton size="small" color="primary" className="bg-white/80 hover:bg-primary/70 hover:text-white shadow-md backdrop-blur">
-                <FiEdit className='w-6 h-6'/>
+              <IconButton
+                size="small"
+                color="primary"
+                className="bg-white/80 shadow-md backdrop-blur hover:bg-primary/70 hover:text-white"
+              >
+                <FiEdit className="h-6 w-6" />
               </IconButton>
             </a>
           </Link>
@@ -84,7 +99,7 @@ export const RoomCard = (props: Iprops) => {
             className="bg-white/80 shadow-md backdrop-blur"
             aria-label="Delete Room"
           >
-            <DeleteIcon className="w-5 h-5 hover:text-error" />
+            <DeleteIcon className="h-5 w-5 hover:text-error" />
           </IconButton>
         </div>
       </div>

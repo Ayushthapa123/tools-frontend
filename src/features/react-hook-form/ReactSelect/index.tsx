@@ -4,7 +4,7 @@ import Select, { Props } from 'react-select';
 interface IProps<T extends FieldValues> extends Props {
   label?: string;
   placeholder?: string;
-  height?:'lg' | 'sm'
+  height?: 'lg' | 'sm';
 
   control?: Control<T>;
   name: FieldPath<T>;
@@ -18,17 +18,7 @@ interface IProps<T extends FieldValues> extends Props {
 }
 
 export function ReactSelect<T extends FieldValues>(props: IProps<T>) {
-  const {
-    control,
-    name,
-    required,
-    options,
-    isdisabled,
-    rules,
-    error,
-    helperText,
-    height
-  } = props;
+  const { control, name, required, options, isdisabled, rules, error, helperText, height } = props;
   // const { errors } = useFormState<T>({ control, name })
 
   return (
@@ -36,12 +26,8 @@ export function ReactSelect<T extends FieldValues>(props: IProps<T>) {
       <section>
         <div>
           {props.label && (
-            <label
-              htmlFor={props.name}
-              className="text-sm font-semibold text-gray-600"
-            >
-              {props.label}{' '}
-              {props.required && <span className="text-error">*</span>}
+            <label htmlFor={props.name} className="text-sm font-semibold text-gray-600">
+              {props.label} {props.required && <span className="text-error">*</span>}
             </label>
           )}
         </div>
@@ -54,15 +40,13 @@ export function ReactSelect<T extends FieldValues>(props: IProps<T>) {
               return (
                 <>
                   <Select
-                    value={options?.find(
-                      (o: { value: object }) => o.value === field.value,
-                    )}
+                    value={options?.find((o: { value: object }) => o.value === field.value)}
                     // className='border-[1.5px] border-[#B6C2E2] peer border-solid rounded  flex focus:border-primary-light-main focus:outline-primary-light-main placeholder-shown:bg-white-default hover:border-primary-light-main hover:bg-white focus-within:border-primary-light-main focus-within:outline-primary-light-main focus-within:bg-white-default relative w-full'
 
                     styles={{
-                      control: (baseStyles) => ({
+                      control: baseStyles => ({
                         ...baseStyles,
-                        height: height==='lg'?'3rem':'2.7rem',
+                        height: height === 'lg' ? '3rem' : '2.7rem',
                         border: '1.5px solid #B6C2E2',
                       }),
                     }}
@@ -70,7 +54,7 @@ export function ReactSelect<T extends FieldValues>(props: IProps<T>) {
                     defaultValue={{ label: props.placeholder, value: '' }}
                     classNamePrefix="addl-class"
                     options={options}
-                    onChange={(name) => field.onChange(name?.value)}
+                    onChange={name => field.onChange(name?.value)}
                     isDisabled={isdisabled}
                   />
                 </>
@@ -79,11 +63,7 @@ export function ReactSelect<T extends FieldValues>(props: IProps<T>) {
           />{' '}
         </div>
         {error && (
-          <span
-            className={`${
-              error ? 'text-gray-500 text-sm' : 'text-surface-grey '
-            } text-sm `}
-          >
+          <span className={`${error ? 'text-sm text-gray-500' : 'text-surface-grey '} text-sm `}>
             {helperText}
           </span>
         )}{' '}

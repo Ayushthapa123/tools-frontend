@@ -1,0 +1,10 @@
+mutation updateAmenityOption($id: Int!, $updateAmenityOptionInput: UpdateAmenityOptionInput!) {
+  updateAmenityOption(amenityOptionId: $id, updateAmenityOptionInput: $updateAmenityOptionInput) {
+    data {
+      id
+    }
+    error {
+      message
+    }
+  }
+}

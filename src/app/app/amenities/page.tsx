@@ -1,8 +1,12 @@
-"use client";
-import { useQuery } from "@tanstack/react-query";
-import { useGraphqlClientRequest } from "src/client/useGraphqlClientRequest";
-import { HostelAmenitiesPage } from "src/features/amenity/HostelAmenityPage";
-import { GetHostelByToken, GetHostelByTokenQuery, GetHostelByTokenQueryVariables } from "src/gql/graphql";
+'use client';
+import { useQuery } from '@tanstack/react-query';
+import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { HostelAmenitiesPage } from 'src/features/amenity/HostelAmenityPage';
+import {
+  GetHostelByToken,
+  GetHostelByTokenQuery,
+  GetHostelByTokenQueryVariables,
+} from 'src/gql/graphql';
 
 export default function AmenityPage() {
   const queryHostelData = useGraphqlClientRequest<
@@ -17,7 +21,7 @@ export default function AmenityPage() {
   };
 
   const { data: hostel, isLoading } = useQuery({
-    queryKey: [ 'getHostelByToken' ],
+    queryKey: ['getHostelByToken'],
     queryFn: fetchData,
   });
   return (
@@ -26,5 +30,5 @@ export default function AmenityPage() {
         <HostelAmenitiesPage hostelId={Number(hostel?.data?.id)} key={hostel?.data?.id} />
       </div>
     </>
-  )
+  );
 }

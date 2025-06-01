@@ -1,17 +1,17 @@
 query getAddressByHostelId($hostelId: Float!) {
- getAddressByHostelId(hostelId: $hostelId) {
-   data {
-   id
-   country    
-   city
-   subCity
-   street
-   latitude
-   longitude
- }
- error {
-  message
-  code
- }
-}
+  getAddressByHostelId(hostelId: $hostelId) {
+    data {
+      id
+      country
+      city
+      subCity
+      street
+      latitude
+      longitude
+    }
+    error {
+      message
+      code
+    }
+  }
 }

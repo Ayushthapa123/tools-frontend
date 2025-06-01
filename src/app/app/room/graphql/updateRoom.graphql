@@ -1,20 +1,20 @@
 mutation UpdateRoom($updateRoomInput: UpdateRoomInput!) {
   updateRoom(updateRoomInput: $updateRoomInput) {
     data {
-    id
-    status
-    capacity
-    caption
-    roomNumber
-    attachBathroom
-    hostelId
- 
-    createdAt
-    updatedAt
+      id
+      status
+      capacity
+      caption
+      roomNumber
+      attachBathroom
+      hostelId
+
+      createdAt
+      updatedAt
+    }
+    error {
+      message
+      code
+    }
   }
-  error {
-    message
-    code
-  }
-}
 }

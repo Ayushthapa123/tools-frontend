@@ -1,0 +1,10 @@
+mutation createServiceOption($createServiceOptionInput: CreateServiceOptionInput!) {
+  createServiceOption(createServiceOptionInput: $createServiceOptionInput) {
+    data {
+      id
+    }
+    error {
+      message
+    }
+  }
+}

@@ -1,0 +1,13 @@
+query AllServiceOptions {
+  serviceOptions {
+    data {
+      id
+      name
+      description
+      iconUrl
+    }
+    error {
+      code
+    }
+  }
+}

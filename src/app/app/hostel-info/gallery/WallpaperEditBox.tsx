@@ -10,7 +10,6 @@ import ImageUploader from 'src/features/ImageUploader';
 import {
   CreateGalleryMutation,
   CreateGallery,
-
   CreateGalleryMutationVariables,
   UpdateGalleryMutation,
   UpdateGalleryMutationVariables,
@@ -29,61 +28,64 @@ interface IcoverEdit {
 }
 
 export const WallpaperEditBox = (props: IcoverEdit) => {
-  const { galleryType, handleBack, roomId, hostelId,galleryId, invalidateKey } = props;
+  const { galleryType, handleBack, roomId, hostelId, galleryId, invalidateKey } = props;
   const router = useRouter();
 
   const queryClient = useQueryClient();
 
-  const [ imageUrl, setImageUrl ] = useState<string | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
   const handleImageUrl = (url: string | null) => {
     setImageUrl(url);
   };
 
-
-
   //create new image
 
-  const mutateCreateGallery = useGraphqlClientRequest<CreateGalleryMutation, CreateGalleryMutationVariables>(CreateGallery.loc?.source.body!)
+  const mutateCreateGallery = useGraphqlClientRequest<
+    CreateGalleryMutation,
+    CreateGalleryMutationVariables
+  >(CreateGallery.loc?.source.body!);
   const { mutateAsync: createGallery } = useMutation({
     mutationFn: mutateCreateGallery,
-    mutationKey: [ String(invalidateKey) ]
+    mutationKey: [String(invalidateKey)],
   });
 
-
-
   const handleSubmit = async () => {
-       // create
-      try {
-        const response = await createGallery({
-          data: {
-            hostelId: Number(hostelId),
-            url: imageUrl ?? '',
-            caption: ''
-          }
-        });
+    // create
+    try {
+      const response = await createGallery({
+        data: {
+          hostelId: Number(hostelId),
+          url: imageUrl ?? '',
+          caption: '',
+        },
+      });
 
-        if (response?.createGallery?.data?.id) {
-          await queryClient.invalidateQueries({ queryKey: [ String(invalidateKey) ] });
-          await queryClient.invalidateQueries({queryKey:["getGalleryByHostelId"]})
-          enqueueSnackbar('Image Created Successfully',{variant:'success'})
-          setImageUrl(null);
-          handleBack?.();
-          router.push(window.location.pathname)
-
-        } else {
-          throw new Error('Failed to get valid response ID');
-        }
+      if (response?.createGallery?.data?.id) {
+        await queryClient.invalidateQueries({ queryKey: [String(invalidateKey)] });
+        await queryClient.invalidateQueries({ queryKey: ['getGalleryByHostelId'] });
+        enqueueSnackbar('Image Created Successfully', { variant: 'success' });
+        setImageUrl(null);
+        handleBack?.();
+        router.push(window.location.pathname);
+      } else {
+        throw new Error('Failed to get valid response ID');
       }
-    catch (error) {
-     enqueueSnackbar("Something went wrong.",{variant:'error'})
+    } catch (error) {
+      enqueueSnackbar('Something went wrong.', { variant: 'error' });
     }
-  }
+  };
 
   return (
-    <div className="relative items-center w-full h-full border rounded-xl">
-      <div className="absolute text-2xl cursor-pointer left-3 top-3">
+    <div className="relative h-full w-full items-center rounded-xl border">
+      <div className="absolute left-3 top-3 cursor-pointer text-2xl">
         {' '}
-        <div className="p-1 text-white bg-gray-200 rounded-full " onClick={() => { handleBack?.(); setImageUrl(null) }}>
+        <div
+          className="rounded-full bg-gray-200 p-1 text-white "
+          onClick={() => {
+            handleBack?.();
+            setImageUrl(null);
+          }}
+        >
           {' '}
           <FaLongArrowAltLeft className="rounded-full " />
         </div>
@@ -92,7 +94,7 @@ export const WallpaperEditBox = (props: IcoverEdit) => {
         <div>
           <ImageUploader imageUrl={imageUrl} handleImageUrl={handleImageUrl} />
         </div>
-        <div className="max-w-md mx-auto mt-5 pb-4 ">
+        <div className="mx-auto mt-5 max-w-md pb-4 ">
           <Button
             label="Upload Image"
             disabled={imageUrl ? false : true}

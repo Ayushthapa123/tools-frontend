@@ -1,13 +1,11 @@
 import axios from 'axios';
 
-const GRAPHQL_ENDPOINT =
-  `${process.env.NEXT_PUBLIC_API_URL!}/graphql`;
+const GRAPHQL_ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL!}/graphql`;
 
 export const useGraphqlClientRequest = <TData, TVariables>(
   query: string,
   options?: RequestInit['headers'],
 ): ((variables?: TVariables) => Promise<TData>) => {
-
   return async (variables?: TVariables) => {
     // this is reset token from verify-reset page. response of OTP
 

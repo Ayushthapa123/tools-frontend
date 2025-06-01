@@ -10,5 +10,5 @@ type Actions = {
 
 export const useEmailStore = create<Store & Actions>()(set => ({
   email: '',
-  setEmail: (email: string) => set({ email: email}),
+  setEmail: (email: string) => set({ email: email }),
 }));

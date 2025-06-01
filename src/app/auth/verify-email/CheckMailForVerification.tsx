@@ -3,7 +3,12 @@ import Button from 'src/components/Button';
 import { MdEmail } from 'react-icons/md';
 import Link from 'next/link';
 import { Logo } from 'src/features/Logo';
-import { LogOut, ResendVerificationMail, ResendVerificationMailMutation, ResendVerificationMailMutationVariables } from 'src/gql/graphql';
+import {
+  LogOut,
+  ResendVerificationMail,
+  ResendVerificationMailMutation,
+  ResendVerificationMailMutationVariables,
+} from 'src/gql/graphql';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import { LogOutMutation } from 'src/gql/graphql';
 import { LogOutMutationVariables } from 'src/gql/graphql';
@@ -20,9 +25,10 @@ export const CheckMailForVerification = () => {
     LogOut.loc?.source.body!,
   );
   const { mutateAsync } = useMutation({ mutationFn: mutateLogOutRequest });
-  const mutateResendVerificationMail = useGraphqlClientRequest<ResendVerificationMailMutation, ResendVerificationMailMutationVariables>(
-    ResendVerificationMail.loc?.source.body!,
-  );
+  const mutateResendVerificationMail = useGraphqlClientRequest<
+    ResendVerificationMailMutation,
+    ResendVerificationMailMutationVariables
+  >(ResendVerificationMail.loc?.source.body!);
   const { mutateAsync: resendVerificationMail } = useMutation({
     mutationFn: mutateResendVerificationMail,
   });
@@ -37,18 +43,18 @@ export const CheckMailForVerification = () => {
 
   const handleResendEmail = async () => {
     if (!user.userId) {
-      enqueueSnackbar('User ID not found. Please log in again.',{variant:"error"})
+      enqueueSnackbar('User ID not found. Please log in again.', { variant: 'error' });
       return;
     }
     try {
       const res = await resendVerificationMail({ id: user.userId });
       if (res?.resendVerificationMail) {
-        enqueueSnackbar('Verification email resent successfully!',{variant:'success'})
+        enqueueSnackbar('Verification email resent successfully!', { variant: 'success' });
       } else {
-        enqueueSnackbar('Failed to resend verification email.',{variant:"error"})
+        enqueueSnackbar('Failed to resend verification email.', { variant: 'error' });
       }
     } catch (err: any) {
-      enqueueSnackbar('An error occurred while resending email.',{variant:"error"})
+      enqueueSnackbar('An error occurred while resending email.', { variant: 'error' });
     }
   };
 
@@ -59,24 +65,37 @@ export const CheckMailForVerification = () => {
           <div className="w-full px-4">
             <div className="relative mx-auto max-w-[450px] rounded-lg bg-white px-[1rem] py-[1.5rem] text-center shadow-md sm:px-12 md:px-[2.5rem]">
               <div className="relative mb-5 flex justify-center">
-                <div className='flex justify-center'>
-                <Logo />
-                <FullLogo />
+                <div className="flex justify-center">
+                  <Logo />
+                  <FullLogo />
                 </div>
               </div>
-              <div className="flex justify-center mb-4">
-                <MdEmail className="text-6xl text-primary animate-bounce" />
+              <div className="mb-4 flex justify-center">
+                <MdEmail className="animate-bounce text-6xl text-primary" />
               </div>
-              <h2 className="text-2xl font-semibold text-primary mb-4">Check Your Email</h2>
-              <p className="text-gray-600 mb-6">
-                We have sent a verification link to your email address. Please check your inbox and click the link to verify your account. You must verify your email before you can access the site.
+              <h2 className="mb-4 text-2xl font-semibold text-primary">Check Your Email</h2>
+              <p className="mb-6 text-gray-600">
+                We have sent a verification link to your email address. Please check your inbox and
+                click the link to verify your account. You must verify your email before you can
+                access the site.
               </p>
-              <p className="text-sm text-gray-500 mt-4">
-                Didn&apos;t receive the email? Check your spam folder  
-                <span className="text-primary font-medium cursor-pointer hover:underline" onClick={() => handleResendEmail()}> Resend Email</span>.
+              <p className="mt-4 text-sm text-gray-500">
+                Didn&apos;t receive the email? Check your spam folder
+                <span
+                  className="cursor-pointer font-medium text-primary hover:underline"
+                  onClick={() => handleResendEmail()}
+                >
+                  {' '}
+                  Resend Email
+                </span>
+                .
               </p>
               <div>
-                <Button label={"Log out"} className='w-full text-primary ' onClick={() => handleLogout()} />
+                <Button
+                  label={'Log out'}
+                  className="w-full text-primary "
+                  onClick={() => handleLogout()}
+                />
               </div>
             </div>
           </div>
@@ -84,4 +103,4 @@ export const CheckMailForVerification = () => {
       </div>
     </section>
   );
-};  
+};

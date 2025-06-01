@@ -1,8 +1,8 @@
 mutation VerifyHostel($hostelId: Int!, $status: Boolean!) {
   verifyHostel(hostelId: $hostelId, status: $status) {
     data {
-    id
-    name
+      id
+      name
     }
     error {
       message

@@ -1,0 +1,14 @@
+query AllAmenitiesOption {
+  amenityOptions {
+    data {
+      id
+      name
+      description
+      iconUrl
+      hostelAmenityType
+    }
+    error {
+      code
+    }
+  }
+}

@@ -1,11 +1,18 @@
 import React from 'react';
-import { Controller, Control, FieldValues, FieldPath, RegisterOptions, FieldErrors } from 'react-hook-form';
+import {
+  Controller,
+  Control,
+  FieldValues,
+  FieldPath,
+  RegisterOptions,
+  FieldErrors,
+} from 'react-hook-form';
 import { Input as FormInput } from 'src/components/Input';
 import { InputHTMLAttributes } from 'react';
 import { regex } from 'src/utils/regex';
 
 // Define custom input types
-type CustomInputType = 
+type CustomInputType =
   | 'email'
   | 'tel'
   | 'password'
@@ -22,7 +29,7 @@ interface IProps<T extends FieldValues> {
   rules?: RegisterOptions<T>;
   label?: string;
   helpertext?: string;
-  size?: 'lg' | 'sm'
+  size?: 'lg' | 'sm';
   error?: boolean;
   errors?: FieldErrors<T>;
   multiline?: boolean;
@@ -34,7 +41,7 @@ interface IProps<T extends FieldValues> {
   currency?: string;
 }
 
-type TextFieldProps<T extends FieldValues> = Omit<IProps<T>, 'type'> & 
+type TextFieldProps<T extends FieldValues> = Omit<IProps<T>, 'type'> &
   Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> & {
     type?: CustomInputType | InputHTMLAttributes<HTMLInputElement>['type'];
   };
@@ -42,47 +49,49 @@ type TextFieldProps<T extends FieldValues> = Omit<IProps<T>, 'type'> &
 const getValidationPattern = (
   type: CustomInputType | undefined,
   name: string,
-  customErrorMessage?: string
+  customErrorMessage?: string,
 ): { pattern: { value: RegExp; message: string } } | undefined => {
   if (!type) return undefined;
 
   const patterns: Record<CustomInputType, { regex: RegExp; message: string }> = {
     email: {
       regex: regex.email,
-      message: customErrorMessage || 'Please enter a valid email address'
+      message: customErrorMessage || 'Please enter a valid email address',
     },
     tel: {
       regex: regex.phone,
-      message: customErrorMessage || 'Please enter a valid 10-digit phone number'
+      message: customErrorMessage || 'Please enter a valid 10-digit phone number',
     },
     password: {
       regex: regex.password,
-      message: customErrorMessage || 'Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special character'
+      message:
+        customErrorMessage ||
+        'Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special character',
     },
     number: {
       regex: regex.number,
-      message: customErrorMessage || 'Please enter a valid number'
+      message: customErrorMessage || 'Please enter a valid number',
     },
     price: {
       regex: regex.price,
-      message: customErrorMessage || 'Please enter a valid price'
+      message: customErrorMessage || 'Please enter a valid price',
     },
     date: {
       regex: regex.date,
-      message: customErrorMessage || 'Please enter a valid date (YYYY-MM-DD)'
+      message: customErrorMessage || 'Please enter a valid date (YYYY-MM-DD)',
     },
     name: {
       regex: regex.name,
-      message: customErrorMessage || 'Please enter a valid name (letters and spaces only)'
+      message: customErrorMessage || 'Please enter a valid name (letters and spaces only)',
     },
     currency: {
       regex: regex.price,
-      message: customErrorMessage || 'Please enter a valid amount'
+      message: customErrorMessage || 'Please enter a valid amount',
     },
     text: {
       regex: /.*/,
-      message: ''
-    }
+      message: '',
+    },
   };
 
   const pattern = patterns[type];
@@ -113,26 +122,42 @@ const TextInput = <T extends FieldValues>(props: TextFieldProps<T>) => {
 
   const getValidationRules = (): RegisterOptions<T> => {
     const baseRules: RegisterOptions<T> = { ...rules };
-    
+
     if (required) {
       baseRules.required = customErrorMessage || 'This field is required';
     }
 
     // Apply min/max validation for numbers and prices
-    if ((type === 'number' || type === 'price' || customType === 'price' || customType === 'currency') && (min !== undefined || max !== undefined)) {
-      baseRules.min = min !== undefined ? {
-        value: min,
-        message: customErrorMessage || `Value must be at least ${min}`
-      } : undefined;
-      baseRules.max = max !== undefined ? {
-        value: max,
-        message: customErrorMessage || `Value must be at most ${max}`
-      } : undefined;
+    if (
+      (type === 'number' ||
+        type === 'price' ||
+        customType === 'price' ||
+        customType === 'currency') &&
+      (min !== undefined || max !== undefined)
+    ) {
+      baseRules.min =
+        min !== undefined
+          ? {
+              value: min,
+              message: customErrorMessage || `Value must be at least ${min}`,
+            }
+          : undefined;
+      baseRules.max =
+        max !== undefined
+          ? {
+              value: max,
+              message: customErrorMessage || `Value must be at most ${max}`,
+            }
+          : undefined;
     }
 
     // Apply regex validation based on type or customType
     const validationType = customType || type;
-    const pattern = getValidationPattern(validationType as CustomInputType, name, customErrorMessage);
+    const pattern = getValidationPattern(
+      validationType as CustomInputType,
+      name,
+      customErrorMessage,
+    );
     if (pattern) {
       baseRules.pattern = pattern.pattern;
     }

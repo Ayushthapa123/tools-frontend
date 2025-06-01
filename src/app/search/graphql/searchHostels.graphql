@@ -1,41 +1,40 @@
-query searchHostel($input: SearchHostelInput!) { 
+query searchHostel($input: SearchHostelInput!) {
   getHostelsBySearch(input: $input) {
     data {
-    name
-    description
-    address {
-      city
-      country
-      subCity
-      street
-    }
-    contact {
-      phone
-      email
-      altPhone
-    }
-    gallery {
-      url
-    }
-    rooms {
-      caption 
-      image {
-        url 
+      name
+      description
+      address {
+        city
+        country
+        subCity
+        street
+      }
+      contact {
+        phone
+        email
+        altPhone
+      }
+      gallery {
+        url
+      }
+      rooms {
         caption
+        image {
+          url
+          caption
+        }
+        price {
+          baseAmountPerDay
+          baseAmountPerMonth
+          currency
+        }
       }
-      price {
-        baseAmountPerDay 
-        baseAmountPerMonth
-        currency
-      }
-    }
 
-    slug
-   
+      slug
+    }
+    error {
+      message
+      code
+    }
   }
-  error {
-    message
-    code
-  }
-}
 }
