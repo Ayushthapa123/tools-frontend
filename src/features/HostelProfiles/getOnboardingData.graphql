@@ -1,0 +1,25 @@
+query getOnboardingData{ 
+  getOnboardingData {
+    data {
+      address {
+        id
+      }
+      contact {
+        id
+      }
+     
+      gallery {
+        id
+      }
+      rooms {
+        id
+      }
+    }
+    error {
+      message 
+      code
+    }
+    
+  }
+  
+}

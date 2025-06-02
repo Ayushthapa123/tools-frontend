@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import { Header } from 'src/features/landing-page/Header';
 import Footer from 'src/features/Footer';
 export const metadata: Metadata = {
-  title: 'Hotel Management System-Manage Your Hotel Informations Online',
+  title: 'Hostel  Management System-Manage Your Hotel Informations Online', 
   description:
     'hosteladmin offers a comprehensive platform that allows you to seamlessly upload and manage all the details of your hostel online. By leveraging our user-friendly interface, you can ensure that potential guests can easily find your hostel, check availability, and reach out to you directly',
   authors: [{ name: 'Ayush Thapa' }],

@@ -1,44 +1,150 @@
 'use client';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { BiCheckSquare, BiSquare } from 'react-icons/bi';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import Button from 'src/components/Button';
 import {
+
+  AllAmenitiesOption,
+  AllAmenitiesOptionQuery,
+  AllAmenitiesOptionQueryVariables,
   CreateAmenity,
   CreateAmenityMutation,
   CreateAmenityMutationVariables,
   UpdateAmenity,
-  UpdateAmenityDocument,
   UpdateAmenityMutation,
   UpdateAmenityMutationVariables,
+  HostelAmenityType,
+  AmenityOption,
+  AmenityOptionData,
 } from 'src/gql/graphql';
-import { getAmenityCategories } from 'src/utils/amenityData';
 import { enqueueSnackbar } from 'notistack';
+import { useGraphQLQuery } from 'src/hooks/useGraphqlQuery';
 export const AmenitySelector = ({
   hostelId,
-  existingAmenities = '',
+  existingAmenities = [],
   loading,
   amenityId,
 }: {
   hostelId: number;
-  existingAmenities: any;
+  existingAmenities: AmenityOptionData[];
   loading: boolean;
   amenityId: number;
 }) => {
-  // Get amenity categories from shared utility
-  const amenityCategories = getAmenityCategories();
+
+  // get amenity options from the database
+
+const { data: allAmenityOptions, isLoading} = useGraphQLQuery<AllAmenitiesOptionQuery,AllAmenitiesOptionQueryVariables >({
+queryKey: ['allAmenityOptions'],
+query: AllAmenitiesOption.loc!.source.body,
+variables: {  },
+enabled: true
+}); 
+
+
+// format them in such way they seperate according to amenityType
+// retun in format like {HostelAmenityType.Other:[{name,description,id}]}
+// also sort them according to amenityType. place other at the end
+const formattedAmenityOptions = allAmenityOptions?.amenityOptions?.data?.reduce(
+  (acc, amenity) => { 
+    const type = amenity.hostelAmenityType;
+
+    if (!acc[type]) {
+      acc[type] = [];
+    }
+
+    acc[type].push({
+      name: amenity.name,
+      description: amenity.description??"",
+      id: amenity.id,
+      hostelAmenityType: type
+    });
+
+    return acc;
+  },
+  {} as Record<HostelAmenityType, { name: string; description: string; id: string; hostelAmenityType: HostelAmenityType }[]>
+); 
+
+console.log("ffffffffffffffffffffffff",formattedAmenityOptions)
+
 
   // Flatten all amenities for internal processing
-  const allAmenities = Object.values(amenityCategories).flat();
+  const allAmenities = Object.values(formattedAmenityOptions || {}).flat();
 
   // State to track selected amenities
-  const [selectedAmenities, setSelectedAmenities] = useState(existingAmenities);
+  const [selectedAmenities, setSelectedAmenities] = useState<AmenityOptionData[]>(existingAmenities);
 
   // State to track which categories are expanded/collapsed
   const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>(
-    Object.keys(amenityCategories).reduce((acc, category) => ({ ...acc, [category]: true }), {}),
+    Object.keys(formattedAmenityOptions || {}).reduce((acc, category) => ({ ...acc, [category]: true }), {})
   );
+
+  // Helper function to get count of selected amenities in a category
+  const getCategorySelectedCount = (category: string) => {
+    const categoryAmenities = formattedAmenityOptions?.[category as HostelAmenityType] || [];
+    return categoryAmenities.filter(amenity => 
+      selectedAmenities.some(selected => selected.id === amenity.id)
+    ).length;
+  };
+
+  // Handler to select all amenities in a category
+  const selectAllInCategory = (category: string) => {
+    const categoryAmenities = formattedAmenityOptions?.[category as HostelAmenityType] || [];
+    const newSelectedAmenities = [...selectedAmenities];
+    
+    categoryAmenities.forEach(amenity => {
+      if (!newSelectedAmenities.some(selected => selected.id === amenity.id)) {
+        newSelectedAmenities.push({
+          id: amenity.id,
+          name: amenity.name,
+          description: amenity.description,
+          hostelAmenityType: category as HostelAmenityType
+        });
+      }
+    });
+    
+    setSelectedAmenities(newSelectedAmenities);
+  };
+
+  // Handler to deselect all amenities in a category
+  const deselectAllInCategory = (category: string) => {
+    const categoryAmenities = formattedAmenityOptions?.[category as HostelAmenityType] || [];
+    const categoryIds = categoryAmenities.map(amenity => amenity.id);
+    
+    setSelectedAmenities(prev => 
+      prev.filter(amenity => !categoryIds.includes(amenity.id))
+    );
+  };
+
+  // Handler to toggle individual amenity selection
+  const handleAmenityChange = (amenityId: string) => {
+    setSelectedAmenities(prev => {
+      const isSelected = prev.some(amenity => amenity.id === amenityId);
+      if (isSelected) {
+        return prev.filter(amenity => amenity.id !== amenityId);
+      } else {
+        const amenityToAdd = allAmenities.find(amenity => amenity.id === amenityId);
+        if (amenityToAdd) {
+          return [...prev, {
+            id: amenityToAdd.id,
+            name: amenityToAdd.name,
+            description: amenityToAdd.description,
+            hostelAmenityType: amenityToAdd.hostelAmenityType
+          }];
+        }
+        return prev;
+      }
+    });
+  };
+
+  // Toggle category expansion
+  const toggleCategory = (category: string) => {
+    setExpandedCategories(prev => ({
+      ...prev,
+      [category]: !prev[category],
+    }));
+  };
 
   // Apollo mutation hooks
   const mutateUpdateAmenities = useGraphqlClientRequest<
@@ -60,45 +166,15 @@ export const AmenitySelector = ({
     mutationFn: mutateCreateAmenities,
   });
 
-  // Handler for checkbox change
-  const handleAmenityChange = (amenity: string) => {
-    setSelectedAmenities((prevSelected: any) => {
-      // Handle both string and array formats
-      const currentSelected =
-        typeof prevSelected === 'string'
-          ? prevSelected.split(',').filter(Boolean)
-          : [...prevSelected];
-
-      if (currentSelected.some(item => item === amenity)) {
-        // Remove if already selected
-        return currentSelected.filter(item => item !== amenity).join(',');
-      } else {
-        // Add if not selected
-        return [...currentSelected, amenity].join(',');
-      }
-    });
-  };
-
-  // Toggle category expansion
-  const toggleCategory = (category: string) => {
-    setExpandedCategories(prev => ({
-      ...prev,
-      [category]: !prev[category],
-    }));
-  };
-
   // Handler to save amenities
   const handleUpdateAmenities = async () => {
     try {
-      const amenitiesArray =
-        typeof selectedAmenities === 'string'
-          ? selectedAmenities.split(',').filter(Boolean)
-          : selectedAmenities;
+      const amenitiesArray =selectedAmenities;
 
       updateAmenities({
         updateAmenityInput: {
           id: amenityId,
-          amenity: Array.isArray(amenitiesArray) ? amenitiesArray.join(',') : amenitiesArray,
+          amenity: JSON.stringify(amenitiesArray),
           hostelId: hostelId,
         },
       }).then(res => {
@@ -113,14 +189,11 @@ export const AmenitySelector = ({
 
   const handleCreateAmenities = async () => {
     try {
-      const amenitiesArray =
-        typeof selectedAmenities === 'string'
-          ? selectedAmenities.split(',').filter(Boolean)
-          : selectedAmenities;
+      const amenitiesArray= selectedAmenities;
 
       await createAmenity({
         createAmenityInput: {
-          amenity: Array.isArray(amenitiesArray) ? amenitiesArray.join(',') : amenitiesArray,
+          amenity: JSON.stringify(amenitiesArray),
           hostelId: hostelId,
         },
       }).then(res => {
@@ -133,61 +206,11 @@ export const AmenitySelector = ({
     }
   };
 
-  // Handler to select all amenities in a category
-  const selectAllInCategory = (category: string) => {
-    const categoryAmenities = amenityCategories[category];
-
-    setSelectedAmenities((prevSelected: any) => {
-      // Convert to array if it's a string
-      const currentSelected =
-        typeof prevSelected === 'string'
-          ? prevSelected.split(',').filter(Boolean)
-          : [...prevSelected];
-
-      // Add all category amenities that aren't already selected
-      categoryAmenities.forEach((amenity: string) => {
-        if (!currentSelected.includes(amenity)) {
-          currentSelected.push(amenity);
-        }
-      });
-      return currentSelected.join(',');
-    });
-  };
-
-  // Handler to deselect all amenities in a category
-  const deselectAllInCategory = (category: string) => {
-    const categoryAmenities = amenityCategories[category];
-
-    setSelectedAmenities((prevSelected: any) => {
-      // Convert to array if it's a string
-      const currentSelected =
-        typeof prevSelected === 'string'
-          ? prevSelected.split(',').filter(Boolean)
-          : [...prevSelected];
-
-      // Filter out all amenities from this category
-      const newSelected = currentSelected.filter(amenity => !categoryAmenities.includes(amenity));
-
-      return newSelected.join(',');
-    });
-  };
-
-  // Calculate the selected count for each category
-  const getCategorySelectedCount = (category: string) => {
-    const categoryAmenities = amenityCategories[category];
-    const selectedArray =
-      typeof selectedAmenities === 'string'
-        ? selectedAmenities.split(',').filter(Boolean)
-        : selectedAmenities;
-
-    return categoryAmenities.filter((amenity: string) => selectedArray.includes(amenity)).length;
-  };
-
   return (
     <div className="mx-auto w-full rounded-lg border border-gray-100 bg-white/80 p-6 shadow-md">
       <h1 className="mb-2 text-2xl font-bold text-gray-800">Hostel Amenities</h1>
       <p className="mb-6 text-gray-600">Select all amenities available at your property.</p>
-      {Object.keys(amenityCategories).map((category: any) => (
+      {Object.keys(formattedAmenityOptions || {}).map((category) => (
         <div key={category} className="mb-6 border-b border-gray-100 pb-4 last:border-b-0">
           <div
             className="group mb-3 flex cursor-pointer items-center justify-between"
@@ -197,7 +220,7 @@ export const AmenitySelector = ({
               <h2 className="group-hover:text-blue-600 text-lg font-semibold text-gray-800 transition-colors">
                 {category}
                 <span className="ml-2 text-sm font-normal text-gray-500">
-                  ({getCategorySelectedCount(category)}/{amenityCategories[category].length})
+                  ({getCategorySelectedCount(category)}/{formattedAmenityOptions?.[category as HostelAmenityType]?.length || 0})
                 </span>
               </h2>
             </div>
@@ -225,20 +248,16 @@ export const AmenitySelector = ({
 
           {expandedCategories[category] && (
             <div className="mt-2 grid grid-cols-1 gap-3 pl-8 md:grid-cols-2">
-              {amenityCategories[category].map((amenity: string) => {
-                // Check if the amenity is in the selectedAmenities
-                const isSelected =
-                  typeof selectedAmenities === 'string'
-                    ? selectedAmenities.split(',').some(item => item === amenity)
-                    : selectedAmenities.some((item: string) => item === amenity);
+              {formattedAmenityOptions?.[category as HostelAmenityType]?.map((amenity) => {
+                const isSelected = selectedAmenities.some(selected => selected.id === amenity.id);
 
                 return (
                   <div
-                    key={amenity}
+                    key={amenity.id}
                     className={`flex items-center rounded-md p-2 transition-colors ${
                       isSelected ? 'bg-blue-50' : 'hover:bg-gray-50'
                     }`}
-                    onClick={() => handleAmenityChange(amenity)}
+                    onClick={() => handleAmenityChange(amenity.id)}
                   >
                     <div className="mr-3">
                       {isSelected ? (
@@ -248,10 +267,10 @@ export const AmenitySelector = ({
                       )}
                     </div>
                     <label
-                      htmlFor={`amenity-${amenity}`}
+                      htmlFor={`amenity-${amenity.id}`}
                       className={`cursor-pointer ${isSelected ? 'text-blue-700' : 'text-gray-700'}`}
                     >
-                      {amenity}
+                      {amenity.name}
                     </label>
                   </div>
                 );
@@ -264,16 +283,14 @@ export const AmenitySelector = ({
       <div className="mt-6 flex flex-col items-start justify-between border-t border-gray-100 pt-4 sm:flex-row sm:items-center">
         <div className="mb-4 text-sm text-gray-500 sm:mb-0">
           <span className="text-blue-600 font-medium">
-            {typeof selectedAmenities === 'string'
-              ? selectedAmenities.split(',').filter(Boolean).length
-              : selectedAmenities.length}
+            {selectedAmenities.length}
           </span>{' '}
           of {allAmenities.length} amenities selected
         </div>
         <div>
           <Button
             label={loading ? 'Saving...' : 'Save Amenities'}
-            onClick={existingAmenities === '' ? handleCreateAmenities : handleUpdateAmenities}
+            onClick={existingAmenities.length === 0 ? handleCreateAmenities : handleUpdateAmenities}
             disabled={loading || isUpdateAmenityPending || isCreateAmenityPending}
             className={`rounded-full px-4 py-2 font-medium ${
               loading || isUpdateAmenityPending || isCreateAmenityPending

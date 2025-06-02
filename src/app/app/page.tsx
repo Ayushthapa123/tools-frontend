@@ -4,6 +4,7 @@ import Link from 'next/link';
 import React from 'react';
 import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
 import Button from 'src/components/Button';
+import HostelProfiles from 'src/features/HostelProfiles';
 import {
   GetHostelDetailsBasic,
   GetHostelDetailsBasicQuery,
@@ -24,7 +25,7 @@ export default function Home() {
     return res.getHostelByToken;
   };
 
-  const { data } = useQuery({
+  const { data,isLoading } = useQuery({
     queryKey: ['getHostelDetailsBasic'],
     queryFn: fetchData,
   });
@@ -54,7 +55,9 @@ export default function Home() {
 
       <div className="card w-full border bg-base-100 p-4 text-base-content shadow">
         <h3 className="text-lg font-semibold">Hostel Profiles</h3>
+        {isLoading ? <div>Loading...</div> : <HostelProfiles hasOnboardingComplete={data?.data?.hasOnboardingComplete || false} />}
       </div>
+     
     </div>
   );
 }

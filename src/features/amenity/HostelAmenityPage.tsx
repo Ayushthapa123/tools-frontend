@@ -35,7 +35,7 @@ export const HostelAmenitiesPage = ({ hostelId }: { hostelId: number }) => {
   if (error) return <p>Error: {error.message}</p>;
 
   // Get existing amenities or provide empty array if none
-  const existingAmenities = data?.data?.amenities || '';
+  const existingAmenities = JSON.parse(data?.data?.amenities || '[]');
 
   return (
     <div className="container mx-auto p-4">

@@ -4,8 +4,8 @@ query getHostelDetailsBasic {
       name
       slug
       verifiedBySuperAdmin
-      verifiedByCommunityOwner
-
+      verifiedByCommunityOwner 
+      hasOnboardingComplete
       address {
         country
         city

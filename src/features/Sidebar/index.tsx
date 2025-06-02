@@ -116,13 +116,13 @@ const Sidebar = () => {
       children: false,
       show: user.userType === UserType.HostelOwner,
     },
-    {
-      icon: <BookingIcon />,
-      text: 'Bookings',
-      href: '/app/booking',
-      children: false,
-      show: user.userType === UserType.HostelOwner,
-    },
+    // {
+    //   icon: <BookingIcon />,
+    //   text: 'Bookings',
+    //   href: '/app/booking',
+    //   children: false,
+    //   show: user.userType === UserType.HostelOwner,
+    // },
 
     // { icon: <PriceIcon />, text: 'Pricing', href: '/app/pricing', children: false },
     // { icon: <GalleryIcon />, text: 'Gallery', href: '/app/gallery', children: false, show: user.userType === UserType.hostelOwner },
