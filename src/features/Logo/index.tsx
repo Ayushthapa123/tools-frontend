@@ -5,8 +5,8 @@ export const Logo = () => {
   return (
     <>
       <Link href="/">
-        <div style={{ alignItems: 'start' }}>
-          <Image src="/logo.png" alt="logo" height={80} width={80} className=" md:-my-2 md:flex" />
+        <div style={{ alignItems: 'start' }} className='flex justify-center items-center align-middle h-full flex-col'>
+          <Image src="/logo512.png" alt="logo" height={60} width={60} className="  md:flex" />
         </div>
       </Link>
     </>

@@ -5,7 +5,7 @@ import { useUserStore } from 'src/store/userStore';
 // import { MobileNav } from './MobileNav';
 
 import { motion } from 'framer-motion';
-
+import { domainConfig } from 'src/config/domainConfig';
 import { UserProfile } from '../UserProfile';
 import { CreateHostelModal } from 'src/app/app/hostel-info/CreateHostelModal';
 import { UserType } from 'src/gql/graphql';
@@ -15,12 +15,12 @@ export const CommonNav = () => {
 
   return (
     <div
-      className="sticky top-0 z-[999] flex h-[70px] w-full  bg-white  px-3 shadow-sm md:h-[70px] md:px-[30px] "
+      className="sticky top-0 z-[999] flex h-[70px] w-full  bg-white  px-3 shadow-sm md:h-[70px] md:px-[30px]  flex-col justify-center align-middle"
       id="common-nav"
     >
       <div className="flex w-full justify-between ">
         <div className="relative flex w-auto">
-          <div className="relative h-[60px] w-[150px] md:h-[70px] md:w-fit ">
+          <div className="relative h-[60px] w-[150px] md:h-[70px] md:w-fit">
             <Logo />
             {/* <h1>Home Stay</h1> */}
           </div>
@@ -28,7 +28,7 @@ export const CommonNav = () => {
 
         <div className=" flex flex-col justify-center ">
           <div className="flex gap-1 md:gap-4">
-            {!user.userId && (
+            {!user.userId && domainConfig.appName === 'hosteladmin' && (
               <>
                 <div className="flex gap-1 md:gap-2">
                   <Link href={'/login'}>
@@ -56,6 +56,19 @@ export const CommonNav = () => {
               </div>
             )}
             {user.userType === UserType.HostelOwner && !user.hostelId && <CreateHostelModal />}
+          </div>
+          <div className=' flex gap-1 md:gap-2'>
+          {domainConfig.appName === 'hostelpilot' && (
+           
+              <button className="flex flex-row items-center justify-center rounded-full border border-transparent bg-primary  font-medium tracking-wide transition duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 lg:min-w-fit">
+                  <motion.div className="  font-semibold " transition={{ duration: 0.3 }}>
+                    <Link href={'https://hosteladmin.com/signup'}>
+                      <span className="block text-white md:block">List My Hostel</span>
+                    </Link>
+                  </motion.div>
+                </button>
+          
+          )}
           </div>
         </div>
       </div>

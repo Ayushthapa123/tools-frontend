@@ -9,7 +9,7 @@ export const LogoIcon = () => {
         <div className=" flex w-auto gap-3" style={{ alignItems: 'center' }}>
           <div className="relative mb-5 flex  gap-1 md:mb-5">
             <div className=" relative inline-block h-16  w-16">
-              <Image src="/logo.png" alt="logo" fill />
+              <Image src="/logo512.png" alt="logo" fill />
             </div>
           </div>
         </div>

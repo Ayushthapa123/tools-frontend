@@ -3,14 +3,15 @@ import { CommonNav } from 'src/features/NavBar/CommonNav';
 import type { Metadata } from 'next';
 import { Header } from 'src/features/landing-page/Header';
 import Footer from 'src/features/Footer';
+import { domainConfig } from 'src/config/domainConfig';
+import HostelAdminHeader from 'src/features/landing-page/Header/HostelAdminHeader';
 export const metadata: Metadata = {
-  title: 'Hostel  Management System-Manage Your Hotel Informations Online', 
-  description:
-    'hosteladmin offers a comprehensive platform that allows you to seamlessly upload and manage all the details of your hostel online. By leveraging our user-friendly interface, you can ensure that potential guests can easily find your hostel, check availability, and reach out to you directly',
+  title: domainConfig.appSlogan, 
+  description:domainConfig.appDescription,
   authors: [{ name: 'Ayush Thapa' }],
   openGraph: {
-    images: '/logo.png',
-    title: 'hostel- Manage Your hostel Informations Online',
+    images: '/logo512.png',
+    title: domainConfig.appSlogan,
   },
 };
 
@@ -21,7 +22,7 @@ export default function Home() {
       <main className="relative ">
         <div className="">
           <CommonNav />
-          <Header />
+          {domainConfig.appName == 'hosteladmin' ?<HostelAdminHeader />:<Header />}
           <Footer />
           {/* <Header1 /> */}
         </div>

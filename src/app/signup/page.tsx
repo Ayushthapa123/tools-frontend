@@ -100,6 +100,7 @@ function SignUp() {
         password: data.password,
         fullName: data.fullName,
         userType: UserType.HostelOwner,
+        phoneNumber: data.phoneNumber,
       },
     }).then(res => {
       if (res?.signupUser?.id) {
@@ -255,12 +256,7 @@ function SignUp() {
                   Log In
                 </Link>
               </p>
-              <p className="text-body-color text-base">
-                <span className="pr-0.5">Signup As a Hostel Owner?</span>
-                <Link href="/hostel-signup" className="ml-1 text-blue hover:underline">
-                  Signup
-                </Link>
-              </p>
+       
 
               <div className=" w-full   ">
                 <hr className="  my-3 w-full border" />

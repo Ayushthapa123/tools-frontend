@@ -87,7 +87,7 @@ const HostelTabs = ({ hostelId }: { hostelId: number }) => {
         role="tablist"
         className="tabs-boxed tabs z-[99] mb-2 flex flex-wrap bg-transparent pt-2"
       >
-        {tabs.map(tab => (
+        {/* {tabs.map(tab => (
           <a
             key={tab.id}
             role="tab"
@@ -96,11 +96,11 @@ const HostelTabs = ({ hostelId }: { hostelId: number }) => {
           >
             {tab.title}
           </a>
-        ))}
+        ))} */}
       </div>
       {tabs.map((tab, index) => (
         <div key={index}>
-          {tab.id == activeTab && (
+          {true && (
             <div>
               <h3 className=" mb-[1rem] ">{tab.title}</h3>
               {tab.comp}

@@ -3,29 +3,7 @@ import './globals.css';
 import Head from 'next/head';
 import { TopLevelWrapper } from 'src/features/TopLevelWrapper';
 
-// const sora = Sora({
-//   subsets: ['latin'],
-//   weight: ['300', '400', '500', '600', '700'],
-//   variable: '--font-sora',
-// });
 
-// const teko = Teko({
-//   subsets: ['latin'],
-//   weight: ['300', '400', '500', '600', '700'],
-//   variable: '--font-teko',
-// });
-
-// export const metadata: Metadata = {
-//   title: 'HOstel Management Software',
-//   description:
-//     'Hostel offers a comprehensive platform that allows you to seamlessly upload and manage all the details of your Hostel online. By leveraging our user-friendly interface, you can ensure that potential guests can easily find your hostel, check availability, and reach out to you directly',
-//   manifest: '/manifest.json',
-//   icons: {
-//     icon: '/logo512.png',
-//     apple: '/logo512.png',
-//   },
-//   themeColor: '#3B5D50',
-// };
 
 export default function RootLayout({
   children,

@@ -21,7 +21,7 @@ export const Header = () => {
             Explore with Us!
             </h1>
             <p className="mb-8 text-base text-white lg:text-lg">
-            Welcome to Hostelpilot.com, your go-to platform for finding the perfect hostel. Whether it is a cozy stay or a shared space, we make your search quick and easy!
+            Welcome to Hostelpilot.com, your go-to platform for finding the perfect hostel, we make your search quick and easy!
             </p>
             <div className="">
               <Suspense>

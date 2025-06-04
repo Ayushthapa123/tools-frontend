@@ -31,7 +31,7 @@ const RichTextEditor: React.FC<SimpleQuillProps> = ({ editorRef, onChange, readO
       modules={modules}
       placeholder="Write here..."
       readOnly={readOnly}
-      className="rounded-md border-base-200 bg-base-100 p-0"
+      className="rounded-md  bg-base-100 p-0 " 
     />
   );
 };

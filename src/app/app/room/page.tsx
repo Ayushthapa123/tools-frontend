@@ -26,11 +26,11 @@ export default function Home() {
 const LocationTabs = () => {
   const tabs = [
     { title: 'Active Rooms', id: 1, comp: <ActiveRooms /> },
-    {
-      title: 'Inactive Rooms',
-      id: 2,
-      comp: <div>Inactive Rooms</div>,
-    },
+    // {
+    //   title: 'Inactive Rooms',
+    //   id: 2,
+    //   comp: <div>Inactive Rooms</div>,
+    // },
   ];
   const [activeTab, setActiveTab] = useState(1);
 
@@ -41,7 +41,7 @@ const LocationTabs = () => {
         className="tabs-boxed tabs z-[99] my-3 flex flex-row flex-wrap justify-between bg-transparent py-2"
       >
         <div className="flex flex-row flex-wrap">
-          {tabs.map(tab => (
+          {/* {tabs.map(tab => (
             <div key={tab.id}>
               <a
                 role="tab"
@@ -51,7 +51,7 @@ const LocationTabs = () => {
                 {tab.title}
               </a>
             </div>
-          ))}
+          ))} */}
         </div>
         {activeTab == 1 && (
           <div>

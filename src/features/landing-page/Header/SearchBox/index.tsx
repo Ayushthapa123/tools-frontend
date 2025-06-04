@@ -100,7 +100,7 @@ export const SearchBox = () => {
 
   return (
     <div className="relative flex w-fit flex-col items-center justify-center px-3 ">
-      <div className="relative z-50 flex w-full max-w-6xl flex-col gap-2  space-y-[6px] rounded-2xl border bg-gray-50 px-[10px] py-[10px] focus-within:border-gray-300 sm:flex-row sm:space-y-0 sm:rounded-full sm:py-1 sm:pl-6 sm:pr-1">
+      <div className="relative z-50 flex w-full max-w-6xl min-w-[300px] md:min-w-[600px] flex-col gap-2  space-y-[6px] rounded-2xl border bg-gray-50 px-[10px] py-[10px] focus-within:border-gray-300 sm:flex-row sm:space-y-0 sm:rounded-full sm:py-1 sm:pl-6 sm:pr-1">
         {/* <input
           type="text"
           placeholder="Search By Location"
@@ -112,6 +112,7 @@ export const SearchBox = () => {
           onClick={() => setShowSearchSuggestions(true)}
         /> */}
 
+<div className=' flex-grow'>
         <Autocomplete
           onLoad={autocomplete => (autocompleteRef.current = autocomplete)}
           className=" "
@@ -128,8 +129,9 @@ export const SearchBox = () => {
             required
           />
         </Autocomplete>
+        </div>
 
-        <div className=" flex items-center">
+        {/* <div className=" flex items-center">
           <label className="relative mb-3 mt-4 block whitespace-nowrap text-sm font-medium text-primary">
             Check In:
           </label>
@@ -141,8 +143,8 @@ export const SearchBox = () => {
             onChange={e => setCheckInDate(e.target.value)}
             min={new Date().toISOString().split('T')[0]}
           />
-        </div>
-
+        </div> */}
+{/* 
         <div className=" flex items-center ">
           <label className="relative mb-3 mt-4 block whitespace-nowrap text-sm font-medium text-primary">
             Check-Out:
@@ -154,7 +156,7 @@ export const SearchBox = () => {
             onChange={e => setCheckOutDate(e.target.value)}
             min={checkInDate}
           />
-        </div>
+        </div> */}
 
         <button
           className="flex flex-row items-center justify-center rounded-full border border-transparent bg-primary px-3 py-2 text-base font-medium tracking-wide text-white transition duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 md:min-w-[130px] md:px-8"

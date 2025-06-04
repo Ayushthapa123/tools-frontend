@@ -111,6 +111,7 @@ const FormContent = ({ rulesData }: { rulesData: HostelRules | undefined }) => {
             setRules(value);
             editorRef.current = value;
           }}
+          
         />
         {rules && (
           <div className="relative mt-5 flex w-full justify-end">

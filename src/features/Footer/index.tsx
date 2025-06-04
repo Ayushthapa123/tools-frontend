@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { domainConfig } from 'src/config/domainConfig';
 const Footer = () => {
   return (
     <footer className="relative z-10 flex items-center justify-center   bg-base-100 px-5 py-16 md:px-20">
@@ -40,7 +40,7 @@ const Footer = () => {
           </a>
         </div>
         <p className="text-body-color text-center text-base">
-          &copy; 2025 All Rights Reserved to Nepal Hostel
+          &copy; 2025 All Rights Reserved to {domainConfig.appName}
         </p>
       </div>
     </footer>

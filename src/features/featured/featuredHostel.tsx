@@ -29,7 +29,7 @@ export const FeaturedHostel = () => {
     <div className="mx-auto flex w-[90vw] flex-col items-center justify-center  py-10">
       <div className="my-6 flex flex-col items-center justify-between  gap-0">
         <h2 className="m-0 text-xl font-bold text-primary lg:text-4xl">Featured Hostels</h2>
-        <p className="text-center text-sm lg:text-lg">Discover our most popular accommodations</p>
+        <p className="text-center text-sm lg:text-lg">Discover our most popular Hostels</p>
       </div>
 
       {isLoading && (

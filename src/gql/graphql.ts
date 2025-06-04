@@ -226,6 +226,25 @@ export type CreateGalleryInput = {
   url: Scalars['String']['input'];
 };
 
+export type CreateHostelGuestInput = {
+  checkinDate?: InputMaybe<Scalars['String']['input']>;
+  checkoutDate?: InputMaybe<Scalars['String']['input']>;
+  dateOfBirth?: InputMaybe<Scalars['DateTime']['input']>;
+  email: Scalars['String']['input'];
+  emergencyContact?: InputMaybe<Scalars['String']['input']>;
+  fullName: Scalars['String']['input'];
+  gender?: InputMaybe<Gender>;
+  hostelId: Scalars['Int']['input'];
+  nationality?: InputMaybe<Scalars['String']['input']>;
+  notes?: InputMaybe<Scalars['String']['input']>;
+  occupation?: InputMaybe<Scalars['String']['input']>;
+  permanentAddress?: InputMaybe<Scalars['String']['input']>;
+  phoneNumber?: InputMaybe<Scalars['String']['input']>;
+  profilePicture?: InputMaybe<Scalars['String']['input']>;
+  religion?: InputMaybe<Scalars['String']['input']>;
+  roomId?: InputMaybe<Scalars['Int']['input']>;
+};
+
 export type CreateHostelInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   genderType?: InputMaybe<Scalars['String']['input']>;
@@ -503,6 +522,41 @@ export enum HostelGenderType {
   Girls = 'GIRLS'
 }
 
+export type HostelGuest = {
+  __typename?: 'HostelGuest';
+  data?: Maybe<HostelGuestData>;
+  error?: Maybe<GraphQlError>;
+};
+
+export type HostelGuestData = {
+  __typename?: 'HostelGuestData';
+  checkinDate?: Maybe<Scalars['DateTime']['output']>;
+  checkoutDate?: Maybe<Scalars['DateTime']['output']>;
+  createdAt: Scalars['DateTime']['output'];
+  dateOfBirth?: Maybe<Scalars['DateTime']['output']>;
+  email: Scalars['String']['output'];
+  emergencyContact?: Maybe<Scalars['String']['output']>;
+  fullName: Scalars['String']['output'];
+  gender?: Maybe<Gender>;
+  hostelId: Scalars['Int']['output'];
+  id: Scalars['ID']['output'];
+  nationality?: Maybe<Scalars['String']['output']>;
+  notes?: Maybe<Scalars['String']['output']>;
+  occupation?: Maybe<Scalars['String']['output']>;
+  permanentAddress?: Maybe<Scalars['String']['output']>;
+  phoneNumber?: Maybe<Scalars['String']['output']>;
+  profilePicture?: Maybe<Scalars['String']['output']>;
+  religion?: Maybe<Scalars['String']['output']>;
+  roomId: Scalars['Int']['output'];
+  updatedAt: Scalars['DateTime']['output'];
+};
+
+export type HostelGuestList = {
+  __typename?: 'HostelGuestList';
+  data?: Maybe<Array<HostelGuestData>>;
+  error?: Maybe<GraphQlError>;
+};
+
 export type HostelRules = {
   __typename?: 'HostelRules';
   data?: Maybe<HostelRulesData>;
@@ -570,6 +624,7 @@ export type Mutation = {
   createContact: ContactDetail;
   createGallery: Gallery;
   createHostel: Hostel;
+  createHostelGuest: HostelGuest;
   createPrice: Price;
   createPriceRule: DynamicPricingRule;
   createRoom: Room;
@@ -597,6 +652,7 @@ export type Mutation = {
   refreshTokens: UsersHostelIdAndToken;
   removeAmenity: Amenities;
   removeBooking: Booking;
+  removeHostelGuest: HostelGuest;
   removePrice: Price;
   removePriceRule: DynamicPricingRule;
   removeRoom: Room;
@@ -615,6 +671,7 @@ export type Mutation = {
   updateContact: ContactDetail;
   updateGallery: Gallery;
   updateHostel: Hostel;
+  updateHostelGuest: HostelGuest;
   updatePrice: Price;
   updatePriceRule: DynamicPricingRule;
   updateRoom: Room;
@@ -675,6 +732,12 @@ export type MutationCreateGalleryArgs = {
 
 export type MutationCreateHostelArgs = {
   data: CreateHostelInput;
+};
+
+
+export type MutationCreateHostelGuestArgs = {
+  createHostelGuestInput: CreateHostelGuestInput;
+  withEmail: Scalars['Boolean']['input'];
 };
 
 
@@ -804,6 +867,11 @@ export type MutationRemoveBookingArgs = {
 };
 
 
+export type MutationRemoveHostelGuestArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
 export type MutationRemovePriceArgs = {
   id: Scalars['Int']['input'];
 };
@@ -899,6 +967,11 @@ export type MutationUpdateGalleryArgs = {
 export type MutationUpdateHostelArgs = {
   data: UpdateHostelInput;
   hostelId: Scalars['Float']['input'];
+};
+
+
+export type MutationUpdateHostelGuestArgs = {
+  updateHostelGuestInput: UpdateHostelGuestInput;
 };
 
 
@@ -1026,6 +1099,7 @@ export type Query = {
   findAmenityByHostelId: Amenities;
   findAmenityByRoomId: RoomAmenity;
   findAnAmenityById: RoomAmenity;
+  findHostelGuestsByHostelRoomId: BookingConfirmationMailData;
   findRoomsByRoomIds: BookingConfirmationMailData;
   findServiceByHostelId: Service;
   getAddressByHostelId?: Maybe<Address>;
@@ -1049,6 +1123,9 @@ export type Query = {
   getUserByAccessToken?: Maybe<User>;
   getUserById?: Maybe<User>;
   getUsers: Array<User>;
+  hostelGuest: HostelGuest;
+  hostelGuestsByHostelId: HostelGuestList;
+  hostelGuestsByToken: HostelGuestList;
   myBookings: BookingList;
   price: Price;
   priceByRoom: Price;
@@ -1104,6 +1181,11 @@ export type QueryFindAmenityByRoomIdArgs = {
 
 export type QueryFindAnAmenityByIdArgs = {
   id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindHostelGuestsByHostelRoomIdArgs = {
+  hostelRoomId: Scalars['Int']['input'];
 };
 
 
@@ -1195,6 +1277,16 @@ export type QueryGetUserByIdArgs = {
 };
 
 
+export type QueryHostelGuestArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryHostelGuestsByTokenArgs = {
+  token: Scalars['String']['input'];
+};
+
+
 export type QueryPriceArgs = {
   id: Scalars['Int']['input'];
 };
@@ -1242,6 +1334,7 @@ export type QuerySearchQueryArgs = {
 
 export type QuerySendVerificationEmailArgs = {
   email: Scalars['String']['input'];
+  name: Scalars['String']['input'];
   token: Scalars['String']['input'];
 };
 
@@ -1518,6 +1611,26 @@ export type UpdateGalleryInput = {
   hostelId?: InputMaybe<Scalars['Float']['input']>;
   id: Scalars['Float']['input'];
   url?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpdateHostelGuestInput = {
+  checkinDate?: InputMaybe<Scalars['String']['input']>;
+  checkoutDate?: InputMaybe<Scalars['String']['input']>;
+  dateOfBirth?: InputMaybe<Scalars['DateTime']['input']>;
+  email?: InputMaybe<Scalars['String']['input']>;
+  emergencyContact?: InputMaybe<Scalars['String']['input']>;
+  fullName?: InputMaybe<Scalars['String']['input']>;
+  gender?: InputMaybe<Gender>;
+  hostelId?: InputMaybe<Scalars['Int']['input']>;
+  id: Scalars['Int']['input'];
+  nationality?: InputMaybe<Scalars['String']['input']>;
+  notes?: InputMaybe<Scalars['String']['input']>;
+  occupation?: InputMaybe<Scalars['String']['input']>;
+  permanentAddress?: InputMaybe<Scalars['String']['input']>;
+  phoneNumber?: InputMaybe<Scalars['String']['input']>;
+  profilePicture?: InputMaybe<Scalars['String']['input']>;
+  religion?: InputMaybe<Scalars['String']['input']>;
+  roomId?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type UpdateHostelInput = {
@@ -2285,7 +2398,7 @@ export type SignUpWithGoogleMutation = { __typename?: 'Mutation', signUpWithGoog
 export type GetOnboardingDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetOnboardingDataQuery = { __typename?: 'Query', getOnboardingData: { __typename?: 'Hostel', data?: { __typename?: 'HostelData', address?: { __typename?: 'AddressData', id: string } | null, contact?: { __typename?: 'ContactDetailData', id: string } | null, gallery: Array<{ __typename?: 'GalleryData', id: string }>, rooms: Array<{ __typename?: 'RoomData', id: string }> } | null, error?: { __typename?: 'GraphQLError', message: string, code?: string | null } | null } };
+export type GetOnboardingDataQuery = { __typename?: 'Query', getOnboardingData: { __typename?: 'Hostel', data?: { __typename?: 'HostelData', address?: { __typename?: 'AddressData', id: string } | null, contact?: { __typename?: 'ContactDetailData', id: string } | null, amenities?: { __typename?: 'AmenitiesData', id: string } | null, gallery: Array<{ __typename?: 'GalleryData', id: string }>, rooms: Array<{ __typename?: 'RoomData', id: string }> } | null, error?: { __typename?: 'GraphQLError', message: string, code?: string | null } | null } };
 
 export type CreateAmenityMutationVariables = Exact<{
   createAmenityInput: CreateAmenityInput;
@@ -2406,7 +2519,7 @@ export const LogOutDocument = {"kind":"Document","definitions":[{"kind":"Operati
 export const RefreshTokenDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"refreshToken"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"refreshTokens"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"fullName"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userType"}},{"kind":"Field","name":{"kind":"Name","value":"hostelId"}}]}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}},{"kind":"Field","name":{"kind":"Name","value":"accessToken"}}]}}]}}]}}]} as unknown as DocumentNode<RefreshTokenMutation, RefreshTokenMutationVariables>;
 export const SignupUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"signupUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SignupInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signupUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userType"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}}]}}]}}]}}]} as unknown as DocumentNode<SignupUserMutation, SignupUserMutationVariables>;
 export const SignUpWithGoogleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"signUpWithGoogle"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SignupWithGoogleInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signUpWithGoogle"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}}]}}]}}]}}]} as unknown as DocumentNode<SignUpWithGoogleMutation, SignUpWithGoogleMutationVariables>;
-export const GetOnboardingDataDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getOnboardingData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getOnboardingData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"contact"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"gallery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"rooms"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<GetOnboardingDataQuery, GetOnboardingDataQueryVariables>;
+export const GetOnboardingDataDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getOnboardingData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getOnboardingData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"contact"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"amenities"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"gallery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"rooms"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<GetOnboardingDataQuery, GetOnboardingDataQueryVariables>;
 export const CreateAmenityDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateAmenity"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createAmenityInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateAmenityInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createAmenity"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createAmenityInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createAmenityInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"amenities"}},{"kind":"Field","name":{"kind":"Name","value":"hostelId"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<CreateAmenityMutation, CreateAmenityMutationVariables>;
 export const FindAmenityByHostelIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindAmenityByHostelId"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"hostelId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findAmenityByHostelId"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"hostelId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"hostelId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"amenities"}},{"kind":"Field","name":{"kind":"Name","value":"hostelId"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<FindAmenityByHostelIdQuery, FindAmenityByHostelIdQueryVariables>;
 export const RemoveAmenityDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RemoveAmenity"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removeAmenity"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"amenities"}},{"kind":"Field","name":{"kind":"Name","value":"hostelId"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<RemoveAmenityMutation, RemoveAmenityMutationVariables>;
@@ -3893,6 +4006,9 @@ export const GetOnboardingData = gql`
         id
       }
       contact {
+        id
+      }
+      amenities {
         id
       }
       gallery {

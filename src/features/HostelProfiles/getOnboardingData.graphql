@@ -7,6 +7,9 @@ query getOnboardingData{
       contact {
         id
       }
+      amenities {
+        id
+      }
      
       gallery {
         id
