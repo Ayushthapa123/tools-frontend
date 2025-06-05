@@ -4,11 +4,17 @@ import {
   GetOnboardingData,
   GetOnboardingDataQuery,
   GetOnboardingDataQueryVariables,
+  CompleteOnboardingMutation,
+  CompleteOnboardingMutationVariables,
+  CompleteOnboarding,
 } from 'src/gql/graphql';
-import { useGraphQLQuery } from 'src/hooks/useGraphqlQuery';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FaHome, FaPhone, FaImages, FaDoorOpen, FaConciergeBell } from 'react-icons/fa';
 import IconButton from 'src/components/IconButton';
 import Link from 'next/link';
+import { useGraphQLQuery } from 'src/hooks/useGraphqlQuery';
+import { enqueueSnackbar } from 'notistack';
 
 export default function OnboardingCompletion() {
   const router = useRouter();
@@ -21,6 +27,8 @@ export default function OnboardingCompletion() {
     variables: {},
     enabled: true,
   });
+
+    const mutateCompleteOnboarding = useGraphqlClientRequest<CompleteOnboardingMutation, CompleteOnboardingMutationVariables>(CompleteOnboarding.loc!.source.body!);
 
   useEffect(() => {
     if (!isLoading && !onboardingData?.getOnboardingData?.data) {
@@ -45,6 +53,7 @@ export default function OnboardingCompletion() {
   };
 
   const progress = calculateProgress();
+  const queryClient = useQueryClient();
 
   if (isLoading) {
     return (
@@ -72,6 +81,19 @@ export default function OnboardingCompletion() {
     }
     if(!onboardingData?.getOnboardingData?.data?.amenities?.id){
       router.push('/app/amenities');
+    }
+    if(progress == 100){
+      // router.push('/app/hostel-profile');
+      // call the api to complete the onboarding
+      mutateCompleteOnboarding().then((res) => {
+        if(res?.completeOnboarding?.error){
+          enqueueSnackbar(res.completeOnboarding.error.message, { variant: 'error' });
+        }
+        if(res?.completeOnboarding?.data?.id){
+          enqueueSnackbar('Onboarding completed successfully', { variant: 'success' });
+          queryClient.invalidateQueries({ queryKey: ['getHostelDetailsBasic'] });
+        }
+      });
     }
   };
 
@@ -118,7 +140,7 @@ export default function OnboardingCompletion() {
                 <StepItem
                   icon={FaHome}
                   title="Address & Contact Information"
-                  isCompleted={!!onboardingData?.getOnboardingData?.data?.address?.id} 
+                  isCompleted={!!onboardingData?.getOnboardingData?.data?.address?.id && !!onboardingData?.getOnboardingData?.data?.contact?.id} 
                   handleClick={() => handleStepClick('address')}
                 />
            
@@ -147,7 +169,7 @@ export default function OnboardingCompletion() {
                   className="btn btn-primary btn-md gap-2"
                   onClick={handleOnboardingRedirect}
                 >
-                  {progress === 100 ? 'Review Profile' : 'Complete Hostel Profile'}
+                  {progress == 100 ? 'Complete Hostel Profile' : 'Complete Hostel Profile'}
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
                   </svg>

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import IconButton from 'src/components/IconButton';
 import DeleteIcon from 'src/components/icons/Delete';
 import { DeleteRoom, DeleteRoomMutation, DeleteRoomMutationVariables } from 'src/gql/graphql';

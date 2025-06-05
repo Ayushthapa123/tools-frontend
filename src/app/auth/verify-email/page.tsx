@@ -1,7 +1,7 @@
 'use client';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import {
   VerifyEmail,
   VerifyEmailDocument,
@@ -32,7 +32,7 @@ function VerifyUserEmailInner() {
     onSuccess: data => {
       if (data?.verifyEmail) {
         enqueueSnackbar('Email verified successfully!', { variant: 'success' });
-        router.push('/app/my-profile');
+        router.push('/app');
       }
     },
   });

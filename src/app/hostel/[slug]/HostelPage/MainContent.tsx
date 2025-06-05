@@ -39,7 +39,7 @@ import { GrFacebook, GrInstagram, GrYoutube } from 'react-icons/gr';
 import { useRoomStore } from 'src/store/roomStore';
 import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import { MapComponent } from 'src/features/GoogleMap';
 import ShowDetails from '../../room-details/ShowDetails';
 

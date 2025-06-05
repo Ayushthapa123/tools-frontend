@@ -4,7 +4,7 @@ import React, { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactSelect from 'src/features/react-hook-form/ReactSelect';
 import { currencyes } from '../data/currencies';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   CreateHostelSettings,

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { FaCamera, FaEdit, FaCalendar, FaClock, FaMapMarkerAlt, FaUser } from 'react-icons/fa';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import {
   GetGoogleOauthUrlQueryVariables,
   MyBookings,

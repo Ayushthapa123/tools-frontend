@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import Button from 'src/components/Button';
 import { Logo } from 'src/features/Logo';
 import { FullLogo } from 'src/features/Logo/FullLogoWithText';
@@ -86,7 +86,7 @@ const SignIn = () => {
           if (res.loginUser.userType === UserType.HostelOwner) {
             router.push('/app');
           } else {
-            router.push('/app/my-profile');
+            router.push('/app/');
           }
         } else {
           setError('Failed to login!');

@@ -2,7 +2,7 @@
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import React from 'react';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import Button from 'src/components/Button';
 import HostelProfiles from 'src/features/HostelProfiles';
 import {
@@ -43,9 +43,9 @@ export default function Home() {
           </p>
         </div>
         <div className="">
-          <Link href={`${process.env.NEXT_PUBLIC_APP_URL}/hostel/${data?.data?.slug}`}>
+          <Link href={`https://hostelpilot.com/hostel/${data?.data?.slug}`}>
             <Button
-              label="See Hostel Profile"
+              label="See Digital Profile"
               className="rounded-lg bg-secondary"
               variant="primary"
             />

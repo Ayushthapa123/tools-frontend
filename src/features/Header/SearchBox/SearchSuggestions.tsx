@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { BiBuilding } from 'react-icons/bi';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import {
   GetSearchQueries,
   GetSearchQueriesQuery,

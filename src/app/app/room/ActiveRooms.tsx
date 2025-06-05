@@ -1,4 +1,4 @@
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import { RoomCard } from './RoomCard';
 import {
   GetRooms,
@@ -65,7 +65,7 @@ export const ActiveRooms = () => {
           <LoadingSpinner />
         </div>
       )}
-      <div className="md:gap- grid grid-cols-2 gap-[1rem] px-2 md:grid-cols-3">
+      <div className="grid sm:grid-cols-2 gap-[1rem] px-2 md:grid-cols-3">
         {rooms?.data?.map(room => (
           <div key={room.id} className="md:mb-4">
             <RoomCard
@@ -86,7 +86,10 @@ export const ActiveRooms = () => {
             open={showDeleteModal}
             handleClose={() => setShowDeleteModal(false)}
             title="Are you sure to delete this room?"
-            onSave={() => setDeleteRoom(true)}
+            onSave={() => setDeleteRoom(true)} 
+            actionLabel="Delete"
+
+
           >
             Disclaimer: you will not be able to see the details of this room after you delete it.
           </Modal>

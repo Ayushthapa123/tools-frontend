@@ -10,10 +10,12 @@ import { UserProfile } from '../UserProfile';
 import { useTheme } from '../themes/ThemeProvider';
 import { UserType } from 'src/gql/graphql';
 
+//!NOT USED
 const Navbar = () => {
   const { user } = useUserStore();
   const [showModal, setShowModal] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  alert('navbar');
 
   useEffect(() => {
     if (!user?.hostelId && user?.userType === 'HOSTEL_OWNER') {

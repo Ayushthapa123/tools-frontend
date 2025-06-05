@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { Suspense, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import TextInput from 'src/features/react-hook-form/TextField';
 
 import {

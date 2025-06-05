@@ -9,8 +9,8 @@ export const Drawer = () => {
         <div className="drawer-content flex flex-col items-center justify-center">
           {/* Page content here */}
           <label htmlFor="my-drawer-2" className=" drawer-button lg:hidden">
-            <div className="  relative top-[6px] block h-min cursor-pointer rounded-lg bg-slate-100 p-1 ">
-              <span className=" text-[25px] text-primary">
+            <div className="  relative  block h-min cursor-pointer rounded-lg bg-slate-100 p-1 ">
+              <span className=" text-[30px] text-primary">
                 <FiMenu />
               </span>
             </div>

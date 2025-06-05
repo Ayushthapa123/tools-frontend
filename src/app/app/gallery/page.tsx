@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Modal } from 'src/components/Modal';
 import { FaTrash } from 'react-icons/fa';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import {
   GetGalleryByHostelId,
   GetGalleryByHostelIdQuery,
@@ -134,13 +134,13 @@ export default function Gallery() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="mb-8 text-3xl font-bold text-primary">Gallery</h1>
+    <div className="container mx-auto px-4 py-4">
+      {/* <h1 className="mb-8 text-3xl font-bold text-primary">Gallery</h1> */}
 
       {/* Main Image Section */}
       <div className="mb-6">
         {mainWallpaper ? (
-          <div className="relative h-[500px] w-full overflow-hidden rounded-2xl bg-gray-200">
+          <div className="relative h-[300px] w-full overflow-hidden rounded-2xl bg-gray-200 lg:h-[500px]">
             <div className="relative h-full w-full">
               <Image
                 src={mainWallpaper?.url ?? ''}
@@ -159,7 +159,7 @@ export default function Gallery() {
       </div>
 
       {/* Thumbnail Images Section */}
-      <div className="grid grid-cols-6 gap-3">
+      <div className="grid grid-cols-4 md:grid-cols-6 gap-3">
         {wallpaperData?.map((img, index) => (
           <div
             key={img?.id}

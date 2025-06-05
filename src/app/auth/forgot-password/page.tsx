@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, Suspense } from 'react';
 import { useForm } from 'react-hook-form';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import Button from 'src/components/Button';
 import { FullLogo } from 'src/features/Logo/FullLogoWithText';
 import { Logo } from 'src/features/Logo';

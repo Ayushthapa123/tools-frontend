@@ -1,0 +1,11 @@
+mutation completeOnboarding {
+  completeOnboarding {
+    data {
+      id
+    }
+    error {
+      message
+      code
+    }
+  }
+}

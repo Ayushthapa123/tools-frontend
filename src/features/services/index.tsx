@@ -6,7 +6,7 @@ import { GetServiceByHostelIdQuery } from 'src/gql/graphql';
 import { GetServiceByHostelIdQueryVariables } from 'src/gql/graphql';
 import { useQuery } from '@tanstack/react-query';
 import { GetServiceByHostelId } from 'src/gql/graphql';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import LoadingSpinner from 'src/components/Loading';
 
 interface ServicesProps {

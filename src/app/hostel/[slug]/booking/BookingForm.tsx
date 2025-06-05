@@ -6,7 +6,7 @@ import TextArea from 'src/features/react-hook-form/TextArea';
 import Button from 'src/components/Button';
 import { useToastStore } from 'src/store/toastStore';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import {
   BookingConfirmationEmailDto,
   CheckValidBooking,

@@ -4,7 +4,7 @@ import { Input } from 'src/components/Input';
 import { useState, useEffect, useCallback } from 'react';
 import Button from 'src/components/Button';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import { useRouter } from 'next/navigation';
 import LoadingSpinner from 'src/components/Loading';
 import { BiCheckSquare, BiSquare } from 'react-icons/bi';

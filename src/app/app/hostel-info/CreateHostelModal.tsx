@@ -8,7 +8,7 @@ import { enqueueSnackbar } from 'notistack';
 
 import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import Button from 'src/components/Button';
 import RichTextEditor from 'src/components/RichTextEditor';
 

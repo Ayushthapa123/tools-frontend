@@ -1,7 +1,7 @@
 // Example page where you'd use the AmenitySelector component
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import {
   FindAmenityByHostelId,
   FindAmenityByHostelIdDocument,

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { GetUserById, GetUserByIdQuery, GetUserByIdQueryVariables } from 'src/gql/graphql';
 import Link from 'next/link';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 
 import { useUserStore } from 'src/store/userStore';
 import Image from 'next/image';

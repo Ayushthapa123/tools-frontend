@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 
 import {
   GetGalleryByHostelId,
@@ -28,12 +28,12 @@ export const WallpaperGallery = (props: Iprops) => {
   };
 
   return (
-    <div className=" relative z-10 flex min-h-[250px] w-full flex-col items-center justify-center gap-0 rounded-md">
+    <div className=" relative z-10 flex min-h-[250px] w-full flex-col items-center justify-center gap-0 rounded-md ">
       <span className="block text-xs text-gray-400 md:inline">
         You can only upload upto 6 images.
       </span>
-      <div className="">
-        <div className=" relative mt-10 h-[300px] md:w-[450px]">
+      <div className=" w-full">
+        <div className=" relative mt-10 h-[300px] md:w-[450px] w-full">
           <WallpaperEditBox
             handleBack={handleBack}
             galleryType={galleryType}

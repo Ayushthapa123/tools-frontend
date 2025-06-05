@@ -4,7 +4,7 @@ import React, { FC, useEffect, useState } from 'react';
 import Button from 'src/components/Button';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import TextInput from 'src/features/react-hook-form/TextField';
 
 import {

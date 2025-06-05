@@ -3,7 +3,7 @@ import { enqueueSnackbar } from 'notistack';
 
 import { useState } from 'react';
 import { FaLongArrowAltLeft } from 'react-icons/fa';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import Button from 'src/components/Button';
 import ImageUploader from 'src/features/ImageUploader';
 import {

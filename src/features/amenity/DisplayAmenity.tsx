@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { BiCheckCircle } from 'react-icons/bi';
 import { BsCheckCircle } from 'react-icons/bs';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import LoadingSpinner from 'src/components/Loading';
 import {
   FindAmenityByHostelId,

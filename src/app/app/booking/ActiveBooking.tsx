@@ -1,4 +1,4 @@
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import { BookingsByHostel, PaymentPlatformName } from 'src/gql/graphql';
 import { useQuery } from '@tanstack/react-query';
 import { BookingsByHostelQuery, BookingsByHostelQueryVariables } from 'src/gql/graphql';

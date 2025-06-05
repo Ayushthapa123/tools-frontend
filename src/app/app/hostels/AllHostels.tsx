@@ -1,4 +1,4 @@
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import { HostelCard } from './HostelCard';
 import {
   GetAllHostelsQuery,

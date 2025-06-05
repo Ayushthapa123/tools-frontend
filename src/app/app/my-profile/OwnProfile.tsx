@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { FaCamera, FaEdit } from 'react-icons/fa';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import {
   Gender,
   GetUserById,
@@ -184,8 +184,8 @@ export const OwnProfile = (props: { userType: string }) => {
 
   return (
     <div>
-      <div className=" mt-[100px] min-h-[calc(100vh-400px)] w-full">
-        <div className=" mb-4 flex flex-col gap-5 lg:flex-row">
+      <div className=" mt-[10px] min-h-[calc(100vh-400px)] w-full">
+        <div className=" mb-4 flex flex-col gap-5 md:flex-row">
           <div className="flex items-center justify-center">
             <div className="group avatar placeholder relative h-[80px] w-[80px] transition-all duration-300 ease-in-out hover:cursor-pointer lg:h-[130px] lg:w-[130px]">
               {userData?.data?.profilePicture || imageUrl ? (
@@ -202,26 +202,27 @@ export const OwnProfile = (props: { userType: string }) => {
               )}
               <button
                 className={`absolute bottom-1 right-0 hidden rounded-full p-1 text-[21px] group-hover:block ${userData?.data?.profilePicture || imageUrl ? 'text-white' : 'text-primary'} lg:bottom-[5px] lg:right-[14px]`}
-                onClick={() => setOpenProfilePictureModal(true)}
-              >
+                onClick={() => setOpenProfilePictureModal(true)}>
                 <FaCamera />
               </button>
             </div>
           </div>
           <div className="flex-grow ">
             <div className="relative top-[10px] lg:top-[30px]">
-              <h2 className=" text-[25px] font-bold ">
-                {userData?.data?.fullName}
-                <span className="text-xs text-secondary md:text-base"> ({user.userType})</span>
-              </h2>{' '}
-              <h2 className="  text-[20px] font-medium text-secondary">{userData?.data?.email}</h2>
-            </div>
-          </div>
-          <div className=" relative">
-            <div className=" relative top-[30px] flex gap-5 text-[21px] text-primary lg:top-[50px] lg:text-[30px]">
-              <div className=" cursor-pointer" onClick={() => setOpenPersonalModal(true)}>
-                <FaEdit />
+              <div className=" relative flex gap-3 w-full ">
+                <h2 className=" text-[25px] font-bold ">
+                  {userData?.data?.fullName}
+                  <span className="text-xs text-secondary md:text-base"> ({user.userType})</span>
+                </h2>{' '}
+                <div className=" relative ">
+                  <div className=" relative flex gap-5 text-[21px] text-primary  lg:text-[30px]">
+                    <div className=" cursor-pointer" onClick={() => setOpenPersonalModal(true)}>
+                      <FaEdit />
+                    </div>
+                  </div>
+                </div>
               </div>
+              <h2 className="  text-[20px] font-medium text-secondary">{userData?.data?.email}</h2>
             </div>
           </div>
         </div>
@@ -240,8 +241,7 @@ export const OwnProfile = (props: { userType: string }) => {
         handleClose={() => setOpenPersonalModal(false)}
         onSave={handleSubmit(onSubmitPersonal)}
         title="Edit Personal Details"
-        actionLabel="Save"
-      >
+        actionLabel="Save">
         <form className="space-y-4">
           <TextInput
             name="fullName"
@@ -304,8 +304,7 @@ export const OwnProfile = (props: { userType: string }) => {
         handleClose={() => setOpenProfilePictureModal(false)}
         title="Edit Profile Picture"
         actionLabel="Save"
-        onSave={handleSubmitProfilePicture(onSubmitProfilePicture)}
-      >
+        onSave={handleSubmitProfilePicture(onSubmitProfilePicture)}>
         <form>
           <input type="file" {...registerProfilePicture('profilePicture')} />
         </form>

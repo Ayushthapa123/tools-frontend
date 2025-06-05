@@ -9,7 +9,7 @@ import {
   GetBookingByKeyQuery,
   GetBookingByKeyQueryVariables,
 } from 'src/gql/graphql';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import { GetBookingByKey } from 'src/gql/graphql';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Suspense, useEffect, useState } from 'react';

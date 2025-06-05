@@ -18,13 +18,11 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <div className="  relative  mx-auto h-auto w-full max-w-[2100px] bg-base-100 ">
-      {/* <Image src={'/bg.png'} fill alt=''/> */}
       <main className="relative ">
         <div className="">
           <CommonNav />
           {domainConfig.appName == 'hosteladmin' ?<HostelAdminHeader />:<Header />}
           <Footer />
-          {/* <Header1 /> */}
         </div>
       </main>
     </div>

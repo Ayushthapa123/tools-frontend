@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { Suspense, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import TextInput from 'src/features/react-hook-form/TextField';
 import { FcGoogle } from 'react-icons/fc';
 
@@ -105,9 +105,10 @@ function SignUp() {
     }).then(res => {
       if (res?.signupUser?.id) {
         // localStorage.setItem('refreshToken', res.signupUser.token.refreshToken);
-        router.push('/');
+        router.push('/app');
       } else {
-        setError('Failed to signup!');
+        // @ts-ignore
+        setError(res?.errors?.[0]?.message ?? 'Failed to signup!');
       }
     });
 

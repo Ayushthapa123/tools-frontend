@@ -9,7 +9,7 @@ import {
   ResendVerificationMailMutation,
   ResendVerificationMailMutationVariables,
 } from 'src/gql/graphql';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import { LogOutMutation } from 'src/gql/graphql';
 import { LogOutMutationVariables } from 'src/gql/graphql';
 import { useMutation } from '@tanstack/react-query';
@@ -36,7 +36,7 @@ export const CheckMailForVerification = () => {
   const handleLogout = () => {
     mutateAsync({}).then(res => {
       if (res?.logout?.success) {
-        router.push('/');
+        router.push('/login');
       }
     });
   };
@@ -81,18 +81,18 @@ export const CheckMailForVerification = () => {
               </p>
               <p className="mt-4 text-sm text-gray-500">
                 Didn&apos;t receive the email? Check your spam folder
-                <span
-                  className="cursor-pointer font-medium text-primary hover:underline"
+                <button
+                  className="cursor-pointer font-medium text-primary hover:underline text-lg"
                   onClick={() => handleResendEmail()}
                 >
                   {' '}
                   Resend Email
-                </span>
+                </button>
                 .
               </p>
               <div>
                 <Button
-                  label={'Log out'}
+                  label={'Exit page'}
                   className="w-full text-primary "
                   onClick={() => handleLogout()}
                 />

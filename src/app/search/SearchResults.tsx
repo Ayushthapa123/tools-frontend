@@ -2,7 +2,7 @@
 import { HostelCard } from './cards/HostelCard';
 
 import { useEffect } from 'react';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import { SearchHostel, SearchHostelQuery, SearchHostelQueryVariables } from 'src/gql/graphql';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';

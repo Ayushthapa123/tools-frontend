@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { domainConfig } from 'src/config/domainConfig';
 
 export const FullLogo = () => {
   return (
@@ -13,9 +14,9 @@ export const FullLogo = () => {
             </div> */}
             <div className=" relative top-3 text-4xl font-medium text-primary">
               {' '}
-              <h1>
+              <h1 className="capitalize">
                 {' '}
-                Hostel <span className=" text-secondary"> Admin</span>
+                {domainConfig.appName}
               </h1>
             </div>
           </div>

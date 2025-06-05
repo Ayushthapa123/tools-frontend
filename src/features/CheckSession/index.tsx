@@ -2,7 +2,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import { RefreshToken, RefreshTokenMutation, RefreshTokenMutationVariables } from 'src/gql/graphql';
 import { useUserStore } from 'src/store/userStore';
 

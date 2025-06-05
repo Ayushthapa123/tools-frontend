@@ -27,7 +27,7 @@ import BookingIcon from '../../components/icons/Booking';
 import { RiToolsFill } from 'react-icons/ri';
 import { FaHotel, FaRegLightbulb } from 'react-icons/fa';
 import { useMutation } from '@tanstack/react-query';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import { GrGallery } from 'react-icons/gr';
 import SettingsIcon from 'src/components/icons/Settings';
 interface MenuItemType {

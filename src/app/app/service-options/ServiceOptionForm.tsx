@@ -5,7 +5,7 @@ import { enqueueSnackbar } from 'notistack';
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import Button from 'src/components/Button';
 import IconButton from 'src/components/IconButton';
 

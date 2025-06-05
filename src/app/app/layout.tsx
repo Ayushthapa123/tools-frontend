@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 
 import Navbar from 'src/features/NavBar';
 import { Drawer } from 'src/features/Drawer';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import {
   GetUserById,
   GetUserByIdQueryVariables,

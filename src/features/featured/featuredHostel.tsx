@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { HostelCard } from 'src/app/search/cards/HostelCard';
 import { HostelCardSkeleton } from 'src/app/search/cards/HostelCardSkeleteon';
-import { useGraphqlClientRequest } from 'src/client/useGraphqlClientRequest';
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import {
   GetFeaturedHostels,
   GetFeaturedHostelsQuery,
