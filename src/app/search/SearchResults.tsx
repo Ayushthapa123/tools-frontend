@@ -46,7 +46,7 @@ export const SearchResults = (props: IResults) => {
   });
 
   useEffect(() => {
-    handleCount(hostels?.length ?? 0);
+    handleCount(hostels?.data?.length ?? 0);
   }, [handleCount, hostels]);
 
   return (
@@ -59,22 +59,22 @@ export const SearchResults = (props: IResults) => {
         </div>
       )}
       <div className="grid w-full grid-cols-1 gap-3 md:grid-cols-2  xl:grid-cols-3">
-        {hostels?.map(hostel => {
-          const imgUrl = hostel?.data?.gallery?.[0]?.url || '/images/default-image.png';
+        {hostels?.data?.map(hostel => {
+          const imgUrl = hostel?.gallery?.[0]?.url || '/images/default-image.png';
 
           return (
-            <div key={hostel.data?.slug}>
+            <div key={hostel.slug}>
               <Link
-                href={`/hostel/${hostel.data?.slug}?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}
+                href={`/hostel/${hostel.slug}?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}
               >
                 <HostelCard
-                  name={hostel.data?.name || ''}
-                  country={hostel.data?.address?.country ?? ''}
-                  city={hostel.data?.address?.city ?? ''}
-                  subCity={hostel.data?.address?.subCity ?? ''}
-                  description={hostel.data?.description ?? ''}
-                  amount={hostel?.data?.rooms?.[0]?.price?.baseAmountPerDay ?? 0}
-                  currency={hostel?.data?.rooms?.[0]?.price?.currency ?? ''}
+                  name={hostel.name || ''}
+                  country={hostel.address?.country ?? ''}
+                  city={hostel.address?.city ?? ''}
+                  subCity={hostel.address?.subCity ?? ''}
+                  description={hostel.description ?? ''}
+                  // amount={hostel?.rooms?.[0]?.price?.baseAmountPerDay ?? 0}
+                  // currency={hostel?.rooms?.[0]?.price?.currency ?? ''}
                   imgUrl={imgUrl}
                   oneSeater={null}
                   twoSeater={null}

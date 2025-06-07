@@ -17,18 +17,7 @@ query searchHostel($input: SearchHostelInput!) {
       gallery {
         url
       }
-      rooms {
-        caption
-        image {
-          url
-          caption
-        }
-        price {
-          baseAmountPerDay
-          baseAmountPerMonth
-          currency
-        }
-      }
+
 
       slug
     }

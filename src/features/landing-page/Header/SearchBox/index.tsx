@@ -58,8 +58,8 @@ export const SearchBox = () => {
     if (city) searchParams.set('city', city);
     if (subCity) searchParams.set('subCity', subCity);
     if (query) searchParams.set('query', query);
-    if (checkInDate) searchParams.set('checkInDate', checkInDate);
-    if (checkOutDate) searchParams.set('checkOutDate', checkOutDate);
+    // if (checkInDate) searchParams.set('checkInDate', checkInDate);
+    // if (checkOutDate) searchParams.set('checkOutDate', checkOutDate);
     if (clickedLatLng) searchParams.set('lat', clickedLatLng.lat?.toString() ?? '');
     if (clickedLatLng) searchParams.set('lng', clickedLatLng.lng?.toString() ?? '');
 

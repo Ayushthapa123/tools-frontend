@@ -16,20 +16,7 @@ export default function ShowDetails({
   room: RoomData;
   setShowDetails: (showDetails: boolean) => void;
 }) {
-  // Statically mocked details for now
-  const mockRoom = {
-    caption: 'Deluxe King Room',
-    roomNumber: '101',
-    status: 'AVAILABLE',
-    image: [{ url: '/room-sample.jpg' }],
-    capacity: '2',
-    attachBathroom: true,
-    description:
-      'A spacious deluxe room with king-size bed, private bathroom, and a beautiful view.',
-    price: { baseAmountPerDay: 3500, currency: 'NPR' },
-    amenities: ['Free WiFi', 'AC', 'TV', 'Room Service'],
-    area: '25m²',
-  };
+
   console.log('room', room);
 
   return (
@@ -46,16 +33,16 @@ export default function ShowDetails({
           <div className="relative h-64 w-full lg:h-full">
             <Image
               src={room?.image?.[0]?.url || '/placeholder-room.jpg'}
-              alt={room?.caption ?? mockRoom.caption}
+              alt={room?.caption ?? ''}
               fill
               className="rounded-lg object-cover transition-transform duration-300"
               priority
             />
             <div className="absolute left-3 top-3 z-10">
               <Badge
-                className={`px-4 py-1 text-xs uppercase tracking-wide text-white ${mockRoom.status === 'AVAILABLE' ? 'bg-success' : 'bg-error'}`}
+                className={`px-4 py-1 text-xs uppercase tracking-wide text-white ${room?.status === 'AVAILABLE' ? 'bg-success' : 'bg-error'}`}
               >
-                {mockRoom.status}
+                {room?.status}
               </Badge>
             </div>
           </div>
@@ -71,12 +58,12 @@ export default function ShowDetails({
               </div>
               <div className="grid grid-cols-[60%,40%] gap-2">
                 <div className="text-xl font-bold text-secondary ">
-                  <span>{room?.caption ?? mockRoom.caption}</span>
+                  <span>{room?.caption ?? ''}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-xl font-bold text-secondary">
-                    {room?.price?.baseAmountPerDay ?? mockRoom.price.baseAmountPerDay}{' '}
-                    {room?.price?.currency ?? mockRoom.price.currency}
+                    {room?.price?.baseAmountPerDay ?? 0}{' '}
+                    {room?.price?.currency ?? ''}
                   </span>
                   <span className="text-sm text-gray-500">/night</span>
                 </div>
@@ -102,26 +89,21 @@ export default function ShowDetails({
           <div className="card w-full border border-base-200 bg-base-100 shadow-md">
             <div className="flex flex-col gap-4 p-4">
               <div className="text-base text-gray-700">
-                {room?.description ?? mockRoom.description}
+                {room?.description ?? ''}
               </div>
               <div>
                 <div className="card-title mb-2 flex items-center  gap-2 text-lg font-bold text-primary">
                   Room Amenities:
                 </div>
                 <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-                  {room?.roomAmenity?.amenity
-                    ? room?.roomAmenity?.amenity?.split(',')?.map((amenity: string) => (
-                        <div key={amenity} className="flex items-center text-sm text-gray-700">
+                  {
+                    JSON.parse(room?.roomAmenity?.amenity ?? '[]')?.map((amenity: any) => (
+                        <div key={amenity?.id} className="flex items-center text-sm text-gray-700">
                           <BsCheckCircleFill className="mr-2 text-success" />
-                          <span>{amenity}</span>
+                          <span>{amenity?.name}</span>
                         </div>
                       ))
-                    : mockRoom.amenities.map(amenity => (
-                        <div key={amenity} className="flex items-center text-sm text-gray-700">
-                          <BsCheckCircleFill className="mr-2 text-success" />
-                          <span>{amenity}</span>
-                        </div>
-                      ))}
+                  }
                 </div>
               </div>
             </div>

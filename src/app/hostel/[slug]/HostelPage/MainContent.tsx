@@ -204,19 +204,6 @@ export default function MainContent(props: Iprops) {
                   </div>
                 </div>
 
-                <div className="rounded-xl bg-white p-6 py-3 shadow-sm">
-                  <h3 className=" text-lg font-semibold text-gray-800">Rules</h3>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="rounded-lg bg-gray-50 p-3">
-                      <p className="text-xs font-medium text-gray-500">Check In</p>
-                      <p className="mt-1 text-base font-medium text-gray-800">8:00 AM</p>
-                    </div>
-                    <div className="rounded-lg bg-gray-50 p-3">
-                      <p className="text-xs font-medium text-gray-500">Check Out</p>
-                      <p className="mt-1 text-base font-medium text-gray-800">7:00 AM</p>
-                    </div>
-                  </div>
-                </div>
 
                 <div className="rounded-xl bg-white p-6 shadow-sm">
                   <h3 className="mb-4 border-b border-gray-200 pb-2 text-lg font-semibold text-gray-800">
@@ -266,7 +253,7 @@ export default function MainContent(props: Iprops) {
                 </div>
                 <div className="rounded-xl bg-white p-6 pt-2 shadow-sm">
                   <h3 className="mb-2 text-lg font-semibold text-gray-800">Map On Google</h3>
-                  <div className=" h-[250px] w-full overflow-y-hidden rounded-md">
+                  <div className=" h-[450px] w-full overflow-y-hidden rounded-md">
                     <MapProvider>
                       {hostel?.data?.address?.latitude && hostel?.data?.address?.longitude && (
                         <MapComponent
@@ -285,12 +272,12 @@ export default function MainContent(props: Iprops) {
           <div className="mx-auto mt-10 w-[93vw] rounded-xl bg-white p-4 shadow-sm">
             <div className="flex items-center justify-between">
               <h2 className="mb-6 text-2xl font-semibold text-gray-800">Available Rooms</h2>
-              <Link
+              {/* <Link
                 href={`/hostel/${hostel?.data?.slug}/booking?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}
                 className="mb-3"
               >
                 <Button label="View Bookings" className="w-fit bg-primary" />
-              </Link>
+              </Link> */}
             </div>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2" ref={sectionRef}>
               {hostel?.data?.rooms?.map((room: RoomData) => (

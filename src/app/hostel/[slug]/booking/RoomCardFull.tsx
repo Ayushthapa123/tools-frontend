@@ -1,4 +1,4 @@
-import { RoomData, RoomStatus } from 'src/gql/graphql';
+import { Amenities, RoomAmenity, RoomData, RoomStatus } from 'src/gql/graphql';
 import Image from 'next/image';
 import { useRoomStore } from 'src/store/roomStore';
 import Button from 'src/components/Button';
@@ -129,14 +129,11 @@ export const RoomCardFull = ({
 
           {room.roomAmenity ? (
             <div className="mt-2 grid grid-cols-2 gap-2">
-              {room.roomAmenity?.amenity
-                .split(',')
-                .slice(0, 4)
-                .map((amm: string) => {
-                  return (
-                    <div key={amm} className="flex items-center justify-start gap-2">
-                      <BsCheckCircleFill className="text-green-500 mr-2" />
-                      <span className="mr-1">{amm}</span>
+              {JSON.parse(room.roomAmenity?.amenity ?? '[]')?.slice(0, 4)?.map((amm: any) => {
+                return (
+                  <div key={amm?.id} className="flex items-center justify-start gap-2">
+                    <BsCheckCircleFill className="text-green-500 mr-2" />
+                      <span className="mr-1">{amm.name}</span>
                     </div>
                   );
                 })}
@@ -194,7 +191,7 @@ export const RoomCardFull = ({
           </div>
 
           {/* Action Button */}
-          {isSelected && (
+          {/* {isSelected && (
             <div className="flex items-center">
               <div
                 onClick={e => {
@@ -204,8 +201,8 @@ export const RoomCardFull = ({
                 <Button className="bg-primary/90 hover:bg-primary" label="Selected" />
               </div>
             </div>
-          )}
-          {isBookingPage
+          )} */}
+          {/* {isBookingPage
             ? !isSelected && (
                 <Link
                   href={`/hostel/${slug}/booking?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}
@@ -228,7 +225,7 @@ export const RoomCardFull = ({
                 >
                   <Button className="bg-primary/90 hover:bg-primary" label="Book Now" />
                 </Link>
-              )}
+              )} */}
         </div>
       </div>
 
