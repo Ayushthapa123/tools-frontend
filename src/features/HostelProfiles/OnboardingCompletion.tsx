@@ -32,7 +32,7 @@ export default function OnboardingCompletion() {
 
   useEffect(() => {
     if (!isLoading && !onboardingData?.getOnboardingData?.data) {
-      router.push('/app/onboarding');
+      router.push('/app');
     }
   }, [isLoading, onboardingData, router]);
 
@@ -68,19 +68,21 @@ export default function OnboardingCompletion() {
 
   const handleOnboardingRedirect = () => {
     if(!onboardingData?.getOnboardingData?.data?.contact?.id){
-      router.push('/app/hostel-info');
+    
+      return router.push('/app/hostel-info');
     }
     if(!onboardingData?.getOnboardingData?.data?.address?.id){
-      router.push('/app/hostel-info');
+      return router.push('/app/hostel-info');
     }
     if(!(onboardingData?.getOnboardingData?.data?.gallery && onboardingData.getOnboardingData.data.gallery.length > 0)){
-      router.push('/app/gallery');
+      return router.push('/app/gallery');
     }
     if(!(onboardingData?.getOnboardingData?.data?.rooms && onboardingData.getOnboardingData.data.rooms.length > 0)){
       router.push('/app/room');
     }
     if(!onboardingData?.getOnboardingData?.data?.amenities?.id){
-      router.push('/app/amenities');
+    
+      return router.push('/app/amenities');
     }
     if(progress == 100){
       // router.push('/app/hostel-profile');

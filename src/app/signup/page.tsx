@@ -100,7 +100,7 @@ function SignUp() {
         password: data.password,
         fullName: data.fullName,
         userType: UserType.HostelOwner,
-        phoneNumber: data.phoneNumber,
+        // phoneNumber: data.phoneNumber,
       },
     }).then(res => {
       if (res?.signupUser?.id) {
@@ -189,7 +189,7 @@ function SignUp() {
                       error={!!errors.email}
                     />
                   </div>
-                  <div className="mt-5 ">
+                  {/* <div className="mt-5 ">
                     <TextInput
                       name="phoneNumber"
                       type="tel"
@@ -201,7 +201,7 @@ function SignUp() {
                       }
                       error={!!errors.phoneNumber}
                     />
-                  </div>
+                  </div> */}
                   <div className="mt-5 ">
                     <TextInput
                       name="password"
