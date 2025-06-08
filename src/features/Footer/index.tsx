@@ -7,7 +7,7 @@ const Footer = () => {
         <h4 className="text-dark mb-2 text-lg font-semibold">Follow Us On</h4>
         <div className="mb-2 flex items-center justify-center gap-3">
           <a
-            href="https://www.facebook.com/hosteladmin"
+            href="https://www.facebook.com/hosteladmin.official"
             className="border-stroke text-dark flex h-8 w-8 items-center justify-center rounded-full border transition-colors hover:border-primary hover:bg-primary hover:text-white"
           >
             <svg width="8" height="16" viewBox="0 0 8 16" className="fill-current">
