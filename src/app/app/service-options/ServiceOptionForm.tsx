@@ -100,7 +100,7 @@ const ServiceForm = ({
         if (res?.createServiceOption?.data?.id) {
           enqueueSnackbar('Service Option Created!', { variant: 'success' });
           queryClient.invalidateQueries({ queryKey: ['getServiceOptions'] });
-          handleClose();
+          // handleClose();
         }
       });
     }
@@ -139,7 +139,7 @@ const ServiceForm = ({
                   type="text"
                   control={control}
                   label="Service Description"
-                  required
+                  // required
                   error={!!errors.description}
                   rows={3}
                 />

@@ -166,7 +166,7 @@ const AmenityForm = ({
                   type="text"
                   control={control}
                   label="Amenity Description"
-                  required
+                  // required
                   error={!!errors.description}
                   rows={3}
                 />
