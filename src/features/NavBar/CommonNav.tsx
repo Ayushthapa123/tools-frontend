@@ -57,7 +57,7 @@ export const CommonNav = () => {
                 </div>
               )}
               <div className=" ">
-                {user.userType !== UserType.Student && (
+                {user.userType !== UserType.Student && user.userId && (
                   <div className="left-0 top-[70px]  lg:hidden ">
                     <Drawer />
                   </div>

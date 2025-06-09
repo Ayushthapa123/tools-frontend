@@ -12,9 +12,9 @@ export const FullLogo = () => {
             {/* <div className=" relative inline-block h-16  w-16">
               <Image src="/logo512.png" alt="logo" fill />
             </div> */}
-            <div className=" relative top-3 text-4xl font-medium text-primary">
+            <div className=" relative top-4 text-4xl font-medium text-primary">
               {' '}
-              <h1 className="capitalize">
+              <h1 className="capitalize text-5xl">
                 {' '}
                 {domainConfig.appName}
               </h1>
