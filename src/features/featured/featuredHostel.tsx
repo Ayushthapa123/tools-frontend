@@ -42,7 +42,7 @@ export const FeaturedHostel = () => {
 
       <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {hostels?.data?.map(hostel => {
-          const mainWallpaper = hostel?.gallery?.filter(img => img.isSelected === true)[0];
+          const mainWallpaper = hostel?.gallery?.filter(img => img.isSelected === true)[0]??hostel?.gallery?.[0];
           var imgUrl = mainWallpaper?.url ?? '/images/default-image.png';
           if (imgUrl == 'https://example.com/image.jpg') imgUrl = '/images/default-image.png';
           return (
