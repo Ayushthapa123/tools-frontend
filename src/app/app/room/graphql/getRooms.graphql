@@ -17,13 +17,18 @@ query GetRooms {
         updatedAt
       }
       price {
+        id
         currency
         baseAmountPerDay
         baseAmountPerMonth
         isDynamicPricing
 
         discountAmount
-        discountType
+        discountType 
+        isDiscountActive 
+        roomId 
+        createdAt
+        updatedAt
       }
 
       createdAt

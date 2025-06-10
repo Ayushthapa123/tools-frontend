@@ -198,6 +198,10 @@ function RoomForm({ params, room }: { params: { slug: string }; room: Room | und
               <div className={`step ${currentStep >= 3 ? 'step-primary' : ''}`}>Upload Photos</div>
               <div className={`step ${currentStep >= 4 ? 'step-primary' : ''}`}>Room Amenities</div>
             </div>
+        
+          </div>
+          <div className="flex justify-start">
+            <h2 className="text-xl font-semibold">{room?.data?.caption}</h2>
           </div>
         </div>
 

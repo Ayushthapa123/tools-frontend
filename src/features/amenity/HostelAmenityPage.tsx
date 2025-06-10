@@ -7,9 +7,13 @@ import {
   FindAmenityByHostelIdDocument,
   FindAmenityByHostelIdQuery,
   FindAmenityByHostelIdQueryVariables,
+  AllAmenitiesOption,
+  AllAmenitiesOptionQuery,
+  AllAmenitiesOptionQueryVariables,
 } from 'src/gql/graphql';
 import { AmenitySelector } from './AmenitySelector';
 import LoadingSpinner from 'src/components/Loading';
+import { useGraphQLQuery } from 'src/hooks/useGraphqlQuery';
 
 export const HostelAmenitiesPage = ({ hostelId }: { hostelId: number }) => {
   // GraphQL query to fetch hostel details
@@ -22,6 +26,13 @@ export const HostelAmenitiesPage = ({ hostelId }: { hostelId: number }) => {
     return res.findAmenityByHostelId ?? null;
   };
 
+  const { data: allAmenityOptions,isLoading} = useGraphQLQuery<AllAmenitiesOptionQuery,AllAmenitiesOptionQueryVariables >({
+    queryKey: ['allAmenityOptions'],
+    query: AllAmenitiesOption.loc!.source.body,
+    variables: {  },
+    enabled: true
+    }); 
+
   const {
     data,
     error,
@@ -31,7 +42,7 @@ export const HostelAmenitiesPage = ({ hostelId }: { hostelId: number }) => {
     queryFn: fetchData,
     enabled: !!hostelId,
   });
-  if (loading) return <LoadingSpinner />;
+  if (loading || isLoading) return <LoadingSpinner />;
   if (error) return <p>Error: {error.message}</p>;
 
   // Get existing amenities or provide empty array if none
@@ -44,6 +55,7 @@ export const HostelAmenitiesPage = ({ hostelId }: { hostelId: number }) => {
         existingAmenities={existingAmenities}
         loading={loading}
         amenityId={Number(data?.data?.id)}
+        allAmenityOptions={allAmenityOptions}
       />
     </div>
   );

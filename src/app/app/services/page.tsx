@@ -1,6 +1,5 @@
 'use client';
 
-import { Input } from 'src/components/Input';
 import { useState, useEffect, useCallback } from 'react';
 import Button from 'src/components/Button';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -102,14 +101,14 @@ export default function ServicesPage() {
 
   // Initialize expanded categories
   useEffect(() => {
-    if (formattedServiceOptions) {
-      const initialExpanded = Object.keys(formattedServiceOptions).reduce(
+    if (serviceOptions?.serviceOptions?.data) {
+      const initialExpanded = Object.keys(formattedServiceOptions || {}).reduce(
         (acc, category) => ({ ...acc, [category]: true }),
         {}
       );
       setExpandedCategories(initialExpanded);
     }
-  }, [formattedServiceOptions]);
+  }, [serviceOptions?.serviceOptions?.data]);
 
   // Mutations
   const { mutateAsync: createServiceAsync } = useMutation({

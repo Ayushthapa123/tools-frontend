@@ -66,9 +66,9 @@ const config: Config = {
           'btn-accent': '#F6B042',
           'btn-neutral': '#4A4A4A',
           // Base scale for light mode
-          'base-100': '#F7F1EA', // for background
-          'base-200': '#EDE7E1', // for hover
-          'base-300': '#E5DFD8', // for border
+          'base-100': '#F5F2EF', // for background
+          'base-200': '#ECE8E4', // for hover
+          'base-300': '#E3DFDB', // for border
         },
         // dark: {
         //   primary: '#3B5D50',

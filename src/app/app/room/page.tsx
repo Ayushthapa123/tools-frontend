@@ -14,7 +14,7 @@ export default function Home() {
         <div className="  w-full  max-w-[1400px]">
           <div>
             <MapProvider>
-              <LocationTabs />
+              <RoomTabs />
             </MapProvider>
           </div>
         </div>
@@ -23,7 +23,7 @@ export default function Home() {
   );
 }
 
-const LocationTabs = () => {
+const RoomTabs = () => {
   const tabs = [
     { title: 'Active Rooms', id: 1, comp: <ActiveRooms /> },
     // {

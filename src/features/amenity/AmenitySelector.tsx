@@ -26,21 +26,17 @@ export const AmenitySelector = ({
   existingAmenities = [],
   loading,
   amenityId,
+  allAmenityOptions,
 }: {
   hostelId: number;
   existingAmenities: AmenityOptionData[];
   loading: boolean;
   amenityId: number;
+  allAmenityOptions: AllAmenitiesOptionQuery | undefined;
 }) => {
 
   // get amenity options from the database
 
-const { data: allAmenityOptions, isLoading} = useGraphQLQuery<AllAmenitiesOptionQuery,AllAmenitiesOptionQueryVariables >({
-queryKey: ['allAmenityOptions'],
-query: AllAmenitiesOption.loc!.source.body,
-variables: {  },
-enabled: true
-}); 
 
 
 // format them in such way they seperate according to amenityType

@@ -15,21 +15,18 @@ import IconButton from '../../components/IconButton';
 import RulesIcon from '../../components/icons/Rules';
 import { useUserStore } from 'src/store/userStore';
 import {
-  LogInUser,
-  LogInUserMutation,
-  LogInUserMutationVariables,
   LogOutMutationVariables,
   LogOut,
   LogOutMutation,
   UserType,
 } from 'src/gql/graphql';
-import BookingIcon from '../../components/icons/Booking';
 import { RiToolsFill } from 'react-icons/ri';
 import { FaHotel, FaRegLightbulb } from 'react-icons/fa';
 import { useMutation } from '@tanstack/react-query';
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import { GrGallery } from 'react-icons/gr';
 import SettingsIcon from 'src/components/icons/Settings';
+import MenuItem from './MenuItem';
 interface MenuItemType {
   icon: JSX.Element;
   text: string;
@@ -40,13 +37,7 @@ interface MenuItemType {
   show?: boolean;
 }
 
-interface MenuItemProps {
-  icon: JSX.Element;
-  text: string;
-  href: string;
-  isActive?: boolean;
-  handleFunc?: () => void;
-}
+
 
 const Sidebar = () => {
   const router = useRouter();
@@ -103,6 +94,13 @@ const Sidebar = () => {
       show: user.userType === UserType.HostelOwner,
     },
     {
+      icon: <GrGallery />,
+      text: 'Gallery',
+      href: '/app/gallery',
+      children: false,
+      show: user.userType === UserType.HostelOwner,
+    },
+    {
       icon: <RoomIcon />,
       text: 'Rooms',
       href: '/app/room',
@@ -110,12 +108,24 @@ const Sidebar = () => {
       show: user.userType === UserType.HostelOwner,
     },
     {
-      icon: <GrGallery />,
-      text: 'Gallery',
-      href: '/app/gallery',
-      children: false,
+      icon: <RulesIcon className="text-primary" />,
+      text: 'Rules',
+      href: '/app/rules',
       show: user.userType === UserType.HostelOwner,
     },
+    {
+      icon: <FaRegLightbulb />,
+      text: 'Amenities',
+      href: '/app/amenities',
+      show: user.userType === UserType.HostelOwner,
+    },
+    {
+      icon: <RiToolsFill />,
+      text: 'Services',
+      href: '/app/services',
+      show: user.userType === UserType.HostelOwner,
+    },
+   
     // {
     //   icon: <BookingIcon />,
     //   text: 'Bookings',
@@ -129,36 +139,36 @@ const Sidebar = () => {
     // { icon: <MapIcon />, text: 'Location', href: '/app/location', children: false, show: user.userType === UserType.hostelOwner },
     // { icon: <CommunityIcon />, text: 'Community', href: '/app/community', children: false },
 
-    {
-      icon: <MdOutlineDirections />,
-      text: 'More',
-      href: '',
-      children: true,
-      show: user.userType === UserType.HostelOwner,
-      childRoutes: [
-        // { icon: <WifiIcon />, text: 'Amenities', href: '/app/amenities', show: user.userType === UserType.hostelOwner },
-        // { icon: <ServiceIcon />, text: 'Services', href: '/app/services', show: user.userType === UserType.hostelOwner },
+    // {
+    //   icon: <MdOutlineDirections />,
+    //   text: 'More',
+    //   href: '',
+    //   children: true,
+    //   show: user.userType === UserType.HostelOwner,
+    //   childRoutes: [
+    //     // { icon: <WifiIcon />, text: 'Amenities', href: '/app/amenities', show: user.userType === UserType.hostelOwner },
+    //     // { icon: <ServiceIcon />, text: 'Services', href: '/app/services', show: user.userType === UserType.hostelOwner },
 
-        {
-          icon: <RulesIcon className="text-primary" />,
-          text: 'Rules',
-          href: '/app/rules',
-          show: user.userType === UserType.HostelOwner,
-        },
-        {
-          icon: <FaRegLightbulb />,
-          text: 'Amenities',
-          href: '/app/amenities',
-          show: user.userType === UserType.HostelOwner,
-        },
-        {
-          icon: <RiToolsFill />,
-          text: 'Services',
-          href: '/app/services',
-          show: user.userType === UserType.HostelOwner,
-        },
-      ],
-    },
+    //     {
+    //       icon: <RulesIcon className="text-primary" />,
+    //       text: 'Rules',
+    //       href: '/app/rules',
+    //       show: user.userType === UserType.HostelOwner,
+    //     },
+    //     {
+    //       icon: <FaRegLightbulb />,
+    //       text: 'Amenities',
+    //       href: '/app/amenities',
+    //       show: user.userType === UserType.HostelOwner,
+    //     },
+    //     {
+    //       icon: <RiToolsFill />,
+    //       text: 'Services',
+    //       href: '/app/services',
+    //       show: user.userType === UserType.HostelOwner,
+    //     },
+    //   ],
+    // },
   ];
 
   /**
@@ -270,24 +280,4 @@ const MenuList = ({ item }: { item: any }) => {
   );
 };
 
-const MenuItem: React.FC<MenuItemProps> = ({ icon, text, href, isActive, handleFunc }) => {
-  return (
-    <div className="flex w-full items-center text-[1.3rem]">
-      <Link href={href} className="w-full">
-        <div
-          onClick={() => {
-            handleFunc?.();
-          }}
-          className={`flex w-full gap-[1rem] rounded-lg py-[0.5rem] pl-3 ${
-            isActive
-              ? 'bg-slate-100 font-semibold text-primary'
-              : 'text-dark font-medium hover:bg-slate-100'
-          }`}
-        >
-          <div className="relative top-[5px] font-bold text-primary">{icon}</div>
-          <div className="relative left-[-8px] flex items-center">{text}</div>
-        </div>
-      </Link>
-    </div>
-  );
-};
+

@@ -69,13 +69,7 @@ export const ActiveRooms = () => {
         {rooms?.data?.map(room => (
           <div key={room.id} className="md:mb-4">
             <RoomCard
-              id={room.id ?? ''}
-              caption={room.caption ?? ''}
-              roomNumber={room.roomNumber ?? ''}
-              status={room.status ?? ''}
-              price={room.price?.baseAmountPerMonth ?? 0}
-              currency={room.price?.currency ?? ''}
-              imageUrl={room.image?.[0]?.url ?? ''}
+             room={room}
               setShowDeleteModal={setShowDeleteModal}
               setDeletedRoomId={setDeletedRoomId}
             />

@@ -4,34 +4,15 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Badge } from 'src/components/Badge';
 import { FiEdit } from 'react-icons/fi';
+import { RoomData } from 'src/gql/graphql';
 
-interface Iprops {
-  id: number | string;
-  caption: string;
-  roomNumber: string;
-  status: string;
-  price: number;
-  currency: string;
-  imageUrl: string;
-  setShowDeleteModal: (state: boolean) => void;
-  setDeletedRoomId: (val: number | string | null) => void;
-}
 
-export const RoomCard = (props: Iprops) => {
-  const {
-    id,
-    caption,
-    roomNumber,
-    status,
-    price,
-    currency,
-    imageUrl,
-    setShowDeleteModal,
-    setDeletedRoomId,
-  } = props;
+
+export const RoomCard = ({room, setShowDeleteModal, setDeletedRoomId}: {room: RoomData | undefined | null, setShowDeleteModal: (state: boolean) => void, setDeletedRoomId: (val: number | string | null) => void}) => {
+ 
 
   const onClickDelete = () => {
-    setDeletedRoomId(id);
+    setDeletedRoomId(room?.id ?? null);
     setShowDeleteModal(true);
   };
 
@@ -53,35 +34,40 @@ export const RoomCard = (props: Iprops) => {
       {/* Image Section */}
       <div className="relative h-48 w-full">
         <Image
-          src={imageUrl || '/placeholder-room.jpg'}
-          alt={caption}
+          src={room?.image?.[0]?.url || '/placeholder-room.jpg'}
+          alt={room?.caption ?? ''}
           fill
           className="rounded-t-2xl object-cover"
           priority
         />
         <div className="absolute left-2 top-1 z-10">
-          <Badge className=" px-3 py-1 text-xs uppercase tracking-wide text-white">{status}</Badge>
+          <Badge className=" px-3 py-1 text-xs uppercase tracking-wide text-white">{room?.status ?? ''}</Badge>
         </div>
       </div>
 
       {/* Content Section */}
       <div className="flex min-h-[80px] flex-col gap-3 p-4">
         <div className="">
-          <h3 className="mb-2 truncate text-lg font-bold text-gray-900" title={caption}>
-            {caption}
+          <h3 className="mb-2 truncate text-lg font-bold text-gray-900" title={room?.caption ?? ''}>
+            {room?.caption ?? ''}
           </h3>
           <div className="flex flex-col items-start justify-start gap-2 lg:flex-row lg:items-center lg:justify-between">
             <p className="m-0 text-sm text-gray-500">
-              <span className="font-medium">Room Number:</span> {roomNumber}
+              <span className="font-medium">Room Number:</span> {room?.roomNumber ?? ''}
+            </p>
+            <div>
+            <p className="m-0 text-sm font-extrabold text-primary">
+              {room?.price?.currency} {room?.price?.baseAmountPerMonth} /month
             </p>
             <p className="m-0 text-sm font-extrabold text-primary">
-              {currency} {price.toLocaleString()}
+               {room?.price?.currency} {room?.price?.baseAmountPerDay} /day
             </p>
+            </div>
           </div>
         </div>
         {/* Action Buttons */}
         <div className="absolute right-3 top-2 z-20 flex gap-2">
-          <Link href={`/app/room/${id}`} passHref legacyBehavior>
+          <Link href={`/app/room/${room?.id}`} passHref legacyBehavior>
             <a aria-label="Edit Room">
               <IconButton
                 size="small"

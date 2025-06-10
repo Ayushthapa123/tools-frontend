@@ -7,6 +7,7 @@ query getHostelByToken {
       slug
       verifiedBySuperAdmin
       verifiedByCommunityOwner
+      hasOnboardingComplete
     }
     error {
       message

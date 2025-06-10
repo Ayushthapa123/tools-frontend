@@ -80,7 +80,7 @@ export const RoomCreateForm = ({ control, errors }: { control: any; errors: any 
           rows={2}
         />
       </div>
-      <div className="mb-2">
+      {/* <div className="mb-2">
         <TextInput
           type="number"
           min={0}
@@ -93,7 +93,7 @@ export const RoomCreateForm = ({ control, errors }: { control: any; errors: any 
           error={!!errors.maxOccupancy}
           datatype="number"
         />
-      </div>
+      </div> */}
     </div>
   );
 };
