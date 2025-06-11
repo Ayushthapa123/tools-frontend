@@ -1,0 +1,11 @@
+mutation CreateHostelGuest($createHostelGuestInput: CreateHostelGuestInput!, $withWelcomeEmail: Boolean!, $allowEdit: Boolean!) {
+  createHostelGuest(createHostelGuestInput: $createHostelGuestInput, withWelcomeEmail: $withWelcomeEmail, allowEdit: $allowEdit) {
+    data {
+      id
+  
+    }
+    error {
+      message
+    }
+  }
+}

@@ -1,0 +1,11 @@
+mutation RemoveHostelGuest($id: Int!) {
+  removeHostelGuest(id: $id) {
+    data {
+      id
+      # Add other fields you need from HostelGuest type
+    }
+    error {
+      message
+    }
+  }
+}

@@ -24,9 +24,10 @@ import { RiToolsFill } from 'react-icons/ri';
 import { FaHotel, FaRegLightbulb } from 'react-icons/fa';
 import { useMutation } from '@tanstack/react-query';
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
-import { GrGallery } from 'react-icons/gr';
+import { GrGallery, GrUserSettings } from 'react-icons/gr';
 import SettingsIcon from 'src/components/icons/Settings';
 import MenuItem from './MenuItem';
+import { BsPeople } from 'react-icons/bs';
 interface MenuItemType {
   icon: JSX.Element;
   text: string;
@@ -104,6 +105,13 @@ const Sidebar = () => {
       icon: <RoomIcon />,
       text: 'Rooms',
       href: '/app/room',
+      children: false,
+      show: user.userType === UserType.HostelOwner,
+    },
+    {
+      icon: <BsPeople />,
+      text: ' Students',
+      href: '/app/hostel-guests',
       children: false,
       show: user.userType === UserType.HostelOwner,
     },

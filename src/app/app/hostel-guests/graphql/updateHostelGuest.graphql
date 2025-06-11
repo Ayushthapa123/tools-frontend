@@ -1,0 +1,11 @@
+mutation UpdateHostelGuest($updateHostelGuestInput: UpdateHostelGuestInput!) {
+  updateHostelGuest(updateHostelGuestInput: $updateHostelGuestInput) {
+    data {
+      id
+ 
+    }
+    error {
+      message
+    }
+  }
+}

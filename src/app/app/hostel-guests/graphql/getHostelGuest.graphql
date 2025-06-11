@@ -1,0 +1,29 @@
+query getHostelGuests {
+  hostelGuestsByHostelId {
+    data {
+      id
+      hostelId
+      roomId
+      fullName
+      email
+      phoneNumber
+      emergencyContact
+      gender
+      dateOfBirth
+      nationality
+      permanentAddress
+      religion
+      occupation
+      profilePicture
+      checkinDate
+      checkoutDate
+      notes
+      isEditable
+      createdAt
+      updatedAt
+    }
+    error {
+      message
+    }
+  }
+}
