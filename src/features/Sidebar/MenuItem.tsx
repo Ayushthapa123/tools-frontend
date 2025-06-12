@@ -31,8 +31,8 @@ export const MenuItem: React.FC<MenuItemProps> = ({ icon, text, href, isActive, 
             }}
             className={`flex w-full gap-[1rem] rounded-lg py-[0.5rem] pl-3 ${
               isActive
-                ? 'bg-slate-100 font-semibold text-primary'
-                : 'text-dark font-medium hover:bg-slate-100'
+                ? 'bg-base-200 font-semibold text-primary'
+                : 'text-dark font-medium hover:bg-base-200'
             }`}
           >
             <div className="relative top-[5px] font-bold text-primary">{icon}</div>

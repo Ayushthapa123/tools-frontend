@@ -1,5 +1,5 @@
-mutation UpdateHostelGuest($updateHostelGuestInput: UpdateHostelGuestInput!) {
-  updateHostelGuest(updateHostelGuestInput: $updateHostelGuestInput) {
+mutation UpdateHostelGuest($updateHostelGuestInput: UpdateHostelGuestInput!, $withWelcomeEmail: Boolean!, $allowEdit: Boolean!) {
+  updateHostelGuest(updateHostelGuestInput: $updateHostelGuestInput, withWelcomeEmail: $withWelcomeEmail, allowEdit: $allowEdit) {
     data {
       id
  

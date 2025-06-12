@@ -204,7 +204,7 @@ const Sidebar = () => {
           {/* profile */}
           {/* <UserProfile /> */}
         </div>
-        <div className="mt-5 flex w-full flex-grow flex-col gap-2">
+        <div className="mt-5 flex w-full flex-grow flex-col gap-1">
           {menuItems
             .filter(item => item.show)
             .map((item, index) => (
@@ -225,7 +225,7 @@ const Sidebar = () => {
               </React.Fragment>
             ))}
         </div>
-        <div className="mt-5 flex w-full flex-col gap-2">
+        <div className="mt-5 flex w-full flex-col gap-1">
           {bottomItems.map((item, index) => (
             <React.Fragment key={index}>
               <MenuItem

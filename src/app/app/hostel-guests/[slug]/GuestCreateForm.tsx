@@ -31,7 +31,7 @@ export const GuestCreateForm = ({ guest, isEdit = false, withToken = false }: Gu
   const { user } = useUserStore();
   const queryClient = useQueryClient();
   const router = useRouter();
-  const [isExpanded, setIsExpanded] = useState(withToken);
+  const [isExpanded, setIsExpanded] = useState(withToken || isEdit);
   const [sendWelcomeEmail, setSendWelcomeEmail] = useState(!isEdit);
   const [allowToFillForm, setAllowToFillForm] = useState(!isEdit);
 
@@ -107,7 +107,7 @@ export const GuestCreateForm = ({ guest, isEdit = false, withToken = false }: Gu
         if (res?.createHostelGuest?.data?.id) {
           enqueueSnackbar('Guest created successfully.', { variant: 'success' });
           queryClient.invalidateQueries({ queryKey: ['getHostelGuests'] });
-          router.push(`/app/hostel-guests/`);
+          router.push(`/app/hostel-guests`);
         } else {
           enqueueSnackbar('Something went wrong.', { variant: 'error' });
         }
@@ -118,12 +118,14 @@ export const GuestCreateForm = ({ guest, isEdit = false, withToken = false }: Gu
           ...input, 
           profilePicture,
           id: Number(guest?.id) 
-        } 
+        },
+        withWelcomeEmail: sendWelcomeEmail,
+        allowEdit: allowToFillForm
       }).then(res => {
         if (res?.updateHostelGuest?.data?.id) {
           enqueueSnackbar('Guest updated successfully.', { variant: 'success' });
           queryClient.invalidateQueries({ queryKey: ['getHostelGuests'] });
-          router.push(withToken ? `/welcome-guest` : `/app/hostel-guests/`);
+          router.push(withToken ? `/welcome-guest` : `/app/hostel-guests`);
         } else {
           enqueueSnackbar('Something went wrong.', { variant: 'error' });
         }

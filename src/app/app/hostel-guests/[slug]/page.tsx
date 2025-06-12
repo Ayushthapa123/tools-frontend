@@ -1,9 +1,9 @@
-import RoomContainer from './GuestContainer';
+import GuestContainer from './GuestContainer';
 
 export default function Home({ params }: { params: { slug: string } }) {
   return (
     <div className="w-full ">
-      <RoomContainer params={params} />
+      <GuestContainer params={params} />
     </div>
   );
 }
