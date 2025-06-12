@@ -61,7 +61,10 @@ function GuestForm() {
 //     }
 //   }, [router, setAccessToken, signUp, token]);
 
-  return <section className="">
-    <GuestCreateForm guest={guestData?.hostelGuestByToken?.data} isEdit={true} withToken={true} />
+  return <section className=" p-4 md:p-8"> 
+    <div className="flex flex-col gap-4">
+      <h1 className="text-2xl font-bold">Please fill in the details below</h1>
+      <GuestCreateForm guest={guestData?.hostelGuestByToken?.data} isEdit={true} withToken={true} />
+    </div>
   </section>;
 }

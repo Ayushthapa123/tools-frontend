@@ -24,9 +24,8 @@ import TextInput from 'src/features/react-hook-form/TextField';
 import ReactSelect from 'src/features/react-hook-form/ReactSelect';
 import { useForm } from 'react-hook-form';
 import DatePicker from 'src/features/react-hook-form/DatePicker';
-import axios from 'axios';
 import { enqueueSnackbar } from 'notistack';
-import { useGraphQLQuery } from 'src/hooks/useGraphqlQuery';
+import { uploadImage } from 'src/utils/uploadImage';
 
 export const OwnProfile = (props: { userType: string }) => {
   const { user } = useUserStore();
@@ -140,45 +139,28 @@ export const OwnProfile = (props: { userType: string }) => {
   const [imageUrl, setImageUrl] = useState(userData?.data?.profilePicture || '');
   const onSubmitProfilePicture = async (data: any) => {
     setLoading(true);
-    try {
-      const formData = new FormData();
-      if (data.profilePicture && data.profilePicture[0]) {
-        formData.append('image', data.profilePicture[0]);
-      } else {
-        enqueueSnackbar('Please select a file.', { variant: 'warning' });
-        setLoading(false);
-        return;
-      }
-      let response;
-      try {
-        response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL!}/upload/image`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-      } catch (err) {
-        enqueueSnackbar('Image upload failed!', { variant: 'error' });
-        return;
-      }
-      setImageUrl(response.data.imageUrl);
-
-      const imageUploaded = await updateUser({
-        input: {
-          id: Number(user.userId),
-          profilePicture: response.data.imageUrl,
-        },
-      });
-
-      if (imageUploaded?.updateUser?.data?.id) {
-        enqueueSnackbar('Profile picture updated successfully!', { variant: 'success' });
-        setOpenProfilePictureModal(false); // Optionally close modal
-      } else {
-        enqueueSnackbar('Something went wrong during upload!', { variant: 'error' });
-      }
-    } catch (err) {
-      enqueueSnackbar('Something went wrong file!', { variant: 'error' });
-    } finally {
+    const response = await uploadImage(data.profilePicture[0]);
+    if (!response) {
+      enqueueSnackbar('Something went wrong during upload!', { variant: 'error' });
       setLoading(false);
+      return;
+    }
+
+      setImageUrl(response);
+    const imageUploaded = await updateUser({
+      input: {
+        id: Number(user.userId),
+        profilePicture: response,
+      },
+    }); 
+    if (imageUploaded?.updateUser?.data?.id) {
+      enqueueSnackbar('Profile picture updated successfully!', { variant: 'success' });
+      setLoading(false);
+      setOpenProfilePictureModal(false);
+    } else {
+      enqueueSnackbar('Something went wrong during upload!', { variant: 'error' });
+      setLoading(false);
+      setOpenProfilePictureModal(false);
     }
   };
 
@@ -306,7 +288,11 @@ export const OwnProfile = (props: { userType: string }) => {
         actionLabel="Save"
         onSave={handleSubmitProfilePicture(onSubmitProfilePicture)}>
         <form>
-          <input type="file" {...registerProfilePicture('profilePicture')} />
+          {loading ? (
+            <div>Uploading...</div>
+          ) : (
+            <input type="file" {...registerProfilePicture('profilePicture')} accept="image/*" />
+          )}
         </form>
       </Modal>
     </div>

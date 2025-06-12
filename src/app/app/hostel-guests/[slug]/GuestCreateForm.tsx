@@ -9,7 +9,7 @@ import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import { enqueueSnackbar } from 'notistack';
 import { useUserStore } from 'src/store/userStore';
 import Button from 'src/components/Button';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   CreateHostelGuest,
   CreateHostelGuestMutation,
@@ -18,6 +18,8 @@ import {
   UpdateHostelGuestMutation,
   UpdateHostelGuestMutationVariables,
 } from 'src/gql/graphql';
+import { countries } from '../../data/countries';
+import ImageUploader from 'src/features/ImageUploader';
 
 interface GuestFormProps {
   guest?: HostelGuestData;
@@ -29,7 +31,7 @@ export const GuestCreateForm = ({ guest, isEdit = false, withToken = false }: Gu
   const { user } = useUserStore();
   const queryClient = useQueryClient();
   const router = useRouter();
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(withToken);
   const [sendWelcomeEmail, setSendWelcomeEmail] = useState(!isEdit);
   const [allowToFillForm, setAllowToFillForm] = useState(!isEdit);
 
@@ -58,6 +60,11 @@ export const GuestCreateForm = ({ guest, isEdit = false, withToken = false }: Gu
     },
   });
 
+  const [profilePicture, setProfilePicture] = useState<string | null>(null); 
+  const handleProfilePicture = (url: string | null) => {
+    setProfilePicture(url);
+  }
+
   useEffect(() => {
     if (guest) {
       reset({
@@ -65,7 +72,7 @@ export const GuestCreateForm = ({ guest, isEdit = false, withToken = false }: Gu
         email: guest.email,
         phoneNumber: guest.phoneNumber || '',
         gender: guest.gender || undefined,
-        dateOfBirth: guest.dateOfBirth,
+        dateOfBirth: guest.dateOfBirth ? guest.dateOfBirth.split('T')[0] : undefined,
         nationality: guest.nationality || '',
         permanentAddress: guest.permanentAddress || '',
         religion: guest.religion || '',
@@ -74,9 +81,10 @@ export const GuestCreateForm = ({ guest, isEdit = false, withToken = false }: Gu
         notes: guest.notes || '',
         hostelId: guest.hostelId,
         roomId: guest.roomId,
-        checkinDate: guest.checkinDate,
-        checkoutDate: guest.checkoutDate,
+        checkinDate: guest.checkinDate ? new Date(guest.checkinDate).toISOString() : undefined,
+        checkoutDate: guest.checkoutDate ? new Date(guest.checkoutDate).toISOString() : undefined ,
       });
+      setProfilePicture(guest.profilePicture || null);
     }
   }, [reset, guest]);
 
@@ -95,7 +103,7 @@ export const GuestCreateForm = ({ guest, isEdit = false, withToken = false }: Gu
   const onSubmit = async (data: CreateHostelGuestInput) => {
     const input = { ...data, hostelId: Number(user.hostelId) };
     if (!isEdit) {
-      mutateAsync({ createHostelGuestInput: input, withWelcomeEmail: sendWelcomeEmail, allowEdit: allowToFillForm }).then(res => {
+      mutateAsync({ createHostelGuestInput: {...input, profilePicture}, withWelcomeEmail: sendWelcomeEmail, allowEdit: allowToFillForm }).then(res => {
         if (res?.createHostelGuest?.data?.id) {
           enqueueSnackbar('Guest created successfully.', { variant: 'success' });
           queryClient.invalidateQueries({ queryKey: ['getHostelGuests'] });
@@ -108,13 +116,14 @@ export const GuestCreateForm = ({ guest, isEdit = false, withToken = false }: Gu
       mutateUpdateGuestAsync({ 
         updateHostelGuestInput: { 
           ...input, 
+          profilePicture,
           id: Number(guest?.id) 
         } 
       }).then(res => {
         if (res?.updateHostelGuest?.data?.id) {
           enqueueSnackbar('Guest updated successfully.', { variant: 'success' });
           queryClient.invalidateQueries({ queryKey: ['getHostelGuests'] });
-          router.push(`/app/hostel-guests/`);
+          router.push(withToken ? `/welcome-guest` : `/app/hostel-guests/`);
         } else {
           enqueueSnackbar('Something went wrong.', { variant: 'error' });
         }
@@ -127,6 +136,12 @@ export const GuestCreateForm = ({ guest, isEdit = false, withToken = false }: Gu
     { label: 'Female', value: Gender.Girls },
     { label: 'Others', value: Gender.Others },
   ];
+  const countryOptions = useMemo(() => {
+    return countries.map(country => ({
+      label: country.name,
+      value: country.name,
+    }));
+  }, []);
 
   const getErrorMessage = (error: any): string | undefined => {
     if (!error) return undefined;
@@ -161,7 +176,8 @@ export const GuestCreateForm = ({ guest, isEdit = false, withToken = false }: Gu
             placeholder="Email Address"
             control={control}
             label="Email Address"
-            required
+            required 
+            disabled={withToken}
             helpertext={getErrorMessage(errors.email)}
             error={!!errors.email}
           />
@@ -231,12 +247,14 @@ export const GuestCreateForm = ({ guest, isEdit = false, withToken = false }: Gu
             </div>
 
             <div className="mb-2">
-              <TextInput
+              <ReactSelect
                 name="nationality"
-                placeholder="Nationality"
+                placeholder="Country"
                 control={control}
-                label="Nationality"
-                helpertext={getErrorMessage(errors.nationality)}
+                options={countryOptions}
+                label="Country"
+                // required
+                helperText={errors.nationality?.type === 'required' ? 'Nationality Is Required' : ''}
                 error={!!errors.nationality}
               />
             </div>
@@ -284,8 +302,17 @@ export const GuestCreateForm = ({ guest, isEdit = false, withToken = false }: Gu
                 rows={1}
               />
             </div>
+            <div className="mb-2 md:col-span-2"> 
+              <div className="flex items-center gap-2"> 
+                <h4 className="font-medium"> Upload Profile Picture</h4>
+              </div>
+              <ImageUploader
+                imageUrl={profilePicture}
+                handleImageUrl={handleProfilePicture}
+              />
+            </div>
 
-            <div className="mb-2 md:col-span-2">
+            {!withToken && <div className="mb-2 md:col-span-2">
               <button
                 type="button"
                 className="text-sm text-primary hover:text-primary-dark flex items-center gap-1"
@@ -296,12 +323,12 @@ export const GuestCreateForm = ({ guest, isEdit = false, withToken = false }: Gu
                 </svg>
                 Show less fields
               </button>
-            </div>
+            </div>}
           </>
         )}
       </div>
 
-      <div className="mt-4 mb-4">
+      {!withToken && <div className="mt-4 mb-4">
         <label className="flex items-center space-x-2">
           <input
             type="checkbox"
@@ -311,8 +338,8 @@ export const GuestCreateForm = ({ guest, isEdit = false, withToken = false }: Gu
           />
           <span>Allow to complete form</span>
         </label>
-      </div>
-      <div className="mt-4 mb-4">
+      </div>}
+      {!withToken && <div className="mt-4 mb-4">
         <label className="flex items-center space-x-2">
           <input
             type="checkbox"
@@ -322,8 +349,7 @@ export const GuestCreateForm = ({ guest, isEdit = false, withToken = false }: Gu
           />
           <span>Send welcome email </span>
         </label>
-      </div>
-   
+      </div>}
 
       <div className="flex justify-end">
         <div className="mt-6 flex justify-end gap-2">

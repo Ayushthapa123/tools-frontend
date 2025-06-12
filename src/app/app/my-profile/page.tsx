@@ -26,7 +26,7 @@ function PageContent() {
 
   //get the payment profile
 
-  const [activeTab, setActiveTab] = useState(1);
+  const [activeTab, setActiveTab] = useState(0);
 
   const mobileTabs = [
     { label: 'Own Profile', id: ' 1', content: <OwnProfile userType={user.userType} /> },
