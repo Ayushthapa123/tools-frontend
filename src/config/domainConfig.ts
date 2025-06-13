@@ -8,3 +8,6 @@ export const domainConfig = {
   appDescription: appName === 'hosteladmin' ? 'Hosteladmin helps you by saving your time and money to manage your hostel business as well as grow your business with digital presence and marketing' :
    'Hostelpilot helps you to find the best hostel nearby you with just a click',
 };
+
+export const isHostelAdmin = appName === 'hosteladmin'; 
+export const isHostelPilot = appName === 'hostelpilot';

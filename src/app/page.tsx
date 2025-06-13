@@ -3,8 +3,9 @@ import { CommonNav } from 'src/features/NavBar/CommonNav';
 import type { Metadata } from 'next';
 import { Header } from 'src/features/landing-page/Header';
 import Footer from 'src/features/Footer';
-import { domainConfig } from 'src/config/domainConfig';
+import { domainConfig, isHostelAdmin } from 'src/config/domainConfig';
 import HostelAdminHeader from 'src/features/landing-page/Header/HostelAdminHeader';
+import { SoftwareFeatures } from 'src/features/landing-page/SoftwareFeatures/page';
 export const metadata: Metadata = {
   title: domainConfig.appSlogan, 
   description:domainConfig.appDescription,
@@ -21,7 +22,8 @@ export default function Home() {
       <main className="relative ">
         <div className="">
           <CommonNav />
-          {domainConfig.appName == 'hosteladmin' ?<HostelAdminHeader />:<Header />}
+          {isHostelAdmin ?<HostelAdminHeader />:<Header />}
+          {isHostelAdmin ?<SoftwareFeatures />:<></>}
           <Footer />
         </div>
       </main>
