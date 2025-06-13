@@ -107,8 +107,10 @@ export const GuestCreateForm = ({ guest, isEdit = true }: GuestFormProps) => {
       mutateUpdateGuestAsync({ 
         updateHostelGuestInput: { 
           ...input, 
-          id: Number(guest?.id) 
-        } 
+          id: Number(guest?.id),
+        },
+        withWelcomeEmail: sendWelcomeEmail,
+        allowEdit: allowToFillForm,
       }).then(res => {
         if (res?.updateHostelGuest?.data?.id) {
           enqueueSnackbar('Guest updated successfully.', { variant: 'success' });
