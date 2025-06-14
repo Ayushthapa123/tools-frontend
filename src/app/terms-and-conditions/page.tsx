@@ -1,10 +1,10 @@
 import { Metadata } from 'next';
-
+import { isHostelPilot } from 'src/config/domainConfig';
 export const metadata: Metadata = {
   title: 'Terms and Conditions | hosteladmin.com',
   description:
     'Read the terms and conditions for using hosteladmin.com, a complete hostel management system. Understand your rights and responsibilities while using our platform.',
-  manifest: '/manifest.json',
+  manifest: isHostelPilot ? '/manifest-hostelpilot.json' : '/manifest.json',
   authors: [{ name: 'Ayush Thapa' }],
   openGraph: {
     images: '/logo512.png',

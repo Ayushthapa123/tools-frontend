@@ -6,9 +6,9 @@ import Footer from 'src/features/Footer';
 import { CommonNav } from 'src/features/NavBar/CommonNav';
 
 export const metadata: Metadata = {
-  title: 'Hostel For Students And Young Professionals',
+  title: 'Search Hostels in your city',
   description:
-    'Hostel is a hotel searching portal specially focused on providing the best hotels for students and young professionals in their city',
+    'Search Best Hostels in your city for students and young professionals',
   manifest: '/manifest.json',
   authors: [{ name: 'Ayush Thapa' }],
   openGraph: {

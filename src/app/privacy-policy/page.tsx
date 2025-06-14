@@ -1,9 +1,9 @@
 import { Metadata } from 'next';
-
+import { isHostelPilot } from 'src/config/domainConfig';
 export const metadata: Metadata = {
   title: 'Privacy Policy | HOSTELADMIN.com',
   description: 'Understand how HOSTELADMIN.com collects, uses, and safeguards your information.',
-  manifest: '/manifest.json',
+  manifest: isHostelPilot ? '/manifest-hostelpilot.json' : '/manifest.json',
   authors: [{ name: 'Ayush Thapa' }],
   openGraph: {
     images: '/logo512.png',
