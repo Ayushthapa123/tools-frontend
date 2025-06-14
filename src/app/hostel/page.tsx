@@ -4,11 +4,11 @@ import Footer from 'src/features/Footer';
 import { Suspense } from 'react';
 
 import { Metadata } from 'next';
-
+import { isHostelPilot } from 'src/config/domainConfig';
 export const metadata: Metadata = {
   title: 'Hostel Lists',
   description: 'Hostel is a hotel searching portal specially focused on providing the best hostel',
-  manifest: '/manifest.json',
+  manifest: isHostelPilot ? '/manifest-hostelpilot.json' : '/manifest.json',
   authors: [{ name: 'Ayush Thapa' }],
   openGraph: {
     images: '/logo512.png',
