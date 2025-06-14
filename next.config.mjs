@@ -8,6 +8,7 @@ const withPWA = createPWAConfig({
   disable: false,
   register: true,
   skipWaiting: true,
+  
 });
 
 const config = {
