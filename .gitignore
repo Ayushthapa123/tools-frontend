@@ -4,12 +4,6 @@
 # Ignore Node.js environment files
 .env
 
-# Ignore package-lock.json file
-package-lock.json
-
-# Ignore yarn lock file
-yarn.lock
-
 # Ignore development/build files
 /.idea
 /.vscode
