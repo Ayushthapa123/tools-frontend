@@ -20,6 +20,7 @@ const config = {
       'res.cloudinary.com',
     ],
   },
+  output: 'standalone',
 };
 
 export default process.env.NEXT_PUBLIC_ENVIRONMENT === 'DEV' ? withPWA(config) : withPWA(config);
