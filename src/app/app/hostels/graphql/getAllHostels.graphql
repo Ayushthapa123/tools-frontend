@@ -1,5 +1,5 @@
-query GetAllHostels($pageSize: Int, $pageNumber: Int) {
-  getAllHostels(pageSize: $pageSize, pageNumber: $pageNumber) {
+query GetAllHostels($pageSize: Int, $pageNumber: Int, $isSuperAdmin: Boolean) {
+  getAllHostels(pageSize: $pageSize, pageNumber: $pageNumber, isSuperAdmin: $isSuperAdmin) {
     data {
       id
       name
