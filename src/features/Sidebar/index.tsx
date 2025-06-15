@@ -133,6 +133,12 @@ const Sidebar = () => {
       href: '/app/services',
       show: user.userType === UserType.HostelOwner,
     },
+    {
+      icon: <FaRegLightbulb />,
+      text: 'Marketing',
+      href: '/app/marketing',
+      show: user.userType === UserType.HostelOwner,
+    },
    
     // {
     //   icon: <BookingIcon />,
