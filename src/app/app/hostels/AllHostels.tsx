@@ -10,13 +10,13 @@ import {
 import { useQuery } from '@tanstack/react-query';
 
 export const AllHostels = () => {
-  const querySignupUrl = useGraphqlClientRequest<GetAllHostelsQuery, GetAllHostelsQueryVariables>(
+  const queryHostels = useGraphqlClientRequest<GetAllHostelsQuery, GetAllHostelsQueryVariables>(
     GetAllHostels.loc?.source?.body!,
   );
 
   //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
   const fetchData = async () => {
-    const res = await querySignupUrl();
+    const res = await queryHostels({ isSuperAdmin: true });
     return res.getAllHostels;
   };
 
