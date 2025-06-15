@@ -68,7 +68,7 @@ const features = [
     title: "Digital Marketing",
     description: (
       <div>
-        Boost your hostel's online presence with targeted digital marketing campaigns, social media management, and SEO optimization.
+        Boost your hostel&apos;s online presence with targeted digital marketing campaigns, social media management, and SEO optimization.
       </div>
     ),
     serviceType: "Paid"
