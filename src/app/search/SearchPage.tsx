@@ -7,20 +7,21 @@ import { MdApartment } from 'react-icons/md';
 import { SearchResults } from './SearchResults';
 import { SearchBox } from 'src/features/landing-page/Header/SearchBox';
 import { MapProvider } from 'src/features/MapProvider';
+import { number } from 'framer-motion';
 export function SearchPage() {
   const params = useSearchParams();
 
   const checkInDate = params.get('checkInDate') ?? '';
   const checkOutDate = params.get('checkOutDate') ?? '';
 
-  const [genderType, setGenderType] = useState(params.get('genderType') ?? '');
-  const [city, setCity] = useState(params.get('city') ?? '');
-  const [subCity, setSubCity] = useState(params.get('subCity') ?? '');
-  const [country, setCountry] = useState(params.get('country') ?? '');
-  const [lat, setLat] = useState(params.get('lat') ?? '');
-  const [lng, setLng] = useState(params.get('lng') ?? '');
-  const [query, setQuery] = useState(params.get('query') ?? '');
-  const [count, setCount] = useState(0);
+  const [ genderType, setGenderType ] = useState(params.get('genderType') ?? '');
+  const [ city, setCity ] = useState(params.get('city') ?? '');
+  const [ subCity, setSubCity ] = useState(params.get('subCity') ?? '');
+  const [ country, setCountry ] = useState(params.get('country') ?? '');
+  const [ lat, setLat ] = useState(params.get('lat') ?? '');
+  const [ lng, setLng ] = useState(params.get('lng') ?? '');
+  const [ query, setQuery ] = useState(params.get('query') ?? '');
+  const [ count, setCount ] = useState<number | undefined>(undefined);
 
   const handleCountry = (country: string) => {
     setCountry(country);
@@ -38,6 +39,7 @@ export function SearchPage() {
   const handleCount = (count: number) => {
     setCount(count);
   };
+  console.log("cc", count, typeof (count))
   return (
     <div className=" ">
       <div className="mx-auto mt-4 h-full min-h-10 max-w-[1800px] pt-3">
@@ -49,18 +51,18 @@ export function SearchPage() {
           </Suspense>
         </div>
 
-        <div className="flex border-b p-10 py-5 ">
-          <div className="flex flex-grow items-center justify-between">
-            <h2 className="flex text-4xl capitalize text-primary">
-              <span>
-                <MdApartment />
-              </span>
-              {subCity ? `${subCity}` : ''} {city ? city + ',' : ''} {country}
-            </h2>
-            <p className="">
-              {' '}
-              <span className="text-secondary/80">{count} Hostels Found!</span>
+        <div className="flex border-b p-10 py-5">
+            <span>
+              <MdApartment className='text-3xl mr-1' />
+            </span>
+          <div className="flex flex-grow items-end">
+            <p className='text-gray-500'>
+              <span className="text-black text-3xl">{count}</span> Hostels Found nearby
             </p>
+            <h2 className="flex items-end gap-3 text-xl capitalize text-secondary ml-1">
+              {query ? query : ""}
+              {subCity ? subCity : ''} {city ? city + ',' : ''} {country}
+            </h2>
           </div>
         </div>
         <div className=" relative flex h-auto  w-full overflow-y-hidden">

@@ -26,11 +26,15 @@ export const FeaturedHostel = () => {
   });
 
   return (
-    <div className="mx-auto flex w-[90vw] flex-col items-center justify-center  py-10">
-      <div className="my-6 flex flex-col items-center justify-between  gap-0">
-        <h2 className="m-0 text-xl font-bold text-primary lg:text-4xl">Featured Hostels</h2>
-        <p className="text-center text-sm lg:text-lg">Discover our most popular Hostels</p>
-      </div>
+    <div className="mx-auto flex w-[90vw] flex-col items-center justify-center py-6">
+     <div className="my-6 flex flex-col items-center justify-between gap-0">
+  <h2 className="m-0 text-xl font-bold text-primary lg:text-4xl">
+    Top-Rated Hostels for Students & Travelers
+  </h2>
+  <p className="text-center text-sm lg:text-base tracking-wider">
+    Explore our handpicked selection of the best hostels offering comfort, affordability, and great amenities.
+  </p>
+</div>
 
       {isLoading && (
         <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -48,7 +52,6 @@ export const FeaturedHostel = () => {
           return (
             <div
               key={hostel?.slug}
-              className="transform transition-all duration-300 hover:translate-y-[-4px]"
             >
               <Link href={`/hostel/${hostel?.slug}`}>
                 <HostelCard
