@@ -16,7 +16,7 @@ export const Header = () => {
         <Image src={'/images/hostel_bg.jpg'} fill alt="" className="object-cover" />
         <div className="hero-overlay z-10 min-h-[50vh] bg-opacity-50 pb-28 lg:pb-0">
           <div className=" inset-0 flex w-full flex-col items-center justify-center px-4 text-center">
-            <div className='bg-slate-100 w-[80%] mt-40 md:mt-32 p-4 rounded-xl leading-3'>
+            <div className='bg-slate-100 w-[80%] mt-40 md:mt-60 p-4 rounded-xl leading-3'>
               <h1 className=" mb-4 mt-8 text-4xl font-bold text-primary md:text-4xl md:mb-1">
                 Find the perfect hostel to call home with Us!
               </h1>
@@ -25,7 +25,7 @@ export const Header = () => {
               </p>
 
             
-              <div className="flex mb-4 w-full items-center justify-center">
+              <div className="flex mb-4 w-full items-center justify-center align-middle ">
                 <Suspense>
                   <MapProvider>
                     <SearchBox />
