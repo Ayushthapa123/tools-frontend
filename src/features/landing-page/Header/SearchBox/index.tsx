@@ -81,10 +81,11 @@ export const SearchBox = () => {
     }, 100);
   };
 
-  const autocompleteRef = useRef<any>(null);
+  const autocompleteRef1 = useRef<any>(null);
+  const autocompleteRef2 = useRef<any>(null);
 
   const handlePlaceChanged = () => {
-    const place = autocompleteRef.current.getPlace();
+    const place = autocompleteRef1.current.getPlace() || autocompleteRef2.current.getPlace();
     handleQuery(place?.name ?? '');
     if (place?.geometry && place?.geometry.location) {
       const lat = place.geometry.location.lat();
@@ -101,7 +102,7 @@ export const SearchBox = () => {
     setQuery(sanitizedValue);
   };
 
-  const isValidSearch = (clickedLatLng?.lat || clickedLatLng?.lng) && checkInDate && checkOutDate;
+  const isValidSearch = (clickedLatLng?.lat || clickedLatLng?.lng) 
 
   return (
     <div className="relative flex w-full flex-col items-center justify-center px-3 ">
@@ -124,7 +125,7 @@ export const SearchBox = () => {
           <div className='flex w-full items-start flex-col justify-start'>
           <span>Location</span>
           <Autocomplete
-            onLoad={autocomplete => (autocompleteRef.current = autocomplete)}
+            onLoad={autocomplete => (autocompleteRef1.current = autocomplete)}
             className="w-full "
             onPlaceChanged={handlePlaceChanged}
           >
@@ -135,8 +136,8 @@ export const SearchBox = () => {
               className="rounded-md w-full bg-gray-50  p-2 pl-0 placeholder:text-xs "
               onChange={handleLocationChange}
               defaultValue={query}
-              autoComplete="on"
-              required
+              // autoComplete="on"
+              // required
             />
           </Autocomplete>
          </div>
@@ -148,7 +149,7 @@ export const SearchBox = () => {
           <div className='flex w-full items-start flex-col justify-start'>
             <span>Hostel Name</span>
             <Autocomplete
-            onLoad={autocomplete => (autocompleteRef.current = autocomplete)}
+            onLoad={autocomplete => (autocompleteRef2.current = autocomplete)}
             className=" w-full"
             onPlaceChanged={handlePlaceChanged}
           >
