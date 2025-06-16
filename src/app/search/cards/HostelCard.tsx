@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useRef, useState } from 'react';
 import { BiFoodMenu, BiHeart } from 'react-icons/bi';
 import { BsLine } from 'react-icons/bs';
-import { FaArrowCircleRight, FaSwimmingPool } from 'react-icons/fa';
+import { FaArrowCircleRight, FaRegHeart, FaSwimmingPool } from 'react-icons/fa';
 import { GrLocation } from 'react-icons/gr';
 import { MdBathroom, MdBreakfastDining, MdSafetyDivider } from 'react-icons/md';
 import { TiWiFi } from 'react-icons/ti';
@@ -23,7 +23,7 @@ interface Iprops {
   threeSeater?: boolean | null;
 }
 export const HostelCard = (props: Iprops) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [ isModalOpen, setIsModalOpen ] = useState(false);
   const {
     name,
     country,
@@ -41,14 +41,14 @@ export const HostelCard = (props: Iprops) => {
   const editorRef = useRef(description ?? '');
 
   return (
-    <div className="group card-bordered mb-2 flex h-full w-full cursor-pointer flex-col gap-4 rounded-3xl bg-base-100 pb-2 transition duration-200 ease-in-out hover:opacity-100">
-      <div className="relative h-[300px] w-full rounded-3xl">
+    <div className="group card-bordered mb-2 flex h-full w-full cursor-pointer flex-col gap-4 rounded-xl bg-base-100 pb-2 transition duration-200 ease-in-out hover:opacity-100">
+      <div className="relative h-[300px] w-full rounded-xl">
         <div className="relative h-full w-full">
           <Image
             src={imgUrl ? imgUrl : '/default-image.png'}
             alt={name}
             fill
-            className="rounded-xl rounded-bl-none rounded-br-none object-cover"
+            className="rounded-xl rounded-bl-none rounded-br-none object-cover group-hover:border-b-[1px] group-hover:border-primary/50"
           />
           {/* <button className="absolute right-2 top-2 rounded-full bg-white/80 p-2 transition hover:bg-red">
             <BiHeart
@@ -62,23 +62,30 @@ export const HostelCard = (props: Iprops) => {
       </div>
 
       <div className="flex-grow overflow-y-auto px-4" style={{ maxHeight: '150px' }}>
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <p className="text-capitalize mb-1 flex items-center gap-2 text-xs text-primary/70">
-            <GrLocation className="text-secondary" />
-            <span className="text-sm text-gray-600">
-              {subCity} {city}, {country}
-            </span>
-          </p>
+        <div className="flex flex-wrap items-start justify-between gap-2">
+          <div className='flex flex-col leading-3'>
+            <h3 className="m-0 ml-1 text-lg font-medium text-gray-800">{name}</h3>
+            <p className="text-capitalize mb-1 flex items-center gap-2 text-xs text-primary/70">
+              <GrLocation className="text-secondary w-4 h-4" />
+              <span className="text-sm text-gray-600">
+                {subCity} {city}, {country}
+              </span>
+            </p>
+          </div>
           <div>
+            <div className='rounded-full p-2 hover:bg-gray-200'>
+              <FaRegHeart className='w-6 h-6 text-red/65' />
+            </div>
             {/* <span className='text-sm text-secondary/80 font-semibold'>{currency} {amount}</span> */}
           </div>
         </div>
-        <h3 className="mb-1 ml-1 text-lg font-medium text-gray-800">{name}</h3>
+
+
 
         <div className="">{/* <RichTextEditor editorRef={editorRef} readOnly={true} /> */}</div>
 
         <div className="mt-2 flex items-center justify-between gap-2">
-          <Button label={'View full details'} className="bg-primary/90 hover:bg-primary" />
+          <Button label={'View full details'} className="bg-primary/90 hover:bg-primary tracking-wide" />
           {/* <div>
             <FaArrowCircleRight className='text-4xl text-gray-400 w-fit group-hover:text-primary/90 transition duration-300 ease-in-out' />
           </div> */}
