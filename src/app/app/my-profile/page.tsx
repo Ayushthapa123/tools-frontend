@@ -29,7 +29,7 @@ function PageContent() {
   const [activeTab, setActiveTab] = useState(0);
 
   const mobileTabs = [
-    { label: 'Own Profile', id: ' 1', content: <OwnProfile userType={user.userType} /> },
+    { label: 'Profile', id: ' 1', content: <OwnProfile userType={user.userType} /> },
     // { name: 'Bookings', id: 2, visible: true },
     { label: 'Change Password', id: '3', content: <ChangePassword userId={Number(user.userId)} /> },
   ];
