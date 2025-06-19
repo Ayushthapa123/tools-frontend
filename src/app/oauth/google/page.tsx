@@ -49,7 +49,7 @@ function SignUp() {
         if (res?.signUpWithGoogle?.id) {
           setAccessToken(res.signUpWithGoogle.token.accessToken);
           // localStorage.setItem('refreshToken', res.signUpWithGoogle.token.refreshToken);
-          router.push('/app');
+          router.push('/app/hostel-info');
         }
       });
     } else {
