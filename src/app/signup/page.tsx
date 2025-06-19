@@ -23,6 +23,7 @@ import { useSearchParams } from 'next/navigation';
 import Button from 'src/components/Button';
 import { FullLogo } from 'src/features/Logo/FullLogoWithText';
 import { Logo } from 'src/features/Logo';
+import Image from 'next/image';
 
 export default function Home() {
   return (
@@ -42,8 +43,8 @@ type signupData = {
   phoneNumber?: string;
 };
 function SignUp() {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [ loading, setLoading ] = useState(false);
+  const [ error, setError ] = useState('');
 
   const router = useRouter();
 
@@ -81,7 +82,7 @@ function SignUp() {
   };
 
   const { data: signupUrl } = useQuery({
-    queryKey: ['getGoogleAuthUrl'],
+    queryKey: [ 'getGoogleAuthUrl' ],
     queryFn: fetchData,
   });
 
@@ -108,7 +109,7 @@ function SignUp() {
         router.push('/app');
       } else {
         // @ts-ignore
-        setError(res?.errors?.[0]?.message ?? 'Failed to signup!');
+        setError(res?.errors?.[ 0 ]?.message ?? 'Failed to signup!');
       }
     });
 
@@ -144,12 +145,48 @@ function SignUp() {
   };
 
   return (
-    <section className="flex min-h-[100vh]  flex-col justify-center bg-gray-100 p-5 align-middle lg:py-[30px]">
+    <section className="flex min-h-[100vh]  flex-col justify-center bg-gray-100 p-5 align-middle">
       <div className="container mx-auto ">
+
         <div className="flex flex-wrap ">
-          <div className="w-full px-4">
-            <div className=" relative mx-auto max-w-[450px] overflow-hidden rounded-lg bg-white px-5 py-[1rem] text-center sm:px-[1rem] md:px-[3rem]">
-              <div className="relative mb-5 flex items-center  gap-1 md:-ml-4">
+          <div className="flex w-[70vw] mx-auto items-center justify-center ">
+            <div className="w-[50%] h-[100%] text-center text-2xl font-bold bg-white p-5 rounded-lg rounded-r-none">
+              <div>
+                <h3 className='text-4xl font-bold text-center'>Welcome to Hostel Admin.</h3>
+                <div className='flex items-center justify-center mt-4'>
+                <Image
+                  src="/hero.png"
+                  alt="Hostel png"
+                  width={270}
+                  height={270}
+                />
+                </div>
+                <p className='text-gray-600 mt-12 text-lg'>
+                  <strong className='text-primary'>Hostel Admin</strong> is a management platform for hostel owners to 
+                </p>
+              </div>
+              <div className='grid grid-cols-2 ml-8 gap-0 mt-2 text-sm'>
+                    <div className='p-3 bg-gray-50  text-base text-gray-700 rounded-lg text-left'>
+                      <span className='text-primary  font-semibold'>✓</span> Manage Bookings
+                    </div>
+                    <div className='p-3 bg-gray-50  text-base text-gray-700 rounded-lg text-left'>
+                      <span className='text-primary  font-semibold'>✓</span> Track Customers
+                    </div>
+                    <div className='p-3 bg-gray-50  text-base text-gray-700 rounded-lg text-left'>
+                      <span className='text-primary  font-semibold'>✓</span> Digital Marketing
+                    </div>
+                    <div className='p-3 bg-gray-50  text-base text-gray-700 rounded-lg text-left'>
+                      <span className='text-primary  font-semibold'>✓</span> Analytics Dashboard
+                    </div>
+                  </div>
+              <div className='mt-8 leading-tight'>
+                <p className='text-gray-500'>
+                  Create an account, add your hostel details, and get listed on our platform.
+                </p>
+              </div>
+            </div>
+            <div className="w-[50%] relative border-l border-primary/50 rounded-l-none overflow-hidden rounded-lg bg-white px-5 py-[1rem] text-center sm:px-[1rem] md:px-[3rem]">
+            <div className="relative  mb-5 flex items-center  gap-1 md:-ml-4">
                 <Logo />
                 <div>
                   <FullLogo />
@@ -244,9 +281,8 @@ function SignUp() {
                   <Button
                     label={'Sign up'}
                     disabled={loading || !isValid}
-                    className={`${
-                      loading || !isValid ? 'cursor-not-allowed opacity-30' : 'opacity-100'
-                    } w-full rounded-md bg-primary px-4 py-2  font-bold   `}
+                    className={`${loading || !isValid ? 'cursor-not-allowed opacity-30' : 'opacity-100'
+                      } w-full rounded-md bg-primary px-4 py-2  font-bold   `}
                   />
                 </div>
               </form>
@@ -257,7 +293,7 @@ function SignUp() {
                   Log In
                 </Link>
               </p>
-       
+
 
               <div className=" w-full   ">
                 <hr className="  my-3 w-full border" />
