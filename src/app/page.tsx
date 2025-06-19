@@ -6,6 +6,7 @@ import Footer from 'src/features/Footer';
 import { domainConfig, isHostelAdmin, isHostelPilot } from 'src/config/domainConfig';
 import HostelAdminHeader from 'src/features/landing-page/Header/HostelAdminHeader';
 import { SoftwareFeatures } from 'src/features/landing-page/SoftwareFeatures/page';
+import MobileDownload from 'src/features/landing-page/Header/MobileDownload';
 export const metadata: Metadata = {
   title: domainConfig.appSlogan, 
   description:domainConfig.appDescription,
@@ -31,7 +32,8 @@ export default function Home() {
         <div className="">
           <CommonNav />
           {isHostelAdmin ?<HostelAdminHeader />:<Header />}
-          {isHostelAdmin ?<SoftwareFeatures />:<></>}
+          {isHostelAdmin ? <SoftwareFeatures /> : <></>}
+          {isHostelAdmin ? <MobileDownload /> : <></>}
           <Footer />
         </div>
       </main>

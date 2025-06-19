@@ -4,10 +4,7 @@ import { Suspense } from 'react';
 import Image from 'next/image';
 import { FeaturedHostel } from 'src/features/featured/featuredHostel';
 import { MapProvider } from 'src/features/MapProvider';
-interface LocationOption {
-  id: number;
-  name: string;
-}
+
 
 export const Header = () => {
   return (
@@ -23,7 +20,6 @@ export const Header = () => {
               <p className="mb-8 text-base text-gray-700 lg:text-base tracking-wide">
                 Search for your ideal hostel here at Hostelpilot.com - Fast and Easy.
               </p>
-
             
               <div className="flex mb-4 w-full items-center justify-center align-middle ">
                 <Suspense>
