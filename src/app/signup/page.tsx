@@ -145,14 +145,14 @@ function SignUp() {
   };
 
   return (
-    <section className="flex min-h-[100vh]  flex-col justify-center bg-gray-100 p-5 align-middle">
+    <section className="flex min-h-[100vh]  flex-col justify-center bg-gray-100 md:p-5 p-2 align-middle">
       <div className="container mx-auto ">
 
         <div className="flex flex-wrap ">
-          <div className="flex w-[70vw] mx-auto items-center justify-center ">
-            <div className="w-[50%] h-[100%] text-center text-2xl font-bold bg-white p-5 rounded-lg rounded-r-none">
+          <div className="flex flex-col-reverse md:flex-row w-[90vw] md:w-[70vw] mx-auto items-center justify-center ">
+            <div className="md:w-[50%] w-[100%] h-[100%] text-center text-2xl font-bold bg-white p-5 rounded-lg rounded-r-none">
               <div>
-                <h3 className='text-4xl font-bold text-center'>Welcome to Hostel Admin.</h3>
+                <h3 className='text-2xl lg:text-4xl font-bold text-center'>Welcome to Hostel Admin.</h3>
                 <div className='flex items-center justify-center mt-4'>
                 <Image
                   src="/hero.png"
@@ -161,11 +161,11 @@ function SignUp() {
                   height={270}
                 />
                 </div>
-                <p className='text-gray-600 mt-12 text-lg'>
+                <p className='text-gray-600 mt-12 md:text-lg text-base'>
                   <strong className='text-primary'>Hostel Admin</strong> is a management platform for hostel owners to 
                 </p>
               </div>
-              <div className='grid grid-cols-2 ml-8 gap-0 mt-2 text-sm'>
+              <div className='grid grid-cols-1 md:grid-cols-2 ml-8 gap-0 mt-2 text-sm'>
                     <div className='p-3 bg-gray-50  text-base text-gray-700 rounded-lg text-left'>
                       <span className='text-primary  font-semibold'>✓</span> Manage Bookings
                     </div>
@@ -180,13 +180,13 @@ function SignUp() {
                     </div>
                   </div>
               <div className='mt-8 leading-tight'>
-                <p className='text-gray-500'>
+                <p className='text-gray-500 lg:text-base text-sm'>
                   Create an account, add your hostel details, and get listed on our platform.
                 </p>
               </div>
             </div>
-            <div className="w-[50%] relative border-l border-primary/50 rounded-l-none overflow-hidden rounded-lg bg-white px-5 py-[1rem] text-center sm:px-[1rem] md:px-[3rem]">
-            <div className="relative  mb-5 flex items-center  gap-1 md:-ml-4">
+            <div className="md:w-[50%] w-[100%] h-[100%] relative md:border-l border-primary/50 rounded-l-none overflow-hidden rounded-lg bg-white px-5 py-[1rem] text-center sm:px-[1rem] md:px-[3rem]">
+            <div className="relative  mb-5 flex items-start md:items-center  gap-1 md:-ml-4">
                 <Logo />
                 <div>
                   <FullLogo />

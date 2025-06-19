@@ -14,7 +14,7 @@ export const FullLogo = () => {
             </div> */}
             <div className=" relative top-4 text-4xl font-medium text-primary">
               {' '}
-              <h1 className="capitalize text-5xl">
+              <h1 className="capitalize text-3xl md:text-5xl">
                 {' '}
                 {domainConfig.appName}
               </h1>
