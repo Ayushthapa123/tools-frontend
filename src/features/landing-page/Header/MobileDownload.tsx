@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function MobileDownload() {
+  
   const playStoreUrl = "https://play.google.com/store/apps/details?id=com.hosteladmin.twa&pcampaignid=web_share";
   
   return (
