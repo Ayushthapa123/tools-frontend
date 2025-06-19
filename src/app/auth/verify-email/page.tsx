@@ -32,7 +32,7 @@ function VerifyUserEmailInner() {
     onSuccess: data => {
       if (data?.verifyEmail) {
         enqueueSnackbar('Email verified successfully!', { variant: 'success' });
-        router.push('/app');
+        router.push('/app/hostel-info');
       }
     },
   });

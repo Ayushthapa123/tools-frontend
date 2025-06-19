@@ -6,7 +6,7 @@ import { useState, useRef, useEffect } from 'react';
 // Map's styling
 const defaultMapContainerStyle = {
   width: '100%',
-  height: '60vh',
+  height: '70vh',
   borderRadius: '15px 0px 0px 15px',
   marginTop: '10px',
 };
@@ -15,7 +15,7 @@ const defaultMapOptions = {
   zoomControl: true,
   tilt: 0,
   gestureHandling: 'auto',
-  mapTypeId: 'satellite',
+  mapTypeId: 'roadmap',
 };
 
 interface Iprops {
@@ -55,11 +55,11 @@ export const MapComponent = (props: Iprops) => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full h-[70vh]">
       {clickedLatLng && (
         <div className="mt-4">
-          <p>Latitude: {clickedLatLng.lat}</p>
-          <p>Longitude: {clickedLatLng.lng}</p>
+          {/* <p>Latitude: {clickedLatLng.lat}</p>
+          <p>Longitude: {clickedLatLng.lng}</p> */}
         </div>
       )}
       <Autocomplete
@@ -68,8 +68,8 @@ export const MapComponent = (props: Iprops) => {
       >
         <input
           type="text"
-          placeholder="Search Your Location"
-          className="mb-4 rounded-lg border p-2 md:w-[300px]"
+          placeholder="Search Your Location Here & Select Below"
+          className="mb-4 rounded-lg border p-2 md:w-[400px]"
           style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.3)' }}
         />
       </Autocomplete>

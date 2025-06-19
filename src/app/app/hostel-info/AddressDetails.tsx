@@ -199,13 +199,23 @@ const HostelInfoForm: FC<IProps> = props => {
 
   return (
     <form className=" h-auto w-full" onSubmit={handleSubmit(handleSubmitForm)}>
-      <div className=" grid h-auto w-full gap-5 md:grid-cols-2">
+    
+
+      <div className="relative mt-5 h-[500px] w-full overflow-hidden">
+        <MapComponent
+          clickedLatLng={clickedLatLng}
+          setClickedLatLng={handleClickLatLng}
+          lat={lat}
+          lng={lng}
+        />
+      </div>
+      <div className=" grid h-auto w-full gap-5 md:grid-cols-2 mt-5">
         <div>
           <ReactSelect
             name="country"
             placeholder="Country"
             control={control}
-            options={countryOptions}
+            options={countryOptions} 
             label="Country"
             required
             helperText={errors.country?.type === 'required' ? 'Country Is Required' : ''}
@@ -245,15 +255,6 @@ const HostelInfoForm: FC<IProps> = props => {
             error={!!errors.street}
           />
         </div>
-      </div>
-
-      <div className="relative mt-5 h-[400px] w-full overflow-hidden">
-        <MapComponent
-          clickedLatLng={clickedLatLng}
-          setClickedLatLng={handleClickLatLng}
-          lat={lat}
-          lng={lng}
-        />
       </div>
 
       <div className=" flex w-full justify-end">

@@ -23,6 +23,7 @@ import {
   HostelType,
 } from 'src/gql/graphql';
 import { useToastStore } from 'src/store/toastStore';
+import { ContactDetails } from './ContactDetails';
 
 interface IProps {
   name?: string | null;
@@ -100,9 +101,11 @@ export const CreateHostelModal = () => {
       },
     }).then(res => {
       if (res?.createHostel?.data?.id) {
-        enqueueSnackbar('Homestay created successfully.', { variant: 'success' });
-        router.push('/app');
-        window.location.reload();
+        enqueueSnackbar('Hostel created successfully.', { variant: 'success' });
+        router.push('/app/hostel-info');
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
         //
       } else {
         enqueueSnackbar('Something went wrong.', { variant: 'error' });
