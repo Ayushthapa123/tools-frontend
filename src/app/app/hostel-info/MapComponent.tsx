@@ -58,8 +58,8 @@ export const MapComponent = (props: Iprops) => {
     <div className="w-full">
       {clickedLatLng && (
         <div className="mt-4">
-          <p>Latitude: {clickedLatLng.lat}</p>
-          <p>Longitude: {clickedLatLng.lng}</p>
+          <p className='text-semibold'>Latitude: <span className='text-gray-600'>{clickedLatLng.lat}</span></p>
+          <p className='text-semibold'>Longitude: <span className='text-gray-600'>{clickedLatLng.lng}</span></p>
         </div>
       )}
       <Autocomplete

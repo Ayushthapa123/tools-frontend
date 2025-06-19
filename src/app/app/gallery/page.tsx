@@ -58,15 +58,14 @@ export default function Gallery() {
     return res.getGalleryByHostelId;
   };
 
-  const { data: wallpaperDat } = useQuery({
+  const { data: wallpaperData } = useQuery({
     queryKey: ['getGalleryByHostelId'],
     queryFn: fetchWallpapers,
     enabled: !!hostelData?.data?.id,
   });
-  const wallpaperData = wallpaperDat?.data?.filter(img => img?.url);
-  // remove this line after removing example.com from db
+  console.log("wd",wallpaperData)
 
-  const mainWallpaper = wallpaperData?.filter(img => img?.isSelected)[0] || wallpaperData?.[0];
+  const mainWallpaper = wallpaperData?.data?.filter(img => img?.isSelected)[0] || wallpaperData?.data?.[0];
 
   // Delete wallpaper mutation
   const mutateDeleteGallery = useGraphqlClientRequest<
@@ -134,12 +133,12 @@ export default function Gallery() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-4">
-      {/* <h1 className="mb-8 text-3xl font-bold text-primary">Gallery</h1> */}
+    <div className="container mx-auto px-4 pb-4">
+      <h1 className='text-2xl font-semibold mb-2'>Wallpaper Gallery</h1>
 
       {/* Main Image Section */}
-      <div className="mb-6">
         {mainWallpaper ? (
+       <div className="mb-6">
           <div className="relative h-[300px] w-full overflow-hidden rounded-2xl bg-gray-200 lg:h-[500px]">
             <div className="relative h-full w-full">
               <Image
@@ -151,16 +150,16 @@ export default function Gallery() {
               />
             </div>
           </div>
+      </div>
         ) : (
           <div>
-            <LoadingSpinner />
+            {isLoading && <LoadingSpinner />}
           </div>
         )}
-      </div>
 
       {/* Thumbnail Images Section */}
-      <div className="grid grid-cols-4 md:grid-cols-6 gap-3">
-        {wallpaperData?.map((img, index) => (
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+        {wallpaperData?.data?.map((img, index) => (
           <div
             key={img?.id}
             className={`relative h-24 w-full cursor-pointer overflow-hidden rounded-lg bg-gray-200 transition-all duration-200 hover:opacity-90
@@ -185,8 +184,8 @@ export default function Gallery() {
         ))}
       </div>
 
-      {Number(wallpaperData?.length) < 6 && (
-        <div className="card card-body card-bordered my-4 bg-white ">
+      {Number(wallpaperData?.data?.length) < 6 && (
+        <div className="card card-body card-bordered bg-white pt-2 mt-4">
           <WallpaperGallery
             hostelId={Number(hostelData?.data?.id)}
             galleryType="ROOM"

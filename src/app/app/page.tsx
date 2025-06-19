@@ -34,7 +34,7 @@ export default function Home() {
     <div className="grid w-full gap-4">
       <div className="card relative flex w-full flex-col border bg-base-100 p-4 text-base-content shadow lg:flex-row">
         <div className="w-[70%] flex-grow">
-          <h3 className="text-lg font-semibold">
+          <h3 className="text-lg  font-semibold mt-2">
             Welcome Back! <span className="font-bold text-secondary">{user.userName}</span>
           </h3>
           <p>

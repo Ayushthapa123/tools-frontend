@@ -10,7 +10,7 @@ import RoomIcon from '../../components/icons/Room';
 import LogoutIcon from '../../components/icons/LogOut';
 import { MdOutlineDirections } from 'react-icons/md';
 import { useState } from 'react';
-import { IoIosArrowUp } from 'react-icons/io';
+import { IoIosArrowUp, IoMdPhotos } from 'react-icons/io';
 import IconButton from '../../components/IconButton';
 import RulesIcon from '../../components/icons/Rules';
 import { useUserStore } from 'src/store/userStore';
@@ -21,13 +21,14 @@ import {
   UserType,
 } from 'src/gql/graphql';
 import { RiToolsFill } from 'react-icons/ri';
-import { FaHotel, FaRegLightbulb } from 'react-icons/fa';
+import { FaHotel, FaLightbulb, FaRegLightbulb } from 'react-icons/fa';
 import { useMutation } from '@tanstack/react-query';
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import { GrGallery, GrUserSettings } from 'react-icons/gr';
 import SettingsIcon from 'src/components/icons/Settings';
 import MenuItem from './MenuItem';
 import { BsPeople } from 'react-icons/bs';
+import { IoPeopleSharp } from 'react-icons/io5';
 interface MenuItemType {
   icon: JSX.Element;
   text: string;
@@ -95,7 +96,7 @@ const Sidebar = () => {
       show: user.userType === UserType.HostelOwner,
     },
     {
-      icon: <GrGallery />,
+      icon: <IoMdPhotos />,
       text: 'Gallery',
       href: '/app/gallery',
       children: false,
@@ -109,7 +110,7 @@ const Sidebar = () => {
       show: user.userType === UserType.HostelOwner,
     },
     {
-      icon: <BsPeople />,
+      icon: <IoPeopleSharp />,
       text: ' Students',
       href: '/app/hostel-guests',
       children: false,
@@ -122,7 +123,7 @@ const Sidebar = () => {
       show: user.userType === UserType.HostelOwner,
     },
     {
-      icon: <FaRegLightbulb />,
+      icon: <FaLightbulb />,
       text: 'Amenities',
       href: '/app/amenities',
       show: user.userType === UserType.HostelOwner,
@@ -196,6 +197,7 @@ const Sidebar = () => {
     { icon: <SettingsIcon />, text: 'Settings', href: '/app/settings' },
     { icon: <LogoutIcon />, text: 'Log Out', href: '/', handleFunc: logOut },
   ];
+  
 
   return (
     <div className="relative z-[99909] flex h-full w-[18rem] flex-col border-r bg-base-100 px-[1rem] shadow-lg">
