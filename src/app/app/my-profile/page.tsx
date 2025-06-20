@@ -36,9 +36,9 @@ function PageContent() {
   const tabs = [...mobileTabs];
 
   return (
-    <div className=" min-h-[90vh] w-full bg-white p-3 md:p-10">
+    <div className=" min-h-[90vh] w-full bg-white p-3 md:p-10 md:pt-4">
       <div className=" mb-5">
-        <h2 className=" text-xl font-semibold text-primary">My Profile Details</h2>
+        <h1 className=" text-xl font-semibold text-primary">My Profile Details</h1>
         {/* <p className=' text-gray-500 '>View your profile details</p> */}
       </div>
 

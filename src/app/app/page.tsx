@@ -34,7 +34,7 @@ export default function Home() {
     <div className="grid w-full gap-4">
       <div className="card relative flex w-full flex-col border bg-base-100 p-4 text-base-content shadow lg:flex-row">
         <div className="w-[70%] flex-grow">
-          <h3 className="text-lg  font-semibold mt-2">
+          <h3 className="text-2xl  font-semibold mt-2">
             Welcome Back! <span className="font-bold text-secondary">{user.userName}</span>
           </h3>
           <p>
@@ -46,7 +46,7 @@ export default function Home() {
           <Link href={`https://hostelpilot.com/hostel/${data?.data?.slug}`}>
             <Button
               label="See Digital Profile"
-              className="rounded-lg bg-secondary"
+              className="rounded-lg bg-primary"
               variant="primary"
             />
           </Link>
@@ -54,7 +54,7 @@ export default function Home() {
       </div>
 
       <div className="card w-full border bg-base-100 p-4 text-base-content shadow">
-        <h3 className="text-lg font-semibold">Hostel Profiles</h3>
+        <h1 className="!text-xl font-semibold">Hostel Profiles</h1>
         {isLoading ? <div>Loading...</div> : <HostelProfiles hasOnboardingComplete={data?.data?.hasOnboardingComplete || false} />}
       </div>
      

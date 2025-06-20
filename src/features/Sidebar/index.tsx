@@ -21,7 +21,7 @@ import {
   UserType,
 } from 'src/gql/graphql';
 import { RiToolsFill } from 'react-icons/ri';
-import { FaHotel, FaLightbulb, FaRegLightbulb } from 'react-icons/fa';
+import { FaHotel, FaLightbulb, FaRegLightbulb, FaTools } from 'react-icons/fa';
 import { useMutation } from '@tanstack/react-query';
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import { GrGallery, GrUserSettings } from 'react-icons/gr';
@@ -129,7 +129,7 @@ const Sidebar = () => {
       show: user.userType === UserType.HostelOwner,
     },
     {
-      icon: <RiToolsFill />,
+      icon: <FaTools />,
       text: 'Services',
       href: '/app/services',
       show: user.userType === UserType.HostelOwner,
