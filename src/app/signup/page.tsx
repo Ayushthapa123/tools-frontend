@@ -144,7 +144,7 @@ function SignUp() {
     if (signupUrl) window.location = signupUrl;
   };
 
-  const signUpfeatures = [
+  const signUpFeatures = [
     {
       title: 'Manage Guests',
       icon: '👥',
@@ -186,7 +186,7 @@ function SignUp() {
               </div>
               <div className='grid grid-cols-1 md:grid-cols-2 md:w-[70%] md:mx-auto gap-0 mt-2 text-sm'>
                 {
-                  signUpfeatures.map((feature) => (
+                  signUpFeatures.map((feature) => (
                     <div key={feature.title} className='p-2 text-base text-gray-600 font-normal rounded-lg text-left break-words'>
                       <span className=''>{feature.icon}</span> {feature.title}
                     </div>

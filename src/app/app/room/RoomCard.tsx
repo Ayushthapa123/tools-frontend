@@ -5,66 +5,111 @@ import Image from 'next/image';
 import { Badge } from 'src/components/Badge';
 import { FiEdit } from 'react-icons/fi';
 import { RoomData } from 'src/gql/graphql';
+import { MdMeetingRoom } from 'react-icons/md';
 
 
 
-export const RoomCard = ({room, setShowDeleteModal, setDeletedRoomId}: {room: RoomData | undefined | null, setShowDeleteModal: (state: boolean) => void, setDeletedRoomId: (val: number | string | null) => void}) => {
- 
+export const RoomCard = ({ room, setShowDeleteModal, setDeletedRoomId }: { room: RoomData | undefined | null, setShowDeleteModal: (state: boolean) => void, setDeletedRoomId: (val: number | string | null) => void }) => {
+
 
   const onClickDelete = () => {
     setDeletedRoomId(room?.id ?? null);
     setShowDeleteModal(true);
   };
 
-  // const getStatusColor = (status: string) => {
-  //   switch (status.toLowerCase()) {
-  //     case 'available':
-  //       return 'bg-green-100 text-green-800';
-  //     case 'occupied':
-  //       return 'bg-red-100 text-red-800';
-  //     case 'maintenance':
-  //       return 'bg-yellow-100 text-yellow-800';
-  //     default:
-  //       return 'bg-gray-100 text-gray-800';
-  //   }
-  // };
+  const getStatusColor = (status: string) => {
+    switch (status.toLowerCase()) {
+      case 'available':
+        return '!bg-green';
+      case 'occupied':
+        return '!bg-red';
+      case 'maintenance':
+        return '!bg-yellow';
+      default:
+        return '!bg-gray-100 !text-gray-800';
+    }
+  };
+  console.log("gg",getStatusColor(room?.status ?? ''))
+
+  const roomSeater = [
+    {
+      label: "One Seater",
+      value: "ONE_BED"
+    },
+    {
+      label: "Two Seater",
+      value: "TWO_BED"
+    },
+    {
+      label: "Three Seater",
+      value: "THREE_BED"
+    },
+    {
+      label: "Four Seater",
+      value: "FOUR_BED"
+    },
+    {
+      label: "Five Seater",
+      value: "FIVE_BED"
+    },
+    {
+      label: "Six Seater",
+      value: "SIX_BED"
+    },
+    {
+      label: "Seven Seater",
+      value: "SEVEN_BED"
+    },
+    {
+      label: "Eight Seater",
+      value: "EIGHT_BED"
+    },
+  ]
+  const roomSeaterType = roomSeater.filter(seater => seater.value === room?.capacity)
 
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-lg  transition-all duration-300 hover:shadow-xl">
+    <div className="group relative overflow-hidden rounded-md border border-gray-100 bg-white shadow-lg  transition-all duration-300 hover:shadow-xl lg:!min-h-48">
       {/* Image Section */}
       <div className="relative h-48 w-full">
         <Image
-          src={room?.image?.[0]?.url || '/placeholder-room.jpg'}
+          src={room?.image?.[ 0 ]?.url || '/placeholder-room.jpg'}
           alt={room?.caption ?? ''}
           fill
-          className="rounded-t-2xl object-cover"
+          className="rounded-t-md object-cover"
           priority
         />
         <div className="absolute left-2 top-1 z-10">
-          <Badge className=" px-3 py-1 text-xs uppercase tracking-wide text-white">{room?.status ?? ''}</Badge>
+          <Badge className={` px-3 py-1 !text-xs uppercase tracking-wide font-bold text-white ${getStatusColor(room?.status ?? '')} !rounded-md `}>{room?.status ?? ''}</Badge>
         </div>
       </div>
 
       {/* Content Section */}
-      <div className="flex min-h-[80px] flex-col gap-3 p-4">
-        <div className="">
-          <h3 className="mb-2 truncate text-lg font-bold text-gray-900" title={room?.caption ?? ''}>
-            {room?.caption ?? ''}
-          </h3>
-          <div className="flex flex-col items-start justify-start gap-2 lg:flex-row lg:items-center lg:justify-between">
-            <p className="m-0 text-sm text-gray-500">
-              <span className="font-medium">Room Number:</span> {room?.roomNumber ?? ''}
-            </p>
+      <div className="flex min-h-[130px] gap-3 py-4 px-2">
+        <div className='w-full flex flex-col justify-between'>
+          <div className="flex flex-col items-start justify-start gap-0 lg:gap-2 lg:flex-row lg:items-start lg:justify-between pb-1 ">
+            <h3 className="mb-0 text-lg font-bold text-gray-900" title={room?.caption ?? ''}>
+              {room?.caption ?? ""}
+            </h3>
             <div>
-            <p className="m-0 text-sm font-extrabold text-primary">
-              {room?.price?.currency} {room?.price?.baseAmountPerMonth} /month
-            </p>
-            <p className="m-0 text-sm font-extrabold text-primary">
-               {room?.price?.currency} {room?.price?.baseAmountPerDay} /day
-            </p>
+              <p className="m-0 text-base text-nowrap bg-slate-200 rounded-md p-1 px-3 font-extrabold text-primary">{roomSeaterType[0]?.label}</p>
             </div>
           </div>
+          <div>
+          <p className='text-sm font-semibold my-0 text-gray-500 pt-1 border-t border-gray-200'>
+              Room No. 
+              <span className="font-bold text-gray-600"> {room?.roomNumber ?? ''}</span>
+            </p>
+           
+            <div className='w-full flex items-center justify-between '>
+              <p className="m-0 text-sm font-extrabold text-gray-400">
+                {room?.price?.currency} <span className='text-primary text-xl'>{room?.price?.baseAmountPerMonth}</span> /month
+              </p>
+              <p className="m-0 text-sm font-extrabold text-gray-400">
+                {room?.price?.currency} <span className='text-primary text-xl'>{room?.price?.baseAmountPerDay}</span> /day
+              </p>
+            </div>
         </div>
+          </div>
         {/* Action Buttons */}
         <div className="absolute right-3 top-2 z-20 flex gap-2">
           <Link href={`/app/room/${room?.id}`} passHref legacyBehavior>

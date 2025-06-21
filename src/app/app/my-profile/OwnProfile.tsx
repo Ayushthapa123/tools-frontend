@@ -31,7 +31,7 @@ export const OwnProfile = (props: { userType: string }) => {
   const { user } = useUserStore();
   const router = useRouter();
   const queryClient = useQueryClient();
-  const [loading, setLoading] = useState(false);
+  const [ loading, setLoading ] = useState(false);
   const mutateLogOutRequest = useGraphqlClientRequest<LogOutMutation, LogOutMutationVariables>(
     LogOut.loc?.source.body!,
   );
@@ -40,8 +40,8 @@ export const OwnProfile = (props: { userType: string }) => {
     UpdateUser.loc?.source.body!,
   );
   const { mutateAsync: updateUser } = useMutation({ mutationFn: mutateUpdateUser });
-  const [openPersonalModal, setOpenPersonalModal] = useState(false);
-  const [openProfilePictureModal, setOpenProfilePictureModal] = useState(false);
+  const [ openPersonalModal, setOpenPersonalModal ] = useState(false);
+  const [ openProfilePictureModal, setOpenProfilePictureModal ] = useState(false);
 
   // Fetch user profile by userId
   const queryUser = useGraphqlClientRequest<GetUserByIdQuery, GetUserByIdQueryVariables>(
@@ -52,7 +52,7 @@ export const OwnProfile = (props: { userType: string }) => {
     return res.getUserById;
   };
   const { data: userData } = useQuery({
-    queryKey: ['getUserById'],
+    queryKey: [ 'getUserById' ],
     queryFn: fetchUser,
     enabled: !!user.userId && user.userId !== null,
   });
@@ -99,7 +99,7 @@ export const OwnProfile = (props: { userType: string }) => {
         dateOfBirth: userData.data.dateOfBirth || '',
       });
     }
-  }, [userData, reset, openPersonalModal]);
+  }, [ userData, reset, openPersonalModal ]);
 
   const genderOptions = [
     { label: 'Boys', value: Gender.Boys },
@@ -117,7 +117,7 @@ export const OwnProfile = (props: { userType: string }) => {
       });
       if (res?.updateUser?.data?.id) {
         enqueueSnackbar('Profile updated successfully!', { variant: 'success' });
-        queryClient.invalidateQueries({ queryKey: ['getUserById'] });
+        queryClient.invalidateQueries({ queryKey: [ 'getUserById' ] });
       } else {
         enqueueSnackbar('Something went wrong!', { variant: 'error' });
       }
@@ -136,23 +136,23 @@ export const OwnProfile = (props: { userType: string }) => {
     });
   };
 
-  const [imageUrl, setImageUrl] = useState(userData?.data?.profilePicture || '');
+  const [ imageUrl, setImageUrl ] = useState(userData?.data?.profilePicture || '');
   const onSubmitProfilePicture = async (data: any) => {
     setLoading(true);
-    const response = await uploadImage(data.profilePicture[0]);
+    const response = await uploadImage(data.profilePicture[ 0 ]);
     if (!response) {
       enqueueSnackbar('Something went wrong during upload!', { variant: 'error' });
       setLoading(false);
       return;
     }
 
-      setImageUrl(response);
+    setImageUrl(response);
     const imageUploaded = await updateUser({
       input: {
         id: Number(user.userId),
         profilePicture: response,
       },
-    }); 
+    });
     if (imageUploaded?.updateUser?.data?.id) {
       enqueueSnackbar('Profile picture updated successfully!', { variant: 'success' });
       setLoading(false);
@@ -163,48 +163,78 @@ export const OwnProfile = (props: { userType: string }) => {
       setOpenProfilePictureModal(false);
     }
   };
+  const personalDetails = [
+    { label: "Name", value: userData?.data?.fullName },
+    { label: "Email", value: userData?.data?.email },
+    { label: "City", value: userData?.data?.city ?? "N/A" },
+    { label: "Phone Number", value: userData?.data?.phoneNumber ?? "N/A" },
+    { label: "Alternative Phone Number", value: userData?.data?.altPhoneNumber ?? "N/A" },
+    { label: "Gender", value: userData?.data?.gender ?? "N/A" },
+    { label: "Date of Birth", value: userData?.data?.dateOfBirth ?? "N/A" },
+  ];
+
+  const verificationStatus = [
+    { label: "Verified User", show: userData?.data?.isVerified, className: "text-white bg-green" },
+    { label: "Not Verified User", show: !userData?.data?.isVerified, className: "text-white bg-red" },
+  ];
 
   return (
     <div>
-      <div className=" mt-[10px] min-h-[calc(100vh-400px)] w-full">
+      <div className=" min-h-[calc(100vh-400px)] w-full bg-base-100 p-4 rounded-box">
         <div className=" mb-4 flex flex-col gap-5 md:flex-row">
-          <div className="flex items-center justify-center">
-            <div className="group avatar placeholder relative h-[80px] w-[80px] transition-all duration-300 ease-in-out hover:cursor-pointer lg:h-[130px] lg:w-[130px]">
+          <div className="flex w-[100%] md:w-[50%] flex-col gap-2 items-center justify-between">
+            <div className="group avatar placeholder flex justify-center items-center md:flex-none relative h-[100px] w-[100px] md:w-[250px] md:h-[250px] transition-all duration-300 ease-in-out hover:cursor-pointer lg:h-[310px] lg:w-[310px]">
               {userData?.data?.profilePicture || imageUrl ? (
                 <Image
-                  className=" rounded-full border border-black"
+                  className=" rounded-full cursor-auto border border-black"
                   src={userData?.data?.profilePicture || imageUrl || ''}
                   alt="user avatar"
                   fill
                 />
               ) : (
-                <div className="h-full w-full rounded-full bg-neutral text-neutral-content">
+                <div className="h-full w-full cursor-auto rounded-full bg-neutral text-neutral-content">
                   <span className="text-[50px]">{userData?.data?.fullName?.charAt(0)}</span>
                 </div>
               )}
               <button
-                className={`absolute bottom-1 right-0 hidden rounded-full p-1 text-[21px] group-hover:block ${userData?.data?.profilePicture || imageUrl ? 'text-white' : 'text-primary'} lg:bottom-[5px] lg:right-[14px]`}
+                className={`absolute bottom-1 right-0  rounded-full p-1 text-[21px] ${userData?.data?.profilePicture || imageUrl ? 'text-black' : 'text-primary'} lg:bottom-[5px] lg:right-[24px]`}
                 onClick={() => setOpenProfilePictureModal(true)}>
                 <FaCamera />
               </button>
             </div>
           </div>
           <div className="flex-grow ">
-            <div className="relative top-[10px] lg:top-[30px]">
-              <div className=" relative flex gap-3 w-full ">
-                <h2 className=" text-[25px] font-bold ">
-                  {userData?.data?.fullName}
-                  <span className="text-xs text-secondary md:text-base"> ({user.userType})</span>
-                </h2>{' '}
-                <div className=" relative ">
-                  <div className=" relative flex gap-5 text-[21px] text-primary  lg:text-[30px]">
-                    <div className=" cursor-pointer" onClick={() => setOpenPersonalModal(true)}>
-                      <FaEdit />
-                    </div>
-                  </div>
+            <div className='flex flex-col sm:flex-col-reverse gap-2'>
+              <div className='flex flex-col sm:flex-row justify-between items-center mt-3 gap-2'>
+                <div className='flex  gap-2'>
+                <div className='flex  justify-center items-center'>
+                  {
+                    verificationStatus.map((status, index) => (
+                      <div key={index} className={`rounded-md p-1 px-3  ${status.show ? "block" : "hidden"} ${status.className}`}>
+                        <span className='text-white'>{status.label}</span>
+                      </div>
+                    ))
+                  }
+                </div>
+                <div className='flex gap-2 items-center p-1 px-3 rounded-md bg-primary text-white'>
+                  <span>Hostel Owner</span>
+                </div>
+                </div>
+                <div className='flex justify-center w-full sm:w-fit gap-2 items-center p-1 px-3 rounded-md bg-slate-50 cursor-pointer' onClick={() => setOpenPersonalModal(true)}>
+                  <FaEdit />
+                  <span>Edit Profile</span>
                 </div>
               </div>
-              <h2 className="  text-[20px] font-medium text-secondary">{userData?.data?.email}</h2>
+              <div>
+              {
+                personalDetails.map((detail, index) => (
+                  <div key={index} className='flex flex-col sm:flex-row justify-between border-b border-gray-300 p-2'>
+                    <span className='text-gray-700 font-medium'>{detail.label}</span>
+                    <span className=" text-gray-700 text-base font-bold break-words">{detail.value}</span>
+                  </div>
+                ))
+                }
+                </div>
             </div>
           </div>
         </div>

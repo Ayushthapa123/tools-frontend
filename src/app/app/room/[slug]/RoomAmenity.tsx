@@ -229,7 +229,7 @@ export default function RoomAmenityPage({
             {amenityOptions?.roomAmenityOptions?.data?.length || 0} amenities selected
           </div>
 
-          <div className="mt-4 flex w-full gap-3 justify-between ">
+          <div className="mt-4 flex w-full flex-col md:flex-row gap-3 justify-between ">
             <div>
               <Button
                 label="Back"

@@ -149,7 +149,7 @@ const SettingsPage: React.FC = () => {
       <h2>Settings</h2>
       <div className="card card-body card-bordered bg-white">
         <h2>Basic Settings</h2>
-        <hr className="divider" />
+        <hr />
         <div className="flex w-full">
           <div className="flex flex-grow flex-col justify-center">
             <h5>Select Currency</h5>
@@ -200,7 +200,7 @@ const SettingsPage: React.FC = () => {
 
       <div className="card card-body card-bordered bg-white">
         <h2>Functionality Settings</h2>
-        <hr className="divider" />
+        <hr />
         <div className="flex w-full">
           <div className="flex flex-grow flex-col justify-center">
             <h5>Allow Booking</h5>
