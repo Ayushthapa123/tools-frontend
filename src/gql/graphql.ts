@@ -1573,7 +1573,12 @@ export type Token = {
 };
 
 export type UpdateAddressInput = {
-  id: Scalars['Float']['input'];
+  city?: InputMaybe<Scalars['String']['input']>;
+  country?: InputMaybe<Scalars['String']['input']>;
+  latitude?: InputMaybe<Scalars['Float']['input']>;
+  longitude?: InputMaybe<Scalars['Float']['input']>;
+  street?: InputMaybe<Scalars['String']['input']>;
+  subCity?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UpdateAmenityInput = {

@@ -9,6 +9,7 @@ import TextInput from 'src/features/react-hook-form/TextField';
 import { countries } from '../data/countries';
 
 import {
+  AddressData,
   CreateAddress,
   CreateAddressMutation,
   CreateAddressMutationVariables,
@@ -48,13 +49,16 @@ export const AddressDetails = (props: Iprops) => {
       {!isLoading ? (
         <HostelInfoForm
           hostelId={hostelId}
-          addressId={hostelData?.data?.id}
-          country={hostelData?.data?.country}
-          city={hostelData?.data?.city}
-          subCity={hostelData?.data?.subCity}
-          street={hostelData?.data?.street}
-          lat={hostelData?.data?.latitude}
-          lng={hostelData?.data?.longitude}
+          // id={Number(hostelData?.data?.id)}
+          country={hostelData?.data?.country ?? ''}
+          city={hostelData?.data?.city ?? ''}
+          subCity={hostelData?.data?.subCity ?? ''}
+          street={hostelData?.data?.street ?? ''}
+          latitude={hostelData?.data?.latitude ?? null}
+          longitude={hostelData?.data?.longitude ?? null}
+          id={hostelData?.data?.id ?? ''} 
+          createdAt={ ''}
+          updatedAt={ ''}
         />
       ) : (
         <div className=" h-[50vh] w-full">
@@ -65,26 +69,15 @@ export const AddressDetails = (props: Iprops) => {
   );
 };
 
-interface IProps {
-  hostelId: number;
-  addressId?: string | null;
 
-  country?: string | null;
 
-  city?: string | null;
-  subCity?: string | null;
-  street?: string | null;
-  lat?: number | null;
-  lng?: number | null;
-}
-
-const HostelInfoForm: FC<IProps> = props => {
-  const { hostelId, addressId, city, country, street, subCity, lat, lng } = props;
+const HostelInfoForm: FC<AddressData> = props => {
+  const { hostelId, id, city, country, street, subCity, latitude, longitude } = props;
 
   const [clickedLatLng, setClickedLatLng] = useState<{
     lat: number | null;
     lng: number | null;
-  } | null>({ lat: lat ?? null, lng: lng ?? null });
+  } | null>({ lat: latitude ?? null, lng: longitude ?? null });
 
   const handleClickLatLng = (lat: number | null, lng: number | null) => {
     setClickedLatLng({ lat, lng });
@@ -96,15 +89,15 @@ const HostelInfoForm: FC<IProps> = props => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<IProps>({
+  } = useForm<AddressData>({
     defaultValues: {
       country,
 
       city,
       subCity,
       street,
-      lat,
-      lng,
+      latitude,
+      longitude,
     },
   });
 
@@ -126,19 +119,18 @@ const HostelInfoForm: FC<IProps> = props => {
     mutationFn: mutateUpdateHostelAddress,
   });
 
-  const handleSubmitForm = (data: IProps) => {
+  const handleSubmitForm = (data: AddressData) => {
     const country = data.country;
     const city = data.city;
     const subCity = data.subCity;
 
     const street = data.street;
 
-    if (addressId) {
+    if (id) {
       //
       updateHostelAddress({
-        addressId: Number(addressId),
+        addressId: Number(id),
         input: {
-          id: Number(addressId),
           ...(country && {
             country,
           }),
@@ -163,6 +155,7 @@ const HostelInfoForm: FC<IProps> = props => {
         if (res?.updateAddress?.data?.id) {
           enqueueSnackbar('Address updated.', { variant: 'success' });
         } else {
+         
           enqueueSnackbar('Something went wrong.', { variant: 'error' });
         }
       });
@@ -205,8 +198,8 @@ const HostelInfoForm: FC<IProps> = props => {
         <MapComponent
           clickedLatLng={clickedLatLng}
           setClickedLatLng={handleClickLatLng}
-          lat={lat}
-          lng={lng}
+          lat={latitude}
+          lng={longitude}
         />
       </div>
       <div className=" grid h-auto w-full gap-5 md:grid-cols-2 mt-5">
@@ -260,7 +253,7 @@ const HostelInfoForm: FC<IProps> = props => {
       <div className=" flex w-full justify-end">
         <div className=" mt-10 w-[200px]">
           <Button
-            label={`${addressId ? 'Update Address Info' : 'Create Address'}`}
+            label={`${id ? 'Update Address Info' : 'Create Address'}`}
             type="submit"
             loading={isCreating || isUpdating}
           />
