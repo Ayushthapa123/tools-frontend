@@ -171,7 +171,7 @@ function SignUp() {
           <div className="flex flex-col-reverse md:flex-row-reverse w-[90vw] md:w-[90vw] mx-auto items-center justify-center ">
             <div className="relative z-10 md:w-[50%] w-[100%] h-[100%] text-center text-2xl font-bold bg-[#d3e9ed] p-5 rounded-r-2xl">
               <div>
-                <h3 className='text-2xl lg:text-lg font-medium text-center'>Welcome to signup !</h3>
+                {/* <h3 className='text-2xl lg:text-lg font-medium text-center'>Welcome to signup !</h3> */}
                 <div className='flex items-center justify-center mt-4'>
                   <Image
                     src="/hero.png"
