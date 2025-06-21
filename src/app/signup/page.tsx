@@ -106,7 +106,7 @@ function SignUp() {
     }).then(res => {
       if (res?.signupUser?.id) {
         // localStorage.setItem('refreshToken', res.signupUser.token.refreshToken);
-        router.push('/app');
+        router.push('/app/hostel-info');
       } else {
         // @ts-ignore
         setError(res?.errors?.[ 0 ]?.message ?? 'Failed to signup!');

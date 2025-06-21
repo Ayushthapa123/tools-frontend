@@ -2,10 +2,8 @@
 
 import { Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { OwnProfile } from './OwnProfile';
 import { useUserStore } from 'src/store/userStore';
-import { OwnBookings } from './OwnBookings';
-import ChangePassword from './ChangePassword';
+
 import Button from 'src/components/Button';
 import { Tabs } from 'src/components/Tabs';
 export default function Page() {
@@ -29,16 +27,23 @@ function PageContent() {
   const [activeTab, setActiveTab] = useState(0);
 
   const mobileTabs = [
-    { label: 'Profile', id: ' 1', content: <OwnProfile userType={user.userType} /> },
+    { label: 'Facebook Advertisement', id: ' 1', content: <div>Coming Soon 
+      <p className=' text-gray-500 text-sm'>Please contact support: 9846793894</p>
+    </div> },
     // { name: 'Bookings', id: 2, visible: true },
-    { label: 'Change Password', id: '3', content: <ChangePassword userId={Number(user.userId)} /> },
+    { label: 'Instagram Advertisement', id: '3', content: <div>Coming Soon
+      <p className=' text-gray-500 text-sm'>Please contact support: 9846793894</p>
+    </div> },
+    { label: 'Google Advertisement', id: '4', content: <div>Coming Soon
+      <p className=' text-gray-500 text-sm'>Please contact support: 9846793894</p>
+    </div> },
   ];
   const tabs = [...mobileTabs];
 
   return (
-    <div className=" min-h-[90vh] w-full bg-white p-3 md:p-10 md:pt-4">
+    <div className=" min-h-[90vh] w-full bg-white p-3 md:p-10">
       <div className=" mb-5">
-        <h1 className=" text-xl font-semibold text-primary">My Profile Details</h1>
+        <h2 className=" text-xl font-semibold text-primary">Marketing Options</h2>
         {/* <p className=' text-gray-500 '>View your profile details</p> */}
       </div>
 

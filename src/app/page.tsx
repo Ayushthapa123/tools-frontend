@@ -13,8 +13,15 @@ export const metadata: Metadata = {
   authors: [{ name: 'Ayush Thapa' }],
   manifest: isHostelPilot ? '/manifest-hostelpilot.json' : '/manifest.json',
   openGraph: {
-    images: '/logo512.png',
+    images: [
+      {
+        url: '/logo512.png',
+        width: 512,
+        height: 512,
+      },
+    ],
     title: domainConfig.appSlogan,
+
   },
 };
 
