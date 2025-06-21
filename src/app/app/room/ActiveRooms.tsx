@@ -15,7 +15,7 @@ import { Modal } from 'src/components/Modal';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { enqueueSnackbar } from 'notistack';
 
-export const ActiveRooms = () => {
+export const ActiveRooms = ({ setActiveRoomCount }: { setActiveRoomCount: (count: number) => void }) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deletedRoomId, setDeletedRoomId] = useState<number | string | null>(null);
   const [deleteRoom, setDeleteRoom] = useState(false);
@@ -26,6 +26,7 @@ export const ActiveRooms = () => {
   //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
   const fetchData = async () => {
     const res = await querySignupUrl();
+    setActiveRoomCount(res.roomsByHostel.data?.length || 0);
     return res.roomsByHostel;
   };
 
@@ -33,6 +34,7 @@ export const ActiveRooms = () => {
     queryKey: ['getRooms'],
     queryFn: fetchData,
   });
+console.log("rooms", rooms)
 
   // deleted room
   const mutateCreateNearbyPlace = useGraphqlClientRequest<
@@ -67,7 +69,7 @@ export const ActiveRooms = () => {
       )}
       <div className="grid sm:grid-cols-2 gap-[1rem] px-2 md:grid-cols-3">
         {rooms?.data?.map(room => (
-          <div key={room.id} className="md:mb-4">
+          <div key={room.id} className="md:mb-4 lg:min-h-48">
             <RoomCard
              room={room}
               setShowDeleteModal={setShowDeleteModal}

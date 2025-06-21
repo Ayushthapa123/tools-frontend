@@ -28,12 +28,14 @@ export const WallpaperGallery = (props: Iprops) => {
   };
 
   return (
-    <div className=" relative z-10 flex min-h-[250px] w-full flex-col items-center justify-center gap-0 rounded-md ">
-      <span className="block text-xs text-gray-400 md:inline">
+    <div className=" relative z-10 flex min-h-[250px] w-full flex-col items-center justify-center gap-0 rounded-md">
+      <div className='flex flex-col items-start justify-start w-full'>
+      <span className="block text-xs text-info/80 md:inline pt-4">
         You can only upload upto 6 images.
       </span>
+      </div>
       <div className=" w-full">
-        <div className=" relative mt-10 h-[300px] md:w-[450px] w-full">
+        <div className=" relative mt-6 h-[300px] md:w-[450px] w-full">
           <WallpaperEditBox
             handleBack={handleBack}
             galleryType={galleryType}

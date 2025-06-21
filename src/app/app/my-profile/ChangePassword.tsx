@@ -97,17 +97,17 @@ export default function ChangePasswordPage({ userId }: { userId: number }) {
   };
 
   return (
-    <section className="flex w-full flex-col justify-center rounded-xl p-5 align-middle">
+    <section className="flex w-full flex-col  justify-center rounded-box p-5 align-middle">
       <div className="container mx-auto">
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
-            <div className="relative mx-auto max-w-[550px] rounded-lg border bg-white px-8 py-8">
+            <div className="relative mx-auto max-w-[550px] rounded-lg border px-8 py-4 bg-base-100">
               <h2 className="mb-6 text-2xl font-bold text-gray-800">Change Password</h2>
 
               {error && <p className="mb-4 text-error">{error}</p>}
               {success && <p className="text-green-600 mb-4">Password changed successfully!</p>}
 
-              <form className="bg-white text-left" onSubmit={handleSubmit(onSubmit)}>
+              <form className=" text-left" onSubmit={handleSubmit(onSubmit)}>
                 <div className="w-full space-y-4">
                   <div>
                     <TextInput

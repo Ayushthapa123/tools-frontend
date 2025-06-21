@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
-import { MdOutlineCancelPresentation } from 'react-icons/md';
+import { MdOutlineCancel } from 'react-icons/md';
 import LoadingSpinner from 'src/components/Loading';
 import { enqueueSnackbar } from 'notistack';
 import { useQueryClient } from '@tanstack/react-query';
@@ -10,13 +10,12 @@ interface Iprops {
   imageUrl: string | null;
 }
 
-const MAX_FILE_SIZE = 10;
 
 const ImageUploader = (props: Iprops) => {
   const { handleImageUrl, imageUrl } = props;
-  const [loading, setLoading] = useState(false);
+  const [ loading, setLoading ] = useState(false);
 
-  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [ isDragging, setIsDragging ] = useState<boolean>(false);
 
   const queryClient = useQueryClient();
 
@@ -41,7 +40,7 @@ const ImageUploader = (props: Iprops) => {
   };
 
   const handleFileChange = (event: any) => {
-    const file = event.target.files[0];
+    const file = event.target.files[ 0 ];
     if (file && validateFile(file)) {
       handleUpload(file);
     }
@@ -67,7 +66,7 @@ const ImageUploader = (props: Iprops) => {
         })
         .then(res => {
           setLoading(false);
-          queryClient.invalidateQueries({ queryKey: ['getHostelWallpaper'] });
+          queryClient.invalidateQueries({ queryKey: [ 'getHostelWallpaper' ] });
           handleImageUrl(res.data.imageUrl);
         });
     } catch (error) {
@@ -97,7 +96,7 @@ const ImageUploader = (props: Iprops) => {
 
     const files = Array.from(e.dataTransfer.files);
     if (files && files.length > 0) {
-      const file = files[0];
+      const file = files[ 0 ];
       if (validateFile(file)) {
         handleUpload(file);
       }
@@ -109,11 +108,10 @@ const ImageUploader = (props: Iprops) => {
   };
 
   return (
-    <div className="mx-auto mt-8 max-w-md">
+    <div className="mx-auto mt-4 max-w-md">
       <div
-        className={`relative flex h-[200px] w-full flex-col items-center justify-center rounded-lg border-[3px] border-dashed ${
-          isDragging ? 'border-blue-500' : 'border-gray-300'
-        }`}
+        className={`relative flex h-[200px] w-full flex-col items-center justify-center rounded-lg border-[3px] ${!imageUrl ? 'border-dashed' : 'border-none'} ${isDragging ? 'border-blue-500' : 'border-gray-300'
+          }`}
         onDragEnter={handleDragEnter}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
@@ -128,32 +126,34 @@ const ImageUploader = (props: Iprops) => {
         {imageUrl ? (
           <div className="relative h-full w-full ">
             <div
-              className=" absolute right-0 top-0 z-10 cursor-pointer text-[25px]"
+              className="group absolute right-1 p-1 top-1 z-10 cursor-pointer text-[25px]"
               onClick={() => removeImage()}
             >
-              <MdOutlineCancelPresentation />
+              <MdOutlineCancel className='text-red rounded-full group-hover:bg-gray-200' />
             </div>
 
             <Image src={imageUrl} alt="Uploaded" className="h-24 w-auto" fill />
           </div>
         ) : (
           <>
-            <p className="text-gray-600">Drag &amp; Drop your picture here</p>
-            <p className="mt-2 text-gray-400">or</p>
             <label
               htmlFor="fileInput"
-              className="hover:bg-blue-600 cursor-pointer  rounded border-dotted bg-gray-100 px-4 py-2 text-primary"
+              className="flex flex-col items-center justify-center h-48 w-full cursor-pointer "
             >
-              Click here to upload
               <input
                 id="fileInput"
                 type="file"
                 className="hidden"
                 onChange={handleFileChange}
-                accept=".jpg , .jpeg, .png"
+                accept=".jpg, .jpeg, .png"
               />
+              <p className="text-gray-600">Drag & Drop your picture here</p>
+              <p className="mt-2 text-gray-400">or</p>
+              <span className="mt-1 inline-block rounded bg-primary/10 px-4 py-2 text-primary">
+                Click anywhere to upload
+              </span>
             </label>
-            {loading && (
+            {loading && ( 
               <div className="h-10 w-10">
                 <LoadingSpinner color="primary" size="lg" />
               </div>
