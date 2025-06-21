@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TextInput from 'src/features/react-hook-form/TextField';
 import {
   Price,
@@ -43,7 +43,7 @@ export const SetPriceForm = ({
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors, isDirty },
     watch,
   } = useForm<CreatePriceInput>({
     defaultValues: {
@@ -59,6 +59,10 @@ export const SetPriceForm = ({
       roomId: roomId,
     },
   });
+  const [ isPriceFieldsDirty, setIsPriceFieldsDirty ] = useState(false);
+  useEffect(() => {
+    setIsPriceFieldsDirty(isDirty);
+  }, [ isDirty ]);
 
   const mutateCreatePrice = useGraphqlClientRequest<
     CreatePriceMutation,
@@ -95,8 +99,8 @@ export const SetPriceForm = ({
         });
         if (result?.createPrice?.data?.id) {
           enqueueSnackbar('Price created.', { variant: 'success' });
-          queryClient.invalidateQueries({ queryKey: ['getRoom'] });
-          // onNext();
+          queryClient.invalidateQueries({ queryKey: [ 'getRoom' ] });
+          onNext();
         } else {
           enqueueSnackbar('Something went wrong.', { variant: 'error' });
         }
@@ -118,8 +122,9 @@ export const SetPriceForm = ({
         }).then(res => {
           if (res?.updatePrice?.data?.id) {
             enqueueSnackbar('Price updated.', { variant: 'success' });
-            queryClient.invalidateQueries({ queryKey: ['getRoom'] });
+            queryClient.invalidateQueries({ queryKey: [ 'getRoom' ] });
             // onNext();
+            setIsPriceFieldsDirty(false);
           }
         });
       }
@@ -149,7 +154,7 @@ export const SetPriceForm = ({
                 options={currencyOptions}
                 control={control}
                 label="Currency"
-                defaultValue={currencyOptions[0]}
+                defaultValue={currencyOptions[ 0 ]}
                 required
                 isdisabled={true}
                 error={!!errors.currency}
@@ -217,16 +222,21 @@ export const SetPriceForm = ({
           </div>
           <div className="w-full flex-1 flex-grow justify-end"></div>
           <div className="flex gap-2">
-            <Button
-              label="Next"
-              onClick={onNext}
-              className="bg-blue-600 hover:bg-blue-700 mt-4 w-full rounded-md px-4 py-2 text-white "
-            />
-            <Button
-              type="submit"
-              className="bg-blue-600 hover:bg-blue-700 mt-4 w-full rounded-md px-4 py-2 text-white"
-              label={isEdit ? 'Update Price' : 'Create Price'}
-            />
+            {
+              !isPriceFieldsDirty ? (
+                <Button
+                  label="Next"
+                  onClick={onNext}
+                  className="bg-blue-600 hover:bg-blue-700 mt-4 w-full rounded-md px-4 py-2 text-white "
+                />
+              ) : (
+                <Button
+                  type="submit"
+                  className="bg-blue-600 hover:bg-blue-700 mt-4 w-full rounded-md px-4 py-2 text-white"
+                  label={isEdit ? 'Update Price' : 'Create Price'}
+                />
+              )
+            }
           </div>
         </div>
       </form>

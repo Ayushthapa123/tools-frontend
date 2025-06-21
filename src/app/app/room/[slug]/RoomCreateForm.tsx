@@ -2,7 +2,13 @@ import TextInput from 'src/features/react-hook-form/TextField';
 import { RoomStatus } from 'src/gql/graphql';
 import ReactSelect from 'src/features/react-hook-form/ReactSelect';
 import TextArea from 'src/features/react-hook-form/TextArea';
-export const RoomCreateForm = ({ control, errors }: { control: any; errors: any }) => {
+import { useFormState } from 'react-hook-form';
+import { useEffect } from 'react';
+export const RoomCreateForm = ({ control, errors, setIsStepOneDirty }: { control: any; errors: any; setIsStepOneDirty: (isDirty: boolean) => void }) => {
+  const { isDirty ,dirtyFields} = useFormState({ control });
+  useEffect(() => {
+    setIsStepOneDirty(isDirty);
+  }, [isDirty, dirtyFields]);
   const roomStatus = [
     { label: 'Available', value: RoomStatus.Available },
     { label: 'Idle', value: RoomStatus.Idle },
