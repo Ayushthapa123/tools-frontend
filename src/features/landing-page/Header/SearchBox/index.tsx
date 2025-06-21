@@ -29,6 +29,7 @@ export const SearchBox = () => {
   const [ country, setCountry ] = useState(params.get('country') ?? '');
   const [ query, setQuery ] = useState(params.get('query') ?? '');
   const [ searchText, setSearchText ] = useState<string | number | readonly string[] | undefined>();
+  const [ searchHostelNameText, setSearchHostelNameText ] = useState<string | number | readonly string[] | undefined>();
   const router = useRouter();
 
   const [ clickedLatLng, setClickedLatLng ] = useState<{
@@ -85,7 +86,7 @@ export const SearchBox = () => {
   const autocompleteRef2 = useRef<any>(null);
 
   const handlePlaceChanged = () => {
-    const place = autocompleteRef1.current.getPlace() || autocompleteRef2.current.getPlace();
+    const place = autocompleteRef1.current.getPlace();
     handleQuery(place?.name ?? '');
     if (place?.geometry && place?.geometry.location) {
       const lat = place.geometry.location.lat();
@@ -95,14 +96,37 @@ export const SearchBox = () => {
       setQuery(place?.name);
     }
   };
+
+  const handleHostelNameChanged = () => {
+    const place = autocompleteRef2.current.getPlace();
+    console.log("place", place);
+    handleQuery(place?.name ?? '');
+    if (place?.geometry && place?.geometry.location) {
+      const lat = place.geometry.location.lat();
+      const lng = place.geometry.location.lng();
+      setClickedLatLng({ lat, lng });
+      setSearchHostelNameText(place?.name);
+      setQuery(place?.name);
+    }
+  };
+
   const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if(searchHostelNameText){
+      setSearchHostelNameText('');
+    }
     const inputValue = e.target.value;
     const sanitizedValue = inputValue.replace(/[^a-zA-Z0-9 ,\-]/, '');
     setSearchText(sanitizedValue);
-    setQuery(sanitizedValue);
   };
-
-  const isValidSearch = (clickedLatLng?.lat || clickedLatLng?.lng) 
+  const handleHostelNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if(searchText){
+      setSearchText('');
+    }
+    const inputValue = e.target.value;
+    const sanitizedValue = inputValue.replace(/[^a-zA-Z0-9 ,\-]/, '');
+    setSearchHostelNameText(sanitizedValue);
+  };
+  const isValidSearch = (clickedLatLng?.lat || clickedLatLng?.lng) || query || searchText || searchHostelNameText;
 
   return (
     <div className="relative flex w-full flex-col items-center justify-center px-3 ">
@@ -135,7 +159,7 @@ export const SearchBox = () => {
               value={searchText}
               className="rounded-md w-full bg-gray-50  p-2 pl-0 placeholder:text-xs "
               onChange={handleLocationChange}
-              defaultValue={query}
+              // defaultValue={query}
               // autoComplete="on"
               // required
             />
@@ -151,15 +175,15 @@ export const SearchBox = () => {
             <Autocomplete
             onLoad={autocomplete => (autocompleteRef2.current = autocomplete)}
             className=" w-full"
-            onPlaceChanged={handlePlaceChanged}
+            onPlaceChanged={handleHostelNameChanged}
           >
             <input
               type="text"
               placeholder="Enter hostel's name"
-              value={searchText}
+              value={searchHostelNameText}
               className="rounded-md w-full bg-gray-50  p-2 pl-0 placeholder:text-xs"
-              onChange={handleLocationChange}
-              defaultValue={query}
+              onChange={handleHostelNameChange}
+              // defaultValue={query}
               // required
               />
                </Autocomplete>
@@ -197,7 +221,6 @@ export const SearchBox = () => {
         <button
           className={`flex gap-2 items-center justify-center rounded-md border border-transparent bg-primary px-3 py-2 text-base font-medium tracking-wide text-white transition duration-150 ease-in-out md:min-w-[100px] md:min-h-[40px] ${!isValidSearch ? "cursor-not-allowed" : ""}`}
           onClick={() => handleSearch()}
-        // disabled={!isValidSearch}
         >
           <span className="hidden text-xl sm:flex">
             <BiSearch />

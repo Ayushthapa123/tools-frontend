@@ -41,51 +41,40 @@ export const HostelCard = (props: Iprops) => {
   const editorRef = useRef(description ?? '');
 
   return (
-    <div className="group card-bordered mb-2 flex h-full w-full cursor-pointer flex-col gap-4 rounded-xl bg-base-100 pb-2 transition duration-200 ease-in-out hover:opacity-100">
-      <div className="relative h-[300px] w-full rounded-xl">
+    <div className="group card-bordered mb-2 flex h-full w-full cursor-pointer flex-col gap-4 rounded-xl bg-white pb-2 transition duration-200 ease-in-out hover:opacity-100 hover:shadow-lg">
+      <div className="relative h-[300px] w-full border-b-[1px] border-gray-300 rounded-xl">
         <div className="relative h-full w-full">
           <Image
             src={imgUrl ? imgUrl : '/default-image.png'}
             alt={name}
             fill
-            className="rounded-xl rounded-bl-none rounded-br-none object-cover group-hover:border-b-[1px] group-hover:border-primary/50"
+            className="rounded-xl rounded-b-none object-cover"
           />
-          {/* <button className="absolute right-2 top-2 rounded-full bg-white/80 p-2 transition hover:bg-red">
-            <BiHeart
-              className="h-5 w-5 text-gray-500 hover:text-white"
-              onClick={() => {
-                isModalOpen && <SignupModal onClose={() => setIsModalOpen(false)} />;
-              }}
-            />
-          </button> */}
         </div>
       </div>
 
       <div className="flex-grow overflow-y-auto px-4" style={{ maxHeight: '150px' }}>
         <div className="flex flex-wrap items-start justify-between gap-2">
           <div className='flex flex-col leading-3'>
-            <h3 className="m-0 ml-1 text-lg font-medium text-gray-800">{name}</h3>
-            <p className="text-capitalize mb-1 flex items-center gap-2 text-xs text-primary/70">
-              <GrLocation className="text-secondary w-4 h-4" />
-              <span className="text-sm text-gray-600">
+            <h3 className="m-0 ml-1 text-xl font-semibold text-gray-900">{name}</h3>
+            <p className="text-capitalize my-1 flex items-center gap-2 text-xs text-primary/70">
+              <GrLocation className="text-secondary w-5 h-5 font-semibold" />
+              <span className="text-base text-gray-600">
                 {subCity} {city}, {country}
               </span>
             </p>
           </div>
           <div>
             <div className='rounded-full p-2 hover:bg-gray-200'>
-              <FaRegHeart className='w-6 h-6 text-red/65' />
+              <FaRegHeart className='w-6 h-6 text-red/65 font-semibold' />
             </div>
             {/* <span className='text-sm text-secondary/80 font-semibold'>{currency} {amount}</span> */}
           </div>
         </div>
-
-
-
         <div className="">{/* <RichTextEditor editorRef={editorRef} readOnly={true} /> */}</div>
 
         <div className="mt-2 flex items-center justify-between gap-2">
-          <Button label={'View full details'} className="bg-primary/90 hover:bg-primary tracking-wide" />
+          <Button label={'View full details'} className="!bg-primary/90 hover:!bg-primary tracking-wide" />
           {/* <div>
             <FaArrowCircleRight className='text-4xl text-gray-400 w-fit group-hover:text-primary/90 transition duration-300 ease-in-out' />
           </div> */}
