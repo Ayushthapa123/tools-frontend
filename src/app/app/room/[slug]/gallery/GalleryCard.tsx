@@ -49,7 +49,7 @@ export const GalleryCard = (props: Iprops) => {
     });
   };
   return (
-    <div className=" relative h-[300px] w-[370px] lg:w-[333px] xl:w-[450px] ">
+    <div className=" relative h-[300px] w-[250px] lg:w-[333px] xl:w-[450px] ">
       <div>
         {!showEditBox ? (
           <div>

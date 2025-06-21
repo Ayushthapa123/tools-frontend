@@ -26,7 +26,7 @@ export const UserProfile = () => {
     <>
       <Link href={'/app/my-profile'}>
         <div
-          className="  tooltip tooltip-bottom box-border flex h-auto w-full cursor-pointer   hover:tooltip-open"
+          className="tooltip tooltip-left before:px-2 box-border flex h-auto w-full cursor-pointer hover:tooltip-open"
           data-tip={user.userEmail}
         >
           <div className=" relative max-h-11 min-h-11 min-w-11 max-w-11 ">
