@@ -144,6 +144,18 @@ function SignUp() {
     if (signupUrl) window.location = signupUrl;
   };
 
+  const signupFeatures = [
+    {
+      title: 'Manage Bookings',
+    }, {
+      title: 'Track Customers',
+    }, {
+      title: 'Digital Marketing',
+    }, {
+      title: 'Analytics Dashboard',
+    }
+  ]
+
   return (
     <section className="flex min-h-[100vh]  flex-col justify-center bg-gray-100 md:p-5 p-2 align-middle">
       <div className="container mx-auto ">
@@ -166,18 +178,13 @@ function SignUp() {
                 </p>
               </div>
               <div className='grid grid-cols-1 md:grid-cols-2 ml-8 gap-0 mt-2 text-sm'>
-                    <div className='p-3 bg-gray-50  text-base text-gray-700 rounded-lg text-left'>
-                      <span className='text-primary  font-semibold'>✓</span> Manage Bookings
+                {
+                  signupFeatures.map((feature, index) => (
+                    <div key={index} className='p-3 bg-gray-50  text-base text-gray-700 rounded-lg text-left'>
+                      <span className='text-primary  font-semibold'>✓</span> {feature.title}
                     </div>
-                    <div className='p-3 bg-gray-50  text-base text-gray-700 rounded-lg text-left'>
-                      <span className='text-primary  font-semibold'>✓</span> Track Customers
-                    </div>
-                    <div className='p-3 bg-gray-50  text-base text-gray-700 rounded-lg text-left'>
-                      <span className='text-primary  font-semibold'>✓</span> Digital Marketing
-                    </div>
-                    <div className='p-3 bg-gray-50  text-base text-gray-700 rounded-lg text-left'>
-                      <span className='text-primary  font-semibold'>✓</span> Analytics Dashboard
-                    </div>
+                  ))
+                }
                   </div>
               <div className='mt-8 leading-tight'>
                 <p className='text-gray-500 lg:text-base text-sm'>

@@ -338,7 +338,7 @@ export const GuestCreateForm = ({ guest, isEdit = false, withToken = false }: Gu
             onChange={(e) => setAllowToFillForm(e.target.checked)}
             className="form-checkbox h-4 w-4 text-primary"
           />
-          <span>Allow to complete form</span>
+          <span>Ask to fill registration form</span>
         </label>
       </div>}
       {!withToken && <div className="mt-4 mb-4">

@@ -61,12 +61,12 @@ export const WallpaperEditBox = (props: IcoverEdit) => {
       });
 
       if (response?.createGallery?.data?.id) {
-        await queryClient.invalidateQueries({ queryKey: [String(invalidateKey)] });
+        await queryClient.invalidateQueries({ queryKey: [(invalidateKey)] });
         await queryClient.invalidateQueries({ queryKey: ['getGalleryByHostelId'] });
-        enqueueSnackbar('Image Created Successfully', { variant: 'success' });
+        enqueueSnackbar('Image Added Successfully', { variant: 'success' });
         setImageUrl(null);
-        handleBack?.();
         router.push(window.location.pathname);
+        handleBack?.();
       } else {
         throw new Error('Failed to get valid response ID');
       }
@@ -77,7 +77,7 @@ export const WallpaperEditBox = (props: IcoverEdit) => {
 
   return (
     <div className="relative h-full w-full items-center rounded-xl border">
-      <div className="absolute left-3 top-3 cursor-pointer text-2xl">
+      {/* <div className="absolute left-3 top-3 cursor-pointer text-2xl">
         {' '}
         <div
           className="rounded-full bg-gray-200 p-1 text-white "
@@ -89,8 +89,8 @@ export const WallpaperEditBox = (props: IcoverEdit) => {
           {' '}
           <FaLongArrowAltLeft className="rounded-full " />
         </div>
-      </div>
-      <div className="">
+      </div> */}
+      <div className="w-full h-full">
         <div>
           <ImageUploader imageUrl={imageUrl} handleImageUrl={handleImageUrl} />
         </div>

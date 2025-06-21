@@ -24,34 +24,25 @@ export default function Home() {
 }
 
 const RoomTabs = () => {
+  const [ activeRoomCount, setActiveRoomCount ] = useState(0);
   const tabs = [
-    { title: 'Active Rooms', id: 1, comp: <ActiveRooms /> },
+    { title: 'Active Rooms', id: 1, comp: <ActiveRooms setActiveRoomCount={setActiveRoomCount} /> },
     // {
     //   title: 'Inactive Rooms',
     //   id: 2,
     //   comp: <div>Inactive Rooms</div>,
     // },
   ];
-  const [activeTab, setActiveTab] = useState(1);
+  const [ activeTab, setActiveTab ] = useState(1);
 
   return (
-    <div className="w-full py-5 ">
+    <div className="w-full ">
       <div
         role="tablist"
-        className="tabs-boxed tabs z-[99] my-3 flex flex-row flex-wrap justify-between bg-transparent py-2"
+        className="tabs-boxed tabs z-[99] flex flex-wrap items-center justify-between bg-transparent pb-2"
       >
-        <div className="flex flex-row flex-wrap">
-          {/* {tabs.map(tab => (
-            <div key={tab.id}>
-              <a
-                role="tab"
-                className={`  tab  text-base font-medium ${tab.id == activeTab ? 'tab-active text-white' : ' text-primary'}`}
-                onClick={() => setActiveTab(tab.id)}
-              >
-                {tab.title}
-              </a>
-            </div>
-          ))} */}
+        <div className='text-gray-500 text-base'>
+          <span className='text-lg font-medium text-gray-900'>{activeRoomCount} </span> Active Rooms
         </div>
         {activeTab == 1 && (
           <div>

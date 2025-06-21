@@ -198,7 +198,7 @@ export default function RoomAmenityPage({
             {amenityOptions?.roomAmenityOptions?.data?.length || 0} amenities selected
           </div>
 
-          <div className="mt-4 flex w-full gap-3 justify-between ">
+          <div className="mt-4 flex w-full flex-col md:flex-row gap-3 justify-between ">
             <div>
               <Button
                 label="Back"
@@ -206,8 +206,8 @@ export default function RoomAmenityPage({
                 className="border border-gray-300 text-gray-700 hover:bg-gray-50"
               />
             </div>
-            <div className=" flex ">
-              <div className=" flex w-auto  gap-3">
+            <div className=" flex w-full">
+              <div className=" flex w-full lg:w-auto  justify-between gap-3">
                 <Button
                   label="Save Amenities"
                   variant="primary"
