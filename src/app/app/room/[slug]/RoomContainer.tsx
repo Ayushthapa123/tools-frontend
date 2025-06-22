@@ -76,7 +76,7 @@ function RoomForm({ params, room }: { params: { slug: string }; room: Room | und
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors  },
     reset,
   } = useForm<CreateRoomInput>({
     defaultValues: {
@@ -185,7 +185,7 @@ function RoomForm({ params, room }: { params: { slug: string }; room: Room | und
         : isEdit
           ? 'Update'
           : 'Create Room';
-
+  const [isStepOneDirty, setIsStepOneDirty] = useState(false);
   return (
     <div className="w-full">
       <div className="rounded-lg bg-white p-6 shadow">
@@ -206,15 +206,15 @@ function RoomForm({ params, room }: { params: { slug: string }; room: Room | und
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          {currentStep === 1 && <RoomCreateForm control={control} errors={errors} />}
+          {currentStep === 1 && <RoomCreateForm setIsStepOneDirty={setIsStepOneDirty} control={control} errors={errors} />}
 
           <div className="flex justify-end">
             <div className="mt-6 flex justify-end gap-2 ">
-              {currentStep === 1 && isEdit && (
+              {currentStep === 1 && isEdit && !isStepOneDirty && (
                 <Button label="Next" onClick={handleNext} className="btn btn-primary w-min" />
               )}
 
-              {currentStep === 1 && (
+              {currentStep === 1 && isStepOneDirty && (
                 <Button
                   type={currentStep === 1 ? 'submit' : 'button'}
                   className={`btn btn-primary  w-min`}

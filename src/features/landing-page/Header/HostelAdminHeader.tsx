@@ -6,12 +6,12 @@ import Link from 'next/link';
 import { FaArrowRightLong } from 'react-icons/fa6';
 export default function HostelAdminHeader() {
   return (
-    <header className="flex flex-col md:flex-row items-center md:items-start lg:items-center justify-between px-10 md:px-16 py-8 md:py-12 bg-white w-full min-h-[90vh]">
+    <header className="flex flex-col md:flex-row items-center md:items-start lg:items-center justify-between px-10 md:px-16 py-8 md:pb-12 md:pt-0 bg-white w-full min-h-[90vh]">
       < div className="flex-1 flex flex-col items-start justify-center max-w-xl">
-        <h1 className="text-4xl md:text-5xl lg:!text-6xl mt-12 font-extrabold text-primary leading-normal">
-         Hostel Admin - <br/><span className='md:text-5xl text-4xl text-gray-600 md:pt-4 pt-2 !leading-6'>Manage and grow your hostel business</span>
+        <h1 className="text-xl md:text-5xl lg:!text-3xl mt-12 font-extrabold text-primary leading-normal">
+         Hosteladmin.com <br/><span className='md:text-7xl text-4xl text-gray-600 md:pt-4 pt-2 !leading-tighter'>Manage and grow your hostel business</span>
         </h1>
-        <p className="text-lg mt-8 md:text-xl font-semibold !text-gray-500 !leading-8">
+        <p className="text-lg mt-4 md:text-lg  font-semibold !text-gray-500 !leading-8">
           {domainConfig.appDescription}
         </p>
   
@@ -34,8 +34,8 @@ export default function HostelAdminHeader() {
         </Link>
         </div>
       </div>
-      <div className="flex-1 flex justify-center items-center mt-10 md:mt-0 relative h-[300px] md:h-auto w-full">
-        <div className="relative w-full max-w-md aspect-square">
+      <div className="flex-1 flex justify-center items-center mt-10 md:mt-0 md:pt-4 relative h-[280px] md:h-[85vh] w-full">
+        <div className="relative w-full h-full aspect-square">
           <Image
             src="/hero.png"
             alt="Hotel Management System Hero"

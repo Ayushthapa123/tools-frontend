@@ -1,7 +1,7 @@
 'use client';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import {
   CreateRoomAmenity,
@@ -32,16 +32,18 @@ export default function RoomAmenityPage({
   handleBack: () => void;
   roomId: number;
 }) {
-  const [selectedRoomAmenity, setSelectedRoomAmenity] = useState<RoomAmenityOptionData[]>([]);
+  const [ selectedRoomAmenity, setSelectedRoomAmenity ] = useState<RoomAmenityOptionData[]>([]);
+  const [ originalAmenities, setOriginalAmenities ] = useState<RoomAmenityOptionData[]>([]);
   const router = useRouter();
   const queryClient = useQueryClient();
+  const [ isAmenityFieldsDirty, setIsAmenityFieldsDirty ] = useState(false);
 
   // Fetch all available room amenity options
   const { data: amenityOptions, isLoading: isLoadingOptions } = useGraphQLQuery<
     AllRoomAmenitiesOptionQuery,
     AllRoomAmenitiesOptionQueryVariables
   >({
-    queryKey: ['getRoomAmenityOptions'],
+    queryKey: [ 'getRoomAmenityOptions' ],
     query: AllRoomAmenitiesOption.loc!.source.body,
     variables: {},
     enabled: true,
@@ -59,22 +61,46 @@ export default function RoomAmenityPage({
     return res.findAmenityByRoomId;
   };
   const { data, isLoading } = useQuery({
-    queryKey: ['getRoomAmenities'],
+    queryKey: [ 'getRoomAmenities' ],
     queryFn: () => getRoomAmenities(),
   });
 
   useEffect(() => {
-    if (data?.data?.amenity) {
-      try {
-        const parsedAmenities = JSON.parse(data.data.amenity);
-        setSelectedRoomAmenity(parsedAmenities);
-      } catch (error) {
-        console.error('Error parsing amenities:', error);
-        setSelectedRoomAmenity([]);
-      }
+    try {
+      const rawAmenities = data?.data?.amenity;
+      const parsedAmenities = rawAmenities ? JSON.parse(rawAmenities) : [];
+      setSelectedRoomAmenity(parsedAmenities);
+      setOriginalAmenities(parsedAmenities);
+    } catch (error) {
+      console.log('Error parsing amenities:', error);
+      setSelectedRoomAmenity([]);
     }
-  }, [data?.data?.amenity]);
+  }, [ data?.data?.amenity ]);
 
+  //check if the amenity fields are dirty
+  useEffect(() => {
+    if (originalAmenities.length === 0 || selectedRoomAmenity.length === 0) {
+      if (selectedRoomAmenity.length === 0) {
+        setIsAmenityFieldsDirty(false);
+      }
+      else {
+        setIsAmenityFieldsDirty(true);
+      }
+    } else {
+      const areArraysEqual = (arr1: RoomAmenityOptionData[], arr2: RoomAmenityOptionData[]) => {
+        if (arr1.length !== arr2.length) return false;
+        const sortedArr1 = [ ...arr1 ].sort((a, b) => Number(a.id) - Number(b.id));
+        const sortedArr2 = [ ...arr2 ].sort((a, b) => Number(a.id) - Number(b.id));
+        return sortedArr1.every((value, index) => value.id === sortedArr2[ index ].id);
+      }
+      const isEqual = areArraysEqual(originalAmenities, selectedRoomAmenity);
+      console.log("originalAmenities", originalAmenities)
+      console.log("selectedRoomAmenity", selectedRoomAmenity)
+      console.log("isEqual", isEqual)
+      setIsAmenityFieldsDirty(!isEqual);
+    }
+  }, [ selectedRoomAmenity, originalAmenities ]);
+  console.log("isAmenityFieldsDirty", isAmenityFieldsDirty)
   //create room amenity
   const mutateRoomAmenity = useGraphqlClientRequest<
     CreateRoomAmenityMutation,
@@ -95,7 +121,7 @@ export default function RoomAmenityPage({
     setSelectedRoomAmenity(prev =>
       prev.some(item => item.id === amenity.id)
         ? prev.filter(item => item.id !== amenity.id)
-        : [...prev, amenity],
+        : [ ...prev, amenity ],
     );
   };
 
@@ -103,10 +129,12 @@ export default function RoomAmenityPage({
     if (amenityOptions?.roomAmenityOptions?.data) {
       setSelectedRoomAmenity(amenityOptions.roomAmenityOptions.data);
     }
+    setIsAmenityFieldsDirty(true);
   };
 
   const clearAll = () => {
     setSelectedRoomAmenity([]);
+    setIsAmenityFieldsDirty(true);
   };
 
   const handleFinish = () => {
@@ -119,8 +147,9 @@ export default function RoomAmenityPage({
         createAmenityInput: { roomId, amenity: JSON.stringify(selectedRoomAmenity) },
       }).then(res => {
         if (res?.createRoomAmenity.data?.id) {
-          queryClient.invalidateQueries({ queryKey: ['getRoomAmenities'] });
+          queryClient.invalidateQueries({ queryKey: [ 'getRoomAmenities' ] });
           enqueueSnackbar('Amenities Created Successfully!', { variant: 'success' });
+          handleFinish();
         } else {
           enqueueSnackbar('Amenities Not Created!', { variant: 'error' });
         }
@@ -133,14 +162,17 @@ export default function RoomAmenityPage({
         },
       }).then(res => {
         if (res?.updateRoomAmenity.data?.id) {
-          queryClient.invalidateQueries({ queryKey: ['getRoomAmenities'] });
+          queryClient.invalidateQueries({ queryKey: [ 'getRoomAmenities' ] });
           enqueueSnackbar('Amenities Updated Successfully!', { variant: 'success' });
+          handleFinish();
         } else {
           enqueueSnackbar('Amenities Not Updated!', { variant: 'error' });
         }
       });
     }
   };
+
+
 
   if (isLoading || isLoadingOptions) return <LoadingSpinner color="primary" size="lg" />;
 
@@ -170,9 +202,8 @@ export default function RoomAmenityPage({
           return (
             <div
               key={amenity.id}
-              className={`flex items-center rounded-md p-2 transition-colors ${
-                isSelected ? 'bg-blue-50' : 'hover:bg-gray-50'
-              }`}
+              className={`flex items-center rounded-md p-2 transition-colors ${isSelected ? 'bg-blue-50' : 'hover:bg-gray-50'
+                }`}
               onClick={() => handleToggle(amenity)}>
               <div className="mr-3">
                 {isSelected ? (
@@ -206,20 +237,25 @@ export default function RoomAmenityPage({
                 className="border border-gray-300 text-gray-700 hover:bg-gray-50"
               />
             </div>
-            <div className=" flex w-full">
-              <div className=" flex w-full lg:w-auto  justify-between gap-3">
-                <Button
-                  label="Save Amenities"
-                  variant="primary"
-                  onClick={handleSave}
-                  className=""
-                />
-                <Button
-                  label="Done"
-                  variant="primary"
-                  onClick={handleFinish}
-                  className=""
-                />
+            <div className=" flex ">
+              <div className=" flex w-auto  gap-3">
+                {
+                  isAmenityFieldsDirty ? (
+                    <Button
+                      label="Save Amenities"
+                      variant="primary"
+                      onClick={handleSave}
+                      className=""
+                    />
+                  ) : (
+                    <Button
+                      label="Done"
+                      variant="primary"
+                      onClick={handleFinish}
+                      className=""
+                    />
+                  )
+                }
               </div>
             </div>
           </div>
