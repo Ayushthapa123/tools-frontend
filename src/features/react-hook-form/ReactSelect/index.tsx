@@ -1,12 +1,7 @@
 import { Controller, Control, FieldValues, FieldPath } from 'react-hook-form';
-import { Select as SelectField } from 'src/components/Select';
+import Select, { Props } from 'react-select';
 
-interface OptionType {
-  value: string | number;
-  label: string;
-}
-
-interface IProps<T extends FieldValues> {
+interface IProps<T extends FieldValues> extends Props {
   label?: string;
   placeholder?: string;
   height?: 'lg' | 'sm';
@@ -15,21 +10,27 @@ interface IProps<T extends FieldValues> {
   name: FieldPath<T>;
   rules?: object;
 
-  options: OptionType[];
+  options: any;
   isdisabled?: boolean;
 
   helperText?: string;
   error?: boolean;
-  required?: boolean;
-  defaultValue?: OptionType;
 }
 
 export function ReactSelect<T extends FieldValues>(props: IProps<T>) {
-  const { control, name, required, options, defaultValue, isdisabled, rules, error, helperText, height } = props;
+  const { control, name, required, options, isdisabled, rules, error, helperText, height } = props;
+  // const { errors } = useFormState<T>({ control, name })
 
   return (
     <>
       <section>
+        <div>
+          {props.label && (
+            <label htmlFor={props.name} className="text-sm font-semibold text-gray-600">
+              {props.label} {props.required && <span className="text-error">*</span>}
+            </label>
+          )}
+        </div>
         <div>
           <Controller
             control={control}
@@ -38,28 +39,35 @@ export function ReactSelect<T extends FieldValues>(props: IProps<T>) {
             render={({ field: { ...field } }) => {
               return (
                 <>
-                  <SelectField
-                    value={options?.find((o: OptionType) => o.value === field.value)?.value || ''}
-                    label={props?.label || ''}
+                  <Select
+                    value={options?.find((o: { value: object }) => o.value === field.value)}
+                    // className='border-[1.5px] border-[#B6C2E2] peer border-solid rounded  flex focus:border-primary-light-main focus:outline-primary-light-main placeholder-shown:bg-white-default hover:border-primary-light-main hover:bg-white focus-within:border-primary-light-main focus-within:outline-primary-light-main focus-within:bg-white-default relative w-full'
+
+                    styles={{
+                      control: baseStyles => ({
+                        ...baseStyles,
+                        height: "50px",
+                        border: '1.5px solid #B6C2E2',
+                        borderRadius: '10px',
+                      }),
+                    }}
+                    instanceId="long-value-select"
+                    defaultValue={{ label: props.placeholder, value: '' }}
+                    classNamePrefix="addl-class"
                     options={options}
-                    defaultValue={defaultValue?.value}
-                    onChange={(e) => field.onChange(e.target.value)}
-                    disabled={isdisabled}
-                    height={height}
-                    required={props.required}
-                    name={field.name}
-                    onBlur={field.onBlur}
+                    onChange={name => field.onChange(name?.value)}
+                    isDisabled={isdisabled}
                   />
                 </>
               );
             }}
-          />
+          />{' '}
         </div>
         {error && (
           <span className={`${error ? 'text-sm text-gray-500' : 'text-surface-grey '} text-sm `}>
             {helperText}
           </span>
-        )}
+        )}{' '}
       </section>
     </>
   );

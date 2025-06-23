@@ -3,6 +3,7 @@ import { Controller, Control, FieldValues, FieldPath } from 'react-hook-form';
 import { Select as FormSelect } from 'src/components/Select';
 import { SelectHTMLAttributes } from 'react';
 
+// Not being used. May be we can remove this file. But component is fine.
 interface IProps<T extends FieldValues> {
   control: Control<T>;
   name: FieldPath<T>;
@@ -26,6 +27,7 @@ const SelectInput = <T extends FieldValues>(props: SelectFieldProps<T>) => {
     required,
     ...otherProps
   } = props;
+
 
   return (
     <Controller
