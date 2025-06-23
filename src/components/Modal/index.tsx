@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 
 interface Iprops {
   open: boolean;
@@ -30,23 +30,33 @@ const ModalContents = (props: IModalContent) => {
     //close only when onSave gives response
     // onClose();
   };
+
+  const handleOverlayClick = () => {
+    onClose();
+  }
+
+  const stopPropagation = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  }
   return (
     <>
       <div className={`modal ${open ? 'modal-open' : ''}`} role="dialog">
-        <div className="modal-box">
-          <div>{title && <h3>{title}</h3>}</div>
-          <div className=" ">{children}</div>
+        <div className="modal-overlay fixed inset-0 bg-black/50" onClick={handleOverlayClick}>
+          <div className="modal-box mx-auto" onClick={stopPropagation}>
+            <div>{title && <h3>{title}</h3>}</div>
+            <div className=" ">{children}</div>
 
-          <div className="modal-action">
-            <div>
-              <label className="btn" onClick={() => onClose()}>
-                Close!
-              </label>
-            </div>
-            <div>
-              <label className="btn btn-primary" onClick={() => handleSave()}>
-                {actionLabel ?? 'Save'}
-              </label>
+            <div className="modal-action">
+              <div>
+                <label className="btn" onClick={() => onClose()}>
+                  Close!
+                </label>
+              </div>
+              <div>
+                <label className="btn btn-primary" onClick={() => handleSave()}>
+                  {actionLabel ?? 'Save'}
+                </label>
+              </div>
             </div>
           </div>
         </div>

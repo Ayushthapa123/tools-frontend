@@ -32,8 +32,8 @@ const Select = forwardRef<HTMLSelectElement, SelectComponentProps>(({ label, nam
           </option>
         ))}
       </select>
-      <div className="absolute inset-y-0 right-1 top-4  flex items-center px-2 pointer-events-none">
-        <svg className="w-7 h-7 text-gray-700 border-l border-gray-300 " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <div className="absolute inset-y-0 right-1 top-5 px-2 flex items-center  pointer-events-none">
+        <svg className="w-8 h-8 text-gray-700 border-l border-gray-300 pl-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6" />
         </svg>
       </div>
