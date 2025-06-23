@@ -1,4 +1,4 @@
-import React, { FC, SelectHTMLAttributes } from 'react';
+import React, { FC, forwardRef, SelectHTMLAttributes } from 'react';
 
 interface OptionType {
   value: string | number;
@@ -11,17 +11,19 @@ interface SelectComponentProps extends SelectHTMLAttributes<HTMLSelectElement> {
   options: OptionType[];
 }
 
-const Select: FC<SelectComponentProps> = ({ label, options, height, className, ...restProps }) => {
+const Select = forwardRef<HTMLSelectElement, SelectComponentProps>(({ label, name, options, height, className, required, ...restProps }, ref) => {
   return (
-    <div className="relative flex w-full min-w-max flex-col space-y-2">
-      <label
-        htmlFor={restProps.name}
-        className={`text-sm font-semibold text-gray-600 ${className}`}
-      >
-        {label}
-      </label>
+    <div className="relative flex flex-col space-y-1 ">
+      <div>
+        {label && (
+          <label htmlFor={name} className="text-base font-semibold text-gray-600">
+            {label} {required && <span className="text-error">*</span>}
+          </label>
+        )}
+      </div>
       <select
-        className={`border border-[#1a1a1a] px-3 py-2 ${height === 'lg' ? 'h-[3rem]' : 'h-[2.7rem]'} rounded-md focus:border-indigo-500 focus:outline-none`}
+        ref={ref}
+        className={`border border-[#959eb4] ${height === 'lg' ? 'h-[3rem]' : 'h-14'} appearance-none rounded-xl px-3 py-2 focus:border-[#484beb] focus:outline-none placeholder:text-[16px]`}
         {...restProps}
       >
         {options.map((option, index) => (
@@ -30,8 +32,15 @@ const Select: FC<SelectComponentProps> = ({ label, options, height, className, .
           </option>
         ))}
       </select>
+      <div className="absolute inset-y-0 right-1 top-4  flex items-center px-2 pointer-events-none">
+        <svg className="w-7 h-7 text-gray-700 border-l border-gray-300 " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6" />
+        </svg>
+      </div>
     </div>
   );
-};
+});
+
+Select.displayName = 'SelectField';
 
 export { Select };

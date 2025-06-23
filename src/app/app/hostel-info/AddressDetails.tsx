@@ -2,7 +2,7 @@
 import React, { FC, useMemo, useState } from 'react';
 
 import Button from 'src/components/Button';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import TextInput from 'src/features/react-hook-form/TextField';
@@ -16,6 +16,9 @@ import {
   GetAddressByHostelId,
   GetAddressByHostelIdQuery,
   GetAddressByHostelIdQueryVariables,
+  GetHostelByTokenQuery,
+  GetHostelByTokenQueryVariables,
+  GetHostelByToken,
   UpdateAddress,
   UpdateAddressMutation,
   UpdateAddressMutationVariables,
@@ -27,10 +30,30 @@ import { enqueueSnackbar } from 'notistack';
 import { useGraphQLQuery } from 'src/hooks/useGraphqlQuery';
 
 interface Iprops {
-  hostelId: number;
+  hostelId?: number;
 }
 export const AddressDetails = (props: Iprops) => {
-  const { hostelId } = props;
+  let { hostelId } = props;
+   const queryHostelData = useGraphqlClientRequest<
+    GetHostelByTokenQuery,
+    GetHostelByTokenQueryVariables
+  >(GetHostelByToken.loc?.source?.body!);
+
+  //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
+  const fetchData = async () => {
+    const res = await queryHostelData();
+    return res.getHostelByToken;
+  };
+
+
+  const { data: hostelDataByToken } = useQuery({
+    queryKey: [ 'getHostelByToken' ],
+    queryFn: fetchData,
+  });
+
+  if(!hostelId){
+    hostelId = Number(hostelDataByToken?.data?.id);
+  }
 
   const { data: hostelDataFull, isLoading } = useGraphQLQuery<
     GetAddressByHostelIdQuery,
@@ -192,8 +215,6 @@ const HostelInfoForm: FC<AddressData> = props => {
 
   return (
     <form className=" h-auto w-full" onSubmit={handleSubmit(handleSubmitForm)}>
-    
-
       <div className="relative mt-5 h-[500px] w-full overflow-hidden">
         <MapComponent
           clickedLatLng={clickedLatLng}

@@ -25,16 +25,16 @@ const Button: FC<ButtonComponentProps> = ({
 
   switch (variant) {
     case 'primary':
-      buttonStyle = 'bg-primary  text-white';
+      buttonStyle = 'btn text-white/90 hover:text-white bg-primary hover:bg-[#156153]';
       break;
     case 'secondary':
       buttonStyle = 'bg-secondary  text-black';
       break;
     case 'danger':
-      buttonStyle = 'bg-red-600 text-white';
+      buttonStyle = 'bg-red text-white';
       break;
     case 'outlined':
-      buttonStyle = 'bg-transparent text-primary border border-primary';
+      buttonStyle = ' btn-outline bg-transparent text-primary border border-primary';
       break;
     case 'teal': // New variant for nepal-teal
       buttonStyle = 'bg-nepal-teal text-white';
@@ -42,11 +42,11 @@ const Button: FC<ButtonComponentProps> = ({
   }
   return (
     <button
-      className={`${height === 'lg' ? 'h-[3rem]' : 'h-[2.7rem]'}  relative flex w-full min-w-max items-center justify-center space-x-2 rounded-lg border   px-4 py-2 align-middle transition duration-300 ease-in-out ${buttonStyle} ${className}`}
+      className={`${height === 'lg' ? 'h-[4rem]' : 'h-14'} relative flex w-full min-w-max items-center justify-center rounded-lg border px-6 py-3 align-middle transition-all duration-150 ease-in-out ${buttonStyle} ${className}`}
       {...restProps}
     >
       {startAdornment && <span>{startAdornment}</span>}
-      <span>{label}</span>
+      <span className="text-base font-semibold">{label}</span>
       {loading && (
         <span className="relative  h-[2rem] w-[2rem]">
           <LoadingSpinner color="white" />
