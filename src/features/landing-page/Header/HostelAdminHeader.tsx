@@ -9,7 +9,7 @@ export default function HostelAdminHeader() {
     <header className="flex flex-col md:flex-row items-center md:items-start lg:items-center justify-between px-10 md:px-16 py-8 md:pb-12 md:pt-0 bg-white w-full min-h-[90vh]">
       < div className="flex-1 flex flex-col items-start justify-center max-w-xl">
         <h1 className="text-xl md:text-5xl lg:!text-3xl mt-12 font-extrabold text-primary leading-normal">
-         Hosteladmin.com <br/><span className='md:text-7xl text-4xl text-gray-600 md:pt-4 pt-2 !leading-tighter'>Manage and grow your hostel business</span>
+          <span className='md:text-7xl text-4xl text-gray-600 md:pt-4 pt-2 !leading-tighter'>Manage and grow your hostel business</span>
         </h1>
         <p className="text-lg mt-4 md:text-lg  font-semibold !text-gray-500 !leading-8">
           {domainConfig.appDescription}
@@ -17,7 +17,7 @@ export default function HostelAdminHeader() {
   
         <div className="flex flex-col sm:flex-row gap-4 mt-4">
           <Link href="/signup">
-          <Button label="Get started" className="btn btn-primary text-base font-bold px-8 py-3 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+          <Button label="Get started" className="btn text-base font-bold px-8 py-3 rounded-lg shadow-md hover:shadow-lg transition-shadow">
             Get started
           </Button>
           </Link>

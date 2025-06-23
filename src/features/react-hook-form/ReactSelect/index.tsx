@@ -46,8 +46,9 @@ export function ReactSelect<T extends FieldValues>(props: IProps<T>) {
                     styles={{
                       control: baseStyles => ({
                         ...baseStyles,
-                        height: height === 'lg' ? '3rem' : '2.7rem',
+                        height: "50px",
                         border: '1.5px solid #B6C2E2',
+                        borderRadius: '10px',
                       }),
                     }}
                     instanceId="long-value-select"

@@ -133,9 +133,9 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+/* button:hover {
   opacity: 0.8;
-}
+} */
 
 /* Media Query for Small Devices */
 @media (max-width: 600px) {
