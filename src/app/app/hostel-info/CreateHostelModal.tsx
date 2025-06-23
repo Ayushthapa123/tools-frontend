@@ -186,12 +186,13 @@ export const CreateHostelModal = () => {
           {steps == 0 && (
             <div>
               <div className='flex flex-col items-center justify-center my-8'>
-                <h3 className='text-3xl text-gray-500 font-bold'>What is your hostel type?</h3>
+                <h3 className='text-xl md:text-3xl text-gray-500 font-bold'>What is your hostel type?</h3>
               </div>
-              <div className="grid gap-5 grid-cols-1 md:grid-cols-4 md:gap-10 w-[100%] mx-auto">
+              <div className="grid gap-5 grid-cols-2 md:grid-cols-4 md:gap-10 w-[100%] mx-auto">
                 {
                   hostelTypeData.map((item) => (
                     <div
+                      key={item.label}
                       className={` card relative cursor-pointer border-[1px]  border-gray-300 ${hostelType == item.value ? 'border-[2px] border-primary' : 'hover:border-gray-400'}`}
                       onClick={() => handleHostelType(item.value)}
                     >
@@ -199,7 +200,7 @@ export const CreateHostelModal = () => {
                         <Image src={item.image} fill alt="college students" className='object-cover rounded-t-2xl p-[2px]' />
                       </div>
                       <div className="pt-6 mb-2 flex items-center justify-center">
-                        <h4 className="text-2xl font-bold ">{item.label}</h4>
+                        <h4 className=" text-lg text-center px-2 md:px-0 md:text-2xl font-bold ">{item.label}</h4>
                       </div>
                     </div>
                   ))
