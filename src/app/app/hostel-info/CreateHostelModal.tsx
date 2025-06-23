@@ -1,7 +1,7 @@
-//@ts-nocheck
+
 'use client';
 
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { enqueueSnackbar } from 'notistack';
@@ -51,7 +51,9 @@ export const CreateHostelModal = () => {
     getValues,
     formState: { errors },
   } = useForm<IProps>({
-    defaultValues: {},
+    defaultValues: {
+      genderType: HostelGenderType.Boys,
+    },
   });
 
   watch('genderType');
@@ -60,29 +62,30 @@ export const CreateHostelModal = () => {
 
   useEffect(() => {
     // Trigger the modal to open when the component mounts
+    // @ts-ignore
     document.getElementById('my_modal_4')?.showModal();
   }, []); // This useEffect will run only once on component mount
 
-  const [ hostelType, setHostelType ] = useState<'STAY' | 'TRAVEL' | 'BOTH' | 'PG'>();
+  const [ hostelType, setHostelType ] = useState<HostelType>(HostelType.Stay);
   const [ hostelTypeErrorMessage, setHostelTypeErrorMessage ] = useState('');
 
-  const handleHostelType = (hType: 'TRAVEL' | 'STAY' | 'BOTH' | 'PG') => {
+  const handleHostelType = (hType: HostelType) => {
     setHostelTypeErrorMessage('');
     switch (hType) {
-      case 'TRAVEL':
-        setHostelType('TRAVEL');
+      case HostelType.Travel:
+        setHostelType(HostelType.Travel);
         break;
-      case 'STAY':
-        setHostelType('STAY');
+      case HostelType.Stay:
+        setHostelType(HostelType.Stay);
         break;
-      case 'BOTH':
-        setHostelType('BOTH');
+      case HostelType.Both:
+        setHostelType(HostelType.Both);
         break;
-      case 'PG':
-        setHostelType('PG');
+      case HostelType.Pg:
+        setHostelType(HostelType.Pg);
         break;
       default:
-        setHostelType(undefined);
+        setHostelType(HostelType.Stay);
         break;
     }
   };
@@ -100,9 +103,9 @@ export const CreateHostelModal = () => {
   };
 
   const genderOptions = [
-    { label: 'Boys', value: 'BOYS' },
-    { label: 'Girls', value: 'GIRLS' },
-    { label: 'Both', value: 'BOTH' },
+    { label: 'Boys', value: HostelGenderType.Boys },
+    { label: 'Girls', value: HostelGenderType.Girls },
+    { label: 'Both', value: HostelGenderType.Both },
   ];
 
   const mutateCreateHostelInfo = useGraphqlClientRequest<
@@ -147,22 +150,22 @@ export const CreateHostelModal = () => {
   const hostelTypeData = [
     {
       label: 'Stay Hostel',
-      value: 'STAY',
+      value: HostelType.Stay,
       image: '/images/hostelTypes/stay.jpg',
     },
     {
       label: 'Travel Hostel',
-      value: 'TRAVEL',
+      value: HostelType.Travel,
       image: '/images/hostelTypes/travel.jpg',
     },
     {
       label: 'PG',
-      value: 'PG',
+      value: HostelType.Pg,
       image: '/images/hostelTypes/pg.jpg',
     },
     {
       label: 'Travel + Stay Hostel',
-      value: 'BOTH',
+      value: HostelType.Both,
       image: '/images/hostelTypes/both.jpg',
     }
   ]
@@ -266,8 +269,8 @@ export const CreateHostelModal = () => {
                 (steps == 0 || steps == 1) && (
                   <Button
                     label="Back"
-                    variant="outline"
-                    disabled={steps == 2 || steps == 0}
+                    variant="outlined"
+                    disabled={steps === 0}
                     className=" w-min text-gray-700 disabled:cursor-not-allowed"
                     onClick={() => minusStep()}
                   />
@@ -306,15 +309,17 @@ const CreateAddressForm = () => {
       label: country.name,
       value: country.name,
     }));
-  }, []);
+  }, []); 
 
+  const queryClient = useQueryClient();
+  const router = useRouter();
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<AddressData>({
     defaultValues: {
-      country: '',
+      country: 'Nepal',
       city: '',
       subCity: '',
       street: '',
