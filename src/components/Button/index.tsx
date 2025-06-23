@@ -34,7 +34,7 @@ const Button: FC<ButtonComponentProps> = ({
       buttonStyle = 'bg-red text-white';
       break;
     case 'outlined':
-      buttonStyle = ' btn-outline bg-transparent text-primary border border-primary';
+      buttonStyle = ' bg-transparent text-primary border-[2px] border-primary';
       break;
     case 'teal': // New variant for nepal-teal
       buttonStyle = 'bg-nepal-teal text-white';
