@@ -41,8 +41,8 @@ const ModalContents = (props: IModalContent) => {
   return (
     <>
       <div className={`modal ${open ? 'modal-open' : ''}`} role="dialog">
-        <div className="modal-overlay fixed inset-0 bg-black/50" onClick={handleOverlayClick}>
-          <div className="modal-box mx-auto" onClick={stopPropagation}>
+        <div className="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center" onClick={handleOverlayClick}>
+          <div className="modal-box" onClick={stopPropagation}>
             <div>{title && <h3>{title}</h3>}</div>
             <div className=" ">{children}</div>
 

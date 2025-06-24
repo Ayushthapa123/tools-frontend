@@ -1,53 +1,37 @@
 export interface AmenityCategoryData {
-  [category: string]: string[];
+  [ category: string ]: string[];
 }
 
 export const getAmenityCategories = (): AmenityCategoryData => {
   return {
-    'Room Essentials': [
-      'Wi-Fi (Free)',
-      'Air conditioning / Heating',
-      'Clean private bathroom with hot shower',
-      'Comfortable bed with fresh linens',
-      'Power outlets and charging points',
-      'Desk / Table and chair',
-      'Drinking water',
-      'Digital room safe',
-      'Daily housekeeping',
-    ],
-    'Essential Property Amenities': [
-      '24/7 check-in or host availability',
-      'Secure entry / Locks on doors',
-      'Clean common areas',
-      'Parking (on-site or nearby)',
-      'Luggage storage',
-      'Security cameras',
-      'Wheelchair accessibility',
-    ],
-    'Basic Kitchen / Food Amenities': [
-      'Drinking water (bottled or filtered)',
-      'Electric kettle / Tea & coffee supplies',
-      'Fridge / Mini fridge',
-      'Microwave oven',
-      'Basic cookware and utensils',
-    ],
-    'Safety & Hygiene Essentials': [
-      'Fire extinguisher',
-      'First aid kit',
-      'Clean and sanitized spaces',
-      'Smoke detector (where applicable)',
-      'Safe / Lockbox (optional but preferred)',
-      'Emergency contact numbers',
-      'Security personnel',
-    ],
-    'Optional but Highly Preferred': [
-      'TV with local or streaming channels',
-      'Free breakfast',
+    'Practical Amenities': [
+      'Secure lockers for personal belongings',
+      'Laundry facilities (self-service)',
       'Laundry access or paid laundry service',
-      'Travel desk / local guide info',
-      'Swimming pool',
-      'Fitness center / Gym',
-      'Restaurant / Café on-site',
+      'Shared kitchen access for cooking',
+      'Workspace or study desks',
+      '24/7 hot water supply',
+    ],
+    "Social Amenities": [
+      'Common lounge area with TV and games',
+      'Outdoor terrace, rooftop, or garden space',
+      'On-site café or snack bar',
+      'Organized social events or city tours',
+      'Book exchange or reading corner',
+    ],
+    "Security Amenities": [
+      '24/7 front desk or staff assistance',
+      'CCTV surveillance in common areas',
+      'Key card or secure code access to rooms',
+      'Female-only dormitory options',
+      'Fire safety equipment',
+    ],
+    "Additional Amenities": [
+      'Free breakfast or light snacks',
+      'Bicycle rental or parking space',
+      'Pet-friendly options (if available)',
+      'No curfew for guests',
+      'Tour and travel assistance desk',
     ],
   };
 };
