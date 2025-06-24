@@ -197,13 +197,14 @@ const SignIn = () => {
               <div className=" w-full   ">
                 <hr className="  my-3 w-full border" />
 
-                <button
+                <Button
+                  variant="teal"
                   onClick={() => openSignupUrl()}
-                  className="flex w-full items-center justify-center rounded-md bg-primary px-4 py-2 font-bold text-white"
-                >
-                  <FcGoogle className="mr-2 text-3xl" />
-                  Continue With Google
-                </button>
+                  label="Continue With Google"
+                  startAdornment={<FcGoogle className="text-3xl " />}
+                  className="bg-primary"
+                  height="sm"
+                />
               </div>
 
               <div>
