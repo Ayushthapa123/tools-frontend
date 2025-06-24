@@ -31,7 +31,7 @@ const Input = forwardRef<HTMLInputElement, InputComponentProps>(
         <div className="relative">
           <input
             ref={ref} // Forward the ref to the input element
-            className={`${height === 'lg' ? 'h-[4rem]' : 'h-14'} w-full rounded-xl border border-[#959eb4] px-3 py-2 focus:border-[#484beb] focus:outline-none placeholder:text-[16px]`}
+            className={`${height === 'lg' ? 'h-[4rem]' : 'h-14'} w-full rounded-xl border border-[#959eb4] px-3 text-lg py-2 focus:border-[#484beb] focus:outline-none placeholder:text-[16px]`}
             type={type === 'password' && isPasswordVisible ? 'text' : type}
             maxLength={255}
             {...restProps}
