@@ -16,7 +16,7 @@ export const FeaturedHostel = () => {
   >(GetFeaturedHostels.loc?.source?.body!);
   const getFeaturedHostels = async () => {
     const res = await queryValidity({
-      pageSize: 6,
+      pageSize: 12,
     });
     return res.getAllHostels;
   };
