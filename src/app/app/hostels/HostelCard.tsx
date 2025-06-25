@@ -14,6 +14,7 @@ import RichTextEditor from 'src/components/RichTextEditor';
 import { useRef } from 'react';
 import { useUserStore } from 'src/store/userStore';
 import { enqueueSnackbar } from 'notistack';
+import CustomEmailModal from 'src/features/CustomEmailModal';
 
 interface Iprops {
   hostel: HostelData;
@@ -127,6 +128,13 @@ export const HostelCard = (props: Iprops) => {
                 onChange={e => handleVerification(e.target.checked)}
               />
             </label>
+            <div>
+              <CustomEmailModal
+                name={hostel?.name}
+                email={hostel?.contact?.email ?? hostel.owner?.email??""}
+                hostelId={hostel?.id}
+              />
+            </div>
           </div>
         </div>
 
