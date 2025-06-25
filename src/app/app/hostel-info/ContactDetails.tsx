@@ -20,7 +20,7 @@ import {
 } from 'src/gql/graphql';
 import LoadingSpinner from 'src/components/Loading';
 import { enqueueSnackbar } from 'notistack';
-
+import { useUserStore } from 'src/store/userStore';
 interface Iprops {
   hostelId: number;
   handleNextStep?: () => void;
@@ -78,6 +78,7 @@ const HostelInfoForm: FC<IProps> = props => {
   const { altPhone, contactId, email, phone, hostelId, handleNextStep } = props;
 
   const queryClient = useQueryClient();
+  const {user}=useUserStore()
 
   const {
     control,
@@ -89,7 +90,7 @@ const HostelInfoForm: FC<IProps> = props => {
     defaultValues: {
       altPhone,
       phone,
-      email,
+      email:email || user.userEmail,
     },
   });
   const changingEmail = watch('email');

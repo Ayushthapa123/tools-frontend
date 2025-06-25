@@ -218,7 +218,7 @@ const HostelInfoForm: FC<AddressData & { handleNextStep?: () => void }> = props 
 
   return (
     <form className=" h-auto w-full" onSubmit={handleSubmit(handleSubmitForm)}>
-      <div className="relative mt-5 h-[500px] w-full overflow-hidden">
+      <div className="relative mt-5 h-[300px] md:h-[500px] w-full overflow-hidden">
         <MapComponent
           clickedLatLng={clickedLatLng}
           setClickedLatLng={handleClickLatLng}

@@ -8,7 +8,6 @@ import DashboardIcon from '../../components/icons/Dashboard';
 import RoomIcon from '../../components/icons/Room';
 
 import LogoutIcon from '../../components/icons/LogOut';
-import { MdOutlineDirections } from 'react-icons/md';
 import { useState } from 'react';
 import { IoIosArrowUp, IoMdPhotos } from 'react-icons/io';
 import IconButton from '../../components/IconButton';
@@ -29,6 +28,7 @@ import SettingsIcon from 'src/components/icons/Settings';
 import MenuItem from './MenuItem';
 import { BsPeople } from 'react-icons/bs';
 import { IoPeopleSharp } from 'react-icons/io5';
+import MarketingIcon from 'src/components/icons/Marketing';
 interface MenuItemType {
   icon: JSX.Element;
   text: string;
@@ -135,7 +135,7 @@ const Sidebar = () => {
       show: user.userType === UserType.HostelOwner,
     },
     {
-      icon: <FaRegLightbulb />,
+      icon: <MarketingIcon />,
       text: 'Marketing',
       href: '/app/marketing',
       show: user.userType === UserType.HostelOwner,

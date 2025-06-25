@@ -1,6 +1,6 @@
 'use client';
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { enqueueSnackbar } from 'notistack';
 import { useEffect, useRef, useState } from 'react';
@@ -21,6 +21,7 @@ import { useToastStore } from 'src/store/toastStore';
 import { AddressDetails } from './AddressDetails';
 import { MapProvider } from 'src/features/MapProvider';
 import { ContactDetails } from './ContactDetails';
+  import { useRouter } from 'next/navigation';
 interface IProps {
   name?: string | null;
   genderType?: HostelGenderType;
@@ -55,6 +56,8 @@ export const CreateHostelModal = () => {
   const [hostelTypeErrorMessage, setHostelTypeErrorMessage] = useState('');
   const [steps, setSteps] = useState(0);
 
+  const router = useRouter();
+
   const handleHostelType = (hType: HostelType) => {
     setHostelTypeErrorMessage('');
     setHostelType(hType);
@@ -64,13 +67,20 @@ export const CreateHostelModal = () => {
     if (steps > 0) setSteps(steps - 1);
   };
 
+  const queryClient = useQueryClient();
   const plusStep = () => {
  
     if (steps < 3) {
       setSteps(steps + 1); 
     } else {
       enqueueSnackbar('Onboarding completed.', { variant: 'success' });
-      window.location.reload();
+      // window.location.reload();
+      router.push('/app/gallery');
+   
+      queryClient.refetchQueries();
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     }
   };
 
@@ -218,8 +228,8 @@ export const CreateHostelModal = () => {
                 </div>
               </div>
             )}
-            <div>{steps === 2 && <CreateAddressForm hostelId={hostelId} handleNextStep={plusStep} />}</div>
-            <div>{steps === 3 && <CreateContactForm hostelId={hostelId} handleNextStep={plusStep} />}</div>
+            <div>{steps === 3 && <MapProvider><CreateAddressForm hostelId={hostelId} handleNextStep={plusStep} /></MapProvider>}</div>
+            <div>{steps === 2 && <CreateContactForm hostelId={hostelId} handleNextStep={plusStep} />}</div>
 
             </div>
 
@@ -280,9 +290,9 @@ const CreateContactForm = ({ hostelId, handleNextStep }: { hostelId: number | nu
       <div className="my-8 flex flex-col items-center justify-center">
         <h3 className="text-3xl font-bold text-gray-500">Contact Details</h3>
       </div>
-      <MapProvider> 
+     
         <ContactDetails hostelId={hostelId} handleNextStep={handleNextStep} />
-      </MapProvider>
+  
     </>
   );
 };

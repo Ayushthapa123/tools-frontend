@@ -1,13 +1,13 @@
 // SettingsIcon.tsx
 import React from 'react';
-import { FiLogOut } from 'react-icons/fi';
+import { IoLogOut } from 'react-icons/io5';
 
 interface IconProps {
   className?: string;
 }
 
 const LogoutIcon: React.FC<IconProps> = ({ className = '' }) => {
-  return <FiLogOut className={`text-primary ${className}`} />;
+  return <IoLogOut  className={`text-primary text-2xl ${className}`} />;
 };
 
 export default LogoutIcon;

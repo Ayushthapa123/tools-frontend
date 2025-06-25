@@ -19,22 +19,22 @@ interface InputComponentProps extends TextareaHTMLAttributes<HTMLTextAreaElement
 const TextArea = forwardRef<HTMLTextAreaElement, InputComponentProps>(
   ({ label, className, rows, error, helpertext, ...restProps }, ref) => {
     return (
-      <div className={`flex flex-col space-y-2 ${className}`}>
+      <div className={`flex flex-col space-y-1 ${className}`}>
         {label && (
-          <label htmlFor={restProps.name} className="text-sm font-semibold text-gray-600">
+          <label htmlFor={restProps.name} className="text-base font-semibold text-gray-600">
             {label}
-            {restProps.required && <span className="text-red-500">*</span>}
+            {restProps.required && <span className="text-error">*</span>}
           </label>
         )}
         <div className="relative">
           <textarea
             rows={rows}
             ref={ref} // Forward the ref to the input element
-            className=" w-full rounded-md border border-[#B6C2E2] px-3 py-2 focus:border-indigo-500 focus:outline-none"
+            className=" w-full rounded-xl border border-[#959eb4] px-3 py-2 focus:border-[#484beb] focus:outline-none min-h-14 placeholder:text-[16px]"
             {...restProps}
           />
         </div>
-        {error && <p className="text-red-500 mt-1 text-sm">{error}</p>}
+        {error && <p className="text-error mt-1 text-sm">{error}</p>}
         {helpertext && <p className="text-sm text-gray-500">{helpertext}</p>}
       </div>
     );
