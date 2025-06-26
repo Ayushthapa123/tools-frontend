@@ -159,7 +159,7 @@ export const SearchBox = () => {
               value={searchText}
               className="rounded-md w-full bg-gray-50  p-2 pl-0 placeholder:text-xs "
               onChange={handleLocationChange}
-              // defaultValue={query}
+              defaultValue={query}
               // autoComplete="on"
               // required
             />

@@ -142,10 +142,10 @@ export default function MainContent(props: Iprops) {
 
   const matchedAmenities = essentialAmenities.filter(essential => {
     const essentialKeywords = extractKeywords(essential.title);
-    return amenitiesArray.some(item => {
+    return amenitiesArray ? amenitiesArray.some(item => {
       const itemKeywords = extractKeywords(item);
       return itemKeywords.some(keyword => essentialKeywords.includes(keyword));
-    });
+    }):false;
   });
 
   const selectedImg = hostel?.data?.gallery?.filter(img => img.isSelected === true);
@@ -234,7 +234,7 @@ export default function MainContent(props: Iprops) {
                       Top Hostel Facilities
                     </h3>
                     {
-                      essentialAmenities.length > 3 && (
+                      matchedAmenities.length > 3 && (
                         <div className='text-sm text-gray-500 hover:text-gray-700 cursor-pointer' onClick={handleShowAllAmenities}>
                           Show All
                         </div>
@@ -242,7 +242,7 @@ export default function MainContent(props: Iprops) {
                     }
                   </div>
                   <div className="grid grid-cols-2 items-start justify-between gap-x-2 gap-y-5">
-                    {matchedAmenities.slice(0, 4).map((amenity) => (
+                    {matchedAmenities.slice(0, 6).map((amenity) => (
                       <div className="flex items-start gap-2" key={amenity.title}>
                         <div className="mt-[2px] bg-blue-50 text-blue-600 flex text-xl items-center justify-center rounded-full text-secondary">
                           {amenity.icons}
@@ -328,7 +328,7 @@ export default function MainContent(props: Iprops) {
                 <Button label="View Bookings" className="w-fit bg-primary" />
               </Link> */}
             </div>
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2" ref={sectionRef}>
+            <div className="grid grid-cols-1 gap-6" ref={sectionRef}>
               {hostel?.data?.rooms?.map((room: RoomData) => (
                 <div
                   key={room.id}
@@ -360,7 +360,7 @@ export default function MainContent(props: Iprops) {
                 <span className='text-base text-gray-600'>{am.title}</span>
               </div>
             ))}
-          {amenitiesArray.filter(item => {
+          {amenitiesArray && amenitiesArray.filter(item => {
             const itemKeywords = extractKeywords(item);
 
             return !essentialAmenities.some(essential => {
