@@ -34,7 +34,6 @@ export const ActiveRooms = ({ setActiveRoomCount }: { setActiveRoomCount: (count
     queryKey: ['getRooms'],
     queryFn: fetchData,
   });
-console.log("rooms", rooms)
 
   // deleted room
   const mutateCreateNearbyPlace = useGraphqlClientRequest<

@@ -36,7 +36,6 @@ export const RoomCardFull = ({
   const router = useRouter();
   const pathName = usePathname();
   const [ isBookingPage, setIsBookingPage ] = useState(false);
-  console.log('room ', room);
 
   useEffect(() => {
     setIsBookingPage(pathName.includes('booking'));

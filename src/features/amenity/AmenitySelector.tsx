@@ -27,16 +27,17 @@ export const AmenitySelector = ({
   loading,
   amenityId,
   allAmenityOptions,
+  onAmenityUpdate,
 }: {
   hostelId: number;
   existingAmenities: AmenityOptionData[];
   loading: boolean;
   amenityId: number;
   allAmenityOptions: AllAmenitiesOptionQuery | undefined;
+  onAmenityUpdate?: () => void;
 }) => {
 
   // get amenity options from the database
-
 
 
 // format them in such way they seperate according to amenityType
@@ -176,6 +177,9 @@ console.log("ffffffffffffffffffffffff",formattedAmenityOptions)
       }).then(res => {
         if (res.updateAmenity.data?.id) {
           enqueueSnackbar('Amenities updated.', { variant: 'success' });
+          if (onAmenityUpdate) {
+            onAmenityUpdate();
+          }
         }
       });
     } catch (err) {
@@ -195,6 +199,9 @@ console.log("ffffffffffffffffffffffff",formattedAmenityOptions)
       }).then(res => {
         if (res.createAmenity.data?.id) {
           enqueueSnackbar('Amenities created.', { variant: 'success' });
+          if (onAmenityUpdate) {
+            onAmenityUpdate();
+          }
         }
       });
     } catch (err) {

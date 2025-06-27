@@ -84,24 +84,23 @@ export default function MainContent(props: Iprops) {
     enabled: !!Number(hostel?.data?.id),
   });
   // Parse the amenities string into an array
-  const amenitiesArray: string[] = amenities ? amenities.data?.amenities.split(',').filter(Boolean) : [];
-
+  const amenitiesArray = amenities ? JSON.parse(amenities.data?.amenities ?? '[]') : [];
 
   const essentialAmenities = [
     {
-      title: "Study table",
+      title: "Study/Reading Room",
       icons: <IoLibrary className="text-xl" />
     },
     {
-      title: "Secure lockers",
+      title: "Locker",
       icons: <RiSafeFill className="text-xl" />
     },
     {
-      title: "Air conditioning / Heating",
+      title: "Air Conditioning (Room)",
       icons: <TbAirConditioning className="text-xl" />
     },
     {
-      title: "CCTV surveillance",
+      title: "CCTV Cameras",
       icons: <BiSolidCctv className="text-xl" />
     },
     {
@@ -109,7 +108,7 @@ export default function MainContent(props: Iprops) {
       icons: <FaSquareParking className="text-xl" />
     },
     {
-      title: "Laundary Service",
+      title: "On-site Laundry Facility",
       icons: <GiClothes className="text-xl" />
     },
     {
@@ -117,36 +116,27 @@ export default function MainContent(props: Iprops) {
       icons: <FaChalkboardTeacher className="text-xl" />
     },
     {
-      title: "Wi-Fi",
+      title: "High-Speed Wi-Fi",
       icons: <FaWifi className="text-xl" />
     },
     {
-      title: "Clean toilet bathroom",
+      title: "Western Toilet",
       icons: <FaToilet className="text-xl" />
     },
     {
-      title: "breakfast",
+      title: "Cafeteria/Canteen",
       icons: <MdFreeBreakfast className="text-xl" />
     },
     {
-      title: "Luggage Storage",
+      title: "Storage Cabinets",
       icons: <MdLuggage className="text-xl" />
     },
 
   ]
 
-  //logic to check if the amenity is in the amenities array
-  const extractKeywords = (str: string) =>
-    str.toLowerCase().split(/[\s\/\(\)\-]+/).filter(Boolean);
-  // Split by space, slash, brackets, hyphen, remove empties
-
-  const matchedAmenities = essentialAmenities.filter(essential => {
-    const essentialKeywords = extractKeywords(essential.title);
-    return amenitiesArray ? amenitiesArray.some(item => {
-      const itemKeywords = extractKeywords(item);
-      return itemKeywords.some(keyword => essentialKeywords.includes(keyword));
-    }):false;
-  });
+  const matchedAmenities = essentialAmenities.filter((essential: any) => {
+    return amenitiesArray.some((item: any) => essential.title.toLowerCase().includes(item.name.toLowerCase()));
+  })
 
   const selectedImg = hostel?.data?.gallery?.filter(img => img.isSelected === true);
 
@@ -234,7 +224,7 @@ export default function MainContent(props: Iprops) {
                       Top Hostel Facilities
                     </h3>
                     {
-                      matchedAmenities.length > 3 && (
+                      amenitiesArray.length > 3 && (
                         <div className='text-sm text-gray-500 hover:text-gray-700 cursor-pointer' onClick={handleShowAllAmenities}>
                           Show All
                         </div>
@@ -242,14 +232,14 @@ export default function MainContent(props: Iprops) {
                     }
                   </div>
                   <div className="grid grid-cols-2 items-start justify-between gap-x-2 gap-y-5">
-                    {matchedAmenities.slice(0, 6).map((amenity) => (
+                    {matchedAmenities.length > 0 ? matchedAmenities.slice(0, 6).map((amenity) => (
                       <div className="flex items-start gap-2" key={amenity.title}>
                         <div className="mt-[2px] bg-blue-50 text-blue-600 flex text-xl items-center justify-center rounded-full text-secondary">
                           {amenity.icons}
                         </div>
                         <span className="text-base text-gray-700">{amenity.title}</span>
                       </div>
-                    ))}
+                    )) : <div className='text-center text-gray-500'>No top amenities found</div>}
                   </div>
                 </div>
 
@@ -353,27 +343,23 @@ export default function MainContent(props: Iprops) {
         <div className='border-t border-gray-300 py-4 grid grid-cols-2 gap-3'>
           {
             matchedAmenities.map((am) => (
-              <div className='flex items-center gap-3' key={am.title}>
+              <div className='flex items-start gap-3' key={am.title}>
                 <div className='flex items-center justify-start text-secondary'>
                   {am.icons}
                 </div>
-                <span className='text-base text-gray-600'>{am.title}</span>
+                <span className='text-base font-semibold text-gray-600'>{am.title}</span>
               </div>
             ))}
-          {amenitiesArray && amenitiesArray.filter(item => {
-            const itemKeywords = extractKeywords(item);
-
+          {amenitiesArray && amenitiesArray.filter((item:any) => {
             return !essentialAmenities.some(essential => {
-              const essentialKeywords = extractKeywords(essential.title);
-
-              return itemKeywords.some(keyword => essentialKeywords.includes(keyword));
+              return item.name.toLowerCase().includes(essential.title.toLowerCase());
             });
-          }).map((amenity) => (
-            <div key={amenity} className='flex items-center gap-3 w-full'>
+          }).map((amenity:any) => (
+            <div key={amenity.id} className='flex items-start gap-3 w-full'>
               <div className='flex items-center justify-start'>
               <FaLightbulb className='text-xl text-secondary' />
                 </div>
-              <span className='text-base text-gray-600'>{amenity}</span>
+              <span className='text-base font-semibold text-gray-600'>{amenity.name}</span>
             </div>
           ))
           }

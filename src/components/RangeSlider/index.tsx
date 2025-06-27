@@ -111,7 +111,7 @@ export const RangeSlider: React.FC<RangeSliderProps> = ({
         >
           {/* Selected range */}
           <div
-            className="absolute h-full bg-blue rounded-full"
+            className="absolute h-full bg-blue/80 rounded-full"
             style={{
               left: `${minPercentage}%`,
               width: `${maxPercentage - minPercentage}%`,
@@ -120,14 +120,14 @@ export const RangeSlider: React.FC<RangeSliderProps> = ({
           
           {/* Min thumb */}
           <div
-            className="absolute top-1/2 w-5 h-5 bg-blue border-2 border-blue-500 rounded-full cursor-pointer transform -translate-y-1/2 -translate-x-1/2 shadow-md hover:shadow-lg transition-shadow"
+            className="absolute top-1/2 w-5 h-5 bg-blue/80 border-2 border-blue-500 rounded-full cursor-pointer transform -translate-y-1/2 -translate-x-1/2 shadow-md hover:shadow-lg transition-shadow"
             style={{ left: `${minPercentage}%` }}
             onMouseDown={(e) => handleMouseDown(e, 'min')}
           />
           
           {/* Max thumb */}
           <div
-            className="absolute top-1/2 w-5 h-5 bg-blue border-2 border-blue-500 rounded-full cursor-pointer transform -translate-y-1/2 -translate-x-1/2 shadow-md hover:shadow-lg transition-shadow"
+            className="absolute top-1/2 w-5 h-5 bg-blue/80 border-2 border-blue-500 rounded-full cursor-pointer transform -translate-y-1/2 -translate-x-1/2 shadow-md hover:shadow-lg transition-shadow"
             style={{ left: `${maxPercentage}%` }}
             onMouseDown={(e) => handleMouseDown(e, 'max')}
           />
