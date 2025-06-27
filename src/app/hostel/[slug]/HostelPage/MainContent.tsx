@@ -173,7 +173,7 @@ export default function MainContent(props: Iprops) {
                 </div>
               </div>
               <div className="mb-2">
-                <div className="relative mb-4 h-[500px] w-full overflow-hidden rounded-2xl bg-gray-200">
+                <div className="relative mb-4 h-[300px] md:h-[500px] w-full overflow-hidden rounded-2xl bg-gray-200">
                   <div className="group relative h-full w-full">
                     <Image
                       src={
@@ -340,7 +340,7 @@ export default function MainContent(props: Iprops) {
         </div>
       )}
       <Modal title='All Amenities' open={showAllAmenities} actionLabel='Okay' key="all-amenities" onSave={() => setShowAllAmenities(false)} handleClose={() => setShowAllAmenities(false)}>
-        <div className='border-t border-gray-300 py-4 grid grid-cols-2 gap-3'>
+        <div className='border-t border-gray-300 py-4 grid grid-cols-1 lg:grid-cols-2 gap-3'>
           {
             matchedAmenities.map((am) => (
               <div className='flex items-start gap-3' key={am.title}>
