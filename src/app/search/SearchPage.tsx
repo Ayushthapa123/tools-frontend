@@ -1,20 +1,14 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { Suspense, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { MdApartment } from 'react-icons/md';
-// import { SearchBox } from 'src/features/Header/SearchBox';
 import { SearchResults } from './SearchResults';
 import { SearchBox } from 'src/features/landing-page/Header/SearchBox';
 import { MapProvider } from 'src/features/MapProvider';
-import { number } from 'framer-motion';
 import SearchFilter, { FilterData } from './filter';
 import Button from 'src/components/Button';
-import { FaFilter } from 'react-icons/fa';
-import { GetFilteredHostels, GetFilteredHostelsQuery, GetFilteredHostelsQueryVariables, HostelType } from 'src/gql/graphql';
-import { HostelGenderType } from 'src/gql/graphql';
-import { useQuery } from '@tanstack/react-query';
-import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
+import { Modal } from 'src/components/Modal';
 
 
 
@@ -32,10 +26,14 @@ export function SearchPage() {
   const [ lng, setLng ] = useState(params.get('lng') ?? '');
   const [ query, setQuery ] = useState(params.get('query') ?? '');
   const [ count, setCount ] = useState<number | undefined>(undefined);
-  const [ showFilter, setShowFilter ] = useState(false);
+  const [ showMobileFilter, setShowMobileFilter ] = useState(false);
   const [filteredHostels, setFilteredHostels] = useState<any>(null);
   
- 
+ useEffect(() => {
+  if(showMobileFilter) {
+    setShowMobileFilter(false);
+  }
+ }, [filteredHostels]);
 
 
   const handleCountry = (country: string) => {
@@ -55,9 +53,6 @@ export function SearchPage() {
     setCount(count);
   };
   
-  const HandleApplyFilters = () => {
-    setShowFilter(!showFilter);
-  }
 
   return (
     <div className="min-h-screen">
@@ -70,7 +65,7 @@ export function SearchPage() {
           </Suspense>
         </div>
        
-        <div className="ml-6">
+        <div className="ml-6 lg:ml-4 flex items-center justify-between">
         <div className="flex py-5">
             <span>
               <MdApartment className='text-3xl mr-1' />
@@ -85,10 +80,13 @@ export function SearchPage() {
             </h2>
           </div>
           </div>
+          <div className='block md:hidden mr-4'>
+            <Button onClick={() => setShowMobileFilter(!showMobileFilter)} label='Filter' className='h-6' />
+          </div>
         </div>
 
         <div className="flex w-full sticky top-0">
-          <div className='w-[25%] relative min-h-screen mx-4'>
+          <div className='w-[25%] hidden md:block relative min-h-screen mx-4'>
             <div className=''>
             <SearchFilter setFilteredHostels={setFilteredHostels} lat={Number(lat)} lng={Number(lng)} />
             </div>
@@ -109,6 +107,13 @@ export function SearchPage() {
           </div>
         </div>
       </div>
+      {
+        showMobileFilter && (
+          <Modal open={showMobileFilter} handleClose={() => setShowMobileFilter(false)} actionLabel='Done' onSave={() => setShowMobileFilter(false)} >
+            <SearchFilter setFilteredHostels={setFilteredHostels} lat={Number(lat)} lng={Number(lng)} />
+          </Modal>
+        )
+      }
     </div>
   );
 }

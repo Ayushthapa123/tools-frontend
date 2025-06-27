@@ -157,7 +157,7 @@ export default function SearchFilter({ setFilteredHostels, lat, lng }: { setFilt
     setShouldFetch(false);
   }
   return (
-    <div className="flex flex-col justify-between items-center gap-4 bg-white border border-gray-100 rounded-md m-2 p-2">
+    <div className="flex flex-col justify-between items-center gap-4 bg-transparent border border-gray-100 rounded-md m-2 p-2">
       <div className="flex flex-col gap-4 items-start w-full">
         <div className="w-full my-3">
           <RangeSlider

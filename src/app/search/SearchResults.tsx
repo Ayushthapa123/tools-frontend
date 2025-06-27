@@ -68,7 +68,7 @@ export const SearchResults = (props: IResults) => {
           <HostelCardSkeleton />
         </div>
       )}
-      <div className="grid w-full grid-cols-1 gap-3 md:grid-cols-2">
+      <div className="grid w-full grid-cols-1 gap-3 md:grid-cols-1 lg:grid-cols-2">
         {filteredHostels==null ? hostels?.data?.map((hostel: any) => {
           const imgUrl = hostel?.gallery?.[0]?.url || '/images/default-image.png';
 
