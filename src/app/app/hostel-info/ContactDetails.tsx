@@ -20,12 +20,13 @@ import {
 } from 'src/gql/graphql';
 import LoadingSpinner from 'src/components/Loading';
 import { enqueueSnackbar } from 'notistack';
-
+import { useUserStore } from 'src/store/userStore';
 interface Iprops {
   hostelId: number;
+  handleNextStep?: () => void;
 }
 export const ContactDetails = (props: Iprops) => {
-  const { hostelId } = props;
+  const { hostelId, handleNextStep } = props;
   const queryContactData = useGraphqlClientRequest<
     GetContactsByHostelIdQuery,
     GetContactsByHostelIdQueryVariables
@@ -51,6 +52,7 @@ export const ContactDetails = (props: Iprops) => {
           phone={hostelData?.data?.phone}
           altPhone={hostelData?.data?.altPhone}
           email={hostelData?.data?.email}
+          handleNextStep={handleNextStep}
         />
       ) : (
         <div className=" relative h-[50vh] w-full">
@@ -69,12 +71,14 @@ interface IProps {
 
   phone?: string | null;
   altPhone?: string | null;
+  handleNextStep?: () => void;
 }
 
 const HostelInfoForm: FC<IProps> = props => {
-  const { altPhone, contactId, email, phone, hostelId } = props;
+  const { altPhone, contactId, email, phone, hostelId, handleNextStep } = props;
 
   const queryClient = useQueryClient();
+  const {user}=useUserStore()
 
   const {
     control,
@@ -86,7 +90,7 @@ const HostelInfoForm: FC<IProps> = props => {
     defaultValues: {
       altPhone,
       phone,
-      email,
+      email:email || user.userEmail,
     },
   });
   const changingEmail = watch('email');
@@ -149,6 +153,7 @@ const HostelInfoForm: FC<IProps> = props => {
           enqueueSnackbar('Contacts created', { variant: 'success' });
           queryClient.invalidateQueries({ queryKey: ['getContacts'] });
           queryClient.invalidateQueries({ queryKey: ['getHostelByToken'] });
+          handleNextStep?.();
         } else {
           enqueueSnackbar('something went wrong.', { variant: 'error' });
         }
