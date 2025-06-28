@@ -76,61 +76,9 @@ export const SitemapPage = async () => {
     };
   })??[];
 
-  //Original Hostels
 
-  const hostelQuery = gql`
-    query getAllOriginalHostelsSlug {
-      getAllHostels {
-        slug
-      }
-    }
-  `;
 
-  const res = await graphqlClient
-    .request(hostelQuery)
-    .then((data: any) => {
-      return data.getAllHostels; // Returning the fetched data
-    })
-    .catch(error => {
-      console.error(error);
-      return null; // Return null in case of an error
-    });
-  const originalHostelSitemaps = res?.map((item: any) => {
-    return {
-      url: `https://hostelpilot.com/hostels/${item.slug}`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 1,
-    };
-  })??[];
-  //Shostels
-
-  const sHostelQuery = gql`
-    query getAllSHostelsSlug {
-      sHostels {
-        slug
-      }
-    }
-  `;
-  const sHostelres = await graphqlClient
-    .request(sHostelQuery)
-    .then((data: any) => {
-      return data.sHostels; // Returning the fetched data
-    })
-    .catch(error => {
-      console.error(error);
-      return null; // Return null in case of an error
-    });
-  const SHostelSitemaps = sHostelres?.map((item: any) => { // This is not giving all the hostels
-    return {
-      url: `https://hosteltrend.com/hostels/${item.slug}`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 1,
-    };
-  })??[];
-
-  return [...constantPages, ...blogDataSitemaps, ...originalHostelSitemaps, ...SHostelSitemaps];
+  return [...constantPages, ...blogDataSitemaps];
 };
 
 export default SitemapPage;
