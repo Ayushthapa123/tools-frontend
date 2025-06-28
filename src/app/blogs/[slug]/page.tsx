@@ -5,8 +5,10 @@ import safeJsonStringify from 'safe-json-stringify';
 import { PageContents } from '../PageContent';
 import { Metadata, ResolvingMetadata } from 'next';
 import { CommonNav } from 'src/features/NavBar/CommonNav';
-const space = process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID;
-const accessToken = process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN;
+import envConfig from 'src/config/envConfig';
+
+const space = envConfig.contentfulSpaceId;
+const accessToken = envConfig.contentfulAccessToken;
 
 const client = createClient({
   space: space ?? '',

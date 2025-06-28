@@ -4,7 +4,7 @@ import { BLOCKS, INLINES, MARKS } from '@contentful/rich-text-types';
 import { getOnlyDay, getOnlyMonth, getOnlyYear } from 'src/utils/date';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { BiLink } from 'react-icons/bi';
-import { LinkedEntry } from './LinkedEntry';
+// import { LinkedEntry } from './LinkedEntry';
 // import { BannerAd } from 'src/features/Drawer/BannerAd';
 import BlogCard from 'src/features/BlogCard';
 // import { CustomChip } from 'src/components/Chip';
@@ -185,7 +185,7 @@ export const PageContents = (props: Iprops) => {
 
                   return (
                     <>
-                      <LinkedEntry id={id} text={children?.toString() ?? ''} />
+                      {/* <LinkedEntry id={id} text={children?.toString() ?? ''} /> */}
                     </>
                   );
                 },

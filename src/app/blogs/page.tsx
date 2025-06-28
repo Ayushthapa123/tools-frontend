@@ -4,16 +4,18 @@ import { createClient } from 'contentful';
 import safeJsonStringify from 'safe-json-stringify';
 import BlogCard from 'src/features/BlogCard';
 import { CommonNav } from 'src/features/NavBar/CommonNav';
+import type { Metadata } from 'next';
+import envConfig from 'src/config/envConfig';
 
-const space = process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID;
-const accessToken = process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN;
+const space = envConfig.contentfulSpaceId;
+const accessToken = envConfig.contentfulAccessToken;
 
 const client = createClient({
   space: space ?? '',
   accessToken: accessToken ?? '',
 });
 
-import type { Metadata } from 'next';
+
 
 export const metadata: Metadata = {
   title: 'Hostelpilot Blogs: Read the latest news/trends in Hostel Industry',
