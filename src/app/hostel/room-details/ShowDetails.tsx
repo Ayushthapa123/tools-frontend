@@ -17,7 +17,6 @@ export default function ShowDetails({
   setShowDetails: (showDetails: boolean) => void;
 }) {
 
-  console.log('room', room);
 
   return (
     <RoomDetailView

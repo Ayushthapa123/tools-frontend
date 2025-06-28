@@ -663,8 +663,6 @@ const StepTwo = ({
     queryKey: ['roomDetails'],
     queryFn: queryFetchRoomDetailsFunc,
   });
-  console.log('roomids', roomIds);
-  console.log('room details', RoomDetails);
 
   const handleCheckout = async () => {
     if (!selectedPaymentMethod) return;
