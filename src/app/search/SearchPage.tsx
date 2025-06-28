@@ -39,7 +39,6 @@ export function SearchPage() {
   const handleCount = (count: number) => {
     setCount(count);
   };
-  console.log("cc", count, typeof (count))
   return (
     <div className=" ">
       <div className="mx-auto mt-4 h-full min-h-10 max-w-[1800px] pt-3">

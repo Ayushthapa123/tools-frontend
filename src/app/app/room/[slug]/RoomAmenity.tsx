@@ -72,7 +72,6 @@ export default function RoomAmenityPage({
       setSelectedRoomAmenity(parsedAmenities);
       setOriginalAmenities(parsedAmenities);
     } catch (error) {
-      console.log('Error parsing amenities:', error);
       setSelectedRoomAmenity([]);
     }
   }, [ data?.data?.amenity ]);
@@ -94,13 +93,10 @@ export default function RoomAmenityPage({
         return sortedArr1.every((value, index) => value.id === sortedArr2[ index ].id);
       }
       const isEqual = areArraysEqual(originalAmenities, selectedRoomAmenity);
-      console.log("originalAmenities", originalAmenities)
-      console.log("selectedRoomAmenity", selectedRoomAmenity)
-      console.log("isEqual", isEqual)
       setIsAmenityFieldsDirty(!isEqual);
     }
   }, [ selectedRoomAmenity, originalAmenities ]);
-  console.log("isAmenityFieldsDirty", isAmenityFieldsDirty)
+
   //create room amenity
   const mutateRoomAmenity = useGraphqlClientRequest<
     CreateRoomAmenityMutation,

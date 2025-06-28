@@ -29,7 +29,6 @@ export const RoomCard = ({ room, setShowDeleteModal, setDeletedRoomId }: { room:
         return '!bg-gray-100 !text-gray-800';
     }
   };
-  console.log("gg",getStatusColor(room?.status ?? ''))
 
   const roomSeater = [
     {

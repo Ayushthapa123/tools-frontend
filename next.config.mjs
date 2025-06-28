@@ -18,6 +18,7 @@ const config = {
       's3-np1.datahub.com.np',
       'cloudinary.com',
       'res.cloudinary.com',
+      "images.ctfassets.net"
     ],
   },
   output: 'standalone',
