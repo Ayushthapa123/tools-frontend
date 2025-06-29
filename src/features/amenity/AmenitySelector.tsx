@@ -63,7 +63,6 @@ const formattedAmenityOptions = allAmenityOptions?.amenityOptions?.data?.reduce(
   {} as Record<HostelAmenityType, { name: string; description: string; id: string; hostelAmenityType: HostelAmenityType }[]>
 ); 
 
-console.log("ffffffffffffffffffffffff",formattedAmenityOptions)
 
 
   // Flatten all amenities for internal processing

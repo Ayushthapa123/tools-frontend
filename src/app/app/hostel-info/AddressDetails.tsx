@@ -30,10 +30,11 @@ import { enqueueSnackbar } from 'notistack';
 import { useGraphQLQuery } from 'src/hooks/useGraphqlQuery';
 
 interface Iprops {
-  hostelId?: number;
+  hostelId?: number;    
+  handleNextStep?: () => void;
 }
 export const AddressDetails = (props: Iprops) => {
-  let { hostelId } = props;
+  let { hostelId, handleNextStep } = props;
    const queryHostelData = useGraphqlClientRequest<
     GetHostelByTokenQuery,
     GetHostelByTokenQueryVariables
@@ -82,6 +83,7 @@ export const AddressDetails = (props: Iprops) => {
           id={hostelData?.data?.id ?? ''} 
           createdAt={ ''}
           updatedAt={ ''}
+          handleNextStep={handleNextStep}
         />
       ) : (
         <div className=" h-[50vh] w-full">
@@ -94,8 +96,8 @@ export const AddressDetails = (props: Iprops) => {
 
 
 
-const HostelInfoForm: FC<AddressData> = props => {
-  const { hostelId, id, city, country, street, subCity, latitude, longitude } = props;
+const HostelInfoForm: FC<AddressData & { handleNextStep?: () => void }> = props => {
+  const { hostelId, id, city, country, street, subCity, latitude, longitude, handleNextStep } = props;
 
   const [clickedLatLng, setClickedLatLng] = useState<{
     lat: number | null;
@@ -199,6 +201,7 @@ const HostelInfoForm: FC<AddressData> = props => {
           enqueueSnackbar('Address Created', { variant: 'success' });
           queryClient.invalidateQueries({ queryKey: ['getAddress'] });
           queryClient.invalidateQueries({ queryKey: ['getHostelByToken'] });
+          handleNextStep?.();
         } else {
           enqueueSnackbar('Something went wrong', { variant: 'error' });
         }
@@ -215,7 +218,7 @@ const HostelInfoForm: FC<AddressData> = props => {
 
   return (
     <form className=" h-auto w-full" onSubmit={handleSubmit(handleSubmitForm)}>
-      <div className="relative mt-5 h-[500px] w-full overflow-hidden">
+      <div className="relative mt-5 h-[300px] md:h-[500px] w-full overflow-hidden">
         <MapComponent
           clickedLatLng={clickedLatLng}
           setClickedLatLng={handleClickLatLng}

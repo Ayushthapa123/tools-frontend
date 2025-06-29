@@ -164,12 +164,12 @@ function SignUp() {
   ];
 
   return (
-    <section className="flex min-h-[100vh]  flex-col justify-center bg-[#f5fffc] md:p-5 p-2 align-middle">
-      <div className="container mx-auto ">
+    <section className="flex min-h-[100vh]  flex-col justify-center  md:p-5 p-1 align-middle">
+      <div className="container md:mx-auto ">
 
         <div className="flex flex-wrap ">
           <div className="flex flex-col-reverse md:flex-row-reverse w-[90vw] md:w-[90vw] mx-auto items-center justify-center ">
-            <div className="relative z-10 md:w-[50%] w-[100%] h-[100%] text-center text-2xl font-bold bg-[#d3e9ed] p-5 rounded-r-2xl">
+            <div className="relative z-10 md:w-[50%] w-[100%] h-[100%] text-center text-2xl font-bold  p-5 rounded-r-2xl">
               <div>
                 {/* <h3 className='text-2xl lg:text-lg font-medium text-center'>Welcome to signup !</h3> */}
                 <div className='flex items-center justify-center mt-4'>
@@ -322,7 +322,7 @@ function SignUp() {
                   </svg>
                 </span>
             </div>
-            <div className="md:w-[50%] w-[100%] h-[100%] relative rounded-l-2xl overflow-hidden bg-[#eaf6f2] px-5 py-[1rem] text-center sm:px-[1rem] md:px-[3rem]">
+            <div className="md:w-[50%] w-[100%] h-[100%] relative rounded-l-2xl overflow-hidden bg-base-100 px-3 py-[1rem] text-center sm:px-[1rem] md:px-[3rem]">
               <div className="relative md:w-[70%] w-full mx-auto mb-5 flex items-start md:items-center  gap-1">
                 <Logo />
                 <div>
@@ -332,7 +332,7 @@ function SignUp() {
               <div>
                 <p className=" text-error">{error ?? error}</p>
               </div>
-              <form className="bg-[#eaf6f2] w-[70%] mx-auto text-left " onSubmit={handleSubmit(onSubmit)}>
+              <form className=" md:w-[80%] mx-auto text-left " onSubmit={handleSubmit(onSubmit)}>
                 <div className=" py-3 ">
                   <div className="">
                     <TextInput
@@ -432,16 +432,17 @@ function SignUp() {
               </p>
 
 
-              <div className="w-[70%] mx-auto  ">
+              <div className="md:w-[80%] mx-auto  ">
                 <hr className="  my-3 w-full border" />
 
-                <button
+                <Button
+                  variant="teal"
                   onClick={() => openSignupUrl()}
-                  className="flex w-full items-center justify-center rounded-md bg-primary px-4 py-2 font-bold text-white"
-                >
-                  <FcGoogle className="mr-2 text-3xl" />
-                  Continue With Google
-                </button>
+                  label="Continue With Google"
+                  startAdornment={<FcGoogle className="text-3xl " />}
+                  className="bg-primary"
+                  height="lg"
+                />
               </div>
 
               <div>

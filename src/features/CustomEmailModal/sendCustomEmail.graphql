@@ -1,0 +1,13 @@
+mutation SendCustomEmail(
+  $email: String!
+  $name: String!
+  $subject: String!
+  $htmlContent: String!
+) {
+  sendCustomEmail(
+    email: $email
+    name: $name
+    subject: $subject
+    htmlContent: $htmlContent
+  )
+}

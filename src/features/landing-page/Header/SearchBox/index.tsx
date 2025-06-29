@@ -99,7 +99,6 @@ export const SearchBox = () => {
 
   const handleHostelNameChanged = () => {
     const place = autocompleteRef2.current.getPlace();
-    console.log("place", place);
     handleQuery(place?.name ?? '');
     if (place?.geometry && place?.geometry.location) {
       const lat = place.geometry.location.lat();

@@ -86,58 +86,6 @@ export default function MainContent(props: Iprops) {
   // Parse the amenities string into an array
   const amenitiesArray = amenities ? JSON.parse(amenities.data?.amenities ?? '[]') : [];
 
-  const essentialAmenities = [
-    {
-      title: "Study/Reading Room",
-      icons: <IoLibrary className="text-xl" />
-    },
-    {
-      title: "Locker",
-      icons: <RiSafeFill className="text-xl" />
-    },
-    {
-      title: "Air Conditioning (Room)",
-      icons: <TbAirConditioning className="text-xl" />
-    },
-    {
-      title: "CCTV Cameras",
-      icons: <BiSolidCctv className="text-xl" />
-    },
-    {
-      title: "Parking facility",
-      icons: <FaSquareParking className="text-xl" />
-    },
-    {
-      title: "On-site Laundry Facility",
-      icons: <GiClothes className="text-xl" />
-    },
-    {
-      title: "24/7 front desk",
-      icons: <FaChalkboardTeacher className="text-xl" />
-    },
-    {
-      title: "High-Speed Wi-Fi",
-      icons: <FaWifi className="text-xl" />
-    },
-    {
-      title: "Western Toilet",
-      icons: <FaToilet className="text-xl" />
-    },
-    {
-      title: "Cafeteria/Canteen",
-      icons: <MdFreeBreakfast className="text-xl" />
-    },
-    {
-      title: "Storage Cabinets",
-      icons: <MdLuggage className="text-xl" />
-    },
-
-  ]
-
-  const matchedAmenities = essentialAmenities.filter((essential: any) => {
-    return amenitiesArray.some((item: any) => essential.title.toLowerCase().includes(item.name.toLowerCase()));
-  })
-
   const selectedImg = hostel?.data?.gallery?.filter(img => img.isSelected === true);
 
   const handleShowAllAmenities = () => {
@@ -232,12 +180,12 @@ export default function MainContent(props: Iprops) {
                     }
                   </div>
                   <div className="grid grid-cols-2 items-start justify-between gap-x-2 gap-y-5">
-                    {matchedAmenities.length > 0 ? matchedAmenities.slice(0, 6).map((amenity) => (
+                    {amenitiesArray.length > 0 ? amenitiesArray.slice(0, 6).map((amenity: any) => (
                       <div className="flex items-start gap-2" key={amenity.title}>
-                        <div className="mt-[2px] bg-blue-50 text-blue-600 flex text-xl items-center justify-center rounded-full text-secondary">
-                          {amenity.icons}
+                        <div className='flex items-center justify-start'>
+                          <FaLightbulb className='text-xl text-secondary' />
                         </div>
-                        <span className="text-base text-gray-700">{amenity.title}</span>
+                        <span className='text-base font-medium text-gray-600'>{amenity.name}</span>
                       </div>
                     )) : <div className='text-center text-gray-500'>No top amenities found</div>}
                   </div>
@@ -341,24 +289,11 @@ export default function MainContent(props: Iprops) {
       )}
       <Modal title='All Amenities' open={showAllAmenities} actionLabel='Okay' key="all-amenities" onSave={() => setShowAllAmenities(false)} handleClose={() => setShowAllAmenities(false)}>
         <div className='border-t border-gray-300 py-4 grid grid-cols-2 gap-3'>
-          {
-            matchedAmenities.map((am) => (
-              <div className='flex items-start gap-3' key={am.title}>
-                <div className='flex items-center justify-start text-secondary'>
-                  {am.icons}
-                </div>
-                <span className='text-base font-semibold text-gray-600'>{am.title}</span>
-              </div>
-            ))}
-          {amenitiesArray && amenitiesArray.filter((item:any) => {
-            return !essentialAmenities.some(essential => {
-              return item.name.toLowerCase().includes(essential.title.toLowerCase());
-            });
-          }).map((amenity:any) => (
+          {amenitiesArray && amenitiesArray.map((amenity: any) => (
             <div key={amenity.id} className='flex items-start gap-3 w-full'>
               <div className='flex items-center justify-start'>
-              <FaLightbulb className='text-xl text-secondary' />
-                </div>
+                <FaLightbulb className='text-xl text-secondary' />
+              </div>
               <span className='text-base font-semibold text-gray-600'>{amenity.name}</span>
             </div>
           ))

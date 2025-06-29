@@ -9,6 +9,7 @@ interface Iprops {
   actionLabel?: string;
   onSave?: () => void;
   handleClose: () => void;
+  
 }
 
 export const Modal = (props: Iprops) => {

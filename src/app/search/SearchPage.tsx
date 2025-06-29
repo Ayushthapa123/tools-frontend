@@ -52,8 +52,6 @@ export function SearchPage() {
   const handleCount = (count: number) => {
     setCount(count);
   };
-  
-
   return (
     <div className="min-h-screen">
       <div className="mx-auto mt-4 h-full min-h-10 max-w-[1800px] pt-3">

@@ -63,7 +63,6 @@ export default function Gallery() {
     queryFn: fetchWallpapers,
     enabled: !!hostelData?.data?.id,
   });
-  console.log("wd",wallpaperData)
 
   const mainWallpaper = wallpaperData?.data?.filter(img => img?.isSelected)[0] || wallpaperData?.data?.[0];
 
