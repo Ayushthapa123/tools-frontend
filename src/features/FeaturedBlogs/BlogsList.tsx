@@ -24,7 +24,7 @@ const BlogLists = async () => {
   const blogPageData = JSON.parse(stringifiedBlogPageData);
   return (
     <>
-      <section className="bg-white pb-10 pt-5 lg:pb-20 ">
+      <section className="pb-2 pt-5 lg:pb-3 ">
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {blogPageData?.items?.map((data: any, index: number) => (
             <div key={index} className="">
