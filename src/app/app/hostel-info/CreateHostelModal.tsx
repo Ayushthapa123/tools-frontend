@@ -228,8 +228,9 @@ export const CreateHostelModal = () => {
                 </div>
               </div>
             )}
-            <div>{steps === 3 && <MapProvider><CreateAddressForm hostelId={hostelId} handleNextStep={plusStep} /></MapProvider>}</div>
             <div>{steps === 2 && <CreateContactForm hostelId={hostelId} handleNextStep={plusStep} />}</div>
+
+            <div>{steps === 3 && <MapProvider><CreateAddressForm hostelId={hostelId} handleNextStep={plusStep} /></MapProvider>}</div>
 
             </div>
 
