@@ -3,7 +3,7 @@ import { HostelCard } from './cards/HostelCard';
 
 import { useEffect, useMemo } from 'react';
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
-import { SearchHostel, SearchHostelQuery, SearchHostelQueryVariables, RoomCapacity, HostelType, HostelGenderType, GetFilteredHostelsQueryVariables, GetFilteredHostelsQuery, GetFilteredHostels } from 'src/gql/graphql';
+import { SearchHostel, SearchHostelQuery, SearchHostelQueryVariables, RoomCapacity, HostelType, HostelGenderType, } from 'src/gql/graphql';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { HostelCardSkeleton } from './cards/HostelCardSkeleteon';
