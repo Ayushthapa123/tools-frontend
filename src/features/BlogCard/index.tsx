@@ -1,4 +1,8 @@
 import Image from 'next/image';
+import { BiUpvote } from 'react-icons/bi';
+import { MdOutlineRemoveRedEye } from 'react-icons/md';
+import { GoPencil } from "react-icons/go";
+import Link from 'next/link';
 
 interface Iprops {
   title: string;
@@ -11,28 +15,52 @@ interface Iprops {
 const BlogCard = ({ date, description, image, title, slug }: Iprops) => {
   return (
     <>
-      <div className="w-full h-full px-4 pt-3  rounded-lg  card">
-        <div className="w-full mb-10">
-          <div className="relative mb-8 h-[300px] w-full overflow-hidden rounded ">
-            <Image src={image} alt="" className="w-full" fill />
-          </div>
-          <div>
-            {date && (
-              <span className="inline-block px-4 py-1 mb-5 text-xs font-semibold leading-loose text-center text-white rounded bg-primary">
-                {date}
-              </span>
-            )}
-            <h3>
-              <a
-                href={`/blogs/` + slug}
-                className="inline-block mb-4 text-xl font-semibold line-clamp-2 text-dark hover:text-primary sm:text-2xl lg:text-xl xl:text-2xl">
-                {title}
-              </a>
-            </h3>
-            <p className="text-lg font-normal text-body-color line-clamp-3">{description}</p>
+      <Link href={`/blogs/${slug}`}>
+        <div className="w-full bg-white h-full rounded-2xl  card cursor-pointer ">
+          <div className="w-full mb-4">
+            <div className='relative'>
+              <div className="h-[300px] w-full overflow-hidden rounded ">
+                <Image src={image} alt="" className="w-full rounded-t-2xl rounded-b-none" fill />
+              </div>
+              <div className='absolute text-sm px-4 py-1 text-gray-600 font-semibold flex justify-center bottom-3 items-center right-2 bg-gray-100 rounded-lg'>
+                5 min read
+              </div>
+            </div>
+            <div className='px-4 pt-3 flex items-center justify-between'>
+              <div className='flex items-center justify-start gap-3'>
+                <div className='flex items-center gap-2 bg-gray-100 rounded-lg px-2 py-1 cursor-default'>
+                  <MdOutlineRemoveRedEye />
+                  <span className='text-gray-700 text-sm'>100</span>
+                </div>
+                <div className='flex items-center gap-2 bg-gray-100 rounded-lg px-2 py-1 cursor-default'>
+                  <BiUpvote />
+                  <span className='text-gray-700 text-sm'>10</span>
+                </div>
+              </div>
+              <div>
+                {date && (
+                  <div className='flex items-center gap-2 px-1 py-1 cursor-default'>
+                    <GoPencil className='text-gray-700 text-sm' />
+                    <span className="inline-block text-sm text-gray-700">
+                      {date}
+                    </span>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className='px-4 mb-0'>
+              <h3 className='mb-0'>
+                <a
+                  href={`/blogs/` + slug}
+                  className="inline-block mt-2 text-xl font-bold line-clamp-2 text-dark hover:text-primary sm:text-2xl lg:text-xl xl:text-2xl">
+                  {title}
+                </a>
+              </h3>
+              <p className={`text-base font-medium text-gray-500 ${title.length > 15 ? 'line-clamp-3' : 'line-clamp-4'} mb-0`}>{description}</p>
+            </div>
           </div>
         </div>
-      </div>
+      </Link>
     </>
   );
 };
