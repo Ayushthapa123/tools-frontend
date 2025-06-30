@@ -55,7 +55,7 @@ const HealthGuidePage = async () => {
         ))}
       </div>
       {/* pagination */}
-      <div className="flex items-center justify-between border-b mt-6 border-gray-100 pb-2 w-full gap-4">
+      <div className="flex w-[90%] mx-auto items-center justify-between border-b my-6 border-gray-100 gap-4">
           <button className="bg-gray-200 rounded-lg px-4 py-2 text-gray-700 w-fit">Previous</button>
           <button className="bg-gray-200 rounded-lg px-4 py-2 text-gray-700 w-fit">Next</button>
       </div>
