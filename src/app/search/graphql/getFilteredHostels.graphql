@@ -1,19 +1,16 @@
-query searchHostel($input: SearchHostelInput!) {
-  getHostelsBySearch(input: $input) {
+query getFilteredHostels($input: SearchFilteredHostelInput!) {
+  getFilteredHostels(input: $input) {
     data {
       name
       description
-      hostelType
-      genderType
       address {
         city
         country
         subCity
         street
       }
-      rooms {
-        capacity
-        price {
+      rooms{
+        price{
           baseAmountPerDay
           baseAmountPerMonth
         }
@@ -26,6 +23,8 @@ query searchHostel($input: SearchHostelInput!) {
       gallery {
         url
       }
+
+
       slug
     }
     error {

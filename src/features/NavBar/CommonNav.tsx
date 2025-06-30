@@ -27,7 +27,7 @@ export const CommonNav = () => {
         <div className="flex  flex-1" />
 
         <div className=" flex flex-shrink-0 flex-col justify-center ">
-          <div className="flex gap-1 md:gap-4">
+          <div className="flex flex-row-reverse gap-2 md:gap-4">
             {!user.userId && domainConfig.appName === 'hosteladmin' && (
               <>
                 <div className="flex gap-1 md:gap-2">

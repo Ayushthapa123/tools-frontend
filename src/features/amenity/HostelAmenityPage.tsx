@@ -37,11 +37,19 @@ export const HostelAmenitiesPage = ({ hostelId }: { hostelId: number }) => {
     data,
     error,
     isLoading: loading,
+    refetch,
   } = useQuery({
     queryKey: ['getAmenity'],
     queryFn: fetchData,
     enabled: !!hostelId,
+    
   });
+
+  // Callback function to refetch data after mutations
+  const handleAmenityUpdate = () => {
+    refetch();
+  };
+
   if (loading || isLoading) return <LoadingSpinner />;
   if (error) return <p>Error: {error.message}</p>;
 
@@ -56,6 +64,7 @@ export const HostelAmenitiesPage = ({ hostelId }: { hostelId: number }) => {
         loading={loading}
         amenityId={Number(data?.data?.id)}
         allAmenityOptions={allAmenityOptions}
+        onAmenityUpdate={handleAmenityUpdate}
       />
     </div>
   );
