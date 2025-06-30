@@ -8,7 +8,7 @@ import { SearchBox } from 'src/features/landing-page/Header/SearchBox';
 import { MapProvider } from 'src/features/MapProvider';
 import SearchFilter, { FilterData } from './filter';
 import Button from 'src/components/Button';
-import { Modal } from 'src/components/Modal';
+import { DetailViewModal } from 'src/app/hostel/room-details/RoomDetailView';
 
 
 
@@ -68,7 +68,7 @@ export function SearchPage() {
             <span>
               <MdApartment className='text-3xl mr-1' />
             </span>
-          <div className="flex flex-grow items-end">
+          <div className="flex flex-col gap-1 md:gap-2 md:flex-row">
             <p className='text-gray-500'>
               <span className="text-black text-3xl">{count}</span> Hostels Found nearby
             </p>
@@ -107,9 +107,9 @@ export function SearchPage() {
       </div>
       {
         showMobileFilter && (
-          <Modal open={showMobileFilter} handleClose={() => setShowMobileFilter(false)} actionLabel='Done' onSave={() => setShowMobileFilter(false)} >
+          <DetailViewModal open={showMobileFilter} handleClose={() => setShowMobileFilter(false)} >
             <SearchFilter setFilteredHostels={setFilteredHostels} lat={Number(lat)} lng={Number(lng)} />
-          </Modal>
+          </DetailViewModal>
         )
       }
     </div>

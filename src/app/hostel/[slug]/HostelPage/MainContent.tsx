@@ -7,24 +7,19 @@ import {
   FindAmenityByHostelIdQuery,
   RoomData,
   Hostel,
-  Gallery,
   GalleryData,
 } from 'src/gql/graphql';
 import { MapProvider } from 'src/features/MapProvider';
-import { useEffect, useRef, useState } from 'react';
+import {  useRef, useState } from 'react';
 import Image from 'next/image';
-import TbHandFingerRight, { TbAirConditioning } from "react-icons/tb";
 import {
   FaFacebook,
-  FaChalkboardTeacher,
-  FaWifi,
-  FaToilet,
   FaLightbulb,
 } from 'react-icons/fa';
 import RichTextEditor from 'src/components/RichTextEditor';
 import { RoomCardFull } from '../booking/RoomCardFull';
-import { FaPhoneFlip, FaSquareParking } from 'react-icons/fa6';
-import { MdEmail, MdFreeBreakfast, MdLocalOffer, MdLuggage, MdOutlineFreeBreakfast } from 'react-icons/md';
+import { FaPhoneFlip } from 'react-icons/fa6';
+import { MdEmail } from 'react-icons/md';
 import { GrInstagram, GrYoutube } from 'react-icons/gr';
 import { useRoomStore } from 'src/store/roomStore';
 import { useQuery } from '@tanstack/react-query';
@@ -32,10 +27,6 @@ import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import { MapComponent } from 'src/features/GoogleMap';
 import ShowDetails from '../../room-details/ShowDetails';
 import { Modal } from 'src/components/Modal';
-import { IoLibrary } from 'react-icons/io5';
-import { BiSolidCctv } from 'react-icons/bi';
-import { GiClothes } from 'react-icons/gi';
-import { RiSafeFill } from 'react-icons/ri';
 
 interface Iprops {
   hostel: Hostel | undefined | null;
@@ -121,7 +112,7 @@ export default function MainContent(props: Iprops) {
                 </div>
               </div>
               <div className="mb-2">
-                <div className="relative mb-4 h-[500px] w-full overflow-hidden rounded-2xl bg-gray-200">
+                <div className="relative mb-4 h-[300px] md:h-[500px] w-full overflow-hidden rounded-2xl bg-gray-200">
                   <div className="group relative h-full w-full">
                     <Image
                       src={
