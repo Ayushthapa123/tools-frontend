@@ -52,7 +52,7 @@ const Button: FC<ButtonComponentProps> = ({
           <LoadingSpinner color="white" />
         </span>
       )}
-      {endAdornment && <span className="relative top-[2px] ">{endAdornment}</span>}
+      {endAdornment && <span className="relative ">{endAdornment}</span>}
     </button>
   );
 };

@@ -3,28 +3,25 @@ import BlogLists from './BlogsList';
 import { Montserrat } from 'next/font/google';
 import Link from 'next/link';
 import { IoIosArrowRoundForward } from 'react-icons/io';
+import Button from 'src/components/Button';
 const montserrat = Montserrat({
   weight: '400',
   subsets: ['latin'],
 });
 export const FeaturedBlogs = async () => {
   return (
-    <div className="flex w-full flex-col  space-y-10 px-6 py-12 sm:px-12 md:px-16 lg:px-20 xl:px-28">
-     <div className="flex w-full items-center  justify-between">
-        <h1 className={`text-left text-3xl sm:text-4xl md:text-5xl ${montserrat.className}`}>
+    <div className="flex flex-col w-[90%] my-4 mx-auto">
+     <div className="flex mb-4 w-full items-center  justify-between">
+        <h1 className={`text-left font-semibold text-xl sm:text-2xl md:text-3xl ${montserrat.className}`}>
           Featured Blogs
         </h1>
-        <Link href={`/blogs`}>
-          {' '}
-          <button className=" flex  h-12  items-center justify-center space-x-2   rounded-lg bg-gradient-to-r from-[#F1F5F9] via-[#F8FAFC] to-white text-base font-bold  text-[#418C7E] hover:cursor-pointer hover:from-[#eaecee] hover:via-[#eef4f9] sm:text-lg ">
-            <span>See All</span>{' '}
-            <span className=" text-2xl md:text-3xl">
-              <IoIosArrowRoundForward />
-            </span>
-          </button>
-        </Link>
       </div>
       <BlogLists />
+      <div className='flex justify-center w-fit mx-auto my-4'>
+      <Link href={`/blogs`}>
+          <Button label="See All blogs" endAdornment={<IoIosArrowRoundForward className='text-4xl font-semibold'/>} />
+        </Link>
+      </div>
     </div>
   );
 };
