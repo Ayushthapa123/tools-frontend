@@ -55,21 +55,21 @@ export const HostelCard = (props: Iprops) => {
 
       <div className="flex-grow overflow-y-auto px-4" style={{ maxHeight: '150px' }}>
         <div className="flex flex-wrap items-start justify-between gap-2">
-          <div className='flex flex-col leading-3'>
+          <div className='flex flex-1 flex-col leading-3'>
             <h3 className="m-0 ml-1 text-xl font-semibold text-gray-900">{name}</h3>
-            <p className="text-capitalize my-1 flex items-center gap-2 text-xs text-primary/70">
+            <p className="text-capitalize my-1 flex items-center gap-2 text-xs text-primary/70 break-words">
               <GrLocation className="text-secondary w-5 h-5 font-semibold" />
-              <span className="text-base text-gray-600">
+              <span className="text-base text-gray-600 text-wrap">
                 {subCity} {city}, {country}
               </span>
             </p>
           </div>
-          <div>
+          <div className="flex-shrink-0">
             <div className='rounded-full p-2 hover:bg-gray-200'>
               <FaRegHeart className='w-6 h-6 text-red/65 font-semibold' />
             </div>
             {/* <span className='text-sm text-secondary/80 font-semibold'>{currency} {amount}</span> */}
-          </div>
+          </div>  
         </div>
         <div className="">{/* <RichTextEditor editorRef={editorRef} readOnly={true} /> */}</div>
 

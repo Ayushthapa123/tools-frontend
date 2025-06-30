@@ -156,7 +156,7 @@ export const SearchBox = () => {
               type="text"
               placeholder="Search Your Location"
               value={searchText}
-              className="rounded-md w-full bg-gray-50  p-2 pl-0 placeholder:text-xs "
+              className="rounded-md w-full bg-gray-50  p-2 pl-0 placeholder:text-sm"
               onChange={handleLocationChange}
               // defaultValue={query}
               // autoComplete="on"
@@ -180,7 +180,7 @@ export const SearchBox = () => {
               type="text"
               placeholder="Enter hostel's name"
               value={searchHostelNameText}
-              className="rounded-md w-full bg-gray-50  p-2 pl-0 placeholder:text-xs"
+              className="rounded-md w-full bg-gray-50  p-2 pl-0 placeholder:text-sm "
               onChange={handleHostelNameChange}
               // defaultValue={query}
               // required

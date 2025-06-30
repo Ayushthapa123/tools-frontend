@@ -16,7 +16,7 @@ const BlogCard = ({ date, description, image, title, slug }: Iprops) => {
   return (
     <>
       <Link href={`/blogs/${slug}`}>
-        <div className="w-full bg-white h-full rounded-2xl  card cursor-pointer ">
+        <div className="w-full bg-white h-full rounded-2xl  card cursor-pointer hover:shadow-md transition-all duration-200">
           <div className="w-full mb-4">
             <div className='relative'>
               <div className="h-[300px] w-full overflow-hidden rounded ">

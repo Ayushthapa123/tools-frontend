@@ -30,16 +30,16 @@ export const Header = () => {
               </div>
               <div className="grid grid-cols-3 gap-4 text-center w-[40%] mx-auto">
                 <div className="flex flex-col items-center border-r border-gray-300">
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Hostels</div>
-                  <div className="text-2xl md:text-2xl font-bold text-secondary mb-1">10+</div>
+                  <div className="text-2xl md:text-4xl font-bold text-secondary/90 mb-1">50+</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-600">Hostels</div>
                 </div>
                 <div className="flex flex-col items-center border-r border-gray-300">
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Cities</div>
-                  <div className="text-2xl md:text-2xl font-bold text-secondary mb-1">5+</div>
+                  <div className="text-2xl md:text-4xl font-bold text-secondary/90 mb-1">5+</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-600">Cities</div>
                 </div>
                 <div className="flex flex-col items-center">
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Support</div>
-                  <div className="text-2xl md:text-2xl font-bold text-secondary mb-1">24/7</div>
+                  <div className="text-2xl md:text-4xl font-bold text-secondary/90 mb-1">24/7</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-600">Support</div>
                 </div>
             </div>
             </div>
