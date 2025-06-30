@@ -45,8 +45,8 @@ export default function OnboardingCompletion() {
 
     if (data.address?.id) completedSteps++;
     if (data.contact?.id) completedSteps++;
-    if (data.gallery?.length > 0) completedSteps++;
-    if (data.rooms?.length > 0) completedSteps++;
+    if (data.gallery?.length && data.gallery.length > 0) completedSteps++;
+    if (data.rooms?.length && data.rooms.length > 0) completedSteps++;
     if (data.amenities?.id) completedSteps++;
 
     return (completedSteps / totalSteps) * 100;

@@ -5,7 +5,7 @@ interface Iprops {
 export const BreadCrumbs = (props: Iprops) => {
   return (
     <>
-      <div className="ml-[30px] pt-2">
+      <div className="ml-2 md:ml-[30px] pt-2">
         <div className="breadcrumbs line-clamp-1 w-full text-sm lg:w-auto">
           <ul className="text-sm">
             <li>

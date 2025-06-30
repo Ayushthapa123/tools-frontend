@@ -10,12 +10,12 @@ const Footer = () => {
         <div className="flex w-full flex-col-reverse md:flex-row-reverse items-start justify-between mr-12 gap-12">
           <div className='flex flex-[70%] flex-col md:flex-row-reverse items-start gap-1 md:gap-8 mt-6 sm:mt-0'>
             <div>
-              <Link href="#">
+              <Link href="/privacy-policy">
                 <h4 className="text-blue text-base lg:text-sm  text-center font-semibold">Privacy Policy</h4>
               </Link>
             </div>
             <div>
-              <Link href="#">
+              <Link href="/terms-and-conditions">
                 <h4 className="text-blue text-base lg:text-sm  text-center font-semibold">Terms of Service</h4>
               </Link>
             </div>

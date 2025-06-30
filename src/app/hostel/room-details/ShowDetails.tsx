@@ -8,7 +8,7 @@ import { BiArea } from 'react-icons/bi';
 import { BsCheckCircleFill } from 'react-icons/bs';
 import { Badge } from 'src/components/Badge';
 import Image from 'next/image';
-import { RoomDetailView } from 'src/app/hostel/room-details/RoomDetailView';
+import { DetailViewModal } from 'src/app/hostel/room-details/RoomDetailView';
 export default function ShowDetails({
   room,
   setShowDetails,
@@ -19,7 +19,7 @@ export default function ShowDetails({
 
 
   return (
-    <RoomDetailView
+    <DetailViewModal
       open={true}
       title="Room Details"
       handleClose={() => {
@@ -109,6 +109,6 @@ export default function ShowDetails({
           </div>
         </div>
       </div>
-    </RoomDetailView>
+    </DetailViewModal>
   );
 }
