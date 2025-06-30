@@ -11,7 +11,7 @@ interface Iprops {
   handleClose: () => void;
 }
 
-export const RoomDetailView = (props: Iprops) => {
+export const DetailViewModal = (props: Iprops) => {
   const { handleClose, open } = props;
 
   return <div>{open && <ModalContents {...props} onClose={handleClose} open={open} />}</div>;

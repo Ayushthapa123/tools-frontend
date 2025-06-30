@@ -64,7 +64,7 @@ export const RoomCardFull = ({
 
   return (
     <div
-      className={`group relative flex h-full flex-col overflow-hidden rounded-xl bg-base-100 transition-all duration-300 xl:flex-row ${isSelected
+      className={`group relative flex h-full flex-col overflow-hidden rounded-xl bg-base-100 transition-all duration-300 lg:flex-row ${isSelected
           ? 'ring-blue-200 border border-blue ring-2'
           : 'border border-gray-200 hover:border-gray-300 hover:shadow-sm'
         }`}
@@ -76,7 +76,7 @@ export const RoomCardFull = ({
 
 
       {/* Left side - Image */}
-      <div className="relative h-44 min-w-[200px] overflow-hidden md:h-80 lg:h-60 xl:h-auto xl:w-1/3">
+      <div className="relative h-64 min-w-[200px] overflow-hidden md:h-80 lg:h-auto lg:w-1/3">
         {room.image && room.image.length > 0 ? (
           <div className="relative h-full">
             <Image
@@ -116,7 +116,7 @@ export const RoomCardFull = ({
       </div>
 
       {/* Right side - Content */}
-      <div className="flex flex-col justify-between p-3 md:px-5 xl:w-2/3">
+      <div className="flex flex-col justify-between p-3 md:px-5 lg:w-2/3">
         <div>
           <h3 className="text-2xl font-semibold text-black">{room.caption}</h3>
 

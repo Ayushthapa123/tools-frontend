@@ -129,7 +129,7 @@ export const SearchBox = () => {
 
   return (
     <div className="relative flex w-full flex-col items-center justify-center px-3 ">
-      <div className="relative z-50 flex w-full max-w-6xl min-w-[300px] md:min-w-[600px] flex-col gap-2  space-y-[6px] rounded-md border bg-gray-50 px-[10px] py-[10px] focus-within:border-gray-300 sm:flex-row sm:space-y-0 sm:rounded-md sm:py-1  sm:pr-1">
+      <div className="relative z-50 flex w-full max-w-6xl md:min-w-[600px] flex-col gap-2  space-y-[6px] rounded-md border bg-gray-50 px-[10px] py-[10px] focus-within:border-gray-300 sm:flex-row sm:space-y-0 sm:rounded-md sm:py-1  sm:pr-1">
         {/* <input
           type="text"
           placeholder="Search By Location"
@@ -141,7 +141,7 @@ export const SearchBox = () => {
           onClick={() => setShowSearchSuggestions(true)}
         /> */}
 
-        <div className='flex gap-3 flex-grow items-start p-2 border-r w-full border-r-gray-300'>
+        <div className='flex gap-3 flex-grow items-start p-2 md:border-r w-full border-r-gray-300'>
           <div>
           <FaLocationDot className='w-6 h-6' />
           </div>
@@ -156,7 +156,7 @@ export const SearchBox = () => {
               type="text"
               placeholder="Search Your Location"
               value={searchText}
-              className="rounded-md w-full bg-gray-50  p-2 pl-0 placeholder:text-xs "
+              className="rounded-md w-full bg-gray-50 text-base  p-2 pl-0 placeholder:text-xs "
               onChange={handleLocationChange}
               defaultValue={query}
               // autoComplete="on"
@@ -180,7 +180,7 @@ export const SearchBox = () => {
               type="text"
               placeholder="Enter hostel's name"
               value={searchHostelNameText}
-              className="rounded-md w-full bg-gray-50  p-2 pl-0 placeholder:text-xs"
+              className="rounded-md w-full bg-gray-50 text-base  p-2 pl-0 placeholder:text-xs"
               onChange={handleHostelNameChange}
               // defaultValue={query}
               // required
@@ -216,9 +216,9 @@ export const SearchBox = () => {
           />
         </div> */}
 
-        <div className='flex gap-2 flex-row items-center justify-center mr-3'>
+        <div className='flex gap-2 w-full md:w-fit flex-row items-center justify-center mr-3'>
         <button
-          className={`flex gap-2 items-center justify-center rounded-md border border-transparent bg-primary px-3 py-2 text-base font-medium tracking-wide text-white transition duration-150 ease-in-out md:min-w-[100px] md:min-h-[40px] ${!isValidSearch ? "cursor-not-allowed" : ""}`}
+          className={`flex w-full md:w-fit gap-2 items-center justify-center rounded-md border border-transparent bg-primary px-3 py-2 text-base font-medium tracking-wide text-white transition duration-150 ease-in-out md:min-w-[100px] md:min-h-[40px] ${!isValidSearch ? "cursor-not-allowed" : ""}`}
           onClick={() => handleSearch()}
         >
           <span className="hidden text-xl sm:flex">

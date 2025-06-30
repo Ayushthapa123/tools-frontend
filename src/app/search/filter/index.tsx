@@ -225,19 +225,19 @@ export default function SearchFilter({ setFilteredHostels, lat, lng }: { setFilt
       </div>
       <div className="flex flex-row-reverse w-full items-center xl:items-end justify-between gap-2 ">
         <button
-          className="min-w-[145px] w-full xl:w-fit flex items-end gap-2 bg-green font-semibold opacity-90 hover:opacity-100 text-white p-3 transition-all duration-100 hover:font-semibold  rounded-md"
+          className="min-w-[120px] lg:min-w-[145px] w-full xl:w-fit flex items-end gap-2 justify-center bg-green font-semibold opacity-90 hover:opacity-100 text-white p-3 transition-all duration-100 hover:font-semibold  rounded-md"
           onClick={handleSubmitFilter}
           disabled={isLoading}
         >
-          <IoFilterSharp className="text-2xl" />
-          <span className="px-2">{isLoading ? 'Loading...' : 'Apply filters'}</span>
+          <IoFilterSharp className="text-2xl hidden lg:block" />
+          <span className="px-2 text-sm lg:text-base">{isLoading ? 'Loading...' : 'Apply filters'}</span>
         </button>
         <button
-          className="min-w-[145px] w-full xl:w-fit flex items-center gap-2 bg-red text-white p-3  font-semibold opacity-90 hover:opacity-100 transition-all duration-100  rounded-md"
+          className="min-w-[120px] lg:min-w-[145px] w-full xl:w-fit flex items-center justify-center gap-2 bg-red text-white p-3  font-semibold opacity-90 hover:opacity-100 transition-all duration-100  rounded-md"
           onClick={handleClearFilter}
         >
-          <IoCloseSharp className="text-2xl" />
-          <span className="px-2">Clear filters</span>
+          <IoCloseSharp className="text-2xl hidden lg:block" />
+          <span className="px-2 text-sm lg:text-base">Clear filters</span>
         </button>
       </div>
     </div>
