@@ -1,11 +1,6 @@
 'use client';
 import { CiLocationOn } from 'react-icons/ci';
 import { BreadCrumbs } from 'src/app/detail-page/BreadCrumbs';
-import { CustomChip } from 'src/components/Chip';
-import { CgWebsite } from 'react-icons/cg';
-import Link from 'next/link';
-import { FoodTable } from 'src/app/detail-page/FoodTable';
-import Button from 'src/components/Button';
 import {
   FindAmenityByHostelId,
   FindAmenityByHostelIdQueryVariables,
@@ -17,31 +12,30 @@ import {
 } from 'src/gql/graphql';
 import { MapProvider } from 'src/features/MapProvider';
 import { useEffect, useRef, useState } from 'react';
-import { BsAirplane } from 'react-icons/bs';
-import { FcWiFiLogo } from 'react-icons/fc';
-import WifiIcon from 'src/components/icons/Wifi';
 import Image from 'next/image';
+import TbHandFingerRight, { TbAirConditioning } from "react-icons/tb";
 import {
   FaFacebook,
-  FaParking,
-  FaPlane,
-  FaRegStar,
-  FaShower,
-  FaStar,
-  FaUmbrellaBeach,
-  FaThermometerHalf,
+  FaChalkboardTeacher,
+  FaWifi,
+  FaToilet,
+  FaLightbulb,
 } from 'react-icons/fa';
 import RichTextEditor from 'src/components/RichTextEditor';
 import { RoomCardFull } from '../booking/RoomCardFull';
-import { FaPhoneFlip } from 'react-icons/fa6';
-import { MdEmail, MdLocalOffer, MdOutlineFreeBreakfast } from 'react-icons/md';
-import { GrFacebook, GrInstagram, GrYoutube } from 'react-icons/gr';
+import { FaPhoneFlip, FaSquareParking } from 'react-icons/fa6';
+import { MdEmail, MdFreeBreakfast, MdLocalOffer, MdLuggage, MdOutlineFreeBreakfast } from 'react-icons/md';
+import { GrInstagram, GrYoutube } from 'react-icons/gr';
 import { useRoomStore } from 'src/store/roomStore';
-import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import { MapComponent } from 'src/features/GoogleMap';
 import ShowDetails from '../../room-details/ShowDetails';
+import { Modal } from 'src/components/Modal';
+import { IoLibrary } from 'react-icons/io5';
+import { BiSolidCctv } from 'react-icons/bi';
+import { GiClothes } from 'react-icons/gi';
+import { RiSafeFill } from 'react-icons/ri';
 
 interface Iprops {
   hostel: Hostel | undefined | null;
@@ -51,14 +45,15 @@ interface Iprops {
 
 export default function MainContent(props: Iprops) {
   const { hostel, checkInDate, checkOutDate } = props;
-  const [mainImage, setMainImage] = useState(0);
-  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
-  const [showDetails, setShowDetails] = useState(false);
-  const [selectedRoom, setSelectedRoom] = useState<RoomData | null>(null);
+  const [ mainImage, setMainImage ] = useState(0);
+  const [ isGalleryOpen, setIsGalleryOpen ] = useState(false);
+  const [ showDetails, setShowDetails ] = useState(false);
+  const [ selectedRoom, setSelectedRoom ] = useState<RoomData | null>(null);
+  const [ showAllAmenities, setShowAllAmenities ] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const isFirstRender = useRef<Boolean>(true);
 
-  const roomImages = hostel?.data?.rooms?.[0]?.image ?? [];
+  const roomImages = hostel?.data?.rooms?.[ 0 ]?.image ?? [];
   const editorRef = useRef(hostel?.data?.description ?? '');
   const { roomIds } = useRoomStore();
 
@@ -84,21 +79,18 @@ export default function MainContent(props: Iprops) {
     error,
     isLoading: loading,
   } = useQuery({
-    queryKey: ['getAmenity'],
+    queryKey: [ 'getAmenity' ],
     queryFn: fetchData,
     enabled: !!Number(hostel?.data?.id),
   });
   // Parse the amenities string into an array
-  const amenitiesArray = amenities ? amenities.data?.amenities.split(',').filter(Boolean) : [];
+  const amenitiesArray = amenities ? JSON.parse(amenities.data?.amenities ?? '[]') : [];
 
-  const essentialAmenities = [
-    'Wi-Fi (Free)',
-    'Air conditioning / Heating',
-    'Free breakfast',
-    'Clean private bathroom with hot shower',
-    'Free parking',
-  ].filter(amenity => amenitiesArray?.includes(amenity));
   const selectedImg = hostel?.data?.gallery?.filter(img => img.isSelected === true);
+
+  const handleShowAllAmenities = () => {
+    setShowAllAmenities((prev) => !prev);
+  }
   return (
     <div className="bg-gray-50 pb-4">
       {showDetails ? (
@@ -133,8 +125,8 @@ export default function MainContent(props: Iprops) {
                   <div className="group relative h-full w-full">
                     <Image
                       src={
-                        selectedImg?.[0]?.url ??
-                        hostel?.data?.gallery?.[mainImage]?.url ??
+                        selectedImg?.[ 0 ]?.url ??
+                        hostel?.data?.gallery?.[ mainImage ]?.url ??
                         '/images/default-image.png'
                       }
                       alt={`Room image ${mainImage + 1}`}
@@ -175,32 +167,27 @@ export default function MainContent(props: Iprops) {
             <div className="sticky top-[100px] m-3 lg:m-0 lg:min-w-[380px] lg:max-w-[380px]">
               <div className="space-y-6">
                 <div className="rounded-xl bg-white p-6 shadow-sm">
-                  <h3 className="mb-4 text-lg font-semibold text-gray-800">
-                    Top Hostel Facilities
-                  </h3>
-                  <div className="grid grid-cols-2 justify-between gap-x-2 gap-y-5">
-                    {essentialAmenities.map((amenity: string) => (
-                      <div className="flex items-center" key={amenity}>
-                        <div className=" bg-blue-50 text-blue-600 flex h-10 w-10 items-center justify-center rounded-full">
-                          {amenity.includes('Wi-Fi') ? (
-                            <WifiIcon className="mr-3 text-secondary" />
-                          ) : amenity.includes('Air conditioning / Heating') ? (
-                            <FaThermometerHalf className="mr-3 text-secondary" />
-                          ) : amenity.includes('Free breakfast') ? (
-                            <MdOutlineFreeBreakfast className="mr-3 text-secondary" />
-                          ) : amenity.includes('Clean private bathroom with hot shower') ? (
-                            <FaShower className="mr-3 text-secondary" />
-                          ) : amenity.includes('Free parking') ? (
-                            <FaParking className="mr-3 text-secondary" />
-                          ) : amenity.includes('Free airport transfer') ? (
-                            <FaPlane className="mr-3 text-secondary" />
-                          ) : (
-                            <FaUmbrellaBeach className="mr-3 text-secondary" />
-                          )}
+                  <div className='flex items-start justify-between'>
+                    <h3 className="mb-4 text-lg font-semibold text-gray-800 ">
+                      Top Hostel Facilities
+                    </h3>
+                    {
+                      amenitiesArray.length > 3 && (
+                        <div className='text-sm text-gray-500 hover:text-gray-700 cursor-pointer' onClick={handleShowAllAmenities}>
+                          Show All
                         </div>
-                        <span className="text-sm text-gray-700">{amenity}</span>
+                      )
+                    }
+                  </div>
+                  <div className="grid grid-cols-2 items-start justify-between gap-x-2 gap-y-5">
+                    {amenitiesArray.length > 0 ? amenitiesArray.slice(0, 6).map((amenity: any) => (
+                      <div className="flex items-start gap-2" key={amenity.title}>
+                        <div className='flex items-center justify-start'>
+                          <FaLightbulb className='text-xl text-secondary' />
+                        </div>
+                        <span className='text-base font-medium text-gray-600'>{amenity.name}</span>
                       </div>
-                    ))}
+                    )) : <div className='text-center text-gray-500'>No top amenities found</div>}
                   </div>
                 </div>
 
@@ -279,7 +266,7 @@ export default function MainContent(props: Iprops) {
                 <Button label="View Bookings" className="w-fit bg-primary" />
               </Link> */}
             </div>
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2" ref={sectionRef}>
+            <div className="grid grid-cols-1 gap-6" ref={sectionRef}>
               {hostel?.data?.rooms?.map((room: RoomData) => (
                 <div
                   key={room.id}
@@ -300,6 +287,19 @@ export default function MainContent(props: Iprops) {
           </div>
         </div>
       )}
+      <Modal title='All Amenities' open={showAllAmenities} actionLabel='Okay' key="all-amenities" onSave={() => setShowAllAmenities(false)} handleClose={() => setShowAllAmenities(false)}>
+        <div className='border-t border-gray-300 py-4 grid grid-cols-2 gap-3'>
+          {amenitiesArray && amenitiesArray.map((amenity: any) => (
+            <div key={amenity.id} className='flex items-start gap-3 w-full'>
+              <div className='flex items-center justify-start'>
+                <FaLightbulb className='text-xl text-secondary' />
+              </div>
+              <span className='text-base font-semibold text-gray-600'>{amenity.name}</span>
+            </div>
+          ))
+          }
+        </div>
+      </Modal>
     </div>
   );
 }
