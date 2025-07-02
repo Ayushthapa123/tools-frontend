@@ -326,7 +326,7 @@ export default function MainContent(props: Iprops) {
           </div>
         </div>
       )}
-      <Modal title='All Amenities' open={showAllAmenities} actionLabel='Okay' key="all-amenities" onSave={() => setShowAllAmenities(false)} handleClose={() => setShowAllAmenities(false)}>
+      <Modal title='All Amenities' open={showAllAmenities} actionLabel='Okay' key="all-amenities" onSave={() => setShowAllAmenities(false)} handleClose={() => setShowAllAmenities(false)} className='min-w-[70vw]'>
         <div className='border-t border-gray-300 py-4 grid grid-cols-2 gap-3'>
           {amenitiesArray && amenitiesArray.map((amenity: any) => (
             <div key={amenity.id} className='flex items-start gap-3 w-full'>
@@ -339,7 +339,7 @@ export default function MainContent(props: Iprops) {
           }
         </div>
       </Modal>
-      <Modal title='All Services' open={showAllServices} actionLabel='Okay' key="all-services" onSave={() => setShowAllServices(false)} handleClose={() => setShowAllServices(false)}>
+      <Modal title='All Services' open={showAllServices} actionLabel='Okay' key="all-services" onSave={() => setShowAllServices(false)} handleClose={() => setShowAllServices(false)} className='min-w-[70vw]'>
         <div className='border-t border-gray-300 py-4 grid grid-cols-2 gap-3'>
           {servicesArray && servicesArray.map((service: any) => (
             <div key={service.id} className='flex items-start gap-3 w-full'>
