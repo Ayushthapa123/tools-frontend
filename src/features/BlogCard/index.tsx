@@ -1,8 +1,10 @@
+"use client"
 import Image from 'next/image';
 import { BiUpvote } from 'react-icons/bi';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { GoPencil } from "react-icons/go";
 import Link from 'next/link';
+import { FaUser } from 'react-icons/fa';
 
 interface Iprops {
   title: string;
@@ -10,9 +12,16 @@ interface Iprops {
   date: string;
   image: string;
   slug: string;
+  content: any;
 }
 
-const BlogCard = ({ date, description, image, title, slug }: Iprops) => {
+const BlogCard = ({ date, description, image, title, slug, content }: Iprops) => {
+  const wholeContentLength = content.flatMap((item: any) => item.content).reduce((acc: any, item: any) => acc + (item.value || '').length, 0);
+  const blogReadTimeCalcuator = () => { 
+    const charactersPerMinute = 1500;
+    const minutes = Math.ceil(wholeContentLength / charactersPerMinute);
+    return minutes;
+  }
   return (
     <>
       <Link href={`/blogs/${slug}`}>
@@ -23,19 +32,19 @@ const BlogCard = ({ date, description, image, title, slug }: Iprops) => {
                 <Image src={image} alt="" className="w-full rounded-t-2xl rounded-b-none" fill />
               </div>
               <div className='absolute text-sm px-4 py-1 text-gray-600 font-semibold flex justify-center bottom-3 items-center right-2 bg-gray-100 rounded-lg'>
-                5 min read
+                {blogReadTimeCalcuator()} min read
               </div>
             </div>
             <div className='px-4 pt-3 flex items-center justify-between'>
               <div className='flex items-center justify-start gap-3'>
-                <div className='flex items-center gap-2 bg-gray-100 rounded-lg px-2 py-1 cursor-default'>
-                  <MdOutlineRemoveRedEye />
-                  <span className='text-gray-700 text-sm'>100</span>
+                <div className='flex items-start gap-2 bg-gray-100 rounded-lg px-2 py-1 cursor-default'>
+                  <FaUser />
+                  <span className='mb-0 text-gray-700 text-sm'>Hostelpilot</span>
                 </div>
-                <div className='flex items-center gap-2 bg-gray-100 rounded-lg px-2 py-1 cursor-default'>
+                {/* <div className='flex items-center gap-2 bg-gray-100 rounded-lg px-2 py-1 cursor-default'>
                   <BiUpvote />
                   <span className='text-gray-700 text-sm'>10</span>
-                </div>
+                </div> */}
               </div>
               <div>
                 {date && (

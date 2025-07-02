@@ -180,11 +180,7 @@ export const SearchBox = () => {
               type="text"
               placeholder="Enter hostel's name"
               value={searchHostelNameText}
-<<<<<<< HEAD
-              className="rounded-md w-full bg-gray-50  p-2 pl-0 placeholder:text-sm "
-=======
               className="rounded-md w-full bg-gray-50 text-base  p-2 pl-0 placeholder:text-xs"
->>>>>>> c347ecb73bd4c20cb0bc8b9712a58b7f3665ded5
               onChange={handleHostelNameChange}
               // defaultValue={query}
               // required

@@ -50,6 +50,7 @@ const HealthGuidePage = async () => {
               slug={data.fields.slug}
               date="Mar 30 2024"
               image={`https:${data.fields.coverphoto?.fields?.file?.url}`}
+              content={data.fields.body.content}
             />
           </div>
         ))}
