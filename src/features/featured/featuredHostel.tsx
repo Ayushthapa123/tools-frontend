@@ -62,9 +62,9 @@ export const FeaturedHostel = () => {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <Link href={`/hostel/${hostel?.slug}`}>
                 <HostelCard
                   name={hostel?.name ?? ''}
+                  slug={hostel?.slug ?? ''}
                   country={hostel?.address?.country ?? ''}
                   city={hostel?.address?.city ?? ''}
                   subCity={hostel?.address?.subCity ?? ''}
@@ -75,8 +75,8 @@ export const FeaturedHostel = () => {
                   oneSeater={null}
                   twoSeater={null}
                   threeSeater={null}
+                  gallery={hostel?.gallery}
                 />
-              </Link>
             </motion.div>
           );
         })}

@@ -1,7 +1,8 @@
 'use client';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRef, useState } from 'react';
-import { FaRegHeart, FaShower } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight, FaRegHeart, FaShower } from 'react-icons/fa';
 import { GiCctvCamera } from 'react-icons/gi';
 import { GrLocation } from 'react-icons/gr';
 import { IoIosWifi } from 'react-icons/io';
@@ -21,6 +22,8 @@ interface Iprops {
   twoSeater?: boolean | null;
   description?: string;
   threeSeater?: boolean | null;
+  gallery?: any;
+  slug?: string;
 }
 export const HostelCard = (props: Iprops) => {
   const [ isModalOpen, setIsModalOpen ] = useState(false);
@@ -29,16 +32,25 @@ export const HostelCard = (props: Iprops) => {
     country,
     city,
     subCity,
-    imgUrl,
     oneSeater,
     twoSeater,
     threeSeater,
     currency,
     amount,
     description,
+    gallery,
+    slug
   } = props;
 
   const editorRef = useRef(description ?? '');
+  const [ sliderCurrentIndex, setSliderCurrentIndex ] = useState(0);
+
+  const mainWallpaper = gallery?.find((img: any) => img.isSelected === true) ?? gallery?.[ 0 ];
+  const otherImages = gallery?.filter((img: any) => img.isSelected === false);
+  var imgUrl = mainWallpaper?.url ?? '/images/default-image.png';
+
+  const imagesArray = [ imgUrl, ...otherImages.map((img: any) => img.url) ].filter(Boolean);
+
 
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
@@ -57,12 +69,24 @@ export const HostelCard = (props: Iprops) => {
     return name.replace(/\b\w/g, (char) => char.toUpperCase());
   };
 
+  const handleSliderLeftClick = (index: number) => {
+    if(index > 0) {
+      setSliderCurrentIndex(index - 1);
+    } 
+  };
+
+  const handleSliderRightClick = (index: number) => {
+    if(index < imagesArray.length - 1) {
+      setSliderCurrentIndex(index + 1);
+    }
+  };
+
   return (
     <div className="group card-bordered mb-2 flex h-full w-full cursor-pointer flex-col gap-4 rounded-xl bg-white pb-2 transition duration-200 ease-in-out hover:opacity-100 hover:shadow-lg">
       <div className="relative h-[300px] w-full border-b-[1px] border-gray-300 rounded-xl">
-        <div className="relative h-full w-full ">
+        <div className="relative h-full w-full group">
           <Image
-            src={imgUrl ? imgUrl : '/default-image.png'}
+            src={imagesArray[sliderCurrentIndex]}
             alt={name}
             fill
             className="rounded-xl rounded-b-none object-cover"
@@ -83,6 +107,23 @@ export const HostelCard = (props: Iprops) => {
             </div>
 
           </div>
+          {/* slider section */}
+          {
+            imagesArray.length > 1 && (
+              <>
+              <div className='absolute bottom-[50%] left-2 flex items-center gap-6 w-fit'>
+                <div className='rounded-full p-2 border border-white'>
+                  <FaChevronLeft className={`w-4 h-4 text-white group-hover:scale-105  transition duration-300 ease-in-out font-semibold ${sliderCurrentIndex === 0 ? 'opacity-50 cursor-not-allowed' : ''}`} onClick={()=> handleSliderLeftClick(sliderCurrentIndex)} />
+                </div>
+              </div>
+              <div className='absolute bottom-[50%] right-2 flex items-center gap-6 w-fit'>
+                <div className='rounded-full p-2 border border-white'>
+                    <FaChevronRight className={`w-4 h-4 text-white group-hover:scale-105  transition duration-300 ease-in-out font-semibold ${sliderCurrentIndex === imagesArray.length - 1 ? 'opacity-50 cursor-not-allowed' : ''}`} onClick={()=> handleSliderRightClick(sliderCurrentIndex)} />
+                </div>
+              </div>
+              </>
+            )
+          }
         </div>
         <div className="absolute right-2 top-1 z-10">
           <Badge className={` px-3 py-1 !text-xs uppercase tracking-wide font-bold text-white/90 ${getStatusColor("Available")} !rounded-md `}>Available</Badge>
@@ -106,21 +147,23 @@ export const HostelCard = (props: Iprops) => {
               <FaRegHeart className='w-6 h-6 text-red/65 font-semibold' />
             </div>
             {/* <span className='text-sm text-secondary/80 font-semibold'>{currency} {amount}</span> */}
-          </div>  
+          </div>
         </div>
         <div className='flex items-center justify-between border-t border-gray-200 mt-3 pt-1'>
           <div className=''>
             <h3 className='text-sm m-0 font-semibold text-gray-600'>Starting with</h3>
             <p className="m-0 text-base font-extrabold text-gray-400">
-                Nrs <span className='text-secondary text-2xl'>10,000</span> /month
-              </p>
+              Nrs <span className='text-secondary text-2xl'>10,000</span> /month
+            </p>
           </div>
-        <div className="mt-2 flex items-center justify-between gap-2">
-          <Button label={'View Details'} className="!bg-primary/90 hover:!bg-primary tracking-wide" />
-          {/* <div>
+          <div className="mt-2 flex items-center justify-between gap-2">
+            <Link href={`/hostel/${slug}`}>
+              <Button label={'View Details'} className="!bg-primary/90 hover:!bg-primary tracking-wide" />
+            </Link>
+            {/* <div>
             <FaArrowCircleRight className='text-4xl text-gray-400 w-fit group-hover:text-primary/90 transition duration-300 ease-in-out' />
           </div> */}
-        </div>
+          </div>
         </div>
 
       </div>
