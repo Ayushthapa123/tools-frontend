@@ -8,6 +8,7 @@ import {
   GetFeaturedHostelsQuery,
   GetFeaturedHostelsQueryVariables,
 } from 'src/gql/graphql';
+import { motion } from 'framer-motion';
 
 export const FeaturedHostel = () => {
   const queryValidity = useGraphqlClientRequest<
@@ -27,14 +28,18 @@ export const FeaturedHostel = () => {
 
   return (
     <div className="mx-auto flex w-[90vw] flex-col items-center justify-center py-6">
-     <div className="my-6 flex flex-col items-center justify-between gap-0">
-  <h2 className="m-0 text-xl text-center font-bold text-primary lg:text-4xl">
-    Top-Rated Hostels for Students & Travelers
-  </h2>
-  <p className="hidden md:block text-center text-sm lg:text-base tracking-wider">
-    Explore our handpicked selection of the best hostels offering comfort, affordability, and great amenities.
-  </p>
-</div>
+      <motion.div
+        initial={{ opacity: 0, y: -100 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="my-6 flex flex-col items-center justify-between gap-0">
+        <h2 className="m-0 text-xl text-center font-bold text-primary lg:text-4xl">
+          Top-Rated Hostels for Students & Travelers
+        </h2>
+        <p className="hidden md:block text-center text-sm lg:text-base tracking-wider">
+          Explore our handpicked selection of the best hostels offering comfort, affordability, and great amenities.
+        </p>
+      </motion.div>
 
       {isLoading && (
         <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -50,8 +55,12 @@ export const FeaturedHostel = () => {
           var imgUrl = mainWallpaper?.url ?? '/images/default-image.png';
           if (imgUrl == 'https://example.com/image.jpg') imgUrl = '/images/default-image.png';
           return (
-            <div
+            <motion.div
               key={hostel?.slug}
+              initial={{ opacity: 0, y: 200 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
             >
               <Link href={`/hostel/${hostel?.slug}`}>
                 <HostelCard
@@ -68,7 +77,7 @@ export const FeaturedHostel = () => {
                   threeSeater={null}
                 />
               </Link>
-            </div>
+            </motion.div>
           );
         })}
       </div>
