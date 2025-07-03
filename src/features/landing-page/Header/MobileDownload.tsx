@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function MobileDownload() {
   
-  const playStoreUrl = "https://play.google.com/store/apps/details?id=com.hosteladmin.twa&pcampaignid=web_share";
+  const playStoreUrl = "https://play.google.com/apps/internaltest/4701735278091353886";
   
   return (
     <div className='flex flex-col items-center justify-center bg-primary py-12 pb-6 mt-8 md:px-10 px-5 md:py-24'>
