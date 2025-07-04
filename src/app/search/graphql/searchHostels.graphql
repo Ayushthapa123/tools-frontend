@@ -11,13 +11,7 @@ query searchHostel($input: SearchHostelInput!) {
         subCity
         street
       }
-      rooms {
-        capacity
-        price {
-          baseAmountPerDay
-          baseAmountPerMonth
-        }
-      }
+   
       contact {
         phone
         email

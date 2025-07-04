@@ -5,7 +5,9 @@ import Button from "src/components/Button";
 import { Input } from "src/components/Input";
 import { Select } from "src/components/Select";
 import RangeSlider from "src/components/RangeSlider";
-import { HostelType, HostelGenderType, GetFilteredHostels, GetFilteredHostelsQuery, GetFilteredHostelsQueryVariables } from "src/gql/graphql";
+import { HostelType, HostelGenderType, 
+  // GetFilteredHostels, GetFilteredHostelsQuery, GetFilteredHostelsQueryVariables 
+} from "src/gql/graphql";
 import { useGraphqlClientRequest } from "src/hooks/useGraphqlClientRequest";
 
 export interface FilterData {
@@ -100,26 +102,26 @@ export default function SearchFilter({ setFilteredHostels, lat, lng }: { setFilt
   ]
 
   // Filter hostels based on filterData
-  const filterHostels = useGraphqlClientRequest<GetFilteredHostelsQuery, GetFilteredHostelsQueryVariables>(
-    GetFilteredHostels.loc?.source?.body!,
-  );
+  // const filterHostels = useGraphqlClientRequest<GetFilteredHostelsQuery, GetFilteredHostelsQueryVariables>(
+  //   GetFilteredHostels.loc?.source?.body!,
+  // );
 
   const fetchFilteredData = async () => {
     try {
       
-      const res = await filterHostels({
-        input: {
-          latitude: Number(lat),
-          longitude: Number(lng),
-          baseAmountPerDay: priceRange,
-          baseAmountPerMonth: monthlyPriceRange,
-          seater: filterData.seater,
-          hostelType: filterData.hostelType,
-          genderType: filterData.gender,
-        },
-      });
+      // const res = await filterHostels({
+      //   input: {
+      //     latitude: Number(lat),
+      //     longitude: Number(lng),
+      //     baseAmountPerDay: priceRange,
+      //     baseAmountPerMonth: monthlyPriceRange,
+      //     seater: filterData.seater,
+      //     hostelType: filterData.hostelType,
+      //     genderType: filterData.gender,
+      //   },
+      // });
       
-      return res.getFilteredHostels;
+      // return res.getFilteredHostels;
     } catch (error) {
       console.error('Error fetching filtered hostels:', error);
       throw error;
@@ -135,7 +137,7 @@ export default function SearchFilter({ setFilteredHostels, lat, lng }: { setFilt
   // Watch for when filteredHostels data becomes available
   useEffect(() => {
     if (filteredHostels && shouldFetch) {
-      setFilteredHostels(filteredHostels.data);
+      // setFilteredHostels(filteredHostels.data);
     }
   }, [ filteredHostels, shouldFetch, setFilteredHostels ]);
 
