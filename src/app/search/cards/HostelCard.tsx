@@ -23,6 +23,7 @@ interface Iprops {
   description?: string;
   threeSeater?: boolean | null;
   gallery?: any;
+  rooms?: any;
   slug?: string;
 }
 export const HostelCard = (props: Iprops) => {
@@ -39,6 +40,7 @@ export const HostelCard = (props: Iprops) => {
     amount,
     description,
     gallery,
+    rooms,
     slug
   } = props;
 
@@ -47,7 +49,7 @@ export const HostelCard = (props: Iprops) => {
 
   const mainWallpaper = gallery?.find((img: any) => img.isSelected === true) ?? gallery?.[ 0 ];
   const otherImages = gallery?.filter((img: any) => img.isSelected === false);
-  var imgUrl = mainWallpaper?.url ?? '/images/default-image.png';
+  var imgUrl = mainWallpaper?.url ?? '/images/nowallpaper.jpg';
 
   const imagesArray = [ imgUrl, ...otherImages.map((img: any) => img.url) ].filter(Boolean);
 
@@ -80,6 +82,11 @@ export const HostelCard = (props: Iprops) => {
       setSliderCurrentIndex(index + 1);
     }
   };
+  // Minimum Room Price Calculator
+  const minimumRoomPrice = rooms &&  rooms?.reduce((min: number, room: any) => {
+    const minPrice = min < room.price.baseAmountPerMonth ? min : room.price.baseAmountPerMonth;
+    return minPrice;
+  }, rooms?.[0]?.price.baseAmountPerMonth ?? 15000);
 
   return (
     <div className="group card-bordered mb-2 flex h-full w-full cursor-pointer flex-col gap-4 rounded-xl bg-white pb-2 transition duration-200 ease-in-out hover:opacity-100 hover:shadow-lg">
@@ -153,7 +160,7 @@ export const HostelCard = (props: Iprops) => {
           <div className=''>
             <h3 className='text-sm m-0 font-semibold text-gray-600'>Starting with</h3>
             <p className="m-0 text-base font-extrabold text-gray-400">
-              Nrs <span className='text-secondary text-2xl'>10,000</span> /month
+              Nrs <span className='text-secondary text-2xl'>{minimumRoomPrice}</span> /month
             </p>
           </div>
           <div className="mt-2 flex items-center justify-between gap-2">

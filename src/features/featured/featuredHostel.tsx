@@ -75,7 +75,8 @@ export const FeaturedHostel = () => {
                   oneSeater={null}
                   twoSeater={null}
                   threeSeater={null}
-                  gallery={hostel?.gallery}
+                gallery={hostel?.gallery}
+                rooms={hostel?.rooms}
                 />
             </motion.div>
           );
