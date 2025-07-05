@@ -8,6 +8,7 @@ import HostelAdminHeader from 'src/features/landing-page/Header/HostelAdminHeade
 import { SoftwareFeatures } from 'src/features/landing-page/SoftwareFeatures/page';
 import MobileDownload from 'src/features/landing-page/Header/MobileDownload';
 import { FeaturedBlogs } from 'src/features/FeaturedBlogs';
+import Pricing from 'src/features/pricing';
 export const metadata: Metadata = {
   title: domainConfig.appSlogan, 
   description:domainConfig.appDescription,
@@ -34,6 +35,7 @@ export default function Home() {
           <CommonNav />
           {isHostelAdmin ?<HostelAdminHeader />:<Header />}
           {isHostelAdmin ? <SoftwareFeatures /> : <></>}
+          {isHostelAdmin?<Pricing/>:<></>}
           {isHostelAdmin ? <MobileDownload /> : <></>}
           {isHostelPilot ? <FeaturedBlogs /> : <></>}
           <Footer />
