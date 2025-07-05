@@ -11,8 +11,8 @@ const montserrat = Montserrat({
 export const FeaturedBlogs = async () => {
   return (
     <div className="flex flex-col w-[90%] my-4 mx-auto">
-     <div className="flex mb-4 w-full items-center  justify-between">
-        <h1 className={`text-left font-semibold text-xl sm:text-2xl md:text-3xl ${montserrat.className}`}>
+     <div className="flex my-3 w-full items-center  justify-center">
+        <h1 className={`m-0 text-xl font-bold text-primary lg:text-4xl `}>
           Featured Blogs
         </h1>
       </div>

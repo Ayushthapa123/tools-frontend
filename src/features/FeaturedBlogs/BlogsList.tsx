@@ -34,6 +34,7 @@ const BlogLists = async () => {
                 slug={data.fields.slug}
                 date={data.fields?.publishedDate ?? ''}
                 image={`https:${data.fields.coverphoto?.fields?.file?.url}`}
+                content = {data.fields.body.content}
               />
             </div>
           ))}

@@ -9,7 +9,7 @@ interface Iprops {
   actionLabel?: string;
   onSave?: () => void;
   handleClose: () => void;
-  
+  className?: string;
 }
 
 export const Modal = (props: Iprops) => {
@@ -23,7 +23,7 @@ interface IModalContent extends Omit<Iprops, 'label'> {
   onClose: () => void;
 }
 const ModalContents = (props: IModalContent) => {
-  const { title, children, actionLabel, onClose, onSave, open } = props;
+  const { title, children, actionLabel, onClose, onSave, open, className } = props;
 
   const handleSave = async () => {
     onSave?.();
@@ -41,9 +41,9 @@ const ModalContents = (props: IModalContent) => {
   }
   return (
     <>
-      <div className={`modal ${open ? 'modal-open' : ''}`} role="dialog">
+      <div className={`modal ${open ? 'modal-open' : ''} `} role="dialog">
         <div className="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center" onClick={handleOverlayClick}>
-          <div className="modal-box" onClick={stopPropagation}>
+          <div className={`modal-box ${className}`} onClick={stopPropagation}>
             <div>{title && <h3>{title}</h3>}</div>
             <div className=" ">{children}</div>
 

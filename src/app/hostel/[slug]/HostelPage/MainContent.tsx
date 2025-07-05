@@ -10,7 +10,7 @@ import {
   GalleryData,
 } from 'src/gql/graphql';
 import { MapProvider } from 'src/features/MapProvider';
-import {  useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 import {
   FaFacebook,
@@ -41,11 +41,15 @@ export default function MainContent(props: Iprops) {
   const [ showDetails, setShowDetails ] = useState(false);
   const [ selectedRoom, setSelectedRoom ] = useState<RoomData | null>(null);
   const [ showAllAmenities, setShowAllAmenities ] = useState(false);
+  const [ showAllServices, setShowAllServices ] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const isFirstRender = useRef<Boolean>(true);
 
   const roomImages = hostel?.data?.rooms?.[ 0 ]?.image ?? [];
-  const editorRef = useRef(hostel?.data?.description ?? '');
+  const editorRef = useRef(hostel?.data?.description != '' ? hostel?.data?.description : 'No description found');
+  const rulesEditorRef = useRef(hostel?.data?.hostelRules?.rules.rules ?? 'No rules found');
+  console.log("editorRef",editorRef)
+ 
   const { roomIds } = useRoomStore();
 
   //socials
@@ -76,6 +80,7 @@ export default function MainContent(props: Iprops) {
   });
   // Parse the amenities string into an array
   const amenitiesArray = amenities ? JSON.parse(amenities.data?.amenities ?? '[]') : [];
+  const servicesArray = hostel?.data?.service?.services ? JSON.parse(hostel?.data?.service?.services ?? '[]') : [];
 
   const selectedImg = hostel?.data?.gallery?.filter(img => img.isSelected === true);
 
@@ -151,7 +156,15 @@ export default function MainContent(props: Iprops) {
                   <div className="prose max-w-none">
                     <RichTextEditor editorRef={editorRef} readOnly={true} />
                   </div>
-                </div>
+                  </div>
+
+                  {/* Rules section */}
+                <div className="rounded-xl mt-4 rounded-t-none border-t-2 border-gray-100 bg-white/70 pt-1">
+                  <h2 className=" text-2xl font-semibold text-gray-800">Rules</h2>
+                  <div className="prose max-w-none">
+                    <RichTextEditor editorRef={rulesEditorRef} readOnly={true} />
+                  </div>
+                  </div>
               </div>
             </div>
 
@@ -163,7 +176,7 @@ export default function MainContent(props: Iprops) {
                       Top Hostel Facilities
                     </h3>
                     {
-                      amenitiesArray.length > 3 && (
+                      amenitiesArray.length > 6 && (
                         <div className='text-sm text-gray-500 hover:text-gray-700 cursor-pointer' onClick={handleShowAllAmenities}>
                           Show All
                         </div>
@@ -229,6 +242,41 @@ export default function MainContent(props: Iprops) {
                     </div>
                   </div>
                 </div>
+
+                
+
+                {/* Services Section */}
+                {
+                  servicesArray.length > 0 &&
+                  (
+                    <div className="rounded-xl bg-white p-6 pt-2 shadow-sm">
+                     <div className='flex items-start justify-between'>
+                    <h3 className="mb-4 text-lg font-semibold text-gray-800 ">
+                      Top Services
+                    </h3>
+                    {
+                      servicesArray.length > 6 && (
+                        <div className='text-sm text-gray-500 hover:text-gray-700 cursor-pointer' onClick={()=>setShowAllServices(true)}>
+                          Show All
+                        </div>
+                      )
+                    }
+                  </div>
+                      <div className="grid grid-cols-2 items-start justify-between gap-x-2 gap-y-5">
+                        {servicesArray.length > 0 ? servicesArray.map((service: any) => (
+                          <div className="flex items-start gap-2" key={service.title}>
+                            <div className='flex items-center justify-start'>
+                              <FaLightbulb className='text-xl text-secondary' />
+                            </div>
+                            <span className='text-base font-medium text-gray-600'>{service.name}</span>
+                          </div>
+                        )) : <div className='text-center text-gray-500'>No top amenities found</div>}
+                      </div>
+                    </div>
+                  )
+                }
+
+
                 <div className="rounded-xl bg-white p-6 pt-2 shadow-sm">
                   <h3 className="mb-2 text-lg font-semibold text-gray-800">Map On Google</h3>
                   <div className=" h-[450px] w-full overflow-y-hidden rounded-md">
@@ -278,7 +326,7 @@ export default function MainContent(props: Iprops) {
           </div>
         </div>
       )}
-      <Modal title='All Amenities' open={showAllAmenities} actionLabel='Okay' key="all-amenities" onSave={() => setShowAllAmenities(false)} handleClose={() => setShowAllAmenities(false)}>
+      <Modal title='All Amenities' open={showAllAmenities} actionLabel='Okay' key="all-amenities" onSave={() => setShowAllAmenities(false)} handleClose={() => setShowAllAmenities(false)} className='min-w-[70vw]'>
         <div className='border-t border-gray-300 py-4 grid grid-cols-2 gap-3'>
           {amenitiesArray && amenitiesArray.map((amenity: any) => (
             <div key={amenity.id} className='flex items-start gap-3 w-full'>
@@ -286,6 +334,19 @@ export default function MainContent(props: Iprops) {
                 <FaLightbulb className='text-xl text-secondary' />
               </div>
               <span className='text-base font-semibold text-gray-600'>{amenity.name}</span>
+            </div>
+          ))
+          }
+        </div>
+      </Modal>
+      <Modal title='All Services' open={showAllServices} actionLabel='Okay' key="all-services" onSave={() => setShowAllServices(false)} handleClose={() => setShowAllServices(false)} className='min-w-[70vw]'>
+        <div className='border-t border-gray-300 py-4 grid grid-cols-2 gap-3'>
+          {servicesArray && servicesArray.map((service: any) => (
+            <div key={service.id} className='flex items-start gap-3 w-full'>
+              <div className='flex items-center justify-start'>
+                <FaLightbulb className='text-xl text-secondary' />
+              </div>
+              <span className='text-base font-semibold text-gray-600'>{service.name}</span>
             </div>
           ))
           }
