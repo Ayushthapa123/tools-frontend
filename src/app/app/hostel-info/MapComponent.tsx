@@ -9,6 +9,7 @@ const defaultMapContainerStyle = {
   height: '70vh',
   borderRadius: '15px 0px 0px 15px',
   marginTop: '10px',
+  zIndex:"1"
 };
 
 const defaultMapOptions = {
@@ -45,7 +46,9 @@ export const MapComponent = (props: Iprops) => {
   };
 
   const handlePlaceChanged = () => {
+    console.log("handlePlaceChanged");
     const place = autocompleteRef.current.getPlace();
+    console.log("place",place);
     if (place.geometry && place.geometry.location) {
       const lat = place.geometry.location.lat();
       const lng = place.geometry.location.lng();
@@ -55,7 +58,7 @@ export const MapComponent = (props: Iprops) => {
   };
 
   return (
-    <div className="w-full h-[70vh]">
+    <div className="w-full h-[70vh] z-0">
       {clickedLatLng && (
         <div className="mt-4">
 
@@ -67,6 +70,7 @@ export const MapComponent = (props: Iprops) => {
       <Autocomplete
         onLoad={autocomplete => (autocompleteRef.current = autocomplete)}
         onPlaceChanged={handlePlaceChanged}
+        className="w-full z-50"
       >
         <input
           type="text"

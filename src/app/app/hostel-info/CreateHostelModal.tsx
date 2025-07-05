@@ -151,8 +151,8 @@ export const CreateHostelModal = () => {
   return (
     <div className=" h-[100vh] w-[100vw]">
       <dialog id="my_modal_4" className="modal h-full w-full ">
-        <div className="modal-box h-[70%] w-11/12 max-w-7xl flex flex-col">
-          <div className="flex-grow overflow-y-auto">
+        <div className="modal-box h-[75%] w-11/12 max-w-7xl flex flex-col">
+          <div className="flex-grow overflow-y-auto hide-scrollbar">
 
             {steps === 0 && (
               <div>
@@ -276,9 +276,11 @@ const CreateAddressForm = ({ hostelId, handleNextStep }: { hostelId: number | nu
       <div className="my-8 flex flex-col items-center justify-center">
         <h3 className="text-3xl font-bold text-gray-500">Address Details</h3>
       </div>
+      <div className='w-full h-full z-50'>
       <MapProvider> 
         <AddressDetails hostelId={hostelId} handleNextStep={handleNextStep} />
       </MapProvider>
+      </div>
     </>
   );
 };
