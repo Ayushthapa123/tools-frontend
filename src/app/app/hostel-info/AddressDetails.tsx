@@ -277,7 +277,6 @@ const HostelInfoForm: FC<AddressData & { handleNextStep?: () => void }> = props 
             placeholder="Country"
             control={control}
             options={countryOptions}
-            defaultValue={reverseGeoData?.geoCounty ?? ""}
             label="Country"
             required
             helperText={errors.country?.type === 'required' ? 'Country Is Required' : ''}
@@ -290,7 +289,6 @@ const HostelInfoForm: FC<AddressData & { handleNextStep?: () => void }> = props 
             name="city"
             type="text"
             placeholder="City"
-            defaultValue={reverseGeoData?.geoCity ?? ""}
             control={control}
             label="City"
             required
@@ -312,7 +310,6 @@ const HostelInfoForm: FC<AddressData & { handleNextStep?: () => void }> = props 
           <TextInput
             name="street"
             type="text"
-            defaultValue={reverseGeoData?.geoStreet ?? ""}
             placeholder="Street"
             control={control}
             label="Street"

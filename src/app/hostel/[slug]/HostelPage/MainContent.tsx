@@ -79,9 +79,8 @@ export default function MainContent(props: Iprops) {
     enabled: !!Number(hostel?.data?.id),
   });
   // Parse the amenities string into an array
-  const amenitiesArray = amenities ? JSON.parse(amenities.data?.amenities ?? '[]') : [];
+  const amenitiesArray = amenities?.data?.amenities ? JSON.parse(amenities.data?.amenities) : [];
   const servicesArray = hostel?.data?.service?.services ? JSON.parse(hostel?.data?.service?.services ?? '[]') : [];
-
   const selectedImg = hostel?.data?.gallery?.filter(img => img.isSelected === true);
 
   const handleShowAllAmenities = () => {
@@ -282,7 +281,7 @@ export default function MainContent(props: Iprops) {
                   <div className=" h-[450px] w-full overflow-y-hidden rounded-md">
                     <MapProvider>
                       {hostel?.data?.address?.latitude && hostel?.data?.address?.longitude && (
-                        <MapComponent
+                          <MapComponent
                           lat={hostel.data.address.latitude}
                           lng={hostel.data.address.longitude}
                           description={hostel.data.name}

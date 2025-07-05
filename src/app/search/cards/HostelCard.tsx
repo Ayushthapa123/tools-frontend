@@ -84,9 +84,9 @@ export const HostelCard = (props: Iprops) => {
   };
   // Minimum Room Price Calculator
   const minimumRoomPrice = rooms &&  rooms?.reduce((min: number, room: any) => {
-    const minPrice = min < room.price.baseAmountPerMonth ? min : room.price.baseAmountPerMonth;
+    const minPrice = min < room.price?.baseAmountPerMonth ? min : room.price?.baseAmountPerMonth;
     return minPrice;
-  }, rooms?.[0]?.price.baseAmountPerMonth ?? 15000);
+  }, rooms?.[0]?.price?.baseAmountPerMonth ?? 15000);
 
   return (
     <div className="group card-bordered mb-2 flex h-full w-full cursor-pointer flex-col gap-4 rounded-xl bg-white pb-2 transition duration-200 ease-in-out hover:opacity-100 hover:shadow-lg">
