@@ -24,7 +24,6 @@ export function HostelPage({
   checkInDat: string;
   checkOutDat: string;
 }) {
-  const searchParams = useSearchParams();
   const checkInDate = checkInDat ?? new Date().toISOString().split('T')[0];
   const checkOutDate = checkOutDat ?? new Date(Date.now() + 86400000).toISOString().split('T')[0];
 
