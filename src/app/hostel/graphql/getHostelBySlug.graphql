@@ -8,6 +8,14 @@ query getHostelBySlug($slug: String!) {
       slug
       verifiedBySuperAdmin
       verifiedByCommunityOwner
+      service {
+        services
+      }
+
+      hostelRules {
+        rules
+      }
+      
       gallery {
         url
         isSelected

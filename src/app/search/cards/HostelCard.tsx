@@ -1,12 +1,13 @@
 'use client';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRef, useState } from 'react';
-import { BiFoodMenu, BiHeart } from 'react-icons/bi';
-import { BsLine } from 'react-icons/bs';
-import { FaArrowCircleRight, FaRegHeart, FaSwimmingPool } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight, FaRegHeart, FaShower } from 'react-icons/fa';
+import { GiCctvCamera } from 'react-icons/gi';
 import { GrLocation } from 'react-icons/gr';
-import { MdBathroom, MdBreakfastDining, MdSafetyDivider } from 'react-icons/md';
-import { TiWiFi } from 'react-icons/ti';
+import { IoIosWifi } from 'react-icons/io';
+import { MdTableRestaurant } from 'react-icons/md';
+import { Badge } from 'src/components/Badge';
 import Button from 'src/components/Button';
 
 interface Iprops {
@@ -21,6 +22,9 @@ interface Iprops {
   twoSeater?: boolean | null;
   description?: string;
   threeSeater?: boolean | null;
+  gallery?: any;
+  rooms?: any;
+  slug?: string;
 }
 export const HostelCard = (props: Iprops) => {
   const [ isModalOpen, setIsModalOpen ] = useState(false);
@@ -29,56 +33,146 @@ export const HostelCard = (props: Iprops) => {
     country,
     city,
     subCity,
-    imgUrl,
     oneSeater,
     twoSeater,
     threeSeater,
     currency,
     amount,
     description,
+    gallery,
+    rooms,
+    slug
   } = props;
 
   const editorRef = useRef(description ?? '');
+  const [ sliderCurrentIndex, setSliderCurrentIndex ] = useState(0);
+
+  const mainWallpaper = gallery?.find((img: any) => img.isSelected === true) ?? gallery?.[ 0 ];
+  const otherImages = gallery?.filter((img: any) => img.isSelected === false);
+  var imgUrl = mainWallpaper?.url ?? '/images/nowallpaper.jpg';
+
+  const imagesArray = [ imgUrl, ...otherImages.map((img: any) => img.url) ].filter(Boolean);
+
+
+  const getStatusColor = (status: string) => {
+    switch (status.toLowerCase()) {
+      case 'available':
+        return '!bg-green/80';
+      case 'occupied':
+        return '!bg-red/80';
+      case 'maintenance':
+        return '!bg-yellow/80';
+      default:
+        return '!bg-gray-100 !text-gray-800';
+    }
+  };
+
+  const capitalizeHostelName = (name: string) => {
+    return name.replace(/\b\w/g, (char) => char.toUpperCase());
+  };
+
+  const handleSliderLeftClick = (index: number) => {
+    if(index > 0) {
+      setSliderCurrentIndex(index - 1);
+    } 
+  };
+
+  const handleSliderRightClick = (index: number) => {
+    if(index < imagesArray.length - 1) {
+      setSliderCurrentIndex(index + 1);
+    }
+  };
+  // Minimum Room Price Calculator
+  const minimumRoomPrice = rooms &&  rooms?.reduce((min: number, room: any) => {
+    const minPrice = min < room.price.baseAmountPerMonth ? min : room.price.baseAmountPerMonth;
+    return minPrice;
+  }, rooms?.[0]?.price.baseAmountPerMonth ?? 15000);
 
   return (
     <div className="group card-bordered mb-2 flex h-full w-full cursor-pointer flex-col gap-4 rounded-xl bg-white pb-2 transition duration-200 ease-in-out hover:opacity-100 hover:shadow-lg">
       <div className="relative h-[300px] w-full border-b-[1px] border-gray-300 rounded-xl">
-        <div className="relative h-full w-full">
+        <div className="relative h-full w-full group">
           <Image
-            src={imgUrl ? imgUrl : '/default-image.png'}
+            src={imagesArray[sliderCurrentIndex]}
             alt={name}
             fill
             className="rounded-xl rounded-b-none object-cover"
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-xl rounded-b-none"></div>
+          <div className='absolute bottom-2 left-2 flex items-center gap-6 w-fit'  >
+            <div>
+              <IoIosWifi className='w-5 h-5 text-white/80 font-semibold' />
+            </div>
+            <div>
+              <FaShower className='w-5 h-5 text-white/80 font-semibold' />
+            </div>
+            <div>
+              <MdTableRestaurant className='w-5 h-5 text-white/80 font-semibold' />
+            </div>
+            <div>
+              <GiCctvCamera className='w-5 h-5 text-white/80 font-semibold' />
+            </div>
+
+          </div>
+          {/* slider section */}
+          {
+            imagesArray.length > 1 && (
+              <>
+              <div className='absolute bottom-[50%] left-2 flex items-center gap-6 w-fit'>
+                <div className='rounded-full p-2 border border-white'>
+                  <FaChevronLeft className={`w-4 h-4 text-white group-hover:scale-105  transition duration-300 ease-in-out font-semibold ${sliderCurrentIndex === 0 ? 'opacity-50 cursor-not-allowed' : ''}`} onClick={()=> handleSliderLeftClick(sliderCurrentIndex)} />
+                </div>
+              </div>
+              <div className='absolute bottom-[50%] right-2 flex items-center gap-6 w-fit'>
+                <div className='rounded-full p-2 border border-white'>
+                    <FaChevronRight className={`w-4 h-4 text-white group-hover:scale-105  transition duration-300 ease-in-out font-semibold ${sliderCurrentIndex === imagesArray.length - 1 ? 'opacity-50 cursor-not-allowed' : ''}`} onClick={()=> handleSliderRightClick(sliderCurrentIndex)} />
+                </div>
+              </div>
+              </>
+            )
+          }
         </div>
+        <div className="absolute right-2 top-1 z-10">
+          <Badge className={` px-3 py-1 !text-xs uppercase tracking-wide font-bold text-white/90 ${getStatusColor("Available")} !rounded-md `}>Available</Badge>
+        </div>
+        <p className='absolute -bottom-3 right-1 text-white/90 bg-transparent p-1 px-3 rounded-md font-semibold'>For Boys</p>
       </div>
 
-      <div className="flex-grow overflow-y-auto px-4" style={{ maxHeight: '150px' }}>
+      <div className="flex-grow overflow-y-auto px-2" style={{ maxHeight: '150px' }}>
         <div className="flex flex-wrap items-start justify-between gap-2">
           <div className='flex flex-col leading-3'>
-            <h3 className="m-0 ml-1 text-xl font-semibold text-gray-900">{name}</h3>
+            <h3 className="m-0 ml-1 text-2xl font-semibold text-gray-900">{capitalizeHostelName(name)}</h3>
             <p className="text-capitalize my-1 flex items-center gap-2 text-xs text-primary/70">
-              <GrLocation className="text-secondary w-5 h-5 font-semibold" />
-              <span className="text-base text-gray-600">
+              <GrLocation className="text-red w-5 h-5 font-bold" />
+              <span className="text-base text-gray-700">
                 {subCity} {city}, {country}
               </span>
             </p>
           </div>
-          <div>
+          <div className="flex-shrink-0">
             <div className='rounded-full p-2 hover:bg-gray-200'>
               <FaRegHeart className='w-6 h-6 text-red/65 font-semibold' />
             </div>
             {/* <span className='text-sm text-secondary/80 font-semibold'>{currency} {amount}</span> */}
           </div>
         </div>
-        <div className="">{/* <RichTextEditor editorRef={editorRef} readOnly={true} /> */}</div>
-
-        <div className="mt-2 flex items-center justify-between gap-2">
-          <Button label={'View full details'} className="!bg-primary/90 hover:!bg-primary tracking-wide" />
-          {/* <div>
+        <div className='flex items-center justify-between border-t border-gray-200 mt-3 pt-1'>
+          <div className=''>
+            <h3 className='text-sm m-0 font-semibold text-gray-600'>Starting with</h3>
+            <p className="m-0 text-base font-extrabold text-gray-400">
+              Nrs <span className='text-secondary text-2xl'>{minimumRoomPrice}</span> /month
+            </p>
+          </div>
+          <div className="mt-2 flex items-center justify-between gap-2">
+            <Link href={`/hostel/${slug}`}>
+              <Button label={'View Details'} className="!bg-primary/90 hover:!bg-primary tracking-wide" />
+            </Link>
+            {/* <div>
             <FaArrowCircleRight className='text-4xl text-gray-400 w-fit group-hover:text-primary/90 transition duration-300 ease-in-out' />
           </div> */}
+          </div>
         </div>
+
       </div>
     </div>
   );
