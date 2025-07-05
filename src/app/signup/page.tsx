@@ -7,7 +7,6 @@ import React, { Suspense, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import TextInput from 'src/features/react-hook-form/TextField';
-import { FcGoogle } from 'react-icons/fc';
 
 import {
   GetGoogleOauthUrl,
@@ -21,9 +20,9 @@ import {
 
 import { useSearchParams } from 'next/navigation';
 import Button from 'src/components/Button';
-import { FullLogo } from 'src/features/Logo/FullLogoWithText';
 import { Logo } from 'src/features/Logo';
 import Image from 'next/image';
+import GoogleIcon from 'src/components/icons/Google';
 
 export default function Home() {
   return (
@@ -340,7 +339,7 @@ function SignUp() {
                   variant="teal"
                   onClick={() => openSignupUrl()}
                   label="Continue With Google"
-                  startAdornment={<FcGoogle className="text-3xl " />}
+                  startAdornment={<GoogleIcon className="text-3xl " />}
                   className="bg-primary"
                   height="lg"
                 />

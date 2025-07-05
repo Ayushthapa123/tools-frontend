@@ -6,7 +6,6 @@ import { ActiveGuests } from './ActiveGuests';
 import { MapProvider } from 'src/features/MapProvider';
 import Button from 'src/components/Button';
 import Link from 'next/link';
-import UsersTable from 'src/components/ReactTable/UserTable';
 
 export default function Home() {
   return (
