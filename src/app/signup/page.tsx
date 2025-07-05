@@ -156,7 +156,7 @@ function SignUp() {
     {
       title: 'Digital Marketing',
       icon: '📱',
-    }, 
+    },
     {
       title: 'Upload Room Rates',
       icon: '🏠',
@@ -176,8 +176,8 @@ function SignUp() {
                   <Image
                     src="/hero.png"
                     alt="Hostel png"
-                    width={350}
-                    height={350}
+                    width={450}
+                    height={450}
                   />
                 </div>
                 <p className='text-gray-700 mt-12 font-normal md:text-lg text-base'>
@@ -200,135 +200,158 @@ function SignUp() {
                 </p>
               </div>
               <span className="absolute -z-10 overflow-hidden right-3 top-4">
-                  <svg
-                    width="40"
-                    height="40"
-                    viewBox="0 0 40 40"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <circle
-                      cx="1.39737"
-                      cy="38.6026"
-                      r="1.39737"
-                      transform="rotate(-90 1.39737 38.6026)"
-                      fill="#3056D3"
-                    />
-                    <circle
-                      cx="1.39737"
-                      cy="1.99122"
-                      r="1.39737"
-                      transform="rotate(-90 1.39737 1.99122)"
-                      fill="#3056D3"
-                    />
-                    <circle
-                      cx="13.6943"
-                      cy="38.6026"
-                      r="1.39737"
-                      transform="rotate(-90 13.6943 38.6026)"
-                      fill="#3056D3"
-                    />
-                    <circle
-                      cx="13.6943"
-                      cy="1.99122"
-                      r="1.39737"
-                      transform="rotate(-90 13.6943 1.99122)"
-                      fill="#3056D3"
-                    />
-                    <circle
-                      cx="25.9911"
-                      cy="38.6026"
-                      r="1.39737"
-                      transform="rotate(-90 25.9911 38.6026)"
-                      fill="#3056D3"
-                    />
-                    <circle
-                      cx="25.9911"
-                      cy="1.99122"
-                      r="1.39737"
-                      transform="rotate(-90 25.9911 1.99122)"
-                      fill="#3056D3"
-                    />
-                    <circle
-                      cx="38.288"
-                      cy="38.6026"
-                      r="1.39737"
-                      transform="rotate(-90 38.288 38.6026)"
-                      fill="#3056D3"
-                    />
-                    <circle
-                      cx="38.288"
-                      cy="1.99122"
-                      r="1.39737"
-                      transform="rotate(-90 38.288 1.99122)"
-                      fill="#3056D3"
-                    />
-                    <circle
-                      cx="1.39737"
-                      cy="26.3057"
-                      r="1.39737"
-                      transform="rotate(-90 1.39737 26.3057)"
-                      fill="#3056D3"
-                    />
-                    <circle
-                      cx="13.6943"
-                      cy="26.3057"
-                      r="1.39737"
-                      transform="rotate(-90 13.6943 26.3057)"
-                      fill="#3056D3"
-                    />
-                    <circle
-                      cx="25.9911"
-                      cy="26.3057"
-                      r="1.39737"
-                      transform="rotate(-90 25.9911 26.3057)"
-                      fill="#3056D3"
-                    />
-                    <circle
-                      cx="38.288"
-                      cy="26.3057"
-                      r="1.39737"
-                      transform="rotate(-90 38.288 26.3057)"
-                      fill="#3056D3"
-                    />
-                    <circle
-                      cx="1.39737"
-                      cy="14.0086"
-                      r="1.39737"
-                      transform="rotate(-90 1.39737 14.0086)"
-                      fill="#3056D3"
-                    />
-                    <circle
-                      cx="13.6943"
-                      cy="14.0086"
-                      r="1.39737"
-                      transform="rotate(-90 13.6943 14.0086)"
-                      fill="#3056D3"
-                    />
-                    <circle
-                      cx="25.9911"
-                      cy="14.0086"
-                      r="1.39737"
-                      transform="rotate(-90 25.9911 14.0086)"
-                      fill="#3056D3"
-                    />
-                    <circle
-                      cx="38.288"
-                      cy="14.0086"
-                      r="1.39737"
-                      transform="rotate(-90 38.288 14.0086)"
-                      fill="#3056D3"
-                    />
-                  </svg>
-                </span>
+                <svg
+                  width="40"
+                  height="40"
+                  viewBox="0 0 40 40"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle
+                    cx="1.39737"
+                    cy="38.6026"
+                    r="1.39737"
+                    transform="rotate(-90 1.39737 38.6026)"
+                    fill="#3056D3"
+                  />
+                  <circle
+                    cx="1.39737"
+                    cy="1.99122"
+                    r="1.39737"
+                    transform="rotate(-90 1.39737 1.99122)"
+                    fill="#3056D3"
+                  />
+                  <circle
+                    cx="13.6943"
+                    cy="38.6026"
+                    r="1.39737"
+                    transform="rotate(-90 13.6943 38.6026)"
+                    fill="#3056D3"
+                  />
+                  <circle
+                    cx="13.6943"
+                    cy="1.99122"
+                    r="1.39737"
+                    transform="rotate(-90 13.6943 1.99122)"
+                    fill="#3056D3"
+                  />
+                  <circle
+                    cx="25.9911"
+                    cy="38.6026"
+                    r="1.39737"
+                    transform="rotate(-90 25.9911 38.6026)"
+                    fill="#3056D3"
+                  />
+                  <circle
+                    cx="25.9911"
+                    cy="1.99122"
+                    r="1.39737"
+                    transform="rotate(-90 25.9911 1.99122)"
+                    fill="#3056D3"
+                  />
+                  <circle
+                    cx="38.288"
+                    cy="38.6026"
+                    r="1.39737"
+                    transform="rotate(-90 38.288 38.6026)"
+                    fill="#3056D3"
+                  />
+                  <circle
+                    cx="38.288"
+                    cy="1.99122"
+                    r="1.39737"
+                    transform="rotate(-90 38.288 1.99122)"
+                    fill="#3056D3"
+                  />
+                  <circle
+                    cx="1.39737"
+                    cy="26.3057"
+                    r="1.39737"
+                    transform="rotate(-90 1.39737 26.3057)"
+                    fill="#3056D3"
+                  />
+                  <circle
+                    cx="13.6943"
+                    cy="26.3057"
+                    r="1.39737"
+                    transform="rotate(-90 13.6943 26.3057)"
+                    fill="#3056D3"
+                  />
+                  <circle
+                    cx="25.9911"
+                    cy="26.3057"
+                    r="1.39737"
+                    transform="rotate(-90 25.9911 26.3057)"
+                    fill="#3056D3"
+                  />
+                  <circle
+                    cx="38.288"
+                    cy="26.3057"
+                    r="1.39737"
+                    transform="rotate(-90 38.288 26.3057)"
+                    fill="#3056D3"
+                  />
+                  <circle
+                    cx="1.39737"
+                    cy="14.0086"
+                    r="1.39737"
+                    transform="rotate(-90 1.39737 14.0086)"
+                    fill="#3056D3"
+                  />
+                  <circle
+                    cx="13.6943"
+                    cy="14.0086"
+                    r="1.39737"
+                    transform="rotate(-90 13.6943 14.0086)"
+                    fill="#3056D3"
+                  />
+                  <circle
+                    cx="25.9911"
+                    cy="14.0086"
+                    r="1.39737"
+                    transform="rotate(-90 25.9911 14.0086)"
+                    fill="#3056D3"
+                  />
+                  <circle
+                    cx="38.288"
+                    cy="14.0086"
+                    r="1.39737"
+                    transform="rotate(-90 38.288 14.0086)"
+                    fill="#3056D3"
+                  />
+                </svg>
+              </span>
             </div>
             <div className="md:w-[50%] w-[100%] h-[100%] relative rounded-l-2xl overflow-hidden bg-base-100 px-3 py-[1rem] text-center sm:px-[1rem] md:px-[3rem]">
-              <div className="relative md:w-[70%] w-full mx-auto mb-5 flex items-start md:items-center  gap-1">
-                <Logo />
-                <div>
-                  <FullLogo />
+              <div className="relative md:w-[70%] w-full mx-auto mb-8 flex items-start md:items-center justify-center  gap-1">
+                <div className='flex items-end gap-3 justify-center opacity-70'>
+                  <h1 className='mb-0'>Signup with </h1>
+                  <div className=''>
+                    <Logo />
+                  </div>
                 </div>
+                {/* <div>
+                  <FullLogo />
+                </div> */}
               </div>
+              <div className="md:w-[80%] mx-auto mb-4  ">
+
+                <Button
+                  variant="teal"
+                  onClick={() => openSignupUrl()}
+                  label="Continue With Google"
+                  startAdornment={<FcGoogle className="text-3xl " />}
+                  className="bg-primary"
+                  height="lg"
+                />
+              </div>
+              <p className="text-body-color text-base">
+                <span className="pr-0.5">Already a member?</span>
+                <Link href="/login" className="ml-1 text-blue hover:underline">
+                  Log In
+                </Link>
+              </p>
+              <hr className="  my-3 w-full border" />
               <div>
                 <p className=" text-error">{error ?? error}</p>
               </div>
@@ -418,32 +441,16 @@ function SignUp() {
                   <Button
                     label={'Sign up'}
                     disabled={loading || !isValid}
-                    className={`${loading || !isValid ? 'cursor-not-allowed opacity-30' : 'opacity-100'
+                    className={`${loading || !isValid ? 'cursor-not-allowed opacity-100' : 'opacity-100'
                       } w-full rounded-md bg-primary px-4 py-2  font-bold   `}
                   />
                 </div>
               </form>
 
-              <p className="text-body-color text-base">
-                <span className="pr-0.5">Already a member?</span>
-                <Link href="/login" className="ml-1 text-blue hover:underline">
-                  Log In
-                </Link>
-              </p>
 
 
-              <div className="md:w-[80%] mx-auto  ">
-                <hr className="  my-3 w-full border" />
 
-                <Button
-                  variant="teal"
-                  onClick={() => openSignupUrl()}
-                  label="Continue With Google"
-                  startAdornment={<FcGoogle className="text-3xl " />}
-                  className="bg-primary"
-                  height="lg"
-                />
-              </div>
+
 
               <div>
                 <span className="absolute bottom-1 left-1">
