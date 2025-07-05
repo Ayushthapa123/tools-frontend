@@ -22,6 +22,8 @@ const BlogLists = async () => {
 
   const stringifiedBlogPageData = safeJsonStringify(blogData);
   const blogPageData = JSON.parse(stringifiedBlogPageData);
+
+
   return (
     <>
       <section className="pb-2 pt-5 lg:pb-3 ">
@@ -46,41 +48,4 @@ const BlogLists = async () => {
 
 export default BlogLists;
 
-const BlogCardNew = ({
-  image,
-  date,
-  CardTitle,
-  CardDescription,
-}: {
-  image: any;
-  date: any;
-  CardTitle: any;
-  CardDescription: any;
-}) => {
-  return (
-    <>
-      <div className="w-full md:w-1/2 lg:w-1/3">
-        <div className="mb-10 w-full">
-          <div className="relative mb-8 overflow-hidden rounded">
-            <img src={image} alt="" className="w-full" />
-          </div>
-          <div>
-            {date && (
-              <span className="mb-5 inline-block rounded bg-primary px-4 py-1 text-center text-xs font-semibold leading-loose text-white">
-                {date}
-              </span>
-            )}
-            <h3>
-              <a
-                href="/#"
-                className="mb-4 inline-block text-xl font-semibold text-dark hover:text-primary sm:text-2xl lg:text-xl xl:text-2xl">
-                {CardTitle}
-              </a>
-            </h3>
-            <p className="text-body-color text-base">{CardDescription}</p>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-};
+

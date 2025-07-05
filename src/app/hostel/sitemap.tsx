@@ -26,7 +26,6 @@ export const SitemapPage = async () => {
     });
   const originalHostelSitemaps =
    res?.data?.map((item: any) => {
-    console.log(item);
     return {
       url: `https://hostelpilot.com/hostel/${item.slug}`,
       lastModified: new Date(),
