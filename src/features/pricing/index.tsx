@@ -23,7 +23,6 @@ export default function Pricing() {
       features: [ "Free publicity", "list your hostel", "manage student", "build online presence", "share digital profile" ],
       ctaText: "Get Started",
     },
-    
   ]
   return (
     <div className="my-12 w-[90%] mx-auto">
