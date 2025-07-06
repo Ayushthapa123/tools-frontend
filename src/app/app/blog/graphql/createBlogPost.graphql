@@ -1,0 +1,12 @@
+mutation CreateBlogPost($createBlogPostInput: CreateBlogPostInput!) {
+  createBlogPost(data: $createBlogPostInput) {
+    data {
+      id
+      
+    }
+    error {
+      message
+      code
+    }
+  }
+}

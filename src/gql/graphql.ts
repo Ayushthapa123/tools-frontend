@@ -85,6 +85,52 @@ export enum Badges {
   TechSavvy = 'TECH_SAVVY'
 }
 
+export type BlogPost = {
+  __typename?: 'BlogPost';
+  data?: Maybe<BlogPostData>;
+  error?: Maybe<GraphQlError>;
+};
+
+export type BlogPostData = {
+  __typename?: 'BlogPostData';
+  authorId: Scalars['Float']['output'];
+  content: Scalars['String']['output'];
+  coverImageUrl?: Maybe<Scalars['String']['output']>;
+  createdAt: Scalars['DateTime']['output'];
+  excerpt?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  metaDescription?: Maybe<Scalars['String']['output']>;
+  metaKeywords?: Maybe<Scalars['String']['output']>;
+  metaTitle?: Maybe<Scalars['String']['output']>;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  slug: Scalars['String']['output'];
+  status: BlogStatus;
+  tags: Array<BlogTags>;
+  title: Scalars['String']['output'];
+  updatedAt: Scalars['DateTime']['output'];
+  views?: Maybe<Scalars['Float']['output']>;
+};
+
+export type BlogPostList = {
+  __typename?: 'BlogPostList';
+  data?: Maybe<Array<BlogPostData>>;
+  error?: Maybe<GraphQlError>;
+};
+
+export enum BlogStatus {
+  Archived = 'ARCHIVED',
+  Draft = 'DRAFT',
+  Published = 'PUBLISHED'
+}
+
+export enum BlogTags {
+  City = 'CITY',
+  Hostel = 'HOSTEL',
+  Other = 'OTHER',
+  TopTenPlaces = 'TOP_TEN_PLACES',
+  Travel = 'TRAVEL'
+}
+
 export type Booking = {
   __typename?: 'Booking';
   data?: Maybe<BookingData>;
@@ -189,6 +235,22 @@ export type CreateAmenityOptionInput = {
   hostelAmenityType?: InputMaybe<Scalars['String']['input']>;
   iconUrl?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
+};
+
+export type CreateBlogPostInput = {
+  authorId: Scalars['Int']['input'];
+  content: Scalars['String']['input'];
+  coverImageUrl?: InputMaybe<Scalars['String']['input']>;
+  excerpt?: InputMaybe<Scalars['String']['input']>;
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
+  metaKeywords?: InputMaybe<Scalars['String']['input']>;
+  metaTitle: Scalars['String']['input'];
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  slug: Scalars['String']['input'];
+  status: BlogStatus;
+  tags: Array<BlogTags>;
+  title: Scalars['String']['input'];
+  views?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type CreateBookingInput = {
@@ -629,6 +691,7 @@ export type Mutation = {
   createAddress: Address;
   createAmenity: Amenities;
   createAmenityOption: AmenityOption;
+  createBlogPost: BlogPost;
   createBooking: Booking;
   createContact: ContactDetail;
   createGallery: Gallery;
@@ -647,6 +710,7 @@ export type Mutation = {
   createSettings: HostelSetting;
   createUser: User;
   deleteAmenityOption: AmenityOption;
+  deleteBlogPost: BlogPost;
   deleteGallery: Gallery;
   deleteHostel: Hostel;
   deleteRoomAmenityOption: RoomAmenityOption;
@@ -677,6 +741,7 @@ export type Mutation = {
   updateAddress: Address;
   updateAmenity: Amenities;
   updateAmenityOption: AmenityOption;
+  updateBlogPost: BlogPost;
   updateBooking: Booking;
   updateContact: ContactDetail;
   updateGallery: Gallery;
@@ -722,6 +787,11 @@ export type MutationCreateAmenityArgs = {
 
 export type MutationCreateAmenityOptionArgs = {
   createAmenityOptionInput: CreateAmenityOptionInput;
+};
+
+
+export type MutationCreateBlogPostArgs = {
+  data: CreateBlogPostInput;
 };
 
 
@@ -815,6 +885,11 @@ export type MutationCreateUserArgs = {
 
 export type MutationDeleteAmenityOptionArgs = {
   amenityOptionId: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteBlogPostArgs = {
+  id: Scalars['Float']['input'];
 };
 
 
@@ -962,6 +1037,11 @@ export type MutationUpdateAmenityArgs = {
 export type MutationUpdateAmenityOptionArgs = {
   amenityOptionId: Scalars['Int']['input'];
   updateAmenityOptionInput: UpdateAmenityOptionInput;
+};
+
+
+export type MutationUpdateBlogPostArgs = {
+  data: UpdateBlogPostInput;
 };
 
 
@@ -1124,8 +1204,11 @@ export type Query = {
   findRoomsByRoomIds: BookingConfirmationMailData;
   findServiceByHostelId: Service;
   getAddressByHostelId?: Maybe<Address>;
+  getAllBlogPosts: BlogPostList;
   getAllHostels: HostelArrayResponse;
   getAllSearchQueries: Array<SearchQuery>;
+  getBlogPostById?: Maybe<BlogPost>;
+  getBlogPostBySlug?: Maybe<BlogPost>;
   getCitySearchSuggestions?: Maybe<Array<SearchQuery>>;
   getContactByHostelId?: Maybe<ContactDetail>;
   getGalleryByHostelId?: Maybe<GalleryList>;
@@ -1225,10 +1308,26 @@ export type QueryGetAddressByHostelIdArgs = {
 };
 
 
+export type QueryGetAllBlogPostsArgs = {
+  pageNumber?: Scalars['Int']['input'];
+  pageSize?: Scalars['Int']['input'];
+};
+
+
 export type QueryGetAllHostelsArgs = {
   isSuperAdmin?: InputMaybe<Scalars['Boolean']['input']>;
   pageNumber?: Scalars['Int']['input'];
   pageSize?: Scalars['Int']['input'];
+};
+
+
+export type QueryGetBlogPostByIdArgs = {
+  id: Scalars['Float']['input'];
+};
+
+
+export type QueryGetBlogPostBySlugArgs = {
+  slug: Scalars['String']['input'];
 };
 
 
@@ -1603,6 +1702,23 @@ export type UpdateAmenityOptionInput = {
   name?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type UpdateBlogPostInput = {
+  authorId?: InputMaybe<Scalars['Int']['input']>;
+  content?: InputMaybe<Scalars['String']['input']>;
+  coverImageUrl?: InputMaybe<Scalars['String']['input']>;
+  excerpt?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['Int']['input'];
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
+  metaKeywords?: InputMaybe<Scalars['String']['input']>;
+  metaTitle?: InputMaybe<Scalars['String']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<BlogStatus>;
+  tags?: InputMaybe<Array<BlogTags>>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  views?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type UpdateBookingInput = {
   bookingKey?: InputMaybe<Scalars['String']['input']>;
   endDate?: InputMaybe<Scalars['DateTime']['input']>;
@@ -1798,7 +1914,8 @@ export enum UserType {
   Others = 'OTHERS',
   Student = 'STUDENT',
   Superadmin = 'SUPERADMIN',
-  Suppliers = 'SUPPLIERS'
+  Suppliers = 'SUPPLIERS',
+  Writer = 'WRITER'
 }
 
 export type UsersAndToken = {
@@ -1876,6 +1993,39 @@ export type UpdateAmenityOptionMutationVariables = Exact<{
 
 
 export type UpdateAmenityOptionMutation = { __typename?: 'Mutation', updateAmenityOption: { __typename?: 'AmenityOption', data?: { __typename?: 'AmenityOptionData', id: string } | null, error?: { __typename?: 'GraphQLError', message: string } | null } };
+
+export type CreateBlogPostMutationVariables = Exact<{
+  createBlogPostInput: CreateBlogPostInput;
+}>;
+
+
+export type CreateBlogPostMutation = { __typename?: 'Mutation', createBlogPost: { __typename?: 'BlogPost', data?: { __typename?: 'BlogPostData', id: string } | null, error?: { __typename?: 'GraphQLError', message: string, code?: string | null } | null } };
+
+export type DeleteBlogPostMutationVariables = Exact<{
+  id: Scalars['Float']['input'];
+}>;
+
+
+export type DeleteBlogPostMutation = { __typename?: 'Mutation', deleteBlogPost: { __typename?: 'BlogPost', data?: { __typename?: 'BlogPostData', id: string, createdAt: any, updatedAt: any } | null, error?: { __typename?: 'GraphQLError', message: string, code?: string | null } | null } };
+
+export type GetBlogPostBySlugQueryVariables = Exact<{
+  slug: Scalars['String']['input'];
+}>;
+
+
+export type GetBlogPostBySlugQuery = { __typename?: 'Query', getBlogPostBySlug?: { __typename?: 'BlogPost', data?: { __typename?: 'BlogPostData', id: string, title: string, slug: string, excerpt?: string | null, content: string, coverImageUrl?: string | null, metaTitle?: string | null, metaDescription?: string | null, metaKeywords?: string | null, status: BlogStatus, views?: number | null, publishedAt?: any | null, tags: Array<BlogTags>, authorId: number, createdAt: any, updatedAt: any } | null, error?: { __typename?: 'GraphQLError', message: string, code?: string | null } | null } | null };
+
+export type GetBlogPostsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetBlogPostsQuery = { __typename?: 'Query', getAllBlogPosts: { __typename?: 'BlogPostList', data?: Array<{ __typename?: 'BlogPostData', id: string, title: string, slug: string, excerpt?: string | null, coverImageUrl?: string | null, metaTitle?: string | null, metaDescription?: string | null, metaKeywords?: string | null, status: BlogStatus, views?: number | null, publishedAt?: any | null, createdAt: any, updatedAt: any }> | null, error?: { __typename?: 'GraphQLError', message: string, code?: string | null } | null } };
+
+export type UpdateBlogPostMutationVariables = Exact<{
+  updateBlogPostInput: UpdateBlogPostInput;
+}>;
+
+
+export type UpdateBlogPostMutation = { __typename?: 'Mutation', updateBlogPost: { __typename?: 'BlogPost', data?: { __typename?: 'BlogPostData', id: string, title: string, content: string, slug: string, createdAt: any, updatedAt: any } | null, error?: { __typename?: 'GraphQLError', message: string, code?: string | null } | null } };
 
 export type BookingsByHostelQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2032,7 +2182,7 @@ export type GetAllHostelsQueryVariables = Exact<{
 }>;
 
 
-export type GetAllHostelsQuery = { __typename?: 'Query', getAllHostels: { __typename?: 'HostelArrayResponse', data: Array<{ __typename?: 'HostelData', id: string, name: string, description?: string | null, slug: string, verifiedByCommunityOwner: boolean, verifiedBySuperAdmin: boolean, ownerId: number, createdAt: any, updatedAt: any, address?: { __typename?: 'AddressData', id: string, country: string, city: string, subCity?: string | null, street?: string | null, latitude?: number | null, longitude?: number | null } | null, owner?: { __typename?: 'UserData', email: string, fullName: string } | null, contact?: { __typename?: 'ContactDetailData', id: string, phone: string, altPhone?: string | null, email: string } | null, rooms?: Array<{ __typename?: 'RoomData', id: string, status: RoomStatus, capacity: RoomCapacity, caption: string, description?: string | null, roomNumber?: string | null, maxOccupancy?: string | null, attachBathroom?: boolean | null, price?: { __typename?: 'PriceData', id: string, baseAmountPerDay?: number | null, baseAmountPerMonth: number, currency: Currency, discountAmount?: number | null, discountType?: DiscountType | null, isDynamicPricing: boolean, isDiscountActive: boolean } | null, image: Array<{ __typename?: 'RoomImageData', id: string, caption?: string | null, url: string }> }> | null, gallery: Array<{ __typename?: 'GalleryData', id: string, caption?: string | null, url: string }> }>, error?: { __typename?: 'GraphQLError', message: string, code?: string | null } | null } };
+export type GetAllHostelsQuery = { __typename?: 'Query', getAllHostels: { __typename?: 'HostelArrayResponse', data: Array<{ __typename?: 'HostelData', id: string, name: string, description?: string | null, slug: string, verifiedByCommunityOwner: boolean, verifiedBySuperAdmin: boolean, ownerId: number, createdAt: any, updatedAt: any, address?: { __typename?: 'AddressData', id: string, country: string, city: string, subCity?: string | null, street?: string | null, latitude?: number | null, longitude?: number | null } | null, owner?: { __typename?: 'UserData', email: string, fullName: string } | null, contact?: { __typename?: 'ContactDetailData', id: string, phone: string, altPhone?: string | null, email: string } | null, rooms: Array<{ __typename?: 'RoomData', id: string, status: RoomStatus, capacity: RoomCapacity, caption: string, description?: string | null, roomNumber?: string | null, maxOccupancy?: string | null, attachBathroom?: boolean | null, price?: { __typename?: 'PriceData', id: string, baseAmountPerDay?: number | null, baseAmountPerMonth: number, currency: Currency, discountAmount?: number | null, discountType?: DiscountType | null, isDynamicPricing: boolean, isDiscountActive: boolean } | null, image: Array<{ __typename?: 'RoomImageData', id: string, caption?: string | null, url: string }> }>, gallery: Array<{ __typename?: 'GalleryData', id: string, caption?: string | null, url: string }> }>, error?: { __typename?: 'GraphQLError', message: string, code?: string | null } | null } };
 
 export type VerifyHostelMutationVariables = Exact<{
   hostelId: Scalars['Int']['input'];
@@ -2409,7 +2559,7 @@ export type GetHostelBySlugQueryVariables = Exact<{
 }>;
 
 
-export type GetHostelBySlugQuery = { __typename?: 'Query', getHostelBySlug?: { __typename?: 'Hostel', data?: { __typename?: 'HostelData', id: string, name: string, description?: string | null, slug: string, verifiedBySuperAdmin: boolean, verifiedByCommunityOwner: boolean, service?: { __typename?: 'ServiceData', services: any } | null, hostelRules?: { __typename?: 'HostelRulesData', rules: any } | null, gallery: Array<{ __typename?: 'GalleryData', url: string, isSelected?: boolean | null }>, address?: { __typename?: 'AddressData', country: string, city: string, subCity?: string | null, street?: string | null, latitude?: number | null, longitude?: number | null } | null, contact?: { __typename?: 'ContactDetailData', phone: string, altPhone?: string | null, email: string } | null, rooms?: Array<{ __typename?: 'RoomData', id: string, caption: string, capacity: RoomCapacity, roomNumber?: string | null, description?: string | null, status: RoomStatus, roomAmenity?: { __typename?: 'RoomAmenityData', amenity: any } | null, image: Array<{ __typename?: 'RoomImageData', url: string, id: string, caption?: string | null }>, price?: { __typename?: 'PriceData', baseAmountPerDay?: number | null, baseAmountPerMonth: number, currency: Currency, isDynamicPricing: boolean, discountAmount?: number | null, discountType?: DiscountType | null } | null }> | null } | null, error?: { __typename?: 'GraphQLError', message: string, code?: string | null } | null } | null };
+export type GetHostelBySlugQuery = { __typename?: 'Query', getHostelBySlug?: { __typename?: 'Hostel', data?: { __typename?: 'HostelData', id: string, name: string, description?: string | null, slug: string, verifiedBySuperAdmin: boolean, verifiedByCommunityOwner: boolean, service?: { __typename?: 'ServiceData', services: any } | null, hostelRules?: { __typename?: 'HostelRulesData', rules: any } | null, gallery: Array<{ __typename?: 'GalleryData', url: string, isSelected?: boolean | null }>, address?: { __typename?: 'AddressData', country: string, city: string, subCity?: string | null, street?: string | null, latitude?: number | null, longitude?: number | null } | null, contact?: { __typename?: 'ContactDetailData', phone: string, altPhone?: string | null, email: string } | null, rooms: Array<{ __typename?: 'RoomData', id: string, caption: string, capacity: RoomCapacity, roomNumber?: string | null, description?: string | null, status: RoomStatus, roomAmenity?: { __typename?: 'RoomAmenityData', amenity: any } | null, image: Array<{ __typename?: 'RoomImageData', url: string, id: string, caption?: string | null }>, price?: { __typename?: 'PriceData', baseAmountPerDay?: number | null, baseAmountPerMonth: number, currency: Currency, isDynamicPricing: boolean, discountAmount?: number | null, discountType?: DiscountType | null } | null }> } | null, error?: { __typename?: 'GraphQLError', message: string, code?: string | null } | null } | null };
 
 export type LogInUserMutationVariables = Exact<{
   input: LoginInput;
@@ -2521,6 +2671,11 @@ export const CreateAmenityOptionDocument = {"kind":"Document","definitions":[{"k
 export const DeleteAmenityOptionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"deleteAmenityOption"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteAmenityOption"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"amenityOptionId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]}}]} as unknown as DocumentNode<DeleteAmenityOptionMutation, DeleteAmenityOptionMutationVariables>;
 export const AllAmenitiesOptionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllAmenitiesOption"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amenityOptions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"iconUrl"}},{"kind":"Field","name":{"kind":"Name","value":"hostelAmenityType"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<AllAmenitiesOptionQuery, AllAmenitiesOptionQueryVariables>;
 export const UpdateAmenityOptionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateAmenityOption"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateAmenityOptionInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateAmenityOptionInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateAmenityOption"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"amenityOptionId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"updateAmenityOptionInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateAmenityOptionInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateAmenityOptionMutation, UpdateAmenityOptionMutationVariables>;
+export const CreateBlogPostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateBlogPost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createBlogPostInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateBlogPostInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createBlogPost"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createBlogPostInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<CreateBlogPostMutation, CreateBlogPostMutationVariables>;
+export const DeleteBlogPostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"deleteBlogPost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteBlogPost"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<DeleteBlogPostMutation, DeleteBlogPostMutationVariables>;
+export const GetBlogPostBySlugDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetBlogPostBySlug"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"slug"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getBlogPostBySlug"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"slug"},"value":{"kind":"Variable","name":{"kind":"Name","value":"slug"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"excerpt"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"coverImageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"metaTitle"}},{"kind":"Field","name":{"kind":"Name","value":"metaDescription"}},{"kind":"Field","name":{"kind":"Name","value":"metaKeywords"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"views"}},{"kind":"Field","name":{"kind":"Name","value":"publishedAt"}},{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"authorId"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<GetBlogPostBySlugQuery, GetBlogPostBySlugQueryVariables>;
+export const GetBlogPostsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetBlogPosts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAllBlogPosts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"excerpt"}},{"kind":"Field","name":{"kind":"Name","value":"coverImageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"metaTitle"}},{"kind":"Field","name":{"kind":"Name","value":"metaDescription"}},{"kind":"Field","name":{"kind":"Name","value":"metaKeywords"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"views"}},{"kind":"Field","name":{"kind":"Name","value":"publishedAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<GetBlogPostsQuery, GetBlogPostsQueryVariables>;
+export const UpdateBlogPostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateBlogPost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateBlogPostInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateBlogPostInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateBlogPost"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateBlogPostInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateBlogPostMutation, UpdateBlogPostMutationVariables>;
 export const BookingsByHostelDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"BookingsByHostel"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bookingsByHostel"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"bookingKey"}},{"kind":"Field","name":{"kind":"Name","value":"startDate"}},{"kind":"Field","name":{"kind":"Name","value":"endDate"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"room"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"roomNumber"}},{"kind":"Field","name":{"kind":"Name","value":"capacity"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"attachBathroom"}},{"kind":"Field","name":{"kind":"Name","value":"maxOccupancy"}},{"kind":"Field","name":{"kind":"Name","value":"price"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"baseAmountPerDay"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"discountAmount"}},{"kind":"Field","name":{"kind":"Name","value":"discountType"}},{"kind":"Field","name":{"kind":"Name","value":"isDiscountActive"}}]}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"guest"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"fullName"}},{"kind":"Field","name":{"kind":"Name","value":"phoneNumber"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"path"}}]}}]}}]}}]} as unknown as DocumentNode<BookingsByHostelQuery, BookingsByHostelQueryVariables>;
 export const SelectGalleryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"selectGallery"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"galleryId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"hostelId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"selectGallery"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"galleryId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"galleryId"}}},{"kind":"Argument","name":{"kind":"Name","value":"hostelId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"hostelId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"isSelected"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<SelectGalleryMutation, SelectGalleryMutationVariables>;
 export const GetHostelDetailsBasicDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getHostelDetailsBasic"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getHostelByToken"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"verifiedBySuperAdmin"}},{"kind":"Field","name":{"kind":"Name","value":"verifiedByCommunityOwner"}},{"kind":"Field","name":{"kind":"Name","value":"hasOnboardingComplete"}},{"kind":"Field","name":{"kind":"Name","value":"address"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"country"}},{"kind":"Field","name":{"kind":"Name","value":"city"}},{"kind":"Field","name":{"kind":"Name","value":"subCity"}},{"kind":"Field","name":{"kind":"Name","value":"street"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetHostelDetailsBasicQuery, GetHostelDetailsBasicQueryVariables>;
@@ -2665,6 +2820,105 @@ export const UpdateAmenityOption = gql`
     }
     error {
       message
+    }
+  }
+}
+    `;
+export const CreateBlogPost = gql`
+    mutation CreateBlogPost($createBlogPostInput: CreateBlogPostInput!) {
+  createBlogPost(data: $createBlogPostInput) {
+    data {
+      id
+    }
+    error {
+      message
+      code
+    }
+  }
+}
+    `;
+export const DeleteBlogPost = gql`
+    mutation deleteBlogPost($id: Float!) {
+  deleteBlogPost(id: $id) {
+    data {
+      id
+      createdAt
+      updatedAt
+    }
+    error {
+      message
+      code
+    }
+  }
+}
+    `;
+export const GetBlogPostBySlug = gql`
+    query GetBlogPostBySlug($slug: String!) {
+  getBlogPostBySlug(slug: $slug) {
+    data {
+      id
+      title
+      slug
+      excerpt
+      content
+      coverImageUrl
+      metaTitle
+      metaDescription
+      metaKeywords
+      status
+      views
+      publishedAt
+      tags
+      authorId
+      createdAt
+      updatedAt
+    }
+    error {
+      message
+      code
+    }
+  }
+}
+    `;
+export const GetBlogPosts = gql`
+    query GetBlogPosts {
+  getAllBlogPosts {
+    data {
+      id
+      title
+      slug
+      excerpt
+      coverImageUrl
+      metaTitle
+      metaDescription
+      metaKeywords
+      status
+      views
+      publishedAt
+      createdAt
+      updatedAt
+    }
+    error {
+      message
+      code
+    }
+  }
+}
+    `;
+export const UpdateBlogPost = gql`
+    mutation UpdateBlogPost($updateBlogPostInput: UpdateBlogPostInput!) {
+  updateBlogPost(data: $updateBlogPostInput) {
+    data {
+      id
+      title
+      content
+      slug
+      createdAt
+      updatedAt
+    }
+    error {
+      message
+      code
     }
   }
 }
