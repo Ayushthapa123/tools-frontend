@@ -52,8 +52,8 @@ export const HostelCard = (props: Iprops) => {
   const otherImages = gallery?.filter((img: any) => img.isSelected === false);
   var imgUrl = mainWallpaper?.url ?? '/images/nowallpaper.jpg';
 
-  const imagesArray = [ imgUrl, ...otherImages.map((img: any) => img.url) ].filter(Boolean);
-
+  // const imagesArray = [ imgUrl, ...otherImages.map((img: any) => img.url) ].filter(Boolean);
+  const imagesArray = [imgUrl, ...(otherImages?.map((img: any) => img.url) || [])].filter(Boolean);
 
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
