@@ -1,0 +1,26 @@
+query GetBlogPostBySlug($slug: String!) {
+  getBlogPostBySlug(slug: $slug) {
+    data {
+      id
+      title
+      slug
+      excerpt
+      content
+      coverImageUrl
+      metaTitle
+      metaDescription
+      metaKeywords
+      status
+      views
+      publishedAt
+      tags
+      authorId
+      createdAt
+      updatedAt
+    }
+    error {
+      message
+      code
+    }
+  }
+}

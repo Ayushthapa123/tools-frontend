@@ -1,0 +1,23 @@
+query GetBlogPosts {
+  getAllBlogPosts {
+    data {
+      id
+      title
+      slug
+      excerpt
+      coverImageUrl
+      metaTitle
+      metaDescription
+      metaKeywords
+      status
+      views
+      publishedAt
+      createdAt
+      updatedAt
+    }
+    error {
+      message
+      code
+    }
+  }
+}
