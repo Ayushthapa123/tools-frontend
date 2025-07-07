@@ -6,7 +6,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 
 import TextInput from 'src/features/react-hook-form/TextField';
-import { BlogStatus, BlogTags } from 'src/gql/graphql';
+import { BlogStatus, BlogTags, UserType } from 'src/gql/graphql';
 import ReactSelect from 'src/features/react-hook-form/ReactSelect';
 import TextArea from 'src/features/react-hook-form/TextArea';
 
@@ -94,6 +94,12 @@ function BlogForm({
     { label: 'Archived', value: BlogStatus.Archived },
   ];
 
+  const blogTags = [
+    // { label: 'Travel', value: BlogTags.Travel },
+    { label: 'City', value: [BlogTags.City] },
+    { label: 'Top Ten Places', value: [BlogTags.TopTenPlaces] },
+  ];
+
   const {
     handleSubmit,
     control,
@@ -106,7 +112,7 @@ function BlogForm({
       excerpt: blogPost?.data?.excerpt,
       coverImageUrl: blogPost?.data?.coverImageUrl,
       content: blogPost?.data?.content,
-      tags: [BlogTags.Travel],
+      tags: [BlogTags.City],
       metaDescription: blogPost?.data?.metaDescription ?? '',
       metaTitle: blogPost?.data?.metaTitle ?? '',
       metaKeywords: blogPost?.data?.metaKeywords ?? '',
@@ -158,7 +164,7 @@ function BlogForm({
     const input = { ...data};
     if (!isEdit) {
       mutateCreateBlogPostAsync({
-        createBlogPostInput: { ...input, authorId: Number(user.userId),coverImageUrl: coverImage },
+        createBlogPostInput: { ...input, authorId: Number(user.userId),coverImageUrl: coverImage ,tags: [data.slug.includes("10")? BlogTags.TopTenPlaces : BlogTags.City] },
       }).then(res => {
         if (res?.createBlogPost?.data?.id) {
           enqueueSnackbar('Blog post created successfully.', { variant: 'success' });
@@ -170,7 +176,7 @@ function BlogForm({
       });
     } else {
       mutateUpdateBlogPostAsync({
-        updateBlogPostInput: { ...input, id: Number(blogPost?.data?.id),coverImageUrl: coverImage },
+        updateBlogPostInput: { ...input, id: Number(blogPost?.data?.id),coverImageUrl: coverImage ,tags: [data.slug.includes("10")? BlogTags.TopTenPlaces : BlogTags.City] },
       }).then(res => {
         if (res?.updateBlogPost?.data?.id) {
           enqueueSnackbar('Blog post updated successfully.', { variant: 'success' });
@@ -188,12 +194,7 @@ function BlogForm({
   return (
     <div className="w-full">
       <div className="rounded-lg bg-white p-6 shadow">
-        <div className="mb-6">
-          <div className="mb-4 flex items-center justify-center"></div>
-          <div className="flex justify-start">
-            <h2 className="text-xl font-semibold">{blogPost?.data?.title}</h2>
-          </div>
-        </div>
+    
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <div>
@@ -218,7 +219,8 @@ function BlogForm({
                   label="Slug"
                   required
                   helpertext={errors.slug?.type === 'required' ? 'Slug is Required' : ''}
-                  error={!!errors.slug}
+                  error={!!errors.slug} 
+                  disabled={isEdit && user.userType !== UserType.Superadmin}
                 />
               </div>
 
@@ -233,7 +235,7 @@ function BlogForm({
                   error={!!errors.status}
                 />
               </div>
-
+     
               <div className="mb-2">
                 <TextArea
                   name="excerpt"
