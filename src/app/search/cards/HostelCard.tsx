@@ -10,6 +10,7 @@ import { MdTableRestaurant } from 'react-icons/md';
 import { Badge } from 'src/components/Badge';
 import Button from 'src/components/Button';
 
+// Please remove this interface and use the type from the backend
 interface Iprops {
   name: string;
   country: string;
@@ -51,8 +52,8 @@ export const HostelCard = (props: Iprops) => {
   const otherImages = gallery?.filter((img: any) => img.isSelected === false);
   var imgUrl = mainWallpaper?.url ?? '/images/nowallpaper.jpg';
 
-  const imagesArray = [ imgUrl, ...otherImages.map((img: any) => img.url) ].filter(Boolean);
-
+  // const imagesArray = [ imgUrl, ...otherImages.map((img: any) => img.url) ].filter(Boolean);
+  const imagesArray = [imgUrl, ...(otherImages?.map((img: any) => img.url) || [])].filter(Boolean);
 
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
@@ -86,7 +87,7 @@ export const HostelCard = (props: Iprops) => {
   const minimumRoomPrice = rooms &&  rooms?.reduce((min: number, room: any) => {
     const minPrice = min < room.price?.baseAmountPerMonth ? min : room.price?.baseAmountPerMonth;
     return minPrice;
-  }, rooms?.[0]?.price?.baseAmountPerMonth ?? 15000);
+  }, rooms?.[0]?.price?.baseAmountPerMonth ?? "0");
 
   return (
     <div className="group card-bordered mb-2 flex h-full w-full cursor-pointer flex-col gap-4 rounded-xl bg-white pb-2 transition duration-200 ease-in-out hover:opacity-100 hover:shadow-lg">

@@ -48,7 +48,6 @@ export default function MainContent(props: Iprops) {
   const roomImages = hostel?.data?.rooms?.[ 0 ]?.image ?? [];
   const editorRef = useRef(hostel?.data?.description != '' ? hostel?.data?.description : 'No description found');
   const rulesEditorRef = useRef(hostel?.data?.hostelRules?.rules.rules ?? 'No rules found');
-  console.log("editorRef",editorRef)
  
   const { roomIds } = useRoomStore();
 

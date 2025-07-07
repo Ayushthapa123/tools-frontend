@@ -1,0 +1,16 @@
+mutation UpdateBlogPost($updateBlogPostInput: UpdateBlogPostInput!) {
+  updateBlogPost(data: $updateBlogPostInput) {
+    data {
+      id
+      title
+      content 
+      slug
+      createdAt
+      updatedAt
+    }
+    error {
+      message
+      code
+    }
+  }
+}

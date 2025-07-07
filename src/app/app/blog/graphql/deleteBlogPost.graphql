@@ -1,0 +1,13 @@
+mutation deleteBlogPost($id: Float!) {
+  deleteBlogPost(id: $id) {
+    data {
+      id
+      createdAt
+      updatedAt
+    }
+    error {
+      message
+      code
+    }
+  }
+}

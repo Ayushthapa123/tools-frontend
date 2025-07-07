@@ -39,12 +39,14 @@
     "react-quill": "^2.0.0",
     "react-select": "^5.8.0",
     "safe-json-stringify": "^1.2.0",
+    "tinymce": "^7.9.1",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.2",
     "@graphql-codegen/typescript-react-query": "^6.1.0",
     "@tanstack/eslint-plugin-query": "^5.28.6",
+    "@tinymce/tinymce-react": "^6.2.1",
     "@types/jest": "^29.5.14",
     "@types/node": "^20",
     "@types/react": "^18",

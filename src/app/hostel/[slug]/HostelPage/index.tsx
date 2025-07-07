@@ -1,8 +1,6 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import Link from 'next/link';
-import { BottomNav } from 'src/app/detail-page/BottomNav';
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import Footer from 'src/features/Footer';
 import {
@@ -13,7 +11,6 @@ import {
 } from 'src/gql/graphql';
 import MainContent from './MainContent';
 import { CommonNav } from 'src/features/NavBar/CommonNav';
-import { useSearchParams } from 'next/navigation';
 import LoadingSpinner from 'src/components/Loading';
 export function HostelPage({
   slug,
@@ -24,7 +21,6 @@ export function HostelPage({
   checkInDat: string;
   checkOutDat: string;
 }) {
-  const searchParams = useSearchParams();
   const checkInDate = checkInDat ?? new Date().toISOString().split('T')[0];
   const checkOutDate = checkOutDat ?? new Date(Date.now() + 86400000).toISOString().split('T')[0];
 
