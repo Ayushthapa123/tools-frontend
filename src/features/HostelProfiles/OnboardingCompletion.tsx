@@ -15,6 +15,7 @@ import IconButton from 'src/components/IconButton';
 import Link from 'next/link';
 import { useGraphQLQuery } from 'src/hooks/useGraphqlQuery';
 import { enqueueSnackbar } from 'notistack';
+import { Chip } from 'src/components/Chip';
 
 export default function OnboardingCompletion() {
   const router = useRouter();
@@ -206,19 +207,10 @@ const StepItem = ({
       </div>
     </div>
     {isCompleted ? (
-      <span className="badge badge-success badge-sm w-full sm:w-fit sm:min-w-[120px] sm:badge-md gap-0 sm:gap-1 flex-shrink-0 p-4 !px-2">
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6" viewBox="0 0 20 20" fill="currentColor">
-          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-        </svg>
-        <span className="inline font-semibold">Completed</span>
-      </span>
+      <Chip label='Completed' variant='success' className='sm:min-h-[50px] rounded-xl' />
+          
     ) : (
-      <span className="badge badge-error badge-sm sm:badge-md w-full sm:w-fit gap-1 sm:gap-1 flex-shrink-0 p-4 sm:min-w-[120px] !px-2">
-        <svg className="h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 1a11 11 0 1 0 11 11A11.012 11.012 0 0 0 12 1Zm1 11a1 1 0 0 1-1 1H7a1 1 0 0 1 0-2h4V6a1 1 0 0 1 2 0Z" />
-        </svg>
-        <span className="inline font-semibold text-white">Pending</span>
-      </span>
+        <Chip label='Pending' variant='error' className='sm:min-h-[50px] rounded-xl' />
     )}
   </div>
 );

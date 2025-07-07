@@ -9,6 +9,7 @@ const defaultMapContainerStyle = {
   height: '70vh',
   borderRadius: '15px 0px 0px 15px',
   marginTop: '10px',
+  zIndex:"1"
 };
 
 const defaultMapOptions = {
@@ -45,7 +46,9 @@ export const MapComponent = (props: Iprops) => {
   };
 
   const handlePlaceChanged = () => {
+    console.log("handlePlaceChanged");
     const place = autocompleteRef.current.getPlace();
+    console.log("place",place);
     if (place.geometry && place.geometry.location) {
       const lat = place.geometry.location.lat();
       const lng = place.geometry.location.lng();
@@ -54,8 +57,33 @@ export const MapComponent = (props: Iprops) => {
     }
   };
 
+
+useEffect(() => {
+  // Wait for the pac-container to be created
+  const interval = setInterval(() => {
+    const pacs = document.querySelectorAll('.pac-container');
+    const modal = document.getElementById('my_modal_4'); // Replace with your modal's id
+
+    if (modal) {
+      pacs.forEach((pac) => {
+        console.log('PAC:', pac);
+        if (!modal.contains(pac) && pac instanceof HTMLElement) {
+          modal.appendChild(pac);
+          pac.style.position = 'absolute';
+          pac.style.zIndex = '99999';
+          console.log('Moved .pac-container into modal and set z-index.');
+        }
+      });
+    } else {
+      console.log('MODAL not found:', modal);
+    }
+  }, 100);
+
+  return () => clearInterval(interval);
+}, []);
+
   return (
-    <div className="w-full h-[70vh]">
+    <div className="w-full h-[70vh] z-0 relative">
       {clickedLatLng && (
         <div className="mt-4">
 
@@ -64,17 +92,21 @@ export const MapComponent = (props: Iprops) => {
 
         </div>
       )}
+      <div className=' '>
+
       <Autocomplete
         onLoad={autocomplete => (autocompleteRef.current = autocomplete)}
         onPlaceChanged={handlePlaceChanged}
+        className="w-full z-50 relative"
       >
         <input
           type="text"
           placeholder="Search Your Location Here & Select Below"
           className="mb-4 rounded-lg border p-2 md:w-[400px]"
-          style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.3)' }}
+          style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.3)',}}
         />
       </Autocomplete>
+      </div>
       <GoogleMap
         mapContainerStyle={defaultMapContainerStyle}
         center={mapCenter}

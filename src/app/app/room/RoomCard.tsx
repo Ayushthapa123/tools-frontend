@@ -3,11 +3,8 @@ import DeleteIcon from 'src/components/icons/Delete';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Badge } from 'src/components/Badge';
-import { FiEdit } from 'react-icons/fi';
 import { RoomData } from 'src/gql/graphql';
-import { MdMeetingRoom } from 'react-icons/md';
-
-
+import EditIcon from 'src/components/icons/Edit';
 
 export const RoomCard = ({ room, setShowDeleteModal, setDeletedRoomId }: { room: RoomData | undefined | null, setShowDeleteModal: (state: boolean) => void, setDeletedRoomId: (val: number | string | null) => void }) => {
 
@@ -118,7 +115,7 @@ export const RoomCard = ({ room, setShowDeleteModal, setDeletedRoomId }: { room:
                 color="primary"
                 className="bg-white/80 shadow-md backdrop-blur hover:bg-primary/70 hover:text-white"
               >
-                <FiEdit className="h-6 w-6" />
+                <EditIcon className="h-6 w-6" />
               </IconButton>
             </a>
           </Link>

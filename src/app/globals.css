@@ -229,3 +229,35 @@ button {
     font-size: 0.9rem;
   }
 }
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;   
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;            
+}
+
+@keyframes subtle-neon {
+  0%, 100% {
+    box-shadow: 0 0 6px rgba(59, 130, 246, 0.5), 0 0 12px rgba(59, 130, 246, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.7), 0 0 18px rgba(59, 130, 246, 0.5);
+  }
+}
+
+
+.pac-container {
+  z-index: 999999 !important;
+}
+
+body .pac-container {
+  z-index: 2147483647 !important; /* Maximum z-index */
+  position: absolute !important;
+}
+
+#my_modal_4 {
+  position: relative !important;
+}

@@ -1,5 +1,5 @@
 'use client';
-import React, { FC, useMemo, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 
 import Button from 'src/components/Button';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -28,14 +28,15 @@ import LoadingSpinner from 'src/components/Loading';
 import { MapComponent } from './MapComponent';
 import { enqueueSnackbar } from 'notistack';
 import { useGraphQLQuery } from 'src/hooks/useGraphqlQuery';
+import { MapProvider } from 'src/features/MapProvider';
 
 interface Iprops {
-  hostelId?: number;    
+  hostelId?: number;
   handleNextStep?: () => void;
 }
 export const AddressDetails = (props: Iprops) => {
   let { hostelId, handleNextStep } = props;
-   const queryHostelData = useGraphqlClientRequest<
+  const queryHostelData = useGraphqlClientRequest<
     GetHostelByTokenQuery,
     GetHostelByTokenQueryVariables
   >(GetHostelByToken.loc?.source?.body!);
@@ -52,7 +53,7 @@ export const AddressDetails = (props: Iprops) => {
     queryFn: fetchData,
   });
 
-  if(!hostelId){
+  if (!hostelId) {
     hostelId = Number(hostelDataByToken?.data?.id);
   }
 
@@ -60,7 +61,7 @@ export const AddressDetails = (props: Iprops) => {
     GetAddressByHostelIdQuery,
     GetAddressByHostelIdQueryVariables
   >({
-    queryKey: ['getAddress', hostelId],
+    queryKey: [ 'getAddress', hostelId ],
     query: GetAddressByHostelId.loc!.source.body,
     variables: { hostelId },
     enabled: !!hostelId,
@@ -69,7 +70,7 @@ export const AddressDetails = (props: Iprops) => {
   const hostelData = hostelDataFull?.getAddressByHostelId;
 
   return (
-    <div className="    w-full">
+    <div className="w-full">
       {!isLoading ? (
         <HostelInfoForm
           hostelId={hostelId}
@@ -80,9 +81,9 @@ export const AddressDetails = (props: Iprops) => {
           street={hostelData?.data?.street ?? ''}
           latitude={hostelData?.data?.latitude ?? null}
           longitude={hostelData?.data?.longitude ?? null}
-          id={hostelData?.data?.id ?? ''} 
-          createdAt={ ''}
-          updatedAt={ ''}
+          id={hostelData?.data?.id ?? ''}
+          createdAt={''}
+          updatedAt={''}
           handleNextStep={handleNextStep}
         />
       ) : (
@@ -94,12 +95,17 @@ export const AddressDetails = (props: Iprops) => {
   );
 };
 
+interface ReverseGeoDataType {
+  geoCity: string | null,
+  geoCounty: string | null,
+  geoStreet: string | null,
+}
 
 
 const HostelInfoForm: FC<AddressData & { handleNextStep?: () => void }> = props => {
   const { hostelId, id, city, country, street, subCity, latitude, longitude, handleNextStep } = props;
 
-  const [clickedLatLng, setClickedLatLng] = useState<{
+  const [ clickedLatLng, setClickedLatLng ] = useState<{
     lat: number | null;
     lng: number | null;
   } | null>({ lat: latitude ?? null, lng: longitude ?? null });
@@ -107,13 +113,14 @@ const HostelInfoForm: FC<AddressData & { handleNextStep?: () => void }> = props 
   const handleClickLatLng = (lat: number | null, lng: number | null) => {
     setClickedLatLng({ lat, lng });
   };
-
+  const [ reverseGeoData, setReverseGeoData ] = useState<ReverseGeoDataType>()
   const queryClient = useQueryClient();
 
   const {
     control,
     handleSubmit,
     formState: { errors },
+    setValue
   } = useForm<AddressData>({
     defaultValues: {
       country,
@@ -180,7 +187,7 @@ const HostelInfoForm: FC<AddressData & { handleNextStep?: () => void }> = props 
         if (res?.updateAddress?.data?.id) {
           enqueueSnackbar('Address updated.', { variant: 'success' });
         } else {
-         
+
           enqueueSnackbar('Something went wrong.', { variant: 'error' });
         }
       });
@@ -199,8 +206,8 @@ const HostelInfoForm: FC<AddressData & { handleNextStep?: () => void }> = props 
       }).then(res => {
         if (res?.createAddress?.data?.id) {
           enqueueSnackbar('Address Created', { variant: 'success' });
-          queryClient.invalidateQueries({ queryKey: ['getAddress'] });
-          queryClient.invalidateQueries({ queryKey: ['getHostelByToken'] });
+          queryClient.invalidateQueries({ queryKey: [ 'getAddress' ] });
+          queryClient.invalidateQueries({ queryKey: [ 'getHostelByToken' ] });
           handleNextStep?.();
         } else {
           enqueueSnackbar('Something went wrong', { variant: 'error' });
@@ -216,15 +223,52 @@ const HostelInfoForm: FC<AddressData & { handleNextStep?: () => void }> = props 
     }));
   }, []);
 
+  useEffect(() => {
+    const geocoder = new window.google.maps.Geocoder();
+
+    geocoder.geocode({ location: { lat: Number(clickedLatLng?.lat), lng: Number(clickedLatLng?.lng) } }, (results, status) => {
+      if (status === "OK") {
+        if (results?.[ 0 ]) {
+          console.log(results[ 0 ].formatted_address); // Full readable address
+          const splitedAddress = results[ 0 ].formatted_address.split(",");
+          setReverseGeoData({
+            geoCity: splitedAddress[ splitedAddress.length - 2 ].split(" ")[ 1 ],
+            geoCounty: splitedAddress[ splitedAddress.length - 1 ],
+            geoStreet: splitedAddress[ splitedAddress.length - 3 ]
+          })
+        } else {
+          console.log("No results found");
+        }
+      } else {
+        console.log("Geocoder failed due to: " + status);
+      }
+    });
+  }, [ clickedLatLng ])
+
+  // setting default value in fields
+  useEffect(() => {
+    if (reverseGeoData?.geoCity) {
+      setValue("city", reverseGeoData.geoCity);
+    }
+    if (reverseGeoData?.geoCounty) {
+      setValue("country", reverseGeoData.geoCounty);
+    }
+    if (reverseGeoData?.geoStreet) {
+      setValue("street", reverseGeoData.geoStreet);
+    }
+  }, [reverseGeoData, setValue]);
+
   return (
     <form className=" h-auto w-full" onSubmit={handleSubmit(handleSubmitForm)}>
       <div className="relative mt-5 h-[300px] md:h-[500px] w-full overflow-hidden">
-        <MapComponent
-          clickedLatLng={clickedLatLng}
-          setClickedLatLng={handleClickLatLng}
-          lat={latitude}
-          lng={longitude}
-        />
+        <MapProvider>
+          <MapComponent
+            clickedLatLng={clickedLatLng}
+            setClickedLatLng={handleClickLatLng}
+            lat={latitude}
+            lng={longitude}
+          />
+        </MapProvider>
       </div>
       <div className=" grid h-auto w-full gap-5 md:grid-cols-2 mt-5">
         <div>
@@ -232,7 +276,7 @@ const HostelInfoForm: FC<AddressData & { handleNextStep?: () => void }> = props 
             name="country"
             placeholder="Country"
             control={control}
-            options={countryOptions} 
+            options={countryOptions}
             label="Country"
             required
             helperText={errors.country?.type === 'required' ? 'Country Is Required' : ''}
@@ -260,7 +304,7 @@ const HostelInfoForm: FC<AddressData & { handleNextStep?: () => void }> = props 
             control={control}
             label="Tole"
             error={!!errors.subCity}
-          />
+            />
         </div>
         <div>
           <TextInput
