@@ -67,7 +67,7 @@ export const ActiveBlogs = ({ setActiveRoomCount }: { setActiveRoomCount: (count
           <LoadingSpinner />
         </div>
       )}
-      <div className="grid sm:grid-cols-2 gap-[1rem] px-2 md:grid-cols-3">
+      <div className="grid  gap-[1rem] px-2 ">
         {blogPosts?.data?.map(blogPost => (
           <div key={blogPost.id} className="md:mb-4 lg:min-h-48">
             <BlogCard
