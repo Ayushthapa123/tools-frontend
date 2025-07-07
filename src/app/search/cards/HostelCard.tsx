@@ -50,7 +50,7 @@ export const HostelCard = (props: Iprops) => {
 
   const mainWallpaper = gallery?.find((img: any) => img.isSelected === true) ?? gallery?.[ 0 ];
   const otherImages = gallery?.filter((img: any) => img.isSelected === false);
-  var imgUrl = mainWallpaper?.url ?? '/images/nowallpaper.jpg';
+  var imgUrl = mainWallpaper?.url ?? '/images/noPhotoWallpaper.jpg';
 
   // const imagesArray = [ imgUrl, ...otherImages.map((img: any) => img.url) ].filter(Boolean);
   const imagesArray = [imgUrl, ...(otherImages?.map((img: any) => img.url) || [])].filter(Boolean);
@@ -87,7 +87,7 @@ export const HostelCard = (props: Iprops) => {
   const minimumRoomPrice = rooms &&  rooms?.reduce((min: number, room: any) => {
     const minPrice = min < room.price?.baseAmountPerMonth ? min : room.price?.baseAmountPerMonth;
     return minPrice;
-  }, rooms?.[0]?.price?.baseAmountPerMonth ?? "0");
+  }, rooms?.[0]?.price?.baseAmountPerMonth ?? 0);
 
   return (
     <div className="group card-bordered mb-2 flex h-full w-full cursor-pointer flex-col gap-4 rounded-xl bg-white pb-2 transition duration-200 ease-in-out hover:opacity-100 hover:shadow-lg">
@@ -99,7 +99,7 @@ export const HostelCard = (props: Iprops) => {
             fill
             className="rounded-xl rounded-b-none object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-xl rounded-b-none"></div>
+          <div className="absolute inset-0 top-[60%]  bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
           <div className='absolute bottom-2 left-2 flex items-center gap-6 w-fit'  >
             <div>
               <IoIosWifi className='w-5 h-5 text-white/80 font-semibold' />
