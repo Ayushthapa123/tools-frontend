@@ -3,7 +3,7 @@ import { PricingCard } from "./PricingCard";
 export default function Pricing() {
   const pricingDetails = [
     {
-      planType: 'Basic',
+      planType: 'Basic(Free)',
       planFor: 'small hostels (up to 30 students)',
       monthlyPrice: 0,
       features: [
