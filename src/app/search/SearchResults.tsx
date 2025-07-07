@@ -3,7 +3,7 @@ import { HostelCard } from './cards/HostelCard';
 
 import { useEffect, useMemo } from 'react';
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
-import { SearchHostel, SearchHostelQuery, SearchHostelQueryVariables, RoomCapacity, HostelType, HostelGenderType, } from 'src/gql/graphql';
+import { SearchHostel, SearchHostelQuery, SearchHostelQueryVariables, RoomCapacity, HostelType, HostelGenderType, HostelData, } from 'src/gql/graphql';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { HostelCardSkeleton } from './cards/HostelCardSkeleteon';
@@ -69,13 +69,13 @@ export const SearchResults = (props: IResults) => {
         </div>
       )}
       <div className="grid w-full grid-cols-1 gap-3 md:grid-cols-1 lg:grid-cols-2">
-        {filteredHostels==null ? hostels?.data?.map((hostel: any) => {
+        {hostels?.data?.map((hostel: any) => {
           const imgUrl = hostel?.gallery?.[0]?.url || '/images/default-image.png';
 
           return (
             <div key={hostel.slug}>
               <Link
-                href={`/hostel/${hostel.slug}?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}
+                href={`/hostel/${hostel?.slug}?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}
               >
                 <HostelCard
                   name={hostel.name || ''}
@@ -89,37 +89,13 @@ export const SearchResults = (props: IResults) => {
                   oneSeater={null}
                   twoSeater={null}
                   threeSeater={null}
+                  slug={hostel.slug}
                 />
               </Link>
             </div>
           );
         })
-          : 
-          filteredHostels?.map((hostel: any) => {
-            const imgUrl = hostel?.gallery?.[0]?.url || '/images/default-image.png';
-  
-            return (
-              <div key={hostel.slug}>
-                <Link
-                  href={`/hostel/${hostel.slug}?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}
-                >
-                  <HostelCard
-                    name={hostel.name || ''}
-                    country={hostel.address?.country ?? ''}
-                    city={hostel.address?.city ?? ''}
-                    subCity={hostel.address?.subCity ?? ''}
-                    description={hostel.description ?? ''}
-                    // amount={hostel?.rooms?.[0]?.price?.baseAmountPerDay ?? 0}
-                    // currency={hostel?.rooms?.[0]?.price?.currency ?? ''}
-                    imgUrl={imgUrl}
-                    oneSeater={null}
-                    twoSeater={null}
-                    threeSeater={null}
-                  />
-                </Link>
-              </div>
-            );
-          })
+        
       }
       </div>
     </div>
