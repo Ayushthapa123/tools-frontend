@@ -27,7 +27,7 @@ const MapComponent = (props: Iprops) => {
     zoomControl: true,
     tilt: 0,
     gestureHandling: 'auto',
-    mapTypeId: 'satellite',
+    // mapTypeId: 'satellite',
   };
 
   return (
@@ -37,6 +37,7 @@ const MapComponent = (props: Iprops) => {
         center={defaultMapCenter}
         options={defaultMapOptions}
         zoom={16}
+        mapTypeId={"ROADMAP"}
       >
         {<Marker position={{ lat, lng }} />}
       </GoogleMap>

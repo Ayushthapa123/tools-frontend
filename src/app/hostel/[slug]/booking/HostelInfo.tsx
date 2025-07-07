@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
-import { CustomChip } from 'src/components/Chip';
 import RichTextEditor from 'src/components/RichTextEditor';
 import { RoomData, RoomCapacity, RoomStatus } from 'src/gql/graphql';
 import { RoomCardFull } from './RoomCardFull';

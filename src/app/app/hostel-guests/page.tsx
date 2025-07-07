@@ -6,7 +6,6 @@ import { ActiveGuests } from './ActiveGuests';
 import { MapProvider } from 'src/features/MapProvider';
 import Button from 'src/components/Button';
 import Link from 'next/link';
-import UsersTable from 'src/components/ReactTable/UserTable';
 
 export default function Home() {
   return (
@@ -39,7 +38,7 @@ const GuestTabs = () => {
     <div className="w-full py-5 ">
       <div
         role="tablist"
-        className="tabs-boxed tabs z-[99] flex flex-row flex-wrap justify-between bg-transparent"
+        className="tabs-boxed tabs z-[99] flex flex-row flex-wrap justify-end mb-4 bg-transparent"
       >
           <div>
             <div>
