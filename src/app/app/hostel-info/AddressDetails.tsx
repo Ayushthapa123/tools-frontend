@@ -70,7 +70,7 @@ export const AddressDetails = (props: Iprops) => {
   const hostelData = hostelDataFull?.getAddressByHostelId;
 
   return (
-    <div className="    w-full">
+    <div className="w-full">
       {!isLoading ? (
         <HostelInfoForm
           hostelId={hostelId}
@@ -254,7 +254,7 @@ const HostelInfoForm: FC<AddressData & { handleNextStep?: () => void }> = props 
       setValue("country", reverseGeoData.geoCounty);
     }
     if (reverseGeoData?.geoStreet) {
-      setValue("subCity", reverseGeoData.geoStreet);
+      setValue("street", reverseGeoData.geoStreet);
     }
   }, [reverseGeoData, setValue]);
 

@@ -324,10 +324,11 @@ function SignUp() {
             <div className="md:w-[50%] w-[100%] h-[100%] relative rounded-l-2xl overflow-hidden bg-base-100 px-3 py-[1rem] text-center sm:px-[1rem] md:px-[3rem]">
               <div className="relative md:w-[70%] w-full mx-auto mb-8 flex items-start md:items-center justify-center  gap-1">
                 <div className='flex items-end gap-3 justify-center opacity-70'>
-                  <h1 className='mb-0'>Signup with </h1>
                   <div className=''>
                     <Logo />
                   </div>
+                  <h1 className='mb-0'>Hosteladmin </h1>
+
                 </div>
                 {/* <div>
                   <FullLogo />

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Button from "src/components/Button";
 import StarIcon from "src/components/icons/Add";
 
@@ -40,7 +41,7 @@ export const PricingCard = (props: PricingCardProps) => {
           }
         </div>
         <div className="w-full">
-          <Button label={ctaText} className="text-white" />
+          <Link href={`/signup?plan=${planType}`}><Button label={ctaText} className="text-white" /></Link>
         </div>
         </div>
         </div>

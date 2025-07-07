@@ -247,3 +247,17 @@ button {
     box-shadow: 0 0 10px rgba(59, 130, 246, 0.7), 0 0 18px rgba(59, 130, 246, 0.5);
   }
 }
+
+
+.pac-container {
+  z-index: 999999 !important;
+}
+
+body .pac-container {
+  z-index: 2147483647 !important; /* Maximum z-index */
+  position: absolute !important;
+}
+
+#my_modal_4 {
+  position: relative !important;
+}

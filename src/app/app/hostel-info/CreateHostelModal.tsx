@@ -150,7 +150,7 @@ export const CreateHostelModal = () => {
 
   return (
     <div className=" h-[100vh] w-[100vw]">
-      <dialog id="my_modal_4" className="modal h-full w-full ">
+      <dialog id="my_modal_4" className="modal h-full w-full relative">
         <div className="modal-box h-[75%] w-11/12 max-w-7xl flex flex-col">
           <div className="flex-grow overflow-y-auto hide-scrollbar">
 

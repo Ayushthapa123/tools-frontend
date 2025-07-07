@@ -5,7 +5,7 @@ export default function Pricing() {
     {
       planType: 'Basic',
       planFor: 'small hostels (up to 30 students)',
-      monthlyPrice: 499,
+      monthlyPrice: 0,
       features: [
         "Free publicity on platform",
         "List your hostel with photos & details",
@@ -18,7 +18,7 @@ export default function Pricing() {
     {
       planType: 'Pro',
       planFor: 'medium hostels (up to 100 students)',
-      monthlyPrice: 999,
+      monthlyPrice: 1499,
       features: [
         "Everything in Basic",
         "Unlimited student management",
@@ -34,7 +34,7 @@ export default function Pricing() {
     {
       planType: 'Enterprise',
       planFor: 'large hostels (100+ students)',
-      monthlyPrice: 1999,
+      monthlyPrice: 2999,
       features: [
         "Everything in Pro",
         "Custom branding (logo & colors)",
