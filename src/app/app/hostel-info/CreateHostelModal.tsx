@@ -158,7 +158,7 @@ export const CreateHostelModal = () => {
               <div>
                 <div className="my-8 flex flex-col items-center justify-center">
                   <h3 className="text-xl font-bold text-gray-500 md:text-3xl">
-                    What is your hostel type?
+                    What&apos;s your hostel type?
                   </h3>
                 </div>
                 <div className="mx-auto grid w-[100%] grid-cols-2 gap-5 md:grid-cols-4 md:gap-10">

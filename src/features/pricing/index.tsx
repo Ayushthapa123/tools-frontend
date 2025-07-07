@@ -4,26 +4,52 @@ export default function Pricing() {
   const pricingDetails = [
     {
       planType: 'Basic',
-      planFor: 'small hostels',
+      planFor: 'small hostels (up to 30 students)',
       monthlyPrice: 499,
-      features: [ "Free publicity", "list your hostel", "manage student", "build online presence", "share digital profile" ],
+      features: [
+        "Free publicity on platform",
+        "List your hostel with photos & details",
+        "Manage up to 30 students",
+        "Basic dashboard",
+        "Share digital hostel profile link"
+      ],
       ctaText: "Get Started",
     },
-     {
+    {
       planType: 'Pro',
-      planFor: 'big hostels',
+      planFor: 'medium hostels (up to 100 students)',
       monthlyPrice: 999,
-      features: [ "Free publicity", "list your hostel", "manage student", "build online presence", "share digital profile" ],
+      features: [
+        "Everything in Basic",
+        "Unlimited student management",
+        "Staff & Warden management",
+        "Vacancy alerts & notifications",
+        "Online payment tracking (manual entry)",
+        "Enhanced hostel profile with customization",
+        "Basic analytics & monthly reports",
+        "Featured listing in search results"
+      ],
       ctaText: "Start with PRO",
     },
-     {
+    {
       planType: 'Enterprise',
-      planFor: 'Large hostels',
+      planFor: 'large hostels (100+ students)',
       monthlyPrice: 1999,
-      features: [ "Free publicity", "list your hostel", "manage student", "build online presence", "share digital profile" ],
+      features: [
+        "Everything in Pro",
+        "Custom branding (logo & colors)",
+        "Advanced reports & analytics",
+        "Online payment gateway integration",
+        "Multi-branch hostel management",
+        "Priority support & dedicated manager",
+        "API access for integrations",
+        "Bulk communication (SMS/Email)",
+        "Community & forum features for students"
+      ],
       ctaText: "Get Started",
     },
   ]
+  
   return (
     <div className="my-12 w-[90%] mx-auto">
       <div className="my-12 text-center md:pb-8">
