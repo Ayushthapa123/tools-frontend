@@ -5,15 +5,18 @@ import Image from 'next/image';
 import { FiEdit } from 'react-icons/fi';
 import { BlogPost, BlogPostData, UserType } from 'src/gql/graphql';
 import { useUserStore } from 'src/store/userStore';
+import Button from 'src/components/Button';
 
 export const BlogCard = ({
   blogPost,
   setShowDeleteModal,
   setDeletedBlogPostId,
+  isviewonly,
 }: {
   blogPost: Partial<BlogPostData> | undefined | null;
   setShowDeleteModal: (state: boolean) => void;
   setDeletedBlogPostId: (val: number | string | null) => void;
+  isviewonly: boolean;
 }) => {
   const onClickDelete = () => {
     setDeletedBlogPostId(blogPost?.id ?? null);
@@ -51,16 +54,18 @@ export const BlogCard = ({
         </div>
         {/* Action Buttons */}
         <div className="absolute right-3 top-2 z-20 flex gap-2">
-          <Link href={`/app/blog/${blogPost?.slug}`} passHref legacyBehavior>
-            <a aria-label="Edit Room">
-              <IconButton
-                size="small"
+          {!isviewonly && (
+            <Link href={`/app/blog/${blogPost?.slug}`} passHref legacyBehavior>
+              <a aria-label="Edit Room">
+                <IconButton
+                  size="small"
                 color="primary"
                 className="bg-white/80 shadow-md backdrop-blur hover:bg-primary/70 hover:text-white">
                 <FiEdit className="h-6 w-6" />
               </IconButton>
             </a>
           </Link>
+          )}
           {user?.userType === UserType.Superadmin && (
             <IconButton
               onClick={onClickDelete}
@@ -71,6 +76,19 @@ export const BlogCard = ({
               <DeleteIcon className="h-5 w-5 hover:text-error" />
             </IconButton>
           )}
+
+          <div className="flex gap-2">
+            {isviewonly && (
+              <Link href={`/citys/${blogPost?.slug}`} passHref legacyBehavior>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  label="View Blog"
+                  className="bg-white/80 shadow-md backdrop-blur">
+                </Button>
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </div>

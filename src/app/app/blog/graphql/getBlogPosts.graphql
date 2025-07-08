@@ -1,5 +1,5 @@
-query GetBlogPosts {
-  getAllBlogPosts {
+query GetBlogPosts($blogTags: [BlogTags!]) {
+  getAllBlogPosts(blogTags: $blogTags) {
     data {
       id
       title

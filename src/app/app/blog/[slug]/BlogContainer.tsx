@@ -257,11 +257,13 @@ function BlogForm({
               </div>
 
               <div className="mb-2">
-                <TextInput
+                <TextArea
                   name="metaDescription"
-                  placeholder="Meta Description"
+                  placeholder="Meta Description" 
+                  error={!!errors.metaDescription}
                   control={control}
                   label="Meta Description"
+                  rows={2}
                 />
               </div>
 
@@ -271,6 +273,14 @@ function BlogForm({
                   placeholder="Meta Keywords"
                   control={control}
                   label="Meta Keywords"
+                />
+              </div>
+              <div className="mb-2">
+                <TextInput
+                  name="videoUrl"
+                  placeholder="Video URL"
+                  control={control}
+                  label="Video URL"
                 />
               </div>
 

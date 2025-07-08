@@ -7,14 +7,15 @@ import { Metadata } from 'next';
 import { isHostelPilot } from 'src/config/domainConfig';
 import { SearchBox } from 'src/features/landing-page/Header/SearchBox';
 import { MapProvider } from 'src/features/MapProvider';
+import { ActiveBlogs } from '../app/blog/ActiveBlogs';
 export const metadata: Metadata = {
-  title: 'Hostel Lists',
-  description: 'Hostel is a hotel searching portal specially focused on providing the best hostel',
+  title: 'Citys of the world',
+  description: 'Citys of the world',
   manifest: isHostelPilot ? '/manifest-hostelpilot.json' : '/manifest.json',
   authors: [{ name: 'Ayush Thapa' }],
   openGraph: {
     images: '/logo512.png',
-    title: 'Hostel: all the hostel list',
+    title: 'Citys of the world',
   },
 };
 
@@ -29,7 +30,9 @@ export default function Home() {
         </Suspense>
       </div>
 
-      <div className="w-full py-10 md:px-10"></div>
+      <div className="w-full py-10 md:px-10">
+        <ActiveBlogs  isviewonly />
+      </div>
       <Footer />
     </div>
   );
