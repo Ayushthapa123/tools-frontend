@@ -78,8 +78,12 @@ export default function MainContent(props: Iprops) {
     enabled: !!Number(hostel?.data?.id),
   });
   // Parse the amenities string into an array
-  const amenitiesArray = amenities?.data?.amenities ? JSON.parse(amenities.data?.amenities) : [];
-  const servicesArray = hostel?.data?.service?.services ? JSON.parse(hostel?.data?.service?.services ?? '[]') : [];
+  // the reason for this logic is : From backend we were getting json of string of string; so 
+  // if first parsing was still returning string, we parsed it again, ultimately double parsing
+  const firstAmenityParse = amenities?.data?.amenities ? JSON.parse(amenities?.data?.amenities):[];
+  const amenitiesArray = firstAmenityParse ? typeof firstAmenityParse === 'string' ? JSON.parse(firstAmenityParse):firstAmenityParse : [];
+  const firstServiceParse = hostel?.data?.service?.services? JSON.parse(hostel?.data?.service?.services):[];
+  const servicesArray = firstServiceParse ? typeof firstServiceParse === 'string' ? JSON.parse(firstServiceParse):firstServiceParse : [];
   const selectedImg = hostel?.data?.gallery?.filter(img => img.isSelected === true);
 
   const handleShowAllAmenities = () => {
