@@ -1,3 +1,5 @@
+"use client"
+
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import { BlogCard } from './BlogCard';
 import {
@@ -8,6 +10,7 @@ import {
   GetBlogPosts,
   GetBlogPostsQuery,
   GetBlogPostsQueryVariables,
+  BlogTags
 } from 'src/gql/graphql';
 import { useQuery } from '@tanstack/react-query';
 import LoadingSpinner from 'src/components/Loading';
@@ -16,7 +19,7 @@ import { Modal } from 'src/components/Modal';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { enqueueSnackbar } from 'notistack';
 
-export const ActiveBlogs = ({ setActiveRoomCount }: { setActiveRoomCount: (count: number) => void }) => {
+export const ActiveBlogs = ({ setActiveRoomCount ,isviewonly=false}: { setActiveRoomCount?: (count: number) => void ,isviewonly?:boolean}) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deletedBlogPostId, setDeletedBlogPostId] = useState<number | string | null>(null);
   const [deleteBlogPost, setDeleteBlogPost] = useState(false);
@@ -26,8 +29,10 @@ export const ActiveBlogs = ({ setActiveRoomCount }: { setActiveRoomCount: (count
 
   //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
   const fetchData = async () => {
-    const res = await queryBlogPosts();
-    setActiveRoomCount(res.getAllBlogPosts.data?.length || 0);
+    const res = await queryBlogPosts({blogTags: [BlogTags.City]});
+    if (setActiveRoomCount) {
+      setActiveRoomCount(res.getAllBlogPosts.data?.length || 0);
+    }
     return res.getAllBlogPosts;
   };
 
@@ -74,6 +79,7 @@ export const ActiveBlogs = ({ setActiveRoomCount }: { setActiveRoomCount: (count
              blogPost={blogPost}
               setShowDeleteModal={setShowDeleteModal}
               setDeletedBlogPostId={setDeletedBlogPostId}
+              isviewonly={isviewonly}
             />
           </div>
         ))}
