@@ -1311,6 +1311,7 @@ export type QueryGetAddressByHostelIdArgs = {
 
 
 export type QueryGetAllBlogPostsArgs = {
+  blogStatus?: InputMaybe<BlogStatus>;
   blogTags?: InputMaybe<Array<BlogTags>>;
   pageNumber?: Scalars['Int']['input'];
   pageSize?: Scalars['Int']['input'];

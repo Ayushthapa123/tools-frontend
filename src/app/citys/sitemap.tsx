@@ -1,14 +1,14 @@
 
 import { gql } from 'graphql-request';
 import { graphqlClient } from 'src/client/graphqlClient';
-import { BlogTags } from 'src/gql/graphql';
+import { BlogTags, BlogStatus } from 'src/gql/graphql';
 export const SitemapPage = async () => {
 
   //Original Hostels
 
   const hostelQuery = gql`
   query getAllCityBlogsSlug {
-      getAllBlogPosts(pageSize: 100, pageNumber: 1,blogTags: [${BlogTags.City}]) {
+      getAllBlogPosts(pageSize: 100, pageNumber: 1,blogTags: [${BlogTags.City}],blogStatus: ${BlogStatus.Published}) {
         data {
           slug
         }
