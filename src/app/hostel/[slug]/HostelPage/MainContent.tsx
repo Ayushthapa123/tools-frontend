@@ -162,7 +162,7 @@ export default function MainContent(props: Iprops) {
 
                   {/* Rules section */}
                 <div className="rounded-xl mt-4 rounded-t-none border-t-2 border-gray-100 bg-white/70 pt-1">
-                  <h2 className=" text-2xl font-semibold text-gray-800">Rules</h2>
+                  <h2 className=" text-2xl font-semibold text-gray-800">Rules/Criteria</h2>
                   <div className="prose max-w-none">
                     <RichTextEditor editorRef={rulesEditorRef} readOnly={true} />
                   </div>
