@@ -8,6 +8,7 @@ import { isHostelPilot } from 'src/config/domainConfig';
 import { SearchBox } from 'src/features/landing-page/Header/SearchBox';
 import { MapProvider } from 'src/features/MapProvider';
 import { ActiveBlogs } from '../app/blog/ActiveBlogs';
+import { AllCities } from './AllCities';
 export const metadata: Metadata = {
   title: 'Cities of the world',
   description: 'Cities of the world',
@@ -31,7 +32,7 @@ export default function Home() {
       </div>
 
       <div className="w-full py-10 md:px-10">
-        <ActiveBlogs  isviewonly />
+        <AllCities   />
       </div>
       <Footer />
     </div>
