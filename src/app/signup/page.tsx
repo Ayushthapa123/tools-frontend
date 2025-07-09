@@ -339,7 +339,7 @@ function SignUp() {
                 <Button
                   variant="teal"
                   onClick={() => openSignupUrl()}
-                  label="Continue With Google"
+                  label="Sign Up With Google"
                   startAdornment={<GoogleIcon className="text-3xl " />}
                   className="bg-primary"
                   height="lg"
