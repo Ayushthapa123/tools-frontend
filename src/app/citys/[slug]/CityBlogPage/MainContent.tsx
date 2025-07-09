@@ -3,6 +3,8 @@ import { CiLocationOn } from 'react-icons/ci';
 import { BreadCrumbs } from 'src/app/detail-page/BreadCrumbs';
 import Image from 'next/image';
 import { BlogPostData } from 'src/gql/graphql';
+import Button from 'src/components/Button';
+import { TextArea } from 'src/components/TextArea';
 
 interface Iprops {
   cityBlogData: BlogPostData | undefined | null;
@@ -80,6 +82,61 @@ export default function MainContent(props: Iprops) {
           {/* Blog Content */}
           <div className="mb-6">
             <div className="prose max-w-none text-gray-700" dangerouslySetInnerHTML={{ __html: content ?? '' }} />
+          </div>
+
+          <div className="mb-6">
+            <div className="border-t pt-6">
+              <h2 className="text-xl font-semibold mb-4 text-gray-800">Comments</h2>
+              {/* 
+                TODO: 
+                - Display list of comments (if any)
+                - Add a form for users to submit a new comment
+                - Show loading/error states as needed
+                - Optionally, allow replies to comments (threaded)
+                - Optionally, require login/authentication to comment
+                - Optionally, moderate/filter inappropriate content
+                - Optionally, show comment count
+                - Optionally, allow upvotes/likes on comments
+                - Optionally, show commenter avatar and name
+                - Optionally, sort comments (newest/oldest/top)
+                - Optionally, paginate or lazy-load comments
+                - Optionally, notify users of replies
+                - Optionally, integrate with backend or third-party comment system
+                - Optionally, support markdown or rich text in comments
+                - Optionally, show timestamps for each comment
+                - Optionally, allow editing/deleting own comments
+                - Optionally, handle spam prevention (captcha, rate limit, etc.)
+                - Optionally, show placeholder if no comments yet
+              */}
+              <div className="text-gray-500 italic">
+                {/* Placeholder for comment list */}
+                No comments yet. Be the first to comment!
+              </div>
+              <form className="mt-4 flex flex-col gap-2">
+                <TextArea
+                  className="w-full rounded  p-2 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                  rows={3}
+                  placeholder="Write your comment here..."
+                  disabled
+                />
+                <Button
+                  type="button"
+                  className="self-end rounded bg-blue-500 px-4 py-2 text-white font-medium hover:bg-blue-600 transition"
+                  disabled 
+                  label="Post Comment"
+                  /
+                >
+                  
+              
+                <div className="text-xs text-gray-400">
+                  {/* 
+                    NOTE: Commenting is disabled in this demo. 
+                    To enable, implement backend integration and authentication.
+                  */}
+                  Commenting is currently disabled.
+                </div>
+              </form>
+            </div>
           </div>
      
         </div>

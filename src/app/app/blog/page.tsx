@@ -11,7 +11,7 @@ import { UserType } from 'src/gql/graphql';
 import { notFound } from 'next/navigation';
 export default function Home() {
   const {user}=useUserStore()
-  if(user.userType!==UserType.Superadmin){ 
+  if(user.userType!==UserType.Superadmin && user.userType!==UserType.Writer){ 
     return notFound()
   }
   return (
