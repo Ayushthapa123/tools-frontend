@@ -6,25 +6,31 @@ export const SitemapPage = async () => {
     {
       url: 'https://hostelpilot.com/',
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'weekly',
       priority: 1,
     },
     {
       url: 'https://hostelpilot.com/blogs',
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'weekly',
+      priority: 1,
+    },
+    {
+      url: 'https://hostelpilot.com/cities',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
       priority: 1,
     },
     {
       url: 'https://hostelpilot.com/search',
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'weekly',
       priority: 1,
     },
     {
-      url: 'https://hostelpilot.com/hostels',
+      url: 'https://hostelpilot.com/hostel',
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'weekly',
       priority: 1,
     },
     // {

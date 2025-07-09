@@ -6,6 +6,7 @@ import { FiEdit } from 'react-icons/fi';
 import { BlogPost, BlogPostData, UserType } from 'src/gql/graphql';
 import { useUserStore } from 'src/store/userStore';
 import Button from 'src/components/Button';
+import { Chip } from 'src/components/Chip';
 
 export const BlogCard = ({
   blogPost,
@@ -43,8 +44,9 @@ export const BlogCard = ({
         <div className="flex w-full flex-col ">
           <div className="flex flex-col items-start justify-start gap-0 pb-1 lg:flex-row lg:items-start lg:justify-between lg:gap-2 ">
             <h3 className="mb-0 text-lg font-bold text-gray-900" title={blogPost?.title ?? ''}>
-              {blogPost?.title ?? ''}
+              {blogPost?.title ?? ''} <div className="flex items-center gap-2"> <Chip label={blogPost?.status ?? ''}  /> </div>
             </h3>
+           
           </div>
           <div>
             <div className="flex w-full items-center justify-between ">
