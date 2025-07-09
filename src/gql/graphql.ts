@@ -102,6 +102,7 @@ export type BlogPostData = {
   metaDescription?: Maybe<Scalars['String']['output']>;
   metaKeywords?: Maybe<Scalars['String']['output']>;
   metaTitle?: Maybe<Scalars['String']['output']>;
+  oneLiner?: Maybe<Scalars['String']['output']>;
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
   slug: Scalars['String']['output'];
   status: BlogStatus;
@@ -246,6 +247,7 @@ export type CreateBlogPostInput = {
   metaDescription?: InputMaybe<Scalars['String']['input']>;
   metaKeywords?: InputMaybe<Scalars['String']['input']>;
   metaTitle: Scalars['String']['input'];
+  oneLiner?: InputMaybe<Scalars['String']['input']>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   slug: Scalars['String']['input'];
   status: BlogStatus;
@@ -1715,6 +1717,7 @@ export type UpdateBlogPostInput = {
   metaDescription?: InputMaybe<Scalars['String']['input']>;
   metaKeywords?: InputMaybe<Scalars['String']['input']>;
   metaTitle?: InputMaybe<Scalars['String']['input']>;
+  oneLiner?: InputMaybe<Scalars['String']['input']>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   slug?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<BlogStatus>;

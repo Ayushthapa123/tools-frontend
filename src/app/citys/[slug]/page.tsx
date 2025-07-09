@@ -54,9 +54,9 @@ export async function generateMetadata(
     openGraph: {
       title: res?.data?.title??"",
       description: res?.data?.metaDescription??"",
-      images: res?.data?.coverImageUrl
-        ? 'https:' + res?.data?.coverImageUrl
-        : `/assets/fallback-image.svg`,
+
+      images: [res?.data?.coverImageUrl??`/assets/fallback-image.svg`],
+
     },
   };
 }

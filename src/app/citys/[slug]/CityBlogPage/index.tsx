@@ -4,10 +4,6 @@ import { useQuery } from '@tanstack/react-query';
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import Footer from 'src/features/Footer';
 import {
-  GetHostelBySlug,
-  GetHostelBySlugQuery,
-  GetHostelBySlugQueryVariables,
-  Hostel,
   BlogPostData,
 } from 'src/gql/graphql';
 import MainContent from './MainContent';
