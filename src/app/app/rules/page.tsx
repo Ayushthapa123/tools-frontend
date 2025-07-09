@@ -116,7 +116,7 @@ const FormContent = ({ rulesData }: { rulesData: HostelRules | undefined }) => {
         {rules && (
           <div className="relative mt-5 flex w-full justify-end">
             <Button
-              label={rulesData?.data?.id ? 'Update Rules' : 'Create Rules'}
+              label={rulesData?.data?.id ? 'Update Rules/Criteria' : 'Create Rules/Criteria'}
               loading={isCreating || isUpdating}
               className=" w-min"
               disabled={rules === '<ol><li><br></li></ol>' || rulesData?.data?.rules == rules}

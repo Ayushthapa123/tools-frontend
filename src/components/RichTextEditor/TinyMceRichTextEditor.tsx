@@ -35,6 +35,7 @@ export const TinyMceRichTextEditor = forwardRef<
       apiKey="w8uy4o7h9z7wetqtop15b04dzsgsc8tcikmdzlvg6543f631" // Replace with your TinyMCE API key
       value={value}
       onEditorChange={handleEditorChange}
+
       init={{
         branding: false, // Removes the "Built with TinyMCE" branding
         readOnly: readOnly, // Set read-only mode
@@ -70,9 +71,19 @@ export const TinyMceRichTextEditor = forwardRef<
           };
           input.click();
         },
-        height: 800, // Set height of the editor (adjust as needed)
+        height: 800, // Set height of the editor (adjust as needed) 
+        content_style: `
+      body {
+        font-size: 16px;
+        font-family: 'Arial', sans-serif;
+      }
+    `,
+    fontsize_formats: '10px 12px 14px 16px 18px 24px 36px', // Optional, controls dropdown options
       }}
+      
       ref={editorRef}
+      
+
     />
   );
 });

@@ -28,7 +28,6 @@ import { enqueueSnackbar } from 'notistack';
 import { useUserStore } from 'src/store/userStore';
 import { Suspense, useEffect, useRef, useState } from 'react';
 
-import { BlogCreateForm } from './BlogCreateForm';
 import Button from 'src/components/Button';
 import ImageUploader from 'src/features/ImageUploader';
 import TinyMceRichTextEditor from 'src/components/RichTextEditor/TinyMceRichTextEditor';
@@ -236,16 +235,6 @@ function BlogForm({
                 />
               </div>
      
-              <div className="mb-2">
-                <TextArea
-                  name="excerpt"
-                  placeholder="Summary"
-                  control={control}
-                  label="Summary"
-                  error={!!errors.excerpt}
-                  rows={2}
-                />
-              </div>
 
               <div className="mb-2">
                 <TextInput
@@ -285,10 +274,30 @@ function BlogForm({
               </div>
 
               <div className="mb-2">
+                <TextInput
+                  name="oneLiner"
+                  placeholder="One Liner"
+                  control={control}
+                  label="One Liner"
+                />
+              </div>
+
+              <div className="mb-2">
                 <h3 className="text-lg font-semibold">Cover Image</h3>
                 <div className="  w-full ">
                   <ImageUploader handleImageUrl={handleCoverImage} imageUrl={coverImage} />
                 </div>
+              </div>
+
+              <div className="mb-2">
+                <TextArea
+                  name="excerpt"
+                  placeholder="Summary"
+                  control={control}
+                  label="Summary"
+                  error={!!errors.excerpt}
+                  rows={4}
+                />
               </div>
               <div className="mb-2">
                 <Controller
