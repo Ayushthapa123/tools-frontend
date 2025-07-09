@@ -176,7 +176,7 @@ const LogIn = () => {
                 <Button
                   variant="teal"
                   onClick={() => openSignupUrl()}
-                  label="Continue With Google"
+                  label="Sign In With Google"
                   startAdornment={<FcGoogle className="text-3xl " />}
                   className="bg-primary"
                   height="lg"

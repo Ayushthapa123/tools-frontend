@@ -24,14 +24,15 @@ const Footer = () => {
                 <h4 className="text-blue text-base lg:text-sm  text-center font-semibold">FAQ</h4>
               </Link>
             </div>
-            <div>
-              <Link href="#">
-                <h4 className="text-blue text-base lg:text-sm  text-center font-semibold">Contact Us</h4>
-              </Link>
-            </div>
+            
             <div>
               <Link href="#">
                 <h4 className="text-blue text-base lg:text-sm  text-center font-semibold">Pricing</h4>
+              </Link>
+            </div>
+            <div>
+              <Link href="/cities">
+                <h4 className="text-blue text-base lg:text-sm  text-center font-semibold">Cities</h4>
               </Link>
             </div>
           </div>

@@ -9,13 +9,13 @@ import { SearchBox } from 'src/features/landing-page/Header/SearchBox';
 import { MapProvider } from 'src/features/MapProvider';
 import { ActiveBlogs } from '../app/blog/ActiveBlogs';
 export const metadata: Metadata = {
-  title: 'Citys of the world',
-  description: 'Citys of the world',
+  title: 'Cities of the world',
+  description: 'Cities of the world',
   manifest: isHostelPilot ? '/manifest-hostelpilot.json' : '/manifest.json',
   authors: [{ name: 'Ayush Thapa' }],
   openGraph: {
     images: '/logo512.png',
-    title: 'Citys of the world',
+    title: 'Cities of the world',
   },
 };
 

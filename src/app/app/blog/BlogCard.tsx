@@ -79,7 +79,7 @@ export const BlogCard = ({
 
           <div className="flex gap-2">
             {isviewonly && (
-              <Link href={`/citys/${blogPost?.slug}`} passHref legacyBehavior>
+              <Link href={`/cities/${blogPost?.slug}`} passHref legacyBehavior>
                 <Button
                   variant="outlined"
                   color="primary"
