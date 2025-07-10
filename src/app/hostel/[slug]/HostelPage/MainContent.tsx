@@ -1,33 +1,21 @@
-'use client';
+
 import { CiLocationOn } from 'react-icons/ci';
 import { BreadCrumbs } from 'src/app/detail-page/BreadCrumbs';
 import {
-  FindAmenityByHostelId,
-  FindAmenityByHostelIdQueryVariables,
-  FindAmenityByHostelIdQuery,
-  RoomData,
   Hostel,
-  GalleryData,
 } from 'src/gql/graphql';
 import { MapProvider } from 'src/features/MapProvider';
-import { useRef, useState } from 'react';
-import Image from 'next/image';
 import {
   FaFacebook,
-  FaLightbulb,
 } from 'react-icons/fa';
-import RichTextEditor from 'src/components/RichTextEditor';
-import { RoomCardFull } from '../booking/RoomCardFull';
 import { FaPhoneFlip } from 'react-icons/fa6';
 import { MdEmail } from 'react-icons/md';
 import { GrInstagram, GrYoutube } from 'react-icons/gr';
-import { useRoomStore } from 'src/store/roomStore';
-import { useQuery } from '@tanstack/react-query';
-import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import { MapComponent } from 'src/features/GoogleMap';
-import ShowDetails from '../../room-details/ShowDetails';
-import { Modal } from 'src/components/Modal';
-
+import AmenitiesProvided from './AmenitiesProvided';
+import HostelGallery from './HostelGallery';
+import HostelRooms from './HostelRooms';
+import HostelServices from './HostelServices';
 interface Iprops {
   hostel: Hostel | undefined | null;
   checkInDate: string;
@@ -35,21 +23,9 @@ interface Iprops {
 }
 
 export default function MainContent(props: Iprops) {
-  const { hostel, checkInDate, checkOutDate } = props;
-  const [ mainImage, setMainImage ] = useState(0);
-  const [ isGalleryOpen, setIsGalleryOpen ] = useState(false);
-  const [ showDetails, setShowDetails ] = useState(false);
-  const [ selectedRoom, setSelectedRoom ] = useState<RoomData | null>(null);
-  const [ showAllAmenities, setShowAllAmenities ] = useState(false);
-  const [ showAllServices, setShowAllServices ] = useState(false);
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const isFirstRender = useRef<Boolean>(true);
+  const { hostel } = props;
 
-  const roomImages = hostel?.data?.rooms?.[ 0 ]?.image ?? [];
-  const editorRef = useRef(hostel?.data?.description != '' ? hostel?.data?.description : 'No description found');
-  const rulesEditorRef = useRef(hostel?.data?.hostelRules?.rules.rules ?? 'No rules found');
- 
-  const { roomIds } = useRoomStore();
+
 
   //socials
   const facebookUrl = hostel?.data?.social?.facebook ?? '#';
@@ -58,44 +34,9 @@ export default function MainContent(props: Iprops) {
 
   // contact
 
-  // for amenities
-  const queryAmenity = useGraphqlClientRequest<
-    FindAmenityByHostelIdQuery,
-    FindAmenityByHostelIdQueryVariables
-  >(FindAmenityByHostelId.loc?.source.body!);
-  const fetchData = async () => {
-    const res = await queryAmenity({ hostelId: Number(hostel?.data?.id) ?? 0 });
-    return res.findAmenityByHostelId ?? null;
-  };
-
-  const {
-    data: amenities,
-    error,
-    isLoading: loading,
-  } = useQuery({
-    queryKey: [ 'getAmenity' ],
-    queryFn: fetchData,
-    enabled: !!Number(hostel?.data?.id),
-  });
-  // Parse the amenities string into an array
-  // the reason for this logic is : From backend we were getting json of string of string; so 
-  // if first parsing was still returning string, we parsed it again, ultimately double parsing
-  const firstAmenityParse = amenities?.data?.amenities ? JSON.parse(amenities?.data?.amenities):[];
-  const amenitiesArray = firstAmenityParse ? typeof firstAmenityParse === 'string' ? JSON.parse(firstAmenityParse):firstAmenityParse : [];
-  const firstServiceParse = hostel?.data?.service?.services? JSON.parse(hostel?.data?.service?.services):[];
-  const servicesArray = firstServiceParse ? typeof firstServiceParse === 'string' ? JSON.parse(firstServiceParse):firstServiceParse : [];
-  const selectedImg = hostel?.data?.gallery?.filter(img => img.isSelected === true);
-
-  const handleShowAllAmenities = () => {
-    setShowAllAmenities((prev) => !prev);
-  }
   return (
     <div className="bg-gray-50 pb-4">
-      {showDetails ? (
-        <div className="">
-          <ShowDetails setShowDetails={setShowDetails} room={selectedRoom as RoomData} />
-        </div>
-      ) : (
+ 
         <div className="container mx-auto">
           <BreadCrumbs name={hostel?.data?.name ?? ''} slug={hostel?.data?.slug} />
           <div className="box-border w-full lg:flex lg:gap-8 lg:px-10">
@@ -111,52 +52,15 @@ export default function MainContent(props: Iprops) {
                       </span>
                     </div>
                   </div>
-                  {/* <div className="flex space-x-3">
-                  <button className="flex items-center rounded-full bg-blue-50 px-4 py-2 text-sm font-medium text-blue-600 hover:bg-blue-100">
-                    <MdLocalOffer className="mr-2" /> Special Offers
-                  </button>
-                </div> */}
+              
                 </div>
               </div>
               <div className="mb-2">
-                <div className="relative mb-4 h-[300px] md:h-[500px] w-full overflow-hidden rounded-2xl bg-gray-200">
-                  <div className="group relative h-full w-full">
-                    <Image
-                      src={
-                        selectedImg?.[ 0 ]?.url ??
-                        hostel?.data?.gallery?.[ mainImage ]?.url ??
-                        '/images/default-image.png'
-                      }
-                      alt={`Room image ${mainImage + 1}`}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      quality={90}
-                    />
-                  </div>
-                </div>
-
-                <div className="mb-8 grid grid-cols-6 gap-3">
-                  {hostel?.data?.gallery?.slice(0, 6).map((img: GalleryData, index: number) => (
-                    <div
-                      key={img.id}
-                      className={`relative h-24 w-full cursor-pointer overflow-hidden rounded-lg bg-gray-200 transition-all duration-200 hover:opacity-90
-                    ${mainImage === index ? 'ring-blue-600 ring-2 ring-offset-2' : ''}`}
-                      onClick={() => setMainImage(index)}
-                    >
-                      <Image
-                        src={img.url ?? '/images/default-image.png'}
-                        alt={`Thumbnail ${index + 1}`}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                  ))}
-                </div>
-
+              <HostelGallery hostel={hostel}/>
                 <div className="rounded-xl rounded-t-none border-t-2 border-gray-100 bg-white/70 pt-1">
                   <h2 className=" text-2xl font-semibold text-gray-800">Description</h2>
                   <div className="prose max-w-none">
-                    <RichTextEditor editorRef={editorRef} readOnly={true} />
+                    <div dangerouslySetInnerHTML={{ __html: hostel?.data?.description ?? '' }} />
                   </div>
                   </div>
 
@@ -164,7 +68,7 @@ export default function MainContent(props: Iprops) {
                 <div className="rounded-xl mt-4 rounded-t-none border-t-2 border-gray-100 bg-white/70 pt-1">
                   <h2 className=" text-2xl font-semibold text-gray-800">Rules/Criteria</h2>
                   <div className="prose max-w-none">
-                    <RichTextEditor editorRef={rulesEditorRef} readOnly={true} />
+                    <div dangerouslySetInnerHTML={{ __html: hostel?.data?.hostelRules?.rules.rules ?? '' }} />
                   </div>
                   </div>
               </div>
@@ -172,30 +76,7 @@ export default function MainContent(props: Iprops) {
 
             <div className="sticky top-[100px] m-3 lg:m-0 lg:min-w-[380px] lg:max-w-[380px]">
               <div className="space-y-6">
-                <div className="rounded-xl bg-white p-6 shadow-sm">
-                  <div className='flex items-start justify-between'>
-                    <h3 className="mb-4 text-lg font-semibold text-gray-800 ">
-                      Top Hostel Facilities
-                    </h3>
-                    {
-                      amenitiesArray.length > 6 && (
-                        <div className='text-sm text-gray-500 hover:text-gray-700 cursor-pointer' onClick={handleShowAllAmenities}>
-                          Show All
-                        </div>
-                      )
-                    }
-                  </div>
-                  <div className="grid grid-cols-2 items-start justify-between gap-x-2 gap-y-5">
-                    {amenitiesArray.length > 0 ? amenitiesArray.slice(0, 6).map((amenity: any) => (
-                      <div className="flex items-start gap-2" key={amenity.title}>
-                        <div className='flex items-center justify-start'>
-                          <FaLightbulb className='text-xl text-secondary' />
-                        </div>
-                        <span className='text-base font-medium text-gray-600'>{amenity.name}</span>
-                      </div>
-                    )) : <div className='text-center text-gray-500'>No top amenities found</div>}
-                  </div>
-                </div>
+               <AmenitiesProvided hostelId={Number(hostel?.data?.id)} />
 
 
                 <div className="rounded-xl bg-white p-6 shadow-sm">
@@ -248,35 +129,7 @@ export default function MainContent(props: Iprops) {
                 
 
                 {/* Services Section */}
-                {
-                  servicesArray.length > 0 &&
-                  (
-                    <div className="rounded-xl bg-white p-6 pt-2 shadow-sm">
-                     <div className='flex items-start justify-between'>
-                    <h3 className="mb-4 text-lg font-semibold text-gray-800 ">
-                      Top Services
-                    </h3>
-                    {
-                      servicesArray.length > 6 && (
-                        <div className='text-sm text-gray-500 hover:text-gray-700 cursor-pointer' onClick={()=>setShowAllServices(true)}>
-                          Show All
-                        </div>
-                      )
-                    }
-                  </div>
-                      <div className="grid grid-cols-2 items-start justify-between gap-x-2 gap-y-5">
-                        {servicesArray.length > 0 ? servicesArray.map((service: any) => (
-                          <div className="flex items-start gap-2" key={service.title}>
-                            <div className='flex items-center justify-start'>
-                              <FaLightbulb className='text-xl text-secondary' />
-                            </div>
-                            <span className='text-base font-medium text-gray-600'>{service.name}</span>
-                          </div>
-                        )) : <div className='text-center text-gray-500'>No top amenities found</div>}
-                      </div>
-                    </div>
-                  )
-                }
+              <HostelServices hostel={hostel}/>
 
 
                 <div className="rounded-xl bg-white p-6 pt-2 shadow-sm">
@@ -300,60 +153,14 @@ export default function MainContent(props: Iprops) {
           <div className="mx-auto mt-10 w-[93vw] rounded-xl bg-white p-4 shadow-sm">
             <div className="flex items-center justify-between">
               <h2 className="mb-6 text-2xl font-semibold text-gray-800">Available Rooms</h2>
-              {/* <Link
-                href={`/hostel/${hostel?.data?.slug}/booking?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}
-                className="mb-3"
-              >
-                <Button label="View Bookings" className="w-fit bg-primary" />
-              </Link> */}
+            
             </div>
-            <div className="grid grid-cols-1 gap-6" ref={sectionRef}>
-              {hostel?.data?.rooms?.map((room: RoomData) => (
-                <div
-                  key={room.id}
-                  className="overflow-hidden rounded-xl border border-gray-200 transition-all duration-300 hover:shadow-md"
-                >
-                  <RoomCardFull
-                    room={room}
-                    setSelectedRoom={setSelectedRoom}
-                    setShowDetails={setShowDetails}
-                    isSelected={roomIds.includes(room.id)}
-                    slug={hostel?.data?.slug ?? ''}
-                    checkInDate={checkInDate}
-                    checkOutDate={checkOutDate}
-                  />
-                </div>
-              ))}
-            </div>
+           <HostelRooms hostel={hostel}/>
           </div>
         </div>
-      )}
-      <Modal title='All Amenities' open={showAllAmenities} actionLabel='Okay' key="all-amenities" onSave={() => setShowAllAmenities(false)} handleClose={() => setShowAllAmenities(false)} className='min-w-[70vw]'>
-        <div className='border-t border-gray-300 py-4 grid grid-cols-2 gap-3'>
-          {amenitiesArray && amenitiesArray.map((amenity: any) => (
-            <div key={amenity.id} className='flex items-start gap-3 w-full'>
-              <div className='flex items-center justify-start'>
-                <FaLightbulb className='text-xl text-secondary' />
-              </div>
-              <span className='text-base font-semibold text-gray-600'>{amenity.name}</span>
-            </div>
-          ))
-          }
-        </div>
-      </Modal>
-      <Modal title='All Services' open={showAllServices} actionLabel='Okay' key="all-services" onSave={() => setShowAllServices(false)} handleClose={() => setShowAllServices(false)} className='min-w-[70vw]'>
-        <div className='border-t border-gray-300 py-4 grid grid-cols-2 gap-3'>
-          {servicesArray && servicesArray.map((service: any) => (
-            <div key={service.id} className='flex items-start gap-3 w-full'>
-              <div className='flex items-center justify-start'>
-                <FaLightbulb className='text-xl text-secondary' />
-              </div>
-              <span className='text-base font-semibold text-gray-600'>{service.name}</span>
-            </div>
-          ))
-          }
-        </div>
-      </Modal>
+    
+    
+  
     </div>
   );
 }
