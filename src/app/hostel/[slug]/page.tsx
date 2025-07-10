@@ -68,7 +68,7 @@ export default async function Home({ params }: { params: { slug: string } }) {
 
   const data:any = await graphqlClient.request(GetHostelBySlug, { slug }) 
 
- const hostelData = data?.getHostelBySlug
+  const hostelData = data?.getHostelBySlug;
 
   
 
