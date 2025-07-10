@@ -6,6 +6,7 @@ import safeJsonStringify from 'safe-json-stringify';
 
 import { gql } from 'graphql-request';
 import { graphqlClient } from 'src/client/graphqlClient';
+import { GetHostelBySlug } from 'src/gql/graphql';
 
 
 
@@ -65,11 +66,15 @@ export default async function Home({ params }: { params: { slug: string } }) {
   const checkinDate = "";
   const checkoutDate = "";
 
+  const data:any = await graphqlClient.request(GetHostelBySlug, { slug }) 
+
+ const hostelData = data?.getHostelBySlug
+
   
 
   return (
     <div className="w-full ">
-      <HostelPage slug={slug} checkInDat={checkinDate} checkOutDat={checkoutDate} />
+      <HostelPage slug={slug} checkInDat={checkinDate} checkOutDat={checkoutDate} hostelData={hostelData} />
     </div>
   );
 }

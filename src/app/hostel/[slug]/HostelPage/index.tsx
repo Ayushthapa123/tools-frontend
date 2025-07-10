@@ -1,55 +1,31 @@
-'use client';
 
-import { useQuery } from '@tanstack/react-query';
-import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
+"use client"
 import Footer from 'src/features/Footer';
 import {
-  GetHostelBySlug,
-  GetHostelBySlugQuery,
-  GetHostelBySlugQueryVariables,
+
   Hostel,
 } from 'src/gql/graphql';
 import MainContent from './MainContent';
 import { CommonNav } from 'src/features/NavBar/CommonNav';
 import LoadingSpinner from 'src/components/Loading';
+import { notFound } from 'next/navigation';
 export function HostelPage({
   slug,
   checkInDat,
   checkOutDat,
+  hostelData,
 }: {
   slug: string;
   checkInDat: string;
   checkOutDat: string;
+  hostelData: Hostel;
 }) {
   const checkInDate = checkInDat ?? new Date().toISOString().split('T')[0];
   const checkOutDate = checkOutDat ?? new Date(Date.now() + 86400000).toISOString().split('T')[0];
 
-  const searchHostels = useGraphqlClientRequest<
-    GetHostelBySlugQuery,
-    GetHostelBySlugQueryVariables
-  >(GetHostelBySlug.loc?.source?.body!);
 
-  const fetchData = async () => {
-    const res = await searchHostels({
-      slug,
-    });
-    return res.getHostelBySlug;
-  };
-
-  const { data: hostel } = useQuery({
-    queryKey: ['getHostelBySlug'],
-    queryFn: fetchData,
-  });
-  if (!hostel) {
-    return (
-      <>
-        <div className="flex min-h-[100vh] items-center justify-center">
-          <div>
-            <LoadingSpinner size="lg" color="primary" />
-          </div>
-        </div>
-      </>
-    );
+  if (!hostelData) {
+    return notFound()
   }
   return (
     <>
@@ -57,9 +33,9 @@ export function HostelPage({
       <div className="w-full ">
         <div>
           <div>
-            {hostel && (
+            {hostelData && (
               <MainContent
-                hostel={hostel as Hostel}
+                hostel={hostelData as Hostel}
                 checkInDate={checkInDate}
                 checkOutDate={checkOutDate}
               />
