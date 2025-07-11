@@ -229,7 +229,6 @@ const HostelInfoForm: FC<AddressData & { handleNextStep?: () => void }> = props 
     geocoder.geocode({ location: { lat: Number(clickedLatLng?.lat), lng: Number(clickedLatLng?.lng) } }, (results, status) => {
       if (status === "OK") {
         if (results?.[ 0 ]) {
-          console.log(results[ 0 ].formatted_address); // Full readable address
           const splitedAddress = results[ 0 ].formatted_address.split(",");
           setReverseGeoData({
             geoCity: splitedAddress[ splitedAddress.length - 2 ].split(" ")[ 1 ],
@@ -237,10 +236,8 @@ const HostelInfoForm: FC<AddressData & { handleNextStep?: () => void }> = props 
             geoStreet: splitedAddress[ splitedAddress.length - 3 ]
           })
         } else {
-          console.log("No results found");
         }
       } else {
-        console.log("Geocoder failed due to: " + status);
       }
     });
   }, [ clickedLatLng ])

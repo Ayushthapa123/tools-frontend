@@ -3,7 +3,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { enqueueSnackbar } from 'notistack';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import Button from 'src/components/Button';
@@ -11,36 +11,45 @@ import RichTextEditor from 'src/components/RichTextEditor';
 import ReactSelect from 'src/features/react-hook-form/ReactSelect';
 import TextInput from 'src/features/react-hook-form/TextField';
 import {
-  CreateHostel,
-  CreateHostelMutation,
-  CreateHostelMutationVariables,
+  AmenityOptionData,
+  CreateOnboardingHostel,
+  CreateOnboardingHostelInput,
+  CreateOnboardingHostelMutation,
+  CreateOnboardingHostelMutationVariables,
   HostelGenderType,
   HostelType,
 } from 'src/gql/graphql';
-import { useToastStore } from 'src/store/toastStore';
-import { AddressDetails } from './AddressDetails';
+
 import { MapProvider } from 'src/features/MapProvider';
-import { ContactDetails } from './ContactDetails';
-  import { useRouter } from 'next/navigation';
-interface IProps {
-  name?: string | null;
-  genderType?: HostelGenderType;
-  capacity?: number | null;
-  description?: string | null;
+import { useRouter } from 'next/navigation';
+import { MapComponent } from './MapComponent';
+import { countries } from '../data/countries';
+import { HostelAmenitiesPage } from 'src/features/amenity/HostelAmenityPage';
+import { useUserStore } from 'src/store/userStore';
+
+interface ReverseGeoDataType {
+  geoCity: string | null;
+  geoCounty: string | null;
+  geoStreet: string | null;
 }
 
 export const CreateHostelModal = () => {
-  const [hostelId, setHostelId] = useState<number | null>(null);
   const {
     control,
     watch,
     getValues,
+    setValue,
     formState: { errors },
-  } = useForm<IProps>({
+    handleSubmit: handleSubmitForm,
+  } = useForm<CreateOnboardingHostelInput>({
     defaultValues: {
       genderType: HostelGenderType.Boys,
     },
   });
+
+    // For amenities
+    const [selectedAmenities, setSelectedAmenities] = useState<AmenityOptionData[]>([]); 
+
 
   watch('genderType');
   watch('name');
@@ -69,14 +78,13 @@ export const CreateHostelModal = () => {
 
   const queryClient = useQueryClient();
   const plusStep = () => {
- 
-    if (steps < 3) {
-      setSteps(steps + 1); 
+    if (steps < 4) {
+      setSteps(steps + 1);
     } else {
       enqueueSnackbar('Onboarding completed.', { variant: 'success' });
       // window.location.reload();
       router.push('/app/gallery');
-   
+
       queryClient.refetchQueries();
       setTimeout(() => {
         window.location.reload();
@@ -91,30 +99,44 @@ export const CreateHostelModal = () => {
   ];
 
   const mutateCreateHostelInfo = useGraphqlClientRequest<
-    CreateHostelMutation,
-    CreateHostelMutationVariables
-  >(CreateHostel.loc?.source.body!);
+    CreateOnboardingHostelMutation,
+    CreateOnboardingHostelMutationVariables
+  >(CreateOnboardingHostel.loc?.source.body!);
 
-  const { mutateAsync: createHostel } = useMutation({ mutationFn: mutateCreateHostelInfo });
+  const { mutateAsync: createHostel, isPending: isLoading } = useMutation({ mutationFn: mutateCreateHostelInfo });
 
-  const handleSubmit = async () => {
-    const name = getValues('name');
-    const genderType = getValues('genderType');
-    const description = descriptionRef.current;
-    plusStep();
+  const handleSubmit = async (data: CreateOnboardingHostelInput) => {
     try {
       const res = await createHostel({
         input: {
-          name: name ?? '',
-          genderType: genderType ?? HostelGenderType.Both,
-          hostelType: hostelType ?? HostelType.Stay,
-          description: description ?? '',
+          ...data,
+          address: {
+            ...data.address,
+            country: data.address?.country || '',
+            city: data.address?.city || '',
+            subCity: data.address?.subCity || '',
+            street: data.address?.street || '',
+            latitude: clickedLatLng?.lat || 0,
+            longitude: clickedLatLng?.lng || 0,
+            hostelId: 0, // remove this from backend
+          },
+          contact: {
+            ...data.contact,
+            email: data.contact?.email || '',
+            phone: data.contact?.phone || '',
+            altPhone: data.contact?.altPhone || '',
+            hostelId: 0, // remove this from backend
+          },
+          amenity: JSON.stringify(selectedAmenities),
+          
         },
       });
-      if (res?.createHostel?.data?.id) {
+      if (res?.createOnboardingHostel?.data?.id) {
         enqueueSnackbar('Hostel created successfully.', { variant: 'success' });
-        setHostelId(Number(res?.createHostel?.data?.id));
-        plusStep();
+        router.push('/app/gallery');
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       } else {
         enqueueSnackbar('Something went wrong.', { variant: 'error' });
       }
@@ -148,12 +170,73 @@ export const CreateHostelModal = () => {
     },
   ];
 
+  // For Address Details
+  const [clickedLatLng, setClickedLatLng] = useState<{
+    lat: number | null;
+    lng: number | null;
+  } | null>({ lat: null, lng: null });
+
+  const handleClickLatLng = (lat: number | null, lng: number | null) => {
+    setClickedLatLng({ lat, lng });
+  };
+  const [reverseGeoData, setReverseGeoData] = useState<ReverseGeoDataType>();
+
+  const countryOptions = useMemo(() => {
+    return countries.map(country => ({
+      label: country.name,
+      value: country.name,
+    }));
+  }, []);
+
+  useEffect(() => {
+    if (window?.google?.maps?.Geocoder) {
+      const geocoder = new window.google.maps.Geocoder();
+
+      geocoder.geocode(
+        { location: { lat: Number(clickedLatLng?.lat), lng: Number(clickedLatLng?.lng) } },
+        (results, status) => {
+          if (status === 'OK') {
+            if (results?.[0]) {
+              const splitedAddress = results[0].formatted_address.split(',');
+              setReverseGeoData({
+                geoCity: splitedAddress[splitedAddress.length - 2].split(' ')[1],
+                geoCounty: splitedAddress[splitedAddress.length - 1].trim(),
+                geoStreet: splitedAddress[splitedAddress.length - 3],
+              });
+            } else {
+            }
+          } else {
+          }
+        },
+      );
+    }
+  }, [clickedLatLng]);
+
+  // setting default value in fields
+  useEffect(() => {
+    if (reverseGeoData?.geoCity) {
+      setValue('address.city', reverseGeoData.geoCity);
+    }
+    if (reverseGeoData?.geoCounty) {
+      setValue('address.country', reverseGeoData.geoCounty);
+    }
+    if (reverseGeoData?.geoStreet) {
+      setValue('address.street', reverseGeoData.geoStreet);
+    }
+  }, [reverseGeoData, setValue]);
+
+
+  const {user}=useUserStore()
+
+
+
   return (
     <div className=" h-[100vh] w-[100vw]">
-      <dialog id="my_modal_4" className="modal h-full w-full relative">
-        <div className="modal-box h-[75%] w-11/12 max-w-7xl flex flex-col">
-          <div className="flex-grow overflow-y-auto hide-scrollbar">
-
+      <dialog id="my_modal_4" className="modal relative h-full w-full">
+        <form
+          className="modal-box flex h-[75%] w-11/12 max-w-7xl flex-col"
+          onSubmit={handleSubmitForm(handleSubmit)}>
+          <div className="hide-scrollbar flex-grow overflow-y-auto">
             {steps === 0 && (
               <div>
                 <div className="my-8 flex flex-col items-center justify-center">
@@ -219,83 +302,189 @@ export const CreateHostelModal = () => {
                       />
                     </div>
                   </div>
-                  <div>
-                    <label htmlFor="description" className="mb-2 block">
-                      Description
-                    </label>
-                    <RichTextEditor editorRef={descriptionRef} />
+                  <div className="">
+                    {/* <label htmlFor="description" className="mb-2 block">
+                        Description
+                      </label>
+                      <RichTextEditor editorRef={descriptionRef} /> */}
+                    <div>
+                      <div className=" grid w-full gap-[1rem] md:grid-cols-2">
+                        <div>
+                          <TextInput
+                            name="contact.email"
+                            type="email"
+                            placeholder="Hostel Email"
+                            control={control}
+                            label="Hostel Email"
+                            // onKeyDown={()=>setSomeInputFieldChanged(true)}
+                            required
+                            helpertext={
+                              errors.contact?.email?.type === 'required' ? 'Email Is Required' : ''
+                            }
+                            error={!!errors.contact?.email} 
+                            defaultValue={user?.userEmail}
+                          />
+                        </div>
+
+                        <div>
+                          <TextInput
+                            name="contact.phone"
+                            placeholder="Phone no"
+                            type="tel"
+                            control={control}
+                            label="Phone Number"
+                            // onChange={(e)=>handlePhoneNumChange(e.target.value)}
+                            required
+                            helpertext={
+                              errors.contact?.phone?.type === 'required' ? 'Phone Is Required' : ''
+                            }
+                            error={!!errors.contact?.phone}
+                          />
+                        </div>
+
+                        <div>
+                          <TextInput
+                            name="contact.altPhone"
+                            type="tel"
+                            placeholder="Alternative Phone"
+                            // onChange={(e)=>handleAltPhoneNumChange(e.target.value)}
+                            control={control}
+                            label="Alternative Phone"
+                            error={!!errors.contact?.altPhone}
+                          />
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             )}
-            <div>{steps === 2 && <CreateContactForm hostelId={hostelId} handleNextStep={plusStep} />}</div>
-
-            <div>{steps === 3 && <MapProvider><CreateAddressForm hostelId={hostelId} handleNextStep={plusStep} /></MapProvider>}</div>
-
-            </div>
-
-
-
-            <div className="mt-3 flex justify-end gap-[1rem]">
-              <div className="mt-2 flex items-end justify-end gap-[1rem]">
-                {hostelTypeErrorMessage && (
-                  <p className="text-base text-red">{hostelTypeErrorMessage}</p>
-                )}
-                {(steps === 0 || steps === 1) && (
-                  <Button
-                    label="Back"
-                    variant="outlined"
-                    disabled={steps === 0}
-                    className="w-min text-gray-700 disabled:cursor-not-allowed"
-                    onClick={minusStep}
-                  />
-                )}
-                {steps === 1 && (
-                  <div className="modal-action">
-                    <form method="dialog" className="flex gap-5 ">
-                      <Button label="Create My Hostel" disabled={!isValid} onClick={handleSubmit} />
-                    </form>
-                  </div>
-                )}
-                {steps === 0 && (
-                  <Button className="w-min" label="Next" variant="primary" onClick={plusStep} />
-                )}
-              </div>
-            </div>
          
-        </div>
+
+            <div>
+              {steps === 2 && (
+                <MapProvider>
+                  <div className=" h-auto w-full">
+                    <div className="relative mt-5 h-[300px] w-full overflow-hidden md:h-[480px]">
+                      <MapProvider>
+                        <MapComponent
+                          clickedLatLng={clickedLatLng}
+                          setClickedLatLng={handleClickLatLng}
+                          lat={clickedLatLng?.lat}
+                          lng={clickedLatLng?.lng}
+                        />
+                      </MapProvider>
+                    </div>
+                   
+                  </div>
+                </MapProvider>
+              )}
+            </div>
+            <div>
+              {steps === 3 && (
+                <div>
+                  <div className="my-8 flex flex-col items-center justify-center">
+                    <h3 className="text-3xl font-bold text-gray-500">Address Details</h3>
+                  </div>
+                  <div className=" mt-5 grid h-auto w-full gap-5 md:grid-cols-2">
+                      <div>
+                        <ReactSelect
+                          name="address.country"
+                          placeholder="Country"
+                          control={control}
+                          options={countryOptions}
+                          label="Country"
+                          required
+                          helperText={
+                            errors.address?.country?.type === 'required'
+                              ? 'Country Is Required'
+                              : ''
+                          }
+                          error={!!errors.address?.country}
+                        />
+                      </div>
+
+                      <div>
+                        <TextInput
+                          name="address.city"
+                          type="text"
+                          placeholder="City"
+                          control={control}
+                          label="City"
+                          required
+                          helpertext={
+                            errors.address?.city?.type === 'required' ? 'City Is Required' : ''
+                          }
+                          error={!!errors.address?.city}
+                        />
+                      </div>
+                      <div>
+                        <TextInput
+                          name="address.subCity"
+                          type="text"
+                          placeholder="Sub City"
+                          control={control}
+                          label="Sub City"
+                          error={!!errors.address?.subCity}
+                        />
+                      </div>
+                      <div>
+                        <TextInput
+                          name="address.street"
+                          type="text"
+                          placeholder="Street"
+                          control={control}
+                          label="Street"
+                          error={!!errors.address?.street}
+                        />
+                      </div>
+                    </div>
+                </div>
+              )}
+            </div>
+            <div>
+              {steps === 4 && (
+                <div>
+                  {/* <h3 className="text-3xl font-bold text-gray-500">Hostel Amenities</h3> */}
+                  <HostelAmenitiesPage hostelId={0} isOnboarding={true} handleAmenityChange={setSelectedAmenities} onboardingAmenities={selectedAmenities}/>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="mt-3 flex justify-end gap-[1rem]">
+            <div className="mt-2 flex items-end justify-end gap-[1rem]">
+              {hostelTypeErrorMessage && (
+                <p className="text-base text-red">{hostelTypeErrorMessage}</p>
+              )}
+              {steps > 0 && (
+                <Button
+                  label="Back"
+                  variant="outlined"
+                  disabled={steps === 0}
+                  className="w-min text-gray-700 disabled:cursor-not-allowed"
+                  onClick={minusStep}
+                  type="button"
+                />
+              )}
+              {steps === 4 && (
+                <div className="modal-action">
+                  <Button label="Create My Hostel" disabled={!isValid} type="submit" loading={isLoading} />
+                </div>
+              )}
+              {steps < 4 && (
+                <Button
+                  className="w-min"
+                  label="Next"
+                  variant="primary"
+                  onClick={plusStep}
+                  type="button"
+                />
+              )}
+            </div>
+          </div>
+        </form>
       </dialog>
     </div>
-  );
-};
-
-const CreateAddressForm = ({ hostelId, handleNextStep }: { hostelId: number | null, handleNextStep: () => void }) => {
-  if (!hostelId) return null;
-  return (
-    <>
-      <div className="my-8 flex flex-col items-center justify-center">
-        <h3 className="text-3xl font-bold text-gray-500">Address Details</h3>
-      </div>
-      <div className='w-full h-full z-50'>
-      <MapProvider> 
-        <AddressDetails hostelId={hostelId} handleNextStep={handleNextStep} />
-      </MapProvider>
-      </div>
-    </>
-  );
-};
-
-
-const CreateContactForm = ({ hostelId, handleNextStep }: { hostelId: number | null, handleNextStep: () => void }) => {
-  if (!hostelId) return null;
-  return (
-    <>
-      <div className="my-8 flex flex-col items-center justify-center">
-        <h3 className="text-3xl font-bold text-gray-500">Contact Details</h3>
-      </div>
-     
-        <ContactDetails hostelId={hostelId} handleNextStep={handleNextStep} />
-  
-    </>
   );
 };

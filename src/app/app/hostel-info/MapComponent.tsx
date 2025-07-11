@@ -46,9 +46,7 @@ export const MapComponent = (props: Iprops) => {
   };
 
   const handlePlaceChanged = () => {
-    console.log("handlePlaceChanged");
     const place = autocompleteRef.current.getPlace();
-    console.log("place",place);
     if (place.geometry && place.geometry.location) {
       const lat = place.geometry.location.lat();
       const lng = place.geometry.location.lng();
@@ -66,18 +64,15 @@ useEffect(() => {
 
     if (modal) {
       pacs.forEach((pac) => {
-        console.log('PAC:', pac);
         if (!modal.contains(pac) && pac instanceof HTMLElement) {
           modal.appendChild(pac);
           pac.style.position = 'absolute';
           pac.style.zIndex = '99999';
-          console.log('Moved .pac-container into modal and set z-index.');
         }
       });
     } else {
-      console.log('MODAL not found:', modal);
     }
-  }, 100);
+  }, 5000);
 
   return () => clearInterval(interval);
 }, []);
