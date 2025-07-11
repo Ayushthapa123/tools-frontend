@@ -6,9 +6,7 @@ import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import Button from 'src/components/Button';
 import {
 
-  AllAmenitiesOption,
   AllAmenitiesOptionQuery,
-  AllAmenitiesOptionQueryVariables,
   CreateAmenity,
   CreateAmenityMutation,
   CreateAmenityMutationVariables,
@@ -16,11 +14,9 @@ import {
   UpdateAmenityMutation,
   UpdateAmenityMutationVariables,
   HostelAmenityType,
-  AmenityOption,
   AmenityOptionData,
 } from 'src/gql/graphql';
 import { enqueueSnackbar } from 'notistack';
-import { useGraphQLQuery } from 'src/hooks/useGraphqlQuery';
 export const AmenitySelector = ({
   hostelId,
   existingAmenities = [],
@@ -28,6 +24,8 @@ export const AmenitySelector = ({
   amenityId,
   allAmenityOptions,
   onAmenityUpdate,
+  isOnboarding = false,
+  handleAmenityChangeFromOnboarding,
 }: {
   hostelId: number;
   existingAmenities: AmenityOptionData[];
@@ -35,6 +33,8 @@ export const AmenitySelector = ({
   amenityId: number;
   allAmenityOptions: AllAmenitiesOptionQuery | undefined;
   onAmenityUpdate?: () => void;
+  isOnboarding?: boolean;
+  handleAmenityChangeFromOnboarding?: (amenity: AmenityOptionData[]) => void;
 }) => {
 
   // get amenity options from the database
@@ -101,6 +101,9 @@ const formattedAmenityOptions = allAmenityOptions?.amenityOptions?.data?.reduce(
     });
     
     setSelectedAmenities(newSelectedAmenities);
+    if (handleAmenityChangeFromOnboarding) {
+      handleAmenityChangeFromOnboarding(newSelectedAmenities);
+    }
   };
 
   // Handler to deselect all amenities in a category
@@ -111,6 +114,10 @@ const formattedAmenityOptions = allAmenityOptions?.amenityOptions?.data?.reduce(
     setSelectedAmenities(prev => 
       prev.filter(amenity => !categoryIds.includes(amenity.id))
     );
+    if (handleAmenityChangeFromOnboarding) {
+      handleAmenityChangeFromOnboarding([]);
+    }
+  
   };
 
   // Handler to toggle individual amenity selection
@@ -132,6 +139,27 @@ const formattedAmenityOptions = allAmenityOptions?.amenityOptions?.data?.reduce(
         return prev;
       }
     });
+    // Logice need to be changed
+    if (handleAmenityChangeFromOnboarding) {
+      //@ts-ignore
+      handleAmenityChangeFromOnboarding((prev: AmenityOptionData[]) => {
+        const isSelected = prev.some(amenity => amenity.id === amenityId);
+        if (isSelected) {
+          return prev.filter(amenity => amenity.id !== amenityId);
+        } else {
+          const amenityToAdd = allAmenities.find(amenity => amenity.id === amenityId);
+          if (amenityToAdd) {
+            return [...prev, {
+              id: amenityToAdd.id,
+              name: amenityToAdd.name,
+              description: amenityToAdd.description,
+              hostelAmenityType: amenityToAdd.hostelAmenityType
+            }];
+          }
+          return prev;
+        }
+      });
+    }
   };
 
   // Toggle category expansion
@@ -209,7 +237,7 @@ const formattedAmenityOptions = allAmenityOptions?.amenityOptions?.data?.reduce(
   };
 
   return (
-    <div className="mx-auto w-full rounded-lg border border-gray-100 bg-white/80 p-6 shadow-md">
+    <div className={`mx-auto w-full rounded-lg md:border md:border-gray-100 ${isOnboarding ? '' : 'bg-white/80'} md:p-6 p-1 shadow-md`}>
       <h1 className="mb-2 text-2xl font-bold text-gray-800">Hostel Amenities</h1>
       <p className="mb-6 text-gray-600">Select all amenities available at your property.</p>
       {Object.keys(formattedAmenityOptions || {}).map((category) => (
@@ -219,12 +247,12 @@ const formattedAmenityOptions = allAmenityOptions?.amenityOptions?.data?.reduce(
             onClick={() => toggleCategory(category)}
           >
             <div className="flex items-center">
-              <h2 className="group-hover:text-blue-600 text-lg font-semibold text-gray-800 transition-colors">
+              <h3 className="group-hover:text-blue-600 text-base md:text-lg font-semibold text-gray-800 transition-colors">
                 {category}
                 <span className="ml-2 text-sm font-normal text-gray-500">
                   ({getCategorySelectedCount(category)}/{formattedAmenityOptions?.[category as HostelAmenityType]?.length || 0})
                 </span>
-              </h2>
+              </h3>
             </div>
             <div className="flex md:space-x-2">
               <button
@@ -232,6 +260,7 @@ const formattedAmenityOptions = allAmenityOptions?.amenityOptions?.data?.reduce(
                   e.stopPropagation();
                   selectAllInCategory(category);
                 }}
+                type="button"
                 className="text-nowrap rounded-full border border-gray-300 bg-white px-3 py-1 text-xs text-gray-700 underline transition-colors hover:bg-gray-50"
               >
                 Select All
@@ -241,6 +270,7 @@ const formattedAmenityOptions = allAmenityOptions?.amenityOptions?.data?.reduce(
                   e.stopPropagation();
                   deselectAllInCategory(category);
                 }}
+                type="button"
                 className="rounded-full border border-gray-300 bg-white px-3 py-1 text-xs text-gray-700 underline transition-colors hover:bg-gray-50"
               >
                 Clear
@@ -289,8 +319,9 @@ const formattedAmenityOptions = allAmenityOptions?.amenityOptions?.data?.reduce(
           </span>{' '}
           of {allAmenities.length} amenities selected
         </div>
-        <div>
-          <Button
+        {!isOnboarding &&<div>
+          <Button 
+            type="button"
             label={loading ? 'Saving...' : 'Save Amenities'}
             onClick={existingAmenities.length === 0 ? handleCreateAmenities : handleUpdateAmenities}
             disabled={loading || isUpdateAmenityPending || isCreateAmenityPending}
@@ -300,7 +331,7 @@ const formattedAmenityOptions = allAmenityOptions?.amenityOptions?.data?.reduce(
                 : 'bg-blue-600 hover:bg-blue-700 text-white shadow-sm'
             }`}
           />
-        </div>
+        </div>}
       </div>
     </div>
   );

@@ -27,7 +27,7 @@ export default function AmenityPage() {
   return (
     <>
       <div>
-        <HostelAmenitiesPage hostelId={Number(hostel?.data?.id)} key={hostel?.data?.id} />
+        <HostelAmenitiesPage hostelId={Number(hostel?.data?.id)} key={hostel?.data?.id} onboardingAmenities={[]} />
       </div>
     </>
   );

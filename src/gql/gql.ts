@@ -37,6 +37,7 @@ const documents = {
     "mutation createAddress($input: CreateAddressInput!) {\n  createAddress(data: $input) {\n    data {\n      id\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.CreateAddressDocument,
     "mutation createContacts($input: CreateContactInput!) {\n  createContact(data: $input) {\n    data {\n      id\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.CreateContactsDocument,
     "mutation createHostel($input: CreateHostelInput!) {\n  createHostel(data: $input) {\n    data {\n      id\n      ownerId\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.CreateHostelDocument,
+    "mutation createOnboardingHostel($input: CreateOnboardingHostelInput!) {\n  createOnboardingHostel(data: $input) {\n    data {\n      id\n      ownerId\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.CreateOnboardingHostelDocument,
     "query getAddressByHostelId($hostelId: Float!) {\n  getAddressByHostelId(hostelId: $hostelId) {\n    data {\n      id\n      country\n      city\n      subCity\n      street\n      latitude\n      longitude\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.GetAddressByHostelIdDocument,
     "query getContactsByHostelId($hostelId: Float!) {\n  getContactByHostelId(hostelId: $hostelId) {\n    data {\n      id\n      email\n      phone\n      altPhone\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.GetContactsByHostelIdDocument,
     "query getHostelByToken {\n  getHostelByToken {\n    data {\n      id\n      name\n      description\n      slug\n      verifiedBySuperAdmin\n      verifiedByCommunityOwner\n      hasOnboardingComplete\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.GetHostelByTokenDocument,
@@ -226,6 +227,10 @@ export function graphql(source: "mutation createContacts($input: CreateContactIn
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "mutation createHostel($input: CreateHostelInput!) {\n  createHostel(data: $input) {\n    data {\n      id\n      ownerId\n    }\n    error {\n      message\n      code\n    }\n  }\n}"): (typeof documents)["mutation createHostel($input: CreateHostelInput!) {\n  createHostel(data: $input) {\n    data {\n      id\n      ownerId\n    }\n    error {\n      message\n      code\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation createOnboardingHostel($input: CreateOnboardingHostelInput!) {\n  createOnboardingHostel(data: $input) {\n    data {\n      id\n      ownerId\n    }\n    error {\n      message\n      code\n    }\n  }\n}"): (typeof documents)["mutation createOnboardingHostel($input: CreateOnboardingHostelInput!) {\n  createOnboardingHostel(data: $input) {\n    data {\n      id\n      ownerId\n    }\n    error {\n      message\n      code\n    }\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

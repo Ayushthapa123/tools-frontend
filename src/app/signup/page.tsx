@@ -42,8 +42,8 @@ type signupData = {
   phoneNumber?: string;
 };
 function SignUp() {
-  const [ loading, setLoading ] = useState(false);
-  const [ error, setError ] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const router = useRouter();
 
@@ -81,7 +81,7 @@ function SignUp() {
   };
 
   const { data: signupUrl } = useQuery({
-    queryKey: [ 'getGoogleAuthUrl' ],
+    queryKey: ['getGoogleAuthUrl'],
     queryFn: fetchData,
   });
 
@@ -104,17 +104,19 @@ function SignUp() {
       },
     }).then(res => {
       if (res?.signupUser?.id) {
+        setLoading(false);
+
         // localStorage.setItem('refreshToken', res.signupUser.token.refreshToken);
         router.push('/app/hostel-info');
       } else {
+        setLoading(false);
+
         // @ts-ignore
-        setError(res?.errors?.[ 0 ]?.message ?? 'Failed to signup!');
+        setError(res?.errors?.[0]?.message ?? 'Failed to signup!');
       }
     });
 
     // Need help in the getting the message in the result
-
-    setLoading(false);
   };
   const checkPasswordValidity = () => {
     const password = getValues().password;
@@ -163,49 +165,42 @@ function SignUp() {
   ];
 
   return (
-    <section className="flex min-h-[100vh]  flex-col justify-center  md:p-5 p-1 align-middle">
+    <section className="flex min-h-[100vh]  flex-col justify-center  p-1 align-middle md:p-5">
       <div className="container md:mx-auto ">
-
         <div className="flex flex-wrap ">
-          <div className="flex flex-col-reverse md:flex-row-reverse w-[90vw] md:w-[90vw] mx-auto items-center justify-center ">
-            <div className="relative z-10 md:w-[50%] w-[100%] h-[100%] text-center text-2xl font-bold  p-5 rounded-r-2xl">
+          <div className="mx-auto flex w-[90vw] flex-col-reverse items-center justify-center md:w-[90vw] md:flex-row-reverse ">
+            <div className="relative z-10 h-[100%] w-[100%] rounded-r-2xl p-5 text-center text-2xl  font-bold md:w-[50%]">
               <div>
                 {/* <h3 className='text-2xl lg:text-lg font-medium text-center'>Welcome to signup !</h3> */}
-                <div className='flex items-center justify-center mt-4'>
-                  <Image
-                    src="/hero.png"
-                    alt="Hostel png"
-                    width={450}
-                    height={450}
-                  />
+                <div className="mt-4 flex items-center justify-center">
+                  <Image src="/hero.png" alt="Hostel png" width={450} height={450} />
                 </div>
-                <p className='text-gray-700 mt-12 font-normal md:text-lg text-base'>
-                  <strong className='text-primary'>Hostel Admin</strong> is a management platform for hostel owners to
+                <p className="mt-12 text-base font-normal text-gray-700 md:text-lg">
+                  <strong className="text-primary">Hostel Admin</strong> is a management platform
+                  for hostel owners to
                 </p>
               </div>
-              <div className='grid grid-cols-1 md:grid-cols-2 md:w-[70%] md:mx-auto gap-0 mt-2 text-sm'>
-                {
-                  signUpFeatures.map((feature) => (
-                    <div key={feature.title} className='p-2 text-base text-gray-600 font-normal rounded-lg text-left break-words'>
-                      <span className=''>{feature.icon}</span> {feature.title}
-                    </div>
-                  ))
-                }
-
+              <div className="mt-2 grid grid-cols-1 gap-0 text-sm md:mx-auto md:w-[70%] md:grid-cols-2">
+                {signUpFeatures.map(feature => (
+                  <div
+                    key={feature.title}
+                    className="break-words rounded-lg p-2 text-left text-base font-normal text-gray-600">
+                    <span className="">{feature.icon}</span> {feature.title}
+                  </div>
+                ))}
               </div>
-              <div className='mt-8 leading-tight'>
-                <p className='text-gray-400 lg:text-base text-sm'>
+              <div className="mt-8 leading-tight">
+                <p className="text-sm text-gray-400 lg:text-base">
                   Create an account, add your hostel details, and get listed on our platform.
                 </p>
               </div>
-              <span className="absolute -z-10 overflow-hidden right-3 top-4">
+              <span className="absolute right-3 top-4 -z-10 overflow-hidden">
                 <svg
                   width="40"
                   height="40"
                   viewBox="0 0 40 40"
                   fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
+                  xmlns="http://www.w3.org/2000/svg">
                   <circle
                     cx="1.39737"
                     cy="38.6026"
@@ -321,21 +316,19 @@ function SignUp() {
                 </svg>
               </span>
             </div>
-            <div className="md:w-[50%] w-[100%] h-[100%] relative rounded-l-2xl overflow-hidden bg-base-100 px-3 py-[1rem] text-center sm:px-[1rem] md:px-[3rem]">
-              <div className="relative md:w-[70%] w-full mx-auto mb-8 flex items-start md:items-center justify-center  gap-1">
-                <div className='flex items-end gap-3 justify-center opacity-70'>
-                  <div className=''>
+            <div className="relative h-[100%] w-[100%] overflow-hidden rounded-l-2xl bg-base-100 px-3 py-[1rem] text-center sm:px-[1rem] md:w-[50%] md:px-[3rem]">
+              <div className="relative mx-auto mb-8 flex w-full items-start justify-center gap-1 md:w-[70%]  md:items-center">
+                <div className="flex items-end justify-center gap-3 opacity-70">
+                  <div className="">
                     <Logo />
                   </div>
-                  <h1 className='mb-0'>Hosteladmin </h1>
-
+                  <h1 className="mb-0">Hosteladmin </h1>
                 </div>
                 {/* <div>
                   <FullLogo />
                 </div> */}
               </div>
-              <div className="md:w-[80%] mx-auto mb-4  ">
-
+              <div className="mx-auto mb-4 md:w-[80%]  ">
                 <Button
                   variant="teal"
                   onClick={() => openSignupUrl()}
@@ -355,7 +348,7 @@ function SignUp() {
               <div>
                 <p className=" text-error">{error ?? error}</p>
               </div>
-              <form className=" md:w-[80%] mx-auto text-left " onSubmit={handleSubmit(onSubmit)}>
+              <form className=" mx-auto text-left md:w-[80%] " onSubmit={handleSubmit(onSubmit)}>
                 <div className=" py-3 ">
                   <div className="">
                     <TextInput
@@ -441,16 +434,13 @@ function SignUp() {
                   <Button
                     label={'Sign up'}
                     disabled={loading || !isValid}
-                    className={`${loading || !isValid ? 'cursor-not-allowed opacity-100' : 'opacity-100'
-                      } w-full rounded-md bg-primary px-4 py-2  font-bold   `}
+                    loading={loading}
+                    className={`${
+                      loading || !isValid ? 'cursor-not-allowed opacity-100' : 'opacity-100'
+                    } w-full rounded-md bg-primary px-4 py-2  font-bold   `}
                   />
                 </div>
               </form>
-
-
-
-
-
 
               <div>
                 <span className="absolute bottom-1 left-1">
@@ -459,8 +449,7 @@ function SignUp() {
                     height="40"
                     viewBox="0 0 29 40"
                     fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
+                    xmlns="http://www.w3.org/2000/svg">
                     <circle
                       cx="2.288"
                       cy="25.9912"

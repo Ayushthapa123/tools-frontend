@@ -80,6 +80,8 @@ const SignIn = () => {
     mutateAsync({ input: { email: getValues('email'), password: getValues('password') } }).then(
       res => {
         if (res?.loginUser?.id) {
+          setLoading(false);
+
           //after login what to do before pushing him to dashboard/me
           setAccessToken(res.loginUser.token.accessToken);
           // localStorage.setItem('refreshToken', res.loginUser.token.refreshToken);
@@ -90,13 +92,12 @@ const SignIn = () => {
           }
         } else {
           setError('Failed to login!');
+          setLoading(false);
         }
       },
     );
 
     // Need help in the getting the message in the result
-
-    setLoading(false);
   };
   const checkPasswordValidity = () => {
     const password = getValues().password;
@@ -175,6 +176,7 @@ const SignIn = () => {
                   <Button
                     label="Log in"
                     disabled={loading || !isValid}
+                    loading={loading}
                     className={`${
                       loading || !isValid ? 'cursor-not-allowed opacity-30' : 'opacity-100'
                     } rounded-md bg-primary px-4 py-2 font-bold   `}
@@ -184,8 +186,7 @@ const SignIn = () => {
 
               <a
                 href="/auth/forgotpassword"
-                className="text-dark mb-2 inline-block text-base hover:text-primary hover:underline "
-              >
+                className="text-dark mb-2 inline-block text-base hover:text-primary hover:underline ">
                 Forgot Password?
               </a>
               <p className="text-base">
@@ -200,7 +201,7 @@ const SignIn = () => {
                 <Button
                   variant="teal"
                   onClick={() => openSignupUrl()}
-                  label="Continue With Google"
+                  label="Log In With Google"
                   startAdornment={<FcGoogle className="text-3xl " />}
                   className="bg-primary"
                   height="sm"
@@ -214,8 +215,7 @@ const SignIn = () => {
                     height="40"
                     viewBox="0 0 40 40"
                     fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
+                    xmlns="http://www.w3.org/2000/svg">
                     <circle
                       cx="1.39737"
                       cy="38.6026"
@@ -336,8 +336,7 @@ const SignIn = () => {
                     height="40"
                     viewBox="0 0 29 40"
                     fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
+                    xmlns="http://www.w3.org/2000/svg">
                     <circle
                       cx="2.288"
                       cy="25.9912"

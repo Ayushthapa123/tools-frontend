@@ -10,12 +10,13 @@ import {
   AllAmenitiesOption,
   AllAmenitiesOptionQuery,
   AllAmenitiesOptionQueryVariables,
+  AmenityOptionData,
 } from 'src/gql/graphql';
 import { AmenitySelector } from './AmenitySelector';
 import LoadingSpinner from 'src/components/Loading';
 import { useGraphQLQuery } from 'src/hooks/useGraphqlQuery';
 
-export const HostelAmenitiesPage = ({ hostelId }: { hostelId: number }) => {
+export const HostelAmenitiesPage = ({ hostelId, isOnboarding = false, handleAmenityChange,onboardingAmenities }: { hostelId: number, isOnboarding?: boolean, handleAmenityChange?: (amenity: AmenityOptionData[]) => void,onboardingAmenities:AmenityOptionData[] }) => {
   // GraphQL query to fetch hostel details
   const queryAmenity = useGraphqlClientRequest<
     FindAmenityByHostelIdQuery,
@@ -57,14 +58,16 @@ export const HostelAmenitiesPage = ({ hostelId }: { hostelId: number }) => {
   const existingAmenities = JSON.parse(data?.data?.amenities || '[]');
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="  md:p-4 ">
       <AmenitySelector
         hostelId={hostelId}
-        existingAmenities={existingAmenities}
+        existingAmenities={isOnboarding ? onboardingAmenities : existingAmenities}
         loading={loading}
         amenityId={Number(data?.data?.id)}
         allAmenityOptions={allAmenityOptions}
         onAmenityUpdate={handleAmenityUpdate}
+        isOnboarding={isOnboarding}
+        handleAmenityChangeFromOnboarding={handleAmenityChange}
       />
     </div>
   );

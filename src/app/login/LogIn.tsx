@@ -27,6 +27,8 @@ type loginData = {
   email: string;
   password: string;
 };
+
+// Is it being used?. if not, remove it.
 const LogIn = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
