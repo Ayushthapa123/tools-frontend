@@ -1,13 +1,34 @@
 "use client"
+import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react'
 import { FaLightbulb } from 'react-icons/fa';
 import { Modal } from 'src/components/Modal';
-import { Hostel } from 'src/gql/graphql'
+import { GetHostelBySlug, GetHostelBySlugQuery, GetHostelBySlugQueryVariables } from 'src/gql/graphql'
+import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 
-export default function HostelServices({hostel}:{hostel:Hostel | null | undefined}) {
-    const [ showAllServices, setShowAllServices ] = useState(false);
+export default function HostelServices({slug}:{slug:string | null | undefined}) {
+  const [ showAllServices, setShowAllServices ] = useState(false);
 
-    const firstServiceParse = hostel?.data?.service?.services? JSON.parse(hostel?.data?.service?.services):[];
+  const searchHostels = useGraphqlClientRequest<
+      GetHostelBySlugQuery,
+      GetHostelBySlugQueryVariables
+    >(GetHostelBySlug.loc?.source?.body!);
+  
+    const fetchData = async () => {
+      const res = await searchHostels({
+        slug:slug ?? ""
+      });
+      return res.getHostelBySlug;
+    };
+  
+    const { data: hostelData, isLoading } = useQuery({
+      queryKey: ['getHostelBySlug', slug],
+      queryFn: fetchData,
+    });
+
+  
+
+    const firstServiceParse = hostelData?.data?.service?.services? JSON.parse(hostelData?.data?.service?.services):[];
     const servicesArray = firstServiceParse ? typeof firstServiceParse === 'string' ? JSON.parse(firstServiceParse):firstServiceParse : [];
   
   return (

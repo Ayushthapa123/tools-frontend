@@ -1646,7 +1646,7 @@ export type ServiceData = {
   __typename?: 'ServiceData';
   hostelId: Scalars['Int']['output'];
   id: Scalars['ID']['output'];
-  services: Scalars['JSON']['output'];
+  services: Scalars['String']['output'];
 };
 
 export type ServiceOption = {
@@ -2479,28 +2479,28 @@ export type GetServiceByHostelIdQueryVariables = Exact<{
 }>;
 
 
-export type GetServiceByHostelIdQuery = { __typename?: 'Query', findServiceByHostelId: { __typename?: 'Service', data?: { __typename?: 'ServiceData', id: string, services: any, hostelId: number } | null, error?: { __typename?: 'GraphQLError', message: string, code?: string | null } | null } };
+export type GetServiceByHostelIdQuery = { __typename?: 'Query', findServiceByHostelId: { __typename?: 'Service', data?: { __typename?: 'ServiceData', id: string, services: string, hostelId: number } | null, error?: { __typename?: 'GraphQLError', message: string, code?: string | null } | null } };
 
 export type CreateServiceMutationVariables = Exact<{
   createServiceInput: CreateServiceDto;
 }>;
 
 
-export type CreateServiceMutation = { __typename?: 'Mutation', createService: { __typename?: 'Service', data?: { __typename?: 'ServiceData', id: string, services: any, hostelId: number } | null, error?: { __typename?: 'GraphQLError', message: string, code?: string | null } | null } };
+export type CreateServiceMutation = { __typename?: 'Mutation', createService: { __typename?: 'Service', data?: { __typename?: 'ServiceData', id: string, services: string, hostelId: number } | null, error?: { __typename?: 'GraphQLError', message: string, code?: string | null } | null } };
 
 export type RemoveServiceMutationVariables = Exact<{
   id: Scalars['Float']['input'];
 }>;
 
 
-export type RemoveServiceMutation = { __typename?: 'Mutation', removeService: { __typename?: 'Service', data?: { __typename?: 'ServiceData', id: string, services: any, hostelId: number } | null, error?: { __typename?: 'GraphQLError', message: string, code?: string | null } | null } };
+export type RemoveServiceMutation = { __typename?: 'Mutation', removeService: { __typename?: 'Service', data?: { __typename?: 'ServiceData', id: string, services: string, hostelId: number } | null, error?: { __typename?: 'GraphQLError', message: string, code?: string | null } | null } };
 
 export type UpdateServiceMutationVariables = Exact<{
   updateServiceInput: UpdateServiceDto;
 }>;
 
 
-export type UpdateServiceMutation = { __typename?: 'Mutation', updateService: { __typename?: 'Service', data?: { __typename?: 'ServiceData', id: string, services: any, hostelId: number } | null, error?: { __typename?: 'GraphQLError', message: string, code?: string | null } | null } };
+export type UpdateServiceMutation = { __typename?: 'Mutation', updateService: { __typename?: 'Service', data?: { __typename?: 'ServiceData', id: string, services: string, hostelId: number } | null, error?: { __typename?: 'GraphQLError', message: string, code?: string | null } | null } };
 
 export type CreateHostelSettingsMutationVariables = Exact<{
   hostelId: Scalars['Float']['input'];
@@ -2596,7 +2596,7 @@ export type GetHostelBySlugQueryVariables = Exact<{
 }>;
 
 
-export type GetHostelBySlugQuery = { __typename?: 'Query', getHostelBySlug?: { __typename?: 'Hostel', data?: { __typename?: 'HostelData', id: string, name: string, description?: string | null, slug: string, verifiedBySuperAdmin: boolean, verifiedByCommunityOwner: boolean, service?: { __typename?: 'ServiceData', services: any } | null, hostelRules?: { __typename?: 'HostelRulesData', rules: any } | null, gallery: Array<{ __typename?: 'GalleryData', url: string, isSelected?: boolean | null }>, address?: { __typename?: 'AddressData', country: string, city: string, subCity?: string | null, street?: string | null, latitude?: number | null, longitude?: number | null } | null, contact?: { __typename?: 'ContactDetailData', phone: string, altPhone?: string | null, email: string } | null, rooms?: Array<{ __typename?: 'RoomData', id: string, caption: string, capacity: RoomCapacity, roomNumber?: string | null, description?: string | null, status: RoomStatus, roomAmenity?: { __typename?: 'RoomAmenityData', amenity: any } | null, image: Array<{ __typename?: 'RoomImageData', url: string, id: string, caption?: string | null }>, price?: { __typename?: 'PriceData', baseAmountPerDay?: number | null, baseAmountPerMonth: number, currency: Currency, isDynamicPricing: boolean, discountAmount?: number | null, discountType?: DiscountType | null } | null }> | null } | null, error?: { __typename?: 'GraphQLError', message: string, code?: string | null } | null } | null };
+export type GetHostelBySlugQuery = { __typename?: 'Query', getHostelBySlug?: { __typename?: 'Hostel', data?: { __typename?: 'HostelData', id: string, name: string, description?: string | null, slug: string, verifiedBySuperAdmin: boolean, verifiedByCommunityOwner: boolean, service?: { __typename?: 'ServiceData', services: string } | null, hostelRules?: { __typename?: 'HostelRulesData', rules: any } | null, gallery: Array<{ __typename?: 'GalleryData', url: string, isSelected?: boolean | null }>, address?: { __typename?: 'AddressData', country: string, city: string, subCity?: string | null, street?: string | null, latitude?: number | null, longitude?: number | null } | null, contact?: { __typename?: 'ContactDetailData', phone: string, altPhone?: string | null, email: string } | null, rooms?: Array<{ __typename?: 'RoomData', id: string, caption: string, capacity: RoomCapacity, roomNumber?: string | null, description?: string | null, status: RoomStatus, roomAmenity?: { __typename?: 'RoomAmenityData', amenity: any } | null, image: Array<{ __typename?: 'RoomImageData', url: string, id: string, caption?: string | null }>, price?: { __typename?: 'PriceData', baseAmountPerDay?: number | null, baseAmountPerMonth: number, currency: Currency, isDynamicPricing: boolean, discountAmount?: number | null, discountType?: DiscountType | null } | null }> | null } | null, error?: { __typename?: 'GraphQLError', message: string, code?: string | null } | null } | null };
 
 export type LogInUserMutationVariables = Exact<{
   input: LoginInput;
@@ -2701,7 +2701,7 @@ export type GetFeaturedHostelsQueryVariables = Exact<{
 }>;
 
 
-export type GetFeaturedHostelsQuery = { __typename?: 'Query', getAllHostels: { __typename?: 'HostelArrayResponse', data: Array<{ __typename?: 'HostelData', id: string, name: string, description?: string | null, slug: string, address?: { __typename?: 'AddressData', country: string, city: string, subCity?: string | null, street?: string | null, latitude?: number | null, longitude?: number | null } | null, gallery: Array<{ __typename?: 'GalleryData', url: string, caption?: string | null, isSelected?: boolean | null }>, rooms?: Array<{ __typename?: 'RoomData', id: string, caption: string, capacity: RoomCapacity, roomNumber?: string | null, status: RoomStatus, createdAt: any, updatedAt: any, hostelId: number, image: Array<{ __typename?: 'RoomImageData', url: string, id: string, caption?: string | null, createdAt: any, updatedAt: any, roomId: number }>, price?: { __typename?: 'PriceData', baseAmountPerDay?: number | null, baseAmountPerMonth: number, currency: Currency, isDynamicPricing: boolean, discountAmount?: number | null, discountType?: DiscountType | null } | null }> | null, service?: { __typename?: 'ServiceData', services: any } | null }>, error?: { __typename?: 'GraphQLError', message: string, code?: string | null } | null } };
+export type GetFeaturedHostelsQuery = { __typename?: 'Query', getAllHostels: { __typename?: 'HostelArrayResponse', data: Array<{ __typename?: 'HostelData', id: string, name: string, description?: string | null, slug: string, address?: { __typename?: 'AddressData', country: string, city: string, subCity?: string | null, street?: string | null, latitude?: number | null, longitude?: number | null } | null, gallery: Array<{ __typename?: 'GalleryData', url: string, caption?: string | null, isSelected?: boolean | null }>, rooms?: Array<{ __typename?: 'RoomData', id: string, caption: string, capacity: RoomCapacity, roomNumber?: string | null, status: RoomStatus, createdAt: any, updatedAt: any, hostelId: number, image: Array<{ __typename?: 'RoomImageData', url: string, id: string, caption?: string | null, createdAt: any, updatedAt: any, roomId: number }>, price?: { __typename?: 'PriceData', baseAmountPerDay?: number | null, baseAmountPerMonth: number, currency: Currency, isDynamicPricing: boolean, discountAmount?: number | null, discountType?: DiscountType | null } | null }> | null, service?: { __typename?: 'ServiceData', services: string } | null }>, error?: { __typename?: 'GraphQLError', message: string, code?: string | null } | null } };
 
 
 export const CreateAmenityOptionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createAmenityOption"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createAmenityOptionInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateAmenityOptionInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createAmenityOption"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createAmenityOptionInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createAmenityOptionInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]}}]} as unknown as DocumentNode<CreateAmenityOptionMutation, CreateAmenityOptionMutationVariables>;
