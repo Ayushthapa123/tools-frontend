@@ -2,7 +2,6 @@
 "use client"
 import Footer from 'src/features/Footer';
 import {
-
   Hostel,
 } from 'src/gql/graphql';
 import MainContent from './MainContent';
