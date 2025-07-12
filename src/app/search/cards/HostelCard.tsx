@@ -39,6 +39,7 @@ export const HostelCard = (props: Iprops) => {
     threeSeater,
     currency,
     amount,
+    imgUrl,
     description,
     gallery,
     rooms,
@@ -50,10 +51,10 @@ export const HostelCard = (props: Iprops) => {
 
   const mainWallpaper = gallery?.find((img: any) => img.isSelected === true) ?? gallery?.[ 0 ];
   const otherImages = gallery?.filter((img: any) => img.isSelected === false);
-  var imgUrl = mainWallpaper?.url ?? '/images/noPhotoWallpaper.jpg';
+  const imageUrl = mainWallpaper?.url ?? imgUrl ?? '/images/noPhotoWallpaper.jpg';
 
   // const imagesArray = [ imgUrl, ...otherImages.map((img: any) => img.url) ].filter(Boolean);
-  const imagesArray = [imgUrl, ...(otherImages?.map((img: any) => img.url) || [])].filter(Boolean);
+  const imagesArray = [imageUrl, ...(otherImages?.map((img: any) => img.url) || [])].filter(Boolean);
 
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
