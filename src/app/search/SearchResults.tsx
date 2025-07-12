@@ -83,6 +83,7 @@ export const SearchResults = (props: IResults) => {
                   city={hostel.address?.city ?? ''}
                   subCity={hostel.address?.subCity ?? ''}
                   description={hostel.description ?? ''}
+                  rooms={hostel.rooms}
                   // amount={hostel?.rooms?.[0]?.price?.baseAmountPerDay ?? 0}
                   // currency={hostel?.rooms?.[0]?.price?.currency ?? ''}
                   imgUrl={imgUrl}
