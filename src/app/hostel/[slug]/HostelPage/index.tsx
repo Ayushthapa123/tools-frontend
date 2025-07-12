@@ -2,7 +2,6 @@
 "use client"
 import Footer from 'src/features/Footer';
 import {
-
   Hostel,
 } from 'src/gql/graphql';
 import MainContent from './MainContent';
@@ -18,7 +17,7 @@ export function HostelPage({
   slug: string;
   checkInDat: string;
   checkOutDat: string;
-  hostelData: any;
+  hostelData: Hostel;
 }) {
   const checkInDate = checkInDat ?? new Date().toISOString().split('T')[0];
   const checkOutDate = checkOutDat ?? new Date(Date.now() + 86400000).toISOString().split('T')[0];
