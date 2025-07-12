@@ -7,6 +7,8 @@ import { BlogPostData } from 'src/gql/graphql';
 import { useUserStore } from 'src/store/userStore';
 import Button from 'src/components/Button';
 import { Chip } from 'src/components/Chip';
+import { FaUser } from 'react-icons/fa';
+import { GoPencil } from 'react-icons/go';
 
 export const CityCard = ({
   city,
@@ -14,66 +16,52 @@ export const CityCard = ({
   city: Partial<BlogPostData> | undefined | null;
 }) => {
   // Helper for slug link
-  const cityLink = city?.slug ? `/cities/${city.slug}` : undefined;
-
+  const cityLink = city?.slug ? `/cities/${city.slug}` :"";
+  
   return (
-    <div className="relative flex overflow-hidden rounded-lg border border-gray-200 bg-white shadow-md transition-all duration-300 hover:shadow-2xl gap-3 group">
-      {/* Image Section */}
-      <div className="relative h-48 w-48 flex-shrink-0">
-        {cityLink ? (
-          <Link href={cityLink} className="block h-full w-full">
-            <Image
-              src={city?.coverImageUrl || '/placeholder-room.jpg'}
-              alt={city?.title ?? 'City image'}
-              fill
-              className="rounded-t-md object-cover transition-transform duration-200 group-hover:scale-105"
-              priority
-            />
-          </Link>
-        ) : (
-          <Image
-            src={city?.coverImageUrl || '/placeholder-room.jpg'}
-            alt={city?.title ?? 'City image'}
-            fill
-            className="rounded-t-md object-cover"
-            priority
-          />
-        )}
-      </div>
-
-      {/* Content Section */}
-      <div className="flex min-h-[130px] gap-3 px-3 py-4 w-full">
-        <div className="flex w-full flex-col justify-between">
-          <div className="flex flex-col items-start justify-start gap-0 pb-1 lg:flex-row lg:items-start lg:justify-between lg:gap-2">
-            {cityLink ? (
-              <Link href={cityLink} className="mb-0 text-lg font-bold text-blue-700 hover:underline" title={city?.title ?? ''}>
-                <h2 className="mb-0 " title={city?.title ?? ''}>
-                {city?.title ?? 'Untitled City'}
-              </h2>
-              </Link>
-            ) : (
-              <h2 className="mb-0 " title={city?.title ?? ''}>
-                {city?.title ?? 'Untitled City'}
-              </h2>
-            )}
-          </div>
-          <div className="mt-1 text-gray-600 text-sm min-h-[40px]">
-            {city?.metaDescription || <span className="italic text-gray-400">No description available.</span>}
-          </div>
-          {/* Optionally show tags if present */}
-          {city?.tags && city.tags.length > 0 && (
-            <div className="mt-2 flex flex-wrap gap-1">
-              {city.tags.map((tag, idx) => (
-                <span key={idx} className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs font-medium">
-                  {tag}
-                </span>
-              ))}
+    <>
+       <Link href={`/cities/${city?.slug}`}>
+        <div className="card h-full w-full cursor-pointer  rounded-2xl bg-white transition-all duration-200 hover:shadow-md">
+          <div className="mb-4 w-full">
+            <div className="relative">
+              <div className="h-[300px] w-full overflow-hidden rounded ">
+                <Image src={city?.coverImageUrl || "/placeholder-room.jpg"} alt="" className="w-full rounded-b-none rounded-t-2xl" fill />
+              </div>
             </div>
-          )}
+            <div className="flex items-center justify-between px-4 pt-3 border-t border-gray-100">
+              <div className="flex items-center justify-start gap-3">
+                <div className="flex cursor-default items-start gap-2 rounded-lg bg-gray-100 px-2 py-1">
+                  <FaUser />
+                  <span className="mb-0 text-sm text-gray-700">Hostelpilot</span>
+                </div>
+              </div>
+              <div>
+                {city?.createdAt && (
+                  <div className="flex cursor-default items-center gap-2 px-1 py-1">
+                    <GoPencil className="text-sm text-gray-700" />
+                    <span className="inline-block text-sm text-gray-700">{city?.createdAt.split("T")[0]}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="mb-0 px-4">
+              <div>
+                <p
+                  className="text-dark mt-2 line-clamp-2 inline-block text-xl font-bold hover:text-primary sm:text-2xl lg:text-xl xl:text-2xl">
+                  {city?.title}
+                </p>
+              </div>
+
+              <div>
+                <p
+                  className={`text-base font-medium text-gray-500 ${ city?.title && city?.title.length > 15 ? 'line-clamp-3' : 'line-clamp-4'} mb-0`}>
+                  {city?.metaDescription}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-        {/* Action Buttons (if needed in future) */}
-        {/* <div className="absolute right-3 top-2 z-20 flex gap-2"></div> */}
-      </div>
-    </div>
+      </Link>
+    </>
   );
 };
