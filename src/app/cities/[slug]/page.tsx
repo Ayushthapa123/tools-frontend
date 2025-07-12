@@ -83,6 +83,8 @@ export default async function Home({ params }: { params: { slug: string } }) {
           publishedAt
           createdAt
           updatedAt
+          videoUrl
+          oneLiner
         }
       }
     }

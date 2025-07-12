@@ -106,6 +106,7 @@ function BlogForm({
     reset,
   } = useForm<CreateBlogPostInput>({
     defaultValues: {
+      ...blogPost?.data,
       title: blogPost?.data?.title,
       slug: blogPost?.data?.slug,
       excerpt: blogPost?.data?.excerpt,
@@ -117,6 +118,8 @@ function BlogForm({
       metaKeywords: blogPost?.data?.metaKeywords ?? '',
        authorId: blogPost?.data?.authorId,
        status: blogPost?.data?.status as BlogStatus,
+       videoUrl: blogPost?.data?.videoUrl,
+       oneLiner: blogPost?.data?.oneLiner,
       //  views: blogPost?.data?.views,
     },
   });
