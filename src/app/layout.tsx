@@ -23,6 +23,7 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#ffffff" />
         <meta name="theme-color" content="#ffffff" />
         <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+        <meta name="google-site-verification" content="RkgF-0fgOVLbsQzlPCBLFLjmqtmwH28e56AVlTnEUQA" />
       </Head>
       <body className={`bg-base-body font-sora`}>
         <TopLevelWrapper>{children}</TopLevelWrapper>

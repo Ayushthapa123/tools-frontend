@@ -10,7 +10,8 @@ export const SitemapPage = async () => {
   query getAllCityBlogsSlug {
       getAllBlogPosts(pageSize: 100, pageNumber: 1,blogTags: [${BlogTags.City}],blogStatus: ${BlogStatus.Published}) {
         data {
-          slug
+          slug 
+          
         }
       }
     }

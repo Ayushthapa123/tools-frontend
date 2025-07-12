@@ -129,7 +129,7 @@ export default function MainContent(props: Iprops) {
                 
 
                 {/* Services Section */}
-              <HostelServices hostel={hostel}/>
+              <HostelServices slug={hostel?.data?.slug}/>
 
 
                 <div className="rounded-xl bg-white p-6 pt-2 shadow-sm">
