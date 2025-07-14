@@ -94,17 +94,19 @@ function BlogForm({
   ];
 
   const blogTags = [
-    // { label: 'Travel', value: BlogTags.Travel },
-    { label: 'City', value: [BlogTags.City] },
-    { label: 'Top Ten Places', value: [BlogTags.TopTenPlaces] },
+    { label: 'City', value: BlogTags.City },
+    { label: 'Top Ten Places', value: BlogTags.TopTenPlaces },
+
   ];
+
+
 
   const {
     handleSubmit,
     control,
     formState: { errors },
     reset,
-  } = useForm<CreateBlogPostInput>({
+  } = useForm<CreateBlogPostInput & { tag: BlogTags }>({
     defaultValues: {
       ...blogPost?.data,
       title: blogPost?.data?.title,
@@ -112,7 +114,8 @@ function BlogForm({
       excerpt: blogPost?.data?.excerpt,
       coverImageUrl: blogPost?.data?.coverImageUrl,
       content: blogPost?.data?.content,
-      tags: [BlogTags.City],
+      // tags: blogPost?.data?.tags[0],
+      tag: blogPost?.data?.tags[0],
       metaDescription: blogPost?.data?.metaDescription ?? '',
       metaTitle: blogPost?.data?.metaTitle ?? '',
       metaKeywords: blogPost?.data?.metaKeywords ?? '',
@@ -162,11 +165,12 @@ function BlogForm({
     mutationFn: mutateUpdateBlogPost,
   });
 
-  const onSubmit = async (data: CreateBlogPostInput) => {
-    const input = { ...data};
+  const onSubmit = async (data: CreateBlogPostInput & { tag: BlogTags }) => {
+    // delete the tag from the data
+    const { tag, ...input } = data;
     if (!isEdit) {
       mutateCreateBlogPostAsync({
-        createBlogPostInput: { ...input, authorId: Number(user.userId),coverImageUrl: coverImage ,tags: [data.slug.includes("10")? BlogTags.TopTenPlaces : BlogTags.City] },
+        createBlogPostInput: { ...input, authorId: Number(user.userId),coverImageUrl: coverImage ,tags: [data.tag] },
       }).then(res => {
         if (res?.createBlogPost?.data?.id) {
           enqueueSnackbar('Blog post created successfully.', { variant: 'success' });
@@ -178,7 +182,7 @@ function BlogForm({
       });
     } else {
       mutateUpdateBlogPostAsync({
-        updateBlogPostInput: { ...input, id: Number(blogPost?.data?.id),coverImageUrl: coverImage ,tags: [data.slug.includes("10")? BlogTags.TopTenPlaces : BlogTags.City] },
+        updateBlogPostInput: { ...input, id: Number(blogPost?.data?.id),coverImageUrl: coverImage ,tags: [data.tag] },
       }).then(res => {
         if (res?.updateBlogPost?.data?.id) {
           enqueueSnackbar('Blog post updated successfully.', { variant: 'success' });
@@ -235,6 +239,17 @@ function BlogForm({
                   control={control}
                   label="Blog Status"
                   error={!!errors.status}
+                />
+              </div>
+              <div className="mb-2">
+                <ReactSelect
+                  name="tag"
+                  placeholder="Blog Tags"
+                  options={blogTags}
+                  defaultValue={blogTags[0]}
+                  control={control}
+                  label="Blog Tags"
+                  error={!!errors.tag}
                 />
               </div>
      
