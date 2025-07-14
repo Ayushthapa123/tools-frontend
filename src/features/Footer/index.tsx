@@ -26,8 +26,8 @@ const Footer = () => {
             </div>
             
             <div>
-              <Link href="#">
-                <h4 className="text-blue text-base lg:text-sm  text-center font-semibold">Pricing</h4>
+              <Link href="/top-places">
+                <h4 className="text-blue text-base lg:text-sm  text-center font-semibold">Top Places</h4>
               </Link>
             </div>
             <div>
