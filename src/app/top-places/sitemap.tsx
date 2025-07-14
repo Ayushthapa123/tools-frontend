@@ -8,10 +8,9 @@ export const SitemapPage = async () => {
 
   const hostelQuery = gql`
   query getAllCityBlogsSlug {
-      getAllBlogPosts(pageSize: 100, pageNumber: 1,blogTags: [${BlogTags.City}],blogStatus: ${BlogStatus.Published}) {
+      getAllBlogPosts(pageSize: 100, pageNumber: 1,blogTags: [${BlogTags.TopTenPlaces}],blogStatus: ${BlogStatus.Published}) {
         data {
           slug 
-          
           
         }
       }
@@ -30,7 +29,7 @@ export const SitemapPage = async () => {
   const originalCityBlogsSitemaps =
    res?.data?.map((item: any) => {
     return {
-      url: `https://hostelpilot.com/cities/${item.slug}`,
+      url: `https://hostelpilot.com/top-places/${item.slug}`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 1,

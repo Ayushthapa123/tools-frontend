@@ -19,7 +19,7 @@ import { Modal } from 'src/components/Modal';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { enqueueSnackbar } from 'notistack';
 
-export const ActiveBlogs = ({ setActiveRoomCount ,isviewonly=false}: { setActiveRoomCount?: (count: number) => void ,isviewonly?:boolean}) => {
+export const CityBlogs = ({ setActiveRoomCount ,isviewonly=false}: { setActiveRoomCount?: (count: number) => void ,isviewonly?:boolean}) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deletedBlogPostId, setDeletedBlogPostId] = useState<number | string | null>(null);
   const [deleteBlogPost, setDeleteBlogPost] = useState(false);

@@ -10,11 +10,13 @@ import { Chip } from 'src/components/Chip';
 
 export const CityCard = ({
   city,
+  subRoute
 }: {
   city: Partial<BlogPostData> | undefined | null;
+  subRoute?:string
 }) => {
   // Helper for slug link
-  const cityLink = city?.slug ? `/cities/${city.slug}` : undefined;
+  const cityLink = city?.slug ? `/${subRoute??"cities"}/${city.slug}` : undefined;
 
   return (
     <div className="relative flex overflow-hidden rounded-lg border border-gray-200 bg-white shadow-md transition-all duration-300 hover:shadow-2xl gap-3 group">
