@@ -51,6 +51,12 @@ export const SitemapPage = async () => {
       changeFrequency: 'monthly',
       priority: 1,
     },
+    {
+      url: 'https://hosteltrend.com/forms/hostel-search-form',
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 1,
+    },
   ];
 
 
