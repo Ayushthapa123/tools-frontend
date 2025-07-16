@@ -13,7 +13,7 @@ query GetBlogPosts($blogTags: [BlogTags!]) {
       views
       publishedAt
       createdAt
-      updatedAt
+      
     }
     error {
       message

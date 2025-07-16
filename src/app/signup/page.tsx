@@ -23,6 +23,7 @@ import Button from 'src/components/Button';
 import { Logo } from 'src/features/Logo';
 import Image from 'next/image';
 import GoogleIcon from 'src/components/icons/Google';
+import { isHostelPilot } from 'src/config/domainConfig';
 
 export default function Home() {
   return (
@@ -99,7 +100,7 @@ function SignUp() {
         email: data.email,
         password: data.password,
         fullName: data.fullName,
-        userType: UserType.HostelOwner,
+        userType: isHostelPilot ? UserType.Student : UserType.HostelOwner,
         // phoneNumber: data.phoneNumber,
       },
     }).then(res => {
