@@ -139,7 +139,7 @@ export const HostelCard = (props: Iprops) => {
         <div className="absolute right-2 top-1 z-10">
           <Badge className={` px-3 py-1 !text-xs uppercase tracking-wide font-bold text-white/90 ${getStatusColor("Available")} !rounded-md `}>Available</Badge>
         </div>
-        <p className='absolute -bottom-3 right-1 text-white/90 bg-transparent p-1 px-3 rounded-md font-semibold'>{ genderType ? `For ${genderType.toLowerCase}` : "" }</p>
+        <p className='absolute -bottom-3 right-1 text-white/90 bg-transparent p-1 px-3 rounded-md font-semibold'>{ genderType ? `For ${genderType.toLowerCase()}` : "" }</p>
       </div>
 
       <div className="flex-grow overflow-y-auto px-2" style={{ maxHeight: '150px' }}>
