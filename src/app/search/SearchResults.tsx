@@ -86,7 +86,7 @@ export const SearchResults = (props: IResults) => {
                   rooms={hostel.rooms}
                   // amount={hostel?.rooms?.[0]?.price?.baseAmountPerDay ?? 0}
                   // currency={hostel?.rooms?.[0]?.price?.currency ?? ''}
-                  imgUrl={imgUrl}
+                  genderType={hostel.genderType ?? ''}
                   oneSeater={null}
                   twoSeater={null}
                   threeSeater={null}
