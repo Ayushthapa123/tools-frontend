@@ -1,12 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
-// import { MapComponent } from './GoogleMap';
+// import { Mapcontentonent } from './GoogleMap';
 import { AllHostels } from './AllHostels';
 import { MapProvider } from 'src/features/MapProvider';
 import { useUserStore } from 'src/store/userStore';
 import { UserType } from 'src/gql/graphql';
 import { notFound } from 'next/navigation';
+import { Tabs } from 'src/components/Tabs';
 export default function Home() {
   const {user}=useUserStore()
   if(user.userType!==UserType.Superadmin){ 
@@ -29,14 +30,13 @@ export default function Home() {
 
 const LocationTabs = () => {
   const tabs = [
-    { title: 'All Hostels', id: 1, comp: <AllHostels /> },
+    { label: 'All Hostels', id: "1", content: <AllHostels /> },
     {
-      title: 'Inactive Hostels',
-      id: 2,
-      comp: <div>Inactive Hostels</div>,
+      label: 'Inactive Hostels',
+      id: "2",
+      content: <div>Inactive Hostels</div>,
     },
   ];
-  const [activeTab, setActiveTab] = useState(1);
 
   return (
     <div className="w-full py-5 ">
@@ -44,28 +44,10 @@ const LocationTabs = () => {
         role="tablist"
         className="tabs-boxed tabs sticky top-0 z-[99] my-3 flex flex-wrap bg-transparent py-2"
       >
-        {tabs.map(tab => (
-          <div key={tab.id} className="flex flex-wrap ">
-            <a
-              role="tab"
-              className={`  tab  text-base font-medium ${tab.id == activeTab ? 'tab-active text-white' : ' text-primary'}`}
-              onClick={() => setActiveTab(tab.id)}
-            >
-              {tab.title}
-            </a>
-          </div>
-        ))}
+            <Tabs
+              tabs={tabs}
+            />
       </div>
-      {tabs.map((tab, index) => (
-        <div key={index}>
-          {tab.id == activeTab && (
-            <div>
-              {tab.comp}
-              <hr className=" divider" />
-            </div>
-          )}
-        </div>
-      ))}
     </div>
   );
 };
