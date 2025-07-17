@@ -46,13 +46,13 @@ export const SitemapPage = async () => {
       priority: 1,
     },
     {
-      url: 'https://hosteltrend.com/terms-and-conditions',
+      url: 'https://hostelpilot.com/terms-and-conditions',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 1,
     },
     {
-      url: 'https://hosteltrend.com/forms/hostel-search-form',
+      url: 'https://hostelpilot.com/forms/hostel-search-form',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 1,

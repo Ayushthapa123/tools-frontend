@@ -11,6 +11,7 @@ import {
   HostelGenderType,
   HostelType,
   CreateHostelSearchFormInput,
+  RoomCapacity,
 } from 'src/gql/graphql';
 import { useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -42,6 +43,8 @@ export const SearchForm = ({ guest, isEdit = false, withToken = false }: GuestFo
 
   const [alsoCreateAccount, setAlsoCreateAccount] = useState(!isEdit);
   const [isCompleted, setIsCompleted] = useState(false);
+
+  const {user} = useUserStore();
 
   const [clickedLatLng, setClickedLatLng] = useState<{
     lat: number | null;
@@ -114,6 +117,18 @@ export const SearchForm = ({ guest, isEdit = false, withToken = false }: GuestFo
     { label: 'Both', value: HostelType.Both },
 
     { label: 'PG', value: HostelType.Pg },
+  ];
+
+  const roomCapacityOptions = [
+    { label: '1 Seater', value: RoomCapacity.OneBed },
+    { label: '2 Seater', value: RoomCapacity.TwoBed },
+    { label: '3 Seater', value: RoomCapacity.ThreeBed },
+    { label: '4 Seater', value: RoomCapacity.FourBed },
+    { label: '5 Seater', value: RoomCapacity.FiveBed },
+    { label: 'Multi Bed', value: RoomCapacity.MultiBed },
+   
+ 
+    
   ];
 
   const buttonText = isEdit ? 'Update Form' : 'Submit Form';
@@ -368,6 +383,20 @@ export const SearchForm = ({ guest, isEdit = false, withToken = false }: GuestFo
                     error={!!errors.address?.country}
                   />
                 </div>
+                <div>
+                  <ReactSelect
+                    name="roomCapacity"
+                    placeholder="Room Capacity"
+                    control={control}
+                    options={roomCapacityOptions}
+                    label="Room Capacity"
+                    required
+                    helperText={
+                      errors.address?.country?.type === 'required' ? 'Country Is Required' : ''
+                    }
+                    error={!!errors.address?.country}
+                  />
+                </div>
               </div>
               <div className="mt-4">
                 <TextInput
@@ -396,19 +425,21 @@ export const SearchForm = ({ guest, isEdit = false, withToken = false }: GuestFo
             </div>
           </div>
 
-          <div className="mb-4 mt-4">
-            <label className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                checked={alsoCreateAccount}
-                onChange={e => setAlsoCreateAccount(e.target.checked)}
-                className="form-checkbox h-4 w-4 text-primary"
-              />
-              <span>Also Create an account if not exist</span>
+          {user.userEmail && (
+            <div className="mb-4 mt-4">
+              <label className="flex items-center space-x-2">
+                {/* <input
+                  type="checkbox"
+                  checked={alsoCreateAccount}
+                  onChange={e => setAlsoCreateAccount(e.target.checked)}
+                  className="form-checkbox h-4 w-4 text-primary"
+              /> */}
+              <span>We will create an account if not exist</span>
             </label>
           </div>
+          )}
 
-          {alsoCreateAccount && (
+          {user.userEmail && (
             <div className="mt-4">
               <TextInput
                 name="password"
