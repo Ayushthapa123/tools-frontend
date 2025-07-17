@@ -23,6 +23,7 @@ export default function Home() {
       <Suspense>
         <CommonNav />
         <SearchPage />
+        
         <Footer />
       </Suspense>
     </div>

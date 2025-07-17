@@ -69,6 +69,13 @@ const Sidebar = () => {
     },
     {
       icon: <FaHotel />,
+      text: 'Forms',
+      href: '/app/forms',
+      children: false,
+      show: user.userType === UserType.Superadmin,
+    },
+    {
+      icon: <FaHotel />,
       text: 'Blogs',
       href: '/app/blog',
       children: false,
@@ -102,6 +109,7 @@ const Sidebar = () => {
       children: false,
       show: user.userType === UserType.HostelOwner,
     },
+  
     {
       icon: <IoMdPhotos />,
       text: 'Gallery',

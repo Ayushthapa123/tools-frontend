@@ -29,7 +29,7 @@ export const Header = () => {
                   </MapProvider>
                 </Suspense>
               </div>
-              <div className="grid grid-cols-3 gap-4 text-center w-[80%] lg:w-[40%] mx-auto">
+              {/* <div className="grid grid-cols-3 gap-4 text-center w-[80%] lg:w-[40%] mx-auto">
                 <div className="flex flex-col items-center border-r border-gray-300">
                   <div className="text-2xl md:text-4xl font-bold text-secondary/90 mb-1">50+</div>
                   <div className="text-sm text-gray-600 dark:text-gray-600">Hostels</div>
@@ -42,7 +42,7 @@ export const Header = () => {
                   <div className="text-2xl md:text-4xl font-bold text-secondary/90 mb-1">24/7</div>
                   <div className="text-sm text-gray-600 dark:text-gray-600">Support</div>
                 </div>
-            </div>
+            </div> */}
             </div>
           </div>
         </div>
