@@ -1,0 +1,12 @@
+mutation CreateHostelSearchForm($createHostelSearchFormInput: CreateHostelSearchFormInput!) {
+  createHostelSearchForm(data: $createHostelSearchFormInput) {
+    data {
+      id
+      
+    }
+    error {
+      message
+      code
+    }
+  }
+}

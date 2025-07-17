@@ -72,7 +72,7 @@ export const CommonNav = () => {
               <button className="flex flex-row items-center justify-center rounded-full border border-transparent bg-primary  font-medium tracking-wide transition duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 lg:min-w-fit">
                 <motion.div className="  font-semibold " transition={{ duration: 0.3 }}>
                   <Link href={'https://hosteladmin.com/signup'}>
-                    <span className="block text-white md:block">List My Hostel</span>
+                    <span className="block text-white md:block">List My Hostel<b className='text-xs text-gray-300'> (Free)</b></span>
                   </Link>
                 </motion.div>
               </button>
