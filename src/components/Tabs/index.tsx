@@ -46,7 +46,7 @@ export const Tabs: React.FC<TabsProps> = ({
               role="tab"
               aria-selected={isActive}
               aria-controls={`panel-${index}`}
-              className={`tab text-wrap h-auto p-3 px-8 text-lg  font-bold  w-fit ${isActive ? 'tab-active bg-primary text-white' : 'bg-gray-200 hover:bg-primary/20'} transition-colors ease-in-out duration-300 ${index===0 ? "rounded-l-xl" : index=== tabs.length - 1 ? "rounded-r-xl":""}  ${tabClassName}`}
+              className={`tab text-wrap h-auto p-3 px-8 text-lg  font-bold  w-fit ${isActive ? 'tab-active bg-primary text-white' : 'bg-gray-200 hover:bg-primary/20'} transition-colors ease-in-out duration-300 ${index===0 ? "rounded-l-xl" :( tabs.length != 2 && index=== tabs.length - 1) ? "rounded-r-xl":""}  ${tabClassName}`}
               onClick={(e) => {
                 e.preventDefault();
                 handleChange(index);
