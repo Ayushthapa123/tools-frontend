@@ -9,7 +9,7 @@ import { MapProvider } from 'src/features/MapProvider';
 import SearchFilter, { FilterData } from './filter';
 import Button from 'src/components/Button';
 import { DetailViewModal } from 'src/app/hostel/room-details/RoomDetailView';
-
+import CustomSearchFormCard from './cards/CustomSearchFormCard';
 
 
 export function SearchPage() {
@@ -28,6 +28,9 @@ export function SearchPage() {
   const [ count, setCount ] = useState<number | undefined>(undefined);
   const [ showMobileFilter, setShowMobileFilter ] = useState(false);
   const [filteredHostels, setFilteredHostels] = useState<any>(null);
+  const [ radius, setRadius ] = useState(params.get('radius') ?? '');
+  const [ gender, setGender ] = useState(params.get('gender') ?? '');
+  const [ roomType, setRoomType ] = useState(params.get('roomType') ?? '');
   
  useEffect(() => {
   if(showMobileFilter) {
@@ -102,6 +105,9 @@ export function SearchPage() {
               lng={Number(lng)}
               filteredHostels={filteredHostels}
             />
+            <div className='mt-4 w-full'>
+              <CustomSearchFormCard />
+            </div>
           </div>
         </div>
       </div>

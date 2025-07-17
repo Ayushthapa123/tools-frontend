@@ -2,13 +2,15 @@
 
 import React, { useState } from 'react';
 // import { MapComponent } from './GoogleMap';
-import { ActiveBlogs } from './ActiveBlogs';
+import { CityBlogs } from './CityBlogs';
+import { PlaceBlogs } from './PlaceBlogs';
 import { MapProvider } from 'src/features/MapProvider';
 import Button from 'src/components/Button';
 import Link from 'next/link';
 import { useUserStore } from 'src/store/userStore';
 import { UserType } from 'src/gql/graphql';
 import { notFound } from 'next/navigation';
+import { Tabs } from 'src/components/Tabs';
 export default function Home() {
   const {user}=useUserStore()
   if(user.userType!==UserType.Superadmin && user.userType!==UserType.Writer){ 
@@ -32,7 +34,9 @@ export default function Home() {
 const BlogTabs = () => {
   const [ activeRoomCount, setActiveRoomCount ] = useState(0);
   const tabs = [
-    { title: 'Active Blogs', id: 1, comp: <ActiveBlogs setActiveRoomCount={setActiveRoomCount} /> },
+      { label: 'City Blogs', id: "1", content: <CityBlogs setActiveRoomCount={setActiveRoomCount} /> },
+    { label: 'Places Blogs', id: "2", content: <PlaceBlogs setActiveRoomCount={setActiveRoomCount} /> },
+
     // {
     //   title: 'Inactive Rooms',
     //   id: 2,
@@ -50,7 +54,7 @@ const BlogTabs = () => {
         <div className='text-gray-500 text-base'>
           <span className='text-lg font-medium text-gray-900'>{activeRoomCount} </span> Active Blogs
         </div>
-        {activeTab == 1 && (
+        
           <div>
             <div>
               <Link href="/app/blog/new">
@@ -58,12 +62,12 @@ const BlogTabs = () => {
               </Link>
             </div>
           </div>
-        )}
+      
       </div>
 
-      {tabs.map((tab, index) => (
-        <div key={index}>{tab.id == activeTab && <div>{tab.comp}</div>}</div>
-      ))}
+  <div>
+    <Tabs tabs={tabs} value={activeTab} onChange={setActiveTab} />
+  </div>
     </div>
   );
 };

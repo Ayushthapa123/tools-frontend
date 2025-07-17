@@ -12,12 +12,14 @@ import { GoPencil } from 'react-icons/go';
 
 export const CityCard = ({
   city,
+  subRoute
 }: {
   city: Partial<BlogPostData> | undefined | null;
+  subRoute?:string
 }) => {
   // Helper for slug link
-  const cityLink = city?.slug ? `/cities/${city.slug}` :"";
-  
+  const cityLink = city?.slug ? `/${subRoute??"cities"}/${city.slug}` : undefined;
+
   return (
     <>
        <Link href={`/cities/${city?.slug}`}>

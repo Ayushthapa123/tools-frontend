@@ -1,4 +1,3 @@
-
 import { CiLocationOn } from 'react-icons/ci';
 import { BreadCrumbs } from 'src/app/detail-page/BreadCrumbs';
 import Image from 'next/image';
@@ -15,9 +14,7 @@ export default function MainContent(props: Iprops) {
 
   if (!cityBlogData) {
     return (
-      <div className="container mx-auto py-10 text-center text-gray-500">
-        Blog post not found.
-      </div>
+      <div className="container mx-auto py-10 text-center text-gray-500">Blog post not found.</div>
     );
   }
 
@@ -37,26 +34,31 @@ export default function MainContent(props: Iprops) {
     tags,
     authorId,
     slug,
+    videoUrl,
   } = cityBlogData;
+
+  console.log("ccc",cityBlogData)
 
   // Format date
   const formattedDate = publishedAt ? new Date(publishedAt).toLocaleDateString() : '';
 
   return (
-    <div className="bg-gray-50 pb-4 min-h-screen">
+    <div className="min-h-screen bg-gray-50 pb-4">
       <div className="container mx-auto max-w-7xl px-2 md:px-0">
         {/* <BreadCrumbs name={title ?? ''} slug={slug ?? ''} /> */}
-        <div className="mt-6 bg-white rounded-xl shadow-sm p-4 md:p-8">
+        <div className="mt-6 rounded-xl bg-white p-4 shadow-sm md:p-8">
           {/* Blog Header */}
           <div className="mb-6">
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">{title}</h1>
-            <div className="flex flex-wrap items-center gap-4 text-gray-500 text-sm mb-2">
+            <h1 className="mb-2 text-4xl font-bold text-gray-900">{title}</h1>
+            <div className="mb-2 flex flex-wrap items-center gap-4 text-sm text-gray-500">
               {formattedDate && <span>Published: {formattedDate}</span>}
               {/* {views !== undefined && <span>• {views} views</span>} */}
               {tags && tags.length > 0 && (
                 <span className="flex flex-wrap gap-2">
-                  {tags.map((tag) => (
-                    <span key={tag} className="bg-gray-100 px-2 py-1 rounded text-xs text-gray-600">{tag}</span>
+                  {tags.map(tag => (
+                    <span key={tag} className="rounded bg-gray-100 px-2 py-1 text-xs text-gray-600">
+                      {tag}
+                    </span>
                   ))}
                 </span>
               )}
@@ -75,18 +77,36 @@ export default function MainContent(props: Iprops) {
               />
             </div>
           )}
+          {videoUrl && (
+            <div className="mb-6 flex justify-center w-full bg-gray-600 rounded-lg">
+              <iframe
+                width="360"
+                height="640"
+                src={videoUrl ?? ''}
+                title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              ></iframe>
+            </div>
+          )}
           {/* Excerpt */}
           {excerpt && (
-            <div className="mb-6 text-lg text-gray-700 italic border-l-4 border-blue-200 pl-4">{excerpt}</div>
+            <div className="border-blue-200 mb-6 border-l-4 pl-4 text-lg italic text-gray-700">
+              {excerpt}
+            </div>
           )}
           {/* Blog Content */}
           <div className="mb-6">
-            <div className="prose max-w-none text-gray-700" dangerouslySetInnerHTML={{ __html: content ?? '' }} />
+            <div
+              className="prose max-w-none text-gray-700"
+              dangerouslySetInnerHTML={{ __html: content ?? '' }}
+            />
           </div>
 
           <div className="mb-6">
             <div className="border-t pt-6">
-              <h2 className="text-xl font-semibold mb-4 text-gray-800">Comments</h2>
+              <h2 className="mb-4 text-xl font-semibold text-gray-800">Comments</h2>
               {/* 
                 TODO: 
                 - Display list of comments (if any)
@@ -108,26 +128,24 @@ export default function MainContent(props: Iprops) {
                 - Optionally, handle spam prevention (captcha, rate limit, etc.)
                 - Optionally, show placeholder if no comments yet
               */}
-              <div className="text-gray-500 italic">
+              <div className="italic text-gray-500">
                 {/* Placeholder for comment list */}
                 No comments yet. Be the first to comment!
               </div>
               <form className="mt-4 flex flex-col gap-2">
                 <TextArea
-                  className="w-full rounded  p-2 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                  className="focus:ring-blue-200 w-full  rounded p-2 focus:outline-none focus:ring-2"
                   rows={3}
                   placeholder="Write your comment here..."
                   disabled
                 />
                 <Button
                   type="button"
-                  className="self-end rounded bg-blue-500 px-4 py-2 text-white font-medium hover:bg-blue-600 transition"
-                  disabled 
+                  className="bg-blue-500 hover:bg-blue-600 self-end rounded px-4 py-2 font-medium text-white transition"
+                  disabled
                   label="Post Comment"
-                  /
-                >
-                  
-              
+                />
+
                 <div className="text-xs text-gray-400">
                   {/* 
                     NOTE: Commenting is disabled in this demo. 
@@ -138,7 +156,6 @@ export default function MainContent(props: Iprops) {
               </form>
             </div>
           </div>
-     
         </div>
       </div>
     </div>

@@ -27,7 +27,7 @@ import { countries } from '../data/countries';
 import { HostelAmenitiesPage } from 'src/features/amenity/HostelAmenityPage';
 import { useUserStore } from 'src/store/userStore';
 
-interface ReverseGeoDataType {
+export interface ReverseGeoDataType {
   geoCity: string | null;
   geoCounty: string | null;
   geoStreet: string | null;
@@ -221,7 +221,7 @@ export const CreateHostelModal = () => {
       setValue('address.country', reverseGeoData.geoCounty);
     }
     if (reverseGeoData?.geoStreet) {
-      setValue('address.street', reverseGeoData.geoStreet);
+      // setValue('address.street', reverseGeoData.geoStreet);
     }
   }, [reverseGeoData, setValue]);
 
