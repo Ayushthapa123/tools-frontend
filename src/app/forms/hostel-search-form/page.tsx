@@ -28,9 +28,7 @@ export default function Home() {
   return (
     <div>
       <CommonNav/>
-    
-        <GuestForm />
-      
+      <GuestForm />
     </div>
   );
 }

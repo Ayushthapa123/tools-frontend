@@ -75,7 +75,7 @@ const FormContent = ({ rulesData }: { rulesData: HostelRules | undefined }) => {
       queryFn: fetchData,
     });
 
-  const defaultHostelRules = hostelRules.filter((rules)=>rules.type == hostelData?.data?.hostelType.toLowerCase())
+  const defaultHostelRules = hostelRules.filter((rules)=>rules.type == hostelData?.data?.hostelType?.toLowerCase())
   const formatedDefaultHostelRules = () => {
     return (
       <ol>
