@@ -6,6 +6,7 @@ import {
   UpdateHostelSearchForm,
   UpdateHostelSearchFormMutation,
   UpdateHostelSearchFormMutationVariables,
+  UserType,
 
 } from 'src/gql/graphql';
 import { useToastStore } from 'src/store/toastStore';
@@ -22,6 +23,8 @@ interface Iprops {
 
 export const FormsCard = (props: Iprops) => {
   const { form } = props;
+
+  const {user} = useUserStore()
 
 
 
@@ -94,6 +97,7 @@ export const FormsCard = (props: Iprops) => {
                 onChange={e => handleVerification(e.target.checked)}
               />
             </label>
+            {user.userType ===UserType.Superadmin && (
             <div>
               <CustomEmailModal
                 name={form.fullName}
@@ -101,6 +105,7 @@ export const FormsCard = (props: Iprops) => {
                 hostelId={form.id}
               />
             </div>
+            )}
           </div>
         </div>
 
