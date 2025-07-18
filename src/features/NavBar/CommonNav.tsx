@@ -68,7 +68,7 @@ export const CommonNav = () => {
             {user.userType === UserType.HostelOwner && !user.hostelId && <CreateHostelModal />}
           </div>
           <div className=" flex gap-1 md:gap-2">
-            {domainConfig.appName === 'hostelpilot' && (
+            {domainConfig.appName === 'hostelpilot' && !user.userEmail && (
               <button className="flex flex-row items-center justify-center rounded-full border border-transparent bg-primary  font-medium tracking-wide transition duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 lg:min-w-fit">
                 <motion.div className="  font-semibold " transition={{ duration: 0.3 }}>
                   <Link href={'https://hosteladmin.com/signup'}>

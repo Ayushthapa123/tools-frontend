@@ -227,6 +227,13 @@ export const SearchForm = ({ guest, isEdit = false, withToken = false }: GuestFo
           >
             Back to Search Page
           </Link>
+          <br/>
+          <Link
+            href="/app/my-profile"
+            className="bg-green-500 hover:bg-green-600 mt-6  rounded px-6 py-2 font-semibold  shadow transition"
+          >
+            Back to My Profile
+          </Link>
         </div>
       ) : (
         <form onSubmit={handleSubmit(onSubmit)}>

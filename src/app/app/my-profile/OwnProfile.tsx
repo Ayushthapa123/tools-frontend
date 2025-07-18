@@ -241,9 +241,9 @@ export const OwnProfile = (props: { userType: string }) => {
       </div>
       <div>
         {props.userType === UserType.Student && (
-          <div className=" w-min cursor-pointer" onClick={handleLogout}>
-            <span className=" relative text-[25px] text-primary ">
-              <LogoutIcon />
+          <div className=" w-min cursor-pointer  md:fixed bottom-10 mt-10" onClick={handleLogout}>
+            <span className=" relative text-[25px] text-primary flex ">
+              <b className='text-red-500 text-xl'>Logout</b><LogoutIcon />
             </span>
           </div>
         )}
