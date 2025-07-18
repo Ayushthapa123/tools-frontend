@@ -5,6 +5,7 @@ query getHostelByToken {
       name
       description
       slug
+      hostelType
       verifiedBySuperAdmin
       verifiedByCommunityOwner
       hasOnboardingComplete
