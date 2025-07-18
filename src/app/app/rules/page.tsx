@@ -14,11 +14,17 @@ import {
   UpdateRulesMutation,
   UpdateRulesMutationVariables,
   HostelRules,
+  GetHostelByTokenQuery,
+  GetHostelByTokenQueryVariables,
+  GetHostelByToken,
 } from 'src/gql/graphql';
 import { useUserStore } from 'src/store/userStore';
 import Button from 'src/components/Button';
 import RichTextEditor from 'src/components/RichTextEditor';
 import { enqueueSnackbar } from 'notistack';
+import { hostelRules } from '../data/rules';
+import ReactDOMServer from 'react-dom/server';
+// it changes html component to string
 
 const Home: React.FC = () => {
   const queryGetRules = useGraphqlClientRequest<GetRulesQuery, GetRulesQueryVariables>(
@@ -50,10 +56,43 @@ export default Home;
 
 const FormContent = ({ rulesData }: { rulesData: HostelRules | undefined }) => {
   const { user } = useUserStore();
+
+  //get hostel data
+   //hostel id
+    const queryHostelData = useGraphqlClientRequest<
+      GetHostelByTokenQuery,
+      GetHostelByTokenQueryVariables
+    >(GetHostelByToken.loc?.source?.body!);
+  
+    //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
+    const fetchData = async () => {
+      const res = await queryHostelData();
+      return res.getHostelByToken;
+    };
+  
+    const { data: hostelData, isLoading } = useQuery({
+      queryKey: ['getHostelByToken'],
+      queryFn: fetchData,
+    });
+
+  const defaultHostelRules = hostelRules.filter((rules)=>rules.type == hostelData?.data?.hostelType?.toLowerCase())
+  const formatedDefaultHostelRules = () => {
+    return (
+      <ol>
+        {
+          defaultHostelRules.map((item, index) => (
+            <li key={index}>
+              {item.rule} 
+            </li>
+          ))
+        }
+      </ol>
+    )
+  }
   const editorRef = useRef<string>(rulesData?.data?.rules ?? '<p><br></p>');
   editorRef.current =
     rulesData?.data?.rules == '<p><br></p>' || rulesData?.data?.rules == null
-      ? '<ol><li> </li></ol>'
+      ? ReactDOMServer.renderToStaticMarkup(formatedDefaultHostelRules()) 
       : rulesData?.data?.rules;
   const [rules, setRules] = useState<string | null>(editorRef.current);
 
@@ -124,6 +163,14 @@ const FormContent = ({ rulesData }: { rulesData: HostelRules | undefined }) => {
             />
           </div>
         )}
+        {/* <div>
+          {hostelRules && hostelRules.map((rules:any, index:any) => (
+            <div key={index}>
+              <input type="checkbox" />
+              <label>{ rules.rule}</label>
+            </div>
+          ))}
+        </div> */}
       </div>
     </div>
   );
