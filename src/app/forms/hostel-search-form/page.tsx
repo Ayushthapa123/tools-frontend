@@ -17,9 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     images: [
       {
-        url: '/searching-for-hostel.png',
-        width: 512,
-        height: 512,
+        url: 'https://www.hostelpilot.com/searching-for-hostel.png',
       },
     ],
     title: "Hostel Search Form",
@@ -30,9 +28,7 @@ export default function Home() {
   return (
     <div>
       <CommonNav/>
-    
-        <GuestForm />
-      
+      <GuestForm />
     </div>
   );
 }

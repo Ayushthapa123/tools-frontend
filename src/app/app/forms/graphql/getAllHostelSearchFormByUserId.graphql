@@ -1,0 +1,34 @@
+query getAllHostelSearchFormsByUserId {
+  getHostelSearchFormsByUserId {
+    data {
+      id
+      fullName
+      email
+      phoneNumber
+      occupation
+      hostelType
+      hostelGenderType
+      roomCapacity
+      checkinDate
+      checkoutDate
+      notes
+      isActive
+      address {
+        id
+        country
+        city
+        subCity
+        street
+        latitude
+        longitude
+        hostelId
+        hostelSearchFormId
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+
+  }
+}

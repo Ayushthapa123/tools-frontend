@@ -3,6 +3,7 @@ query GetFeaturedHostels($pageSize: Int!) {
     data {
       id
       name
+      genderType
       description
       slug
       address {

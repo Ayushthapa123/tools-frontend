@@ -20,7 +20,7 @@ import {
   UserType,
 } from 'src/gql/graphql';
 import { RiToolsFill } from 'react-icons/ri';
-import { FaHotel, FaLightbulb, FaRegLightbulb, FaTools } from 'react-icons/fa';
+import { FaBloggerB, FaChair, FaHotel, FaLightbulb, FaRegLightbulb, FaTools } from 'react-icons/fa';
 import { useMutation } from '@tanstack/react-query';
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import { GrGallery, GrUserSettings } from 'react-icons/gr';
@@ -75,28 +75,28 @@ const Sidebar = () => {
       show: user.userType === UserType.Superadmin,
     },
     {
-      icon: <FaHotel />,
+      icon: <FaBloggerB />,
       text: 'Blogs',
       href: '/app/blog',
       children: false,
       show: user.userType === UserType.Superadmin || user.userType === UserType.CommunityOwner  || user.userType === UserType.Writer,
     },
     {
-      icon: <FaHotel />,
-      text: 'Amenitys',
+      icon: <FaLightbulb />,
+      text: 'Amenities',
       href: '/app/amenity-options',
       children: false,
       show: user.userType === UserType.Superadmin || user.userType === UserType.CommunityOwner,
     },
     {
-      icon: <FaHotel />,
-      text: 'Room Amenity ',
+      icon: <FaChair />,
+      text: 'Room Amenities ',
       href: '/app/room-amenity-option',
       children: false,
       show: user.userType === UserType.Superadmin || user.userType === UserType.CommunityOwner,
     },
     {
-      icon: <FaHotel />,
+      icon: <FaTools />,
       text: 'Services',
       href: '/app/service-options',
       children: false,
