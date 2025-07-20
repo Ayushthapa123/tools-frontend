@@ -1,0 +1,16 @@
+mutation DeleteHostelServicesById($id:Float!){
+	deleteHostelService(id:$id){
+    data {
+       id
+      title
+      description
+      hostelServiceType
+      priority
+      status
+      budget
+    }
+    error {
+      message
+    }
+  }
+}

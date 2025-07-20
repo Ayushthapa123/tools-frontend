@@ -36,7 +36,7 @@ export const Tabs: React.FC<TabsProps> = ({
 
   return (
     <div className={`inline-block w-full ${className}`}>
-      <div role="tablist" className="tabs w-fit bg-gray-2 00 rounded-xl">
+      <div role="tablist" className="tabs w-fit bg-gray-200 rounded-xl">
         {tabs.map((tab, index) => {
           const isActive = activeIndex === index;
           return (
@@ -46,7 +46,7 @@ export const Tabs: React.FC<TabsProps> = ({
               role="tab"
               aria-selected={isActive}
               aria-controls={`panel-${index}`}
-              className={`tab text-wrap h-auto p-3 px-8 text-lg  font-bold  w-fit ${isActive ? 'tab-active bg-primary text-white' : 'bg-gray-200 hover:bg-primary/20'} transition-colors ease-in-out duration-300 ${index===0 ? "rounded-l-xl" : index=== tabs.length - 1 ? "rounded-r-xl":""}  ${tabClassName}`}
+              className={`tab text-wrap h-full p-3 px-8 text-lg  font-bold  w-fit ${isActive ? 'tab-active bg-primary text-white' : 'bg-gray-200 hover:bg-primary/20'} transition-colors ease-in-out duration-300 ${index===0 ? "rounded-l-xl" : index=== tabs.length - 1 ? "rounded-r-xl":""}  ${tabClassName}`}
               onClick={(e) => {
                 e.preventDefault();
                 handleChange(index);

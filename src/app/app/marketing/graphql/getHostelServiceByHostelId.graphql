@@ -1,0 +1,19 @@
+query GetHostelServicesByHostelId($hostelId:Float!){
+  getHostelServicesByHostelId(hostelId:$hostelId){
+    data {
+      id
+      title
+      description
+      hostelServiceType
+      priority
+      status
+      budget
+      dueDate
+      completionDate
+      createdAt
+    }
+    error {
+      message
+    }
+  }
+}
