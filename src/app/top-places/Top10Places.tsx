@@ -22,7 +22,7 @@ export const Top10Places = async() => {
   return (
     <div className="w-full ">
      
-      <div className="grid  gap-[1rem] px-2 ">
+      <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-[1rem] px-2 ">
         {cities?.data?.map(city => (
           <div key={city.id} className="md:mb-4 lg:min-h-48">
             <CityCard

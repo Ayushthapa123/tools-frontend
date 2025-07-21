@@ -1,0 +1,12 @@
+mutation CreateHostelSellForm($createHostelSellFormInput: CreateHostelSellFormInput!) {
+  createHostelSellForm(data: $createHostelSellFormInput) {
+    data {
+      id
+      
+    }
+    error {
+      message
+      code
+    }
+  }
+}
