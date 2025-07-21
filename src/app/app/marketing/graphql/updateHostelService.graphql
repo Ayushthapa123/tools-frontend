@@ -1,0 +1,16 @@
+mutation UpdateHostelServicesById($input:UpdateHostelServiceDto!){
+	updateHostelService(input:$input){
+    data {
+       id
+      title
+      description
+      hostelServiceType
+      priority
+      status
+      budget
+    }
+    error {
+      message
+    }
+  }
+}

@@ -36,7 +36,7 @@ export const Tabs: React.FC<TabsProps> = ({
 
   return (
     <div className={`inline-block w-full ${className}`}>
-      <div role="tablist" className="tabs w-fit bg-gray-2 00 rounded-xl">
+      <div role="tablist" className="tabs w-fit bg-gray-200 rounded-xl">
         {tabs.map((tab, index) => {
           const isActive = activeIndex === index;
           return (

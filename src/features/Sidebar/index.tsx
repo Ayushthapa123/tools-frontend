@@ -104,6 +104,13 @@ const Sidebar = () => {
     },
     {
       icon: <FaHotel />,
+      text: 'Marketing',
+      href: '/app/marketing-details',
+      children: false,
+      show: user.userType === UserType.Superadmin,
+    },
+    {
+      icon: <FaHotel />,
       text: 'Hostel',
       href: '/app/hostel-info',
       children: false,
