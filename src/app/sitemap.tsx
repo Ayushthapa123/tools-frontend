@@ -18,7 +18,13 @@ export const SitemapPage = async () => {
     {
       url: 'https://hostelpilot.com/cities',
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: 'daily',
+      priority: 1,
+    },
+    {
+      url: 'https://hostelpilot.com/top-places',
+      lastModified: new Date(),
+      changeFrequency: 'daily',
       priority: 1,
     },
     {
@@ -30,7 +36,7 @@ export const SitemapPage = async () => {
     {
       url: 'https://hostelpilot.com/hostel',
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: 'daily',
       priority: 1,
     },
     // {
