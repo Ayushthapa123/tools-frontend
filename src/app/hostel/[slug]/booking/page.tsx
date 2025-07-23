@@ -21,11 +21,7 @@ import { useEffect } from 'react';
 
 export default function BookingPage({ params }: { params: { slug: string } }) {
   const router = useRouter();
-  const { roomIds, setRoomIds } = useRoomStore();
 
-  const handleRoomSelect = (roomId: string) => {
-    setRoomIds([...roomIds, roomId]);
-  };
 
   const searchHostels = useGraphqlClientRequest<
     GetHostelBySlugQuery,
@@ -48,15 +44,7 @@ export default function BookingPage({ params }: { params: { slug: string } }) {
     router.push('/my-bookings');
   };
 
-  // it should invoked only once
-  useEffect(() => {
-    // if selected rooms are not among the current room of that hostel remove them.
-    if (hostel?.data?.rooms) {
-      const currentRooms = hostel?.data?.rooms?.map(room => room.id) || [];
-      const selectedRooms = roomIds.filter(id => currentRooms.includes(id));
-      setRoomIds(selectedRooms);
-    }
-  }, [hostel?.data?.rooms]);
+
 
   if (isLoading) {
     return (
@@ -100,16 +88,16 @@ export default function BookingPage({ params }: { params: { slug: string } }) {
                 hostel.data?.rooms?.flatMap(room => room.image?.map(img => img.url) || []) || []
               }
               rooms={hostel.data?.rooms as RoomData[]}
-              selectedRoomId={roomIds[0]} // TODO: some change needed
+              selectedRoomId={""} // TODO: some change needed
               slug={params.slug}
-              onRoomSelect={handleRoomSelect}
+              onRoomSelect={() => {}}
             />
           </div>
 
           {/* Right Column - Booking Form */}
           <div className="rounded-lg bg-white p-6 shadow-md">
             <h2 className="mb-6 text-2xl font-bold">Book Your Stay</h2>
-            {roomIds.length > 0 ? (
+         
               <BookingForm
                 hostelId={String(hostel.data?.id)}
                 // roomIds={roomIds  }
@@ -117,14 +105,7 @@ export default function BookingPage({ params }: { params: { slug: string } }) {
                 rooms={hostel.data?.rooms || []}
                 hostelSlug={params.slug}
               />
-            ) : (
-              <div className="flex h-[50vh] w-full flex-col items-center justify-center gap-4 text-redHover">
-                <p>
-                  <RxCross2 className="text-4xl" />
-                </p>
-                <p>Please select a room to proceed with booking</p>
-              </div>
-            )}
+        
           </div>
         </div>
       </div>

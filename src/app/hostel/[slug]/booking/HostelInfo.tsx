@@ -83,6 +83,10 @@ export const HostelInfo = ({
           {/* Property Header */}
           <div className="">
             <h1 className="text-2xl font-bold text-primary">{name}</h1>
+            <p className="text-sm text-gray-500 flex">
+              <CiLocationOn className="mr-1 text-xl text-blue" />
+              {address.street}, {address.subCity}, {address.city}, {address.country}
+            </p>
           </div>
           {/* Tabs Navigation */}
           <div className="border-b border-gray-200">
@@ -117,7 +121,7 @@ export const HostelInfo = ({
               >
                 Contact Info
               </button>
-              <button
+              {/* <button
                 onClick={() => setActiveTab('amenity')}
                 className={`border-b-2 px-1 py-4 text-sm font-medium ${
                   activeTab === 'amenity'
@@ -136,7 +140,7 @@ export const HostelInfo = ({
                 }`}
               >
                 Services
-              </button>
+              </button> */}
             </nav>
           </div>
           {/* Tab Content */}
@@ -150,7 +154,7 @@ export const HostelInfo = ({
                   </h2>
                   <div className="rounded-full border border-blue p-2 px-4 text-xs font-extralight text-blue">
                     <FaInfoCircle className="mr-2 inline text-lg" />
-                    You can select multiple rooms
+                    You can book the available rooms
                   </div>
                 </div>
                 <div className="space-y-4">
