@@ -3,7 +3,7 @@ import { DeleteHostelServicesById } from "src/gql/graphql";
 import { DeleteHostelServicesByIdMutationVariables } from "src/gql/graphql";
 import { useGraphqlClientRequest } from "src/hooks/useGraphqlClientRequest";
 import { DeleteHostelServicesByIdMutation } from "src/gql/graphql";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { enqueueSnackbar } from "notistack";
 
 export default function DeleteServiceModal({serviceId,isOpen,onClose,serviceName}:{serviceId:number,isOpen:boolean,onClose:()=>void,serviceName:string}) {
@@ -13,11 +13,13 @@ export default function DeleteServiceModal({serviceId,isOpen,onClose,serviceName
   );
   const { mutateAsync: deleteHostelService, isPending: isDeleting } = useMutation({ mutationFn: mutateDeleteHostelService });
   
+  const queryClient = useQueryClient();
   const handleDeleteService = async () => {
     const res = await deleteHostelService({ id: Number(serviceId) });
     console.log("res", res);
     if (res?.deleteHostelService?.data?.id) {
       enqueueSnackbar('Service deleted successfully.', { variant: 'success' });
+      queryClient.invalidateQueries({ queryKey: ['getHostelServicesByHostelId'] });
       onClose();
     } else {
       enqueueSnackbar('Something went wrong.', { variant: 'error' });

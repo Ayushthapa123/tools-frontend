@@ -40,12 +40,12 @@ function PageContent() {
     if (!user?.hostelId) {
       throw new Error('Hostel ID not found');
     }
-    const res = await queryHostelServices({hostelId: Number(user?.hostelId)});
+    const res = await queryHostelServices({hostelId: Number(user?.hostelId)}); // it should have been taken from the token
     return res.getHostelServicesByHostelId;
   };
 
   const { data: hostelServices, isLoading, error } = useQuery({
-    queryKey: ['getHostelServicesByHostelId', user?.hostelId],
+    queryKey: ['getHostelServicesByHostelId'],
     queryFn: fetchHostelServices,
     enabled: !!user?.hostelId, // Only run query if hostelId exists
   });
@@ -68,16 +68,16 @@ function PageContent() {
   const mobileTabs = [
     { label: 'Facebook Marketing', id: ' 1', content: <ServiceTab tabName='Facebook Marketing' tabServices={facebookMarketingServices ?? []} hostelId={user?.hostelId} /> },
     // { name: 'Bookings', id: 2, visible: true },
-    { label: 'Google Marketing', id: '2', content:  <ServiceTab tabName='Google Marketing' tabServices={googleMarketingServices ?? []} hostelId={user?.hostelId} /> },
+    // { label: 'Google Marketing', id: '2', content:  <ServiceTab tabName='Google Marketing' tabServices={googleMarketingServices ?? []} hostelId={user?.hostelId} /> },
     { label: 'Employee', id: '3', content: <ServiceTab tabName='Employee' tabServices={employeeServices ?? []} hostelId={user?.hostelId} /> },
     {
       label: 'Furniture', id: '3', content: <ServiceTab tabName='Furniture' tabServices={furnitureServices ?? []} hostelId={user?.hostelId} />
     },
     {
-      label: 'Real Estate', id: '3', content: <ServiceTab tabName='Real Estate' tabServices={realEstateServices ?? []} hostelId={user?.hostelId} />
+      label: 'RealEstate', id: '3', content: <ServiceTab tabName='Real Estate' tabServices={realEstateServices ?? []} hostelId={user?.hostelId} />
     },
     {
-      label: 'Other Services', id: '3', content: <ServiceTab tabName='Other' tabServices={otherServices ?? []} hostelId={user?.hostelId} />
+      label: 'Others', id: '3', content: <ServiceTab tabName='Other' tabServices={otherServices ?? []} hostelId={user?.hostelId} />
     },
   ];
   const tabs = [...mobileTabs];
@@ -85,7 +85,7 @@ function PageContent() {
   return (
     <div className=" min-h-[90vh] w-full bg-white p-3 md:p-10">
       <div className=" mb-5">
-        <h2 className=" text-xl font-semibold text-primary">Marketing Options</h2>
+        <h2 className=" text-xl font-semibold text-primary">Hosteladmin Services</h2>
         {/* <p className=' text-gray-500 '>View your profile details</p> */}
       </div>
 

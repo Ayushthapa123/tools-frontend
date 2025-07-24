@@ -7,7 +7,7 @@ export const SitemapPage = async () => {
 
   const hostelQuery = gql`
   query getAllOriginalHostelsSlug {
-      getAllHostels(pageSize: 100, pageNumber: 1, isSuperAdmin: true) {
+      getAllHostels(pageSize: 200, pageNumber: 1, isSuperAdmin: true) {
         data {
           slug
         }

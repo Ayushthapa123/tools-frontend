@@ -158,8 +158,8 @@ const Sidebar = () => {
     },
     {
       icon: <MarketingIcon />,
-      text: 'Marketing',
-      href: '/app/marketing',
+      text: 'Offerings',
+      href: '/app/offerings',
       show: user.userType === UserType.HostelOwner,
     },
    

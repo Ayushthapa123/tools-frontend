@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { Input } from "src/components/Input";
 import TextInput from "src/features/react-hook-form/TextField";
 import TextArea from "src/features/react-hook-form/TextArea";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CreateHostelServiceMutation, CreateHostelServiceMutationVariables, GetHostelServicesById, GetHostelServicesByIdQuery, GetHostelServicesByIdQueryVariables, UpdateHostelServicesById, UpdateHostelServicesByIdMutation, UpdateHostelServicesByIdMutationVariables } from "src/gql/graphql";
 import { CreateHostelService } from "src/gql/graphql";
 import { useGraphqlClientRequest } from "src/hooks/useGraphqlClientRequest";
@@ -52,6 +52,8 @@ export default function RequestServiceModal({ hostelId, isOpen, onClose, service
       value: 'LOW'
     }
   ]
+
+  const queryClient = useQueryClient();
 
   const mutateCreateHostelService = useGraphqlClientRequest<
     CreateHostelServiceMutation,
@@ -125,6 +127,7 @@ export default function RequestServiceModal({ hostelId, isOpen, onClose, service
         if (res?.createHostelService?.data?.id) {
           console.log(res);
           enqueueSnackbar('Service requested successfully.', { variant: 'success' });
+          queryClient.invalidateQueries({ queryKey: ['getHostelServicesByHostelId'] });
           onClose();
         } else {
           enqueueSnackbar('Something went wrong.', { variant: 'error' });

@@ -10,6 +10,7 @@ import LandingPageOffers from '../offers';
 export const Header = () => {
   return (
     <div className="dark:bg-white rounded-2xl bg-white flex min-h-screen xl:min-h-[calc(100vh-80px)] w-full flex-col items-center p-2 pb-0">
+      
       <div className=" hero relative h-fit w-[100vw] bg-cover bg-center xl:min-h-[calc(100vh-80px)] xl:w-full rounded-2xl">
         <Image src={'/images/hostel_bg.jpg'} fill alt="" className="object-cover rounded-2xl" />
         <div className="hero-overlay z-10 min-h-[50vh] bg-opacity-50 pb-28 lg:pb-0 rounded-2xl">
@@ -47,12 +48,13 @@ export const Header = () => {
           </div>
         </div>
       </div>
+      <div className="mx-4 w-full bg-slate-50 p-4 my-10 mt-16">
+        <LandingPageOffers />
+      </div>
       <div className="mx-4 w-full bg-slate-50 p-4">
         <FeaturedHostel />
       </div>
-      <div className="mx-4 w-full bg-slate-50 p-4">
-        <LandingPageOffers />
-      </div>
+    
       <div />
     </div>
   );
