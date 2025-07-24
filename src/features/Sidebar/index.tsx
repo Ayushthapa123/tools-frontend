@@ -26,9 +26,10 @@ import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import { GrGallery, GrUserSettings } from 'react-icons/gr';
 import SettingsIcon from 'src/components/icons/Settings';
 import MenuItem from './MenuItem';
-import { BsPeople } from 'react-icons/bs';
+import { BsFileSlidesFill, BsPeople } from 'react-icons/bs';
 import { IoPeopleSharp } from 'react-icons/io5';
 import MarketingIcon from 'src/components/icons/Marketing';
+import { MdSettingsApplications } from 'react-icons/md';
 interface MenuItemType {
   icon: JSX.Element;
   text: string;
@@ -135,6 +136,13 @@ const Sidebar = () => {
       icon: <IoPeopleSharp />,
       text: ' Students',
       href: '/app/hostel-guests',
+      children: false,
+      show: user.userType === UserType.HostelOwner,
+    },
+    {
+      icon: <BsFileSlidesFill />,
+      text: ' Applications',
+      href: '/app/applications',
       children: false,
       show: user.userType === UserType.HostelOwner,
     },

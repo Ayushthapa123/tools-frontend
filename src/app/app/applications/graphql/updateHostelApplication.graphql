@@ -1,0 +1,13 @@
+mutation UpdateHostelApplicationForm($data: UpdateHostelApplicationFormInput!) {
+  updateHostelApplicationForm(data: $data) {
+    data {
+      id
+      fullName
+      email
+  
+    }
+    error {
+      message
+    }
+  }
+}

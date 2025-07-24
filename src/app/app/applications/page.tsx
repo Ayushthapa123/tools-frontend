@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 // import { MapComponent } from './GoogleMap';
-import { AllForms } from './AllForms';
+import { AllForms } from './AllApplications';
 import { MapProvider } from 'src/features/MapProvider';
 import { useUserStore } from 'src/store/userStore';
 import { UserType } from 'src/gql/graphql';
@@ -10,9 +10,7 @@ import { notFound } from 'next/navigation';
 import { Tabs } from 'src/components/Tabs';
 export default function Home() {
   const {user}=useUserStore()
-  if(user.userType!==UserType.Superadmin){ 
-    return notFound()
-  }
+
   return (
     <div className="w-full ">
       <div className="flex w-full items-center justify-center ">
@@ -30,12 +28,12 @@ export default function Home() {
 
 const LocationTabs = () => {
   const tabs = [
-    { label: 'All Forms', id: '1', content: <AllForms /> },
-    {
-      label: 'Inactive Forms',
-      id: '2',
-      content: <div>Inactive Forms</div>,
-    },
+    { label: 'All Applications', id: '1', content: <AllForms /> },
+    // {
+    //   label: 'Pending Applications',
+    //   id: '2',
+    //   content: <div>Pending Applications</div>,
+    // },
   ];
    
   return (

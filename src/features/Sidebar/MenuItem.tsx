@@ -29,7 +29,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({ icon, text, href, isActive, 
             onClick={() => {
               handleRedirect();
             }}
-            className={`flex w-full gap-[1rem] rounded-lg py-[0.5rem] pl-3 ${
+            className={`flex w-full gap-[1rem] rounded-lg py-[0.3rem] pl-3 ${
               isActive
                 ? 'bg-base-200 font-semibold text-primary'
                 : 'text-dark font-medium hover:bg-base-200'
