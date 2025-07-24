@@ -16,6 +16,8 @@ import AmenitiesProvided from './AmenitiesProvided';
 import HostelGallery from './HostelGallery';
 import HostelRooms from './HostelRooms';
 import HostelServices from './HostelServices';
+import Button from 'src/components/Button';
+import ApplyNow from './ApplyNow';
 interface Iprops {
   hostel: Hostel | undefined | null;
   checkInDate: string;
@@ -76,7 +78,9 @@ export default function MainContent(props: Iprops) {
 
             <div className="sticky top-[100px] m-3 lg:m-0 lg:min-w-[380px] lg:max-w-[380px]">
               <div className="space-y-6">
+                <ApplyNow slug={hostel?.data?.slug ?? ''} />
                <AmenitiesProvided hostelId={Number(hostel?.data?.id)} />
+
 
 
                 <div className="rounded-xl bg-white p-6 shadow-sm">

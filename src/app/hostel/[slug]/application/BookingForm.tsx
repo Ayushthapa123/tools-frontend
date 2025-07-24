@@ -199,15 +199,7 @@ export const BookingForm = ({ hostelId, hostelSlug, onSuccess, rooms }: BookingF
 
   return (
     <div>
-      <div className="mb-6">
-        <h2 className="mb-2 text-2xl font-bold">Step {currentStep} of 2</h2>
-        <div className="h-2.5 w-full rounded-full bg-gray-200">
-          <div
-            className="h-2.5 rounded-full bg-primary"
-            style={{ width: `${(currentStep / 2) * 100}%` }}
-          />
-        </div>
-      </div>
+   
 
       {currentStep === 1 ? (
         <StepOne

@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { Hostel, RoomData } from 'src/gql/graphql';
-import { RoomCardFull } from '../booking/RoomCardFull';
+import { RoomCardFull } from '../application/RoomCardFull';
 import ShowDetails from '../../room-details/ShowDetails';
 
 // TODO: PLEASE SOLVE THE HYDRATION ERROR

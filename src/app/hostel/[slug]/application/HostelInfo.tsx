@@ -165,7 +165,7 @@ export const HostelInfo = ({
                       transition={{ duration: 0.3 }}
                       className="space-y-4 border-l-4 border-blue pl-2"
                     >
-                      <h3 className="mb-2 text-lg font-medium text-gray-600">Selected Room(s)</h3>
+                      {/* <h3 className="mb-2 text-lg font-medium text-gray-600">Selected Room(s)</h3> */}
                       {selectedRooms.map(selectedRoom => (
                         <RoomCardFull
                           key={selectedRoom.id}

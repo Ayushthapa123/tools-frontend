@@ -1,5 +1,4 @@
 'use client';
-
 import { useQuery } from '@tanstack/react-query';
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import {
@@ -18,9 +17,22 @@ import { useRoomStore } from 'src/store/roomStore';
 import Footer from 'src/features/Footer';
 import { RxCross2 } from 'react-icons/rx';
 import { useEffect } from 'react';
+import { graphqlClient } from 'src/client/graphqlClient';
 
-export default function BookingPage({ params }: { params: { slug: string } }) {
-  const router = useRouter();
+import { Metadata } from 'next';
+import { ResolvingMetadata } from 'next';
+import { gql } from 'graphql-request';
+import { ApplicationForm } from './ApplicationForm';
+type Props = {
+  params: { id: string; slug: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+
+
+
+
+export default function BookingPage({slug}:{slug:string}) {
 
 
   const searchHostels = useGraphqlClientRequest<
@@ -30,19 +42,17 @@ export default function BookingPage({ params }: { params: { slug: string } }) {
 
   const fetchData = async () => {
     const res = await searchHostels({
-      slug: params.slug,
+      slug: slug,
     });
     return res.getHostelBySlug;
   };
 
   const { data: hostel, isLoading } = useQuery({
-    queryKey: ['getHostelBySlug', params.slug],
+    queryKey: ['getHostelBySlug', slug],
     queryFn: fetchData,
   });
 
-  const handleBookingSuccess = () => {
-    router.push('/my-bookings');
-  };
+
 
 
 
@@ -89,22 +99,16 @@ export default function BookingPage({ params }: { params: { slug: string } }) {
               }
               rooms={hostel.data?.rooms as RoomData[]}
               selectedRoomId={""} // TODO: some change needed
-              slug={params.slug}
+              slug={slug}
               onRoomSelect={() => {}}
             />
           </div>
 
           {/* Right Column - Booking Form */}
           <div className="rounded-lg bg-white p-6 shadow-md">
-            <h2 className="mb-6 text-2xl font-bold">Book Your Stay</h2>
+            <h2 className="mb-6 text-2xl font-bold">Hostel Application Form</h2>
          
-              <BookingForm
-                hostelId={String(hostel.data?.id)}
-                // roomIds={roomIds  }
-                onSuccess={handleBookingSuccess}
-                rooms={hostel.data?.rooms || []}
-                hostelSlug={params.slug}
-              />
+          <ApplicationForm slug={slug} hostelId={Number(hostel.data?.id)} />
         
           </div>
         </div>

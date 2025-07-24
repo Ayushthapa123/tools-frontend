@@ -304,6 +304,25 @@ export type CreateGenericAddressInput = {
   subCity?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type CreateHostelApplicationFormInput = {
+  askForDiscount?: Scalars['Boolean']['input'];
+  checkinDate?: InputMaybe<Scalars['String']['input']>;
+  checkoutDate?: InputMaybe<Scalars['String']['input']>;
+  discountPercentage?: InputMaybe<Scalars['Int']['input']>;
+  email: Scalars['String']['input'];
+  fullName: Scalars['String']['input'];
+  hostelId: Scalars['Int']['input'];
+  institutionName: Scalars['String']['input'];
+  notes?: InputMaybe<Scalars['String']['input']>;
+  occupation: Scalars['String']['input'];
+  password?: InputMaybe<Scalars['String']['input']>;
+  permanentAddress: Scalars['String']['input'];
+  phoneNumber?: InputMaybe<Scalars['String']['input']>;
+  roomCapacity?: InputMaybe<RoomCapacity>;
+  status?: InputMaybe<Scalars['String']['input']>;
+  userId: Scalars['Int']['input'];
+};
+
 export type CreateHostelGuestInput = {
   checkinDate?: InputMaybe<Scalars['String']['input']>;
   checkoutDate?: InputMaybe<Scalars['String']['input']>;
@@ -616,6 +635,41 @@ export enum HostelAmenityType {
   SafetyAndHygeneEssentials = 'SAFETY_AND_HYGENE_ESSENTIALS'
 }
 
+export type HostelApplicationForm = {
+  __typename?: 'HostelApplicationForm';
+  data?: Maybe<HostelApplicationFormData>;
+  error?: Maybe<GraphQlError>;
+};
+
+export type HostelApplicationFormData = {
+  __typename?: 'HostelApplicationFormData';
+  askForDiscount: Scalars['Boolean']['output'];
+  checkinDate: Scalars['String']['output'];
+  checkoutDate: Scalars['String']['output'];
+  createdAt: Scalars['DateTime']['output'];
+  discountPercentage: Scalars['Float']['output'];
+  email: Scalars['String']['output'];
+  fullName: Scalars['String']['output'];
+  hostel?: Maybe<HostelData>;
+  hostelId: Scalars['Float']['output'];
+  id: Scalars['ID']['output'];
+  institutionName: Scalars['String']['output'];
+  notes: Scalars['String']['output'];
+  permanentAddress: Scalars['String']['output'];
+  phoneNumber: Scalars['String']['output'];
+  roomCapacity: Scalars['String']['output'];
+  status: Scalars['String']['output'];
+  updatedAt: Scalars['DateTime']['output'];
+  user?: Maybe<UserData>;
+  userId: Scalars['Float']['output'];
+};
+
+export type HostelApplicationFormList = {
+  __typename?: 'HostelApplicationFormList';
+  data?: Maybe<Array<HostelApplicationFormData>>;
+  error?: Maybe<GraphQlError>;
+};
+
 export type HostelArrayResponse = {
   __typename?: 'HostelArrayResponse';
   data: Array<HostelData>;
@@ -875,6 +929,7 @@ export type Mutation = {
   createContact: ContactDetail;
   createGallery: Gallery;
   createHostel: Hostel;
+  createHostelApplicationForm: HostelApplicationForm;
   createHostelGuest: HostelGuest;
   createHostelSearchForm: HostelSearchForm;
   createHostelSellForm: HostelSellForm;
@@ -896,6 +951,7 @@ export type Mutation = {
   deleteBlogPost: BlogPost;
   deleteGallery: Gallery;
   deleteHostel: Hostel;
+  deleteHostelApplicationForm: HostelApplicationForm;
   deleteHostelSearchForm: HostelSearchForm;
   deleteHostelSellForm: HostelSellForm;
   deleteHostelService: HostelService;
@@ -932,6 +988,7 @@ export type Mutation = {
   updateContact: ContactDetail;
   updateGallery: Gallery;
   updateHostel: Hostel;
+  updateHostelApplicationForm: HostelApplicationForm;
   updateHostelGuest: HostelGuest;
   updateHostelSearchForm: HostelSearchForm;
   updateHostelSellForm: HostelSellForm;
@@ -1011,6 +1068,11 @@ export type MutationCreateGalleryArgs = {
 
 export type MutationCreateHostelArgs = {
   data: CreateHostelInput;
+};
+
+
+export type MutationCreateHostelApplicationFormArgs = {
+  data: CreateHostelApplicationFormInput;
 };
 
 
@@ -1119,6 +1181,11 @@ export type MutationDeleteGalleryArgs = {
 
 export type MutationDeleteHostelArgs = {
   hostelId: Scalars['Float']['input'];
+};
+
+
+export type MutationDeleteHostelApplicationFormArgs = {
+  id: Scalars['Float']['input'];
 };
 
 
@@ -1303,6 +1370,11 @@ export type MutationUpdateHostelArgs = {
 };
 
 
+export type MutationUpdateHostelApplicationFormArgs = {
+  data: UpdateHostelApplicationFormInput;
+};
+
+
 export type MutationUpdateHostelGuestArgs = {
   allowEdit: Scalars['Boolean']['input'];
   updateHostelGuestInput: UpdateHostelGuestInput;
@@ -1460,6 +1532,7 @@ export type Query = {
   findServiceByHostelId: Service;
   getAddressByHostelId?: Maybe<Address>;
   getAllBlogPosts: BlogPostList;
+  getAllHostelApplicationForms: HostelApplicationFormList;
   getAllHostelSearchForms: HostelSearchFormList;
   getAllHostelSellForms: HostelSellFormList;
   getAllHostelServices: HostelServiceList;
@@ -1471,6 +1544,8 @@ export type Query = {
   getContactByHostelId?: Maybe<ContactDetail>;
   getGalleryByHostelId?: Maybe<GalleryList>;
   getGoogleAuthUrl: GoogleOauthUrl;
+  getHostelApplicationFormById?: Maybe<HostelApplicationForm>;
+  getHostelApplicationFormsByUserId: HostelApplicationFormList;
   getHostelById?: Maybe<Hostel>;
   getHostelBySlug?: Maybe<Hostel>;
   getHostelByToken?: Maybe<Hostel>;
@@ -1579,6 +1654,12 @@ export type QueryGetAllBlogPostsArgs = {
 };
 
 
+export type QueryGetAllHostelApplicationFormsArgs = {
+  pageNumber?: Scalars['Int']['input'];
+  pageSize?: Scalars['Int']['input'];
+};
+
+
 export type QueryGetAllHostelSearchFormsArgs = {
   pageNumber?: Scalars['Int']['input'];
   pageSize?: Scalars['Int']['input'];
@@ -1620,6 +1701,17 @@ export type QueryGetContactByHostelIdArgs = {
 
 export type QueryGetGalleryByHostelIdArgs = {
   hostelId: Scalars['Int']['input'];
+};
+
+
+export type QueryGetHostelApplicationFormByIdArgs = {
+  id: Scalars['Float']['input'];
+};
+
+
+export type QueryGetHostelApplicationFormsByUserIdArgs = {
+  pageNumber?: Scalars['Int']['input'];
+  pageSize?: Scalars['Int']['input'];
 };
 
 
@@ -2066,6 +2158,26 @@ export type UpdateGalleryInput = {
   hostelId?: InputMaybe<Scalars['Float']['input']>;
   id: Scalars['Float']['input'];
   url?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpdateHostelApplicationFormInput = {
+  askForDiscount?: InputMaybe<Scalars['Boolean']['input']>;
+  checkinDate?: InputMaybe<Scalars['String']['input']>;
+  checkoutDate?: InputMaybe<Scalars['String']['input']>;
+  discountPercentage?: InputMaybe<Scalars['Int']['input']>;
+  email?: InputMaybe<Scalars['String']['input']>;
+  fullName?: InputMaybe<Scalars['String']['input']>;
+  hostelId?: InputMaybe<Scalars['Int']['input']>;
+  id: Scalars['Int']['input'];
+  institutionName?: InputMaybe<Scalars['String']['input']>;
+  notes?: InputMaybe<Scalars['String']['input']>;
+  occupation?: InputMaybe<Scalars['String']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
+  permanentAddress?: InputMaybe<Scalars['String']['input']>;
+  phoneNumber?: InputMaybe<Scalars['String']['input']>;
+  roomCapacity?: InputMaybe<RoomCapacity>;
+  status?: InputMaybe<Scalars['String']['input']>;
+  userId?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type UpdateHostelGuestInput = {
@@ -2970,6 +3082,13 @@ export type CreateHostelSellFormMutationVariables = Exact<{
 
 export type CreateHostelSellFormMutation = { __typename?: 'Mutation', createHostelSellForm: { __typename?: 'HostelSellForm', data?: { __typename?: 'HostelSellFormData', id: string } | null, error?: { __typename?: 'GraphQLError', message: string, code?: string | null } | null } };
 
+export type CreateHostelApplicationFormMutationVariables = Exact<{
+  createHostelApplicationFormInput: CreateHostelApplicationFormInput;
+}>;
+
+
+export type CreateHostelApplicationFormMutation = { __typename?: 'Mutation', createHostelApplicationForm: { __typename?: 'HostelApplicationForm', data?: { __typename?: 'HostelApplicationFormData', id: string } | null, error?: { __typename?: 'GraphQLError', message: string, code?: string | null } | null } };
+
 export type CheckValidBookingQueryVariables = Exact<{
   roomIds: Array<Scalars['Int']['input']> | Scalars['Int']['input'];
   startDate: Scalars['DateTime']['input'];
@@ -3200,6 +3319,7 @@ export const ConfirmBookingDocument = {"kind":"Document","definitions":[{"kind":
 export const GetBookingByKeyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetBookingByKey"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"bookingKey"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bookingsWithKey"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"bookingKey"},"value":{"kind":"Variable","name":{"kind":"Name","value":"bookingKey"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"roomId"}},{"kind":"Field","name":{"kind":"Name","value":"bookingKey"}},{"kind":"Field","name":{"kind":"Name","value":"guestId"}},{"kind":"Field","name":{"kind":"Name","value":"startDate"}},{"kind":"Field","name":{"kind":"Name","value":"endDate"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"room"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"capacity"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"roomNumber"}},{"kind":"Field","name":{"kind":"Name","value":"attachBathroom"}},{"kind":"Field","name":{"kind":"Name","value":"hostelId"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}}]}},{"kind":"Field","name":{"kind":"Name","value":"price"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"baseAmountPerDay"}},{"kind":"Field","name":{"kind":"Name","value":"baseAmountPerMonth"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"guest"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"fullName"}},{"kind":"Field","name":{"kind":"Name","value":"phoneNumber"}},{"kind":"Field","name":{"kind":"Name","value":"isVerified"}},{"kind":"Field","name":{"kind":"Name","value":"userType"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<GetBookingByKeyQuery, GetBookingByKeyQueryVariables>;
 export const CreateHostelSearchFormDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateHostelSearchForm"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createHostelSearchFormInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateHostelSearchFormInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createHostelSearchForm"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createHostelSearchFormInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<CreateHostelSearchFormMutation, CreateHostelSearchFormMutationVariables>;
 export const CreateHostelSellFormDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateHostelSellForm"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createHostelSellFormInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateHostelSellFormInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createHostelSellForm"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createHostelSellFormInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<CreateHostelSellFormMutation, CreateHostelSellFormMutationVariables>;
+export const CreateHostelApplicationFormDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateHostelApplicationForm"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createHostelApplicationFormInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateHostelApplicationFormInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createHostelApplicationForm"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createHostelApplicationFormInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<CreateHostelApplicationFormMutation, CreateHostelApplicationFormMutationVariables>;
 export const CheckValidBookingDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"CheckValidBooking"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"roomIds"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"startDate"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DateTime"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"endDate"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DateTime"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"checkValidBooking"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"roomIds"},"value":{"kind":"Variable","name":{"kind":"Name","value":"roomIds"}}},{"kind":"Argument","name":{"kind":"Name","value":"startDate"},"value":{"kind":"Variable","name":{"kind":"Name","value":"startDate"}}},{"kind":"Argument","name":{"kind":"Name","value":"endDate"},"value":{"kind":"Variable","name":{"kind":"Name","value":"endDate"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"isValid"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"totalPrice"}},{"kind":"Field","name":{"kind":"Name","value":"totalDays"}},{"kind":"Field","name":{"kind":"Name","value":"bookingSummary"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"roomId"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"totalPriceOfRoom"}},{"kind":"Field","name":{"kind":"Name","value":"priceType"}}]}}]}}]}}]} as unknown as DocumentNode<CheckValidBookingQuery, CheckValidBookingQueryVariables>;
 export const FindRoomsByRoomIdsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindRoomsByRoomIds"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"roomIds"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findRoomsByRoomIds"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"roomIds"},"value":{"kind":"Variable","name":{"kind":"Name","value":"roomIds"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"roomNumbers"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<FindRoomsByRoomIdsQuery, FindRoomsByRoomIdsQueryVariables>;
 export const SendMmailAfterBookingDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SendMmailAfterBooking"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"BookingConfirmationEmailDto"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sendMailAfterBooking"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}]}]}}]} as unknown as DocumentNode<SendMmailAfterBookingMutation, SendMmailAfterBookingMutationVariables>;
@@ -4924,6 +5044,19 @@ export const CreateHostelSearchForm = gql`
 export const CreateHostelSellForm = gql`
     mutation CreateHostelSellForm($createHostelSellFormInput: CreateHostelSellFormInput!) {
   createHostelSellForm(data: $createHostelSellFormInput) {
+    data {
+      id
+    }
+    error {
+      message
+      code
+    }
+  }
+}
+    `;
+export const CreateHostelApplicationForm = gql`
+    mutation CreateHostelApplicationForm($createHostelApplicationFormInput: CreateHostelApplicationFormInput!) {
+  createHostelApplicationForm(data: $createHostelApplicationFormInput) {
     data {
       id
     }

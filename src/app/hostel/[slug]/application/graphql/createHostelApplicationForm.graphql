@@ -1,0 +1,12 @@
+mutation CreateHostelApplicationForm($createHostelApplicationFormInput: CreateHostelApplicationFormInput!) {
+  createHostelApplicationForm(data: $createHostelApplicationFormInput) {
+    data {
+      id
+      
+    }
+    error {
+      message
+      code
+    }
+  }
+}

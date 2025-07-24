@@ -35,9 +35,19 @@ export const SitemapPage = async () => {
   })??[];
   //Shostels
 
+  const originalHostelApplicationSitemaps =
+  res?.data?.map((item: any) => {
+   return {
+     url: `https://hostelpilot.com/hostel/${item.slug}/application`,
+     lastModified: new Date(),
+     changeFrequency: 'weekly',
+     priority: 1,
+   };
+ })??[];
 
 
-  return [...originalHostelSitemaps];
+
+  return [...originalHostelSitemaps, ...originalHostelApplicationSitemaps];
 };
 
 export default SitemapPage;
