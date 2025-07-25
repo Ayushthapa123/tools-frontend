@@ -1,5 +1,5 @@
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
-import { FormsCard } from './ApplicationCard';
+import { ApplicationCard } from './ApplicationCard';
 import {
 
   GetAllHostelApplicationFormsByHostelIdQuery,
@@ -31,7 +31,7 @@ export const AllForms = () => {
       <div className="grid gap-[1rem]  bg-slate-100">
         {forms?.data?.map(form => (
           <div key={form.id}>
-            <FormsCard form={form as HostelApplicationFormData} />
+            <ApplicationCard form={form as HostelApplicationFormData} />
           </div>
         ))}
       </div>

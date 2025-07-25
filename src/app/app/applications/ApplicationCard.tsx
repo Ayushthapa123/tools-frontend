@@ -18,10 +18,11 @@ import { Select } from 'src/components/Select';
 
 interface Iprops {
   form: HostelApplicationFormData;
+  hostelOwnerAccess?: boolean;
 }
 
-export const FormsCard = (props: Iprops) => {
-  const { form } = props;
+export const ApplicationCard = (props: Iprops) => {
+  const { form, hostelOwnerAccess =true} = props;
 
   const {user} = useUserStore()
 
@@ -132,7 +133,7 @@ export const FormsCard = (props: Iprops) => {
 
         <div className="space-y-2">
           {/* Personal Info */}
-          <div>
+          { hostelOwnerAccess && <div>
             <h3 className="font-semibold text-gray-700 text-sm mb-1">Personal Information</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-x-4 gap-y-1 text-xs text-gray-600">
               {form.fullName && (
@@ -151,7 +152,26 @@ export const FormsCard = (props: Iprops) => {
                 <div><span className="font-medium">Permanent Address:</span> {form.permanentAddress}</div>
               )}
             </div>
-          </div>
+          </div>}
+          { !hostelOwnerAccess && <div>
+            <h3 className="font-semibold text-gray-700 text-sm mb-1">Hostel Information</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-4 gap-y-1 text-xs text-gray-600">
+              {form.fullName && (
+                <div><span className="font-medium">Hostel Name:</span> {form.hostel?.name}</div>
+              )}
+              {form.email && (
+                <div><span className="font-medium">Email:</span> {form.hostel?.contact?.email}</div>
+              )}
+              {form.phoneNumber && (
+                <div><span className="font-medium">Phone Number:</span> {form.hostel?.contact?.phone}</div>
+              )}
+           
+            </div>
+            <div>
+              <h3 className="font-semibold text-gray-700 text-sm mb-1">Hostel Address</h3>
+              <div><span className="font-medium">Address:</span>{form.hostel?.address?.street}, {form.hostel?.address?.subCity}, {form.hostel?.address?.city}, {form.hostel?.address?.country}</div>
+            </div>
+          </div>}
 
           {/* Room Capacity */}
           {form.roomCapacity && (
@@ -184,7 +204,7 @@ export const FormsCard = (props: Iprops) => {
           <div>
             <h3 className="font-semibold text-gray-700 text-sm mt-2 mb-1">Discount Information</h3>
             <div className="text-xs text-gray-600 flex flex-wrap gap-x-4 gap-y-1">
-              <div><span className="font-medium text-red-500">Asked For Discount:</span> {form.askForDiscount ? 'Yes' : 'No'}</div>
+              <div><span className="font-medium text-red-500">Asked For Discount In admission fee:</span> {form.askForDiscount ? 'Yes' : 'No'}</div>
               <div><span className="font-medium">Discount Percentage:</span> {form.discountPercentage}%</div>
             </div>
           </div>
@@ -198,11 +218,12 @@ export const FormsCard = (props: Iprops) => {
           )}
 
           <div className="flex flex-col md:flex-row gap-2 mt-1">
-            <div className="w-full md:w-1/2">
-              <Select
-                options={discountPrecentage}
+            {hostelOwnerAccess && (
+              <div className="w-full md:w-1/2">
+                <Select
+                  options={discountPrecentage}
                 value={form.discountPercentage !== undefined && form.discountPercentage !== null ? String(form.discountPercentage) : '0'}
-                label="Discount %"
+                label="Discount In Admission Fee %"
                 // size="sm"
                 className="min-h-0 h-8 text-xs"
                 onChange={e => {
@@ -211,16 +232,19 @@ export const FormsCard = (props: Iprops) => {
                 }}
               />
             </div>
-            <div className="w-full md:w-1/2">
-              <Select
-                options={applicationStatus}
-                value={(form.status as string | number) || ''}
-                label="Change Status"
-                // size="sm"
-                className="min-h-0 h-8 text-xs"
+            )}
+            {hostelOwnerAccess && (
+              <div className="w-full md:w-1/2">
+                <Select
+                  options={applicationStatus}
+                  value={(form.status as string | number) || ''}
+                  label="Change Status"
+                  // size="sm"
+                  className="min-h-0 h-8 text-xs"
                 onChange={e => handleVerification(e.target.value as Status)}
-              />
-            </div>
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>

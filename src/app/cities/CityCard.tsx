@@ -17,12 +17,10 @@ export const CityCard = ({
   city: Partial<BlogPostData> | undefined | null;
   subRoute?:string
 }) => {
-  // Helper for slug link
-  const cityLink = city?.slug ? `/${subRoute??"cities"}/${city.slug}` : undefined;
 
   return (
     <>
-       <Link href={`/cities/${city?.slug}`}>
+       <Link href={`/${subRoute??"cities"}/${city?.slug}`}>
         <div className="card h-full w-full cursor-pointer  rounded-2xl bg-white transition-all duration-200 hover:shadow-md">
           <div className="mb-4 w-full">
             <div className="relative">

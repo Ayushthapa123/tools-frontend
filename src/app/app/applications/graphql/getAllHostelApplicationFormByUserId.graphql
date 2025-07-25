@@ -1,4 +1,4 @@
-query GetHostelApplicationFormsByUserId($pageSize: Int = 50, $pageNumber: Int = 1) {
+query GetAllHostelApplicationFormsByUserId($pageSize: Int = 50, $pageNumber: Int = 1) {
   getHostelApplicationFormsByUserId(pageSize: $pageSize, pageNumber: $pageNumber) {
     data {
       id
@@ -26,8 +26,14 @@ query GetHostelApplicationFormsByUserId($pageSize: Int = 50, $pageNumber: Int = 
         contact {
           phone 
           altPhone
+          email
         }
-        
+        address {
+          street
+          subCity
+          city
+          country
+        }
         # add more hostel fields as needed
       }
       createdAt
