@@ -7,8 +7,8 @@ import { useState } from 'react';
 //Map's styling
 export const defaultMapContainerStyle = {
   width: '100%',
-  height: '80vh',
-  borderRadius: '15px 0px 0px 15px',
+  height: '60vh',
+  borderRadius: '10px 0px 0px 10px',
 };
 
 interface Iprops {
@@ -36,7 +36,7 @@ const MapComponent = (props: Iprops) => {
         mapContainerStyle={defaultMapContainerStyle}
         center={defaultMapCenter}
         options={defaultMapOptions}
-        zoom={16}
+        zoom={17}
         mapTypeId={"ROADMAP"}
       >
         {<Marker position={{ lat, lng }} />}

@@ -42,7 +42,7 @@ const Button: FC<ButtonComponentProps> = ({
   }
   return (
     <button
-      className={`${height === 'lg' ? 'h-[4rem]' : 'h-14'} relative flex w-full min-w-max items-center justify-center rounded-lg border px-6 py-3 align-middle transition-all duration-150 ease-in-out ${buttonStyle} ${className}`}
+      className={`${height === 'sm' ? 'h-12' : 'h-[4rem]'} relative flex w-full min-w-max items-center justify-center rounded-lg border px-6 py-3 align-middle transition-all duration-150 ease-in-out ${buttonStyle} ${className}`}
       {...restProps}
     >
       {startAdornment && <span>{startAdornment}</span>}
