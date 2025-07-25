@@ -10,6 +10,7 @@ export const SitemapPage = async () => {
       getAllHostels(pageSize: 200, pageNumber: 1, isSuperAdmin: true) {
         data {
           slug
+          
         }
       }
     }

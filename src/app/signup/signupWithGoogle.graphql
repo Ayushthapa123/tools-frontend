@@ -2,6 +2,7 @@ mutation signUpWithGoogle($input: SignupWithGoogleInput!) {
   signUpWithGoogle(input: $input) {
     id
     email
+    userType
     token {
       accessToken
       refreshToken

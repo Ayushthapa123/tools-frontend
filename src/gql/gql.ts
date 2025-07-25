@@ -121,7 +121,7 @@ const documents = {
     "mutation logOut {\n  logout {\n    success\n    message\n  }\n}": types.LogOutDocument,
     "mutation refreshToken {\n  refreshTokens {\n    user {\n      email\n      fullName\n      id\n      userType\n      hostelId\n    }\n    token {\n      refreshToken\n      accessToken\n    }\n  }\n}": types.RefreshTokenDocument,
     "mutation signupUser($input: SignupInput!) {\n  signupUser(input: $input) {\n    email\n    id\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}": types.SignupUserDocument,
-    "mutation signUpWithGoogle($input: SignupWithGoogleInput!) {\n  signUpWithGoogle(input: $input) {\n    id\n    email\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}": types.SignUpWithGoogleDocument,
+    "mutation signUpWithGoogle($input: SignupWithGoogleInput!) {\n  signUpWithGoogle(input: $input) {\n    id\n    email\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}": types.SignUpWithGoogleDocument,
     "mutation SendCustomEmail($email: String!, $name: String!, $subject: String!, $htmlContent: String!) {\n  sendCustomEmail(\n    email: $email\n    name: $name\n    subject: $subject\n    htmlContent: $htmlContent\n  )\n}": types.SendCustomEmailDocument,
     "mutation completeOnboarding {\n  completeOnboarding {\n    data {\n      id\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.CompleteOnboardingDocument,
     "query getOnboardingData {\n  getOnboardingData {\n    data {\n      address {\n        id\n      }\n      contact {\n        id\n      }\n      amenities {\n        id\n      }\n      gallery {\n        id\n      }\n      rooms {\n        id\n      }\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.GetOnboardingDataDocument,
@@ -581,7 +581,7 @@ export function graphql(source: "mutation signupUser($input: SignupInput!) {\n  
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "mutation signUpWithGoogle($input: SignupWithGoogleInput!) {\n  signUpWithGoogle(input: $input) {\n    id\n    email\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}"): (typeof documents)["mutation signUpWithGoogle($input: SignupWithGoogleInput!) {\n  signUpWithGoogle(input: $input) {\n    id\n    email\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}"];
+export function graphql(source: "mutation signUpWithGoogle($input: SignupWithGoogleInput!) {\n  signUpWithGoogle(input: $input) {\n    id\n    email\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}"): (typeof documents)["mutation signUpWithGoogle($input: SignupWithGoogleInput!) {\n  signUpWithGoogle(input: $input) {\n    id\n    email\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

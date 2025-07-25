@@ -85,10 +85,12 @@ const LogIn = () => {
           //after login what to do before pushing him to dashboard/me
           setAccessToken(res.loginUser.token.accessToken);
           // localStorage.setItem('refreshToken', res.loginUser.token.refreshToken);
-          if (res.loginUser.userType !== UserType.HostelOwner) {
+          if (res.loginUser.userType === UserType.HostelOwner) {
             router.push('/app');
+          } else if (res.loginUser.userType === UserType.Student) {
+            router.push('/app/my-profile');
           } else {
-            router.push('/');
+            router.push('/app');
           }
         } else {
           setError('Failed to login!');

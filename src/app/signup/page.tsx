@@ -108,7 +108,13 @@ function SignUp() {
         setLoading(false);
 
         // localStorage.setItem('refreshToken', res.signupUser.token.refreshToken);
-        router.push('/app/hostel-info');
+        if(res?.signupUser?.userType === UserType.HostelOwner){
+          router.push('/app/hostel-info');
+        } else if (res?.signupUser?.userType === UserType.Student) {
+          router.push('/app/my-profile');
+        } else {
+          router.push('/app');
+        }
       } else {
         setLoading(false);
 
