@@ -12,6 +12,7 @@ interface RangeSliderProps {
   className?: string;
   showValues?: boolean;
   formatValue?: (value: number) => string;
+  disabled?: boolean;
 }
 
 export const RangeSlider: React.FC<RangeSliderProps> = ({
@@ -24,6 +25,7 @@ export const RangeSlider: React.FC<RangeSliderProps> = ({
   className = '',
   showValues = true,
   formatValue = (val) => val.toString(),
+  disabled = false,
 }) => {
   const [isDragging, setIsDragging] = useState<'min' | 'max' | null>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -77,7 +79,7 @@ export const RangeSlider: React.FC<RangeSliderProps> = ({
   const maxPercentage = getPercentage(value[1]);
 
   return (
-    <div className={`w-full ${className}`}>
+    <div className={`w-full ${className} `}>
       {label && (
         <label className="block text-base font-semibold text-gray-600 mb-2">
           {label}
@@ -88,7 +90,7 @@ export const RangeSlider: React.FC<RangeSliderProps> = ({
         {/* Track */}
         <div
           ref={sliderRef}
-          className="relative h-2 bg-gray-200 rounded-full cursor-pointer"
+          className="relative h-2 bg-gray-200 rounded-full cursor-pointer  "
           onMouseDown={(e) => {
             const rect = sliderRef.current?.getBoundingClientRect();
             if (!rect) return;

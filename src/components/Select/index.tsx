@@ -1,7 +1,7 @@
 import React, { FC, forwardRef, SelectHTMLAttributes } from 'react';
 
 interface OptionType {
-  value: string | number ;
+  value: string | number | null;
   label: string;
 }
 
@@ -27,7 +27,7 @@ const Select = forwardRef<HTMLSelectElement, SelectComponentProps>(({ label, nam
         {...restProps}
       >
         {options.map((option, index) => (
-          <option key={index} value={option.value}>
+          <option key={index} value={option?.value??""}>
             {option.label}
           </option>
         ))}

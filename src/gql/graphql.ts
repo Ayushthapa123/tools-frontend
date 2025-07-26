@@ -1994,11 +1994,16 @@ export type SearchHostelInput = {
   checkInDate?: InputMaybe<Scalars['DateTime']['input']>;
   checkOutDate?: InputMaybe<Scalars['DateTime']['input']>;
   city?: InputMaybe<Scalars['String']['input']>;
+  genderType?: InputMaybe<Scalars['String']['input']>;
+  hostelType?: InputMaybe<Scalars['String']['input']>;
   latitude?: InputMaybe<Scalars['Float']['input']>;
   longitude?: InputMaybe<Scalars['Float']['input']>;
   maxPrice?: InputMaybe<Scalars['Float']['input']>;
   minRating?: InputMaybe<Scalars['Float']['input']>;
   pageNumber: Scalars['Float']['input'];
+  pricePerDay?: InputMaybe<Scalars['Float']['input']>;
+  pricePerMonth?: InputMaybe<Scalars['Float']['input']>;
+  roomCapacity?: InputMaybe<Scalars['String']['input']>;
   subCity?: InputMaybe<Scalars['String']['input']>;
 };
 

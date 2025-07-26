@@ -1,247 +1,216 @@
-import { useQuery } from "@tanstack/react-query";
-import { useState, useEffect } from "react";
-import { IoCloseSharp, IoFilterSharp } from "react-icons/io5";
-import Button from "src/components/Button";
-import { Input } from "src/components/Input";
-import { Select } from "src/components/Select";
-import RangeSlider from "src/components/RangeSlider";
-import { HostelType, HostelGenderType, 
-  // GetFilteredHostels, GetFilteredHostelsQuery, GetFilteredHostelsQueryVariables 
-} from "src/gql/graphql";
-import { useGraphqlClientRequest } from "src/hooks/useGraphqlClientRequest";
+import { useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
+import { IoCloseSharp, IoFilterSharp } from 'react-icons/io5';
+import { Select } from 'src/components/Select';
+import RangeSlider from 'src/components/RangeSlider';
+import { HostelType, HostelGenderType, RoomCapacity } from 'src/gql/graphql';
 
-export interface FilterData {
-  pricePerDay?: number[] | null;
-  pricePerMonth?: number[] | null;
-  seater?: 'ONE_BED' | 'TWO_BED' | 'THREE_BED' | 'FOUR_BED' | 'FIVE_BED' | 'SIX_BED' | 'SEVEN_BED' | 'EIGHT_BED';
-  hostelType?: HostelType;
-  gender?: HostelGenderType;
-}
 
-export default function SearchFilter({ setFilteredHostels, lat, lng }: { setFilteredHostels: (filteredHostel: any) => void, lat: number, lng: number }) {
-  const [ shouldFetch, setShouldFetch ] = useState(false);
+
+export default function SearchFilter({
+  setFilteredHostels,
+  lat,
+  lng,
+  isLoading,
+  setHostelType,
+  setGenderType,
+  setRoomCapacity,
+  hostelType,
+  genderType,
+  roomCapacity,
+}: {
+  setFilteredHostels: (filteredHostel: any) => void;
+  lat: number;
+  lng: number;
+  isLoading: boolean;
+  setHostelType: (hostelType: HostelType) => void;
+  setGenderType: (genderType: HostelGenderType) => void;
+  setRoomCapacity: (roomCapacity: RoomCapacity) => void;
+  hostelType: HostelType;
+  genderType: HostelGenderType;
+  roomCapacity: RoomCapacity;
+}) {
+  const [shouldFetch, setShouldFetch] = useState(false);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 2000]);
   const [monthlyPriceRange, setMonthlyPriceRange] = useState<[number, number]>([0, 20000]);
 
-  const [ filterData, setFilterData ] = useState<FilterData>({
-    pricePerDay: [0, 2000],
-    pricePerMonth: [0, 20000],
-    hostelType: HostelType.Stay,
-    seater: "ONE_BED",
-    gender: HostelGenderType.Boys
-  });
-
-
   const roomSeater = [
     {
-      label: "One Seater",
-      value: "ONE_BED"
+      label: 'All',
+      value: null,
     },
     {
-      label: "Two Seater",
-      value: "TWO_BED"
+      label: 'One Seater',
+      value: RoomCapacity.OneBed,
     },
     {
-      label: "Three Seater",
-      value: "THREE_BED"
+      label: 'Two Seater',
+      value: RoomCapacity.TwoBed,
     },
     {
-      label: "Four Seater",
-      value: "FOUR_BED"
+      label: 'Three Seater',
+      value: RoomCapacity.ThreeBed,
     },
     {
-      label: "Five Seater",
-      value: "FIVE_BED"
+      label: 'Four Seater',
+      value: RoomCapacity.FourBed,
     },
     {
-      label: "Six Seater",
-      value: "SIX_BED"
+      label: 'Five Seater',
+      value: RoomCapacity.FiveBed,
     },
-    {
-      label: "Seven Seater",
-      value: "SEVEN_BED"
-    },
-    {
-      label: "Eight Seater",
-      value: "EIGHT_BED"
-    },
-  ]
+    // {
+    //   label: 'Six Seater',
+    //   value: RoomCapacity.SixBed,
+    // },
+    // {
+    //   label: 'Seven Seater',
+    //   value: RoomCapacity.SevenBed,
+    // },
+    // {
+    //   label: 'Eight Seater',
+    //   value: RoomCapacity.EightBed,
+    // },
+  ];
 
   const hostelTypeOptions = [
     {
-      label: "Stay",
-      value: HostelType.Stay
+      label: 'All',
+      value: null,
     },
     {
-      label: "PG",
-      value: HostelType.Pg
+      label: 'Stay',
+      value: HostelType.Stay,
     },
     {
-      label: "Travel",
-      value: HostelType.Travel
+      label: 'PG',
+      value: HostelType.Pg,
     },
     {
-      label: "Both",
-      value: HostelType.Both
-    }
-  ]
+      label: 'Travel',
+      value: HostelType.Travel,
+    },
+    {
+      label: 'Both',
+      value: HostelType.Both,
+    },
+  ];
 
   const hostelGenderOptions = [
     {
-      label: "Boys",
-      value: HostelGenderType.Boys
+      label: 'All',
+      value: null,
     },
     {
-      label: "Girls",
-      value: HostelGenderType.Girls
+      label: 'Boys',
+      value: HostelGenderType.Boys,
     },
     {
-      label: "Both",
-      value: HostelGenderType.Both
-    }
-  ]
+      label: 'Girls',
+      value: HostelGenderType.Girls,
+    },
+    {
+      label: 'Both',
+      value: HostelGenderType.Both,
+    },
+  ];
 
-  // Filter hostels based on filterData
-  // const filterHostels = useGraphqlClientRequest<GetFilteredHostelsQuery, GetFilteredHostelsQueryVariables>(
-  //   GetFilteredHostels.loc?.source?.body!,
-  // );
+ 
 
-  const fetchFilteredData = async () => {
-    try {
-      
-      // const res = await filterHostels({
-      //   input: {
-      //     latitude: Number(lat),
-      //     longitude: Number(lng),
-      //     baseAmountPerDay: priceRange,
-      //     baseAmountPerMonth: monthlyPriceRange,
-      //     seater: filterData.seater,
-      //     hostelType: filterData.hostelType,
-      //     genderType: filterData.gender,
-      //   },
-      // });
-      
-      // return res.getFilteredHostels;
-    } catch (error) {
-      console.error('Error fetching filtered hostels:', error);
-      throw error;
-    }
-  };
-
-  const { data: filteredHostels, isLoading } = useQuery({
-    queryKey: [ 'getFilteredHostels', filterData.hostelType,filterData.gender, filterData.seater, lat, lng ],
-    queryFn: fetchFilteredData,
-    enabled: !!shouldFetch,
-  });
-
-  // Watch for when filteredHostels data becomes available
-  useEffect(() => {
-    if (filteredHostels && shouldFetch) {
-      // setFilteredHostels(filteredHostels.data);
-    }
-  }, [ filteredHostels, shouldFetch, setFilteredHostels ]);
+  const queryClient = useQueryClient();
 
   const handleSubmitFilter = () => {
     setShouldFetch(true);
-  }
+    // queryClient.invalidateQueries({ queryKey: ['getHostelsss'] });
+    // force to refetch the query with the above key 
+    queryClient.refetchQueries({ queryKey: ['getHostelsss'] });
+  };
 
   const handleClearFilter = () => {
-    setFilterData({
-      pricePerDay: null,
-      pricePerMonth: null,
-      hostelType: HostelType.Stay,
-      seater: "ONE_BED",
-      gender: HostelGenderType.Boys
-    });
-    setPriceRange([0, 2000]);
-    setMonthlyPriceRange([0, 20000]);
-    setFilteredHostels(null);
-    setShouldFetch(false);
-  }
+    // refresh the page
+    window.location.reload();
+  };
   return (
-    <div className="flex flex-col justify-between items-center bg-gray-100 gap-4 border border-gray-100 rounded-md m-2 p-2">
-      <div className="flex flex-col gap-4 items-start w-full">
-        <div className="w-full my-3">
+    <div className="m-2 flex flex-col items-center justify-between gap-4 rounded-md border border-gray-100 bg-gray-100 p-4">
+      <div className="flex w-full flex-col items-start gap-4">
+        <div className="my-3 w-full">
           <RangeSlider
             label="Price per day"
             min={0}
             max={2000}
             step={100}
             value={priceRange}
-            onChange={(value) => {
+            onChange={value => {
               setPriceRange(value);
-              setFilterData({ ...filterData, pricePerDay: value });
               setShouldFetch(false);
             }}
-            formatValue={(value) => `Nrs.${value.toLocaleString()}`}
+            formatValue={value => `Nrs.${value.toLocaleString()}`}
           />
         </div>
-        <div className="w-full my-3">
+        <div className="my-3 w-full">
           <RangeSlider
             label="Price per month"
             min={0}
             max={20000}
             step={500}
             value={monthlyPriceRange}
-            onChange={(value) => {
+            onChange={value => {
               setMonthlyPriceRange(value);
-              setFilterData({ ...filterData, pricePerMonth: value });
               setShouldFetch(false);
             }}
-            formatValue={(value) => `Nrs.${value.toLocaleString()}`}
+            formatValue={value => `Nrs.${value.toLocaleString()}`}
           />
         </div>
         <div className="w-full">
           <Select
             options={roomSeater}
             label="Seater"
-            onChange={(e) => {
-              setFilterData({ ...filterData, seater: e.target.value as 'ONE_BED' | 'TWO_BED' | 'THREE_BED' | 'FOUR_BED' | 'FIVE_BED' | 'SIX_BED' | 'SEVEN_BED' | 'EIGHT_BED' });
+            onChange={e => {
               setShouldFetch(false);
             }}
-            value={filterData.seater}
+            value={roomCapacity}
           />
         </div>
         <div className="w-full">
           <Select
             options={hostelTypeOptions}
             label="Hostel Type"
-            onChange={(e) => {
-              setFilterData({ ...filterData, hostelType: e.target.value as HostelType });
+            onChange={e => {
+              setHostelType(e.target.value as HostelType);
               setShouldFetch(false);
             }}
-            value={filterData.hostelType}
+            value={hostelType}
           />
         </div>
         <div className="w-full">
           <Select
             options={hostelGenderOptions}
             label="Hostel Gender"
-            onChange={(e) => {
-              setFilterData({ ...filterData, gender: e.target.value as HostelGenderType });
+            onChange={e => {
+              setGenderType(e.target.value as HostelGenderType);
               setShouldFetch(false);
             }}
-            value={filterData.gender}
+            value={genderType}
           />
         </div>
       </div>
-      <div className="flex flex-row-reverse w-full items-center xl:items-end justify-between gap-2 ">
+      <div className="flex w-full flex-row-reverse items-center justify-between gap-2 xl:items-end ">
         <button
-          className="min-w-[120px] lg:min-w-[145px] w-full xl:w-fit flex items-end gap-2 justify-center bg-green font-semibold opacity-90 hover:opacity-100 text-white p-3 transition-all duration-100 hover:font-semibold  rounded-md"
+          className="flex w-full min-w-[120px] items-end justify-center gap-2 rounded-md bg-green p-3 font-semibold text-white opacity-90 transition-all duration-100 hover:font-semibold hover:opacity-100 lg:min-w-[145px]  xl:w-fit"
           onClick={handleSubmitFilter}
-          disabled={isLoading}
-        >
-          <IoFilterSharp className="text-2xl hidden lg:block" />
-          <span className="px-2 text-sm lg:text-base">{isLoading ? 'Loading...' : 'Apply filters'}</span>
+          disabled={isLoading}>
+          <IoFilterSharp className="hidden text-2xl lg:block" />
+          <span className="px-2 text-sm lg:text-base">
+            {isLoading ? 'Loading...' : 'Apply filters'}
+          </span>
         </button>
         <button
-          className="min-w-[120px] lg:min-w-[145px] w-full xl:w-fit flex items-center justify-center gap-2 bg-red text-white p-3  font-semibold opacity-90 hover:opacity-100 transition-all duration-100  rounded-md"
-          onClick={handleClearFilter}
-        >
-          <IoCloseSharp className="text-2xl hidden lg:block" />
+          className="flex w-full min-w-[120px] items-center justify-center gap-2 rounded-md bg-red p-3 font-semibold text-white  opacity-90 transition-all duration-100 hover:opacity-100 lg:min-w-[145px]  xl:w-fit"
+          onClick={handleClearFilter}>
+          <IoCloseSharp className="hidden text-2xl lg:block" />
           <span className="px-2 text-sm lg:text-base">Clear filters</span>
         </button>
       </div>
     </div>
-  )
+  );
 }

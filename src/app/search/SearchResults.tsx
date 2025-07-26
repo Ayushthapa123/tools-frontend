@@ -12,17 +12,18 @@ interface IResults {
   country: string;
   city: string;
   subCity: string;
-  genderType: string;
+    genderType: HostelGenderType;
+    hostelType: HostelType;
+    roomCapacity: RoomCapacity;
   handleCount: (c: number) => void;
   checkInDate: string;
   checkOutDate: string;
   lat: number;
   lng: number;
-  filteredHostels: any;
 }
 
 export const SearchResults = (props: IResults) => {
-  const { country, city, subCity, genderType, handleCount, checkInDate, checkOutDate, lat, lng ,filteredHostels} =
+  const { country, city, subCity, genderType, hostelType, roomCapacity, handleCount, checkInDate, checkOutDate, lat, lng } =
     props;
   const searchHostel = useGraphqlClientRequest<SearchHostelQuery, SearchHostelQueryVariables>(
     SearchHostel.loc?.source?.body!,
@@ -36,22 +37,24 @@ export const SearchResults = (props: IResults) => {
         pageNumber: 1,
         latitude: lat,
         longitude: lng,
+        genderType,
+        hostelType,
+        roomCapacity
       },
     });
     return res.getHostelsBySearch;
   };
 
-  const { data: hostels, isLoading } = useQuery({
-    queryKey: ['getHostels', country, city, subCity, genderType],
+  const { data: hostels, isLoading,isFetching } = useQuery({
+    queryKey: ['getHostelsss'],
     queryFn: fetchData,
+    
   });
 
 
-  useEffect(() => {
-    filteredHostels==null ? handleCount(hostels?.data?.length ?? 0) : handleCount(filteredHostels?.length ?? 0);
-  }, [ handleCount, hostels?.data ]);
+
   
-  if(filteredHostels?.length==0){
+  if(hostels?.data?.length===0){
     return (
       <div className='w-full flex items-start justify-center h-full'>
         <h1 className='text-2xl text-red font-bold'>No hostels found</h1>
@@ -61,7 +64,7 @@ export const SearchResults = (props: IResults) => {
   
   return (
     <div className="w-full ">
-      {isLoading && (
+      {isLoading || isFetching && (
         <div className="md:flex w-full items-center justify-center gap-3 ">
           <HostelCardSkeleton />
           <HostelCardSkeleton />
