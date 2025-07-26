@@ -2,55 +2,28 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRef, useState } from 'react';
-import { FaChevronLeft, FaChevronRight, FaRegHeart, FaShower } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight, FaRegHeart, FaShower, FaWalking } from 'react-icons/fa';
 import { GiCctvCamera } from 'react-icons/gi';
 import { GrLocation } from 'react-icons/gr';
 import { IoIosWifi } from 'react-icons/io';
 import { MdTableRestaurant } from 'react-icons/md';
+import { RiPinDistanceLine } from 'react-icons/ri';
 import { Badge } from 'src/components/Badge';
 import Button from 'src/components/Button';
+import { HostelData } from 'src/gql/graphql';
+import { calculateWalkingTime } from 'src/utils/calculateWalkingTime';
 
 // Please remove this interface and use the type from the backend
-interface Iprops {
-  name: string;
-  country: string;
-  city: string;
-  subCity: string;
-  genderType: string;
-  amount?: number;
-  currency?: string;
-  oneSeater?: boolean | null;
-  twoSeater?: boolean | null;
-  description?: string;
-  threeSeater?: boolean | null;
-  gallery?: any;
-  rooms?: any;
-  slug?: string;
-}
-export const HostelCard = (props: Iprops) => {
-  const [ isModalOpen, setIsModalOpen ] = useState(false);
-  const {
-    name,
-    country,
-    city,
-    subCity,
-    oneSeater,
-    twoSeater,
-    threeSeater,
-    currency,
-    amount,
-    genderType,
-    description,
-    gallery,
-    rooms,
-    slug
-  } = props;
 
-  const editorRef = useRef(description ?? '');
+export const HostelCard = ({hostel,currentLat,currentLong}:{hostel:HostelData,currentLat?:number,currentLong?:number}) => {
+  const [ isModalOpen, setIsModalOpen ] = useState(false);
+ 
+
+  const editorRef = useRef(hostel.description ?? '');
   const [ sliderCurrentIndex, setSliderCurrentIndex ] = useState(0);
 
-  const mainWallpaper = gallery?.find((img: any) => img.isSelected === true) ?? gallery?.[ 0 ];
-  const otherImages = gallery?.filter((img: any) => img.isSelected === false);
+  const mainWallpaper = hostel.gallery?.find((img: any) => img.isSelected === true) ?? hostel.gallery?.[ 0 ];
+  const otherImages = hostel.gallery?.filter((img: any) => img.isSelected === false);
   const imageUrl = mainWallpaper?.url  ?? '/images/noPhotoWallpaper.jpg';
 
   // const imagesArray = [ imgUrl, ...otherImages.map((img: any) => img.url) ].filter(Boolean);
@@ -87,9 +60,9 @@ export const HostelCard = (props: Iprops) => {
     }
   };
   // Minimum Room Price Calculator
-  const minimumRoomPrice: number | null = Array.isArray(rooms) ? rooms?.filter((room) => room?.price?.baseAmountPerMonth != null).reduce((min: number, room: any) => {
+  const minimumRoomPrice: number | null = Array.isArray(hostel.rooms) ? hostel.rooms?.filter((room) => room?.price?.baseAmountPerMonth != null).reduce((min: number, room: any) => {
     return Math.min(min, room?.price?.baseAmountPerMonth)
-  }, rooms?.[ 0 ]?.price?.baseAmountPerMonth ?? Infinity)
+  }, hostel.rooms?.[ 0 ]?.price?.baseAmountPerMonth ?? Infinity)
     : null;
 
   return (
@@ -98,7 +71,7 @@ export const HostelCard = (props: Iprops) => {
         <div className="relative h-full w-full group">
           <Image
             src={imagesArray[ sliderCurrentIndex ]}
-            alt={name}
+            alt={hostel.name}
             fill
             className="rounded-xl rounded-b-none object-cover"
           />
@@ -139,18 +112,25 @@ export const HostelCard = (props: Iprops) => {
         <div className="absolute right-2 top-1 z-10">
           <Badge className={` px-3 py-1 !text-xs uppercase tracking-wide font-bold text-white/90 ${getStatusColor("Available")} !rounded-md `}>Available</Badge>
         </div>
-        <p className='absolute -bottom-3 right-1 text-white/90 bg-transparent p-1 px-3 rounded-md font-semibold'>{ genderType ? `For ${genderType.toLowerCase()}` : "" }</p>
+        <p className='absolute -bottom-3 right-1 text-white/90 bg-transparent p-1 px-3 rounded-md font-semibold'>{ hostel.genderType ? `For ${hostel.genderType.toLowerCase()}` : "" }</p>
       </div>
 
-      <div className="flex-grow overflow-y-auto px-2" style={{ maxHeight: '150px' }}>
+      <div className="flex-grow overflow-y-auto px-2" style={{ maxHeight: '180px' }}>
         <div className="flex flex-wrap items-start justify-between gap-2">
           <div className='flex flex-col leading-3'>
-            <h3 className="m-0 ml-1 text-2xl font-semibold text-gray-900">{capitalizeHostelName(name)}</h3>
+            <h3 className="m-0 ml-1 text-2xl font-semibold text-gray-900">{capitalizeHostelName(hostel.name)}</h3>
             <p className="text-capitalize my-1 flex items-center gap-2 text-xs text-primary/70">
               <GrLocation className="text-red w-5 h-5 font-bold" />
               <span className="text-base text-gray-700">
-                {subCity} {city}, {country}
+                {hostel.address?.subCity} {hostel.address?.city}, {hostel.address?.country}
               </span>
+            </p>
+            <p className="text-capitalize my-1 flex items-center gap-2 text-xs text-primary/70">
+              {currentLat && currentLong && hostel.address?.latitude && hostel.address?.longitude && <span className="text-base text-gray-700 flex">
+              <FaWalking className="text-red w-5 h-5 font-bold" />
+
+                In a walking distance of {calculateWalkingTime(hostel.address?.latitude, hostel.address?.longitude, currentLat, currentLong)} minutes
+              </span>}
             </p>
           </div>
           <div className="flex-shrink-0">
@@ -172,7 +152,7 @@ export const HostelCard = (props: Iprops) => {
             ) : <p>No price mentioned</p>
           }
           <div className="mt-2 flex items-center justify-between gap-2">
-            <Link href={`/hostel/${slug}`}>
+            <Link href={`/hostel/${hostel.slug}`}>
               <Button label={'View Details'} className="!bg-primary/90 hover:!bg-primary tracking-wide" />
             </Link>
             {/* <div>

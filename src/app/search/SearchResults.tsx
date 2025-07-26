@@ -62,7 +62,7 @@ export const SearchResults = (props: IResults) => {
   return (
     <div className="w-full ">
       {isLoading && (
-        <div className="flex w-full items-center justify-center gap-3 ">
+        <div className="md:flex w-full items-center justify-center gap-3 ">
           <HostelCardSkeleton />
           <HostelCardSkeleton />
           <HostelCardSkeleton />
@@ -78,19 +78,9 @@ export const SearchResults = (props: IResults) => {
                 href={`/hostel/${hostel?.slug}?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`}
               >
                 <HostelCard
-                  name={hostel.name || ''}
-                  country={hostel.address?.country ?? ''}
-                  city={hostel.address?.city ?? ''}
-                  subCity={hostel.address?.subCity ?? ''}
-                  description={hostel.description ?? ''}
-                  rooms={hostel.rooms}
-                  // amount={hostel?.rooms?.[0]?.price?.baseAmountPerDay ?? 0}
-                  // currency={hostel?.rooms?.[0]?.price?.currency ?? ''}
-                  genderType={hostel.genderType ?? ''}
-                  oneSeater={null}
-                  twoSeater={null}
-                  threeSeater={null}
-                  slug={hostel.slug}
+                 hostel={hostel}
+                 currentLat={lat}
+                 currentLong={lng}
                 />
               </Link>
             </div>

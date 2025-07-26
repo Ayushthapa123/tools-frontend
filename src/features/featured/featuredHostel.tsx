@@ -7,6 +7,7 @@ import {
   GetFeaturedHostels,
   GetFeaturedHostelsQuery,
   GetFeaturedHostelsQueryVariables,
+  HostelData,
 } from 'src/gql/graphql';
 import { motion } from 'framer-motion';
 
@@ -60,20 +61,7 @@ export const FeaturedHostel = () => {
               viewport={{ once: true }}
             >
                 <HostelCard
-                  name={hostel?.name ?? ''}
-                  slug={hostel?.slug ?? ''}
-                  genderType={hostel?.genderType ?? ''}
-                  country={hostel?.address?.country ?? ''}
-                  city={hostel?.address?.city ?? ''}
-                  subCity={hostel?.address?.subCity ?? ''}
-                  description={hostel?.description ?? ''}
-                  amount={hostel?.rooms?.[ 0 ]?.price?.baseAmountPerDay ?? 0}
-                  currency={hostel?.rooms?.[ 0 ]?.price?.currency ?? ''}
-                  oneSeater={null}
-                  twoSeater={null}
-                  threeSeater={null}
-                gallery={hostel?.gallery}
-                rooms={hostel?.rooms}
+                  hostel={hostel as HostelData}
                 />
             </motion.div>
           );
