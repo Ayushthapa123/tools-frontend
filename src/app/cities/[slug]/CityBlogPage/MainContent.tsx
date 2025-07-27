@@ -5,6 +5,7 @@ import { BlogPostData } from 'src/gql/graphql';
 import Button from 'src/components/Button';
 import { TextArea } from 'src/components/TextArea';
 
+
 interface Iprops {
   cityBlogData: BlogPostData | undefined | null;
 }
@@ -40,7 +41,8 @@ export default function MainContent(props: Iprops) {
   console.log("ccc",cityBlogData)
 
   // Format date
-  const formattedDate = publishedAt ? new Date(publishedAt).toLocaleDateString() : '';
+  const formattedDate = publishedAt ? new Date(publishedAt).toLocaleDateString() : ''; 
+
 
   return (
     <div className="min-h-screen bg-gray-50 pb-4">
@@ -101,7 +103,11 @@ export default function MainContent(props: Iprops) {
             <div
               className="prose max-w-none text-gray-700"
               dangerouslySetInnerHTML={{ __html: content ?? '' }}
+            
             />
+
+
+       
           </div>
 
           <div className="mb-6">

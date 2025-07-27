@@ -261,3 +261,73 @@ body .pac-container {
 #my_modal_4 {
   position: relative !important;
 }
+
+
+/* For TinyMCE */
+.prose {
+  font-family: 'Georgia', serif;
+  color: #1a1a1a;
+  line-height: 1.8;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Headings */
+.prose h1 {
+  font-size: 2.5rem;
+  margin: 2rem 0 1.2rem;
+  font-weight: 700;
+}
+
+.prose h2 {
+  font-size: 2rem;
+  margin: 1.8rem 0 1rem;
+  font-weight: 600;
+}
+
+.prose h3 {
+  font-size: 1.5rem;
+  margin: 1.5rem 0 0.75rem;
+  font-weight: 600;
+}
+
+/* Paragraphs */
+.prose p {
+  font-size: 1.225rem;
+  margin-bottom: 1.25rem;
+}
+
+/* Lists */
+.prose ul,
+.prose ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.prose li {
+  font-size: 1.225rem;
+  margin-bottom: 0.5rem;
+  list-style-type: disc;
+}
+
+/* Links */
+.prose a {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+.prose a:hover {
+  text-decoration: none;
+}
+
+/* Blockquotes */
+.prose blockquote {
+  margin: 1.5rem 0;
+  padding-left: 1.25rem;
+  border-left: 4px solid #d1d5db;
+  font-style: italic;
+  color: #4b5563;
+  background-color: #f9fafb;
+}
+
+
