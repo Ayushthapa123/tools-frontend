@@ -34,22 +34,27 @@ export interface ReverseGeoDataType {
 }
 
 export const CreateHostelModal = () => {
+  const { user } = useUserStore();
+
   const {
     control,
     watch,
     getValues,
     setValue,
+    trigger,
     formState: { errors },
     handleSubmit: handleSubmitForm,
   } = useForm<CreateOnboardingHostelInput>({
     defaultValues: {
       genderType: HostelGenderType.Boys,
+      contact: {
+        email: user?.userEmail,
+      },
     },
   });
 
-    // For amenities
-    const [selectedAmenities, setSelectedAmenities] = useState<AmenityOptionData[]>([]); 
-
+  // For amenities
+  const [selectedAmenities, setSelectedAmenities] = useState<AmenityOptionData[]>([]);
 
   watch('genderType');
   watch('name');
@@ -77,7 +82,60 @@ export const CreateHostelModal = () => {
   };
 
   const queryClient = useQueryClient();
-  const plusStep = () => {
+
+  const validateStep = async () => {
+    switch (steps) {
+      case 0:
+        // Hostel type selection, no form fields to validate
+        if (!hostelType) {
+          setHostelTypeErrorMessage('Please select a hostel type');
+          return false;
+        }
+        return true;
+      case 1:
+        // Hostel details
+        return await trigger([
+          'name',
+          'genderType',
+          'contact.email',
+          'contact.phone',
+          'hostelType',
+          // ...(hostelType !== HostelType.Travel ? ['admissionFee', 'depositAmount'] : []),
+        ]);
+      case 2:
+        // Map step, maybe require lat/lng
+        if (!clickedLatLng?.lat || !clickedLatLng?.lng) {
+          enqueueSnackbar('Please select a location on the map.', { variant: 'error' });
+          return false;
+        }
+        return true;
+      case 3:
+        // Address details
+        return await trigger([
+          'address.country',
+          'address.city',
+          // add more if required
+        ]);
+      case 4:
+        // Amenities step, maybe require at least one amenity
+        if (selectedAmenities.length === 0) {
+          enqueueSnackbar('Please select at least one amenity.', { variant: 'error' });
+          return false;
+        }
+        return true;
+      default:
+        return true;
+    }
+  };
+
+  const plusStep = async () => {
+    // first validate the form in each step
+    const isStepValid = await validateStep();
+    if (!isStepValid) {
+      enqueueSnackbar('Please fill all the fields.', { variant: 'error' });
+      return;
+    }
+
     if (steps < 4) {
       setSteps(steps + 1);
     } else {
@@ -103,7 +161,9 @@ export const CreateHostelModal = () => {
     CreateOnboardingHostelMutationVariables
   >(CreateOnboardingHostel.loc?.source.body!);
 
-  const { mutateAsync: createHostel, isPending: isLoading } = useMutation({ mutationFn: mutateCreateHostelInfo });
+  const { mutateAsync: createHostel, isPending: isLoading } = useMutation({
+    mutationFn: mutateCreateHostelInfo,
+  });
 
   const handleSubmit = async (data: CreateOnboardingHostelInput) => {
     try {
@@ -131,7 +191,6 @@ export const CreateHostelModal = () => {
             hostelId: 0, // remove this from backend
           },
           amenity: JSON.stringify(selectedAmenities),
-          
         },
       });
       if (res?.createOnboardingHostel?.data?.id) {
@@ -229,10 +288,6 @@ export const CreateHostelModal = () => {
   }, [reverseGeoData, setValue]);
 
 
-  const {user}=useUserStore()
-
-
-
   return (
     <div className=" h-[100vh] w-[100vw]">
       <dialog id="my_modal_4" className="modal relative h-full w-full">
@@ -309,30 +364,38 @@ export const CreateHostelModal = () => {
                         <TextInput
                           name="admissionFee"
                           type="price"
-                          customType='price'
+                          customType="price"
                           placeholder="Admission Fee"
                           control={control}
                           label="Admission Fee"
-                        // required
-                        helpertext={errors.admissionFee?.type === 'required' ? 'Admission Fee Is Required' : ''}
-                        error={!!errors.admissionFee}
-                      />
-                    </div>
+                          // required
+                          helpertext={
+                            errors.admissionFee?.type === 'required'
+                              ? 'Admission Fee Is Required'
+                              : ''
+                          }
+                          error={!!errors.admissionFee}
+                        />
+                      </div>
                     )}
-                     {hostelType !== HostelType.Travel&& (
+                    {hostelType !== HostelType.Travel && (
                       <div>
                         <TextInput
                           name="depositAmount"
                           type="price"
-                          customType='number'
+                          customType="number"
                           placeholder="Deposit Amount"
                           control={control}
                           label="Deposit Amount"
-                        // required
-                        helpertext={errors.depositAmount?.type === 'required' ? 'Deposit Amount Is Required' : ''}
-                        error={!!errors.depositAmount}
-                      />
-                    </div>
+                          // required
+                          helpertext={
+                            errors.depositAmount?.type === 'required'
+                              ? 'Deposit Amount Is Required'
+                              : ''
+                          }
+                          error={!!errors.depositAmount}
+                        />
+                      </div>
                     )}
                   </div>
                   <div className="">
@@ -354,7 +417,7 @@ export const CreateHostelModal = () => {
                             helpertext={
                               errors.contact?.email?.type === 'required' ? 'Email Is Required' : ''
                             }
-                            error={!!errors.contact?.email} 
+                            error={!!errors.contact?.email}
                             defaultValue={user?.userEmail}
                           />
                         </div>
@@ -392,7 +455,6 @@ export const CreateHostelModal = () => {
                 </div>
               </div>
             )}
-         
 
             <div>
               {steps === 2 && (
@@ -408,7 +470,6 @@ export const CreateHostelModal = () => {
                         />
                       </MapProvider>
                     </div>
-                   
                   </div>
                 </MapProvider>
               )}
@@ -420,58 +481,56 @@ export const CreateHostelModal = () => {
                     <h3 className="text-3xl font-bold text-gray-500">Address Details</h3>
                   </div>
                   <div className=" mt-5 grid h-auto w-full gap-5 md:grid-cols-2">
-                      <div>
-                        <ReactSelect
-                          name="address.country"
-                          placeholder="Country"
-                          control={control}
-                          options={countryOptions}
-                          label="Country"
-                          required
-                          helperText={
-                            errors.address?.country?.type === 'required'
-                              ? 'Country Is Required'
-                              : ''
-                          }
-                          error={!!errors.address?.country}
-                        />
-                      </div>
-
-                      <div>
-                        <TextInput
-                          name="address.city"
-                          type="text"
-                          placeholder="City"
-                          control={control}
-                          label="City"
-                          required
-                          helpertext={
-                            errors.address?.city?.type === 'required' ? 'City Is Required' : ''
-                          }
-                          error={!!errors.address?.city}
-                        />
-                      </div>
-                      <div>
-                        <TextInput
-                          name="address.subCity"
-                          type="text"
-                          placeholder="Sub City"
-                          control={control}
-                          label="Sub City"
-                          error={!!errors.address?.subCity}
-                        />
-                      </div>
-                      <div>
-                        <TextInput
-                          name="address.street"
-                          type="text"
-                          placeholder="Street"
-                          control={control}
-                          label="Street"
-                          error={!!errors.address?.street}
-                        />
-                      </div>
+                    <div>
+                      <ReactSelect
+                        name="address.country"
+                        placeholder="Country"
+                        control={control}
+                        options={countryOptions}
+                        label="Country"
+                        required
+                        helperText={
+                          errors.address?.country?.type === 'required' ? 'Country Is Required' : ''
+                        }
+                        error={!!errors.address?.country}
+                      />
                     </div>
+
+                    <div>
+                      <TextInput
+                        name="address.city"
+                        type="text"
+                        placeholder="City"
+                        control={control}
+                        label="City"
+                        required
+                        helpertext={
+                          errors.address?.city?.type === 'required' ? 'City Is Required' : ''
+                        }
+                        error={!!errors.address?.city}
+                      />
+                    </div>
+                    <div>
+                      <TextInput
+                        name="address.subCity"
+                        type="text"
+                        placeholder="Sub City"
+                        control={control}
+                        label="Sub City"
+                        error={!!errors.address?.subCity}
+                      />
+                    </div>
+                    <div>
+                      <TextInput
+                        name="address.street"
+                        type="text"
+                        placeholder="Street"
+                        control={control}
+                        label="Street"
+                        error={!!errors.address?.street}
+                      />
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
@@ -479,7 +538,12 @@ export const CreateHostelModal = () => {
               {steps === 4 && (
                 <div>
                   {/* <h3 className="text-3xl font-bold text-gray-500">Hostel Amenities</h3> */}
-                  <HostelAmenitiesPage hostelId={0} isOnboarding={true} handleAmenityChange={setSelectedAmenities} onboardingAmenities={selectedAmenities}/>
+                  <HostelAmenitiesPage
+                    hostelId={0}
+                    isOnboarding={true}
+                    handleAmenityChange={setSelectedAmenities}
+                    onboardingAmenities={selectedAmenities}
+                  />
                 </div>
               )}
             </div>
@@ -502,7 +566,12 @@ export const CreateHostelModal = () => {
               )}
               {steps === 4 && (
                 <div className="modal-action">
-                  <Button label="Create My Hostel" disabled={!isValid} type="submit" loading={isLoading} />
+                  <Button
+                    label="Create My Hostel"
+                    disabled={!isValid}
+                    type="submit"
+                    loading={isLoading}
+                  />
                 </div>
               )}
               {steps < 4 && (

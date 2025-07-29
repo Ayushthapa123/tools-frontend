@@ -15,21 +15,30 @@ import { calculateWalkingTime } from 'src/utils/calculateWalkingTime';
 
 // Please remove this interface and use the type from the backend
 
-export const HostelCard = ({hostel,currentLat,currentLong}:{hostel:HostelData,currentLat?:number,currentLong?:number}) => {
-  const [ isModalOpen, setIsModalOpen ] = useState(false);
- 
+export const HostelCard = ({
+  hostel,
+  currentLat,
+  currentLong,
+}: {
+  hostel: HostelData;
+  currentLat?: number;
+  currentLong?: number;
+}) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const editorRef = useRef(hostel.description ?? '');
-  const [ sliderCurrentIndex, setSliderCurrentIndex ] = useState(0);
+  const [sliderCurrentIndex, setSliderCurrentIndex] = useState(0);
 
-  const mainWallpaper = hostel.gallery?.find((img: any) => img.isSelected === true) ?? hostel.gallery?.[ 0 ];
+  const mainWallpaper =
+    hostel.gallery?.find((img: any) => img.isSelected === true) ?? hostel.gallery?.[0];
   const otherImages = hostel.gallery?.filter((img: any) => img.isSelected === false);
-  const imageUrl = mainWallpaper?.url  ?? '/images/noPhotoWallpaper.jpg';
+  const imageUrl = mainWallpaper?.url ?? '/images/noPhotoWallpaper.jpg';
 
   // const imagesArray = [ imgUrl, ...otherImages.map((img: any) => img.url) ].filter(Boolean);
 
-  const imagesArray = [ imageUrl, ...(otherImages?.map((img: any) => img.url) || []) ].filter(Boolean);
-
+  const imagesArray = [imageUrl, ...(otherImages?.map((img: any) => img.url) || [])].filter(
+    Boolean,
+  );
 
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
@@ -45,7 +54,7 @@ export const HostelCard = ({hostel,currentLat,currentLong}:{hostel:HostelData,cu
   };
 
   const capitalizeHostelName = (name: string) => {
-    return name.replace(/\b\w/g, (char) => char.toUpperCase());
+    return name.replace(/\b\w/g, char => char.toUpperCase());
   };
 
   const handleSliderLeftClick = (index: number) => {
@@ -60,107 +69,133 @@ export const HostelCard = ({hostel,currentLat,currentLong}:{hostel:HostelData,cu
     }
   };
   // Minimum Room Price Calculator
-  const minimumRoomPrice: number | null = Array.isArray(hostel.rooms) ? hostel.rooms?.filter((room) => room?.price?.baseAmountPerMonth != null).reduce((min: number, room: any) => {
-    return Math.min(min, room?.price?.baseAmountPerMonth)
-  }, hostel.rooms?.[ 0 ]?.price?.baseAmountPerMonth ?? Infinity)
+  const minimumRoomPrice: number | null = Array.isArray(hostel.rooms)
+    ? hostel.rooms
+        ?.filter(room => room?.price?.baseAmountPerMonth != null)
+        .reduce((min: number, room: any) => {
+          return Math.min(min, room?.price?.baseAmountPerMonth);
+        }, hostel.rooms?.[0]?.price?.baseAmountPerMonth ?? Infinity)
     : null;
 
   return (
     <div className="group card-bordered mb-2 flex h-full w-full cursor-pointer flex-col gap-4 rounded-xl bg-white pb-2 transition duration-200 ease-in-out hover:opacity-100 hover:shadow-lg">
-      <div className="relative h-[300px] w-full border-b-[1px] border-gray-300 rounded-xl">
-        <div className="relative h-full w-full group">
+      <div className="relative h-[300px] w-full rounded-xl border-b-[1px] border-gray-300">
+        <div className="group relative h-full w-full">
           <Image
-            src={imagesArray[ sliderCurrentIndex ]}
+            src={imagesArray[sliderCurrentIndex]}
             alt={hostel.name}
             fill
             className="rounded-xl rounded-b-none object-cover"
           />
           <div className="absolute inset-0 top-[60%]  bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-          <div className='absolute bottom-2 left-2 flex items-center gap-6 w-fit'  >
+          <div className="absolute bottom-2 left-2 flex w-fit items-center gap-6">
             <div>
-              <IoIosWifi className='w-5 h-5 text-white/80 font-semibold' />
+              <IoIosWifi className="h-5 w-5 font-semibold text-white/80" />
             </div>
             <div>
-              <FaShower className='w-5 h-5 text-white/80 font-semibold' />
+              <FaShower className="h-5 w-5 font-semibold text-white/80" />
             </div>
             <div>
-              <MdTableRestaurant className='w-5 h-5 text-white/80 font-semibold' />
+              <MdTableRestaurant className="h-5 w-5 font-semibold text-white/80" />
             </div>
             <div>
-              <GiCctvCamera className='w-5 h-5 text-white/80 font-semibold' />
+              <GiCctvCamera className="h-5 w-5 font-semibold text-white/80" />
             </div>
-
           </div>
           {/* slider section */}
-          {
-            imagesArray.length > 1 && (
-              <>
-                <div className='absolute bottom-[50%] left-2 flex items-center gap-6 w-fit'>
-                  <div className='rounded-full p-2 border border-white'>
-                    <FaChevronLeft className={`w-4 h-4 text-white group-hover:scale-105  transition duration-300 ease-in-out font-semibold ${sliderCurrentIndex === 0 ? 'opacity-50 cursor-not-allowed' : ''}`} onClick={() => handleSliderLeftClick(sliderCurrentIndex)} />
-                  </div>
+          {imagesArray.length > 1 && (
+            <>
+              <div className="absolute bottom-[50%] left-2 flex w-fit items-center gap-6">
+                <div className="rounded-full border border-white p-2">
+                  <FaChevronLeft
+                    className={`h-4 w-4 font-semibold text-white  transition duration-300 ease-in-out group-hover:scale-105 ${sliderCurrentIndex === 0 ? 'cursor-not-allowed opacity-50' : ''}`}
+                    onClick={() => handleSliderLeftClick(sliderCurrentIndex)}
+                  />
                 </div>
-                <div className='absolute bottom-[50%] right-2 flex items-center gap-6 w-fit'>
-                  <div className='rounded-full p-2 border border-white'>
-                    <FaChevronRight className={`w-4 h-4 text-white group-hover:scale-105  transition duration-300 ease-in-out font-semibold ${sliderCurrentIndex === imagesArray.length - 1 ? 'opacity-50 cursor-not-allowed' : ''}`} onClick={() => handleSliderRightClick(sliderCurrentIndex)} />
-                  </div>
+              </div>
+              <div className="absolute bottom-[50%] right-2 flex w-fit items-center gap-6">
+                <div className="rounded-full border border-white p-2">
+                  <FaChevronRight
+                    className={`h-4 w-4 font-semibold text-white  transition duration-300 ease-in-out group-hover:scale-105 ${sliderCurrentIndex === imagesArray.length - 1 ? 'cursor-not-allowed opacity-50' : ''}`}
+                    onClick={() => handleSliderRightClick(sliderCurrentIndex)}
+                  />
                 </div>
-              </>
-            )
-          }
+              </div>
+            </>
+          )}
         </div>
         <div className="absolute right-2 top-1 z-10">
-          <Badge className={` px-3 py-1 !text-xs uppercase tracking-wide font-bold text-white/90 ${getStatusColor("Available")} !rounded-md `}>Available</Badge>
+          <Badge
+            className={` px-3 py-1 !text-xs font-bold uppercase tracking-wide text-white/90 ${getStatusColor('Available')} !rounded-md `}>
+            Available
+          </Badge>
         </div>
-        <p className='absolute -bottom-3 right-1 text-white/90 bg-transparent p-1 px-3 rounded-md font-semibold'>{ hostel.genderType ? `For ${hostel.genderType.toLowerCase()}` : "" }</p>
+        <p className="absolute -bottom-3 right-1 rounded-md bg-transparent p-1 px-3 font-semibold text-white/90">
+          {hostel.genderType ? `For ${hostel.genderType.toLowerCase()}` : ''}
+        </p>
       </div>
 
       <div className="flex-grow overflow-y-auto px-2" style={{ maxHeight: '180px' }}>
         <div className="flex flex-wrap items-start justify-between gap-2">
-          <div className='flex flex-col leading-3'>
-            <h3 className="m-0 ml-1 text-2xl font-semibold text-gray-900">{capitalizeHostelName(hostel.name)}</h3>
+          <div className="flex flex-col leading-3">
+            <h3 className="m-0 ml-1 text-2xl font-semibold text-gray-900">
+              {capitalizeHostelName(hostel.name)}
+            </h3>
             <p className="text-capitalize my-1 flex items-center gap-2 text-xs text-primary/70">
-              <GrLocation className="text-red w-5 h-5 font-bold" />
+              <GrLocation className="h-5 w-5 font-bold text-red" />
               <span className="text-base text-gray-700">
                 {hostel.address?.subCity} {hostel.address?.city}, {hostel.address?.country}
               </span>
             </p>
             <p className="text-capitalize my-1 flex items-center gap-2 text-xs text-primary/70">
-              {currentLat && currentLong && hostel.address?.latitude && hostel.address?.longitude && <span className="text-base text-gray-700 flex">
-              <FaWalking className="text-red w-5 h-5 font-bold" />
-
-                In a walking distance of {calculateWalkingTime(hostel.address?.latitude, hostel.address?.longitude, currentLat, currentLong)} minutes
-              </span>}
+              {Boolean(currentLat) &&
+                Boolean(currentLong) &&
+                Boolean(hostel.address?.latitude) &&
+                Boolean(hostel.address?.longitude) && (
+                  <span className="flex text-base text-gray-700">
+                    <FaWalking className="h-5 w-5 font-bold text-red" />
+                    In a walking distance of{' '}
+                    {calculateWalkingTime(
+                      hostel.address?.latitude ?? 0,
+                      hostel.address?.longitude ?? 0,
+                      currentLat ?? 0,
+                      currentLong ?? 0,
+                    )}{' '}
+                    minutes
+                  </span>
+                )}
             </p>
           </div>
           <div className="flex-shrink-0">
-            <div className='rounded-full p-2 hover:bg-gray-200'>
-              <FaRegHeart className='w-6 h-6 text-red/65 font-semibold' />
+            <div className="rounded-full p-2 hover:bg-gray-200">
+              <FaRegHeart className="h-6 w-6 font-semibold text-red/65" />
             </div>
             {/* <span className='text-sm text-secondary/80 font-semibold'>{currency} {amount}</span> */}
           </div>
         </div>
-        <div className='flex items-center justify-between border-t border-gray-200 mt-3 pt-1'>
-          {
-            minimumRoomPrice != Infinity ? (
-              <div className=''>
-                <h3 className='text-sm m-0 font-semibold text-gray-600'>Starting with</h3>
-                <p className="m-0 text-base font-extrabold text-gray-400">
-                  Nrs <span className='text-secondary text-2xl'>{minimumRoomPrice}</span> /month
-                </p>
-              </div>
-            ) : <p>No price mentioned</p>
-          }
+        <div className="mt-3 flex items-center justify-between border-t border-gray-200 pt-1">
+          {minimumRoomPrice != Infinity ? (
+            <div className="">
+              <h3 className="m-0 text-sm font-semibold text-gray-600">Starting with</h3>
+              <p className="m-0 text-base font-extrabold text-gray-400">
+                Nrs <span className="text-2xl text-secondary">{minimumRoomPrice}</span> /month
+              </p>
+            </div>
+          ) : (
+            <p>No price mentioned</p>
+          )}
           <div className="mt-2 flex items-center justify-between gap-2">
             <Link href={`/hostel/${hostel.slug}`}>
-              <Button label={'View Details'} className="!bg-primary/90 hover:!bg-primary tracking-wide" />
+              <Button
+                label={'View Details'}
+                className="!bg-primary/90 tracking-wide hover:!bg-primary"
+              />
             </Link>
             {/* <div>
             <FaArrowCircleRight className='text-4xl text-gray-400 w-fit group-hover:text-primary/90 transition duration-300 ease-in-out' />
           </div> */}
           </div>
         </div>
-
       </div>
     </div>
   );
