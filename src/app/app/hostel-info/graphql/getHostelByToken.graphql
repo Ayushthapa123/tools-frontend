@@ -8,7 +8,9 @@ query getHostelByToken {
       hostelType
       verifiedBySuperAdmin
       verifiedByCommunityOwner
-      hasOnboardingComplete
+      hasOnboardingComplete 
+      admissionFee
+      depositAmount
     }
     error {
       message

@@ -8,20 +8,34 @@ import { motion } from 'framer-motion';
 import { domainConfig } from 'src/config/domainConfig';
 import { UserProfile } from '../UserProfile';
 import { CreateHostelModal } from 'src/app/app/hostel-info/CreateHostelModal';
-import { UserType } from 'src/gql/graphql';
+import { AllAmenitiesOption, GetHostelByToken, GetHostelByTokenQuery, GetHostelByTokenQueryVariables, UserType } from 'src/gql/graphql';
 import { Drawer } from '../Drawer';
+import { useGraphQLQuery } from 'src/hooks/useGraphqlQuery';
 
 export const CommonNav = () => {
   const { user } = useUserStore();
+
+  const { data: hostelData, isLoading } = useGraphQLQuery<
+  GetHostelByTokenQuery,
+  GetHostelByTokenQueryVariables
+>({
+  queryKey: ['getHostelByToken'],
+  query: GetHostelByToken.loc!.source.body,
+  variables: {},
+  enabled: !!user.userId,
+});
 
   return (
     <div
       className="sticky top-0 z-[999] flex h-[70px] w-full  flex-col  justify-center bg-white px-3 align-middle  shadow-sm md:h-[70px] md:px-[30px]"
       id="common-nav">
       <div className="flex w-full justify-between overflow-hidden ">
-        <div className=" flex-shrink-0  ">
+        <div className=" flex-shrink-0 flex ">
           <div className="relative h-[60px] w-[70px] md:h-[70px] ">
             <Logo />
+          </div>
+          <div className=' flex-col justify-center mt-2 hidden md:flex'>
+            <h3 className='font-bold'>{hostelData?.getHostelByToken?.data?.name}</h3>
           </div>
         </div>
         <div className="flex  flex-1" />

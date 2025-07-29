@@ -14,6 +14,7 @@ import {
   GetHostelByTokenQueryVariables,
   UpdateHostel,
   UpdateHostelMutation,
+  UpdateHostelInput,
   UpdateHostelMutationVariables,
 } from 'src/gql/graphql';
 import { AddressDetails } from './AddressDetails';
@@ -31,11 +32,11 @@ export const HostelInfo = () => {
   //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
   const fetchData = async () => {
     const res = await queryHostelData();
-    return res.getHostelByToken;
+    return res;
   };
 
   const { data: hostelData, isLoading } = useQuery({
-    queryKey: ['getHostelByToken'],
+    queryKey: ['getHostelByToken1'],
     queryFn: fetchData,
   });
 
@@ -43,9 +44,11 @@ export const HostelInfo = () => {
     <div className=" w-full">
       {!isLoading ? (
         <HostelInfoForm
-          hostelId={hostelData?.data?.id}
-          name={hostelData?.data?.name}
-          description={hostelData?.data?.description}
+          hostelId={Number(hostelData?.getHostelByToken?.data?.id) || undefined}
+          name={hostelData?.getHostelByToken?.data?.name}
+          description={hostelData?.getHostelByToken?.data?.description}
+          depositAmount={hostelData?.getHostelByToken?.data?.depositAmount}
+          admissionFee={hostelData?.getHostelByToken?.data?.admissionFee}
         />
       ) : (
         <div className=" relative h-[50vh] w-full">
@@ -53,11 +56,11 @@ export const HostelInfo = () => {
         </div>
       )}
 
-      {hostelData?.data?.id && (
+      {hostelData?.getHostelByToken?.data?.id && (
         <div>
           {
             <div className="card card-body card-bordered bg-white">
-              <HostelTabs hostelId={Number(hostelData.data.id)} />
+              <HostelTabs hostelId={Number(hostelData?.getHostelByToken?.data?.id)} />
             </div>
           }
         </div>
@@ -113,16 +116,10 @@ const HostelTabs = ({ hostelId }: { hostelId: number }) => {
   );
 };
 
-interface IProps {
-  hostelId?: string | null;
 
-  name?: string | null;
 
-  description?: string | null;
-}
-
-export const HostelInfoForm: FC<IProps> = props => {
-  const { name, description, hostelId } = props;
+export const HostelInfoForm: FC<UpdateHostelInput & { hostelId: number | undefined }> = props => {
+  const { name, description, hostelId, depositAmount, admissionFee } = props;
   const [hostelName, setHostelName] = useState<string | null>(null);
   const [hostelDescription, setHostelDescription] = useState<string | null>(description ?? null);
 
@@ -134,9 +131,11 @@ export const HostelInfoForm: FC<IProps> = props => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<IProps>({
+  } = useForm<UpdateHostelInput & { hostelId: number | undefined }>({
     defaultValues: {
       name: name,
+      depositAmount: depositAmount,
+      admissionFee: admissionFee,
     },
   });
 
@@ -148,9 +147,11 @@ export const HostelInfoForm: FC<IProps> = props => {
   const { mutateAsync: updateHostel, isPending } = useMutation({
     mutationFn: mutateUpdateHostelInfo,
   });
-  const handleSubmitForm = (data: IProps) => {
+  const handleSubmitForm = (data: UpdateHostelInput ) => {
     const name = data.name ?? undefined;
     const description = descriptionRef.current ?? '';
+    const depositAmount = Number(data.depositAmount) || undefined;
+    const admissionFee = Number(data.admissionFee) || undefined;
 
     if (hostelId) {
       //
@@ -162,6 +163,12 @@ export const HostelInfoForm: FC<IProps> = props => {
           }),
           ...(description && {
             description,
+          }),
+          ...(depositAmount && {
+            depositAmount,
+          }),
+          ...(admissionFee && {
+            admissionFee,
           }),
         },
       }).then(res => {
@@ -194,7 +201,36 @@ export const HostelInfoForm: FC<IProps> = props => {
             customType="name"
           />
         </div>
+     
       </div>
+      <div className="grid gap-[1rem] md:grid-cols-2">
+        <div>
+          <TextInput
+            name="admissionFee"
+            type="number"
+            customType="price"
+            placeholder="Admission Fee"
+            control={control}
+            label="Admission Fee"
+            // required
+            helpertext={errors.admissionFee?.type === 'required' ? 'Admission Fee Is Required' : ''}
+            error={!!errors.admissionFee}
+          />
+        </div>
+        <div>
+          <TextInput
+            name="depositAmount"
+            type="number"
+            customType="price"
+            placeholder="Deposit Amount"
+            control={control}
+            label="Deposit Amount"
+            // required
+            helpertext={errors.depositAmount?.type === 'required' ? 'Deposit Amount Is Required' : ''}
+            error={!!errors.depositAmount}
+          />
+        </div>
+        </div>
       <div>
         <RichTextEditor editorRef={descriptionRef} onChange={e => setHostelDescription(e)} />
       </div>
@@ -204,7 +240,7 @@ export const HostelInfoForm: FC<IProps> = props => {
             label={`${hostelId ? 'Update Hostel Info' : 'Create Hostel Info'}`}
             type="submit"
             loading={isPending}
-            disabled={hostelName == null && hostelDescription == description}
+            // disabled={ }
           />
         </div>
       </div>

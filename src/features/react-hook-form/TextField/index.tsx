@@ -224,7 +224,7 @@ const TextInput = <T extends FieldValues>(props: TextFieldProps<T>) => {
           height={size}
           type={getInputType()}
           {...(multiline ? { rows: rows || 3 } : {})}
-          inputMode={type === 'number' || type === 'price' ? 'numeric' : undefined}
+          inputMode={(type === 'number' || type === 'price' || customType === 'price') ? 'numeric' : undefined}
         />
       )}
     />

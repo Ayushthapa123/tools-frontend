@@ -43,7 +43,10 @@ export const HostelCard = (props: Iprops) => {
       if (res?.changeCurrentHostel) {
         enqueueSnackbar(`Active Listing Changed!`, { variant: 'success' });
         queryClient.invalidateQueries()
-        router.push("/app/")
+        router.push("/app/") 
+        setTimeout(() => {
+          window.location.reload()
+        }, 1000)
       } else {
         enqueueSnackbar('Something went wrong', { variant: 'error' });
       }

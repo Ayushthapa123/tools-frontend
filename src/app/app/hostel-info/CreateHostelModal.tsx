@@ -110,6 +110,9 @@ export const CreateHostelModal = () => {
       const res = await createHostel({
         input: {
           ...data,
+          hostelType: hostelType,
+          admissionFee: Number(data.admissionFee) || null,
+          depositAmount: Number(data.depositAmount) || null,
           address: {
             ...data.address,
             country: data.address?.country || '',
@@ -301,6 +304,36 @@ export const CreateHostelModal = () => {
                         error={!!errors.genderType}
                       />
                     </div>
+                    {hostelType !== HostelType.Travel && (
+                      <div>
+                        <TextInput
+                          name="admissionFee"
+                          type="price"
+                          customType='price'
+                          placeholder="Admission Fee"
+                          control={control}
+                          label="Admission Fee"
+                        // required
+                        helpertext={errors.admissionFee?.type === 'required' ? 'Admission Fee Is Required' : ''}
+                        error={!!errors.admissionFee}
+                      />
+                    </div>
+                    )}
+                     {hostelType !== HostelType.Travel&& (
+                      <div>
+                        <TextInput
+                          name="depositAmount"
+                          type="price"
+                          customType='number'
+                          placeholder="Deposit Amount"
+                          control={control}
+                          label="Deposit Amount"
+                        // required
+                        helpertext={errors.depositAmount?.type === 'required' ? 'Deposit Amount Is Required' : ''}
+                        error={!!errors.depositAmount}
+                      />
+                    </div>
+                    )}
                   </div>
                   <div className="">
                     {/* <label htmlFor="description" className="mb-2 block">
