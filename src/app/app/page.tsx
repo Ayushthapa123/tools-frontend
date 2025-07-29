@@ -35,9 +35,10 @@ export default function Home() {
       <div className="card relative flex w-full flex-col border bg-base-100 p-4 text-base-content shadow lg:flex-row">
         <div className="w-[70%] flex-grow">
           <h3 className="text-2xl  font-semibold mt-2">
-            Welcome Back! <span className="font-bold text-secondary">{user.userName}</span>
+            Welcome Back! <span className="font-bold text-secondary">{data?.data?.name}</span>
           </h3>
-          <p>
+          <p className='text-md text-primary'>
+            {/* {data?.data?.name} */}
             {/* {data?.address?.subCity} */}
             {/* {data?.address?.city}, {data?.address?.country} */}
           </p>
@@ -48,6 +49,7 @@ export default function Home() {
               label="See Digital Profile"
               className="rounded-lg bg-primary"
               variant="primary"
+              height="sm"
             />
           </Link>
         </div>

@@ -1,0 +1,12 @@
+mutation ChangeCurrentHostel($hostelId: Int!) {
+  changeCurrentHostel(hostelId: $hostelId) {
+    data {
+      id
+      
+    }
+    error {
+      message
+      code
+    }
+  }
+}

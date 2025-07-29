@@ -3,8 +3,7 @@ import './globals.css';
 import Head from 'next/head';
 import { TopLevelWrapper } from 'src/features/TopLevelWrapper';
 import { isHostelPilot } from 'src/config/domainConfig';
-import 'tinymce/skins/content/default/content.min.css';
-import 'tinymce/skins/ui/oxide/skin.min.css';
+
 
 
 export default function RootLayout({

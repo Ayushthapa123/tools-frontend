@@ -51,13 +51,23 @@ export const CommonNav = () => {
             <div className="flex flex-row-reverse gap-3">
             <div className=" flex gap-3 ">
               {user.userId && (
-                <div className=" flex flex-col justify-center ">
-                  <div className="flex gap-1 md:gap-2">
-                    <UserProfile />
+                <div className="flex flex-col justify-center">
+                  <div className="flex items-center gap-2 md:gap-4 bg-gray-50 rounded-lg px-3 py-2 shadow-sm transition hover:bg-gray-100">
+                    <Link href={'/app/my-listings'}>
+                      <button className="flex items-center gap-2 px-3 py-1 rounded-md bg-primary text-white font-semibold text-base md:text-lg shadow hover:bg-primary/90 transition">
+                        <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7M16 3v4M8 3v4m-5 4h18" />
+                        </svg>
+                        My Listings
+                      </button>
+                    </Link>
+                    <div className="ml-2">
+                      <UserProfile />
+                    </div>
                   </div>
                 </div>
               )}
-              <div className=" ">
+              <div className=" mt-2 ">
                 {user.userType !== UserType.Student && user.userId && (
                   <div className="left-0 top-[70px]  lg:hidden ">
                     <Drawer />

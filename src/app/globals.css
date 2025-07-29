@@ -269,7 +269,7 @@ body .pac-container {
   color: #1a1a1a;
   line-height: 1.8;
   margin: 0 auto;
-  padding: 1rem;
+  /* padding: 1rem; */
 }
 
 /* Headings */

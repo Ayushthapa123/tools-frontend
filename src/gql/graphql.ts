@@ -25,6 +25,7 @@ export type Address = {
   __typename?: 'Address';
   data?: Maybe<AddressData>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type AddressData = {
@@ -46,6 +47,7 @@ export type Amenities = {
   __typename?: 'Amenities';
   data?: Maybe<AmenitiesData>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type AmenitiesData = {
@@ -59,6 +61,7 @@ export type AmenityOption = {
   __typename?: 'AmenityOption';
   data?: Maybe<AmenityOptionData>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type AmenityOptionData = {
@@ -74,6 +77,7 @@ export type AmenityOptionList = {
   __typename?: 'AmenityOptionList';
   data?: Maybe<Array<AmenityOptionData>>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export enum Badges {
@@ -90,6 +94,7 @@ export type BlogPost = {
   __typename?: 'BlogPost';
   data?: Maybe<BlogPostData>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type BlogPostData = {
@@ -118,6 +123,7 @@ export type BlogPostList = {
   __typename?: 'BlogPostList';
   data?: Maybe<Array<BlogPostData>>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export enum BlogStatus {
@@ -139,6 +145,7 @@ export type Booking = {
   __typename?: 'Booking';
   data?: Maybe<BookingData>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type BookingConfirmationEmailDto = {
@@ -176,6 +183,7 @@ export type BookingList = {
   __typename?: 'BookingList';
   data?: Maybe<Array<BookingData>>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export enum BookingStatus {
@@ -206,6 +214,7 @@ export type ContactDetail = {
   __typename?: 'ContactDetail';
   data?: Maybe<ContactDetailData>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type ContactDetailData = {
@@ -524,6 +533,7 @@ export type DynamicPricingRule = {
   __typename?: 'DynamicPricingRule';
   data?: Maybe<DynamicPricingRuleData>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type DynamicPricingRuleData = {
@@ -546,6 +556,7 @@ export type DynamicPricingRuleList = {
   __typename?: 'DynamicPricingRuleList';
   data?: Maybe<Array<DynamicPricingRuleData>>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type FoodMenuData = {
@@ -572,6 +583,7 @@ export type Gallery = {
   __typename?: 'Gallery';
   data?: Maybe<GalleryData>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type GalleryData = {
@@ -590,6 +602,7 @@ export type GalleryList = {
   __typename?: 'GalleryList';
   data?: Maybe<Array<GalleryData>>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export enum GalleryType {
@@ -628,6 +641,7 @@ export type Hostel = {
   __typename?: 'Hostel';
   data?: Maybe<HostelData>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export enum HostelAmenityType {
@@ -643,6 +657,7 @@ export type HostelApplicationForm = {
   __typename?: 'HostelApplicationForm';
   data?: Maybe<HostelApplicationFormData>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type HostelApplicationFormData = {
@@ -672,6 +687,7 @@ export type HostelApplicationFormList = {
   __typename?: 'HostelApplicationFormList';
   data?: Maybe<Array<HostelApplicationFormData>>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type HostelArrayResponse = {
@@ -724,6 +740,7 @@ export type HostelGuest = {
   __typename?: 'HostelGuest';
   data?: Maybe<HostelGuestData>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type HostelGuestData = {
@@ -754,18 +771,21 @@ export type HostelGuestList = {
   __typename?: 'HostelGuestList';
   data?: Maybe<Array<HostelGuestData>>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type HostelList = {
   __typename?: 'HostelList';
   data?: Maybe<Array<HostelData>>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type HostelRules = {
   __typename?: 'HostelRules';
   data?: Maybe<HostelRulesData>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type HostelRulesData = {
@@ -779,6 +799,7 @@ export type HostelSearchForm = {
   __typename?: 'HostelSearchForm';
   data?: Maybe<HostelSearchFormData>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type HostelSearchFormData = {
@@ -804,12 +825,14 @@ export type HostelSearchFormList = {
   __typename?: 'HostelSearchFormList';
   data?: Maybe<Array<HostelSearchFormData>>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type HostelSellForm = {
   __typename?: 'HostelSellForm';
   data?: Maybe<HostelSellFormData>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type HostelSellFormData = {
@@ -837,12 +860,14 @@ export type HostelSellFormList = {
   __typename?: 'HostelSellFormList';
   data?: Maybe<Array<HostelSellFormData>>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type HostelService = {
   __typename?: 'HostelService';
   data?: Maybe<HostelServiceData>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type HostelServiceData = {
@@ -866,6 +891,7 @@ export type HostelServiceList = {
   __typename?: 'HostelServiceList';
   data?: Maybe<Array<HostelServiceData>>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export enum HostelServiceType {
@@ -881,6 +907,7 @@ export type HostelSetting = {
   __typename?: 'HostelSetting';
   data?: Maybe<HostelSettingData>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type HostelSettingData = {
@@ -923,6 +950,7 @@ export type LogoutResponse = {
 export type Mutation = {
   __typename?: 'Mutation';
   cancelHostelService: HostelService;
+  changeCurrentHostel: User;
   changePassword: Scalars['String']['output'];
   completeHostelService: HostelService;
   completeOnboarding: Hostel;
@@ -1018,6 +1046,11 @@ export type Mutation = {
 
 export type MutationCancelHostelServiceArgs = {
   id: Scalars['Float']['input'];
+};
+
+
+export type MutationChangeCurrentHostelArgs = {
+  hostelId: Scalars['Int']['input'];
 };
 
 
@@ -1487,6 +1520,16 @@ export type NearbyPlaceData = {
   name: Scalars['String']['output'];
 };
 
+export type Pagination = {
+  __typename?: 'Pagination';
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPreviousPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  page: Scalars['Int']['output'];
+  total: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
 export enum PaymentPlatformName {
   Esewa = 'ESEWA',
   Khalti = 'KHALTI',
@@ -1497,6 +1540,7 @@ export type Price = {
   __typename?: 'Price';
   data?: Maybe<PriceData>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type PriceData = {
@@ -1563,6 +1607,7 @@ export type Query = {
   getHostelServiceById: HostelService;
   getHostelServicesByHostelId: HostelServiceList;
   getHostelsBySearch: HostelList;
+  getHostelsByUserToken: HostelArrayResponse;
   getOnboardingData: Hostel;
   getRoomImagesByRoomId?: Maybe<RoomImageList>;
   getRulesByHostel: HostelRules;
@@ -1776,6 +1821,12 @@ export type QueryGetHostelsBySearchArgs = {
 };
 
 
+export type QueryGetHostelsByUserTokenArgs = {
+  pageNumber?: Scalars['Int']['input'];
+  pageSize?: Scalars['Int']['input'];
+};
+
+
 export type QueryGetRoomImagesByRoomIdArgs = {
   roomId: Scalars['Int']['input'];
 };
@@ -1881,12 +1932,14 @@ export type Room = {
   __typename?: 'Room';
   data?: Maybe<RoomData>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type RoomAmenity = {
   __typename?: 'RoomAmenity';
   data?: Maybe<RoomAmenityData>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type RoomAmenityData = {
@@ -1902,6 +1955,7 @@ export type RoomAmenityOption = {
   __typename?: 'RoomAmenityOption';
   data?: Maybe<RoomAmenityOptionData>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type RoomAmenityOptionData = {
@@ -1916,6 +1970,7 @@ export type RoomAmenityOptionList = {
   __typename?: 'RoomAmenityOptionList';
   data?: Maybe<Array<RoomAmenityOptionData>>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export enum RoomCapacity {
@@ -1954,6 +2009,7 @@ export type RoomImage = {
   __typename?: 'RoomImage';
   data?: Maybe<RoomImageData>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type RoomImageData = {
@@ -1975,12 +2031,14 @@ export type RoomImageList = {
   __typename?: 'RoomImageList';
   data?: Maybe<Array<RoomImageData>>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type RoomList = {
   __typename?: 'RoomList';
   data?: Maybe<Array<RoomData>>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export enum RoomStatus {
@@ -2011,6 +2069,7 @@ export type SearchQuery = {
   __typename?: 'SearchQuery';
   data?: Maybe<Array<SearchQueryData>>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type SearchQueryData = {
@@ -2027,6 +2086,7 @@ export type Service = {
   __typename?: 'Service';
   data?: Maybe<ServiceData>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type ServiceData = {
@@ -2040,6 +2100,7 @@ export type ServiceOption = {
   __typename?: 'ServiceOption';
   data?: Maybe<ServiceOptionData>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type ServiceOptionData = {
@@ -2054,6 +2115,7 @@ export type ServiceOptionList = {
   __typename?: 'ServiceOptionList';
   data?: Maybe<Array<ServiceOptionData>>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type SignupInput = {
@@ -2379,6 +2441,7 @@ export type User = {
   __typename?: 'User';
   data?: Maybe<UserData>;
   error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
 };
 
 export type UserData = {
@@ -2739,6 +2802,21 @@ export type GetAllHostelServicesQueryVariables = Exact<{ [key: string]: never; }
 
 
 export type GetAllHostelServicesQuery = { __typename?: 'Query', getAllHostelServices: { __typename?: 'HostelServiceList', data?: Array<{ __typename?: 'HostelServiceData', id: string, title: string, description?: string | null, hostelServiceType: HostelServiceType, priority: Priority, status: Status, budget?: number | null, dueDate?: any | null, completionDate?: any | null, createdAt: any, hostel?: { __typename?: 'HostelData', name: string } | null }> | null, error?: { __typename?: 'GraphQLError', message: string } | null } };
+
+export type ChangeCurrentHostelMutationVariables = Exact<{
+  hostelId: Scalars['Int']['input'];
+}>;
+
+
+export type ChangeCurrentHostelMutation = { __typename?: 'Mutation', changeCurrentHostel: { __typename?: 'User', data?: { __typename?: 'UserData', id: string } | null, error?: { __typename?: 'GraphQLError', message: string, code?: string | null } | null } };
+
+export type GetAllListingsByUserIdQueryVariables = Exact<{
+  pageSize?: InputMaybe<Scalars['Int']['input']>;
+  pageNumber?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type GetAllListingsByUserIdQuery = { __typename?: 'Query', getHostelsByUserToken: { __typename?: 'HostelArrayResponse', data: Array<{ __typename?: 'HostelData', id: string, name: string, description?: string | null, slug: string, verifiedByCommunityOwner: boolean, verifiedBySuperAdmin: boolean, ownerId: number, createdAt: any, updatedAt: any, address?: { __typename?: 'AddressData', id: string, country: string, city: string, subCity?: string | null, street?: string | null, latitude?: number | null, longitude?: number | null } | null, owner?: { __typename?: 'UserData', email: string, fullName: string } | null, contact?: { __typename?: 'ContactDetailData', id: string, phone: string, altPhone?: string | null, email: string } | null, rooms?: Array<{ __typename?: 'RoomData', id: string, status: RoomStatus, capacity: RoomCapacity, caption: string, description?: string | null, roomNumber?: string | null, maxOccupancy?: string | null, attachBathroom?: boolean | null, price?: { __typename?: 'PriceData', id: string, baseAmountPerDay?: number | null, baseAmountPerMonth: number, currency: Currency, discountAmount?: number | null, discountType?: DiscountType | null, isDynamicPricing: boolean, isDiscountActive: boolean } | null, image: Array<{ __typename?: 'RoomImageData', id: string, caption?: string | null, url: string }> }> | null, gallery: Array<{ __typename?: 'GalleryData', id: string, caption?: string | null, url: string }> }>, error?: { __typename?: 'GraphQLError', message: string, code?: string | null } | null } };
 
 export type ChangePasswordMutationVariables = Exact<{
   userId: Scalars['Float']['input'];
@@ -3311,6 +3389,8 @@ export const UpdateHostelDocument = {"kind":"Document","definitions":[{"kind":"O
 export const GetAllHostelsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllHostels"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageNumber"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"isSuperAdmin"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAllHostels"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pageSize"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}}},{"kind":"Argument","name":{"kind":"Name","value":"pageNumber"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageNumber"}}},{"kind":"Argument","name":{"kind":"Name","value":"isSuperAdmin"},"value":{"kind":"Variable","name":{"kind":"Name","value":"isSuperAdmin"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"verifiedByCommunityOwner"}},{"kind":"Field","name":{"kind":"Name","value":"verifiedBySuperAdmin"}},{"kind":"Field","name":{"kind":"Name","value":"ownerId"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"address"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"country"}},{"kind":"Field","name":{"kind":"Name","value":"city"}},{"kind":"Field","name":{"kind":"Name","value":"subCity"}},{"kind":"Field","name":{"kind":"Name","value":"street"}},{"kind":"Field","name":{"kind":"Name","value":"latitude"}},{"kind":"Field","name":{"kind":"Name","value":"longitude"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"fullName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"contact"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"altPhone"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"Field","name":{"kind":"Name","value":"rooms"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"capacity"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"roomNumber"}},{"kind":"Field","name":{"kind":"Name","value":"maxOccupancy"}},{"kind":"Field","name":{"kind":"Name","value":"attachBathroom"}},{"kind":"Field","name":{"kind":"Name","value":"price"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"baseAmountPerDay"}},{"kind":"Field","name":{"kind":"Name","value":"baseAmountPerMonth"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"discountAmount"}},{"kind":"Field","name":{"kind":"Name","value":"discountType"}},{"kind":"Field","name":{"kind":"Name","value":"isDynamicPricing"}},{"kind":"Field","name":{"kind":"Name","value":"isDiscountActive"}}]}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"gallery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllHostelsQuery, GetAllHostelsQueryVariables>;
 export const VerifyHostelDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"VerifyHostel"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"hostelId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"status"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"verifyHostel"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"hostelId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"hostelId"}}},{"kind":"Argument","name":{"kind":"Name","value":"status"},"value":{"kind":"Variable","name":{"kind":"Name","value":"status"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<VerifyHostelMutation, VerifyHostelMutationVariables>;
 export const GetAllHostelServicesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllHostelServices"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAllHostelServices"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"hostelServiceType"}},{"kind":"Field","name":{"kind":"Name","value":"priority"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"budget"}},{"kind":"Field","name":{"kind":"Name","value":"dueDate"}},{"kind":"Field","name":{"kind":"Name","value":"completionDate"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"hostel"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllHostelServicesQuery, GetAllHostelServicesQueryVariables>;
+export const ChangeCurrentHostelDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ChangeCurrentHostel"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"hostelId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"changeCurrentHostel"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"hostelId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"hostelId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<ChangeCurrentHostelMutation, ChangeCurrentHostelMutationVariables>;
+export const GetAllListingsByUserIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllListingsByUserId"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageNumber"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getHostelsByUserToken"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pageSize"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}}},{"kind":"Argument","name":{"kind":"Name","value":"pageNumber"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageNumber"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"verifiedByCommunityOwner"}},{"kind":"Field","name":{"kind":"Name","value":"verifiedBySuperAdmin"}},{"kind":"Field","name":{"kind":"Name","value":"ownerId"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"address"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"country"}},{"kind":"Field","name":{"kind":"Name","value":"city"}},{"kind":"Field","name":{"kind":"Name","value":"subCity"}},{"kind":"Field","name":{"kind":"Name","value":"street"}},{"kind":"Field","name":{"kind":"Name","value":"latitude"}},{"kind":"Field","name":{"kind":"Name","value":"longitude"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"fullName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"contact"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"altPhone"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"Field","name":{"kind":"Name","value":"rooms"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"capacity"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"roomNumber"}},{"kind":"Field","name":{"kind":"Name","value":"maxOccupancy"}},{"kind":"Field","name":{"kind":"Name","value":"attachBathroom"}},{"kind":"Field","name":{"kind":"Name","value":"price"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"baseAmountPerDay"}},{"kind":"Field","name":{"kind":"Name","value":"baseAmountPerMonth"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"discountAmount"}},{"kind":"Field","name":{"kind":"Name","value":"discountType"}},{"kind":"Field","name":{"kind":"Name","value":"isDynamicPricing"}},{"kind":"Field","name":{"kind":"Name","value":"isDiscountActive"}}]}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"gallery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllListingsByUserIdQuery, GetAllListingsByUserIdQueryVariables>;
 export const ChangePasswordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ChangePassword"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ChangePasswordInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"changePassword"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"userId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}},{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}]}}]} as unknown as DocumentNode<ChangePasswordMutation, ChangePasswordMutationVariables>;
 export const GetUserByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getUserById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getUserById"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isVerified"}},{"kind":"Field","name":{"kind":"Name","value":"fullName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"phoneNumber"}},{"kind":"Field","name":{"kind":"Name","value":"altPhoneNumber"}},{"kind":"Field","name":{"kind":"Name","value":"city"}},{"kind":"Field","name":{"kind":"Name","value":"gender"}},{"kind":"Field","name":{"kind":"Name","value":"dateOfBirth"}},{"kind":"Field","name":{"kind":"Name","value":"profilePicture"}},{"kind":"Field","name":{"kind":"Name","value":"hostelId"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<GetUserByIdQuery, GetUserByIdQueryVariables>;
 export const MyBookingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"MyBookings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"myBookings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"roomId"}},{"kind":"Field","name":{"kind":"Name","value":"bookingKey"}},{"kind":"Field","name":{"kind":"Name","value":"guestId"}},{"kind":"Field","name":{"kind":"Name","value":"startDate"}},{"kind":"Field","name":{"kind":"Name","value":"endDate"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"paymentPlatformName"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"room"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"roomNumber"}},{"kind":"Field","name":{"kind":"Name","value":"capacity"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"attachBathroom"}},{"kind":"Field","name":{"kind":"Name","value":"maxOccupancy"}},{"kind":"Field","name":{"kind":"Name","value":"price"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"baseAmountPerDay"}},{"kind":"Field","name":{"kind":"Name","value":"baseAmountPerMonth"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"guest"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"fullName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<MyBookingsQuery, MyBookingsQueryVariables>;
@@ -4227,6 +4307,89 @@ export const GetAllHostelServices = gql`
     }
     error {
       message
+    }
+  }
+}
+    `;
+export const ChangeCurrentHostel = gql`
+    mutation ChangeCurrentHostel($hostelId: Int!) {
+  changeCurrentHostel(hostelId: $hostelId) {
+    data {
+      id
+    }
+    error {
+      message
+      code
+    }
+  }
+}
+    `;
+export const GetAllListingsByUserId = gql`
+    query GetAllListingsByUserId($pageSize: Int, $pageNumber: Int) {
+  getHostelsByUserToken(pageSize: $pageSize, pageNumber: $pageNumber) {
+    data {
+      id
+      name
+      description
+      slug
+      verifiedByCommunityOwner
+      verifiedBySuperAdmin
+      ownerId
+      createdAt
+      updatedAt
+      address {
+        id
+        country
+        city
+        subCity
+        street
+        latitude
+        longitude
+      }
+      owner {
+        email
+        fullName
+      }
+      contact {
+        id
+        phone
+        altPhone
+        email
+      }
+      rooms {
+        id
+        status
+        capacity
+        caption
+        description
+        roomNumber
+        maxOccupancy
+        attachBathroom
+        price {
+          id
+          baseAmountPerDay
+          baseAmountPerMonth
+          currency
+          discountAmount
+          discountType
+          isDynamicPricing
+          isDiscountActive
+        }
+        image {
+          id
+          caption
+          url
+        }
+      }
+      gallery {
+        id
+        caption
+        url
+      }
+    }
+    error {
+      message
+      code
     }
   }
 }
