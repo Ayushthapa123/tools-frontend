@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRef, useState } from 'react';
-import { FaChevronLeft, FaChevronRight, FaRegHeart, FaShower, FaWalking } from 'react-icons/fa';
+import { FaArrowRight, FaChevronLeft, FaChevronRight, FaRegHeart, FaShower, FaWalking } from 'react-icons/fa';
 import { GiCctvCamera } from 'react-icons/gi';
 import { GrLocation } from 'react-icons/gr';
 import { IoIosWifi } from 'react-icons/io';
@@ -189,11 +189,11 @@ export const HostelCard = ({
               <Button
                 label={'View Details'}
                 className="!bg-primary/90 tracking-wide hover:!bg-primary"
+                height="sm"
+                endAdornment={<FaArrowRight />}
               />
             </Link>
-            {/* <div>
-            <FaArrowCircleRight className='text-4xl text-gray-400 w-fit group-hover:text-primary/90 transition duration-300 ease-in-out' />
-          </div> */}
+          
           </div>
         </div>
       </div>

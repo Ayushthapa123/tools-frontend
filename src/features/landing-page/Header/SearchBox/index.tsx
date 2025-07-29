@@ -110,8 +110,8 @@ export const SearchBox = () => {
     if (clickedLatLng) searchParams.set('lat', clickedLatLng.lat?.toString() ?? '');
     if (clickedLatLng) searchParams.set('lng', clickedLatLng.lng?.toString() ?? '');
     if (selectedRadius) searchParams.set('radius', selectedRadius);
-    if (selectedGender) searchParams.set('gender', selectedGender);
-    if (selectedRoomType) searchParams.set('roomType', selectedRoomType);
+    if (selectedGender) searchParams.set('genderType', selectedGender);
+    if (selectedRoomType) searchParams.set('roomCapacity', selectedRoomType);
     if (selectedPriceRange) searchParams.set('priceRange', selectedPriceRange);
     if (!city && !query) {
       router.push(`/search?${searchParams.toString()}`);

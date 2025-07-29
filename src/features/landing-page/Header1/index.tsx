@@ -2,7 +2,7 @@ import { FaBusinessTime, FaClipboardList, FaSearch } from 'react-icons/fa';
 import { MdAnalytics, MdBookOnline, MdSocialDistance } from 'react-icons/md';
 import { IntegratedWith } from '../integrated-with';
 import Link from 'next/link';
-import LogIn from 'src/app/login/LogIn';
+// import LogIn from 'src/app/login/LogIn';
 import { BsArrowRight } from 'react-icons/bs';
 
 export const Header = () => {
@@ -36,7 +36,7 @@ export const Header = () => {
         </div>
       </div>
       <div className="flex">
-        <LogIn />
+        {/* <LogIn /> */}
       </div>
     </div>
   );

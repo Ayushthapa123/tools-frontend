@@ -10,6 +10,18 @@ export const SitemapPage = async () => {
       priority: 1,
     },
     {
+      url: 'https://hostelpilot.com/login',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 1,
+    },
+    {
+      url: 'https://hostelpilot.com/signup',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 1,
+    },
+    {
       url: 'https://hostelpilot.com/blogs',
       lastModified: new Date(),
       changeFrequency: 'weekly',

@@ -4,14 +4,15 @@ export default function Pricing() {
   const pricingDetails = [
     {
       planType: 'Basic(Free)',
-      planFor: 'small hostels (up to 30 students)',
+      planFor: 'small hostels (up to 40 students)',
       monthlyPrice: 0,
       features: [
         "Free publicity on platform",
         "List your hostel with photos & details",
-        "Manage up to 30 students",
+        "Manage up to 40 students",
         "Basic dashboard",
-        "Share digital hostel profile link"
+        "Share digital hostel profile link",
+        "Get Bookings/Application Form",
       ],
       ctaText: "Get Started",
     },
@@ -21,13 +22,13 @@ export default function Pricing() {
       monthlyPrice: 1499,
       features: [
         "Everything in Basic",
-        "Unlimited student management",
+        "100 active student management",
         "Staff & Warden management",
         "Vacancy alerts & notifications",
-        "Online payment tracking (manual entry)",
         "Enhanced hostel profile with customization",
         "Basic analytics & monthly reports",
-        "Featured listing in search results"
+        "Featured listing in search results",
+        "Online Student Application Form",
       ],
       ctaText: "Start with PRO",
     },
@@ -39,11 +40,11 @@ export default function Pricing() {
         "Everything in Pro",
         "Custom branding (logo & colors)",
         "Advanced reports & analytics",
-        "Online payment gateway integration",
+        // "Online payment gateway integration",
         "Multi-branch hostel management",
         "Priority support & dedicated manager",
         "API access for integrations",
-        "Bulk communication (SMS/Email)",
+        "Bulk communication (SMS/Email) For Birthday/Events",
         "Community & forum features for students"
       ],
       ctaText: "Get Started",
