@@ -2,20 +2,14 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import {
   ChangeCurrentHostel,
-  Hostel,
   HostelData,
-  UserType,
-  VerifyHostel,
-  VerifyHostelMutation,
-  VerifyHostelMutationVariables,
+
 } from 'src/gql/graphql';
-import { useToastStore } from 'src/store/toastStore';
 import Image from 'next/image';
 import RichTextEditor from 'src/components/RichTextEditor';
 import { useRef } from 'react';
 import { useUserStore } from 'src/store/userStore';
 import { enqueueSnackbar } from 'notistack';
-import CustomEmailModal from 'src/features/CustomEmailModal';
 import { ChangeCurrentHostelMutation, ChangeCurrentHostelMutationVariables } from 'src/gql/graphql';
 import { useRouter } from 'next/navigation';
 interface Iprops {
@@ -71,11 +65,7 @@ export const HostelCard = (props: Iprops) => {
     ? `${hostel?.address.city || ''}${hostel?.address.subCity ? `, ${hostel?.address.subCity}` : ''}`
     : 'Location not specified';
 
-  const isVerified =
-    user.userType === UserType.Superadmin
-      ? hostel?.verifiedBySuperAdmin
-      : hostel?.verifiedByCommunityOwner;
-
+  const isVerified =hostel.verifiedBySuperAdmin
   return (
     <div className="card card-side min-h-[280px] overflow-hidden bg-base-100 shadow-xl transition-all duration-300 hover:shadow-2xl">
       {/* Image Section */}
@@ -118,11 +108,10 @@ export const HostelCard = (props: Iprops) => {
                 </svg>
                 <span>{location}</span>
               </div>
-              {firstRoom?.status && (
-                <div className={`badge ${getStatusColor(firstRoom.status)}`}>
-                  {firstRoom.status}
+                <div className={`badge ${getStatusColor(firstRoom?.status || '')}`}>
+                  {isVerified ? 'Verified' : 'Not Verified'}
                 </div>
-              )}
+            
             </div>
           </div>
           <div className="form-control">
@@ -145,8 +134,7 @@ export const HostelCard = (props: Iprops) => {
           {/* Description */}
           {hostel?.description && <RichTextEditor editorRef={editorRef} readOnly={true} />}
 
-          {/* Price */}
-          {firstRoom?.price && (
+       
             <div className="flex items-center justify-between rounded-lg bg-base-200 p-3">
               <div className="flex items-center">
                 <svg
@@ -165,33 +153,37 @@ export const HostelCard = (props: Iprops) => {
                 </svg>
                 <div>
                   <span className="text-2xl font-bold text-primary">
-                    {firstRoom.price.currency}{' '}
-                    {firstRoom.price.baseAmountPerMonth?.toLocaleString()}
+                    Admission Fee: {hostel?.admissionFee}{' '}
+                 
                   </span>
                   <span className="ml-1 text-sm text-gray-500">/night</span>
                 </div>
               </div>
-              {firstRoom.capacity && (
-                <div className="flex items-center text-sm text-gray-500">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="mr-1 h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                    />
-                  </svg>
-                  <span>Capacity: {firstRoom.capacity}</span>
+              <div className="flex items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="mr-2 h-6 w-6 text-primary"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <div>
+                  <span className="text-2xl font-bold text-primary">
+                    Deposit Fee: {hostel?.depositAmount}{' '}
+                 
+                  </span>
+                  <span className="ml-1 text-sm text-gray-500">/night</span>
                 </div>
-              )}
+              </div>
+           
             </div>
-          )}
 
           {/* Contact Information */}
           {hostel?.contact && (
@@ -233,24 +225,7 @@ export const HostelCard = (props: Iprops) => {
             </div>
           )}
 
-          {/* Amenities */}
-          {hostel?.amenities && (
-            <div className="space-y-2">
-              <h3 className="text-sm font-semibold text-gray-500">Amenities</h3>
-              <div className="flex flex-wrap gap-2">
-                {Object.entries(hostel?.amenities || {}).map(([key, value]) => {
-                  if (value) {
-                    return (
-                      <div key={key} className="badge badge-primary badge-outline">
-                        {key.replace(/([A-Z])/g, ' $1').trim()}
-                      </div>
-                    );
-                  }
-                  return null;
-                })}
-              </div>
-            </div>
-          )}
+         
         </div>
       </div>
     </div>

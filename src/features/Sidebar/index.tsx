@@ -144,7 +144,7 @@ const Sidebar = () => {
       text: ' Applications',
       href: '/app/applications',
       children: false,
-      show: user.userType === UserType.HostelOwner,
+      show: user.userType === UserType.HostelOwner || user.userType === UserType.Superadmin,
     },
     {
       icon: <RulesIcon className="text-primary" />,

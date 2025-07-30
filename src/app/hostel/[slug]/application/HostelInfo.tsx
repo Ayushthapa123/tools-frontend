@@ -34,6 +34,8 @@ interface HostelInfoProps {
   selectedRoomId?: string;
   slug: string;
   onRoomSelect?: (roomId: string) => void;
+  admissionFee?: number;
+  depositAmount?: number;
 }
 
 export const HostelInfo = ({
@@ -46,6 +48,8 @@ export const HostelInfo = ({
   rooms,
   selectedRoomId,
   slug,
+  admissionFee,
+  depositAmount,
 }: HostelInfoProps) => {
   const searchParams = useSearchParams();
   const { setRoomIds, roomIds } = useRoomStore();
@@ -88,6 +92,20 @@ export const HostelInfo = ({
               {address.street}, {address.subCity}, {address.city}, {address.country}
             </p>
           </div>
+          {/* <div className="flex items-center gap-8 mb-6">
+              <div className="flex items-center bg-blue-50 rounded-lg px-4 py-2">
+                <span className="text-blue-700 font-semibold mr-2">Admission Fee:</span>
+                <span className="text-lg font-bold text-gray-800">
+                  {admissionFee ? `रु${admissionFee}` : 'N/A'}
+                </span>
+              </div>
+              <div className="flex items-center bg-blue-50 rounded-lg px-4 py-2">
+                <span className="text-blue-700 font-semibold mr-2">Deposit Fee:</span>
+                <span className="text-lg font-bold text-gray-800">
+                  {depositAmount ? `रु${depositAmount}` : 'N/A'}
+                </span>
+              </div>
+            </div> */}
           {/* Tabs Navigation */}
           <div className="border-b border-gray-200">
             <nav className=" flex justify-between space-x-2">
@@ -182,7 +200,7 @@ export const HostelInfo = ({
                   )}
                   {(!rooms || rooms.length === 0) && (
                     <div className="rounded-lg bg-yellow-50 p-4 text-center text-yellow-800">
-                      No rooms are currently available for this property.
+                      {/* No rooms are currently available for this property. */}
                     </div>
                   )}
                 </div>

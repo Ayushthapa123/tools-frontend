@@ -62,10 +62,10 @@ export default function MainContent(props: Iprops) {
               {/* Rules section */}
               <div className="mt-4 rounded-xl rounded-t-none border-t-2 border-gray-100 bg-white/70 pt-1">
                 <h2 className=" text-2xl font-semibold text-gray-800">Rules/Criteria</h2>
-                <div className="prose max-w-none">
+                <div className=" max-w-none">
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: hostel?.data?.hostelRules?.rules.rules ?? '',
+                      __html: hostel?.data?.hostelRules?.rules ?? '',
                     }}
                   />
                 </div>
@@ -147,6 +147,35 @@ export default function MainContent(props: Iprops) {
                         className="bg-blue-50 text-blue-600 hover:bg-blue-100 flex h-10 w-10 items-center justify-center rounded-full transition-colors">
                         <GrYoutube className="h-7 w-7 text-secondary lg:h-6 lg:w-6" />
                       </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="rounded-xl bg-white p-6 shadow-sm">
+                <h3 className="mb-4 border-b border-gray-200 pb-2 text-lg font-semibold text-gray-800">
+                  Hostel Fees
+                </h3>
+                <div className="flex flex-col md:flex-row lg:flex-col gap-4">
+                  <div className="flex-1 flex items-center p-4 rounded-lg bg-gradient-to-r from-blue-50 to-blue-100 shadow-sm mb-2">
+                    <div className="flex items-center justify-center h-10 w-10 rounded-full bg-blue-200 mr-4">
+                      <span className="text-blue-700 font-bold text-lg">रु</span>
+                    </div>
+                    <div>
+                      <div className="text-gray-700 font-medium">Admission Fee</div>
+                      <div className="text-blue-700 text-xl font-semibold">
+                        {hostel?.data?.admissionFee ? `रु${hostel?.data?.admissionFee}` : 'N/A'}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex-1 flex items-center p-4 rounded-lg bg-gradient-to-r from-blue-50 to-blue-100 shadow-sm mb-2">
+                    <div className="flex items-center justify-center h-10 w-10 rounded-full bg-blue-200 mr-4">
+                      <span className="text-blue-700 font-bold text-lg">रु</span>
+                    </div>
+                    <div>
+                      <div className="text-gray-700 font-medium">Deposit Fee</div>
+                      <div className="text-blue-700 text-xl font-semibold">
+                        {hostel?.data?.depositAmount ? `रु${hostel?.data?.depositAmount}` : 'N/A'}
+                      </div>
                     </div>
                   </div>
                 </div>

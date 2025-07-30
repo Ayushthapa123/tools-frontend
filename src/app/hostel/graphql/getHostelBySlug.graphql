@@ -3,7 +3,9 @@ query getHostelBySlug($slug: String!) {
     data {
       id
       name
-      description
+      description 
+      admissionFee
+      depositAmount
 
       slug
       verifiedBySuperAdmin

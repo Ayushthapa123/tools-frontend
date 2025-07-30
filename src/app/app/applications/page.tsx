@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 // import { MapComponent } from './GoogleMap';
 import { AllForms } from './AllApplications';
-import { MapProvider } from 'src/features/MapProvider';
 import { useUserStore } from 'src/store/userStore';
 import { UserType } from 'src/gql/graphql';
 import { notFound } from 'next/navigation';
@@ -16,9 +15,7 @@ export default function Home() {
       <div className="flex w-full items-center justify-center ">
         <div className="  w-full  max-w-[1400px]">
           <div>
-            <MapProvider>
               <LocationTabs />
-            </MapProvider>
           </div>
         </div>
       </div>

@@ -101,12 +101,15 @@ export default function BookingPage({slug}:{slug:string}) {
               selectedRoomId={""} // TODO: some change needed
               slug={slug}
               onRoomSelect={() => {}}
+              admissionFee={hostel.data?.admissionFee ?? undefined}
+              depositAmount={hostel.data?.depositAmount ?? undefined}
             />
           </div>
 
           {/* Right Column - Booking Form */}
           <div className="rounded-lg bg-white p-6 shadow-md">
             <h2 className="mb-6 text-2xl font-bold">Hostel Application Form</h2>
+        
          
           <ApplicationForm slug={slug} hostelId={Number(hostel.data?.id)} />
         

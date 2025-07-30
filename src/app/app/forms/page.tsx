@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 // import { MapComponent } from './GoogleMap';
 import { AllForms } from './AllForms';
-import { MapProvider } from 'src/features/MapProvider';
 import { useUserStore } from 'src/store/userStore';
 import { UserType } from 'src/gql/graphql';
 import { notFound } from 'next/navigation';
@@ -18,9 +17,7 @@ export default function Home() {
       <div className="flex w-full items-center justify-center ">
         <div className="  w-full  max-w-[1400px]">
           <div>
-            <MapProvider>
               <LocationTabs />
-            </MapProvider>
           </div>
         </div>
       </div>
@@ -30,7 +27,7 @@ export default function Home() {
 
 const LocationTabs = () => {
   const tabs = [
-    { label: 'All Forms', id: '1', content: <AllForms /> },
+    { label: 'All Hostel Search Forms', id: '1', content: <AllForms /> },
     {
       label: 'Inactive Forms',
       id: '2',

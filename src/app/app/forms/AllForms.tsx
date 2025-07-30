@@ -5,25 +5,23 @@ import {
   GetAllHostelSearchForms,
   GetAllHostelSearchFormsQueryVariables,
   HostelSearchFormData,
-  GetAllHostelSearchFormsByUserIdQuery,
-  GetAllHostelSearchFormsByUserIdQueryVariables,
-  GetAllHostelSearchFormsByUserId,
+
 } from 'src/gql/graphql';
 import { useQuery } from '@tanstack/react-query';
 
 export const AllForms = () => {
-  const queryForms = useGraphqlClientRequest<GetAllHostelSearchFormsByUserIdQuery, GetAllHostelSearchFormsByUserIdQueryVariables>(
-    GetAllHostelSearchFormsByUserId.loc?.source?.body!,
+  const queryForms = useGraphqlClientRequest<GetAllHostelSearchFormsQuery, GetAllHostelSearchFormsQueryVariables>(
+    GetAllHostelSearchForms.loc?.source?.body!,
   );
 
   //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
   const fetchData = async () => {
     const res = await queryForms();
-    return res.getHostelSearchFormsByUserId;
+    return res.getAllHostelSearchForms;
   };
 
   const { data: forms } = useQuery({
-    queryKey: ['getAllHostelSearchFormsByUserId'],
+    queryKey: ['getAllHostelSearchForms'],
     queryFn: fetchData,
   });
   return (

@@ -9,7 +9,9 @@ query GetAllListingsByUserId($pageSize: Int, $pageNumber: Int) {
       verifiedBySuperAdmin
       ownerId
       createdAt
-      updatedAt
+      updatedAt 
+      admissionFee
+      depositAmount
       address {
         id
         country
