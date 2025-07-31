@@ -24,6 +24,7 @@ import { Logo } from 'src/features/Logo';
 import Image from 'next/image';
 import GoogleIcon from 'src/components/icons/Google';
 import { isHostelPilot } from 'src/config/domainConfig';
+import { useUserStore } from 'src/store/userStore';
 
 export default function SignupComponent() {
   return (
@@ -148,9 +149,39 @@ function SignUp() {
   }, []);
 
   const openSignupUrl = () => {
-    // @ts-ignore
-    if (signupUrl) window.location = signupUrl;
+    const width = Math.min(500, window.innerWidth - 40);
+    const height = Math.min(600, window.innerHeight - 80);
+    const popup = window.open(
+      signupUrl,
+      'GoogleAuth',
+      `width=${width},height=${height}`
+    );
+  
+    const receiveMessage = (event: MessageEvent) => {
+      console.log('🔔 Message received:', event);
+  
+      if (
+        event.origin === process.env.NEXT_PUBLIC_API_URL &&
+        event.data?.type === 'OAUTH_SUCCESS'
+      ) {
+        
+        console.log('✅ OAuth successful. Reloading...');
+        window.removeEventListener('message', receiveMessage);
+        window.location.reload();
+      }
+    };
+  
+    window.addEventListener('message', receiveMessage);
   };
+  
+
+  const {user} = useUserStore()
+
+  useEffect(() => {
+    if (user?.userId) {
+      router.push('/app');
+    }
+  }, [router,user]);
 
   const signUpFeatures = [
     {

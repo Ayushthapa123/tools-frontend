@@ -25,7 +25,7 @@ import {
 import { useAccessTokenStore } from 'src/store/accessTokenStore';
 import { Metadata } from 'next';
 import { isHostelPilot } from 'src/config/domainConfig';
-
+import { useUserStore } from 'src/store/userStore';
 
 
 
@@ -128,9 +128,39 @@ const LoginComponent = () => {
   }, [router]);
 
   const openSignupUrl = () => {
-    // @ts-ignore
-    if (signupUrl) window.location = signupUrl;
+    const width = Math.min(500, window.innerWidth - 40);
+    const height = Math.min(600, window.innerHeight - 80);
+    const popup = window.open(
+      signupUrl,
+      'GoogleAuth',
+      `width=${width},height=${height}`
+    );
+  
+    const receiveMessage = (event: MessageEvent) => {
+      console.log('🔔 Message received:', event);
+  
+      if (
+        event.origin === process.env.NEXT_PUBLIC_API_URL &&
+        event.data?.type === 'OAUTH_SUCCESS'
+      ) {
+        
+        console.log('✅ OAuth successful. Reloading...');
+        window.removeEventListener('message', receiveMessage);
+        window.location.reload();
+      }
+    };
+  
+    window.addEventListener('message', receiveMessage);
   };
+  
+
+  const {user} = useUserStore()
+
+  useEffect(() => {
+    if (user?.userId) {
+      router.push('/app');
+    }
+  }, [router,user]);
 
   return (
     <section className="flex min-h-[100vh] flex-col justify-center bg-gray-100 p-5 align-middle lg:py-[3rem] ">
@@ -152,7 +182,7 @@ const LoginComponent = () => {
                     <TextInput
                       name="email"
                       type="email"
-                      placeholder="example@email.co.uk"
+                      placeholder="example@email.np"
                       control={control}
                       label="Email Address"
                       required

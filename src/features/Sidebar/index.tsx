@@ -18,6 +18,7 @@ import {
   LogOut,
   LogOutMutation,
   UserType,
+  User
 } from 'src/gql/graphql';
 import { RiToolsFill } from 'react-icons/ri';
 import { FaBloggerB, FaChair, FaHotel, FaLightbulb, FaRegLightbulb, FaTools } from 'react-icons/fa';
@@ -30,6 +31,7 @@ import { BsFileSlidesFill, BsPeople } from 'react-icons/bs';
 import { IoPeopleSharp } from 'react-icons/io5';
 import MarketingIcon from 'src/components/icons/Marketing';
 import { MdSettingsApplications } from 'react-icons/md';
+import { setupFsCheck } from 'next/dist/server/lib/router-utils/filesystem';
 interface MenuItemType {
   icon: JSX.Element;
   text: string;
@@ -45,7 +47,7 @@ interface MenuItemType {
 const Sidebar = () => {
   const router = useRouter();
   const pathName = usePathname();
-  const { user } = useUserStore();
+  const { user ,setUser} = useUserStore();
 
   const mutateLogOutRequest = useGraphqlClientRequest<LogOutMutation, LogOutMutationVariables>(
     LogOut.loc?.source.body!,
@@ -223,6 +225,8 @@ const Sidebar = () => {
   const logOut = () => {
     mutateAsync({}).then(res => {
       if (res?.logout?.success) {
+        
+        setUser({...user, userId: null})
         router.push('/login');
       }
     });
