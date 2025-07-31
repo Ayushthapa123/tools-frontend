@@ -5,7 +5,7 @@ import Link from "next/link";
 const features = [
   {
     icon: <MdPerson className="text-7xl text-primary hover:bg-primary/10 rounded-full p-2" />,
-    title: "Instantly Create Digital Profile",
+    title: "Instantly Create Digital Profile of your Hostel",
     description: (
       <div>
         Create and manage your hostel&apos;s professional digital profile with customizable branding, photos, and amenities showcase.
