@@ -20,8 +20,8 @@ const Footer = () => {
               </Link>
             </div>
             <div>
-              <Link href="#">
-                <h4 className="text-blue text-base lg:text-sm  text-center font-semibold">FAQ</h4>
+              <Link href="/contact-us">
+                <h4 className="text-blue text-base lg:text-sm  text-center font-semibold">Contact Us</h4>
               </Link>
             </div>
             

@@ -156,7 +156,7 @@ export const HostelCard = (props: Iprops) => {
                     Admission Fee: {hostel?.admissionFee}{' '}
                  
                   </span>
-                  <span className="ml-1 text-sm text-gray-500">/night</span>
+                  <span className="ml-1 text-sm text-gray-500">/person</span>
                 </div>
               </div>
               <div className="flex items-center">
@@ -179,7 +179,7 @@ export const HostelCard = (props: Iprops) => {
                     Deposit Fee: {hostel?.depositAmount}{' '}
                  
                   </span>
-                  <span className="ml-1 text-sm text-gray-500">/night</span>
+                  <span className="ml-1 text-sm text-gray-500">/person</span>
                 </div>
               </div>
            

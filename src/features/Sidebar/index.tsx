@@ -166,7 +166,7 @@ const Sidebar = () => {
     },
     {
       icon: <MarketingIcon />,
-      text: 'Offerings',
+      text: 'Hosteladmin',
       href: '/app/offerings',
       show: user.userType === UserType.HostelOwner,
     },
