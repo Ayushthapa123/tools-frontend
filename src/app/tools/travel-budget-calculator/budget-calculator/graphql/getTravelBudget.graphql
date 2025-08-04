@@ -1,0 +1,13 @@
+
+mutation getTravelBudget($input: TravelBudgetCalculatorInput!) {
+  getTravelBudget(input: $input) {
+    personalizedTravelGuide
+    data  {
+      category 
+      cost 
+      currency 
+      per 
+      shortGuide    
+    }
+  }
+}

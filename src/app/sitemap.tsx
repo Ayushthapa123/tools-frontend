@@ -22,6 +22,18 @@ export const SitemapPage = async () => {
       priority: 1,
     },
     {
+      url: 'https://hostelpilot.com/tools',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 1,
+    },
+    {
+      url: 'https://hostelpilot.com/tools/travel-budget-calculator',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 1,
+    },
+    {
       url: 'https://hostelpilot.com/blogs',
       lastModified: new Date(),
       changeFrequency: 'weekly',

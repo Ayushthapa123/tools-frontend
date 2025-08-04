@@ -16,6 +16,9 @@ query GetBlogPostBySlug($slug: String!) {
       tags
       videoUrl
       oneLiner
+      updatedAt
+      createdAt
+      
 
       authorId
       createdAt

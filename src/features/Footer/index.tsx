@@ -6,7 +6,7 @@ import { FullLogo } from '../Logo/FullLogoWithText';
 const Footer = () => {
   return (
     <footer>
-      <div className="relative w-[100vw] z-10 flex items-center justify-center  bg-white/80 px-5 md:py-28 py-10 md:px-10">
+      <div className="relative w-full max-w-[1800px] z-10 flex items-center justify-center  bg-white/80 px-5 md:py-28 py-10 md:px-10">
         <div className="flex w-full flex-col-reverse md:flex-row-reverse items-start justify-between mr-12 gap-12">
           <div className='flex flex-[70%] flex-col md:flex-row-reverse items-start gap-1 md:gap-8 mt-6 sm:mt-0'>
             <div>
