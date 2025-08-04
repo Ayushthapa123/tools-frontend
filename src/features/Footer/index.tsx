@@ -35,6 +35,11 @@ const Footer = () => {
                 <h4 className="text-blue text-base lg:text-sm  text-center font-semibold">Cities</h4>
               </Link>
             </div>
+            <div>
+              <Link href="/tools">
+                <h4 className="text-blue text-base lg:text-sm  text-center font-semibold">Tools</h4>
+              </Link>
+            </div>
           </div>
           <div className='flex-[30%] flex -mt-5  flex-col items-start gap-2'>
             <div className='flex items-center gap-2'>
