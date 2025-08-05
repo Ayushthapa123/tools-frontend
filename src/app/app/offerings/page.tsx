@@ -73,9 +73,9 @@ function PageContent() {
     {
       label: 'Furniture', id: '3', content: <ServiceTab tabName='Furniture' tabServices={furnitureServices ?? []} hostelId={user?.hostelId} />
     },
-    {
-      label: 'RealEstate', id: '3', content: <ServiceTab tabName='Real Estate' tabServices={realEstateServices ?? []} hostelId={user?.hostelId} />
-    },
+    // {
+    //   label: 'RealEstate', id: '3', content: <ServiceTab tabName='Real Estate' tabServices={realEstateServices ?? []} hostelId={user?.hostelId} />
+    // },
     {
       label: 'Others', id: '3', content: <ServiceTab tabName='Other' tabServices={otherServices ?? []} hostelId={user?.hostelId} />
     },

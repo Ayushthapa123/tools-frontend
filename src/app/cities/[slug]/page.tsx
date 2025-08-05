@@ -32,6 +32,7 @@ export async function generateMetadata(
             title
             slug
             metaDescription
+            metaTitle
             coverImageUrl
          
           }
@@ -49,13 +50,17 @@ export async function generateMetadata(
 
 
   return {
-    title: res?.data?.title??"City Blog",
+    title: res?.data?.metaTitle??"City Blog",
     description: res?.data?.metaDescription??"",
+    alternates: {
+      canonical: `https://www.hostelpilot.com/cities/${res?.data?.slug}`,
+    },
     openGraph: {
-      title: res?.data?.title??"",
+      title: res?.data?.metaTitle??"",
       description: res?.data?.metaDescription??"",
 
       images: [res?.data?.coverImageUrl??`/assets/fallback-image.svg`],
+      
 
     },
   };
