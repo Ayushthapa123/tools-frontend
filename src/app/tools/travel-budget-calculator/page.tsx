@@ -26,12 +26,12 @@ export const metadata = {
 export default async function TravelBudgetCalculatorPage() {
   const data:any= await graphqlClient.request(GetBlogPostBySlug, { slug: 'travel-budget-calculator' }) 
 
-  const blogData = data.getBlogPostBySlug
+  const blogData = data?.getBlogPostBySlug
 
   return (
     <main className="min-h-screen bg-gray-50 py-10">
       <div className="container mx-auto px-4">
-        <h1 className="mb-8 text-primary">{blogData?.data.title}</h1>
+        <h1 className="mb-8 text-primary">{blogData?.data?.title}</h1>
         {/* <p className=" text-gray-700">
           {blogData?.data.metaDescription}
         </p> */}  
@@ -40,12 +40,9 @@ export default async function TravelBudgetCalculatorPage() {
           <div className="mb-6">
             <div
               className="prose max-w-none text-gray-700"
-              dangerouslySetInnerHTML={{ __html: blogData?.data.content ?? '' }}
+              dangerouslySetInnerHTML={{ __html: blogData?.data?.content ?? '' }}
             
             />
-
-
-       
           </div>
           <Footer/>
         </div>
