@@ -11,6 +11,7 @@
 /.next
 .cursor
 .cursor/*
+.vercel
 
 
 # Ignore any files/folders specific to your development setup

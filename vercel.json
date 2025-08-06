@@ -4,15 +4,8 @@
         "source": "/cities/chennai-the-coastal-city-of-culture-chaos-charm",
         "destination": "/cities/chennai",
         "permanent": true
-      },
-      {
-        "source": "/cities/peshawar-travel-guide-history-bazaar-culture",
-        "destination": "/cities/peshawar",
-        "permanent": true
-      },
-      {
-      
-    
+      }
+   
     ]
   }
   
