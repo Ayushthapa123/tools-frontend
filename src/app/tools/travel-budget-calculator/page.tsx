@@ -9,7 +9,15 @@ export const metadata = {
   openGraph: {
     title: 'Travel Budget Calculator',
     description: 'Easily estimate your travel expenses for hostel trips, including transportation, accommodation, food, and more.',
-    images: '/images/tbc.png',
+    images: [
+      {
+        url: 'https://www.hostelpilot.com/images/tbc.png',
+        type: 'image/png',
+        alt: 'Travel Budget Calculator',
+        width: 1200,
+        height: 630,
+      },
+    ],
   },
   authors: [{ name: 'Ayush Thapa' }],
   manifest: '/manifest.json',
