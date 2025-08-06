@@ -4,7 +4,573 @@
         "source": "/cities/chennai-the-coastal-city-of-culture-chaos-charm",
         "destination": "/cities/chennai",
         "permanent": true
+      },
+      {
+        "source": "/cities/peshawar-travel-guide-history-bazaar-culture",
+        "destination": "/cities/peshawar",
+        "permanent": true
+      },
+      {
+        "source": "/cities/jodhpur-the-blue-city-of-royal-vibes",
+        "destination": "/cities/jodhpur",
+        "permanent": true
+      },
+      {
+        "source": "/cities/multan-travel-guide-sufi-saints-history",
+        "destination": "/cities/multan",
+        "permanent": true
+      },
+      {
+        "source": "/cities/ladakh-the-land-of-high-passes-and-hostel-stories",
+        "destination": "/cities/ladakh",
+        "permanent": true
+      },
+      {
+        "source": "/cities/skardu-travel-guide-nature-trekking",
+        "destination": "/cities/skardu",
+        "permanent": true
+      },
+      {
+        "source": "/cities/kerala-gods-own-country-for-backpackers",
+        "destination": "/cities/kerala",
+        "permanent": true
+      },
+      {
+        "source": "/cities/hunza-travel-guide-pakistan-nature-peace",
+        "destination": "/cities/hunza",
+        "permanent": true
+      },
+      {
+        "source": "/cities/lahore-travel-guide-history-culture-food",
+        "destination": "/cities/lahore",
+        "permanent": true
+      },
+      {
+        "source": "/cities/arunachal-pradesh-indias-untouched-himalayan-treasure-for-backpackers",
+        "destination": "/cities/arunanchal",
+        "permanent": true
+      },
+      {
+        "source": "/cities/tamil-nadu-the-land-where-ancient-temples-meet-soulful-streets",
+        "destination": "/cities/tamilnadu",
+        "permanent": true
+      },
+      {
+        "source": "/cities/uttarakhand-where-mountains-hug-your-soul",
+        "destination": "/cities/uttarakhand",
+        "permanent": true
+      },
+      {
+        "source": "/cities/sikkim-the-himalayan-jewel-of-peace-and-adventure",
+        "destination": "/cities/sikkim",
+        "permanent": true
+      },
+      {
+        "source": "/cities/makalu-the-majestic-gateway-to-nepals-untouched-himalayas",
+        "destination": "/cities/makalu",
+        "permanent": true
+      },
+      {
+        "source": "/cities/mugu-nepals-untamed-himalayan-paradise",
+        "destination": "/cities/mugu",
+        "permanent": true
+      },
+      {
+        "source": "/cities/jumla-nepals-hidden-highland-haven",
+        "destination": "/cities/jumla",
+        "permanent": true
+      },
+      {
+        "source": "/cities/daman-nepals-peaceful-hilltop-paradise",
+        "destination": "/cities/daman",
+        "permanent": true
+      },
+      {
+        "source": "/cities/palpa-the-vintage-hill-town-with-soul",
+        "destination": "/cities/palpa",
+        "permanent": true
+      },
+      {
+        "source": "/cities/manang-the-himalayan",
+        "destination": "/cities/manang",
+        "permanent": true
+      },
+      {
+        "source": "/cities/Dang-hidden-backpacker-gem-you-must-visit",
+        "destination": "/cities/dang",
+        "permanent": true
+      },
+      {
+        "source": "/cities/syangja-travel-guide-hills-villages-trekking",
+        "destination": "/cities/syangja",
+        "permanent": true
+      },
+      {
+        "source": "/cities/gulmi-travel-guide-coffee-culture-hills",
+        "destination": "/cities/gulmi",
+        "permanent": true
+      },
+      {
+        "source": "/cities/achham-travel-guide-hills-rivers-culture",
+        "destination": "/cities/achham",
+        "permanent": true
+      },
+      {
+        "source": "/cities/parsa-travel-guide-tharu-jungle-culture",
+        "destination": "/cities/parsa",
+        "permanent": true
+      },
+      {
+        "source": "/cities/ramechhap-travel-guide-hills-airstrip-culture",
+        "destination": "/cities/ramechhap",
+        "permanent": true
+      },
+      {
+        "source": "/cities/kapilvastu-travel-guide-buddha-birthplace",
+        "destination": "/cities/kapilvastu",
+        "permanent": true
+      },
+      {
+        "source": "/cities/dolpa-travel-guide-hidden-nepal-himalayas",
+        "destination": "/cities/dolpa",
+        "permanent": true
+      },
+      {
+        "source": "/cities/chainpur-bajhang-travel-guide-remote-nepal",
+        "destination": "/cities/chainpur",
+        "permanent": true
+      },
+      {
+        "source": "/cities/darchula-travel-guide-border-river-hills",
+        "destination": "/cities/darchula",
+        "permanent": true
+      },
+      {
+        "source": "/cities/rasuwa-travel-guide-langtang-nepal",
+        "destination": "/cities/rasuwa",
+        "permanent": true
+      },
+      {
+        "source": "/cities/bhojpur-travel-guide-eastern-nepal",
+        "destination": "/cities/bhojpur",
+        "permanent": true
+      },
+      {
+        "source": "/cities/baitadi-travel-guide-farwest-nepal",
+        "destination": "/cities/baitadi",
+        "permanent": true
+      },
+      {
+        "source": "/cities/okhaldhunga-travel-guide-eastern-nepal",
+        "destination": "/cities/okhaldhunga",
+        "permanent": true
+      },
+      {
+        "source": "/cities/tumlingtar-travel-guide-eastern-nepa",
+        "destination": "/cities/tumlingtar",
+        "permanent": true
+      },
+      {
+        "source": "/cities/rukum-travel-guide-hidden-nepal",
+        "destination": "/cities/rukum",
+        "permanent": true
+      },
+      {
+        "source": "/cities/dhulikhel-travel-guide-nepal",
+        "destination": "/cities/dhulikhel",
+        "permanent": true
+      },
+      {
+        "source": "/cities/tansen-travel-guide-palpa-hilltown",
+        "destination": "/cities/tansen",
+        "permanent": true
+      },
+      {
+        "source": "/cities/ghandruk-the-serene-himalayan-village-where-adventure-meets-culture",
+        "destination": "/cities/ghandruk",
+        "permanent": true
+      },
+      {
+        "source": "/cities/jomsom-the-himalayan-winfy-town-you-will-never-want-to-leave",
+        "destination": "/cities/jomsom",
+        "permanent": true
+      },
+      {
+        "source": "/cities/butwal-the-gateway-to-terai-adventures-and-mountain-views",
+        "destination": "/cities/butwal",
+        "permanent": true
+      },
+      {
+        "source": "/cities/pharping-the-peaceful-hidden-gem-near-kathmandu",
+        "destination": "/cities/pharping",
+        "permanent": true
+      },
+      {
+        "source": "/cities/bandipur-nepals-hidden-hiltop-treasure",
+        "destination": "/cities/bandipur",
+        "permanent": true
+      },  {
+        "source": "/cities/bardiya-nepals-wild-heart-of-nepalis-terai",
+        "destination": "/cities/bardiya",
+        "permanent": true
+      },
+      {
+        "source": "/cities/dharan-the-hidden-gem-of-eastern-nepal",
+        "destination": "/cities/dharan",
+        "permanent": true
+      },
+      {
+        "source": "/cities/lukla-the-gateway-to-everest-and-the-heart-of-himalayan-adventure",
+        "destination": "/cities/lukla",
+        "permanent": true
+      },
+      {
+        "source": "/cities/namche-bazaar-the-gateway-to-the-himalayas",
+        "destination": "/cities/namche-bazaar",
+        "permanent": true
+      },
+      {
+        "source": "/cities/gorkha-the-land-of-brave-hearts-and-ancient-forts",
+        "destination": "/cities/gorkha",
+        "permanent": true
+      },
+      {
+        "source": "/cities/ilam-travel-guide-tea-hills-nepal",
+        "destination": "/cities/ilam",
+        "permanent": true
+      },
+      {
+        "source": "/cities/solukhumbu-travel-guide-everest-villages-trekking",
+        "destination": "/cities/solukhumbu",
+        "permanent": true
+      },
+      {
+        "source": "/cities/kandy-the-heartbeat-of-sri-lankas-hills",
+        "destination": "/cities/kandy",
+        "permanent": true
+      },
+      {
+        "source": "/cities/aizawl-travel-guide-mizoram-hills-culture",
+        "destination": "/cities/aizawl",
+        "permanent": true
+      },
+      {
+        "source": "/cities/indore-the-street-food-capital-thatll-win-every-backpackers-heart",
+        "destination": "/cities/indore",
+        "permanent": true
+      },
+      {
+        "source": "/cities/ahmedabad-the-heritage-heartbeat-of-india",
+        "destination": "/cities/ahmedabad",
+        "permanent": true
+      },
+
+      {
+        "source": "/cities/surat-the-diamond-city-with-a-street-food-soul",
+        "destination": "/cities/surat",
+        "permanent": true
+      },
+      {
+        "source": "/cities/kanpur-the-gritty-soul-of-uttar-pradesh-you-didnt-know-youd-love",
+        "destination": "/cities/kanpur",
+        "permanent": true
+      },
+      {
+        "source": "/cities/bundi-travel-guide-palace-stepwells-art",
+        "destination": "/cities/bundi",
+        "permanent": true
+      },
+      {
+        "source": "/cities/pondicherry-travel-guide-french-quarter-beach-food",
+        "destination": "/cities/pondicherry",
+        "permanent": true
+      },
+
+       {
+        "source": "/cities/madurai-travel-guide-meenakshi-temple-tamil-culture",
+        "destination": "/cities/madurai",
+        "permanent": true
+      },
+      {
+        "source": "/cities/tawang-travel-guide-monastery-himalayas-arunachal",
+        "destination": "/cities/tawang",
+        "permanent": true
+      },
+      {
+        "source": "/cities/pushkar-travel-guide-ghats-temples-bazaars",
+        "destination": "/cities/pushkar",
+        "permanent": true
+      },
+      {
+        "source": "/cities/ujjain-travel-guide-mahakaleshwar-kumbh-ghats",
+        "destination": "/cities/ujjain",
+        "permanent": true
+      },
+      {
+        "source": "/cities/hampi-travel-guide-heritage-history-hills",
+        "destination": "/cities/hampi",
+        "permanent": true
+      },
+      {
+        "source": "/cities/rameswaram-travel-guide-temples-ram-setu",
+        "destination": "/cities/rameswaram",
+        "permanent": true
+      },
+      {
+        "source": "/cities/mysuru-travel-guide-palace-sandalwood",
+        "destination": "/cities/mysuru",
+        "permanent": true
+      },
+      {
+        "source": "/cities/rishikesh-travel-guide-yoga-ganga",
+        "destination": "/cities/rishikesh",
+        "permanent": true
+      },
+      {
+        "source": "/cities/paro-the-gateway-to-bhutans-timeless-beauty",
+        "destination": "/cities/paro",
+        "permanent": true
+      },
+      {
+        "source": "/cities/mustang-the-last-forbidden-kingdom-of-nepal",
+        "destination": "/cities/mustang",
+        "permanent": true
+      },
+      {
+        "source": "/cities/kashmir-the-hidden-jewel-of-heaven-on-earth",
+        "destination": "/cities/kashmir",
+        "permanent": true
+      },
+   
+      {
+        "source": "/cities/karachi-the-city-that-never-sleeps-and-always-surprises",
+        "destination": "/cities/karachi",
+        "permanent": true
+      },
+
+          {
+        "source": "/cities/amritsar-travel-guide-golden-temple",
+        "destination": "/cities/amritsar",
+        "permanent": true
+      },
+      {
+        "source": "/cities/jaipur-travel-guide-royal-rajasthan",
+        "destination": "/cities/jaipur",
+        "permanent": true
+      },
+      {
+        "source": "/cities/islamabad-the-green-escape-where-city-meets-mountains",
+        "destination": "/cities/islamabad",
+        "permanent": true
+      },
+      {
+        "source": "/cities/chittagong-the-city-hills-harbors-and-hidden-treasures",
+        "destination": "/cities/chittagong",
+        "permanent": true
+      },
+      {
+        "source": "/cities/colombo-the-city-of-waves-and-wonders",
+        "destination": "/cities/colombo",
+        "permanent": true
+      },
+      {
+        "source": "/cities/pune-travel-guide-maharashtra-culture",
+        "destination": "/cities/pune",
+        "permanent": true
+      },
+      {
+        "source": "/cities/male-maldives-the-tiny-island-that-packs-a-big-punch",
+        "destination": "/cities/male",
+        "permanent": true
+      },
+      {
+        "source": "/cities/udaipur-travel-guide-lakes-rajasthan",
+        "destination": "/cities/udaipur",
+        "permanent": true
+      },
+
+      {
+        "source": "/cities/hyderabad-the-city-of-pearls-briyani",
+        "destination": "/cities/hyderabad",
+        "permanent": true
+      }, 
+      {
+        "source": "/cities/kochi-travel-guide-backwaters-art",
+        "destination": "/cities/kochi",
+        "permanent": true
+      }, 
+      {
+        "source": "/cities/agra-beyond-the-taj",
+        "destination": "/cities/agra",
+        "permanent": true
+      }, 
+      {
+        "source": "/cities/Dhaka-The-chaotic-of-south-asia",
+        "destination": "/cities/dhaka",
+        "permanent": true
+      }, 
+      {
+        "source": "/cities/lucknow-travel-guide-food-history-uttarpradesh",
+        "destination": "/cities/lucknow",
+        "permanent": true
+      }, 
+      {
+        "source": "/cities/darjeeling-travel-guide-mountains-tea-india",
+        "destination": "/cities/darjeeling",
+        "permanent": true
+      }, 
+      {
+        "source": "/cities/bangalore-travel-guide-garden-city-india",
+        "destination": "/cities/bangalore",
+        "permanent": true
+      }, 
+
+      {
+        "source": "/cities/kolkata-travel-guide-culture-food-india",
+        "destination": "/cities/kolkata",
+        "permanent": true
+      }, 
+      {
+        "source": "/cities/nepalgunj-the-dusty-crossroads-of-culture-chaos-and-charm",
+        "destination": "/cities/nepalgunj",
+        "permanent": true
+      }, 
+      {
+        "source": "/cities/lisbon-the-city-of-sunsets-streetsongs-and-slow-sips",
+        "destination": "/cities/lisbon",
+        "permanent": true
+      }, 
+
+      {
+        "source": "/cities/meghalaya-travel-guide-clouds-culture-northeast-india",
+        "destination": "/cities/meghalaya",
+        "permanent": true
+      }, 
+      {
+        "source": "/cities/baglung-travel-guide-hills-nepal",
+        "destination": "/cities/baglung",
+        "permanent": true
+      }, 
+      {
+        "source": "/cities/manali-travel-guide-himachal-india",
+        "destination": "/cities/manali",
+        "permanent": true
+      }, 
+
+      {
+        "source": "/cities/dolakha-travel-guide-jiri-sailung-nepal",
+        "destination": "/cities/dolakha",
+        "permanent": true
+      },   
+       {
+        "source": "/cities/madrid-the-city-that-never-naps",
+        "destination": "/cities/madrid",
+        "permanent": true
+      }, 
+      {
+        "source": "/cities/kassel-travel-guide-fairytale-germany",
+        "destination": "/cities/kassel",
+        "permanent": true
+      }, 
+      {
+        "source": "/cities/biratnagar-the-grity-flavored-no-filter-city-of-the-east",
+        "destination": "/cities/biratnagar",
+        "permanent": true
+      }, 
+      {
+        "source": "/cities/lumbini-peace-soul-of-nepal",
+        "destination": "/cities/lumbini",
+        "permanent": true
+      }, 
+      {
+        "source": "/cities/lalitpur-where-art-breathes-and-history-whispers",
+        "destination": "/cities/lalitpur",
+        "permanent": true
+      }, 
+        {
+        "source": "/cities/janakpur-travel-guide-mithila-nepal",
+        "destination": "/cities/janakpur",
+        "permanent": true
+      }, 
+      {
+        "source": "/cities/berlin-city-where-history-meets-the-future",
+        "destination": "/cities/berlin",
+        "permanent": true
+      }, 
+      {
+        "source": "/cities/varanasi-the-city-that-humbles-you",
+        "destination": "/cities/varanasi",
+        "permanent": true
+      }, 
+      {
+        "source": "/cities/thimpu-the-tranquill-capital-in-the-clouds",
+        "destination": "/cities/thimpu",
+        "permanent": true
+      }, 
+      {
+        "source": "/cities/chitwan-where-the-wild-roam-freely",
+        "destination": "/cities/chitwan",
+        "permanent": true
+      }, 
+      {
+        "source": "/cities/bhaktapur-the-living-museum-of-nepal",
+        "destination": "/cities/bhaktapur",
+        "permanent": true
+      }, 
+      {
+        "source": "/cities/pokhara-the-city-of-lakes",
+        "destination": "/cities/pokhara",
+        "permanent": true
+      }, 
+      {
+        "source": "/cities/goa-where-time-slows-down-and-nights-come-alive",
+        "destination": "/cities/goa",
+        "permanent": true
+      }, 
+      {
+        "source": "/cities/delhi-the-city-of-chaos-and-charm",
+        "destination": "/cities/delhi",
+        "permanent": true
+      }, 
+      {
+        "source": "/cities/kathmandu-the-city-of-gods-and-temples",
+        "destination": "/cities/kathmandu",
+        "permanent": true
+      }, 
+      {
+        "source": "/cities/mumbai-the-city-of-dreams",
+        "destination": "/cities/mumbai",
+        "permanent": true
       }
+
+
+
+
+
+      
+
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+   
+      
+      
+      
+      
+      
+      
    
     ]
   }

@@ -18,7 +18,7 @@ query GetBlogPosts($blogTags: [BlogTags!]) {
     }
     error {
       message
-      code
+      
     }
   }
 }
