@@ -27,6 +27,7 @@ export default function StartDestination() {
           control={control}
           options={countryOptions}
           label="Country"
+          height='sm'
           required
           helperText={
             errors?.startCountry && 'country' in errors.startCountry && (errors.startCountry.country as any)?.type === 'required' ? 'Country is required' : ''
@@ -36,12 +37,14 @@ export default function StartDestination() {
       </div>
       <div className="">
         <TextInput
+
           name="startCity"
           type="text"
           placeholder="City"
           control={control}
           label="City"
           required
+          height='sm'
           helpertext={errors?.startCity && 'city' in errors.startCity && (errors.startCity.city as any)?.type === 'required' ? 'City is required' : ''}
           error={!!(errors?.startCity && 'city' in errors.startCity && (errors.startCity.city as any))} 
         />

@@ -27,6 +27,7 @@ export default function TravelDestination() {
           options={countryOptions}
           label="Country"
           required
+          height='sm'
           helperText={
             errors?.travelCountry && 'country' in errors.travelCountry && (errors.travelCountry.country as any)?.type === 'required' ? 'Country is required' : ''
           }
@@ -41,6 +42,7 @@ export default function TravelDestination() {
           control={control}
           label="City"
           required
+          height='sm'
           helpertext={errors?.travelCity && 'city' in errors.travelCity && (errors.travelCity.city as any)?.type === 'required' ? 'City is required' : ''}
           error={!!(errors?.travelCity && 'city' in errors.travelCity && (errors.travelCity.city as any))}
         />

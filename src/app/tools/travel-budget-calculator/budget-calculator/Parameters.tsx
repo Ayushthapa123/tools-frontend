@@ -9,9 +9,9 @@ export default function Parameters() {
   const { control, formState: { errors } } = useFormContext();
 
 const travelStyleOptions = [
-  { label: 'Budget', value: 'budget' },
-  { label: 'Mid-Range', value: 'mid-range' },
-  { label: 'Luxury', value: 'luxury' },
+  { label: 'Budget Travel', value: 'budget' },
+  { label: 'Mid-Range Travel', value: 'mid-range' },
+  { label: 'Luxury Travel', value: 'luxury' },
 ]
 
 const accomodationTypeOptions = [

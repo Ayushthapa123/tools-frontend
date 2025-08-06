@@ -4,7 +4,7 @@ import React from 'react';
 
 const LoadingSpinner = ({
   className,
-  color,
+  color='primary',
   size,
 }: {
   className?: string;
