@@ -2,7 +2,7 @@
 import './globals.css';
 import Head from 'next/head';
 import { TopLevelWrapper } from 'src/features/TopLevelWrapper';
-import { isHostelPilot } from 'src/config/domainConfig';
+import { isHostelAdmin, isHostelPilot, domainConfig } from 'src/config/domainConfig';
 
 
 
@@ -14,13 +14,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Head>
-        <link rel="apple-touch-icon" sizes="180x180" href="/logo512.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href={domainConfig.logo} />
 
-        <link rel="icon" href="/logo512.png" />
+        <link rel="icon" href={domainConfig.logo} />
 
         <link rel="manifest" href={isHostelPilot ? "/manifest-hostelpilot.json" : "/manifest.json"} />
         <meta name="theme-color" content="#000" />
-        <link rel="mask-icon" href="/logo512.png" color="#5bbad5" />
+        <link rel="mask-icon" href={domainConfig.logo} color="#5bbad5" />
         <meta name="msapplication-TileColor" content="#ffffff" />
         <meta name="theme-color" content="#ffffff" />
         <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />

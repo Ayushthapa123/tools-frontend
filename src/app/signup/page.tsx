@@ -1,4 +1,4 @@
-import { isHostelPilot } from 'src/config/domainConfig';
+import { isHostelPilot, domainConfig } from 'src/config/domainConfig';
 import SignupComponent from './SignUp';
 import { Metadata } from 'next';
 
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   manifest: isHostelPilot ? '/manifest-hostelpilot.json' : '/manifest.json',
   authors: [{ name: 'Ayush Thapa' }],
   openGraph: {
-    images: '/logo512.png',
+    images: domainConfig.logo,
     title: isHostelPilot ? 'Hostelpilot Signup' : 'Hosteladmin Signup',
   },
 };

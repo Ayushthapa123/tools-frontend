@@ -4,7 +4,7 @@ import Footer from 'src/features/Footer';
 import { Suspense } from 'react';
 
 import { Metadata } from 'next';
-import { isHostelPilot } from 'src/config/domainConfig';
+import { isHostelPilot, domainConfig } from 'src/config/domainConfig';
 import { SearchBox } from 'src/features/landing-page/Header/SearchBox';
 import { MapProvider } from 'src/features/MapProvider';
 import  {Top10Places}  from './Top10Places';
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   manifest: isHostelPilot ? '/manifest-hostelpilot.json' : '/manifest.json',
   authors: [{ name: 'Ayush Thapa' }],
   openGraph: {
-    images: '/logo512.png',
+    images: domainConfig.logo,
     title: 'List Of Top 10 Places to visit in the cities',
   },
 };

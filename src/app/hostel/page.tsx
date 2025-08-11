@@ -9,12 +9,12 @@ import { SearchBox } from 'src/features/landing-page/Header/SearchBox';
 import { MapProvider } from 'src/features/MapProvider';
 export const metadata: Metadata = {
   title: 'Hostel Lists',
-  description: 'Hostel is a hotel searching portal specially focused on providing the best hostel',
+  description: 'Hostelpilot is a hotel searching portal specially focused on providing the best hostel',
   manifest: isHostelPilot ? '/manifest-hostelpilot.json' : '/manifest.json',
   authors: [{ name: 'Ayush Thapa' }],
   openGraph: {
-    images: '/logo512.png',
-    title: 'Hostel: all the hostel list',
+    images: '/logohp512.png',
+    title: 'Hostelpilot: all the hostel list',
   },
 };
 

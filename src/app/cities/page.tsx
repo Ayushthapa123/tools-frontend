@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   manifest: isHostelPilot ? '/manifest-hostelpilot.json' : '/manifest.json',
   authors: [{ name: 'Ayush Thapa' }],
   openGraph: {
-    images: '/logo512.png',
+    images: '/logohp512.png',
     title: 'Cities of the world',
   },
 };

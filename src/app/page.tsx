@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     images: [
       {
-        url: '/logo512.png',
+        url: domainConfig.logo,
         width: 512,
         height: 512,
       },

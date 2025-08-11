@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     'Hostelpilot Blog Is a one stop shop for all the hostel industry related news,trends,research,ideas etc.',
   authors: [{ name: 'Ayush Thapa' }],
   openGraph: {
-    images: '/logo512.png',
+    images: '/logohp512.png',
     title: 'Hostelpilot Blogs: Read the latest news/trends in Hostel Industry',
   },
 };

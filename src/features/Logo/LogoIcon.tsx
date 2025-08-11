@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-
+import { domainConfig } from 'src/config/domainConfig';
 export const LogoIcon = () => {
   return (
     <div className=" flex h-[60px] w-full ">
@@ -9,7 +9,7 @@ export const LogoIcon = () => {
         <div className=" flex w-auto gap-3" style={{ alignItems: 'center' }}>
           <div className="relative mb-5 flex  gap-1 md:mb-5">
             <div className=" relative inline-block h-16  w-16">
-              <Image src="/logo512.png" alt="logo" fill />
+              <Image src={domainConfig.logo} alt="logo" fill />
             </div>
           </div>
         </div>

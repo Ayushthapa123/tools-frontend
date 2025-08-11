@@ -11,7 +11,7 @@ import { GoDotFill } from 'react-icons/go';
 import Link from 'next/link';
 import Button from 'src/components/Button';
 // import { CustomChip } from 'src/components/Chip';
-
+import { domainConfig } from 'src/config/domainConfig';
 interface Iprops {
   article: any;
 }
@@ -54,7 +54,7 @@ export const PageContents = (props: Iprops) => {
           <div className="mt-3 flex h-auto w-full gap-3 ">
             <div className="relative h-14 w-14 rounded-full">
               <Image
-                src={"/logo512.png"}
+                src={domainConfig.logo}
                 alt="author"
                 loading="eager"
                 fill

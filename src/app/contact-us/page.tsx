@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 
-import { isHostelAdmin } from 'src/config/domainConfig';
+import { isHostelAdmin, domainConfig } from 'src/config/domainConfig';
 import { MdPhone, MdEmail } from 'react-icons/md';
 export const metadata: Metadata = {
   title: `Contact Us | ${isHostelAdmin ? 'HostelAdmin' : 'HostelPilot'}`,
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   manifest: '/manifest.json',
   authors: [{ name: 'Ayush Thapa' }],
   openGraph: {
-    images: '/logo512.png',
+    images: domainConfig.logo,
     title: `Contact Us | ${isHostelAdmin ? 'HostelAdmin' : 'HostelPilot'}`,
     description: `Contact ${isHostelAdmin ? 'HostelAdmin' : 'HostelPilot'} for support, inquiries, or feedback. Find our phone, email, and office address here.`,
   },

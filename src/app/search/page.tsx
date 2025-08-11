@@ -4,7 +4,7 @@ import { SearchPage } from './SearchPage';
 import { Metadata } from 'next';
 import Footer from 'src/features/Footer';
 import { CommonNav } from 'src/features/NavBar/CommonNav';
-
+import { domainConfig } from 'src/config/domainConfig';
 export const metadata: Metadata = {
   title: 'Search Hostels in your city',
   description:
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   manifest: '/manifest.json',
   authors: [{ name: 'Ayush Thapa' }],
   openGraph: {
-    images: '/logo512.png',
+    images: domainConfig.logo,
     title: 'Search Hostels in your city',
   },
 };

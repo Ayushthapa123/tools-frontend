@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 
 import { HostelAdminTandC } from './HostelAdminTandC';
 import { HostelPilotTandC } from './HostelPilotTandC';
-import { isHostelAdmin } from 'src/config/domainConfig';
+import { isHostelAdmin, domainConfig } from 'src/config/domainConfig';
 export const metadata: Metadata = {
   title: `Terms and Conditions | ${isHostelAdmin ? 'HostelAdmin' : 'HostelPilot'}`,
   description:
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   manifest: '/manifest.json',
   authors: [{ name: 'Ayush Thapa' }],
   openGraph: {
-    images: '/logo512.png',
+    images: domainConfig.logo,
     title: `Terms and Conditions | ${isHostelAdmin ? 'HostelAdmin' : 'HostelPilot'}`,
   },
 };
