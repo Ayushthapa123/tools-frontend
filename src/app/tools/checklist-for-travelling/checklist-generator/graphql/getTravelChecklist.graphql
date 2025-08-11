@@ -1,0 +1,11 @@
+
+
+mutation getTravelChecklist($input: TravelChecklistGeneratorInput!) {
+  getTravelChecklist(input: $input) {
+    personalizedTravelGuide
+    data  {
+     category
+     items
+    }
+  }
+}

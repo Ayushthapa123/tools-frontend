@@ -125,6 +125,7 @@ const documents = {
     "mutation refreshToken {\n  refreshTokens {\n    user {\n      email\n      fullName\n      id\n      userType\n      hostelId\n    }\n    token {\n      refreshToken\n      accessToken\n    }\n  }\n}": types.RefreshTokenDocument,
     "mutation signupUser($input: SignupInput!) {\n  signupUser(input: $input) {\n    email\n    id\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}": types.SignupUserDocument,
     "mutation signUpWithGoogle($input: SignupWithGoogleInput!) {\n  signUpWithGoogle(input: $input) {\n    id\n    email\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}": types.SignUpWithGoogleDocument,
+    "mutation getTravelChecklist($input: TravelChecklistGeneratorInput!) {\n  getTravelChecklist(input: $input) {\n    personalizedTravelGuide\n    data {\n      category\n      items\n    }\n  }\n}": types.GetTravelChecklistDocument,
     "mutation getTravelBudget($input: TravelBudgetCalculatorInput!) {\n  getTravelBudget(input: $input) {\n    personalizedTravelGuide\n    data {\n      category\n      cost\n      currency\n      per\n      shortGuide\n    }\n  }\n}": types.GetTravelBudgetDocument,
     "mutation getTravelDestination($input: TravelDestinationFinderInput!) {\n  getTravelDestination(input: $input) {\n    personalizedTravelGuide\n    data {\n      activitiesToDo\n      destinationCountry\n      destinationPlace\n      expectedCost\n      shortGuide\n    }\n  }\n}": types.GetTravelDestinationDocument,
     "mutation SendCustomEmail($email: String!, $name: String!, $subject: String!, $htmlContent: String!) {\n  sendCustomEmail(\n    email: $email\n    name: $name\n    subject: $subject\n    htmlContent: $htmlContent\n  )\n}": types.SendCustomEmailDocument,
@@ -599,6 +600,10 @@ export function graphql(source: "mutation signupUser($input: SignupInput!) {\n  
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "mutation signUpWithGoogle($input: SignupWithGoogleInput!) {\n  signUpWithGoogle(input: $input) {\n    id\n    email\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}"): (typeof documents)["mutation signUpWithGoogle($input: SignupWithGoogleInput!) {\n  signUpWithGoogle(input: $input) {\n    id\n    email\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation getTravelChecklist($input: TravelChecklistGeneratorInput!) {\n  getTravelChecklist(input: $input) {\n    personalizedTravelGuide\n    data {\n      category\n      items\n    }\n  }\n}"): (typeof documents)["mutation getTravelChecklist($input: TravelChecklistGeneratorInput!) {\n  getTravelChecklist(input: $input) {\n    personalizedTravelGuide\n    data {\n      category\n      items\n    }\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
