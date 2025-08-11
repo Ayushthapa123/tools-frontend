@@ -126,6 +126,7 @@ const documents = {
     "mutation signupUser($input: SignupInput!) {\n  signupUser(input: $input) {\n    email\n    id\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}": types.SignupUserDocument,
     "mutation signUpWithGoogle($input: SignupWithGoogleInput!) {\n  signUpWithGoogle(input: $input) {\n    id\n    email\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}": types.SignUpWithGoogleDocument,
     "mutation getTravelBudget($input: TravelBudgetCalculatorInput!) {\n  getTravelBudget(input: $input) {\n    personalizedTravelGuide\n    data {\n      category\n      cost\n      currency\n      per\n      shortGuide\n    }\n  }\n}": types.GetTravelBudgetDocument,
+    "mutation getTravelDestination($input: TravelDestinationFinderInput!) {\n  getTravelDestination(input: $input) {\n    personalizedTravelGuide\n    data {\n      activitiesToDo\n      destinationCountry\n      destinationPlace\n      expectedCost\n      shortGuide\n    }\n  }\n}": types.GetTravelDestinationDocument,
     "mutation SendCustomEmail($email: String!, $name: String!, $subject: String!, $htmlContent: String!) {\n  sendCustomEmail(\n    email: $email\n    name: $name\n    subject: $subject\n    htmlContent: $htmlContent\n  )\n}": types.SendCustomEmailDocument,
     "mutation completeOnboarding {\n  completeOnboarding {\n    data {\n      id\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.CompleteOnboardingDocument,
     "query getOnboardingData {\n  getOnboardingData {\n    data {\n      address {\n        id\n      }\n      contact {\n        id\n      }\n      amenities {\n        id\n      }\n      gallery {\n        id\n      }\n      rooms {\n        id\n      }\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.GetOnboardingDataDocument,
@@ -602,6 +603,10 @@ export function graphql(source: "mutation signUpWithGoogle($input: SignupWithGoo
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "mutation getTravelBudget($input: TravelBudgetCalculatorInput!) {\n  getTravelBudget(input: $input) {\n    personalizedTravelGuide\n    data {\n      category\n      cost\n      currency\n      per\n      shortGuide\n    }\n  }\n}"): (typeof documents)["mutation getTravelBudget($input: TravelBudgetCalculatorInput!) {\n  getTravelBudget(input: $input) {\n    personalizedTravelGuide\n    data {\n      category\n      cost\n      currency\n      per\n      shortGuide\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation getTravelDestination($input: TravelDestinationFinderInput!) {\n  getTravelDestination(input: $input) {\n    personalizedTravelGuide\n    data {\n      activitiesToDo\n      destinationCountry\n      destinationPlace\n      expectedCost\n      shortGuide\n    }\n  }\n}"): (typeof documents)["mutation getTravelDestination($input: TravelDestinationFinderInput!) {\n  getTravelDestination(input: $input) {\n    personalizedTravelGuide\n    data {\n      activitiesToDo\n      destinationCountry\n      destinationPlace\n      expectedCost\n      shortGuide\n    }\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

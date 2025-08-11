@@ -997,6 +997,8 @@ export type Mutation = {
   deleteSettings: HostelSetting;
   forgotPassword: ForgotPasswordResponse;
   getTravelBudget: TbcList;
+  getTravelChecklist: TcgList;
+  getTravelDestination: TdfList;
   loginUser: UsersAndToken;
   logout: LogoutResponse;
   refreshTokens: UsersHostelIdAndToken;
@@ -1281,6 +1283,16 @@ export type MutationForgotPasswordArgs = {
 
 export type MutationGetTravelBudgetArgs = {
   input: TravelBudgetCalculatorInput;
+};
+
+
+export type MutationGetTravelChecklistArgs = {
+  input: TravelChecklistGeneratorInput;
+};
+
+
+export type MutationGetTravelDestinationArgs = {
+  input: TravelDestinationFinderInput;
 };
 
 
@@ -2173,6 +2185,37 @@ export type TbcList = {
   personalizedTravelGuide?: Maybe<Scalars['String']['output']>;
 };
 
+export type TcgData = {
+  __typename?: 'TCGData';
+  category: Scalars['String']['output'];
+  items: Array<Scalars['String']['output']>;
+};
+
+export type TcgList = {
+  __typename?: 'TCGList';
+  data?: Maybe<Array<TcgData>>;
+  error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
+  personalizedTravelGuide?: Maybe<Scalars['String']['output']>;
+};
+
+export type TdfData = {
+  __typename?: 'TDFData';
+  activitiesToDo: Array<Scalars['String']['output']>;
+  destinationCountry: Scalars['String']['output'];
+  destinationPlace: Scalars['String']['output'];
+  expectedCost: Scalars['String']['output'];
+  shortGuide: Scalars['String']['output'];
+};
+
+export type TdfList = {
+  __typename?: 'TDFList';
+  data?: Maybe<Array<TdfData>>;
+  error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
+  personalizedTravelGuide?: Maybe<Scalars['String']['output']>;
+};
+
 export type TbcData = {
   __typename?: 'TbcData';
   category: Scalars['String']['output'];
@@ -2198,6 +2241,31 @@ export type TravelBudgetCalculatorInput = {
   travelCity: Scalars['String']['input'];
   travelCountry: Scalars['String']['input'];
   travelStyle: Scalars['String']['input'];
+};
+
+export type TravelChecklistGeneratorInput = {
+  date: Scalars['DateTime']['input'];
+  destinationCity: Scalars['String']['input'];
+  destinationCountry: Scalars['String']['input'];
+  purpose: Scalars['String']['input'];
+  startCity: Scalars['String']['input'];
+  startCountry: Scalars['String']['input'];
+  travelActivities: Array<Scalars['String']['input']>;
+  travelCompanionType: Scalars['String']['input'];
+  travelDuration: Scalars['String']['input'];
+  travelType: Scalars['String']['input'];
+};
+
+export type TravelDestinationFinderInput = {
+  date: Scalars['DateTime']['input'];
+  purpose: Scalars['String']['input'];
+  startCity: Scalars['String']['input'];
+  startCountry: Scalars['String']['input'];
+  travelActivities: Array<Scalars['String']['input']>;
+  travelBudgetUSD: Scalars['String']['input'];
+  travelCompanionType: Scalars['String']['input'];
+  travelDuration: Scalars['String']['input'];
+  travelType: Scalars['String']['input'];
 };
 
 export type UpdateAddressInput = {
@@ -3344,6 +3412,13 @@ export type GetTravelBudgetMutationVariables = Exact<{
 
 export type GetTravelBudgetMutation = { __typename?: 'Mutation', getTravelBudget: { __typename?: 'TBCList', personalizedTravelGuide?: string | null, data?: Array<{ __typename?: 'TbcData', category: string, cost: number, currency: string, per: string, shortGuide: string }> | null } };
 
+export type GetTravelDestinationMutationVariables = Exact<{
+  input: TravelDestinationFinderInput;
+}>;
+
+
+export type GetTravelDestinationMutation = { __typename?: 'Mutation', getTravelDestination: { __typename?: 'TDFList', personalizedTravelGuide?: string | null, data?: Array<{ __typename?: 'TDFData', activitiesToDo: Array<string>, destinationCountry: string, destinationPlace: string, expectedCost: string, shortGuide: string }> | null } };
+
 export type SendCustomEmailMutationVariables = Exact<{
   email: Scalars['String']['input'];
   name: Scalars['String']['input'];
@@ -3513,6 +3588,7 @@ export const RefreshTokenDocument = {"kind":"Document","definitions":[{"kind":"O
 export const SignupUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"signupUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SignupInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signupUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userType"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}}]}}]}}]}}]} as unknown as DocumentNode<SignupUserMutation, SignupUserMutationVariables>;
 export const SignUpWithGoogleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"signUpWithGoogle"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SignupWithGoogleInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signUpWithGoogle"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"userType"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}}]}}]}}]}}]} as unknown as DocumentNode<SignUpWithGoogleMutation, SignUpWithGoogleMutationVariables>;
 export const GetTravelBudgetDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"getTravelBudget"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"TravelBudgetCalculatorInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getTravelBudget"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"personalizedTravelGuide"}},{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"cost"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"per"}},{"kind":"Field","name":{"kind":"Name","value":"shortGuide"}}]}}]}}]}}]} as unknown as DocumentNode<GetTravelBudgetMutation, GetTravelBudgetMutationVariables>;
+export const GetTravelDestinationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"getTravelDestination"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"TravelDestinationFinderInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getTravelDestination"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"personalizedTravelGuide"}},{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"activitiesToDo"}},{"kind":"Field","name":{"kind":"Name","value":"destinationCountry"}},{"kind":"Field","name":{"kind":"Name","value":"destinationPlace"}},{"kind":"Field","name":{"kind":"Name","value":"expectedCost"}},{"kind":"Field","name":{"kind":"Name","value":"shortGuide"}}]}}]}}]}}]} as unknown as DocumentNode<GetTravelDestinationMutation, GetTravelDestinationMutationVariables>;
 export const SendCustomEmailDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SendCustomEmail"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"subject"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"htmlContent"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sendCustomEmail"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"subject"},"value":{"kind":"Variable","name":{"kind":"Name","value":"subject"}}},{"kind":"Argument","name":{"kind":"Name","value":"htmlContent"},"value":{"kind":"Variable","name":{"kind":"Name","value":"htmlContent"}}}]}]}}]} as unknown as DocumentNode<SendCustomEmailMutation, SendCustomEmailMutationVariables>;
 export const CompleteOnboardingDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"completeOnboarding"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"completeOnboarding"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<CompleteOnboardingMutation, CompleteOnboardingMutationVariables>;
 export const GetOnboardingDataDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getOnboardingData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getOnboardingData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"contact"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"amenities"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"gallery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"rooms"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<GetOnboardingDataQuery, GetOnboardingDataQueryVariables>;
@@ -5692,6 +5768,20 @@ export const GetTravelBudget = gql`
       cost
       currency
       per
+      shortGuide
+    }
+  }
+}
+    `;
+export const GetTravelDestination = gql`
+    mutation getTravelDestination($input: TravelDestinationFinderInput!) {
+  getTravelDestination(input: $input) {
+    personalizedTravelGuide
+    data {
+      activitiesToDo
+      destinationCountry
+      destinationPlace
+      expectedCost
       shortGuide
     }
   }

@@ -1,0 +1,14 @@
+
+
+mutation getTravelDestination($input: TravelDestinationFinderInput!) {
+  getTravelDestination(input: $input) {
+    personalizedTravelGuide
+    data  {
+      activitiesToDo 
+      destinationCountry
+      destinationPlace 
+      expectedCost 
+      shortGuide
+    }
+  }
+}

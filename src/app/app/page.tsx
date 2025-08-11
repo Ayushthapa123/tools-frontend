@@ -44,7 +44,7 @@ export default function Home() {
           </p>
         </div>
         <div className="">
-          <Link href={`https://hostelpilot.com/hostel/${data?.data?.slug}`}>
+          <Link href={`https://www.hostelpilot.com/hostel/${data?.data?.slug}`}>
             <Button
               label="See Digital Profile"
               className="rounded-lg bg-primary"

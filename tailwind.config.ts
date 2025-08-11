@@ -18,7 +18,7 @@ const config: Config = {
         // Primary font
         sora: ['var(--font-sora)', 'system-ui', 'sans-serif'],
         // Secondary font
-        teko: ['var(--font-teko)', 'system-ui', 'sans-serif'],
+        // teko: ['var(--font-teko)', 'system-ui', 'sans-serif'],
         // Keeping mono for code blocks if needed
         mono: ['DM Mono', 'monospace'],
       },

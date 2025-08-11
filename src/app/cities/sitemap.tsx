@@ -30,7 +30,7 @@ export const SitemapPage = async () => {
   const originalCityBlogsSitemaps =
    res?.data?.map((item: any) => {
     return {
-      url: `https://hostelpilot.com/cities/${item.slug}`,
+      url: `https://www.hostelpilot.com/cities/${item.slug}`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 1,

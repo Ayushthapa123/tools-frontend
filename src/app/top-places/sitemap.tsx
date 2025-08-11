@@ -29,7 +29,7 @@ export const SitemapPage = async () => {
   const originalCityBlogsSitemaps =
    res?.data?.map((item: any) => {
     return {
-      url: `https://hostelpilot.com/top-places/${item.slug}`,
+      url: `https://www.hostelpilot.com/top-places/${item.slug}`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 1,

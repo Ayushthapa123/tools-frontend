@@ -25,7 +25,7 @@ export const SitemapPage = async () => {
 
   const blogDataSitemaps = blogPageData?.items?.map((item: any) => {
     return {
-      url: `https://hostelpilot.com/blogs/${item.fields.slug}`,
+      url: `https://www.hostelpilot.com/blogs/${item.fields.slug}`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 1,
