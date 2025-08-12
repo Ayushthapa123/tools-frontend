@@ -8,7 +8,7 @@ export const SitemapPage = async () => {
 
   const hostelQuery = gql`
   query getAllCityBlogsSlug {
-      getAllBlogPosts(pageSize: 100, pageNumber: 1,blogTags: [${BlogTags.City}],blogStatus: ${BlogStatus.Published}) {
+      getAllBlogPosts(pageSize: 130, pageNumber: 1,blogTags: [${BlogTags.City}],blogStatus: ${BlogStatus.Published}) {
         data {
           slug 
           

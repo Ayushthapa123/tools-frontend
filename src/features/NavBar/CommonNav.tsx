@@ -31,7 +31,7 @@ export const CommonNav = () => {
       id="common-nav">
       <div className="flex w-full justify-between overflow-hidden ">
         <div className=" flex-shrink-0 flex ">
-          <div className="relative h-[60px] w-[70px] md:h-[70px] ">
+          <div className="relative ">
             <Logo />
           </div>
           <div className=' flex-col justify-center mt-2 hidden md:flex'>

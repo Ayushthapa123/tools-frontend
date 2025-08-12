@@ -35,7 +35,7 @@ export default function DistanceCalculation({ lat, lng }: { lat: number; lng: nu
       lat: place.geometry.location.lat(),
       lng: place.geometry.location.lng(),
     });
-    calculateDistance();
+    // calculateDistance();
   };
 
   const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {

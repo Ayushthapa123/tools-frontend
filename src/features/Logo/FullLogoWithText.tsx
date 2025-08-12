@@ -14,10 +14,10 @@ export const FullLogo = () => {
             </div> */}
             <div className=" relative top-4 text-4xl font-medium text-primary">
               {' '}
-              <h3 className="capitalize text-3xl md:text-5xl">
+              {domainConfig.appName === 'hosteladmin' ? <h3 className="capitalize text-3xl md:text-5xl">
                 {' '}
                 {domainConfig.appName}
-              </h3>
+              </h3> : <></>}
             </div>
           </div>
         </div>
