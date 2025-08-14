@@ -57,7 +57,7 @@ export const Header = () => {
       </div>
       <div className="flex justify-center my-12 w-full">
         <Link
-          href="/tools/travel-budget-calculator"
+          href="/tools/travel-destination-finder"
           className="group block w-full max-w-6xl bg-gradient-to-br from-blue-600 via-blue-500 to-blue-400 hover:from-blue-700 hover:to-blue-500 transition-all duration-200 rounded-2xl shadow-xl p-8  cursor-pointer border border-blue-100 hover:shadow-2xl"
         >
           <div className="flex items-center gap-6">
