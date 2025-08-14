@@ -26,7 +26,8 @@ export const metadata = {
 export default async function TravelDestinationFinderPage() {
   const data:any= await graphqlClient.request(GetBlogPostBySlug, { slug: 'checklist-for-travelling' }) 
 
-  const blogData = data?.getBlogPostBySlug
+  const blogData = data?.getBlogPostBySlug 
+  console.log(blogData)
 
   return (
     <main className="min-h-screen bg-gray-50 py-10">

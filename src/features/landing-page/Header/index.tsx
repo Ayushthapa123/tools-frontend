@@ -52,6 +52,41 @@ export const Header = () => {
       <div className="mx-4 w-full bg-slate-50 p-4 my-10 mt-16">
         <LandingPageOffers />
       </div>
+      <div className="text-center font-bold">
+        <h2 className="md:text-4xl ">Your Backpacking Journey Starts Here</h2>
+      </div>
+      <div className="flex justify-center my-12 w-full">
+        <Link
+          href="/tools/travel-budget-calculator"
+          className="group block w-full max-w-6xl bg-gradient-to-br from-blue-600 via-blue-500 to-blue-400 hover:from-blue-700 hover:to-blue-500 transition-all duration-200 rounded-2xl shadow-xl p-8  cursor-pointer border border-blue-100 hover:shadow-2xl"
+        >
+          <div className="flex items-center gap-6">
+            <div className="flex-shrink-0 bg-white/30 rounded-full p-4 shadow-md group-hover:scale-105 transition-transform">
+              <svg
+                className="w-10 h-10 text-blue-700  group-hover:scale-110 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="4" stroke="currentColor" strokeWidth="2" fill="none"/>
+                <path d="M8 10h8M8 14h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <h3 className="text-3xl font-extrabold mb-2 group-hover:underline  transition-colors">
+                Travel Destination Finder
+              </h3>
+              <p className="text-lg  ">
+                Find the best travel destination for your next trip, based on your preferences, budget, and interests.
+              </p>
+              <span className="inline-block mt-3 px-4 py-1 bg-white/20 rounded-full text-sm font-semibold tracking-wide text-blue-100 group-hover:bg-yellow-400 group-hover:text-blue-800 transition-colors">
+                Free & Easy to Use
+              </span>
+            </div>
+          </div>
+        </Link>
+      </div>
       <div className="flex justify-center my-12 w-full">
         <Link
           href="/tools/travel-budget-calculator"
@@ -76,6 +111,38 @@ export const Header = () => {
               </h3>
               <p className="text-lg  ">
                 Plan your next adventure with confidence! Instantly estimate your total and daily travel expenses, receive a personalized travel guide, and make your journey stress-free and budget-friendly.
+              </p>
+              <span className="inline-block mt-3 px-4 py-1 bg-white/20 rounded-full text-sm font-semibold tracking-wide text-blue-100 group-hover:bg-yellow-400 group-hover:text-blue-800 transition-colors">
+                Free & Easy to Use
+              </span>
+            </div>
+          </div>
+        </Link>
+      </div>
+      <div className="flex justify-center my-12 w-full">
+        <Link
+          href="/tools/checklist-for-travelling"
+          className="group block w-full max-w-6xl bg-gradient-to-br from-blue-600 via-blue-500 to-blue-400 hover:from-blue-700 hover:to-blue-500 transition-all duration-200 rounded-2xl shadow-xl p-8  cursor-pointer border border-blue-100 hover:shadow-2xl"
+        >
+          <div className="flex items-center gap-6">
+            <div className="flex-shrink-0 bg-white/30 rounded-full p-4 shadow-md group-hover:scale-105 transition-transform">
+              <svg
+                className="w-10 h-10 text-blue-700  group-hover:scale-110 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="4" stroke="currentColor" strokeWidth="2" fill="none"/>
+                <path d="M8 10h8M8 14h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <h3 className="text-3xl font-extrabold mb-2 group-hover:underline  transition-colors">
+                Travel Checklist Generator
+              </h3>
+              <p className="text-lg  ">
+                Generate a travel checklist for your next trip, based on your destination, budget, and interests.
               </p>
               <span className="inline-block mt-3 px-4 py-1 bg-white/20 rounded-full text-sm font-semibold tracking-wide text-blue-100 group-hover:bg-yellow-400 group-hover:text-blue-800 transition-colors">
                 Free & Easy to Use

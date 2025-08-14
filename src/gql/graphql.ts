@@ -200,6 +200,20 @@ export type BookingSummary = {
   totalPriceOfRoom?: Maybe<Scalars['Float']['output']>;
 };
 
+export type CagData = {
+  __typename?: 'CAGData';
+  category: Scalars['String']['output'];
+  items: Array<Scalars['String']['output']>;
+};
+
+export type CagList = {
+  __typename?: 'CAGList';
+  data?: Maybe<Array<CagData>>;
+  error?: Maybe<GraphQlError>;
+  pagination?: Maybe<Pagination>;
+  personalizedCustomerAvatar?: Maybe<Scalars['String']['output']>;
+};
+
 export type ChangePasswordInput = {
   currentPassword: Scalars['String']['input'];
   newPassword: Scalars['String']['input'];
@@ -523,6 +537,11 @@ export enum Currency {
   Npr = 'NPR',
   Usd = 'USD'
 }
+
+export type CustomerAvatarGeneratorInput = {
+  businessDescription: Scalars['String']['input'];
+  businessName: Scalars['String']['input'];
+};
 
 export enum DiscountType {
   Fixed = 'FIXED',
@@ -996,6 +1015,7 @@ export type Mutation = {
   deleteServiceOption: ServiceOption;
   deleteSettings: HostelSetting;
   forgotPassword: ForgotPasswordResponse;
+  getCustomerAvatar: CagList;
   getTravelBudget: TbcList;
   getTravelChecklist: TcgList;
   getTravelDestination: TdfList;
@@ -1278,6 +1298,11 @@ export type MutationDeleteSettingsArgs = {
 
 export type MutationForgotPasswordArgs = {
   email: Scalars['String']['input'];
+};
+
+
+export type MutationGetCustomerAvatarArgs = {
+  input: CustomerAvatarGeneratorInput;
 };
 
 

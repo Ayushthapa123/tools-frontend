@@ -3,10 +3,10 @@ import Link from 'next/link';
 export default function LandingPageOffers() {
   const offers = [
     {
-      title: 'Blogs',
-      description: 'You can read the blogs written by our team and get the latest news and updates about the hostel industry. We guide you to find the perfect hostel for your needs.',
-      imagePath: '/images/offers/blog.png', 
-      link: '/blogs'
+      title: 'Tools',
+      description: 'Hostelpilot offers a range of tools to help you plan your next trip. From travel budget calculators to travel destination finders, we have you covered.',
+      imagePath: '/images/offers/listProperty.png', 
+      link: '/tools'
     },
     {
       title: 'Search Engine',
@@ -17,7 +17,7 @@ export default function LandingPageOffers() {
     {
       title: 'List your property',
       description: 'You can list your hostel for FREE. You can also add details about the hostel and the rooms available. Users from our site will be able to see your property and contact you for booking.',
-      imagePath: '/images/offers/listProperty.png',
+      imagePath: '/images/offers/blog.png',
       link: 'https://hosteladmin.com/signup'
     },
   ]
