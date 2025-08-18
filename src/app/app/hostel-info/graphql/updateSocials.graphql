@@ -1,5 +1,0 @@
-#mutation updateSocials($input: UpdateSocialsInput!, $socialsId: Float!) {
-#  updateSocials(data: $input, socialsId: $socialsId) {
-#    socialsId
-#  }
-#}

@@ -1,14 +1,9 @@
-import { CommonNav } from 'src/features/NavBar/CommonNav';
 
 import type { Metadata } from 'next';
-import { Header } from 'src/features/landing-page/Header';
-import Footer from 'src/features/Footer';
+
 import { domainConfig, isHostelAdmin, isHostelPilot } from 'src/config/domainConfig';
-import HostelAdminHeader from 'src/features/landing-page/Header/HostelAdminHeader';
-import { SoftwareFeatures } from 'src/features/landing-page/SoftwareFeatures/page';
-import MobileDownload from 'src/features/landing-page/Header/MobileDownload';
-import { FeaturedBlogs } from 'src/features/FeaturedBlogs';
-import Pricing from 'src/features/pricing';
+
+import MainContent from './MainContent';
 export const metadata: Metadata = {
   title: domainConfig.appSlogan, 
   description:domainConfig.appDescription,
@@ -31,15 +26,9 @@ export default function Home() {
   return (
     <div className="  relative  mx-auto h-auto w-full max-w-[2100px] bg-base-100 ">
       <main className="relative ">
-        <div className="">
-          <CommonNav />
-          {isHostelAdmin ?<HostelAdminHeader />:<Header />}
-          {isHostelAdmin ? <SoftwareFeatures /> : <></>}
-          {isHostelAdmin?<Pricing/>:<></>}
-          {isHostelAdmin ? <MobileDownload /> : <></>}
-          {isHostelPilot ? <FeaturedBlogs /> : <></>}
-          <Footer />
-        </div>
+        <MainContent >
+          <div>hello</div>
+        </MainContent>
       </main>
     </div>
   );

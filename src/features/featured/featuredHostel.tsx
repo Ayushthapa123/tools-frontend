@@ -1,7 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
-import { HostelCard } from 'src/app/search/cards/HostelCard';
-import { HostelCardSkeleton } from 'src/app/search/cards/HostelCardSkeleteon';
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import {
   GetFeaturedHostels,
@@ -62,9 +60,7 @@ export const FeaturedHostel = () => {
 
       {isLoading && (
         <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <HostelCardSkeleton />
-          <HostelCardSkeleton />
-          <HostelCardSkeleton />
+         
         </div>
       )}
 
@@ -78,9 +74,7 @@ export const FeaturedHostel = () => {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-                <HostelCard
-                  hostel={hostel as HostelData}
-                />
+              f
             </motion.div>
           );
         })}

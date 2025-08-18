@@ -1,5 +1,4 @@
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
-import { FormsCard } from '../forms/FormsCard';
 import {
   GetAllHostelSearchFormsQuery,
   GetAllHostelSearchForms,
@@ -15,7 +14,7 @@ import {
 } from 'src/gql/graphql';
 import { useQuery } from '@tanstack/react-query';
 import { useGraphQLQuery } from 'src/hooks/useGraphqlQuery';
-import { ApplicationCard } from '../applications/ApplicationCard';
+// import { ApplicationCard } from '../applications/ApplicationCard';
 
 export const MyForms = () => {
   const queryForms = useGraphqlClientRequest<
@@ -53,7 +52,7 @@ export const MyForms = () => {
       <div className="grid gap-[1rem]  bg-slate-100 p-4">
         {applicationForms?.getHostelApplicationFormsByUserId?.data?.map(form => (
           <div key={form.id}>
-            <ApplicationCard form={form as HostelApplicationFormData} hostelOwnerAccess={false} />
+            {/* <ApplicationCard form={form as HostelApplicationFormData} hostelOwnerAccess={false} /> */}
           </div>
         ))}
       </div>
@@ -63,7 +62,7 @@ export const MyForms = () => {
       <div className="grid gap-[1rem]  bg-slate-100">
         {forms?.data?.map(form => (
           <div key={form.id}>
-            <FormsCard form={form as HostelSearchFormData} />
+            {/* <FormsCard form={form as HostelSearchFormData} /> */}
           </div>
         ))}
       </div>

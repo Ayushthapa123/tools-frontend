@@ -1,9 +1,0 @@
-mutation updateHostelSearchForm($data: UpdateHostelSearchFormInput!) {
-  updateHostelSearchForm(data: $data) {
-   data {
-   id 
-   email
-   }
- 
-  }
-}

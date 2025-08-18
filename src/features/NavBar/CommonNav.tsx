@@ -7,7 +7,6 @@ import { useUserStore } from 'src/store/userStore';
 import { motion } from 'framer-motion';
 import { domainConfig } from 'src/config/domainConfig';
 import { UserProfile } from '../UserProfile';
-import { CreateHostelModal } from 'src/app/app/hostel-info/CreateHostelModal';
 import { AllAmenitiesOption, GetHostelByToken, GetHostelByTokenQuery, GetHostelByTokenQueryVariables, UserType } from 'src/gql/graphql';
 import { Drawer } from '../Drawer';
 import { useGraphQLQuery } from 'src/hooks/useGraphqlQuery';
@@ -82,14 +81,13 @@ export const CommonNav = () => {
                 </div>
               )}
               <div className=" mt-2 ">
-                {user.userType !== UserType.Student && user.userId && (
+               
                   <div className="left-0 top-[70px]  lg:hidden ">
                     <Drawer />
                   </div>
-                )}
+                
               </div>
             </div>
-            {user.userType === UserType.HostelOwner && !user.hostelId && <CreateHostelModal />}
           </div>
           <div className=" flex gap-1 md:gap-2">
             {domainConfig.appName === 'hostelpilot' && !user.userEmail && (

@@ -1,5 +1,0 @@
-#mutation updateMonthlyPricing($input: UpdateMonthlyPricingInput!, $monthlyPricingId: Float!) {
-#  updateMonthlyPricing(data: $input, monthlyPricingId: $monthlyPricingId) {
-#    monthlyPricingId
-#  }
-#}

@@ -21,7 +21,7 @@ import {
   User
 } from 'src/gql/graphql';
 import { RiToolsFill } from 'react-icons/ri';
-import { FaBloggerB, FaChair, FaHotel, FaLightbulb, FaRegLightbulb, FaTools } from 'react-icons/fa';
+import { FaAssistiveListeningSystems, FaBloggerB, FaChair, FaHotel, FaLightbulb, FaRegLightbulb, FaTools } from 'react-icons/fa';
 import { useMutation } from '@tanstack/react-query';
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import { GrGallery, GrUserSettings } from 'react-icons/gr';
@@ -32,6 +32,7 @@ import { IoPeopleSharp } from 'react-icons/io5';
 import MarketingIcon from 'src/components/icons/Marketing';
 import { MdSettingsApplications } from 'react-icons/md';
 import { setupFsCheck } from 'next/dist/server/lib/router-utils/filesystem';
+import { BiHelpCircle } from 'react-icons/bi';
 interface MenuItemType {
   icon: JSX.Element;
   text: string;
@@ -58,164 +59,30 @@ const Sidebar = () => {
   const menuItems: MenuItemType[] = [
     {
       icon: <DashboardIcon />,
-      text: 'Dashboard',
-      href: '/app',
+      text: 'Explore ',
+      href: '/',
       children: false,
-      show: user.userType === UserType.HostelOwner || user.userType === UserType.Superadmin,
+      show: true,
     },
-    {
-      icon: <FaHotel />,
-      text: 'Hostels',
-      href: '/app/hostels',
-      children: false,
-      show: user.userType === UserType.Superadmin || user.userType === UserType.CommunityOwner,
-    },
-    {
-      icon: <FaHotel />,
-      text: 'Forms',
-      href: '/app/forms',
-      children: false,
-      show: user.userType === UserType.Superadmin,
-    },
-    {
-      icon: <FaBloggerB />,
-      text: 'Blogs',
-      href: '/app/blog',
-      children: false,
-      show: user.userType === UserType.Superadmin || user.userType === UserType.CommunityOwner  || user.userType === UserType.Writer,
-    },
-    {
-      icon: <FaLightbulb />,
-      text: 'Amenities',
-      href: '/app/amenity-options',
-      children: false,
-      show: user.userType === UserType.Superadmin || user.userType === UserType.CommunityOwner,
-    },
-    {
-      icon: <FaChair />,
-      text: 'Room Amenities ',
-      href: '/app/room-amenity-option',
-      children: false,
-      show: user.userType === UserType.Superadmin || user.userType === UserType.CommunityOwner,
-    },
+ 
+ 
     {
       icon: <FaTools />,
-      text: 'Services',
-      href: '/app/service-options',
+      text: 'My Tools',
+      href: '/app/tool',
       children: false,
-      show: user.userType === UserType.Superadmin || user.userType === UserType.CommunityOwner,
+      show: true
     },
     {
-      icon: <FaHotel />,
-      text: 'Marketing',
-      href: '/app/marketing-details',
+      icon: <FaAssistiveListeningSystems />,
+      text: 'My Assets',
+      href: '/app/asset',
       children: false,
-      show: user.userType === UserType.Superadmin,
-    },
-    {
-      icon: <FaHotel />,
-      text: 'Hostel',
-      href: '/app/hostel-info',
-      children: false,
-      show: user.userType === UserType.HostelOwner,
-    },
-  
-    {
-      icon: <IoMdPhotos />,
-      text: 'Gallery',
-      href: '/app/gallery',
-      children: false,
-      show: user.userType === UserType.HostelOwner,
-    },
-    {
-      icon: <RoomIcon />,
-      text: 'Rooms',
-      href: '/app/room',
-      children: false,
-      show: user.userType === UserType.HostelOwner,
-    },
-    {
-      icon: <IoPeopleSharp />,
-      text: ' Students',
-      href: '/app/hostel-guests',
-      children: false,
-      show: user.userType === UserType.HostelOwner,
-    },
-    {
-      icon: <BsFileSlidesFill />,
-      text: ' Applications',
-      href: '/app/applications',
-      children: false,
-      show: user.userType === UserType.HostelOwner || user.userType === UserType.Superadmin,
-    },
-    {
-      icon: <RulesIcon className="text-primary" />,
-      text: 'Rules',
-      href: '/app/rules',
-      show: user.userType === UserType.HostelOwner,
-    },
-    {
-      icon: <FaLightbulb />,
-      text: 'Amenities',
-      href: '/app/amenities',
-      show: user.userType === UserType.HostelOwner,
-    },
-    {
-      icon: <FaTools />,
-      text: 'Services',
-      href: '/app/services',
-      show: user.userType === UserType.HostelOwner,
-    },
-    {
-      icon: <MarketingIcon />,
-      text: 'Hosteladmin',
-      href: '/app/offerings',
-      show: user.userType === UserType.HostelOwner,
+      show: true
     },
    
-    // {
-    //   icon: <BookingIcon />,
-    //   text: 'Bookings',
-    //   href: '/app/booking',
-    //   children: false,
-    //   show: user.userType === UserType.HostelOwner,
-    // },
-
-    // { icon: <PriceIcon />, text: 'Pricing', href: '/app/pricing', children: false },
-    // { icon: <GalleryIcon />, text: 'Gallery', href: '/app/gallery', children: false, show: user.userType === UserType.hostelOwner },
-    // { icon: <MapIcon />, text: 'Location', href: '/app/location', children: false, show: user.userType === UserType.hostelOwner },
-    // { icon: <CommunityIcon />, text: 'Community', href: '/app/community', children: false },
-
-    // {
-    //   icon: <MdOutlineDirections />,
-    //   text: 'More',
-    //   href: '',
-    //   children: true,
-    //   show: user.userType === UserType.HostelOwner,
-    //   childRoutes: [
-    //     // { icon: <WifiIcon />, text: 'Amenities', href: '/app/amenities', show: user.userType === UserType.hostelOwner },
-    //     // { icon: <ServiceIcon />, text: 'Services', href: '/app/services', show: user.userType === UserType.hostelOwner },
-
-    //     {
-    //       icon: <RulesIcon className="text-primary" />,
-    //       text: 'Rules',
-    //       href: '/app/rules',
-    //       show: user.userType === UserType.HostelOwner,
-    //     },
-    //     {
-    //       icon: <FaRegLightbulb />,
-    //       text: 'Amenities',
-    //       href: '/app/amenities',
-    //       show: user.userType === UserType.HostelOwner,
-    //     },
-    //     {
-    //       icon: <RiToolsFill />,
-    //       text: 'Services',
-    //       href: '/app/services',
-    //       show: user.userType === UserType.HostelOwner,
-    //     },
-    //   ],
-    // },
+   
+ 
   ];
 
   /**
@@ -235,6 +102,8 @@ const Sidebar = () => {
   // this function
   const bottomItems: MenuItemType[] = [
     { icon: <SettingsIcon />, text: 'Settings', href: '/app/settings' },
+    { icon: <BiHelpCircle />, text: 'Help', href: '/app/help' },
+
     { icon: <LogoutIcon />, text: 'Log Out', href: '/', handleFunc: logOut },
   ];
   
