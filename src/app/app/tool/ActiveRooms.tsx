@@ -1,12 +1,13 @@
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
-import { RoomCard } from './RoomCard';
+import { ToolCard } from './ToolCard';
 import {
-  GetRooms,
-  GetRoomsQuery,
-  GetRoomsQueryVariables,
-  DeleteRoom,
-  DeleteRoomMutation,
-  DeleteRoomMutationVariables,
+  GetToolsByUserToken,
+  GetToolsByUserTokenQuery,
+  GetToolsByUserTokenQueryVariables,
+  DeleteTool,
+  DeleteToolMutation,
+  DeleteToolMutationVariables,
+  ToolData,
 } from 'src/gql/graphql';
 import { useQuery } from '@tanstack/react-query';
 import LoadingSpinner from 'src/components/Loading';
@@ -15,48 +16,48 @@ import { Modal } from 'src/components/Modal';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { enqueueSnackbar } from 'notistack';
 
-export const ActiveRooms = ({ setActiveRoomCount }: { setActiveRoomCount: (count: number) => void }) => {
+export const ActiveTools = ({ setActiveToolCount }: { setActiveToolCount: (count: number) => void }) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [deletedRoomId, setDeletedRoomId] = useState<number | string | null>(null);
-  const [deleteRoom, setDeleteRoom] = useState(false);
-  const querySignupUrl = useGraphqlClientRequest<GetRoomsQuery, GetRoomsQueryVariables>(
-    GetRooms.loc?.source?.body!,
+  const [deletedToolId, setDeletedToolId] = useState<number | string | null>(null);
+  const [deleteTool, setDeleteTool] = useState(false);  //delete tool
+  const queryGetAllTools = useGraphqlClientRequest<GetToolsByUserTokenQuery, GetToolsByUserTokenQueryVariables>(
+    GetToolsByUserToken.loc?.source?.body!,
   );
 
   //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
   const fetchData = async () => {
-    const res = await querySignupUrl();
-    setActiveRoomCount(res.roomsByHostel.data?.length || 0);
-    return res.roomsByHostel;
+    const res = await queryGetAllTools();
+    setActiveToolCount(res.getToolsByUserToken.data?.length || 0);
+    return res.getToolsByUserToken;
   };
 
-  const { data: rooms, isLoading } = useQuery({
-    queryKey: ['getRooms'],
+  const { data: tools, isLoading } = useQuery({
+    queryKey: ['getToolsByUserToken'],
     queryFn: fetchData,
   });
 
-  // deleted room
-  const mutateCreateNearbyPlace = useGraphqlClientRequest<
-    DeleteRoomMutation,
-    DeleteRoomMutationVariables
-  >(DeleteRoom.loc?.source.body!);
+  // deleted tool
+  const mutateDeleteTool = useGraphqlClientRequest<
+    DeleteToolMutation,
+    DeleteToolMutationVariables
+  >(DeleteTool.loc?.source.body!);
 
-  const { mutateAsync } = useMutation({ mutationFn: mutateCreateNearbyPlace });
+  const { mutateAsync } = useMutation({ mutationFn: mutateDeleteTool });
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    if (deleteRoom) {
-      mutateAsync({ id: Number(deletedRoomId) }).then(res => {
-        if (res?.removeRoom) {
-          enqueueSnackbar('Room deleted.', { variant: 'success' });
-          queryClient.invalidateQueries({ queryKey: ['getRooms'] });
+    if (deleteTool) {
+      mutateAsync({ toolId: Number(deletedToolId) }).then(res => {
+        if (res?.deleteTool) {
+          enqueueSnackbar('Tool deleted.', { variant: 'success' });
+          queryClient.invalidateQueries({ queryKey: ['getToolsByUserToken'] });
         } else {
-          enqueueSnackbar("Couldn't delete room.", { variant: 'error' });
+          enqueueSnackbar("Couldn't delete tool.", { variant: 'error' });
         }
       });
       setShowDeleteModal(false);
     }
-  }, [deleteRoom]);
+  }, [deleteTool]);
 
   return (
     <div className="w-full ">
@@ -67,12 +68,12 @@ export const ActiveRooms = ({ setActiveRoomCount }: { setActiveRoomCount: (count
         </div>
       )}
       <div className="grid sm:grid-cols-2 gap-[1rem] px-2 md:grid-cols-3">
-        {rooms?.data?.map(room => (
-          <div key={room.id} className="md:mb-4 lg:min-h-48">
-            <RoomCard
-             room={room}
+        {tools?.data?.map(tool => (
+          <div key={tool.id} className="md:mb-4 lg:min-h-48">
+            <ToolCard
+             tool={tool as ToolData}
               setShowDeleteModal={setShowDeleteModal}
-              setDeletedRoomId={setDeletedRoomId}
+              setDeletedToolId={setDeletedToolId}
             />
           </div>
         ))}
@@ -80,13 +81,13 @@ export const ActiveRooms = ({ setActiveRoomCount }: { setActiveRoomCount: (count
           <Modal
             open={showDeleteModal}
             handleClose={() => setShowDeleteModal(false)}
-            title="Are you sure to delete this room?"
-            onSave={() => setDeleteRoom(true)} 
+            title="Are you sure to delete this tool?"
+            onSave={() => setDeleteTool(true)} 
             actionLabel="Delete"
 
 
           >
-            Disclaimer: you will not be able to see the details of this room after you delete it.
+            Disclaimer: you will not be able to see the details of this tool after you delete it.
           </Modal>
         )}
       </div>

@@ -1,0 +1,16 @@
+mutation CreateTool($data: CreateToolInput!) {
+  createTool(data: $data) {
+    data {
+      id
+      name 
+      slug
+
+     
+    }
+    error {
+      message
+      code
+      path
+    }
+  }
+}

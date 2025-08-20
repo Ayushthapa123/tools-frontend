@@ -1,0 +1,14 @@
+mutation UpdateTool($toolId: Float!, $data: UpdateToolInput!) {
+  updateTool(toolId: $toolId, data: $data) {
+    data {
+      id
+      name
+   
+    }
+    error {
+      message
+      code
+      path
+    }
+  }
+}

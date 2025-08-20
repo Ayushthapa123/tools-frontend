@@ -1,0 +1,60 @@
+query GetToolBySlug($slug: String!) {
+  getToolBySlug(slug: $slug) {
+    data {
+      id
+      name
+      description
+      shortDescription
+      slug
+      handle
+      thumbnailUrl
+      ranking
+      toolType
+      visibility
+      ownerId
+      verifiedBySuperAdmin
+      createdAt
+      updatedAt
+      deletedAt
+      owner {
+        id
+        email
+        fullName
+        profilePicture
+        userType
+        isVerified
+      }
+      inputSchema {
+        id
+        schema
+        toolId
+        createdAt
+        updatedAt
+      }
+      outputSchema {
+        id
+        schema
+        toolId
+        createdAt
+        updatedAt
+      }
+      toolMetadata {
+        id
+        title
+        description
+        keywords
+        ogTitle
+        ogDescription
+        ogImageUrl
+        toolId
+        createdAt
+        updatedAt
+      }
+    }
+    error {
+      message
+      code
+      path
+    }
+  }
+}

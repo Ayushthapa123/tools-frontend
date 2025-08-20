@@ -7,11 +7,11 @@ query getUserById($id: Float!) {
       email
       phoneNumber
       altPhoneNumber
-      city
+      
       gender
       dateOfBirth
       profilePicture
-      hostelId
+      
     }
     error {
       message

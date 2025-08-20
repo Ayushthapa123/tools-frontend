@@ -1,4 +1,4 @@
-import RoomContainer from './RoomContainer';
+import RoomContainer from './ToolContainer';
 
 export default function Home({ params }: { params: { slug: string } }) {
   return (

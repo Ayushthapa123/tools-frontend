@@ -1,0 +1,7 @@
+query GetToolMetaDataByToolId($toolId: Float!) {
+  getToolMetaDataByToolId(toolId: $toolId) {
+    data {
+      id
+    }
+  }
+}

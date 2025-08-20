@@ -1,0 +1,13 @@
+mutation CreateInputSchema($data: CreateInputSchema!) {
+  createInputSchema(createInputSchemaInput: $data) {
+     data {
+      id
+     }
+     error {
+      message
+      code
+      path
+     }
+
+  }
+}

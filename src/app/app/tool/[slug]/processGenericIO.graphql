@@ -1,0 +1,11 @@
+mutation ProcessGenericIO($input: IOGenericInput!) {
+  processGenericIO(input: $input) {
+  
+    data {
+      htmlResponse
+    }
+    error {
+      message
+    }
+  }
+}

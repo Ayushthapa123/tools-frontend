@@ -7,22 +7,13 @@ import { useUserStore } from 'src/store/userStore';
 import { motion } from 'framer-motion';
 import { domainConfig } from 'src/config/domainConfig';
 import { UserProfile } from '../UserProfile';
-import { AllAmenitiesOption, GetHostelByToken, GetHostelByTokenQuery, GetHostelByTokenQueryVariables, UserType } from 'src/gql/graphql';
 import { Drawer } from '../Drawer';
-import { useGraphQLQuery } from 'src/hooks/useGraphqlQuery';
+
 
 export const CommonNav = () => {
   const { user } = useUserStore();
 
-  const { data: hostelData, isLoading } = useGraphQLQuery<
-  GetHostelByTokenQuery,
-  GetHostelByTokenQueryVariables
->({
-  queryKey: ['getHostelByToken'],
-  query: GetHostelByToken.loc!.source.body,
-  variables: {},
-  enabled: !!user.userId,
-});
+
 
   return (
     <div
@@ -34,7 +25,6 @@ export const CommonNav = () => {
             <Logo />
           </div>
           <div className=' flex-col justify-center mt-2 hidden md:flex'>
-            <h3 className='font-bold'>{hostelData?.getHostelByToken?.data?.name}</h3>
           </div>
         </div>
         <div className="flex  flex-1" />

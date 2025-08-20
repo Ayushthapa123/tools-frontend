@@ -1,3 +1,0 @@
-mutation SendMmailAfterBooking($email: String!, $data: BookingConfirmationEmailDto!) {
-  sendMailAfterBooking(email: $email, data: $data)
-}

@@ -1,5 +1,0 @@
-#mutation updateMapLocation($id: Int!, $data: UpdateGoogleMapLocation!) {
-#  updateGoogleMapLocation(id: $id, data: $data) {
-#    googleMapLocationId
-#  }
-#}

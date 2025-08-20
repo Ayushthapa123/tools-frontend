@@ -90,7 +90,7 @@ const LoginComponent = () => {
           //after login what to do before pushing him to dashboard/me
           setAccessToken(res.loginUser.token.accessToken);
           // localStorage.setItem('refreshToken', res.loginUser.token.refreshToken);
-          if (res.loginUser.userType === UserType.HostelOwner) {
+          if (res.loginUser.userType === UserType.Creator) {
             router.push('/app');
           } else {
             router.push('/app/');

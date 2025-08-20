@@ -1,0 +1,7 @@
+mutation UpdateToolMetaData($updateToolMetaDataInput: UpdateToolMetaDataDto!) {
+  updateToolMetaData(updateToolMetaDataInput: $updateToolMetaDataInput) {
+    data {
+      id
+    }
+  }
+}

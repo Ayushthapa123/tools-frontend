@@ -1,0 +1,13 @@
+mutation UpdateInputSchema($data: UpdateInputSchema!) {
+  updateInputSchema(updateInputSchemaInput: $data) {
+     data {
+      id
+     }
+     error {
+      message
+      code
+      path
+     }
+
+  }
+}

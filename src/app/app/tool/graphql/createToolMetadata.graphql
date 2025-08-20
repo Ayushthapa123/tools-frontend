@@ -1,0 +1,7 @@
+mutation CreateToolMetaData($createToolMetaDataInput: CreateToolMetaDataDto!) {
+  createToolMetaData(createToolMetaDataInput: $createToolMetaDataInput) {
+    data {
+      id
+    }
+  }
+}

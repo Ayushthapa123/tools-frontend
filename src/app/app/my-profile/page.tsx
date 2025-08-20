@@ -8,7 +8,6 @@ import { OwnBookings } from './OwnBookings';
 import ChangePassword from './ChangePassword';
 import Button from 'src/components/Button';
 import { Tabs } from 'src/components/Tabs';
-import { MyForms } from './MyForms';
 export default function Page() {
   return (
     <div>
@@ -33,7 +32,6 @@ function PageContent() {
     { label: 'Profile', id: ' 1', content: <OwnProfile userType={user.userType} /> },
     // { name: 'Bookings', id: 2, visible: true },
     { label: 'Password', id: '3', content: <ChangePassword userId={Number(user.userId)} /> },
-    { label: 'Forms', id: '4', content: <MyForms /> },
 
   ];
   const tabs = [...mobileTabs];

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 // import { MapComponent } from './GoogleMap';
-import { ActiveRooms } from './ActiveRooms';
+import { ActiveTools } from './ActiveRooms';
 import { MapProvider } from 'src/features/MapProvider';
 import Button from 'src/components/Button';
 import Link from 'next/link';
@@ -14,7 +14,7 @@ export default function Home() {
         <div className="  w-full  max-w-[1400px]">
           <div>
             <MapProvider>
-              <RoomTabs />
+              <ToolTabs />
             </MapProvider>
           </div>
         </div>
@@ -23,14 +23,14 @@ export default function Home() {
   );
 }
 
-const RoomTabs = () => {
-  const [ activeRoomCount, setActiveRoomCount ] = useState(0);
+const ToolTabs = () => {
+  const [ activeToolCount, setActiveToolCount ] = useState(0);
   const tabs = [
-    { title: 'Active Rooms', id: 1, comp: <ActiveRooms setActiveRoomCount={setActiveRoomCount} /> },
+    { title: 'Active Tools', id: 1, comp: <ActiveTools setActiveToolCount={setActiveToolCount} /> },
     // {
-    //   title: 'Inactive Rooms',
+    //   title: 'Inactive Tools',
     //   id: 2,
-    //   comp: <div>Inactive Rooms</div>,
+    //   comp: <div>Inactive Tools</div>,
     // },
   ];
   const [ activeTab, setActiveTab ] = useState(1);
@@ -42,7 +42,7 @@ const RoomTabs = () => {
         className="tabs-boxed tabs z-[99] flex flex-wrap items-center justify-between bg-transparent pb-2"
       >
         <div className='text-gray-500 text-base'>
-          <span className='text-lg font-medium text-gray-900'>{activeRoomCount} </span> Active Rooms
+          <span className='text-lg font-medium text-gray-900'>{activeToolCount} </span> Active Tools
         </div>
         {activeTab == 1 && (
           <div>

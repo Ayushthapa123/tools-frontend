@@ -1,0 +1,60 @@
+query GetAllTools($pageSize: Int = 200, $pageNumber: Int = 1, $isSuperAdmin: Boolean = false) {
+  getAllTools(pageSize: $pageSize, pageNumber: $pageNumber, isSuperAdmin: $isSuperAdmin) {
+    data {
+      id
+      name
+      description
+      shortDescription
+      slug
+      handle
+      thumbnailUrl
+      ranking
+      toolType
+      visibility
+      ownerId
+      verifiedBySuperAdmin
+      createdAt
+      updatedAt
+      deletedAt
+      owner {
+        id
+        email
+        fullName
+        profilePicture
+        userType
+        isVerified
+      }
+      inputSchema {
+        id
+        schema
+        toolId
+        createdAt
+        updatedAt
+      }
+      outputSchema {
+        id
+        schema
+        toolId
+        createdAt
+        updatedAt
+      }
+      toolMetadata {
+        id
+        title
+        description
+        keywords
+        ogTitle
+        ogDescription
+        ogImageUrl
+        toolId
+        createdAt
+        updatedAt
+      }
+    }
+    error {
+      message
+      code
+      path
+    }
+  }
+}

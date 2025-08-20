@@ -5,7 +5,7 @@ mutation refreshToken {
       fullName
       id
       userType
-      hostelId
+      
     }
     token {
       refreshToken

@@ -1,0 +1,12 @@
+mutation DeleteTool($toolId: Float!) {
+  deleteTool(toolId: $toolId) {
+    data {
+      id
+    }
+    error {
+      message
+      code
+      path
+    }
+  }
+}

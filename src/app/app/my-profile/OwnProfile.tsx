@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import { FaCamera, FaEdit } from 'react-icons/fa';
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import {
-  Gender,
+  GenderType,
   GetUserById,
   GetUserByIdQuery,
   GetUserByIdQueryVariables,
@@ -67,7 +67,7 @@ export const OwnProfile = (props: { userType: string }) => {
   } = useForm({
     defaultValues: {
       fullName: userData?.data?.fullName || '',
-      city: userData?.data?.city || '',
+      city: '',
       altPhoneNumber: userData?.data?.altPhoneNumber || '',
       phoneNumber: userData?.data?.phoneNumber || '',
       gender: userData?.data?.gender || '',
@@ -92,7 +92,7 @@ export const OwnProfile = (props: { userType: string }) => {
     if (userData?.data) {
       reset({
         fullName: userData.data.fullName || '',
-        city: userData.data.city || '',
+        city: '',
         altPhoneNumber: userData.data.altPhoneNumber || '',
         phoneNumber: userData.data.phoneNumber || '',
         gender: userData.data.gender || '',
@@ -102,9 +102,9 @@ export const OwnProfile = (props: { userType: string }) => {
   }, [ userData, reset, openPersonalModal ]);
 
   const genderOptions = [
-    { label: 'Boys', value: Gender.Boys },
-    { label: 'Girls', value: Gender.Girls },
-    { label: 'Others', value: Gender.Others },
+    { label: 'Boys', value: GenderType.Boys },
+    { label: 'Girls', value: GenderType.Girls },
+    { label: 'Others', value: GenderType.Others },
   ];
 
   const onSubmitPersonal = async (data: any) => {
@@ -166,7 +166,7 @@ export const OwnProfile = (props: { userType: string }) => {
   const personalDetails = [
     { label: "Name", value: userData?.data?.fullName },
     { label: "Email", value: userData?.data?.email },
-    { label: "City", value: userData?.data?.city ?? "N/A" },
+    { label: "City", value: "" },
     { label: "Phone Number", value: userData?.data?.phoneNumber ?? "N/A" },
     { label: "Alternative Phone Number", value: userData?.data?.altPhoneNumber ?? "N/A" },
     { label: "Gender", value: userData?.data?.gender ?? "N/A" },
@@ -240,7 +240,7 @@ export const OwnProfile = (props: { userType: string }) => {
         </div>
       </div>
       <div>
-        {props.userType === UserType.Student && (
+        {true&& (
           <div className=" w-min cursor-pointer  md:fixed bottom-10 mt-10" onClick={handleLogout}>
             <span className=" relative text-[25px] text-primary flex ">
               <b className='text-red-500 text-xl'>Logout</b><LogoutIcon />
