@@ -4,34 +4,62 @@ import { Logo } from '../Logo';
 import { useUserStore } from 'src/store/userStore';
 // import { MobileNav } from './MobileNav';
 
+import { enqueueSnackbar } from 'notistack';
 import { motion } from 'framer-motion';
-import { domainConfig } from 'src/config/domainConfig';
-import { UserProfile } from '../UserProfile';
-import { Drawer } from '../Drawer';
-
 
 export const CommonNav = () => {
   const { user } = useUserStore();
 
-
+  const handleCreateTool = () => {
+    enqueueSnackbar('Tool creation is coming soon', { variant: 'error' });
+  };
 
   return (
     <div
       className="sticky top-0 z-[999] flex h-[70px] w-full  flex-col  justify-center bg-white px-3 align-middle  shadow-sm md:h-[70px] md:px-[30px]"
       id="common-nav">
       <div className="flex w-full justify-between overflow-hidden ">
-        <div className=" flex-shrink-0 flex ">
+        <div className=" flex flex-shrink-0 ">
           <div className="relative ">
             <Logo />
           </div>
-          <div className=' flex-col justify-center mt-2 hidden md:flex'>
-          </div>
+          <div className=" mt-2 hidden flex-col justify-center md:flex"></div>
         </div>
         <div className="flex  flex-1" />
 
         <div className=" flex flex-shrink-0 flex-col justify-center ">
           <div className="flex flex-row-reverse gap-2 md:gap-4">
-            {!user.userId && domainConfig.appName === 'hosteladmin' && (
+            
+
+            <div className="flex flex-row-reverse gap-3">
+              <div className=" flex gap-3 ">
+                { 
+                  <div className="flex flex-col justify-center">
+                    <div className="bg-gray-50o hover:bg-gray-1000 flex items-center gap-2 rounded-lg  py-2 transition md:gap-4">
+                      <Link href={user.userId ? '/app/my-tools' : '/signup'}>
+                        <button className="flex items-center gap-2 rounded-md bg-primary  py-1 text-base font-semibold text-white shadow transition hover:bg-primary/90 md:text-lg">
+                          <svg
+                            className="mr-1 h-5 w-5"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                          </svg>
+                          List My Tool
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
+                }
+                <div className=" mt-2 ">
+                  {/* <div className="left-0 top-[70px]  lg:hidden ">
+                    <Drawer />
+                  </div> */}
+                </div>
+              </div>
+            </div>
+            {!user.userId &&
               <>
                 <div className="flex gap-1 md:gap-2">
                   <Link href={'/login'}>
@@ -40,47 +68,10 @@ export const CommonNav = () => {
                     </motion.div>
                   </Link>
                 </div>
-
-                <button className="flex flex-row items-center justify-center rounded-full border border-transparent bg-primary py-0 font-medium tracking-wide transition duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 lg:min-w-fit">
-                  <motion.div className="  font-semibold " transition={{ duration: 0.3 }}>
-                    <Link href={'/signup'}>
-                      <span className="block text-white md:block">Signup</span>
-                    </Link>
-                  </motion.div>
-                </button>
               </>
-            )}
-
-            <div className="flex flex-row-reverse gap-3">
-            <div className=" flex gap-3 ">
-              {user.userId && (
-                <div className="flex flex-col justify-center">
-                  <div className="flex items-center gap-2 md:gap-4 bg-gray-50 rounded-lg px-3 py-2 shadow-sm transition hover:bg-gray-100">
-                    <Link href={'/app/my-listings'}>
-                      <button className="flex items-center gap-2 px-3 py-1 rounded-md bg-primary text-white font-semibold text-base md:text-lg shadow hover:bg-primary/90 transition">
-                        <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7M16 3v4M8 3v4m-5 4h18" />
-                        </svg>
-                        My Listings
-                      </button>
-                    </Link>
-                    <div className="ml-2">
-                      <UserProfile />
-                    </div>
-                  </div>
-                </div>
-              )}
-              <div className=" mt-2 ">
-               
-                  <div className="left-0 top-[70px]  lg:hidden ">
-                    <Drawer />
-                  </div>
-                
-              </div>
-            </div>
-          </div>
-          <div className=" flex gap-1 md:gap-2">
-            {domainConfig.appName === 'hostelpilot' && !user.userEmail && (
+            }
+            <div className=" flex gap-1 md:gap-2">
+              {/* {domainConfig.appName === 'hostelpilot' && !user.userEmail && (
               <button className="flex flex-row items-center justify-center rounded-full border border-transparent bg-primary  font-medium tracking-wide transition duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 lg:min-w-fit">
                 <motion.div className="  font-semibold " transition={{ duration: 0.3 }}>
                   <Link href={'https://hosteladmin.com/signup'}>
@@ -88,9 +79,9 @@ export const CommonNav = () => {
                   </Link>
                 </motion.div>
               </button>
-            )}
-          </div>
+            )} */}
             </div>
+          </div>
         </div>
       </div>
     </div>

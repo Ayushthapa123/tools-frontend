@@ -38,9 +38,11 @@ import { useRouter } from 'next/navigation';
 export const ToolCreateAndTestForm = ({
   isEdit = false,
   tool,
+  viewOnly = false,
 }: {
   isEdit?: boolean;
   tool?: Tool;
+  viewOnly?: boolean;
 }) => {
   const { user } = useUserStore();
   const router = useRouter();
@@ -58,11 +60,11 @@ export const ToolCreateAndTestForm = ({
       custom_prompt:
         JSON.parse(tool?.data?.inputSchema?.schema ?? '[]')?.find(
           (item: any) => item.name === 'custom_prompt',
-        )?.placeholder ?? '',
+        )?.value ?? '',
       response_format:
         JSON.parse(tool?.data?.inputSchema?.schema ?? '[]')?.find(
           (item: any) => item.name === 'response_format',
-        )?.placeholder ?? '',
+        )?.value ?? '',
     },
   });
 
@@ -145,12 +147,14 @@ export const ToolCreateAndTestForm = ({
       label: 'Custom Prompt',
       placeholder: 'Enter your custom prompt',
       type: 'textarea',
+      value:getValues('custom_prompt')
     },
     {
       name: 'response_format',
       label: 'Response Format Guide',
       placeholder: 'Enter your response format',
       type: 'textarea',
+      value:getValues('response_format')
     },
   ];
   const onSubmit = (data: any) => {
@@ -180,7 +184,7 @@ export const ToolCreateAndTestForm = ({
         mutateUpdateInputSchemaAsync({
           data: {
             id: Number(tool?.data?.inputSchema?.id) || 0,
-            schema: JSON.stringify([...customFields, ...prev]),
+            schema: JSON.stringify([...customFields, {name:'custom_prompt',value:getValues('custom_prompt')}, {name:'response_format',value:getValues('response_format')}]),
           },
         }).then(res => {
           enqueueSnackbar('Input schema updated successfully', { variant: 'success' });
@@ -206,7 +210,7 @@ export const ToolCreateAndTestForm = ({
         mutateCreateInputSchemaAsync({
           data: {
             toolId: Number(res.createTool.data?.id) || 0,
-            schema: JSON.stringify([...customFields, ...prev]),
+            schema: JSON.stringify([...customFields, {name:'custom_prompt',value:getValues('custom_prompt')}, {name:'response_format',value:getValues('response_format')}]),
           },
         }).then(ress => {
           // snackbar success
@@ -222,7 +226,7 @@ export const ToolCreateAndTestForm = ({
   return (
     <div className=" p-8">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
+        {!viewOnly && <div>
           <div className="w-full">
             <TextInput
               name="name"
@@ -245,17 +249,17 @@ export const ToolCreateAndTestForm = ({
               rows={3}
             />
           </div>
-        </div>
+        </div>}
         <div className="border-b-1 my-4 w-full border-gray-300" />
         <h2>Users Input Fields</h2>
         <div className="flex  w-min">
-          <Button
+          {!viewOnly && <Button
             label="Add New Field"
             type="button"
             onClick={() => {
               setIsAddFieldModalOpen(true);
             }}
-          />
+          />}
           <div>
             <Modal
               open={isAddFieldModalOpen}
@@ -346,7 +350,7 @@ export const ToolCreateAndTestForm = ({
             </Modal>
           </div>
         </div>
-        <div className="grid grid-cols-1">
+        <div className="grid grid-cols-1 my-4">
           {customFields
             ?.filter(field => field.name !== 'custom_prompt' && field.name !== 'response_format')
             ?.map((field, index) => (
@@ -362,7 +366,7 @@ export const ToolCreateAndTestForm = ({
                     // type="number"
                   />
                 </div>
-                <div className="flex w-10 items-center justify-center  ">
+               {!viewOnly && <div className="flex w-10 items-center justify-center  ">
                   <IconButton
                     onClick={() => {
                       
@@ -370,15 +374,16 @@ export const ToolCreateAndTestForm = ({
                     }}>
                     <FaTrash className="text-red" />
                   </IconButton>
-                </div>
+                </div>}
               </div>
             ))}
         </div>
 
-        <div className="mt-8">
+        {!viewOnly && <div className="mt-8">
           <h2>Creators Guides For Better Response</h2>
-        </div>
-        <div className="grid grid-cols-1">
+          
+        </div>}
+        { !viewOnly && <div className="grid grid-cols-1">
           <TextArea
             name="custom_prompt"
             control={control}
@@ -395,20 +400,18 @@ export const ToolCreateAndTestForm = ({
             label="Response Format Guide"
             rows={3}
           />
-        </div>
-        <Button label="Test Response" type="submit" loading={isPending} />
+        </div>}
+        <Button label={viewOnly ? "Submit" : "Test Response"} type="submit" loading={isPending} />
       </form>
-      <div>
+      <div className='mt-4'>
         <h2>Output</h2>
         <div>
-          <div>
-            <h3>HTML Response</h3>
-          </div>
+         
           <div dangerouslySetInnerHTML={{ __html: htmlResponse }} />
         </div>
       </div>
       <div>
-        <Button label="Save" type="button" onClick={handleSave} />
+        {!viewOnly && <Button label="Save" type="button" onClick={handleSave} />}
       </div>
     </div>
   );

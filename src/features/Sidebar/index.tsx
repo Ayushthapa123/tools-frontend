@@ -21,7 +21,7 @@ import {
   User
 } from 'src/gql/graphql';
 import { RiToolsFill } from 'react-icons/ri';
-import { FaAssistiveListeningSystems, FaBloggerB, FaChair, FaHotel, FaLightbulb, FaRegLightbulb, FaTools } from 'react-icons/fa';
+import { FaAssistiveListeningSystems, FaBloggerB, FaChair, FaHotel, FaLightbulb, FaRegHeart, FaRegLightbulb, FaTools } from 'react-icons/fa';
 import { useMutation } from '@tanstack/react-query';
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import { GrGallery, GrUserSettings } from 'react-icons/gr';
@@ -64,12 +64,34 @@ const Sidebar = () => {
       children: false,
       show: true,
     },
- 
+    {
+      icon: <FaRegHeart />,
+      text: 'Saved',
+      href: '/app/saved',
+      children: false,
+      show: true
+    },
  
     {
       icon: <FaTools />,
       text: 'My Tools',
       href: '/app/tool',
+      children: false,
+      show: user?.userType === UserType.Admin
+    },
+    {
+      icon: <FaTools />,
+      text: 'My Tools',
+      href: '/app/my-tools',
+      children: false,
+      show: true
+    },
+
+
+    {
+      icon: <FaRegLightbulb />,
+      text: 'Recommendations',
+      href: '/app/recommendations',
       children: false,
       show: true
     },
@@ -109,7 +131,7 @@ const Sidebar = () => {
   
 
   return (
-    <div className="relative z-[99909] flex h-full w-[18rem] flex-col border-r bg-base-100 px-[1rem] shadow-lg">
+    <div className="relative z-[99909] flex h-full w-[18rem] flex-col border-r bg-base-100 px-[1rem] shadow-lg overflow-hidden ">
       <div className="flex h-full w-full flex-col">
         <div className="relative box-content w-full">
           {/* profile */}

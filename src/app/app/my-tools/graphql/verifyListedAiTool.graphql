@@ -1,0 +1,14 @@
+mutation VerifyListedAiTool($toolId: Int!, $status: Boolean!) {
+  verifyListedAiTool(toolId: $toolId, status: $status) {
+    data {
+      id
+      name
+
+    }
+    error {
+      message
+      code
+      path
+    }
+  }
+}

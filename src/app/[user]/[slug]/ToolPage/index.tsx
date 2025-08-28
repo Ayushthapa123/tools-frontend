@@ -1,29 +1,23 @@
 
-"use client"
+
 import Footer from 'src/features/Footer';
 import {
-  Hostel,
+  Tool,
 } from 'src/gql/graphql';
 import MainContent from './MainContent';
 import { CommonNav } from 'src/features/NavBar/CommonNav';
 import LoadingSpinner from 'src/components/Loading';
 import { notFound } from 'next/navigation';
-export function HostelPage({
-  slug,
-  checkInDat,
-  checkOutDat,
-  hostelData,
+export function ToolPage({
+
+  toolData,
 }: {
   slug: string;
-  checkInDat: string;
-  checkOutDat: string;
-  hostelData: Hostel;
+  toolData: Tool;
 }) {
-  const checkInDate = checkInDat ?? new Date().toISOString().split('T')[0];
-  const checkOutDate = checkOutDat ?? new Date(Date.now() + 86400000).toISOString().split('T')[0];
 
 
-  if (!hostelData) {
+  if (!toolData) {
     return notFound()
   }
   return (
@@ -32,11 +26,10 @@ export function HostelPage({
       <div className="w-full ">
         <div>
           <div>
-            {hostelData && (
+            {toolData && (
               <MainContent
-                hostel={hostelData as Hostel}
-                checkInDate={checkInDate}
-                checkOutDate={checkOutDate}
+                tool={toolData as Tool}
+             
               />
             )}
           </div>

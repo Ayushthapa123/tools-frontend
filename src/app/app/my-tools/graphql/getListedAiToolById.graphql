@@ -1,0 +1,30 @@
+query GetListedAiToolById($toolId: Float!) {
+  getListedAiToolById(toolId: $toolId) {
+    data {
+      id
+      name
+      slug
+      shortDescription
+      logoUrl
+      websiteUrl
+      pricingType
+      aiType
+      toolUserTypes
+      keywords
+      platforms
+      integrationOptions
+      popularityScore
+      featured
+      verified
+      useCases
+      createdAt
+      updatedAt
+    }
+    error {
+      message
+      code
+      path
+    }
+   
+  }
+}

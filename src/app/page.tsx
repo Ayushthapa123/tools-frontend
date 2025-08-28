@@ -27,7 +27,7 @@ export default function Home() {
     <div className="  relative  mx-auto h-auto w-full max-w-[2100px] bg-base-100 ">
       <main className="relative ">
         <MainContent >
-          <div>hello</div>
+          <div></div>
         </MainContent>
       </main>
     </div>

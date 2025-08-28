@@ -1,0 +1,14 @@
+mutation CreateListedAiTool($data: CreateListedAiToolInput!) {
+  createListedAiTool(data: $data) {
+    data {
+      id
+      name
+  
+    }
+    error {
+      message
+      code
+      path
+    }
+  }
+}

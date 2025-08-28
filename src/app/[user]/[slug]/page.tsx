@@ -1,12 +1,13 @@
 
 import { Metadata } from 'next';
 import { ResolvingMetadata } from 'next';
-import { HostelPage } from './HostelPage';
+import { ToolPage } from './ToolPage';
 import safeJsonStringify from 'safe-json-stringify';
 
 import { gql } from 'graphql-request';
 import { graphqlClient } from 'src/client/graphqlClient';
-import { GetHostelBySlug } from 'src/gql/graphql';
+import { GetToolBySlug } from 'src/gql/graphql';
+import { Tool } from 'src/gql/graphql';
 
 
 
@@ -27,8 +28,8 @@ export async function generateMetadata(
   const res = await graphqlClient
   .request(
     gql`
-      query GetHostelBySlug($slug: String!) {
-        getHostelBySlug(slug: $slug) {
+      query GetToolBySlug($slug: String!) {
+        getToolBySlug(slug: $slug) {
           data {
             name
             slug
@@ -41,7 +42,7 @@ export async function generateMetadata(
     { slug: params.slug }
   )
   .then((data: any) => {
-    return data.getHostelBySlug; // Returning the fetched data
+    return data.getToolBySlug; // Returning the fetched data
   })
   .catch(error => {
     return null; // Return null in case of an error
@@ -63,18 +64,16 @@ export async function generateMetadata(
 // async function 
 export default async function Home({ params }: { params: { slug: string } }) {
   const slug = params?.slug;
-  const checkinDate = "";
-  const checkoutDate = "";
 
-  const data:any = await graphqlClient.request(GetHostelBySlug, { slug }) 
+  const data:any = await graphqlClient.request(GetToolBySlug, { slug }) 
 
-  const hostelData = data?.getHostelBySlug;
+  const toolData = data?.getToolBySlug;
 
   
 
   return (
     <div className="w-full ">
-      <HostelPage slug={slug} checkInDat={checkinDate} checkOutDat={checkoutDate} hostelData={hostelData} />
+      <ToolPage slug={slug} toolData={toolData as Tool} />
     </div>
   );
 }

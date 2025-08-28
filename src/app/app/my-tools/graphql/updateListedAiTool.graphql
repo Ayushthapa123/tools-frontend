@@ -1,0 +1,13 @@
+mutation UpdateListedAiTool($toolId: Float!, $data: UpdateListedAiToolInput!) {
+  updateListedAiTool(toolId: $toolId, data: $data) {
+    data {
+      id
+    
+    }
+    error {
+      message
+      code
+      path
+    }
+  }
+}

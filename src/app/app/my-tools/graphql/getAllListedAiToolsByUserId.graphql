@@ -1,0 +1,35 @@
+query GetListedAiToolsByUserToken(
+  $pageSize: Int = 30
+  $pageNumber: Int = 1
+) {
+  getListedAiToolsByUserToken(
+    pageSize: $pageSize
+    pageNumber: $pageNumber
+  ) {
+    data {
+      id
+      name
+      slug
+      shortDescription
+      logoUrl
+      websiteUrl
+      pricingType
+      aiType
+      toolUserTypes
+      keywords
+      platforms
+      integrationOptions
+      popularityScore
+      featured
+      verified
+      useCases
+      createdAt
+      updatedAt
+    }
+    error {
+      message
+      code
+      path
+    }
+  }
+}

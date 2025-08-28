@@ -1,0 +1,34 @@
+query GetListedAiToolBySlug($slug: String!) {
+  getListedAiToolBySlug(slug: $slug) {
+    data {
+      id
+      name
+      slug
+      shortDescription
+      logoUrl
+      websiteUrl
+      pricingType
+      aiType
+      aiCapabilities
+      modalities
+      delivery
+      toolUserTypes
+      keywords
+      platforms
+      integrationOptions 
+      domains
+      popularityScore
+      featured
+      verified
+      useCases
+      createdAt
+      updatedAt
+    }
+    error {
+      message
+      code
+      path
+    }
+   
+  }
+}

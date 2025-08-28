@@ -1,0 +1,13 @@
+mutation DeleteListedAiTool($toolId: Float!) {
+  deleteListedAiTool(toolId: $toolId) {
+    data {
+      id
+
+    }
+    error {
+      message
+      code
+      path
+    }
+  }
+}

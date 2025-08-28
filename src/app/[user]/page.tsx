@@ -1,12 +1,9 @@
 // import { SearchBox } from 'src/features/Header/SearchBox';
 import Footer from 'src/features/Footer';
 
-import { Suspense } from 'react';
 
 import { Metadata } from 'next';
 import { isHostelPilot } from 'src/config/domainConfig';
-import { SearchBox } from 'src/features/landing-page/Header/SearchBox';
-import { MapProvider } from 'src/features/MapProvider';
 export const metadata: Metadata = {
   title: 'Hostel Lists',
   description: 'Hostelpilot is a hotel searching portal specially focused on providing the best hostel',
@@ -22,11 +19,7 @@ export default function Home() {
   return (
     <div className="w-full ">
       <div className="    mx-auto h-full max-w-[1800px]  border-b bg-white py-3 shadow-md">
-        <Suspense>
-          <MapProvider>
-            <SearchBox />
-          </MapProvider>
-        </Suspense>
+        details about user
       </div>
 
       <div className="w-full py-10 md:px-10"></div>

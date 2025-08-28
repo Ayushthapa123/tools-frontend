@@ -22,7 +22,8 @@ query GetAllTools($pageSize: Int = 200, $pageNumber: Int = 1, $isSuperAdmin: Boo
         fullName
         profilePicture
         userType
-        isVerified
+        isVerified 
+        username
       }
       inputSchema {
         id

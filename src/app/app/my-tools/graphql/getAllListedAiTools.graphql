@@ -1,0 +1,39 @@
+query GetAllListedAiTools(
+  $pageSize: Int = 200
+  $pageNumber: Int = 1
+  $isSuperAdmin: Boolean = false
+) {
+  getAllListedAiTools(
+    pageSize: $pageSize
+    pageNumber: $pageNumber
+    isSuperAdmin: $isSuperAdmin
+  ) {
+    data {
+      id
+      name
+      slug
+      shortDescription
+      logoUrl
+      websiteUrl
+      pricingType
+      aiType 
+      domains 
+      modalities 
+      
+      toolUserTypes
+      platforms
+      integrationOptions
+      popularityScore
+      featured
+      verified
+      useCases
+      createdAt
+      updatedAt
+    }
+    error {
+      message
+      code
+      path
+    }
+  }
+}

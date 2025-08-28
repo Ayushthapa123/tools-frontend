@@ -15,7 +15,6 @@ import {
   UserType,
 } from 'src/gql/graphql';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import GlobalToast from 'src/features/GlobalToast';
 
 import { useUserStore } from 'src/store/userStore';
 import { ThemeProvider } from 'src/features/themes/ThemeProvider';
@@ -80,7 +79,6 @@ export default function Layout({
   return (
     <ThemeProvider>
       <div className=" w-full ">
-        <GlobalToast />
         <>
           <div className=" relative  z-[999] h-[70px] shadow-sm">
             <CommonNav />
