@@ -24,7 +24,6 @@ import {
 } from 'src/gql/graphql';
 import { useAccessTokenStore } from 'src/store/accessTokenStore';
 import { Metadata } from 'next';
-import { isHostelPilot } from 'src/config/domainConfig';
 import { useUserStore } from 'src/store/userStore';
 
 
@@ -137,14 +136,12 @@ const LoginComponent = () => {
     );
   
     const receiveMessage = (event: MessageEvent) => {
-      console.log('🔔 Message received:', event);
   
       if (
         event.origin === process.env.NEXT_PUBLIC_API_URL &&
         event.data?.type === 'OAUTH_SUCCESS'
       ) {
         
-        console.log('✅ OAuth successful. Reloading...');
         window.removeEventListener('message', receiveMessage);
         window.location.reload();
       }
@@ -169,7 +166,6 @@ const LoginComponent = () => {
           <div className="w-full px-4">
             <div className=" relative mx-auto max-w-[450px]  rounded-lg bg-white px-[1rem] py-[1.5rem] text-center sm:px-12 md:px-[2.5rem]">
               <div className="relative mb-5 flex items-center  gap-1 md:-ml-4">
-                <Logo />
                 <div>
                   <FullLogo />
                 </div>

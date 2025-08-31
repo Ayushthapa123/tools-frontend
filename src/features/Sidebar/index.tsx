@@ -64,13 +64,7 @@ const Sidebar = () => {
       children: false,
       show: true,
     },
-    {
-      icon: <FaRegHeart />,
-      text: 'Saved',
-      href: '/app/saved',
-      children: false,
-      show: true
-    },
+ 
  
     {
       icon: <FaTools />,
@@ -83,6 +77,13 @@ const Sidebar = () => {
       icon: <FaTools />,
       text: 'My Tools',
       href: '/app/my-tools',
+      children: false,
+      show: true
+    },
+    {
+      icon: <FaRegHeart />,
+      text: 'Saved',
+      href: '/app/saved',
       children: false,
       show: true
     },
@@ -124,7 +125,7 @@ const Sidebar = () => {
   // this function
   const bottomItems: MenuItemType[] = [
     // { icon: <SettingsIcon />, text: 'Settings', href: '/app/settings' },
-    { icon: <BiHelpCircle />, text: 'Help', href: '/app/help' },
+    { icon: <BiHelpCircle />, text: 'Help', href: '/help' },
 
     { icon: <LogoutIcon />, text: 'Log Out', href: '/', handleFunc: logOut },
   ];

@@ -3,12 +3,11 @@ import React, { useRef, useState } from 'react';
 import { GoogleMap, Marker, Autocomplete } from '@react-google-maps/api';
 
 import { BiSearch } from 'react-icons/bi';
-import { SearchSuggestions } from './SearchSuggestions';
+// import { SearchSuggestions } from './SearchSuggestions';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { FaLocationDot } from 'react-icons/fa6';
 import { FaBuilding } from 'react-icons/fa';
 import { Select } from 'src/components/Select';
-import { Gender, RoomCapacity } from 'src/gql/graphql';
 
 const radiusOptions = [
   { label: '500m', value: '500' },
@@ -18,19 +17,7 @@ const radiusOptions = [
   { label: '4km', value: '4000' },
   { label: '5km', value: '5000' },
 ];
-const genderOptions = [
-  { label: 'Boys', value: Gender.Boys },
-  { label: 'Girls', value: Gender.Girls },
-  { label: 'Both', value: Gender.Others },
-];
-const roomTypeOptions = [
-  { label: 'Single', value: RoomCapacity.OneBed },
-  { label: 'Double', value: RoomCapacity.TwoBed },
-  { label: 'Triple', value: RoomCapacity.ThreeBed },
-  { label: 'Quad', value: RoomCapacity.FourBed },
-  { label: 'Suite', value: RoomCapacity.FiveBed },
-  { label: 'Multi Bed', value: RoomCapacity.MultiBed },
-];
+
 
 const priceRangeOptions = [
   { label: 'Around 9000/M', value: '9000' },
@@ -249,26 +236,7 @@ export const SearchBox = () => {
             onChange={e => setSelectedRadius(e.target.value)}
           />
           </div>
-          <div>
-          <Select
-            label="Gender"
-            options={genderOptions}
-            title="Gender"
-            className=""
-            value={selectedGender}
-              onChange={e => setSelectedGender(e.target.value)}
-            />
-          </div>
-          <div>
-            <Select
-              label="Room Type"
-              options={roomTypeOptions}
-              title="Room Type"
-              className=""
-              value={selectedRoomType}
-              onChange={e => setSelectedRoomType(e.target.value)}
-            />
-          </div>
+        
           <div className=" hidden md:block relative">
             <Select
               label="Price Range"
@@ -282,7 +250,7 @@ export const SearchBox = () => {
         </div>
       </div>
       <div className="flex w-full max-w-6xl justify-start px-0 py-2 sm:pl-6">
-        {showSearchSuggestions && (
+        {/* {showSearchSuggestions && (
           <SearchSuggestions
             handleClose={handleClose}
             handleCity={handleCity}
@@ -291,7 +259,7 @@ export const SearchBox = () => {
             handleQuery={handleQuery}
             query={query}
           />
-        )}
+        )} */}
       </div>
     </div>
   );

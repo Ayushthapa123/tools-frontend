@@ -2,7 +2,7 @@
 import { SearchBox } from './SearchBox';
 import { Suspense } from 'react';
 import Image from 'next/image';
-import { FeaturedHostel } from 'src/features/featured/featuredHostel';
+// import { FeaturedHostel } from 'src/features/featured/featuredHostel';
 import { MapProvider } from 'src/features/MapProvider';
 import LandingPageOffers from '../offers';
 import Link from 'next/link';
@@ -152,7 +152,7 @@ export const Header = () => {
         </Link>
       </div>
       <div className="mx-4 w-full bg-slate-50 p-4">
-        <FeaturedHostel />
+        {/* <FeaturedHostel /> */}
       </div>
     
       <div />

@@ -1,6 +1,6 @@
 import Button from 'src/components/Button';
-import { RoomImage } from 'src/gql/graphql';
-import { PhotoGallery } from './gallery/PhotoGallery';
+// import { RoomImage } from 'src/gql/graphql';
+// import { PhotoGallery } from './gallery/PhotoGallery';
 
 const UploadPhotos = ({
   handleBack,
@@ -10,14 +10,14 @@ const UploadPhotos = ({
 }: {
   handleBack: () => void;
   handleNext: () => void;
-  roomImages: RoomImage[];
+  roomImages: any[];
   roomId: number;
 }) => {
   const isEdit = roomImages.length > 0;
   return (
     <div className="space-y-4">
       <div className="text-center">
-        <PhotoGallery galleryType="ROOM" galleryKey="getRoomImages" roomId={roomId} />
+        {/* <PhotoGallery galleryType="ROOM" galleryKey="getRoomImages" roomId={roomId} /> */}
       </div>
       <div className="w-full">
         <div className="flex items-center justify-between ">

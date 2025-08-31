@@ -70,7 +70,6 @@ export default function ForgotUserPassword() {
           <div className="w-full px-4">
             <div className="relative mx-auto max-w-[450px] rounded-lg bg-white px-[1rem] py-[1.5rem] text-center sm:px-12 md:px-[2.5rem]">
               <div className="relative mb-5 flex items-center gap-1 md:-ml-4">
-                <Logo />
                 <div>
                   <FullLogo />
                 </div>

@@ -14,10 +14,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { useUserStore } from 'src/store/userStore';
 import { ThemeProvider } from 'src/features/themes/ThemeProvider';
-import LoadingSpinner from 'src/components/Loading';
 import { CommonNav } from 'src/features/NavBar/CommonNav';
-import { useRouter } from 'next/navigation';
-import ToolCard from 'src/features/ToolCard';
 import { ListedAiToolCardPublic } from 'src/features/ListedAiToolCardPublic';
 
 export default function MainContent({ children }: { children: React.ReactNode }) {
@@ -56,7 +53,7 @@ export default function MainContent({ children }: { children: React.ReactNode })
             <div
               className={`  relative h-[calc(100vh-70px)] w-full overflow-y-scroll   bg-slate-50 p-3 md:p-5`}>
               {children}
-              <div className="grid grid-cols-1 md:grid-cols-2  gap-4 w-full">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4 w-full">
                 {tools?.data?.map((tool) => (
                   <ListedAiToolCardPublic key={tool.id} tool={tool as ListedAiToolData} />
                 ))}

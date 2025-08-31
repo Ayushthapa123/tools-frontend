@@ -1,24 +1,24 @@
 {
-  "name": "Hosteladmin: Find Hostel Anywhere In The World!",
-  "short_name": "Hosteladmin",
+  "name": "Toolsland.ai: Discover & List the Best AI Tools!",
+  "short_name": "Toolsland.ai",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#4a90e2",
-  "description": "Find Hostels anywhere in the world with Hosteladmin!",
+  "description": "Find the best AI tools from 10000+ AI tools for business, marketing, coding, design, and more at Toolsland.ai. Browse thousands of AI tools, compare features, and list your own AI tool for free.",
   "icons": [
     {
-      "src": "/logo512.svg",
-      "sizes": "512x512",
-      "type": "image/svg"
-    },
-    {
-      "src": "/logo512.png",
+      "src": "/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     },
     {
-      "src": "/logo512.png",
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     }

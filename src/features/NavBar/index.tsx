@@ -53,7 +53,7 @@ const Navbar = () => {
           </div>
           <UserProfile />
 
-          {user.userType !== UserType.Student && (
+          {user.userType !== UserType.User && (
             <div className="left-0 top-[70px]  lg:hidden ">
               <Drawer />
             </div>

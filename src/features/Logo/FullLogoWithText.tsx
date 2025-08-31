@@ -1,24 +1,17 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { domainConfig } from 'src/config/domainConfig';
 
 export const FullLogo = () => {
   return (
-    <div className=" flex h-[70px] w-full ">
+    <div className=" flex h-[70px] w-full p-1 justify-center align-middle flex-col ">
       <Link href="/">
         {' '}
-        <div className=" flex w-auto gap-3" style={{ alignItems: 'center' }}>
-          <div className="relative mb-5 flex  gap-1 md:mb-5">
-            {/* <div className=" relative inline-block h-16  w-16">
-              <Image src="/logo512.png" alt="logo" fill />
-            </div> */}
-            <div className=" relative top-4 text-4xl font-medium text-primary">
-              {' '}
-              {domainConfig.appName === 'hosteladmin' ? <h3 className="capitalize text-3xl md:text-5xl">
-                {' '}
-                {domainConfig.appName}
-              </h3> : <></>}
+        <div className=" flex w-auto ">
+          <div className="relative  flex   ">
+            <div className=" relative inline-block h-12  w-72 align-middle ">
+              <Image src="/full-logo.png" alt="toolsland.ai Logo"   fill/>
             </div>
+         
           </div>
         </div>
       </Link>

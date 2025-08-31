@@ -2,17 +2,98 @@
 import Link from 'next/link';
 import { Logo } from '../Logo';
 import { useUserStore } from 'src/store/userStore';
-// import { MobileNav } from './MobileNav';
-
-import { enqueueSnackbar } from 'notistack';
+import { useRouter } from 'next/navigation';
+import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { BiSearch, BiX } from 'react-icons/bi';
+import { extractEnums } from 'src/utils/extractEnums';
+import { FullLogo } from '../Logo/FullLogoWithText';
 
 export const CommonNav = () => {
   const { user } = useUserStore();
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const suggestionsRef = useRef<HTMLDivElement>(null); 
+  const [isMobile, setIsMobile] = useState(false);
 
-  const handleCreateTool = () => {
-    enqueueSnackbar('Tool creation is coming soon', { variant: 'error' });
+
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+    // if user logged in redirect to /app 
+    if (user.userId) {
+      router.push('/app');
+    }
+  }, []);
+
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/search?query=${encodeURIComponent(searchQuery.trim())}`);
+      setIsSearchFocused(false);
+    }
   };
+
+
+
+  const clearSearch = () => {
+    setSearchQuery('');
+    searchInputRef.current?.focus();
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+  };
+
+  const handleInputFocus = () => {
+    setIsSearchFocused(true);
+ 
+  };
+
+  const handleInputBlur = () => {
+    // Delay hiding suggestions to allow for clicks
+    setTimeout(() => {
+      setIsSearchFocused(false);
+    }, 200);
+  };
+
+  // Close suggestions when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        suggestionsRef.current &&
+        !suggestionsRef.current.contains(event.target as Node) &&
+        searchInputRef.current &&
+        !searchInputRef.current.contains(event.target as Node)
+      ) {
+       
+        setIsSearchFocused(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+       
+        setIsSearchFocused(false);
+        searchInputRef.current?.blur();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  const hideRightside= isSearchFocused && isMobile
 
   return (
     <div
@@ -21,19 +102,73 @@ export const CommonNav = () => {
       <div className="flex w-full justify-between overflow-hidden ">
         <div className=" flex flex-shrink-0 ">
           <div className="relative ">
+            <div className="hidden md:block">
+              <FullLogo />
+            </div>
             <Logo />
+          
           </div>
           <div className=" mt-2 hidden flex-col justify-center md:flex"></div>
         </div>
-        <div className="flex  flex-1" />
+        
+        {/* Enhanced Search Bar - Center */}
+        <div className="flex flex-1 items-center justify-center px-4">
+          <div className="relative w-full max-w-lg">
+            <form onSubmit={handleSearch} className="relative">
+              <div className={`relative transition-all duration-300 ${
+                isSearchFocused ? 'scale-105' : 'scale-100'
+              }`}>
+                <input
+                  ref={searchInputRef}
+                  type="text"
+                  placeholder="Search for tools, Ai tools for programmer, and more..."
+                  value={searchQuery}
+                  onChange={handleInputChange}
+                  onFocus={handleInputFocus}
+                  onBlur={handleInputBlur}
+                  className="w-full rounded-full border-2 border-gray-200 bg-gray-50 px-5 py-3 pl-12 pr-12 text-sm font-medium text-gray-900 placeholder:text-gray-500 focus:border-primary focus:bg-white focus:outline-none focus:ring-4 focus:ring-primary/10 transition-all duration-300 shadow-sm hover:shadow-md"
+                />
+                
+                {/* Search Icon */}
+                <div className="absolute left-4 top-1/2 -translate-y-1/2">
+                  <BiSearch className="h-5 w-5 text-gray-400" />
+                </div>
+                
+                {/* Clear Button */}
+                {searchQuery && (
+                  <motion.button
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    type="button"
+                    onClick={clearSearch}
+                    aria-label="Clear Search"
+                    className="absolute right-14 top-3  -translate-y-1/2 rounded-full p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors duration-200"
+                  >
+                    <BiX className="h-4 w-4" />
+                  </motion.button>
+                )}
+                
+                {/* Search Button */}
+                <button
+                  type="submit"
+                  disabled={!searchQuery.trim()}
+                    aria-label="Search"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-primary p-2.5 text-white hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-primary shadow-sm hover:shadow-md"
+                >
+                  <BiSearch className="h-4 w-4" />
+                </button>
+              </div>
+            </form>
 
-        <div className=" flex flex-shrink-0 flex-col justify-center ">
+          </div>
+        </div>
+
+        { !hideRightside  &&<div className=" flex flex-shrink-0 flex-col justify-center ">
           <div className="flex flex-row-reverse gap-2 md:gap-4">
-            
-
             <div className="flex flex-row-reverse gap-3">
               <div className=" flex gap-3 ">
-                { 
+                {
                   <div className="flex flex-col justify-center">
                     <div className="bg-gray-50o hover:bg-gray-1000 flex items-center gap-2 rounded-lg  py-2 transition md:gap-4">
                       <Link href={user.userId ? '/app/my-tools' : '/signup'}>
@@ -46,7 +181,7 @@ export const CommonNav = () => {
                             viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
                           </svg>
-                          List My Tool
+                          {isMobile ? 'Tools' : 'List My AI Tool'}
                         </button>
                       </Link>
                     </div>
@@ -59,7 +194,7 @@ export const CommonNav = () => {
                 </div>
               </div>
             </div>
-            {!user.userId &&
+            {!user.userId && (
               <>
                 <div className="flex gap-1 md:gap-2">
                   <Link href={'/login'}>
@@ -69,20 +204,9 @@ export const CommonNav = () => {
                   </Link>
                 </div>
               </>
-            }
-            <div className=" flex gap-1 md:gap-2">
-              {/* {domainConfig.appName === 'hostelpilot' && !user.userEmail && (
-              <button className="flex flex-row items-center justify-center rounded-full border border-transparent bg-primary  font-medium tracking-wide transition duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 lg:min-w-fit">
-                <motion.div className="  font-semibold " transition={{ duration: 0.3 }}>
-                  <Link href={'https://hosteladmin.com/signup'}>
-                    <span className="block text-white md:block">List My Hostel <b className='text-xs  bg-neutral p-1 rounded text-gray-600 px-1'> FREE</b></span>
-                  </Link>
-                </motion.div>
-              </button>
-            )} */}
-            </div>
+            )}
           </div>
-        </div>
+        </div>}
       </div>
     </div>
   );

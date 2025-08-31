@@ -1,6 +1,5 @@
 import React from 'react';
 import { domainConfig } from 'src/config/domainConfig';
-import { Logo } from '../Logo';
 import Link from 'next/link';
 import { FullLogo } from '../Logo/FullLogoWithText';
 const Footer = () => {
@@ -11,60 +10,41 @@ const Footer = () => {
           <div className='flex flex-[70%] flex-col md:flex-row-reverse items-start gap-1 md:gap-8 mt-6 sm:mt-0'>
             <div>
               <Link href="/privacy-policy">
-                <h4 className="text-blue text-base lg:text-sm  text-center font-semibold">Privacy Policy</h4>
+                <h4 className="text-gray-500 text-base lg:text-sm  text-center font-semibold">Privacy Policy</h4>
               </Link>
             </div>
             <div>
               <Link href="/terms-and-conditions">
-                <h4 className="text-blue text-base lg:text-sm  text-center font-semibold">Terms of Service</h4>
+                <h4 className="text-gray-500 text-base lg:text-sm  text-center font-semibold">Terms of Service</h4>
               </Link>
             </div>
             <div>
               <Link href="/contact-us">
-                <h4 className="text-blue text-base lg:text-sm  text-center font-semibold">Contact Us</h4>
+                <h4 className="text-gray-500 text-base lg:text-sm  text-center font-semibold">Contact Us</h4>
               </Link>
             </div>
             
-            <div>
-              <Link href="/top-places">
-                <h4 className="text-blue text-base lg:text-sm  text-center font-semibold">Top Places</h4>
-              </Link>
-            </div>
-            <div>
-              <Link href="/cities">
-                <h4 className="text-blue text-base lg:text-sm  text-center font-semibold">Cities</h4>
-              </Link>
-            </div>
-            <div>
+        
+       
+            {/* <div>
               <Link href="/tools">
                 <h4 className="text-blue text-base lg:text-sm  text-center font-semibold">Tools</h4>
               </Link>
-            </div>
+            </div> */}
           </div>
           <div className='flex-[30%] flex -mt-5  flex-col items-start gap-2'>
             <div className='flex items-center gap-2'>
-              <Logo />
               <div>
                 <FullLogo />
               </div>
             </div>
             <div>
-              {
-                domainConfig.appName === 'hosteladmin' ? (
-                  <p className=" text-gray-500 text-lg leading-relaxed mb-4">
-                  Streamline your hostel management with our comprehensive platform.
-                  Manage bookings, payments, and operations efficiently.
-                </p>
-                ) : (
-                  <p className=" text-gray-500 text-lg leading-relaxed mb-4">
-                    Search for your comprehensive hostel with hostelpilot. The best hostel search engine in Nepal.
-                  </p>
-                )
-             }
+             <p>Toolsland.ai is a platform for discovering and listing the best AI tools for business, marketing, coding, design, and more.</p>
               <div className="flex items-center justify-start gap-3">
                 <a
                   target="_blank"
-                  href="https://www.facebook.com/hosteladmin.official"
+                  aria-label="Facebook"
+                  href="https://www.facebook.com/"
                   className="border-stroke text-dark flex h-8 w-8 items-center justify-center rounded-full border transition-colors hover:border-primary hover:bg-primary hover:text-white"
                 >
                   <svg width="8" height="16" viewBox="0 0 8 16" className="fill-current">
@@ -72,7 +52,8 @@ const Footer = () => {
                   </svg>
                 </a>
                 <a
-                  href="#"
+                  aria-label="X"
+                  href="https://www.x.com/"
                   className="border-stroke text-dark flex h-8 w-8 items-center justify-center rounded-full border transition-colors hover:border-primary hover:bg-primary hover:text-white"
                 >
                   <svg width="16" height="12" viewBox="0 0 16 12" className="fill-current">
@@ -80,7 +61,8 @@ const Footer = () => {
                   </svg>
                 </a>
                 <a
-                  href="#"
+                  aria-label="YouTube"
+                  href="https://www.youtube.com/"
                   className="border-stroke text-dark flex h-8 w-8 items-center justify-center rounded-full border transition-colors hover:border-primary hover:bg-primary hover:text-white"
                 >
                   <svg width="16" height="12" viewBox="0 0 16 12" className="fill-current">
@@ -88,7 +70,8 @@ const Footer = () => {
                   </svg>
                 </a>
                 <a
-                  href="#"
+                  aria-label="LinkedIn"
+                  href="https://www.linkedin.com/"
                   className="border-stroke text-dark flex h-8 w-8 items-center justify-center rounded-full border transition-colors hover:border-primary hover:bg-primary hover:text-white"
                 >
                   <svg width="14" height="14" viewBox="0 0 14 14" className="fill-current">
@@ -110,29 +93,5 @@ const Footer = () => {
 };
 
 export default Footer;
-const LinkGroup = ({ children, header }: { children: any; header: any }) => {
-  return (
-    <>
-      <div className="w-full px-4 sm:w-1/2 lg:w-2/12">
-        <div className="mb-10 w-full">
-          <h4 className="text-dark mb-9 text-lg font-normal ">{header}</h4>
-          <ul className="space-y-3">{children}</ul>
-        </div>
-      </div>
-    </>
-  );
-};
 
-const NavLink = ({ link, label }: { link: any; label: any }) => {
-  return (
-    <li>
-      <a
-        href={link}
-        className="text-body-color inline-block text-base leading-loose hover:text-primary"
-      >
-        {label}
-      </a>
-    </li>
-  );
-};
 

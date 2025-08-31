@@ -1,13 +1,9 @@
 import { createClient } from 'contentful';
 import BlogLists from './BlogsList';
-import { Montserrat } from 'next/font/google';
 import Link from 'next/link';
 import { IoIosArrowRoundForward } from 'react-icons/io';
 import Button from 'src/components/Button';
-const montserrat = Montserrat({
-  weight: '400',
-  subsets: ['latin'],
-});
+
 export const FeaturedBlogs = async () => {
   return (
     <div className="flex flex-col w-[90%] my-4 mx-auto">

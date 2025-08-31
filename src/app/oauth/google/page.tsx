@@ -50,9 +50,9 @@ function SignUp() {
         if (res?.signUpWithGoogle?.id) {
           setAccessToken(res.signUpWithGoogle.token.accessToken);
           // localStorage.setItem('refreshToken', res.signUpWithGoogle.token.refreshToken);
-          if(res?.signUpWithGoogle?.userType === UserType.HostelOwner){
+          if(res?.signUpWithGoogle?.userType === UserType.Creator){
             router.push('/app/');
-          } else if (res?.signUpWithGoogle?.userType === UserType.Student) {
+          } else if (res?.signUpWithGoogle?.userType === UserType.Creator) {
             router.push('/app/my-profile');
           } else {
             router.push('/app');

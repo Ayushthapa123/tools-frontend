@@ -2,7 +2,7 @@
 import './globals.css';
 import Head from 'next/head';
 import { TopLevelWrapper } from 'src/features/TopLevelWrapper';
-import { isHostelAdmin, isHostelPilot, domainConfig } from 'src/config/domainConfig';
+import { domainConfig } from 'src/config/domainConfig';
 
 
 
@@ -18,7 +18,7 @@ export default function RootLayout({
 
         <link rel="icon" href={domainConfig.logo} />
 
-        <link rel="manifest" href={isHostelPilot ? "/manifest-hostelpilot.json" : "/manifest.json"} />
+        <link rel="manifest" href={"/manifest.json"} />
         <meta name="theme-color" content="#000" />
         <link rel="mask-icon" href={domainConfig.logo} color="#5bbad5" />
         <meta name="msapplication-TileColor" content="#ffffff" />

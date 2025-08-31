@@ -29,8 +29,8 @@ export default function HostelAdminHeader() {
         </div>
 
         <div className='mt-12'>
-        <Link href="https://www.hostelpilot.com" rel="noopener noreferrer" target="_blank" className="inline-block text-primary font-bold px-4 py-2 text-lg border-b border-primary ">
-          Linked With <span className='text-blue'>Hostelpilot.com</span>
+        <Link href="https://www.toolsland.ai" rel="noopener noreferrer" target="_blank" className="inline-block text-primary font-bold px-4 py-2 text-lg border-b border-primary ">
+          Linked With <span className='text-blue'>toolsland.ai</span>
         </Link>
         </div>
       </div>

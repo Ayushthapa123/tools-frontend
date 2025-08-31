@@ -20,11 +20,10 @@ import {
 
 import { useSearchParams } from 'next/navigation';
 import Button from 'src/components/Button';
-import { Logo } from 'src/features/Logo';
 import Image from 'next/image';
 import GoogleIcon from 'src/components/icons/Google';
-import { isHostelPilot } from 'src/config/domainConfig';
 import { useUserStore } from 'src/store/userStore';
+import { FullLogo } from 'src/features/Logo/FullLogoWithText';
 
 export default function SignupComponent() {
   return (
@@ -101,7 +100,7 @@ function SignUp() {
         email: data.email,
         password: data.password,
         fullName: data.fullName,
-        userType: isHostelPilot ? UserType.Student : UserType.HostelOwner,
+        userType: UserType.User,
         // phoneNumber: data.phoneNumber,
       },
     }).then(res => {
@@ -109,10 +108,10 @@ function SignUp() {
         setLoading(false);
 
         // localStorage.setItem('refreshToken', res.signupUser.token.refreshToken);
-        if(res?.signupUser?.userType === UserType.HostelOwner){
-          router.push('/app/hostel-info');
-        } else if (res?.signupUser?.userType === UserType.Student) {
-          router.push('/app/my-profile');
+        if(res?.signupUser?.userType === UserType.User){
+          router.push('/app/');
+        } else if (res?.signupUser?.userType === UserType.Creator) {
+          router.push('/app/');
         } else {
           router.push('/app');
         }
@@ -158,14 +157,12 @@ function SignUp() {
     );
   
     const receiveMessage = (event: MessageEvent) => {
-      console.log('🔔 Message received:', event);
   
       if (
         event.origin === process.env.NEXT_PUBLIC_API_URL &&
         event.data?.type === 'OAUTH_SUCCESS'
       ) {
         
-        console.log('✅ OAuth successful. Reloading...');
         window.removeEventListener('message', receiveMessage);
         window.location.reload();
       }
@@ -185,20 +182,20 @@ function SignUp() {
 
   const signUpFeatures = [
     {
-      title: 'Manage Students/Guests',
+      title: 'Get Listed on Toolsland.ai',
       icon: '👥',
     },
     {
-      title: 'Attract Customers',
-      icon: '🎯',
+      title: 'Get Discovered by Users',
+      icon: '�',
     },
     {
-      title: 'Digital Marketing',
-      icon: '📱',
+      title: 'Get Recommended to Users',
+      icon: '�',
     },
     {
-      title: 'Hostel Room Bookings',
-      icon: '🏠',
+      title: 'Get Reviews and Ratings',
+      icon: '💬',
     },
   ];
 
@@ -214,7 +211,7 @@ function SignUp() {
                   <Image src="/hero.png" alt="Hostel png" width={450} height={450} />
                 </div>
                 <p className="mt-12 text-base font-normal text-gray-700 md:text-lg">
-                  <strong className="text-primary">Hostel Admin</strong> Helps You To Manage & Grow Your Hostel Business
+                  <strong className="text-primary">Toolsland.ai</strong> Helps You To Discover & List The Best AI Tools For Business, Marketing, Coding, Design, and More.
                 </p>
               </div>
               <div className="mt-2 grid grid-cols-1 gap-0 text-sm md:mx-auto md:w-[70%] md:grid-cols-2">
@@ -228,7 +225,7 @@ function SignUp() {
               </div>
               <div className="mt-8 leading-tight">
                 <p className="text-sm text-gray-400 lg:text-base">
-                  Create an account, add your hostel details, and get listed on our platform.
+                  Create an account, add your tools details, and get listed on our platform.
                 </p>
               </div>
               <span className="absolute right-3 top-4 -z-10 overflow-hidden">
@@ -357,9 +354,8 @@ function SignUp() {
               <div className="relative mx-auto mb-8 flex w-full items-start justify-center gap-1 md:w-[70%]  md:items-center">
                 <div className="flex items-end justify-center gap-3 opacity-70">
                   <div className="">
-                    <Logo />
+                    <FullLogo />
                   </div>
-                  <h1 className="mb-0">Hosteladmin </h1>
                 </div>
                 {/* <div>
                   <FullLogo />

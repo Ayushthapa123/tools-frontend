@@ -40,7 +40,7 @@ const BlogCard = ({ date, description, image, title, slug, content }: Iprops) =>
               <div className="flex items-center justify-start gap-3">
                 <div className="flex cursor-default items-start gap-2 rounded-lg bg-gray-100 px-2 py-1">
                   <FaUser />
-                  <span className="mb-0 text-sm text-gray-700">Hostelpilot</span>
+                  <span className="mb-0 text-sm text-gray-700">toolsland.ai</span>
                 </div>
                 {/* <div className='flex items-center gap-2 bg-gray-100 rounded-lg px-2 py-1 cursor-default'>
                   <BiUpvote />

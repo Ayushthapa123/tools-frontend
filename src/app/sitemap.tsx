@@ -4,95 +4,51 @@
 export const SitemapPage = async () => {
   const constantPages = [
     {
-      url: 'https://www.hostelpilot.com/',
+      url: 'https://www.toolsland.ai',
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 1,
     },
     {
-      url: 'https://www.hostelpilot.com/login',
+      url: 'https://www.toolsland.ai/login',
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 1,
     },
     {
-      url: 'https://www.hostelpilot.com/signup',
+      url: 'https://www.toolsland.ai/signup',
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 1,
     },
-    {
-      url: 'https://www.hostelpilot.com/tools',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 1,
-    },
-    {
-      url: 'https://www.hostelpilot.com/tools/travel-budget-calculator',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 1,
-    },
-    {
-      url: 'https://www.hostelpilot.com/blogs',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 1,
-    },
-    {
-      url: 'https://www.hostelpilot.com/cities',
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 1,
-    },
-    {
-      url: 'https://www.hostelpilot.com/top-places',
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 1,
-    },
-    {
-      url: 'https://www.hostelpilot.com/search',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 1,
-    },
-    {
-      url: 'https://www.hostelpilot.com/hostel',
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 1,
-    },
+   
+ 
     // {
-    //   url: 'https://hostelpilot.com/contact-us',
+    //   url: 'https://www.toolsland.ai/search',
     //   lastModified: new Date(),
-    //   changeFrequency: 'monthly',
+    //   changeFrequency: 'weekly',
     //   priority: 1,
     // },
+ 
     {
-      url: 'https://www.hostelpilot.com/privacy-policy',
+      url: 'https://www.toolsland.ai/privacy-policy',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 1,
     },
     {
-      url: 'https://www.hostelpilot.com/terms-and-conditions',
+      url: 'https://www.toolsland.ai/terms-and-conditions',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 1,
     },
     {
-      url: 'https://www.hostelpilot.com/forms/hostel-search-form',
+      url: 'https://www.toolsland.ai/contact-us',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 1,
     },
-    {
-      url: 'https://www.hostelpilot.com/forms/hostel-sell-form',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 1,
-    },
+  
   ];
 
 

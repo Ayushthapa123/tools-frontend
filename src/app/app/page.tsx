@@ -4,9 +4,9 @@ import Link from 'next/link';
 import React from 'react';
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import Button from 'src/components/Button';
-import HostelProfiles from 'src/features/HostelProfiles';
 
 import { useUserStore } from 'src/store/userStore';
+import MainContent from '../MainContent';
 
 export default function Home() {
   const { user } = useUserStore();
@@ -16,34 +16,10 @@ export default function Home() {
 
 
   return (
-    <div className="grid w-full gap-4">
-      <div className="card relative flex w-full flex-col border bg-base-100 p-4 text-base-content shadow lg:flex-row">
-        <div className="w-[70%] flex-grow">
-          <h3 className="text-2xl  font-semibold mt-2">
-            {/* Welcome Back! <span className="font-bold text-secondary">{data?.data?.name}</span> */}
-          </h3>
-          <p className='text-md text-primary'>
-            {/* {data?.data?.name} */}
-            {/* {data?.address?.subCity} */}
-            {/* {data?.address?.city}, {data?.address?.country} */}
-          </p>
-        </div>
-        <div className="">
-          <Link href={``}>
-            <Button
-              label="See Digital Profile"
-              className="rounded-lg bg-primary"
-              variant="primary"
-              height="sm"
-            />
-          </Link>
-        </div>
-      </div>
-
-      <div className="card w-full border bg-base-100 p-4 text-base-content shadow">
-        <h1 className="!text-xl font-semibold">Hostel Profiles</h1>
-      </div>
-     
+    <div className="">
+     <MainContent>
+      <div/>
+     </MainContent>
     </div>
   );
 }

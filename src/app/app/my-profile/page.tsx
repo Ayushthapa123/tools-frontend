@@ -4,7 +4,6 @@ import { Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { OwnProfile } from './OwnProfile';
 import { useUserStore } from 'src/store/userStore';
-import { OwnBookings } from './OwnBookings';
 import ChangePassword from './ChangePassword';
 import Button from 'src/components/Button';
 import { Tabs } from 'src/components/Tabs';

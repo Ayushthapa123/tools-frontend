@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 
 import { BiSearch } from 'react-icons/bi';
-import { SearchSuggestions } from './SearchSuggestions';
+// import { SearchSuggestions } from './SearchSuggestions';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export const SearchBox = () => {
@@ -71,7 +71,7 @@ export const SearchBox = () => {
         </button>
       </div>
       <div className=" flex w-full max-w-6xl justify-start px-0  py-2 sm:pl-6">
-        {showSearchSuggestions && (
+        {/* {showSearchSuggestions && (
           <SearchSuggestions
             handleClose={handleClose}
             handleCity={handleCity}
@@ -80,7 +80,7 @@ export const SearchBox = () => {
             handleQuery={handleQuery}
             query={query}
           />
-        )}
+        )} */}
       </div>
     </div>
   );

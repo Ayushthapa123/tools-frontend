@@ -61,7 +61,7 @@ export default function Layout({
           userName: res.refreshTokens?.user.fullName,
           userEmail: res.refreshTokens.user.email,
           userId: Number(res.refreshTokens.user.id),
-          hostelId: Number(res.refreshTokens.user.hostelId),
+          hostelId: Number(res.refreshTokens.user.id),
           userType: res.refreshTokens.user.userType,
         });
       } else {
@@ -77,35 +77,10 @@ export default function Layout({
       </>
     );
   return (
-    <ThemeProvider>
       <div className=" w-full ">
         <>
-          <div className=" relative  z-[999] h-[70px] shadow-sm">
-            <CommonNav />
-          </div>
-          {userData ? (
-            userData?.data?.isVerified == false ? (
-              <CheckMailForVerification />
-            ) : (
-              <div className=" pt-15    h-[calc(100vh-70px)] w-full  md:flex">
-                {user.userType !== UserType.Student && (
-                  <div className="fixed z-50 hidden  lg:relative lg:flex">
-                    <Drawer />
-                  </div>
-                )}
-
-                <div
-                  className={`  relative h-[calc(100vh-70px)] w-full overflow-y-scroll   bg-slate-50 p-3 md:p-5`}
-                >
-                  {children}
-                </div>
-              </div>
-            )
-          ) : (
-            ''
-          )}
+          (<div>{children}</div>)
         </>
       </div>
-    </ThemeProvider>
   );
 }
