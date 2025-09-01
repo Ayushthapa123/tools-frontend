@@ -67,6 +67,7 @@ export const CreateListedAiForm = ({ tool }: { tool: ListedAiToolData | undefine
       toolUserTypes: tool?.toolUserTypes || [],
       featured: tool?.featured || false,
       verified: tool?.verified || false,
+      popularityScore: tool?.popularityScore || 33,
       
     },
   });
@@ -318,7 +319,7 @@ export const CreateListedAiForm = ({ tool }: { tool: ListedAiToolData | undefine
               />
             </div>
             <div className="w-full bg-base-100 p-4 rounded-lg">
-              <p className="text-lg font-semibold">Logo</p>
+              <p className="text-lg font-semibold">Logo/Thumbnail</p>
               <ImageUploader
                 handleImageUrl={url => setLogoUrl(url || '')}
                 imageUrl={logoUrl || ''}
