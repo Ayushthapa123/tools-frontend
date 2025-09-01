@@ -67,7 +67,6 @@ export const OwnProfile = (props: { userType: string }) => {
   } = useForm({
     defaultValues: {
       fullName: userData?.data?.fullName || '',
-      city: '',
       altPhoneNumber: userData?.data?.altPhoneNumber || '',
       phoneNumber: userData?.data?.phoneNumber || '',
       gender: userData?.data?.gender || '',
@@ -92,7 +91,6 @@ export const OwnProfile = (props: { userType: string }) => {
     if (userData?.data) {
       reset({
         fullName: userData.data.fullName || '',
-        city: '',
         altPhoneNumber: userData.data.altPhoneNumber || '',
         phoneNumber: userData.data.phoneNumber || '',
         gender: userData.data.gender || '',
@@ -166,7 +164,6 @@ export const OwnProfile = (props: { userType: string }) => {
   const personalDetails = [
     { label: "Name", value: userData?.data?.fullName },
     { label: "Email", value: userData?.data?.email },
-    { label: "City", value: "" },
     { label: "Phone Number", value: userData?.data?.phoneNumber ?? "N/A" },
     { label: "Alternative Phone Number", value: userData?.data?.altPhoneNumber ?? "N/A" },
     { label: "Gender", value: userData?.data?.gender ?? "N/A" },
@@ -217,7 +214,7 @@ export const OwnProfile = (props: { userType: string }) => {
                   }
                 </div>
                 <div className='flex gap-2 items-center p-1 px-3 rounded-md bg-primary text-white'>
-                  <span>Hostel Owner</span>
+                  <span>Normal User</span>
                 </div>
                 </div>
                 <div className='flex justify-center w-full sm:w-fit gap-2 items-center p-1 px-3 rounded-md bg-slate-50 cursor-pointer' onClick={() => setOpenPersonalModal(true)}>
@@ -240,13 +237,7 @@ export const OwnProfile = (props: { userType: string }) => {
         </div>
       </div>
       <div>
-        {true&& (
-          <div className=" w-min cursor-pointer  md:fixed bottom-10 mt-10" onClick={handleLogout}>
-            <span className=" relative text-[25px] text-primary flex ">
-              <b className='text-red-500 text-xl'>Logout</b><LogoutIcon />
-            </span>
-          </div>
-        )}
+  
       </div>
       <Modal
         open={openPersonalModal}
@@ -267,18 +258,7 @@ export const OwnProfile = (props: { userType: string }) => {
             minLength={0}
             maxLength={50}
           />
-          <TextInput
-            name="city"
-            type="text"
-            control={control}
-            label="City"
-            customType="name"
-            minLength={0}
-            maxLength={50}
-            required
-            error={!!errors.city}
-            helpertext={errors.city ? 'City is required' : ''}
-          />
+   
           <TextInput
             name="phoneNumber"
             control={control}
@@ -308,7 +288,7 @@ export const OwnProfile = (props: { userType: string }) => {
             error={!!errors.gender}
             helperText={errors.gender ? 'Gender is required' : ''}
           />
-          <DatePicker name="dateOfBirth" control={control} label="Date of Birth" />
+          <DatePicker name="dateOfBirth" control={control} label="Date of Birth *"  />
         </form>
       </Modal>
       <Modal

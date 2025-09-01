@@ -1,9 +1,11 @@
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import {
 
-  GetAllListedAiToolsQuery,
   GetAllListedAiTools,
   GetAllListedAiToolsQueryVariables,
+  GetListedAiToolsByUserToken,
+  GetListedAiToolsByUserTokenQuery,
+  GetListedAiToolsByUserTokenQueryVariables,
   ListedAiToolData,
 } from 'src/gql/graphql';
 import { useQuery } from '@tanstack/react-query';
@@ -13,18 +15,18 @@ import { ListedAiToolCard } from './ListedAiToolCard';
 import Link from 'next/link';
 
 export const AllListings = () => {
-  const queryHostels = useGraphqlClientRequest<GetAllListedAiToolsQuery, GetAllListedAiToolsQueryVariables>(
-    GetAllListedAiTools.loc?.source?.body!,
+  const queryHostels = useGraphqlClientRequest<GetListedAiToolsByUserTokenQuery, GetListedAiToolsByUserTokenQueryVariables>(
+    GetListedAiToolsByUserToken.loc?.source?.body!,
   );
 
   //initially user is unauthenticated so there will be undefined data/ you should authenticate in _app
   const fetchData = async () => {
     const res = await queryHostels({ });
-    return res.getAllListedAiTools;
+    return res.getListedAiToolsByUserToken;
   };
 
   const { data: hostels } = useQuery({
-    queryKey: ['getAllListedAiTools'],
+    queryKey: ['getListedAiToolsByUserToken'],
     queryFn: fetchData,
   });
   return (    

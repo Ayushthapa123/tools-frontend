@@ -20,9 +20,10 @@ import { ListedAiToolCardPublic } from 'src/features/ListedAiToolCardPublic';
 export default function MainContent({ children }: { children: React.ReactNode }) {
   const { user } = useUserStore();
   // Fetch user profile by userId
-  const queryUser = useGraphqlClientRequest<GetAllListedAiToolsQuery, GetAllListedAiToolsQueryVariables>(
-    GetAllListedAiTools.loc?.source.body!,
-  );
+  const queryUser = useGraphqlClientRequest<
+    GetAllListedAiToolsQuery,
+    GetAllListedAiToolsQueryVariables
+  >(GetAllListedAiTools.loc?.source.body!);
   const fetchUser = async () => {
     const res = await queryUser({ pageSize: 50, pageNumber: 1 });
     return res.getAllListedAiTools;
@@ -32,29 +33,15 @@ export default function MainContent({ children }: { children: React.ReactNode })
     queryFn: fetchUser,
   });
 
-
-
-
   return (
     <ThemeProvider>
-      <div className=" w-full ">
+      <div className=" w-full">
         <>
-          <div className=" relative  z-[999] h-[70px] shadow-sm">
-            <CommonNav />
-          </div>
-
-          <div className=" pt-15    h-[calc(100vh-70px)] w-full  md:flex">
-            {user.userId && (
-              <div className="fixed z-50 hidden  lg:relative lg:flex">
-                <Drawer />
-              </div>
-            )}
-
-            <div
-              className={`  relative h-[calc(100vh-70px)] w-full overflow-y-scroll   bg-slate-50 p-3 md:p-5`}>
+          <div className=" ">
+            <div className={`  relative   bg-slate-50 `}>
               {children}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4 w-full">
-                {tools?.data?.map((tool) => (
+              <div className="grid w-full grid-cols-1 gap-4  md:grid-cols-2 lg:grid-cols-3">
+                {tools?.data?.map(tool => (
                   <ListedAiToolCardPublic key={tool.id} tool={tool as ListedAiToolData} />
                 ))}
               </div>

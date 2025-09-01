@@ -2,8 +2,6 @@
 
 import React, { useEffect } from 'react';
 
-import Navbar from 'src/features/NavBar';
-import { Drawer } from 'src/features/Drawer';
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import {
   GetUserById,
@@ -22,6 +20,7 @@ import { CheckMailForVerification } from '../auth/verify-email/CheckMailForVerif
 import LoadingSpinner from 'src/components/Loading';
 import { CommonNav } from 'src/features/NavBar/CommonNav';
 import { useRouter } from 'next/navigation';
+import { Drawer } from 'src/features/Drawer';
 
 export default function Layout({
   children,
@@ -77,10 +76,25 @@ export default function Layout({
       </>
     );
   return (
+    <div className=" w-full ">
       <div className=" w-full ">
         <>
-          (<div>{children}</div>)
+          <div className=" relative  z-[999] h-[70px] shadow-sm">
+            <CommonNav />
+          </div>
+
+          <div className=" pt-15    h-[calc(100vh-70px)] w-full  md:flex">
+            {user.userId && (
+              <div className="fixed z-50 hidden  lg:relative lg:flex">
+                <Drawer />
+              </div>
+            )}
+            <div className=" w-full  p-3 overflow-y-auto ">
+            {children}
+            </div>
+          </div>
         </>
       </div>
+    </div>
   );
 }

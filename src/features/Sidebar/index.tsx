@@ -68,7 +68,7 @@ const Sidebar = () => {
  
     {
       icon: <FaTools />,
-      text: 'My Tools',
+      text: 'Custom Tools',
       href: '/app/tool',
       children: false,
       show: user?.userType === UserType.Admin
