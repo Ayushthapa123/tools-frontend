@@ -7,6 +7,7 @@ import {
   GetAllListedAiTools,
   GetListedAiToolsByUserType,
   ToolUserType,
+  GetListedAiToolsWithHighPopularityScore,
 } from 'src/gql/graphql';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
@@ -21,9 +22,9 @@ import Link from 'next/link';
 export default async function MainContentSSR({ children }: { children: React.ReactNode }) {
   // Fetch user profile by userId
 
-  const data: any = await graphqlClient.request(GetAllListedAiTools, { pageSize: 6, page: 1 });
+  const data: any = await graphqlClient.request(GetListedAiToolsWithHighPopularityScore, { pageSize: 6, page: 1 });
 
-  const bestAiTools = data?.getAllListedAiTools;
+  const bestAiTools = data?.getListedAiToolsWithHighPopularityScore;
 
   const businessData: any = await graphqlClient.request(GetListedAiToolsByUserType, {
     pageSize: 3,
