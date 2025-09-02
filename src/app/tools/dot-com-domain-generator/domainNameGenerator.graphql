@@ -1,0 +1,15 @@
+mutation DomainNamesGenerator($input: DomainNameGeneratorInput!) {
+  getDomainNames(input: $input) {
+    success
+    message
+    personalizedGuide
+    data {
+      category
+      items {
+        item
+        available
+        price
+      }
+    }
+  }
+}

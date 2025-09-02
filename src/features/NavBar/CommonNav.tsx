@@ -24,7 +24,7 @@ export const CommonNav = () => {
     setIsMobile(window.innerWidth < 768);
     // if user logged and in a landing page  redirect to /app
     if (user.userId && !window.location.pathname.includes('/app')) {
-      router.push('/app');
+      // router.push('/app');
     }
   }, []);
 

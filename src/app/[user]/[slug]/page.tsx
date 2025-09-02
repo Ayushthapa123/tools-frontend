@@ -2,7 +2,6 @@
 import { Metadata } from 'next';
 import { ResolvingMetadata } from 'next';
 import { ToolPage } from './ToolPage';
-import safeJsonStringify from 'safe-json-stringify';
 
 import { gql } from 'graphql-request';
 import { graphqlClient } from 'src/client/graphqlClient';
@@ -33,7 +32,13 @@ export async function generateMetadata(
           data {
             name
             slug
-            description
+            toolMetadata {
+              title
+              description
+              ogTitle
+              ogDescription
+              ogImageUrl
+            }
          
           }
         }
@@ -50,12 +55,15 @@ export async function generateMetadata(
 
 
   return {
-    title: res?.data?.name??"Hostel",
-    description: res?.data?.description??"",
+    title: res?.data?.toolMetadata?.name??"Toolsland.ai",
+    description: res?.data?.toolMetadata?.description??"",
+    authors: [{ name: 'Ayush Thapa' }],
+    manifest: '/manifest.json', 
+    
     openGraph: {
-      title: res?.data?.name??"",
-      description: res?.data?.description??"",
-      images: res?.data?.coverphoto?.url
+      title: res?.data?.toolMetadata?.name??"",
+      description: res?.data?.toolMetadata?.description??"",
+      images: res?.data?.toolMetadata?.ogImageUrl
         ? 'https:' + res?.data?.coverphoto?.url
         : `/assets/fallback-image.svg`,
     },

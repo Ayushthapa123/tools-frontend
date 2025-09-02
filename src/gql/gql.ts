@@ -48,6 +48,7 @@ const documents = {
     "mutation refreshToken {\n  refreshTokens {\n    user {\n      email\n      fullName\n      id\n      userType\n    }\n    token {\n      refreshToken\n      accessToken\n    }\n  }\n}": types.RefreshTokenDocument,
     "mutation signupUser($input: SignupInput!) {\n  signupUser(input: $input) {\n    email\n    id\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}": types.SignupUserDocument,
     "mutation signUpWithGoogle($input: SignupWithGoogleInput!) {\n  signUpWithGoogle(input: $input) {\n    id\n    email\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}": types.SignUpWithGoogleDocument,
+    "mutation DomainNamesGenerator($input: DomainNameGeneratorInput!) {\n  getDomainNames(input: $input) {\n    success\n    message\n    personalizedGuide\n    data {\n      category\n      items {\n        item\n        available\n        price\n      }\n    }\n  }\n}": types.DomainNamesGeneratorDocument,
     "mutation SendCustomEmail($email: String!, $name: String!, $subject: String!, $htmlContent: String!) {\n  sendCustomEmail(\n    email: $email\n    name: $name\n    subject: $subject\n    htmlContent: $htmlContent\n  )\n}": types.SendCustomEmailDocument,
 };
 
@@ -205,6 +206,10 @@ export function graphql(source: "mutation signupUser($input: SignupInput!) {\n  
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "mutation signUpWithGoogle($input: SignupWithGoogleInput!) {\n  signUpWithGoogle(input: $input) {\n    id\n    email\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}"): (typeof documents)["mutation signUpWithGoogle($input: SignupWithGoogleInput!) {\n  signUpWithGoogle(input: $input) {\n    id\n    email\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation DomainNamesGenerator($input: DomainNameGeneratorInput!) {\n  getDomainNames(input: $input) {\n    success\n    message\n    personalizedGuide\n    data {\n      category\n      items {\n        item\n        available\n        price\n      }\n    }\n  }\n}"): (typeof documents)["mutation DomainNamesGenerator($input: DomainNameGeneratorInput!) {\n  getDomainNames(input: $input) {\n    success\n    message\n    personalizedGuide\n    data {\n      category\n      items {\n        item\n        available\n        price\n      }\n    }\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

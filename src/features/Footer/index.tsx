@@ -10,17 +10,17 @@ const Footer = () => {
           <div className='flex flex-[70%] flex-col md:flex-row-reverse items-start gap-1 md:gap-8 mt-6 sm:mt-0'>
             <div>
               <Link href="/privacy-policy">
-                <h4 className="text-gray-500 text-base lg:text-sm  text-center font-semibold">Privacy Policy</h4>
+                <p className="text-gray-500 text-base lg:text-sm  text-center font-semibold">Privacy Policy</p>
               </Link>
             </div>
             <div>
               <Link href="/terms-and-conditions">
-                <h4 className="text-gray-500 text-base lg:text-sm  text-center font-semibold">Terms of Service</h4>
+                <p className="text-gray-500 text-base lg:text-sm  text-center font-semibold">Terms of Service</p>
               </Link>
             </div>
             <div>
               <Link href="/contact-us">
-                <h4 className="text-gray-500 text-base lg:text-sm  text-center font-semibold">Contact Us</h4>
+                <p className="text-gray-500 text-base lg:text-sm  text-center font-semibold">Contact Us</p>
               </Link>
             </div>
             

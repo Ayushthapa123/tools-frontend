@@ -16,12 +16,13 @@ const Select = forwardRef<HTMLSelectElement, SelectComponentProps>(({ label, nam
     <div className="relative flex flex-col space-y-1 ">
       <div className=' text-start'>
         {label && (
-          <label htmlFor={name} className="text-base font-semibold text-gray-600 relative text-start ">
+          <label htmlFor={name} className="text-base font-semibold text-gray-700 relative text-start ">
             {label} {required && <span className="text-error">*</span>}
           </label>
         )}
       </div>
       <select
+        id={name}
         ref={ref}
         className={`border border-[#959eb4] ${height === 'lg' ? 'h-[3rem]' : 'h-14'} appearance-none rounded-xl px-3 py-2 pr-10 focus:border-[#484beb] focus:outline-none placeholder:text-[16px] `}
         {...restProps}

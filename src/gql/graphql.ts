@@ -160,6 +160,22 @@ export type CustomerAvatarGeneratorInput = {
   businessName: Scalars['String']['input'];
 };
 
+export type DngData = {
+  __typename?: 'DNGData';
+  category: Scalars['String']['output'];
+  items: Array<DomainItem>;
+};
+
+export type DngList = {
+  __typename?: 'DNGList';
+  data?: Maybe<Array<DngData>>;
+  error?: Maybe<GraphQlError>;
+  message?: Maybe<Scalars['String']['output']>;
+  pagination?: Maybe<Pagination>;
+  personalizedGuide?: Maybe<Scalars['String']['output']>;
+  success?: Maybe<Scalars['Boolean']['output']>;
+};
+
 export enum Delivery {
   Api = 'API',
   EdgeDevice = 'EDGE_DEVICE',
@@ -206,6 +222,20 @@ export enum Domain {
   VirtualAssistant = 'VIRTUAL_ASSISTANT',
   Writing = 'WRITING'
 }
+
+export type DomainItem = {
+  __typename?: 'DomainItem';
+  available: Scalars['Boolean']['output'];
+  item: Scalars['String']['output'];
+  price?: Maybe<Scalars['Float']['output']>;
+};
+
+export type DomainNameGeneratorInput = {
+  businessDescription: Scalars['String']['input'];
+  businessName: Scalars['String']['input'];
+  customPrompt: Scalars['String']['input'];
+  domainExtension: Scalars['String']['input'];
+};
 
 export type ForgotPasswordResponse = {
   __typename?: 'ForgotPasswordResponse';
@@ -365,6 +395,7 @@ export type Mutation = {
   deleteTool: Tool;
   forgotPassword: ForgotPasswordResponse;
   getCustomerAvatar: CagList;
+  getDomainNames: DngList;
   getTravelBudget: TbcList;
   getTravelChecklist: TcgList;
   getTravelDestination: TdfList;
@@ -443,6 +474,11 @@ export type MutationForgotPasswordArgs = {
 
 export type MutationGetCustomerAvatarArgs = {
   input: CustomerAvatarGeneratorInput;
+};
+
+
+export type MutationGetDomainNamesArgs = {
+  input: DomainNameGeneratorInput;
 };
 
 
@@ -1353,6 +1389,13 @@ export type SignUpWithGoogleMutationVariables = Exact<{
 
 export type SignUpWithGoogleMutation = { __typename?: 'Mutation', signUpWithGoogle: { __typename?: 'UsersAndToken', id: string, email: string, userType: string, token: { __typename?: 'Token', accessToken: string, refreshToken: string } } };
 
+export type DomainNamesGeneratorMutationVariables = Exact<{
+  input: DomainNameGeneratorInput;
+}>;
+
+
+export type DomainNamesGeneratorMutation = { __typename?: 'Mutation', getDomainNames: { __typename?: 'DNGList', success?: boolean | null, message?: string | null, personalizedGuide?: string | null, data?: Array<{ __typename?: 'DNGData', category: string, items: Array<{ __typename?: 'DomainItem', item: string, available: boolean, price?: number | null }> }> | null } };
+
 export type SendCustomEmailMutationVariables = Exact<{
   email: Scalars['String']['input'];
   name: Scalars['String']['input'];
@@ -1399,6 +1442,7 @@ export const LogOutDocument = {"kind":"Document","definitions":[{"kind":"Operati
 export const RefreshTokenDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"refreshToken"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"refreshTokens"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"fullName"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userType"}}]}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}},{"kind":"Field","name":{"kind":"Name","value":"accessToken"}}]}}]}}]}}]} as unknown as DocumentNode<RefreshTokenMutation, RefreshTokenMutationVariables>;
 export const SignupUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"signupUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SignupInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signupUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userType"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}}]}}]}}]}}]} as unknown as DocumentNode<SignupUserMutation, SignupUserMutationVariables>;
 export const SignUpWithGoogleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"signUpWithGoogle"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SignupWithGoogleInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signUpWithGoogle"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"userType"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}}]}}]}}]}}]} as unknown as DocumentNode<SignUpWithGoogleMutation, SignUpWithGoogleMutationVariables>;
+export const DomainNamesGeneratorDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DomainNamesGenerator"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DomainNameGeneratorInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getDomainNames"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"personalizedGuide"}},{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"item"}},{"kind":"Field","name":{"kind":"Name","value":"available"}},{"kind":"Field","name":{"kind":"Name","value":"price"}}]}}]}}]}}]}}]} as unknown as DocumentNode<DomainNamesGeneratorMutation, DomainNamesGeneratorMutationVariables>;
 export const SendCustomEmailDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SendCustomEmail"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"subject"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"htmlContent"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sendCustomEmail"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"subject"},"value":{"kind":"Variable","name":{"kind":"Name","value":"subject"}}},{"kind":"Argument","name":{"kind":"Name","value":"htmlContent"},"value":{"kind":"Variable","name":{"kind":"Name","value":"htmlContent"}}}]}]}}]} as unknown as DocumentNode<SendCustomEmailMutation, SendCustomEmailMutationVariables>;
 
 export const ChangePassword = gql`
@@ -2111,6 +2155,23 @@ export const SignUpWithGoogle = gql`
     token {
       accessToken
       refreshToken
+    }
+  }
+}
+    `;
+export const DomainNamesGenerator = gql`
+    mutation DomainNamesGenerator($input: DomainNameGeneratorInput!) {
+  getDomainNames(input: $input) {
+    success
+    message
+    personalizedGuide
+    data {
+      category
+      items {
+        item
+        available
+        price
+      }
     }
   }
 }

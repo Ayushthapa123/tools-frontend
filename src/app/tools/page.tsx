@@ -2,11 +2,11 @@ import ToolCard from './ToolCard';
 import { FaCalculator, FaList, FaMapMarkerAlt, FaSearchLocation, FaTools, FaUser } from 'react-icons/fa';
 
 export const metadata = {
-  title: 'Online Software Tools For Hostel Travelers',
-  description: 'Access useful online software tools for hostel travelers and managers: Travel Budget Calculator, Budget Calculator, Hostel Searching Tool, and Hostel Management Tool etc.',
+  title: 'Custom ai Software Tools',
+  description: 'Access useful custom ai software tools for your business, marketing, coding, design, and more.',
   openGraph: {
-    title: 'Online Software Tools For Hostel Travelers',
-    description: 'Access useful online software tools for hostel travelers and managers: Travel Budget Calculator, Budget Calculator, Hostel Searching Tool, and Hostel Management Tool etc.',
+    title: 'Custom ai Software Tools',
+    description: 'Access useful custom ai software tools for your business, marketing, coding, design, and more.',
     images: '/images/software-tools.png',
   },
   authors: [{ name: 'Ayush Thapa' }],
@@ -18,31 +18,31 @@ const tools = [
     title: 'Travel Destination Finder',
     description: 'Find the best travel destination for your next trip, based on your preferences, budget, and interests.',
     icon: <FaMapMarkerAlt />,
-    href: '/tools/travel-destination-finder',
+    href: 'https://www.hostelpilot.com/tools/travel-destination-finder',
   },
   {
     title: 'Travel Budget Calculator',
     description: 'Easily estimate your travel expenses for hostel trips, including transportation, accommodation, food, and more.',
     icon: <FaCalculator />,
-    href: '/tools/travel-budget-calculator',
+    href: 'https://www.hostelpilot.com/tools/travel-budget-calculator',
   },
   {
     title: 'Travel Checklist Generator',
     description: 'Generate a travel checklist for your next trip, based on your preferences, budget, and interests.',
     icon: <FaList />,
-    href: '/tools/checklist-for-travelling',
+    href: 'https://www.hostelpilot.com/tools/checklist-for-travelling',
   },
   {
     title: 'Hostel Searching Tool',
     description: 'Find the best hostels based on your preferences, location, budget, and amenities.',
     icon: <FaSearchLocation />,
-    href: '/search',
+    href: 'https://www.hostelpilot.com/search',
   },
   {
     title: 'Hostel Management Software',
     description: 'Get Your Hostel Online and Manage hostel operations efficiently, including bookings, room assignments, and guest records.',
     icon: <FaTools />,
-    href: 'https://hosteladmin.com',
+    href: 'https://www.hostelpilot.com',
   },
   {
     title: 'Customer Avatar Generator',
