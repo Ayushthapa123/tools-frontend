@@ -112,9 +112,9 @@ type ExtractedEnums = {
     const pricingType = extract(pricingTypeMap);
   
     return {
-      domain: domain.length ? domain : [Domain.Other],
+      domain: domain.length ? domain : [],
       toolUserType: toolUserType.length ? toolUserType : [],
-      aiType: aiType.length ? aiType : [AiType.Other],
+      aiType: aiType.length ? aiType : [],
       aiCapability: aiCapability.length ? aiCapability : [],
       pricingType: pricingType.length ? pricingType : [],
       keywords: normalized.split(" ").filter(word => word.length > 0),

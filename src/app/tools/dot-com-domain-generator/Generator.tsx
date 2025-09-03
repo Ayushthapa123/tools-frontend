@@ -138,11 +138,11 @@ export default function Generator() {
               <TextInput
                 control={control}
                 name="businessName"
-                label="Business Name"
+                label="Business Name(If you already have)"
                 placeholder="Enter your business or project name"
-                required
+                // required
                 error={!!errors.businessName?.message}
-                helpertext="The main name of your business or project"
+                // helpertext="The main name of your business or project"
               />
               
               <SelectInput

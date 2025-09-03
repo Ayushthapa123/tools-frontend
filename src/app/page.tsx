@@ -6,7 +6,7 @@ import { domainConfig } from 'src/config/domainConfig';
 import MainContentSSR from './MainContentSSR';
 import Footer from 'src/features/Footer';
 export const metadata: Metadata = {
-  title: "Discover & List the Best AI Tools",
+  title: "Research, Discover & List the Best AI Tools",
   description:
     "Find the best AI tools from 10000+ AI tools for business, marketing, coding, design, and more at Toolsland.ai. Browse thousands of AI tools, compare features, and list your own AI tool for free.",
   authors: [{ name: "Ayush Thapa" }],

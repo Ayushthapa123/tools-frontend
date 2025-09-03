@@ -21,6 +21,18 @@ export const SitemapPage = async () => {
       changeFrequency: 'weekly',
       priority: 1,
     },
+    {
+      url: 'https://www.toolsland.ai/@thapaaayush115/ai-animal-name-generator-free',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 1,
+    },
+    {
+      url: 'https://www.toolsland.ai/tools/dot-com-domain-generator',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 1,
+    },
    
  
     // {

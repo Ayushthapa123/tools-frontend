@@ -43,6 +43,7 @@ const documents = {
     "mutation resendVerificationMail($id: Float!) {\n  resendVerificationMail(id: $id)\n}": types.ResendVerificationMailDocument,
     "mutation VerifyEmail($token: VerifyEmailInput!) {\n  verifyEmail(input: $token) {\n    id\n  }\n}": types.VerifyEmailDocument,
     "mutation logInUser($input: LoginInput!) {\n  loginUser(input: $input) {\n    email\n    id\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}": types.LogInUserDocument,
+    "query SearchListedAiTools($input: SearchListedAiToolInput!) {\n  searchListedAiTools(input: $input) {\n    data {\n      id\n      name\n      slug\n      shortDescription\n      logoUrl\n      websiteUrl\n      pricingType\n      aiType\n      domains\n      modalities\n      toolUserTypes\n      platforms\n      integrationOptions\n      popularityScore\n      featured\n      verified\n      useCases\n      createdAt\n      updatedAt\n    }\n    error {\n      message\n      code\n      path\n    }\n  }\n}": types.SearchListedAiToolsDocument,
     "query getGoogleOauthUrl {\n  getGoogleAuthUrl {\n    url\n  }\n}": types.GetGoogleOauthUrlDocument,
     "mutation logOut {\n  logout {\n    success\n    message\n  }\n}": types.LogOutDocument,
     "mutation refreshToken {\n  refreshTokens {\n    user {\n      email\n      fullName\n      id\n      userType\n    }\n    token {\n      refreshToken\n      accessToken\n    }\n  }\n}": types.RefreshTokenDocument,
@@ -186,6 +187,10 @@ export function graphql(source: "mutation VerifyEmail($token: VerifyEmailInput!)
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "mutation logInUser($input: LoginInput!) {\n  loginUser(input: $input) {\n    email\n    id\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}"): (typeof documents)["mutation logInUser($input: LoginInput!) {\n  loginUser(input: $input) {\n    email\n    id\n    userType\n    token {\n      accessToken\n      refreshToken\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query SearchListedAiTools($input: SearchListedAiToolInput!) {\n  searchListedAiTools(input: $input) {\n    data {\n      id\n      name\n      slug\n      shortDescription\n      logoUrl\n      websiteUrl\n      pricingType\n      aiType\n      domains\n      modalities\n      toolUserTypes\n      platforms\n      integrationOptions\n      popularityScore\n      featured\n      verified\n      useCases\n      createdAt\n      updatedAt\n    }\n    error {\n      message\n      code\n      path\n    }\n  }\n}"): (typeof documents)["query SearchListedAiTools($input: SearchListedAiToolInput!) {\n  searchListedAiTools(input: $input) {\n    data {\n      id\n      name\n      slug\n      shortDescription\n      logoUrl\n      websiteUrl\n      pricingType\n      aiType\n      domains\n      modalities\n      toolUserTypes\n      platforms\n      integrationOptions\n      popularityScore\n      featured\n      verified\n      useCases\n      createdAt\n      updatedAt\n    }\n    error {\n      message\n      code\n      path\n    }\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -100,15 +100,18 @@ export type CreateListedAiToolInput = {
   featured: Scalars['Boolean']['input'];
   integrationOptions: Array<IntegrationOption>;
   keywords: Array<Scalars['String']['input']>;
+  listedBy: ListedBy;
   logoUrl: Scalars['String']['input'];
   modalities: Array<Modality>;
   name: Scalars['String']['input'];
   platforms: Array<PlatformType>;
   popularityScore: Scalars['Int']['input'];
   pricingType: Array<PricingType>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   shortDescription: Scalars['String']['input'];
   toolUserTypes: Array<ToolUserType>;
   useCases: Array<Scalars['String']['input']>;
+  usps: Array<Scalars['String']['input']>;
   verified: Scalars['Boolean']['input'];
   websiteUrl: Scalars['String']['input'];
 };
@@ -337,17 +340,20 @@ export type ListedAiToolData = {
   id: Scalars['ID']['output'];
   integrationOptions: Array<IntegrationOption>;
   keywords: Array<Scalars['String']['output']>;
+  listedBy: ListedBy;
   logoUrl: Scalars['String']['output'];
   modalities: Array<Modality>;
   name: Scalars['String']['output'];
   platforms: Array<PlatformType>;
   popularityScore: Scalars['Int']['output'];
   pricingType: Array<PricingType>;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
   shortDescription: Scalars['String']['output'];
   slug: Scalars['String']['output'];
   toolUserTypes: Array<ToolUserType>;
   updatedAt: Scalars['DateTime']['output'];
   useCases: Array<Scalars['String']['output']>;
+  usps: Array<Scalars['String']['output']>;
   verified: Scalars['Boolean']['output'];
   websiteUrl: Scalars['String']['output'];
 };
@@ -358,6 +364,12 @@ export type ListedAiToolList = {
   error?: Maybe<GraphQlError>;
   pagination?: Maybe<Pagination>;
 };
+
+export enum ListedBy {
+  Gemenai = 'GEMENAI',
+  Gpt = 'GPT',
+  User = 'USER'
+}
 
 export type LoginInput = {
   email: Scalars['String']['input'];
@@ -770,6 +782,7 @@ export type SearchListedAiToolInput = {
   aiTypes?: InputMaybe<Array<AiType>>;
   delivery?: InputMaybe<Array<Delivery>>;
   domains?: InputMaybe<Array<Domain>>;
+  endDate?: InputMaybe<Scalars['DateTime']['input']>;
   featured?: InputMaybe<Scalars['Boolean']['input']>;
   integrationOptions?: InputMaybe<Array<IntegrationOption>>;
   keywords?: InputMaybe<Array<Scalars['String']['input']>>;
@@ -780,9 +793,11 @@ export type SearchListedAiToolInput = {
   pageSize?: Scalars['Int']['input'];
   platforms?: InputMaybe<Array<PlatformType>>;
   pricingTypes?: InputMaybe<Array<PricingType>>;
+  researchMode?: InputMaybe<Scalars['Boolean']['input']>;
   searchTerm?: InputMaybe<Scalars['String']['input']>;
   sortBy?: InputMaybe<Scalars['String']['input']>;
   sortOrder?: InputMaybe<Scalars['String']['input']>;
+  startDate?: InputMaybe<Scalars['DateTime']['input']>;
   toolUserTypes?: InputMaybe<Array<ToolUserType>>;
   verified?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -1022,15 +1037,18 @@ export type UpdateListedAiToolInput = {
   id: Scalars['Int']['input'];
   integrationOptions?: InputMaybe<Array<IntegrationOption>>;
   keywords?: InputMaybe<Array<Scalars['String']['input']>>;
+  listedBy?: InputMaybe<ListedBy>;
   logoUrl?: InputMaybe<Scalars['String']['input']>;
   modalities?: InputMaybe<Array<Modality>>;
   name?: InputMaybe<Scalars['String']['input']>;
   platforms?: InputMaybe<Array<PlatformType>>;
   popularityScore?: InputMaybe<Scalars['Int']['input']>;
   pricingType?: InputMaybe<Array<PricingType>>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   shortDescription?: InputMaybe<Scalars['String']['input']>;
   toolUserTypes?: InputMaybe<Array<ToolUserType>>;
   useCases?: InputMaybe<Array<Scalars['String']['input']>>;
+  usps?: InputMaybe<Array<Scalars['String']['input']>>;
   verified?: InputMaybe<Scalars['Boolean']['input']>;
   websiteUrl?: InputMaybe<Scalars['String']['input']>;
 };
@@ -1360,6 +1378,13 @@ export type LogInUserMutationVariables = Exact<{
 
 export type LogInUserMutation = { __typename?: 'Mutation', loginUser: { __typename?: 'UsersAndToken', email: string, id: string, userType: string, token: { __typename?: 'Token', accessToken: string, refreshToken: string } } };
 
+export type SearchListedAiToolsQueryVariables = Exact<{
+  input: SearchListedAiToolInput;
+}>;
+
+
+export type SearchListedAiToolsQuery = { __typename?: 'Query', searchListedAiTools: { __typename?: 'ListedAiToolList', data?: Array<{ __typename?: 'ListedAiToolData', id: string, name: string, slug: string, shortDescription: string, logoUrl: string, websiteUrl: string, pricingType: Array<PricingType>, aiType: Array<AiType>, domains: Array<Domain>, modalities: Array<Modality>, toolUserTypes: Array<ToolUserType>, platforms: Array<PlatformType>, integrationOptions: Array<IntegrationOption>, popularityScore: number, featured: boolean, verified: boolean, useCases: Array<string>, createdAt: any, updatedAt: any }> | null, error?: { __typename?: 'GraphQLError', message: string, code?: string | null, path?: string | null } | null } };
+
 export type GetGoogleOauthUrlQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1437,6 +1462,7 @@ export const ResetPasswordDocument = {"kind":"Document","definitions":[{"kind":"
 export const ResendVerificationMailDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"resendVerificationMail"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"resendVerificationMail"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<ResendVerificationMailMutation, ResendVerificationMailMutationVariables>;
 export const VerifyEmailDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"VerifyEmail"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"token"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"VerifyEmailInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"verifyEmail"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"token"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<VerifyEmailMutation, VerifyEmailMutationVariables>;
 export const LogInUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"logInUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LoginInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"loginUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userType"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}}]}}]}}]}}]} as unknown as DocumentNode<LogInUserMutation, LogInUserMutationVariables>;
+export const SearchListedAiToolsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchListedAiTools"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SearchListedAiToolInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"searchListedAiTools"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"shortDescription"}},{"kind":"Field","name":{"kind":"Name","value":"logoUrl"}},{"kind":"Field","name":{"kind":"Name","value":"websiteUrl"}},{"kind":"Field","name":{"kind":"Name","value":"pricingType"}},{"kind":"Field","name":{"kind":"Name","value":"aiType"}},{"kind":"Field","name":{"kind":"Name","value":"domains"}},{"kind":"Field","name":{"kind":"Name","value":"modalities"}},{"kind":"Field","name":{"kind":"Name","value":"toolUserTypes"}},{"kind":"Field","name":{"kind":"Name","value":"platforms"}},{"kind":"Field","name":{"kind":"Name","value":"integrationOptions"}},{"kind":"Field","name":{"kind":"Name","value":"popularityScore"}},{"kind":"Field","name":{"kind":"Name","value":"featured"}},{"kind":"Field","name":{"kind":"Name","value":"verified"}},{"kind":"Field","name":{"kind":"Name","value":"useCases"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"path"}}]}}]}}]}}]} as unknown as DocumentNode<SearchListedAiToolsQuery, SearchListedAiToolsQueryVariables>;
 export const GetGoogleOauthUrlDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getGoogleOauthUrl"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getGoogleAuthUrl"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]} as unknown as DocumentNode<GetGoogleOauthUrlQuery, GetGoogleOauthUrlQueryVariables>;
 export const LogOutDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"logOut"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"logout"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]} as unknown as DocumentNode<LogOutMutation, LogOutMutationVariables>;
 export const RefreshTokenDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"refreshToken"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"refreshTokens"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"fullName"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userType"}}]}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}},{"kind":"Field","name":{"kind":"Name","value":"accessToken"}}]}}]}}]}}]} as unknown as DocumentNode<RefreshTokenMutation, RefreshTokenMutationVariables>;
@@ -2098,6 +2124,38 @@ export const LogInUser = gql`
     token {
       accessToken
       refreshToken
+    }
+  }
+}
+    `;
+export const SearchListedAiTools = gql`
+    query SearchListedAiTools($input: SearchListedAiToolInput!) {
+  searchListedAiTools(input: $input) {
+    data {
+      id
+      name
+      slug
+      shortDescription
+      logoUrl
+      websiteUrl
+      pricingType
+      aiType
+      domains
+      modalities
+      toolUserTypes
+      platforms
+      integrationOptions
+      popularityScore
+      featured
+      verified
+      useCases
+      createdAt
+      updatedAt
+    }
+    error {
+      message
+      code
+      path
     }
   }
 }

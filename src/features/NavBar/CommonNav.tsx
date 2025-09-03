@@ -2,23 +2,27 @@
 import Link from 'next/link';
 import { Logo } from '../Logo';
 import { useUserStore } from 'src/store/userStore';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { BiSearch, BiX } from 'react-icons/bi';
-import { extractEnums } from 'src/utils/extractEnums';
 import { FullLogo } from '../Logo/FullLogoWithText';
 import { Drawer } from '../Drawer';
 import { UserProfile } from '../UserProfile';
+import { extractEnums } from 'src/utils/extractEnums';
 
 export const CommonNav = () => {
   const { user } = useUserStore();
   const router = useRouter();
-  const [searchQuery, setSearchQuery] = useState('');
+  const query= useSearchParams();
+  const queryString=query.get('query') ?? '';
+  const [searchQuery, setSearchQuery] = useState(queryString);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const suggestionsRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
+
+
 
   useEffect(() => {
     setIsMobile(window.innerWidth < 768);
@@ -38,7 +42,8 @@ export const CommonNav = () => {
 
   const clearSearch = () => {
     setSearchQuery('');
-    searchInputRef.current?.focus();
+    searchInputRef.current?.focus(); 
+    router.push('/search');
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
