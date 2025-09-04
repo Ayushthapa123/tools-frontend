@@ -24,13 +24,14 @@ query GetToolBySlug($slug: String!) {
         userType
         isVerified 
         username
+
       }
       inputSchema {
         id
         schema
         toolId
         createdAt
-       
+        updatedAt
       }
       outputSchema {
         id

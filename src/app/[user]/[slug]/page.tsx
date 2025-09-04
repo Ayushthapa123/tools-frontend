@@ -47,24 +47,26 @@ export async function generateMetadata(
     { slug: params.slug }
   )
   .then((data: any) => {
+    console.log(JSON.stringify(data));
     return data.getToolBySlug; // Returning the fetched data
   })
   .catch(error => {
+    console.log(error);
     return null; // Return null in case of an error
   });
 
 
   return {
-    title: res?.data?.toolMetadata?.name??"Toolsland.ai",
+    title: res?.data?.toolMetadata?.title??"Toolsland.ai",
     description: res?.data?.toolMetadata?.description??"",
     authors: [{ name: 'Ayush Thapa' }],
     manifest: '/manifest.json', 
     
     openGraph: {
-      title: res?.data?.toolMetadata?.name??"",
+      title: res?.data?.toolMetadata?.title??"",
       description: res?.data?.toolMetadata?.description??"",
       images: res?.data?.toolMetadata?.ogImageUrl
-        ? 'https:' + res?.data?.coverphoto?.url
+        ? 'https:' + res?.data?.toolMetadata?.ogImageUrl
         : `/assets/fallback-image.svg`,
     },
   };
