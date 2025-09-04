@@ -86,6 +86,7 @@ export default function MainContent({ children }: { children: React.ReactNode })
         researchMode: researchMode,
         pageNumber: 1, 
         pageSize: 12,
+        keywords: searchQuery?.split(" ").filter(word => word.length > 3),
 
       },
     });

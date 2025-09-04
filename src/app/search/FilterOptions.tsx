@@ -215,7 +215,7 @@ const queryClient = useQueryClient();
                   label=""
                   items={enumToOptions(Delivery)}
                   onChange={(selected) => setDeliveryMethods(selected as Delivery[])}
-                  defaultValue={[...deliveryMethods]}
+                  defaultValue={[...deliveryMethods,...x.deliveryMethod]}
                 />
               </div>
             </div>
@@ -229,7 +229,7 @@ const queryClient = useQueryClient();
                   label=""
                   items={enumToOptions(Modality)}
                   onChange={(selected) => setModalities(selected as Modality[])}
-                  defaultValue={modalities}
+                  defaultValue={[...modalities,...x.modality]}
                 />
               </div>
 
@@ -240,7 +240,7 @@ const queryClient = useQueryClient();
                   label=""
                   items={enumToOptions(PlatformType)}
                   onChange={(selected) => setPlatforms(selected as PlatformType[])}
-                  defaultValue={platforms}
+                  defaultValue={[...platforms,...x.platform]}
                 />
               </div>
             </div>
@@ -254,7 +254,7 @@ const queryClient = useQueryClient();
                   label=""
                   items={enumToOptions(IntegrationOption)}
                   onChange={(selected) => setIntegrationOptions(selected as IntegrationOption[])}
-                  defaultValue={integrationOptions}
+                  defaultValue={[...integrationOptions]}
                 />
               </div>
 

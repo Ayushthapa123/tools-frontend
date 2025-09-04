@@ -1,4 +1,4 @@
-import { AiCapability, AiType, Domain, PricingType, ToolUserType } from "src/gql/graphql";
+import { AiCapability, AiType, Delivery, Domain, Modality, PlatformType, PricingType, ToolUserType } from "src/gql/graphql";
 
 type ExtractedEnums = {
     domain: Domain[];
@@ -6,7 +6,10 @@ type ExtractedEnums = {
     aiType: AiType[];
     aiCapability: AiCapability[]; 
     pricingType: PricingType[];
+    deliveryMethod: Delivery[];
     keywords: string[];
+    modality: Modality[];
+    platform: PlatformType[]; 
   };
   
   export function extractEnums(sentence: string): ExtractedEnums {
@@ -95,6 +98,40 @@ type ExtractedEnums = {
       "custom": PricingType.Custom,
       "trial": PricingType.Trial,
     };
+    const deliveryMethodMap: Record<string, Delivery> = {
+      "api": Delivery.Api,
+      "edge": Delivery.EdgeDevice,
+      "marketplace": Delivery.MarketplacePlugin,
+      "model": Delivery.ModelWeights,
+      "onprem": Delivery.OnPrem,
+      "open": Delivery.OpenSource,
+      "saas": Delivery.Saas,
+      "sdk": Delivery.Sdk,
+    };
+
+    const modalityMap: Record<string, Modality> = {
+      "text": Modality.Text,
+      "audio": Modality.Audio,
+      "graph": Modality.Graph,
+      "image": Modality.Image,
+      "multimodal": Modality.Multimodal,
+      "tabular": Modality.Tabular,
+      "time series": Modality.TimeSeries,
+      "video": Modality.Video,
+      "three d": Modality.ThreeD,
+    };
+
+    const platformMap: Record<string, PlatformType> = {
+      "api": PlatformType.Api,
+      "desktop": PlatformType.Desktop,
+      "extension": PlatformType.Extension,
+      "mobile": PlatformType.Mobile,
+      "other": PlatformType.Other,
+      "plugin": PlatformType.Plugin,
+      "sdk": PlatformType.Sdk,
+      "web": PlatformType.Web,
+      "webhook": PlatformType.Webhook,
+    };
   
     // --- Extract function ---
     const extract = <T>(map: Record<string, T>): T[] => {
@@ -110,13 +147,19 @@ type ExtractedEnums = {
     const aiType = extract(aiTypeMap);
     const aiCapability = extract(aiCapMap);
     const pricingType = extract(pricingTypeMap);
-  
+    const deliveryMethod = extract(deliveryMethodMap);
+    const modality = extract(modalityMap);
+    const platform = extract(platformMap);
+    
     return {
       domain: domain.length ? domain : [],
       toolUserType: toolUserType.length ? toolUserType : [],
       aiType: aiType.length ? aiType : [],
       aiCapability: aiCapability.length ? aiCapability : [],
       pricingType: pricingType.length ? pricingType : [],
+      deliveryMethod: deliveryMethod.length ? deliveryMethod : [],
+      modality: modality.length ? modality : [], 
+      platform: platform.length ? platform : [],
       keywords: normalized.split(" ").filter(word => word.length > 0),
     };
   }

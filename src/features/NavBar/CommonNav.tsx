@@ -51,7 +51,7 @@ export const Common = () => {
       // refresh the page after 1 second
       setTimeout(() => {
         window.location.reload();
-      }, 100);
+      }, 500);
     }
   };
 
