@@ -64,7 +64,6 @@ type ExtractedEnums = {
       "code ai": AiType.CodeAi,
       "marketing ai": AiType.MarketingAi,
       "security ai": AiType.SecurityAi,
-      "ai agent": AiType.AiAgent,
     };
   
     const aiCapMap: Record<string, AiCapability> = {
