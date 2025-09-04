@@ -15,8 +15,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: domainConfig.coverImage,
-        width: 512,
-        height: 512,
+        width: 1300,
+        height: 720,
       },
     ],
     title: "Find Best AI tools",

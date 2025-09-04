@@ -47,7 +47,9 @@ export const Common = () => {
     e.preventDefault();
     if (searchQuery.trim()) {
       router.push(`/search?query=${encodeURIComponent(searchQuery.trim())}`);
-      setIsSearchFocused(false);
+      setIsSearchFocused(false); 
+      // refresh the page
+      window.location.reload();
     }
   };
 

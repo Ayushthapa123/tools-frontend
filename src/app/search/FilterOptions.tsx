@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import FilterIcon from 'src/components/icons/Filter';
 import { useFilterStore } from 'src/store/filterStore';
 import Checklist from 'src/components/CheckList';
@@ -17,12 +17,25 @@ import {
   AiCapability
 } from 'src/gql/graphql';
 import { useQueryClient } from '@tanstack/react-query';
+import LoadingSpinner from 'src/components/Loading';
+import { useSearchParams } from 'next/navigation';
+import { extractEnums } from 'src/utils/extractEnums';
 
 interface FilterOptionsProps {
   onFiltersChange?: () => void;
 }
 
 export default function FilterOptions({ onFiltersChange }: FilterOptionsProps) {
+  return (
+    <Suspense fallback={<LoadingSpinner color="primary" size="lg" />}>
+      <FilterOptionsComponent onFiltersChange={onFiltersChange} />
+    </Suspense>
+  );
+};
+
+
+ function FilterOptionsComponent({ onFiltersChange }: FilterOptionsProps) {
+  const query = useSearchParams();
   const {
     // State
     researchMode,
@@ -99,7 +112,10 @@ const queryClient = useQueryClient();
 
   const closeModal = () => {
     setFilterModalOpen(false);
-  };
+  }; 
+
+  const searchQuery = query.get('query');
+  const x = extractEnums(searchQuery ?? '');
 
   return (
     <>
@@ -163,7 +179,7 @@ const queryClient = useQueryClient();
                   label=""
                   items={enumToOptions(AiType)}
                   onChange={(selected) => setAiTypes(selected as AiType[])}
-                  defaultValue={aiTypes}
+                  defaultValue={[...aiTypes, ...x.aiType]}
                 />
               </div>
 
@@ -174,7 +190,7 @@ const queryClient = useQueryClient();
                   label=""
                   items={enumToOptions(Domain)}
                   onChange={(selected) => setDomains(selected as Domain[])}
-                  defaultValue={domains}
+                  defaultValue={[...domains, ...x.domain]}
                 />
               </div>
             </div>
@@ -188,7 +204,7 @@ const queryClient = useQueryClient();
                   label=""
                   items={enumToOptions(PricingType)}
                   onChange={(selected) => setPricingTypes(selected as PricingType[])}
-                  defaultValue={pricingTypes}
+                  defaultValue={[...pricingTypes, ...x.pricingType]}
                 />
               </div>
 
@@ -199,7 +215,7 @@ const queryClient = useQueryClient();
                   label=""
                   items={enumToOptions(Delivery)}
                   onChange={(selected) => setDeliveryMethods(selected as Delivery[])}
-                  defaultValue={deliveryMethods}
+                  defaultValue={[...deliveryMethods]}
                 />
               </div>
             </div>
@@ -249,7 +265,7 @@ const queryClient = useQueryClient();
                   label=""
                   items={enumToOptions(ToolUserType)}
                   onChange={(selected) => setToolUserTypes(selected as ToolUserType[])}
-                  defaultValue={toolUserTypes}
+                  defaultValue={[...toolUserTypes, ...x.toolUserType]}
                 />
               </div>
             </div>
@@ -261,7 +277,7 @@ const queryClient = useQueryClient();
                 label=""
                 items={enumToOptions(AiCapability)}
                 onChange={(selected) => setAiCapabilities(selected as AiCapability[])}
-                defaultValue={aiCapabilities}
+                defaultValue={[...aiCapabilities, ...x.aiCapability]}
               />
             </div>
 
