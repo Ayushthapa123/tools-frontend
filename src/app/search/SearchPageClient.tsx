@@ -19,8 +19,8 @@ export default function SearchPageClient() {
     <div className="  relative  mx-auto h-auto w-full max-w-[2100px] bg-base-100 ">
       <main className="relative ">
         <CommonNav />
-        <FilterOptions onDateFilterChange={handleDateFilterChange} />
-        <MainContent dateFilters={dateFilters}>
+        <FilterOptions  />
+        <MainContent >
           <div/>
         </MainContent>
       </main>

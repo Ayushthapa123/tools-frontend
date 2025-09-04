@@ -3,15 +3,26 @@ import Link from 'next/link';
 import { Logo } from '../Logo';
 import { useUserStore } from 'src/store/userStore';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { BiSearch, BiX } from 'react-icons/bi';
 import { FullLogo } from '../Logo/FullLogoWithText';
 import { Drawer } from '../Drawer';
 import { UserProfile } from '../UserProfile';
 import { extractEnums } from 'src/utils/extractEnums';
+import LoadingSpinner from 'src/components/Loading';
+
 
 export const CommonNav = () => {
+  return (
+    <Suspense fallback={<LoadingSpinner color="primary" size="lg" />}>
+    <Common />
+    </Suspense>
+  );
+};
+
+
+export const Common = () => {
   const { user } = useUserStore();
   const router = useRouter();
   const query= useSearchParams();

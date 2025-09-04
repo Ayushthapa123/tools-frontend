@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 
 import { Drawer } from 'src/features/Drawer';
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
@@ -21,7 +21,20 @@ import LoadingSpinner from 'src/components/Loading';
 import { extractEnums } from 'src/utils/extractEnums';
 import { useFilterStore } from 'src/store/filterStore';
 
+
+
+
 export default function MainContent({ children }: { children: React.ReactNode }) {
+  return (
+    <Suspense fallback={<LoadingSpinner color="primary" size="lg" />}>
+    <Main>
+      {children}
+    </Main>
+    </Suspense>
+  );
+}
+
+ function Main({ children }: { children: React.ReactNode }) {
   const { user } = useUserStore();
   const {
     aiTypes,
