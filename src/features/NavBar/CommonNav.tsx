@@ -48,8 +48,10 @@ export const Common = () => {
     if (searchQuery.trim()) {
       router.push(`/search?query=${encodeURIComponent(searchQuery.trim())}`);
       setIsSearchFocused(false); 
-      // refresh the page
-      window.location.reload();
+      // refresh the page after 1 second
+      setTimeout(() => {
+        window.location.reload();
+      }, 100);
     }
   };
 
