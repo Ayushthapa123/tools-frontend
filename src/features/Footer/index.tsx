@@ -71,7 +71,7 @@ const Footer = () => {
                 </a>
                 <a
                   aria-label="LinkedIn"
-                  href="https://www.linkedin.com/"
+                  href="https://www.linkedin.com/company/toolsland-ai"
                   className="border-stroke text-dark flex h-8 w-8 items-center justify-center rounded-full border transition-colors hover:border-primary hover:bg-primary hover:text-white"
                 >
                   <svg width="14" height="14" viewBox="0 0 14 14" className="fill-current">

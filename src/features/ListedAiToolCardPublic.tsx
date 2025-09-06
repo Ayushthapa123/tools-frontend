@@ -142,8 +142,8 @@ export const ListedAiToolCardPublic = (props: Iprops) => {
         {/* Description */}
         {tool?.shortDescription && (
           <div className="mt-2">
-            <p className="text-gray-600 text-sm leading-relaxed line-clamp-2">
-              {truncateText(tool.shortDescription, 100)}
+            <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">
+              {truncateText(tool.shortDescription, 190)}
             </p>
           </div>
         )}

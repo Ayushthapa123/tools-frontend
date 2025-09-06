@@ -27,6 +27,7 @@ import {
   UpdateListedAiTool,
   UpdateListedAiToolMutationVariables,
   UpdateListedAiToolMutation,
+  ProductType,
 } from 'src/gql/graphql';
 import Checklist from 'src/components/CheckList';
 import { enumToOptions } from 'src/utils/enumToArray';
@@ -68,7 +69,7 @@ export const CreateListedAiForm = ({ tool }: { tool: ListedAiToolData | undefine
       featured: tool?.featured || false,
       verified: tool?.verified || false,
       popularityScore: tool?.popularityScore || 33,
-      
+      productType: tool?.productType || [],
     },
   });
 
@@ -174,6 +175,18 @@ export const CreateListedAiForm = ({ tool }: { tool: ListedAiToolData | undefine
                   error={!!errors.websiteUrl}
                 />
               </div>
+            </div>
+            <div>
+              <Checklist
+                label="Select Product Type"
+                items={enumToOptions(ProductType)}
+                onChange={selected => {
+                  if (selected.length > 0) {
+                    setValue('productType', selected as ProductType[]);
+                  }
+                }}
+                defaultValue={watch('productType')}
+              />
             </div>
 
             {/* AI Type Selection - Critical for categorization */}

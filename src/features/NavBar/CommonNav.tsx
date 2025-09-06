@@ -15,7 +15,7 @@ import LoadingSpinner from 'src/components/Loading';
 
 export const CommonNav = () => {
   return (
-    <Suspense fallback={<LoadingSpinner color="primary" size="lg" />}>
+    <Suspense fallback={<div  />}>
     <Common />
     </Suspense>
   );

@@ -194,7 +194,7 @@ function SignUp() {
       icon: '�',
     },
     {
-      title: 'Get Reviews and Ratings',
+      title: 'Get Reviews and Suggestions',
       icon: '💬',
     },
   ];

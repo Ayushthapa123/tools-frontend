@@ -21,20 +21,18 @@ import LoadingSpinner from 'src/components/Loading';
 import { useSearchParams } from 'next/navigation';
 import { extractEnums } from 'src/utils/extractEnums';
 
-interface FilterOptionsProps {
-  onFiltersChange?: () => void;
-}
 
-export default function FilterOptions({ onFiltersChange }: FilterOptionsProps) {
+
+export default function FilterOptions() {
   return (
     <Suspense fallback={<LoadingSpinner color="primary" size="lg" />}>
-      <FilterOptionsComponent onFiltersChange={onFiltersChange} />
+      <FilterOptionsComponent  />
     </Suspense>
   );
 };
 
 
- function FilterOptionsComponent({ onFiltersChange }: FilterOptionsProps) {
+ function FilterOptionsComponent() {
   const query = useSearchParams();
   const {
     // State
@@ -78,14 +76,7 @@ export default function FilterOptions({ onFiltersChange }: FilterOptionsProps) {
 
   const activeFilterCount = getActiveFilterCount();
 
-  // Notify parent component when filters change
-  useEffect(() => {
-    onFiltersChange?.();
-  }, [
-    aiTypes, domains, pricingTypes, modalities, platforms, deliveryMethods,
-    integrationOptions, toolUserTypes, aiCapabilities, featuredOnly, verifiedOnly,
-    startDate, endDate, minPopularityScore, maxPopularityScore, onFiltersChange
-  ]);
+
 
   const handleFilterClick = () => {
     setFilterModalOpen(true);
@@ -100,14 +91,12 @@ const queryClient = useQueryClient();
   const handleApplyFilters = () => {
     queryClient.refetchQueries({ queryKey: ['searchListedAiTools'],type:"all" }); 
     setFilterModalOpen(false);
-    onFiltersChange?.();
   };
 
   const handleClearFilters = () => {
     queryClient.refetchQueries({ queryKey: ['searchListedAiTools'],type:"all" }); 
     clearAllFilters();
     window.location.reload();
-    onFiltersChange?.();
   };
 
   const closeModal = () => {
