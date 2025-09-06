@@ -78,6 +78,7 @@ export interface FilterActions {
   
   // Utility actions
   clearAllFilters: () => void;
+  resetFilters: () => void;
   getActiveFilterCount: () => number;
 }
 
@@ -144,6 +145,8 @@ export const useFilterStore = create<FilterState & FilterActions>()((set, get) =
     searchQuery: get().searchQuery, // Keep search query
     researchMode: get().researchMode, // Keep research mode
   }),
+  
+  resetFilters: () => set(initialState),
   
   getActiveFilterCount: () => {
     const state = get();

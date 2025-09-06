@@ -11,29 +11,27 @@ import { Drawer } from '../Drawer';
 import { UserProfile } from '../UserProfile';
 import { extractEnums } from 'src/utils/extractEnums';
 import LoadingSpinner from 'src/components/Loading';
-
+import { useQueryClient } from '@tanstack/react-query';
 
 export const CommonNav = () => {
   return (
-    <Suspense fallback={<div  />}>
-    <Common />
+    <Suspense fallback={<div />}>
+      <Common />
     </Suspense>
   );
 };
 
-
 export const Common = () => {
   const { user } = useUserStore();
   const router = useRouter();
-  const query= useSearchParams();
-  const queryString=query.get('query') ?? '';
+  const query = useSearchParams();
+  const queryString = query.get('query') ?? '';
   const [searchQuery, setSearchQuery] = useState(queryString);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const suggestionsRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
-
-
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     setIsMobile(window.innerWidth < 768);
@@ -47,17 +45,23 @@ export const Common = () => {
     e.preventDefault();
     if (searchQuery.trim()) {
       router.push(`/search?query=${encodeURIComponent(searchQuery.trim())}`);
-      setIsSearchFocused(false); 
+      setIsSearchFocused(false);
+      // first reset all the filters
+      queryClient.refetchQueries({ queryKey: ['searchListedAiTools'], type: 'all' });
       // refresh the page after 1 second
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
+      if (window.location.pathname.includes('/search')) {
+        setTimeout(() => {
+          // only if it's in search page
+
+          window.location.reload();
+        }, 100);
+      }
     }
   };
 
   const clearSearch = () => {
     setSearchQuery('');
-    searchInputRef.current?.focus(); 
+    searchInputRef.current?.focus();
     router.push('/search');
   };
 

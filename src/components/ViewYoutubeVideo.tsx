@@ -21,7 +21,7 @@ export default function ViewYoutubeVideo({ videoUrl }: { videoUrl: string }) {
       throw new Error('Invalid YouTube URL or video ID');
     }
   
-    return `https://www.youtube.com/embed/${videoId}`;
+    return `https://www.youtube.com/embed/${videoId}?autoplay=1`;
   };
   const embedableVideoUrl = createEmbedableVideoUrl(videoUrl);
 
