@@ -39,6 +39,7 @@ export default function MainContent({ children }: { children: React.ReactNode })
   const {
     aiTypes,
     domains,
+    productTypes,
     toolUserTypes,
     pricingTypes,
     aiCapabilities,
@@ -68,6 +69,7 @@ export default function MainContent({ children }: { children: React.ReactNode })
     const res = await queryTools({
       input: {
         aiTypes: [...aiTypes, ...x.aiType],
+        productTypes: [...productTypes, ...x.productType],
         domains: [...x.domain, ...domains],
         toolUserTypes: [...x.toolUserType, ...toolUserTypes],
         pricingTypes: [...x.pricingType, ...pricingTypes],

@@ -9,7 +9,8 @@ import {
   Delivery,
   IntegrationOption,
   ToolUserType,
-  AiCapability
+  AiCapability,
+  ProductType
 } from 'src/gql/graphql';
 
 export interface FilterState {
@@ -35,7 +36,7 @@ export interface FilterState {
   // Boolean filters
   featuredOnly: boolean;
   verifiedOnly: boolean;
-  
+  productTypes: ProductType[];
   // Numeric filters
   minPopularityScore: number;
   maxPopularityScore: number;
@@ -63,7 +64,8 @@ export interface FilterActions {
   setIntegrationOptions: (options: IntegrationOption[]) => void;
   setToolUserTypes: (types: ToolUserType[]) => void;
   setAiCapabilities: (capabilities: AiCapability[]) => void;
-  
+  setProductTypes: (types: ProductType[]) => void;
+
   // Boolean filter actions
   setFeaturedOnly: (featured: boolean) => void;
   setVerifiedOnly: (verified: boolean) => void;
@@ -93,6 +95,7 @@ const initialState: FilterState = {
   integrationOptions: [],
   toolUserTypes: [],
   aiCapabilities: [],
+  productTypes: [],
   featuredOnly: false,
   verifiedOnly: false,
   minPopularityScore: 0,
@@ -121,7 +124,7 @@ export const useFilterStore = create<FilterState & FilterActions>()((set, get) =
   setIntegrationOptions: (options: IntegrationOption[]) => set({ integrationOptions: options }),
   setToolUserTypes: (types: ToolUserType[]) => set({ toolUserTypes: types }),
   setAiCapabilities: (capabilities: AiCapability[]) => set({ aiCapabilities: capabilities }),
-  
+  setProductTypes: (types: ProductType[]) => set({ productTypes: types }),
   // Boolean filter actions
   setFeaturedOnly: (featured: boolean) => set({ featuredOnly: featured }),
   setVerifiedOnly: (verified: boolean) => set({ verifiedOnly: verified }),
@@ -156,7 +159,7 @@ export const useFilterStore = create<FilterState & FilterActions>()((set, get) =
     if (state.integrationOptions.length > 0) count++;
     if (state.toolUserTypes.length > 0) count++;
     if (state.aiCapabilities.length > 0) count++;
-    
+    if (state.productTypes.length > 0) count++;
     // Count boolean filters
     if (state.featuredOnly) count++;
     if (state.verifiedOnly) count++;

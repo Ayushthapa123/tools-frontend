@@ -1,6 +1,7 @@
 import { ListedAiToolData } from 'src/gql/graphql';
 import Image from 'next/image';
 import Link from 'next/link';
+import ViewYoutubeVideo from 'src/components/ViewYoutubeVideo';
 
 interface Iprops {
   tool: ListedAiToolData;
@@ -102,6 +103,9 @@ export const ListedAiToolCardPublicSSR = (props: Iprops) => {
                 </span>
               </div>
             </div>
+          </div>
+          <div>
+           {tool?.videoUrl && <ViewYoutubeVideo videoUrl={tool?.videoUrl} />}
           </div>
         </div>
 

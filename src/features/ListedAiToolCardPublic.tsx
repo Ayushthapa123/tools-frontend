@@ -2,6 +2,7 @@ import { ListedAiToolData } from 'src/gql/graphql';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import ViewYoutubeVideo from 'src/components/ViewYoutubeVideo';
 
 interface Iprops {
   tool: ListedAiToolData;
@@ -101,14 +102,17 @@ export const ListedAiToolCardPublic = (props: Iprops) => {
               <h2 className="text-base font-bold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
                 {tool?.name || 'Unnamed Tool'}
               </h2>
-              {tool?.verified && (
-                <div className="bg-green-100 text-green-700 text-xs px-1.5 py-0.5 rounded-full font-medium flex items-center gap-1 flex-shrink-0 ml-2">
-                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                  ✓
-                </div>
-              )}
+              <div className="flex items-center gap-2 flex-shrink-0 ml-2">
+            
+                {tool?.verified && (
+                  <div className="bg-green-100 text-green-700 text-xs px-1.5 py-0.5 rounded-full font-medium flex items-center gap-1">
+                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    ✓
+                  </div>
+                )}
+              </div>
             </div>
             
             {/* Primary Badges */}
@@ -136,6 +140,9 @@ export const ListedAiToolCardPublic = (props: Iprops) => {
                 </span>
               </div>
             </div>
+          </div>
+          <div>
+            {tool?.videoUrl && <ViewYoutubeVideo videoUrl ={tool?.videoUrl } />} 
           </div>
         </div>
 
@@ -463,6 +470,7 @@ export const ListedAiToolCardPublic = (props: Iprops) => {
           </div>
         )}
       </div>
+
     </div>
   );
 };

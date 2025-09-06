@@ -15,6 +15,7 @@ query GetAllListedAiTools(
       shortDescription
       logoUrl
       websiteUrl
+      videoUrl
       pricingType
       aiType 
       domains 

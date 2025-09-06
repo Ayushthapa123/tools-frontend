@@ -1,4 +1,4 @@
-import { AiCapability, AiType, Delivery, Domain, Modality, PlatformType, PricingType, ToolUserType } from "src/gql/graphql";
+import { AiCapability, AiType, Delivery, Domain, Modality, PlatformType, PricingType, ProductType, ToolUserType } from "src/gql/graphql";
 
 type ExtractedEnums = {
     domain: Domain[];
@@ -10,6 +10,7 @@ type ExtractedEnums = {
     keywords: string[];
     modality: Modality[];
     platform: PlatformType[]; 
+    productType: ProductType[];
   };
   
   export function extractEnums(sentence: string): ExtractedEnums {
@@ -131,6 +132,19 @@ type ExtractedEnums = {
       "web": PlatformType.Web,
       "webhook": PlatformType.Webhook,
     };
+
+    const productTypeMap: Record<string, ProductType> = {
+      "agent": ProductType.Agent,
+      "application": ProductType.Application,
+      "dataset": ProductType.Dataset,
+      "framework": ProductType.Framework,
+      "hardware": ProductType.Hardware,
+      "model": ProductType.Model,
+      "other": ProductType.Other,
+      "service": ProductType.Service,
+      "template": ProductType.Template,
+      "toolkit": ProductType.Toolkit,
+    };
   
     // --- Extract function ---
     const extract = <T>(map: Record<string, T>): T[] => {
@@ -148,7 +162,8 @@ type ExtractedEnums = {
     const pricingType = extract(pricingTypeMap);
     const deliveryMethod = extract(deliveryMethodMap);
     const modality = extract(modalityMap);
-    const platform = extract(platformMap);
+    const platform = extract(platformMap); 
+    const productType = extract(productTypeMap);
     
     return {
       domain: domain.length ? domain : [],
@@ -159,6 +174,7 @@ type ExtractedEnums = {
       deliveryMethod: deliveryMethod.length ? deliveryMethod : [],
       modality: modality.length ? modality : [], 
       platform: platform.length ? platform : [],
+      productType: productType.length ? productType : [],
       keywords: normalized.split(" ").filter(word => word.length > 0),
     };
   }
