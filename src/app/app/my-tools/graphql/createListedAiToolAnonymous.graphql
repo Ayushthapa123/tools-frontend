@@ -1,0 +1,14 @@
+mutation CreateListedAiToolAnonymous($data: CreateListedAiToolInput!) {
+  createListedAiToolAnonymously(data: $data) {
+    data {
+      id
+      name
+  
+    }
+    error {
+      message
+      code
+      path
+    }
+  }
+}

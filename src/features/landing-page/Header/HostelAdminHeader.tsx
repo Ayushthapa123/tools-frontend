@@ -37,8 +37,8 @@ export default function HostelAdminHeader() {
       <div className="flex-1 flex justify-center items-center mt-10 md:mt-0 md:pt-4 relative h-[280px] md:h-[85vh] w-full">
         <div className="relative w-full h-full aspect-square">
           <Image
-            src="/hero.png"
-            alt="Hotel Management System Hero"
+            src="/hero.svg"
+            alt="ToolsLand.ai Platform Hero"
             fill
             className="object-contain drop-shadow-xl"
             priority

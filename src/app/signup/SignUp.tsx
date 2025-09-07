@@ -208,7 +208,7 @@ function SignUp() {
               <div>
                 {/* <h3 className='text-2xl lg:text-lg font-medium text-center'>Welcome to signup !</h3> */}
                 <div className="mt-4 flex items-center justify-center">
-                  <Image src="/hero.png" alt="Hostel png" width={450} height={450} />
+                  <Image src="/hero.svg" alt="ToolsLand.ai Hero" width={450} height={450} />
                 </div>
                 <p className="mt-12 text-base font-normal text-gray-700 md:text-lg">
                   <strong className="text-primary">Toolsland.ai</strong> Helps You To Discover & List The Best AI Tools For Business, Marketing, Coding, Design, and More.
@@ -412,19 +412,7 @@ function SignUp() {
                       error={!!errors.email}
                     />
                   </div>
-                  {/* <div className="mt-5 ">
-                    <TextInput
-                      name="phoneNumber"
-                      type="tel"
-                      placeholder="Enter Phone Number"
-                      control={control}
-                      label="Phone Number"
-                      helpertext={
-                        errors.phoneNumber?.type === 'required' ? 'Phone Number Is Required' : ''
-                      }
-                      error={!!errors.phoneNumber}
-                    />
-                  </div> */}
+         
                   <div className="mt-5 ">
                     <TextInput
                       name="password"

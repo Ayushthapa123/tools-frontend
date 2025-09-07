@@ -28,6 +28,10 @@ import {
   UpdateListedAiToolMutationVariables,
   UpdateListedAiToolMutation,
   ProductType,
+  CreateListedAiToolAnonymousMutation,
+  CreateListedAiToolAnonymous,
+  CreateListedAiToolAnonymousMutationVariables,
+  ListedBy,
 } from 'src/gql/graphql';
 import Checklist from 'src/components/CheckList';
 import { enumToOptions } from 'src/utils/enumToArray';
@@ -36,7 +40,7 @@ import TextArea from 'src/features/react-hook-form/TextArea';
 import AddableList from 'src/components/AddableList';
 import ImageUploader from 'src/features/ImageUploader';
 
-export const CreateListedAiForm = ({ tool }: { tool: ListedAiToolData | undefined }) => {
+export const CreateListedAiForm = ({ tool, isPublic=false }: { tool: ListedAiToolData | undefined, isPublic?: boolean }) => {
   const { user } = useUserStore();
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -54,6 +58,7 @@ export const CreateListedAiForm = ({ tool }: { tool: ListedAiToolData | undefine
       name: tool?.name || '',
       shortDescription: tool?.shortDescription || '',
       websiteUrl: tool?.websiteUrl || '',
+      videoUrl: tool?.videoUrl || '',
       logoUrl: tool?.logoUrl || '',
       aiType: tool?.aiType || [],
       aiCapabilities: tool?.aiCapabilities || [],
@@ -69,7 +74,9 @@ export const CreateListedAiForm = ({ tool }: { tool: ListedAiToolData | undefine
       featured: tool?.featured || false,
       verified: tool?.verified || false,
       popularityScore: tool?.popularityScore || 33,
-      productType: tool?.productType || [],
+      productType: tool?.productType || [], 
+      features: tool?.features || [], 
+      usps: tool?.usps || [],
     },
   });
 
@@ -82,6 +89,15 @@ export const CreateListedAiForm = ({ tool }: { tool: ListedAiToolData | undefine
   const { mutateAsync: createAiTool, isPending: isLoading } = useMutation({
     mutationFn: mutateCreateAiTool,
   }); 
+  // anonymous mutation 
+  const mutateCreateAiToolAnonymous = useGraphqlClientRequest<
+  CreateListedAiToolAnonymousMutation,
+  CreateListedAiToolAnonymousMutationVariables
+>(CreateListedAiToolAnonymous.loc?.source?.body!);
+
+const { mutateAsync: createAiToolAnonymous, isPending: isLoadingAnonymous } = useMutation({
+  mutationFn: mutateCreateAiToolAnonymous,
+}); 
 
   const mutateUpdateAiTool = useGraphqlClientRequest<
     UpdateListedAiToolMutation,
@@ -96,7 +112,9 @@ export const CreateListedAiForm = ({ tool }: { tool: ListedAiToolData | undefine
 
     try {
       if(!tool?.id){
-      
+        alert('calling create mutation');
+      // if user logged in
+      if(user?.userId){
       const res = await createAiTool({
         data: {
           ...data,
@@ -110,7 +128,29 @@ export const CreateListedAiForm = ({ tool }: { tool: ListedAiToolData | undefine
         queryClient.refetchQueries();
       } else {
         enqueueSnackbar('Something went wrong.', { variant: 'error' });
+      } 
+
+    }else {
+      alert('calling anonymous mutation');
+      // if user not logged in 
+      // call different mutation createAiToolAnonymous
+      const resAnonymous = await createAiToolAnonymous({
+        data: {
+          ...data,
+          logoUrl: logoUrl || data.logoUrl,
+        },
+      });
+
+      if (resAnonymous?.createListedAiToolAnonymously?.data?.id) {
+        enqueueSnackbar('AI Tool listed successfully.', { variant: 'success' });
+        // after 3 seconds redirect to login
+        setTimeout(() => {
+          router.push('/login');
+        }, 3000);
+      } else {
+        enqueueSnackbar('Something went wrong.', { variant: 'error' });
       }
+    }
     }else{
       const res = await updateAiTool({
         toolId: Number(tool.id),
@@ -139,12 +179,12 @@ export const CreateListedAiForm = ({ tool }: { tool: ListedAiToolData | undefine
     <div>
       <form className=" w-full flex-col" onSubmit={handleSubmitForm(handleSubmit)}>
         <div className="hide-scrollbar flex-grow overflow-y-auto">
-          <div className="my-8 flex flex-col items-center justify-center">
+          { !isPublic && <div className="my-8 flex flex-col items-center justify-center">
             <h3 className="text-3xl font-bold text-gray-500">List Your AI Tool</h3>
             <p className="mt-2 text-center text-gray-600">
               Share your AI tool with the community and help others discover innovative solutions
             </p>
-          </div>
+          </div>}
 
           <div className="grid w-full gap-6">
             {/* Core Identity - Most Important */}
@@ -219,6 +259,20 @@ export const CreateListedAiForm = ({ tool }: { tool: ListedAiToolData | undefine
              
               />
             </div>
+            <div>
+                <TextInput
+                  name="videoUrl"
+                  type="url"
+                  placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                  control={control}
+                  label="Demo Video URL(Youtube)"
+                  // required
+                  helpertext={
+                    errors.videoUrl?.type === 'required' ? 'Video URL is required' : ''
+                  }
+                  error={!!errors.videoUrl}
+                />
+              </div>
 
             {/* Core Functionality - High Importance */}
             <div className="grid w-full gap-6">
@@ -338,6 +392,20 @@ export const CreateListedAiForm = ({ tool }: { tool: ListedAiToolData | undefine
                 imageUrl={logoUrl || ''}
               />
             </div>
+            {!user.userId && <div>
+                <TextInput
+                  name="ownerEmail"
+                  type="text"
+                  placeholder="owner@example.com"
+                  control={control}
+                  label="Owner Email" 
+                  defaultValue={user.userEmail}
+                  required
+                  helpertext={errors.ownerEmail?.type === 'required' ? 'Owner email is required' : ''}
+                  error={!!errors.ownerEmail} 
+
+                />
+              </div>}
           </div>
         </div>
 
@@ -354,7 +422,7 @@ export const CreateListedAiForm = ({ tool }: { tool: ListedAiToolData | undefine
             }}
             type="button"
           />
-          <Button label={tool?.id ? "Update AI Tool" : "List AI Tool"} type="submit" loading={isLoading || isUpdating} className="w-min" />
+          <Button label={tool?.id ? "Update AI Tool" : "List my AI Tool"} type="submit" loading={isLoading || isUpdating || isLoadingAnonymous} className="w-min" />
         </div>
       </form>
     </div>

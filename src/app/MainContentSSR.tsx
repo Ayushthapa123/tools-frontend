@@ -25,7 +25,6 @@ export default async function MainContentSSR({ children }: { children: React.Rea
   const data: any = await graphqlClient.request(GetListedAiToolsWithHighPopularityScore, { pageSize: 6, page: 1 });
 
   const bestAiTools = data?.getListedAiToolsWithHighPopularityScore;
-  console.log('bestAiTools', bestAiTools);
 
   const businessData: any = await graphqlClient.request(GetListedAiToolsByUserType, {
     pageSize: 3,
@@ -53,7 +52,7 @@ export default async function MainContentSSR({ children }: { children: React.Rea
 
   return (
     <ThemeProvider>
-      <div className="w-full min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 relative overflow-hidden">
+      <div className="w-full min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 relative ">
         {/* Background decorative elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"></div>
@@ -62,7 +61,7 @@ export default async function MainContentSSR({ children }: { children: React.Rea
         </div>
 
         <>
-          <div className="relative z-[999] h-[70px] shadow-xl bg-white/90 backdrop-blur-md border-b border-gray-200/50">
+          <div className="relative  h-[70px] shadow-xl bg-white/90 backdrop-blur-md border-b border-gray-200/50">
             <CommonNav />
           </div>
 

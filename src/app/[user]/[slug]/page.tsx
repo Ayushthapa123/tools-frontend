@@ -47,11 +47,9 @@ export async function generateMetadata(
     { slug: params.slug }
   )
   .then((data: any) => {
-    console.log(JSON.stringify(data));
     return data.getToolBySlug; // Returning the fetched data
   })
   .catch(error => {
-    console.log(error);
     return null; // Return null in case of an error
   });
 
