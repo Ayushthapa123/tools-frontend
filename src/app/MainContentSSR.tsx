@@ -25,6 +25,7 @@ export default async function MainContentSSR({ children }: { children: React.Rea
   const data: any = await graphqlClient.request(GetListedAiToolsWithHighPopularityScore, { pageSize: 6, page: 1 });
 
   const bestAiTools = data?.getListedAiToolsWithHighPopularityScore;
+  console.log('bestAiTools', bestAiTools);
 
   const businessData: any = await graphqlClient.request(GetListedAiToolsByUserType, {
     pageSize: 3,

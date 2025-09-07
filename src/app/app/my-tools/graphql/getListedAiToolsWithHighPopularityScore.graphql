@@ -15,8 +15,10 @@ query GetListedAiToolsWithHighPopularityScore(
       shortDescription
       logoUrl
       websiteUrl
+      videoUrl
       pricingType
-      aiType 
+      aiType  
+      productType
       domains 
       modalities 
       

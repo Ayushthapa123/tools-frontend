@@ -131,7 +131,14 @@ function FilterOptionsComponent() {
   const handleClearFiltersAndNavigate = () => {
 
     router.push('/search'); 
-    window.location.reload();
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
+  
+    // window.location.reload();
+
+    
   };
 
   const closeModal = () => {
