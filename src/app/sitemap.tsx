@@ -22,6 +22,12 @@ export const SitemapPage = async () => {
       priority: 1,
     },
     {
+      url: 'https://www.toolsland.ai/submit-ai-tool-free',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 1,
+    },
+    {
       url: 'https://www.toolsland.ai/thapaaayush115/ai-animal-name-generator-free',
       lastModified: new Date(),
       changeFrequency: 'weekly',
