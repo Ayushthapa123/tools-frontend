@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   openGraph: {
     images: domainConfig.coverImage,
     title: 'Toolsland.ai Signup',
+  }, 
+  alternates: {
+    canonical: 'https://www.toolsland.ai/signup',
   },
 };
 

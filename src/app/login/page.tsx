@@ -11,6 +11,10 @@ export const metadata: Metadata = {
     images: domainConfig.coverImage,
     title: 'Toolsland.ai Login',
   },
+  // add canonical link
+  alternates: {
+    canonical: 'https://www.toolsland.ai/login',
+  },
 };
 
 const SignIn = () => {

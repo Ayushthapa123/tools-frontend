@@ -22,6 +22,9 @@ export const metadata: Metadata = {
     title: "Find Best AI tools",
 
   },
+  alternates: {
+    canonical: 'https://www.toolsland.ai/search',
+  },
 };
 
 export default function Home() {

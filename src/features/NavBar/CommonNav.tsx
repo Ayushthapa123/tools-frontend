@@ -9,11 +9,8 @@ import { BiSearch, BiX } from 'react-icons/bi';
 import { FullLogo } from '../Logo/FullLogoWithText';
 import { Drawer } from '../Drawer';
 import { UserProfile } from '../UserProfile';
-import { extractEnums } from 'src/utils/extractEnums';
-import LoadingSpinner from 'src/components/Loading';
 import { useQueryClient } from '@tanstack/react-query';
 import LoginModal from '../LoginModal';
-import { Modal } from 'src/components/Modal';
 
 export const CommonNav = () => {
   return (
