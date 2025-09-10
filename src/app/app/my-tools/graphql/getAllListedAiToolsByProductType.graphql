@@ -1,0 +1,40 @@
+query GetListedAiToolsByProductType(
+  $pageNumber: Int = 1
+  $pageSize: Int = 6
+  $productType: ProductType!
+) {
+  getListedAiToolsByProductType(
+    pageNumber: $pageNumber
+    pageSize: $pageSize
+    productType: $productType
+  ) {
+    data {
+      id
+      name
+      slug
+      shortDescription
+      logoUrl
+      websiteUrl
+      videoUrl
+      pricingType
+      aiType 
+      domains 
+      modalities 
+      
+      toolUserTypes
+      platforms
+      integrationOptions
+      popularityScore
+      featured
+      verified
+      useCases
+      createdAt
+      updatedAt
+    }
+    error {
+      message
+      code
+      path
+    }
+  }
+}

@@ -9,7 +9,7 @@ const EnumLister: React.FC<EnumListerProps> = ({ enums }) => {
 
 
   return (
-    <div className="card bg-base shadow-xl border border-base-200 mb-10">
+    <div className="card bg-base shadow-lg border border-base-200 my-10">
       <div className="card-body p-6">
         <div className="flex flex-wrap gap-2 sm:gap-3">
           {enums?.map((item) => (
