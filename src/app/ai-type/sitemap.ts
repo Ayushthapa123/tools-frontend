@@ -1,0 +1,24 @@
+
+import { AiType, ProductType } from 'src/gql/graphql';
+import { convertToSlug } from 'src/utils/convertToSlug';
+import { enumToOptions } from 'src/utils/enumToArray';
+export const SitemapPage = async () => {
+
+
+
+  const res = enumToOptions(AiType)
+  const data =
+   res?.filter((item) => item.value !== AiType.Other)?.map((item) => {
+    return {
+      url: `https://www.toolsland.ai/ai-type/${convertToSlug(item.value.toLowerCase())}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 1,
+    };
+  })??[];
+  //Shostels
+
+  return [...data];
+};
+
+export default SitemapPage;

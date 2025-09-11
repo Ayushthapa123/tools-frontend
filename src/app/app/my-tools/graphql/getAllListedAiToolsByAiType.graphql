@@ -1,0 +1,40 @@
+query GetListedAiToolsByAiType(
+  $pageNumber: Int = 1
+  $pageSize: Int = 6
+  $aiType: AiType!
+) {
+  getListedAiToolsByAiType(
+    pageNumber: $pageNumber
+    pageSize: $pageSize
+    aiType: $aiType
+  ) {
+    data {
+      id
+      name
+      slug
+      shortDescription
+      logoUrl
+      websiteUrl
+      videoUrl
+      pricingType
+      aiType 
+      domains 
+      modalities 
+      
+      toolUserTypes
+      platforms
+      integrationOptions
+      popularityScore
+      featured
+      verified
+      useCases
+      createdAt
+      updatedAt
+    }
+    error {
+      message
+      code
+      path
+    }
+  }
+}
