@@ -28,7 +28,7 @@ export async function generateMetadata(
 
 
   return {
-    title: `Top 30 ${enumToText(currentAiCapability)} - Toolsland.ai`,
+    title: `Top 30 ${enumToText(currentAiCapability)} tools - Toolsland.ai`,
     description: `Top 30  ${enumToText(currentAiCapability)} tools list with features, pricing,demo and use cases`,
     authors: [{ name: 'Ayush Thapa' }],
     manifest: '/manifest.json', 
@@ -36,7 +36,7 @@ export async function generateMetadata(
       canonical: `https://www.toolsland.ai/ai-capability/${currentAiCapability}`,
     },
     openGraph: {
-      title: `Top 30 ${enumToText(currentAiCapability)} - Toolsland.ai`,
+      title: `Top 30 ${enumToText(currentAiCapability)} tools - Toolsland.ai`,
       description: `Top 30 ${enumToText(currentAiCapability)} tools list with features, pricing,demo and use cases`,
       images: domainConfig.coverImage,
     }, 
@@ -58,7 +58,7 @@ export default async function Home({ params }: { params: { slug: string } }) {
   return (
     <div className="w-full ">
         <CommonNav />
-     <BlogPageHeader title={`Top 30  ${slugToEnum(slug).toLowerCase().replace(/_/g, ' ')}`} />
+     <BlogPageHeader title={`Top 30  ${enumToText(currentAiCapability)} tools`} />
       
       <BlogPage slug={slug} toolData={toolData as ListedAiToolList} />
     </div>

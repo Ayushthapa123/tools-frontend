@@ -4,7 +4,7 @@ import { ResolvingMetadata } from 'next';
 import { BlogPage } from '../../../features/BlogPage';
 
 import { graphqlClient } from 'src/client/graphqlClient';
-import { GetListedAiToolsByDomain, GetListedAiToolsByUserType, ListedAiToolList } from 'src/gql/graphql';
+import { GetListedAiToolsByUserType, ListedAiToolList } from 'src/gql/graphql';
 import { domainConfig } from 'src/config/domainConfig';
 import { slugToEnum } from 'src/utils/slugToEnum';
 import BlogPageHeader from 'src/features/BlogPage/BlogPageHeader';
