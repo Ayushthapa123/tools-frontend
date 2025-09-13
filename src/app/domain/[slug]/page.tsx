@@ -9,6 +9,7 @@ import { domainConfig } from 'src/config/domainConfig';
 import { slugToEnum } from 'src/utils/slugToEnum';
 import BlogPageHeader from 'src/features/BlogPage/BlogPageHeader';
 import { CommonNav } from 'src/features/NavBar/CommonNav';
+import { enumToText } from 'src/utils/enumToText';
 
 type Props = {
   params: { id: string; slug: string };
@@ -27,16 +28,16 @@ export async function generateMetadata(
 
 
   return {
-    title: `Top 30 ai ${currentAiDomain} tools - Toolsland.ai`,
-    description: `Top 30  ${currentAiDomain} tools list with features, pricing,demo and use cases`,
+    title: `Top 30 ai ${enumToText(currentAiDomain)} tools - Toolsland.ai`,
+    description: `Top 30  ${enumToText(currentAiDomain)} tools list with features, pricing,demo and use cases`,
     authors: [{ name: 'Ayush Thapa' }],
     manifest: '/manifest.json', 
     alternates: {
       canonical: `https://www.toolsland.ai/domain/${currentAiDomain}`,
     },
     openGraph: {
-      title: `Top 30 ai ${currentAiDomain} tools - Toolsland.ai`,
-      description: `Top 30 ${currentAiDomain} tools list with features, pricing,demo and use cases`,
+      title: `Top 30 ai ${enumToText(currentAiDomain)} tools - Toolsland.ai`,
+      description: `Top 30 ${enumToText(currentAiDomain)} tools list with features, pricing,demo and use cases`,
       images: domainConfig.coverImage,
     }, 
 

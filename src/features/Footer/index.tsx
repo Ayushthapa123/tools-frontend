@@ -23,6 +23,11 @@ const Footer = () => {
                 <p className="text-gray-500 text-base lg:text-sm  text-center font-semibold">Contact Us</p>
               </Link>
             </div>
+            <div>
+              <Link href="/tools-categories">
+                <p className="text-gray-500 text-base lg:text-sm  text-center font-semibold">Categories</p>
+              </Link>
+            </div>
             
         
        
