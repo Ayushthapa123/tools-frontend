@@ -13,6 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+    "query GetUserByUsername($username: String!) {\n  getUserByUsername(username: $username) {\n    data {\n      id\n      fullName\n      username\n      profilePicture\n      tool {\n        id\n        name\n        slug\n        shortDescription\n        thumbnailUrl\n      }\n    }\n    error {\n      message\n    }\n  }\n}": types.GetUserByUsernameDocument,
     "mutation ChangePassword($userId: Float!, $input: ChangePasswordInput!) {\n  changePassword(userId: $userId, input: $input)\n}": types.ChangePasswordDocument,
     "query getUserById($id: Float!) {\n  getUserById(id: $id) {\n    data {\n      id\n      isVerified\n      fullName\n      email\n      phoneNumber\n      altPhoneNumber\n      gender\n      dateOfBirth\n      profilePicture\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.GetUserByIdDocument,
     "mutation updateUser($input: UpdateUserInput!) {\n  updateUser(input: $input) {\n    data {\n      id\n      fullName\n      email\n      phoneNumber\n      altPhoneNumber\n      gender\n      dateOfBirth\n      profilePicture\n    }\n    error {\n      message\n      code\n    }\n  }\n}": types.UpdateUserDocument,
@@ -72,6 +73,10 @@ const documents = {
  */
 export function graphql(source: string): unknown;
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query GetUserByUsername($username: String!) {\n  getUserByUsername(username: $username) {\n    data {\n      id\n      fullName\n      username\n      profilePicture\n      tool {\n        id\n        name\n        slug\n        shortDescription\n        thumbnailUrl\n      }\n    }\n    error {\n      message\n    }\n  }\n}"): (typeof documents)["query GetUserByUsername($username: String!) {\n  getUserByUsername(username: $username) {\n    data {\n      id\n      fullName\n      username\n      profilePicture\n      tool {\n        id\n        name\n        slug\n        shortDescription\n        thumbnailUrl\n      }\n    }\n    error {\n      message\n    }\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

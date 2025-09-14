@@ -54,6 +54,7 @@ export const ToolCreateAndTestForm = ({
   } = useForm<any>({
     defaultValues: {
       name: tool?.data?.name ?? '',
+      slug: tool?.data?.slug ?? '',
       shortDescription: tool?.data?.shortDescription ?? '',
       description: tool?.data?.description ?? '',
       handle: tool?.data?.handle ?? '',
@@ -158,10 +159,11 @@ export const ToolCreateAndTestForm = ({
     },
   ];
   const onSubmit = (data: any) => {
+    const dataWithoutDescription = { ...data, description: '',name:"",slug:"" };
     mutateAsync({
       input: {
         schema: [...customFields, ...prev],
-        data: data,
+        data: dataWithoutDescription,
       },
     }).then(res => {
       setHtmlResponse(res.processGenericIO.data?.htmlResponse || '');
@@ -175,6 +177,7 @@ export const ToolCreateAndTestForm = ({
         data: {
           id: Number(tool?.data?.id) || 0,
           name: getValues('name'),
+          slug: getValues('slug'),
           shortDescription: getValues('shortDescription'),
           description: getValues('description'),
           handle: getValues('handle'),
@@ -195,6 +198,7 @@ export const ToolCreateAndTestForm = ({
       mutateCreateToolAsync({
         data: {
           name: getValues('name'),
+          slug: getValues('slug'),
           shortDescription: getValues('shortDescription'),
           ownerId: user?.userId || 0,
           description: '',
@@ -233,6 +237,18 @@ export const ToolCreateAndTestForm = ({
               control={control}
               label="Tool Name"
               placeholder="Enter Tool Name"
+              error={false}
+              type="text"
+              required
+              // type="number"
+            />
+          </div>
+          <div className="w-full">
+            <TextInput
+              name="slug"
+              control={control}
+              label="Slug"
+              placeholder="Enter Tool Slug"
               error={false}
               type="text"
               required
@@ -390,7 +406,7 @@ export const ToolCreateAndTestForm = ({
             label="Custom Prompt"
             placeholder="Enter your custom prompt"
             error={false}
-            rows={3}
+            rows={8}
           />
           <TextArea
             name="response_format"

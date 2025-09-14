@@ -1,0 +1,20 @@
+query GetUserByUsername($username: String!) {
+  getUserByUsername(username: $username) {
+    data {
+      id
+      fullName
+      username
+      profilePicture
+      tool {
+        id
+        name
+        slug
+        shortDescription
+        thumbnailUrl
+      }
+    }
+    error {
+      message
+    }
+  }
+}

@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 
 export default function ViewYoutubeVideo({ videoUrl }: { videoUrl: string }) {
+  
   const [isOpen, setIsOpen] = useState(false);
-  const createEmbedableVideoUrl = (videoUrl: string): string => {
+  const createEmbedableVideoUrl = (videoUrl: string): string | null => {
     let videoId = '';
   
     // Check if it's a full YouTube URL
@@ -18,12 +19,15 @@ export default function ViewYoutubeVideo({ videoUrl }: { videoUrl: string }) {
       // If user passes only the video ID
       videoId = videoUrl;
     } else {
-      throw new Error('Invalid YouTube URL or video ID');
+      console.log('Invalid YouTube URL or video ID', videoUrl);
+      return null;
     }
   
     return `https://www.youtube.com/embed/${videoId}?autoplay=1`;
   };
-  const embedableVideoUrl = createEmbedableVideoUrl(videoUrl);
+
+  if(!videoUrl || videoUrl === '' || !videoUrl.includes('youtube.com')) return null;
+  const embedableVideoUrl = createEmbedableVideoUrl(videoUrl) ?? null;
 
   return (
     <>
@@ -48,7 +52,7 @@ export default function ViewYoutubeVideo({ videoUrl }: { videoUrl: string }) {
             <div className="modal-box max-w-5xl w-full p-0">
               <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                 <iframe
-                  src={embedableVideoUrl}
+                  src={embedableVideoUrl??""}
                   title="Demo Video"
                   className="absolute inset-0 h-full w-full"
                   frameBorder="0"
