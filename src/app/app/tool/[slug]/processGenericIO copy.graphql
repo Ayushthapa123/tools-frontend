@@ -1,0 +1,13 @@
+mutation ProcessGenericIOTextToImageGemini($input: IOGenericInput!) {
+  processGenericIOTextToImageGemini(input: $input) {
+  
+    data {
+      lowResolutionImage 
+      mediumResolutionImage
+      highResolutionImage
+    }
+    error {
+      message
+    }
+  }
+}
