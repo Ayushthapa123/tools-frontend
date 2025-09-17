@@ -111,10 +111,10 @@ export const SetMetadataForm = ({
   };
 
   return (
-    <div className="p-8">
+    <div className="">
       <form onSubmit={handleSubmit(handleSave)}>
-        <div className="space-y-6">
-          <div className="space-y-4">
+        <div className="space-y-3">
+          <div className="space-y-1">
             <h3 className="text-lg font-semibold">Tool Metadata</h3>
             
             <div className="w-full">

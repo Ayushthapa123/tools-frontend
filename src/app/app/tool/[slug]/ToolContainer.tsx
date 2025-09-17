@@ -62,11 +62,11 @@ function ToolForm({ params, tool }: { params: { slug: string }; tool: Tool | und
 
   return (
     <div className="w-full">
-      <div className="rounded-lg bg-white p-6 shadow">
-        <div className="mb-6">
-          <div className="mb-4 flex items-center justify-center">
+      <div className="rounded-lg bg-white px-6 shadow">
+        <div className="">
+          <div className="mb-1 flex items-center justify-center">
             {/* <h2 className="text-xl font-semibold">Step {currentStep} of 3</h2> */}
-            <div className="steps steps-horizontal text-gray-600">
+            <div className="steps steps-horizontal text-gray-600 ">
               <div className={`step ${currentStep >= 1 ? 'step-primary' : ''}`}>Tool Details</div>
               <div className={`step ${currentStep >= 2 ? 'step-primary' : ''}`}>Set Metadata</div>
               <div className={`step ${currentStep >= 3 ? 'step-primary' : ''}`}>
@@ -83,7 +83,7 @@ function ToolForm({ params, tool }: { params: { slug: string }; tool: Tool | und
           </div>
         </div>
 
-        <div className="flex h-[calc(100vh-300px)] flex-col  gap-4 overflow-y-auto">
+        <div className="flex h-[calc(100vh-270px)] flex-col  gap-4 overflow-y-auto">
           <div>
             {currentStep === 1 && (
               <ToolCreateAndTestForm isEdit={isEdit} tool={tool as Tool | undefined} />
@@ -100,7 +100,7 @@ function ToolForm({ params, tool }: { params: { slug: string }; tool: Tool | und
               <Button label="Back" onClick={handleBack} className="btn btn-primary w-min" />
             )}
 
-            {isEdit && (
+            {isEdit && currentStep < 4 && (
               <Button label="Next" onClick={handleNext} className="btn btn-primary w-min" />
             )}
           </div>

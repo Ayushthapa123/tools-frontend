@@ -63,9 +63,15 @@ export async function generateMetadata(
     openGraph: {
       title: res?.data?.toolMetadata?.title??"",
       description: res?.data?.toolMetadata?.description??"",
-      images: res?.data?.toolMetadata?.ogImageUrl
-        ? 'https:' + res?.data?.toolMetadata?.ogImageUrl
-        : `/assets/fallback-image.svg`,
+      
+      images: [
+        {
+          url: res?.data?.toolMetadata?.ogImageUrl
+            ? 'https:' + res?.data?.toolMetadata?.ogImageUrl
+            : `/assets/fallback-image.svg`,
+          alt: res?.data?.name ?? "Toolsland.ai",
+        }
+      ],
     },
   };
 }

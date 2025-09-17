@@ -1,5 +1,5 @@
 import ToolCard from './ToolCard';
-import { FaCalculator, FaList, FaMapMarkerAlt, FaSearchLocation, FaTools, FaUser } from 'react-icons/fa';
+import { FaCalculator, FaGlobe, FaList, FaMapMarkerAlt, FaSearchLocation, FaTools, FaUser } from 'react-icons/fa';
 
 export const metadata = {
   title: 'Custom ai Software Tools',
@@ -14,6 +14,12 @@ export const metadata = {
 };
 
 const tools = [
+  {
+    title: '.com Domain Name Generator',
+    description: 'Generate a .com domain name for your business, blog, or project. Available only.',
+    icon: <FaGlobe />,
+    href: 'https://www.toolsland.ai/tools/dot-com-domain-generator',
+  },
   {
     title: 'Travel Destination Finder',
     description: 'Find the best travel destination for your next trip, based on your preferences, budget, and interests.',
@@ -56,7 +62,7 @@ const ToolsPage = () => {
   return (
     <main className="min-h-screen bg-gray-50 py-10">
       <div className="container mx-auto px-4">
-        <h1 className="mb-8 text-3xl font-bold text-center text-primary">Tools For Hostel Travelers</h1>
+        <h1 className="mb-8 text-3xl font-bold text-center text-primary">AI Tools</h1>
         <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {tools.map((tool) => (
             <ToolCard key={tool.title} {...tool} />

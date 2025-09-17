@@ -41,7 +41,7 @@ export const WriteArticleForm = ({ isEdit = false, tool }: { isEdit?: boolean; t
  
 
   return (
-    <div className=" p-8">
+    <div className=" ">
       <div className="flex justify-start">
         <h2 className="text-2xl font-bold">Write Article/Guide For The Tool</h2>
       </div>
