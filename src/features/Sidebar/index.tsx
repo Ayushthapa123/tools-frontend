@@ -20,7 +20,7 @@ import {
   UserType,
   User
 } from 'src/gql/graphql';
-import { RiToolsFill } from 'react-icons/ri';
+import { RiListSettingsFill, RiToolsFill } from 'react-icons/ri';
 import { FaAssistiveListeningSystems, FaBloggerB, FaChair, FaHotel, FaLightbulb, FaRegHeart, FaRegLightbulb, FaTools } from 'react-icons/fa';
 import { useMutation } from '@tanstack/react-query';
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
@@ -71,11 +71,11 @@ const Sidebar = () => {
       text: 'Custom Tools',
       href: '/app/tool',
       children: false,
-      show: user?.userType === UserType.Admin
+      show: user?.userType === UserType.Admin || user?.userType === UserType.Creator
     },
     {
-      icon: <FaTools />,
-      text: 'My Tools',
+      icon: <RiListSettingsFill />,
+      text: 'Tools Listing',
       href: '/app/my-tools',
       children: false,
       show: true
