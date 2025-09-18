@@ -1,6 +1,3 @@
-import { AiType, ProductType } from 'src/gql/graphql';
-import { convertToSlug } from 'src/utils/convertToSlug';
-import { enumToOptions } from 'src/utils/enumToArray';
 
 import { gql } from 'graphql-request';
 import { graphqlClient } from 'src/client/graphqlClient';
@@ -33,7 +30,7 @@ export const SitemapPage = async () => {
       return {
         url: `https://www.toolsland.ai/${item.owner.username}/${item.slug}`,
         lastModified: new Date(),
-        changeFrequency: 'weekly',
+        changeFrequency: 'daily',
         priority: 1,
       };
     }) ?? [];

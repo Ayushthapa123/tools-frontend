@@ -67,7 +67,7 @@ export async function generateMetadata(
       images: [
         {
           url: res?.data?.toolMetadata?.ogImageUrl
-            ? 'https:' + res?.data?.toolMetadata?.ogImageUrl
+            ? res?.data?.toolMetadata?.ogImageUrl
             : `/assets/fallback-image.svg`,
           alt: res?.data?.name ?? "Toolsland.ai",
         }
