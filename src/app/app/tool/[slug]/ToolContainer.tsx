@@ -72,10 +72,10 @@ function ToolForm({ params, tool }: { params: { slug: string }; tool: Tool | und
               <div className={`step ${currentStep >= 3 ? 'step-primary' : ''}`}>
                 Write Article/Instruction
               </div>
-              <div className={`step ${currentStep >= 3 ? 'step-primary' : ''}`}>Set Images</div>
+              <div className={`step ${currentStep >= 4 ? 'step-primary' : ''}`}>Set Images</div>
             
 
-              <div className={`step ${currentStep >= 4 ? 'step-primary' : ''}`}>Preview & Save</div>
+              {/* <div className={`step ${currentStep >= 5 ? 'step-primary' : ''}`}>Preview & Save</div> */}
             </div>
           </div>
           <div className="flex justify-start">
