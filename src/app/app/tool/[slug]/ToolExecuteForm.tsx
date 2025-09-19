@@ -94,6 +94,9 @@ export const ToolExecuteForm = ({
     isEdit ? (JSON.parse(tool?.data?.inputSchema?.schema ?? '[]') as Field[]).filter(field => field.name !== 'custom_prompt' && field.name !== 'response_format') : [],
   );
   const [isAddFieldModalOpen, setIsAddFieldModalOpen] = useState(false);
+  const [executeCount, setExecuteCount] = useState(0);
+
+
 
   const handleAddField = (field: Field) => {
     setCustomFields([...customFields, field]);
@@ -272,7 +275,7 @@ export const ToolExecuteForm = ({
       enqueueSnackbar('Tool type is missing for this tool', { variant: 'error' });
       return;
     }
-
+    localStorage.setItem('executeCount', (executeCount + 1).toString());
     if (toolType === ToolType.Io) {
       mutateAsync({
         input: {
@@ -356,6 +359,14 @@ export const ToolExecuteForm = ({
       });
     }
   };
+
+
+  useEffect(() => {
+    const executeCount = localStorage.getItem('executeCount');
+    if (executeCount) {
+      setExecuteCount(Number(executeCount));
+    }
+  }, [executeCount]);
 
   return (
     <div className="w-full  px-4 md:px-6 bg-gray-50">
@@ -559,7 +570,10 @@ export const ToolExecuteForm = ({
             </div>}
 
             <div className="flex items-center gap-3 pt-2 pb-1 sticky bottom-0 bg-white">
-              <Button label={viewOnly ? "Submit" : "Test Response"} type="submit" loading={isPending || isPendingTextToImage} disabled={isPending || isPendingTextToImage} />
+              <Button label={viewOnly ? "Submit" : "Test Response"} type="submit" loading={isPending || isPendingTextToImage} disabled={isPending || isPendingTextToImage || executeCount > 3} />
+            </div>
+            <div>
+             {executeCount > 3 && <p className="text-sm text-gray-500">Please Login/Signup for more credits.</p>}
             </div>
           </form>
           </div>

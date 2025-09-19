@@ -62,9 +62,7 @@ export const SetMetadataForm = ({
 
   const handleSave = async (data:ToolMetadataData) => { 
     try {
-      alert(JSON.stringify(data))
       const formData = getValues();
-      alert(tool?.data?.id)
       
       if (isEdit && tool?.data?.id) {
         // Update existing tool metadata
@@ -85,7 +83,7 @@ export const SetMetadataForm = ({
         enqueueSnackbar('Tool metadata updated successfully', { variant: 'success' });
         router.push(`/app/tool/${tool.data.slug}`);
       } else if (tool?.data?.id) {
-        alert(tool.data.id)
+        // alert(tool.data.id)
         // Create new tool metadata for existing tool
         await mutateCreateToolMetadataAsync({
           createToolMetaDataInput: {

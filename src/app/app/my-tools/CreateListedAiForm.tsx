@@ -116,7 +116,7 @@ export const CreateListedAiForm = ({
   const handleSubmit = async (data: CreateListedAiToolInput) => {
     try {
       if (!tool?.id) {
-        alert('calling create mutation');
+        // alert('calling create mutation');
         // if user logged in
         if (user?.userId) {
           const res = await createAiTool({
@@ -134,7 +134,7 @@ export const CreateListedAiForm = ({
             enqueueSnackbar('Something went wrong.', { variant: 'error' });
           }
         } else {
-          alert('calling anonymous mutation');
+          // alert('calling anonymous mutation');
           // if user not logged in
           // call different mutation createAiToolAnonymous
           const resAnonymous = await createAiToolAnonymous({

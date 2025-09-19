@@ -14,7 +14,6 @@ const Navbar = () => {
   const { user } = useUserStore();
   const [showModal, setShowModal] = useState(false);
   const { theme, toggleTheme } = useTheme();
-  alert('navbar');
 
   useEffect(() => {
     if (!user?.hostelId && user?.userType === 'HOSTEL_OWNER') {

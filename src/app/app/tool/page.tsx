@@ -6,6 +6,8 @@ import { ActiveTools } from './ActiveRooms';
 import { MapProvider } from 'src/features/MapProvider';
 import Button from 'src/components/Button';
 import Link from 'next/link';
+import { useUserStore } from 'src/store/userStore';
+import { UserType } from 'src/gql/graphql';
 
 export default function Home() {
   return (
@@ -34,7 +36,10 @@ const ToolTabs = () => {
     // },
   ];
   const [ activeTab, setActiveTab ] = useState(1);
-
+  const {user}=useUserStore() 
+  if(user.userType !== UserType.Admin && user.userType !== UserType.Creator){
+    return <div>You are not authorized to access this page</div>
+  }
   return (
     <div className="w-full ">
       <div
