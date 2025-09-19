@@ -59,8 +59,8 @@ const Sidebar = () => {
   const menuItems: MenuItemType[] = [
     {
       icon: <DashboardIcon />,
-      text: 'Explore ',
-      href: '/',
+      text: 'Recent ',
+      href: '/app',
       children: false,
       show: true,
     },

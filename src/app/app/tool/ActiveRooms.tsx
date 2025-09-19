@@ -46,7 +46,8 @@ export const ActiveTools = ({ setActiveToolCount }: { setActiveToolCount: (count
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    if (deleteTool) {
+    if (deleteTool) { 
+      return;
       mutateAsync({ toolId: Number(deletedToolId) }).then(res => {
         if (res?.deleteTool) {
           enqueueSnackbar('Tool deleted.', { variant: 'success' });

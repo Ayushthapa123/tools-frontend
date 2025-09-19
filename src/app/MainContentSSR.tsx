@@ -92,7 +92,7 @@ export default async function MainContentSSR({ children }: { children: React.Rea
                 <p className="mx-auto mb-10 max-w-4xl text-xl leading-relaxed text-gray-700 md:text-2xl">
                   Explore thousands of cutting-edge AI tools designed to boost your productivity,
                   streamline workflows, and unlock new possibilities for business, marketing, and
-                  learning.
+                  learning - toolsland AI.
                 </p>
 
                 <div className="mb-12 flex flex-wrap justify-center gap-4">

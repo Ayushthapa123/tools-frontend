@@ -6,13 +6,13 @@ import { domainConfig } from 'src/config/domainConfig';
 import MainContentSSR from './MainContentSSR';
 import Footer from 'src/features/Footer';
 export const metadata: Metadata = {
-  title: "Research, Discover & List the Best AI Tools",
+  title: "Research, Discover & List the Best AI Tools- toolsland AI",
   description:
     "Find the best AI tools from 10000+ AI tools for business, marketing, coding, design, and more at Toolsland.ai. Browse thousands of AI tools, compare features, and list your own AI tool for free.",
   authors: [{ name: "Ayush Thapa" }],
   manifest: "/manifest.json",
   openGraph: {
-    title: "Toolsland.ai – AI Tools Directory",
+    title: "Toolsland AI – AI Tools Directory",
     description:
       "Explore thousands of AI tools to boost productivity, marketing, coding, and design. Toolsland.ai also lets you list your AI tool for free.",
     images: [
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
         url: domainConfig.coverImage,
         width: 1200,
         height: 630,
-        alt: "Toolsland.ai – AI Tools Directory",
+        alt: "Toolsland AI – AI Tools Directory",
       },
     ],
   },

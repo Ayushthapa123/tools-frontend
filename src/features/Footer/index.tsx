@@ -44,7 +44,7 @@ const Footer = () => {
               </div>
             </div>
             <div>
-             <p>Toolsland.ai is a platform for discovering and listing the best AI tools for business, marketing, coding, design, and more.</p>
+             <p>Toolsland AI is a platform for discovering and listing the best AI tools for business, marketing, coding, design, and more.</p>
               <div className="flex items-center justify-start gap-3">
                 <a
                   target="_blank"
