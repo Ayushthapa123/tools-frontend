@@ -275,6 +275,9 @@ export const ToolExecuteForm = ({
       enqueueSnackbar('Tool type is missing for this tool', { variant: 'error' });
       return;
     }
+    // set expires date 24 hours from now
+    const expiresAt = new Date().getTime() + 24 * 60 * 60 * 1000;
+    localStorage.setItem('expiresAt', expiresAt.toString());
     localStorage.setItem('executeCount', (executeCount + 1).toString());
     if (toolType === ToolType.Io) {
       mutateAsync({
@@ -362,7 +365,14 @@ export const ToolExecuteForm = ({
 
 
   useEffect(() => {
-    const executeCount = localStorage.getItem('executeCount');
+    const executeCount = localStorage.getItem('executeCount'); 
+    const expiresAt = localStorage.getItem('expiresAt'); 
+    const currentTime = new Date().getTime(); 
+    if(expiresAt && currentTime > Number(expiresAt)) {
+      localStorage.removeItem('executeCount');
+      localStorage.removeItem('expiresAt');
+      setExecuteCount(0);
+    }
     if (executeCount) {
       setExecuteCount(Number(executeCount));
     }
