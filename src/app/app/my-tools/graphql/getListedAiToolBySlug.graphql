@@ -22,7 +22,9 @@ query GetListedAiToolBySlug($slug: String!) {
       popularityScore
       featured
       verified
-      useCases
+      useCases 
+      features
+      usps
       createdAt
       updatedAt
     }

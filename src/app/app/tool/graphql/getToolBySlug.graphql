@@ -10,7 +10,8 @@ query GetToolBySlug($slug: String!) {
       thumbnailUrl
       ranking
       toolType
-      visibility
+      visibility 
+      toolStatus
       ownerId
       verifiedBySuperAdmin
       createdAt
@@ -49,6 +50,12 @@ query GetToolBySlug($slug: String!) {
         ogDescription
         ogImageUrl
         toolId
+        createdAt
+        updatedAt
+      }
+      comment {
+        id
+        comment
         createdAt
         updatedAt
       }

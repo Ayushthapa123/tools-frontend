@@ -1,11 +1,12 @@
 import { CiLocationOn } from 'react-icons/ci';
-import { Tool } from 'src/gql/graphql';
+import { Tool, ToolType } from 'src/gql/graphql';
 
 import { Badge } from 'src/components/Badge';
 import Image from 'next/image';
 import { ToolCreateAndTestForm } from 'src/app/app/tool/[slug]/ToolCreateAndTestForm';
 import { ToolExecuteForm } from 'src/app/app/tool/[slug]/ToolExecuteForm';
 import { FaBookmark } from 'react-icons/fa';
+import CommentSection from './CommentSection';
 
 interface Iprops {
   tool: Tool | undefined | null;
@@ -121,6 +122,10 @@ export default function MainContent(props: Iprops) {
                     </p>
                   </div>
                 </div>
+              </div>
+              <div className='mx-auto max-w-6xl mt-10'>
+                {/* comments section */}
+                <CommentSection comments={toolData?.comment || undefined} toolId={Number(toolData?.id ?? 0)} toolType={toolData?.toolType ?? ToolType.Io} />
               </div>
             </div>
           </div>

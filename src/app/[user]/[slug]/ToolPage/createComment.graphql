@@ -1,0 +1,24 @@
+mutation CreateComment($createCommentInput: CreateComment!) {
+  createComment(createCommentInput: $createCommentInput) {
+    data {
+      id
+      comment
+      createdAt
+      updatedAt
+      user {
+        id
+        fullName
+        username
+        profilePicture
+        userType
+      }
+      toolId
+      toolType
+    }
+    error {
+      message
+      code
+      path
+    }
+  }
+}

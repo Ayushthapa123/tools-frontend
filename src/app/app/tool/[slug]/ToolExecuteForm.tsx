@@ -31,6 +31,7 @@ import {
   ProcessGenericIoTextToImageGemini,
   ProcessGenericIoTextToImageGeminiMutation,
   ProcessGenericIoTextToImageGeminiMutationVariables,
+  UserType,
 } from 'src/gql/graphql';
 import { useMutation } from '@tanstack/react-query';
 import { useUserStore } from 'src/store/userStore';
@@ -378,6 +379,8 @@ export const ToolExecuteForm = ({
     }
   }, [executeCount]);
 
+  const isDisabled = (isPending || isPendingTextToImage || executeCount > 1) && (tool?.data?.toolType === ToolType.IoTextToImage) && (user.userType !== UserType.Admin) ;
+
   return (
     <div className="w-full  px-4 md:px-6 bg-gray-50">
 
@@ -580,10 +583,10 @@ export const ToolExecuteForm = ({
             </div>}
 
             <div className="flex items-center gap-3 pt-2 pb-1 sticky bottom-0 bg-white">
-              <Button label={viewOnly ? "Submit" : "Test Response"} type="submit" loading={isPending || isPendingTextToImage} disabled={isPending || isPendingTextToImage || executeCount > 3} />
+              <Button label={viewOnly ? "Submit" : "Test Response"} type="submit" loading={isPending || isPendingTextToImage} disabled={isDisabled} />
             </div>
             <div>
-             {executeCount > 3 && <p className="text-sm text-gray-500">Please Login/Signup for more credits.</p>}
+             {executeCount > 1 && <p className="text-sm text-gray-500">Please Login/Signup for more credits.</p>}
             </div>
           </form>
           </div>

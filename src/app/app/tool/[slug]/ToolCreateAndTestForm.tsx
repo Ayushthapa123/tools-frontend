@@ -32,6 +32,7 @@ import {
   ProcessGenericIoTextToImageGeminiMutation,
   ProcessGenericIoTextToImageGeminiMutationVariables,
   ProcessGenericIoTextToImageGemini,
+  ToolStatus,
 } from 'src/gql/graphql';
 import { useMutation } from '@tanstack/react-query';
 import { useUserStore } from 'src/store/userStore';
@@ -43,6 +44,7 @@ import ReactSelect from 'src/features/react-hook-form/ReactSelect';
 // it takes dynamic fields and gives response based on the fields
 
 const toolTypeOptions= enumToOptions(ToolType)
+const toolStatusOptions= enumToOptions(ToolStatus)
 
 export const ToolCreateAndTestForm = ({
   isEdit = false,
@@ -68,7 +70,7 @@ export const ToolCreateAndTestForm = ({
       description: tool?.data?.description ?? '',
       handle: tool?.data?.handle ?? '',
       toolType: tool?.data?.toolType ?? '',
-
+      toolStatus: tool?.data?.toolStatus ?? '',
       custom_prompt:
         JSON.parse(tool?.data?.inputSchema?.schema ?? '[]')?.find(
           (item: any) => item.name === 'custom_prompt',
@@ -298,6 +300,7 @@ export const ToolCreateAndTestForm = ({
           shortDescription: getValues('shortDescription'),
           description: getValues('description'),
           handle: getValues('handle'),
+          toolStatus: getValues('toolStatus'),
         },
       }).then(res => {
         enqueueSnackbar('Tool updated successfully', { variant: 'success' });
@@ -320,6 +323,7 @@ export const ToolCreateAndTestForm = ({
           shortDescription: getValues('shortDescription'),
           ownerId: user?.userId || 0,
           description: '',
+          toolStatus: getValues('toolStatus'),
         },
       }).then(res => {
         if (res.createTool.error) {
@@ -381,6 +385,15 @@ export const ToolCreateAndTestForm = ({
               placeholder="Enter your short description"
               error={false}
               rows={3}
+            />
+          </div>
+          <div>
+            <ReactSelect
+              name="toolStatus"
+              control={control}
+              label="Tool Status"
+              options={toolStatusOptions}
+              error={false}
             />
           </div>
           <div>

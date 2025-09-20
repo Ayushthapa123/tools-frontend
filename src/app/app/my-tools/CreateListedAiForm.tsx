@@ -371,6 +371,22 @@ export const CreateListedAiForm = ({
                 defaultValues={watch('useCases')}
               />
             </div>
+            <div>
+              <AddableList
+                label="Features"
+                items={[]}
+                onChange={selected => setValue('features', selected as string[])}
+                defaultValues={watch('features')}
+              />
+            </div>
+            <div>
+              <AddableList
+                label="USPs"
+                items={[]}
+                onChange={selected => setValue('usps', selected as string[])}
+                defaultValues={watch('usps')}
+              />
+            </div>
             <div className="w-full rounded-lg bg-base-100 p-4">
               <p className="text-lg font-semibold">Logo/Thumbnail</p>
               <ImageUploader

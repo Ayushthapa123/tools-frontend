@@ -1,0 +1,31 @@
+query GetCommentsByToolId($toolId: Float!) {
+  getCommentsByToolId(toolId: $toolId) {
+    data {
+      id
+      comment
+      createdAt
+      updatedAt
+      user {
+        id
+        fullName
+        username
+        profilePicture
+        userType
+      }
+      toolId
+      toolType
+    }
+    error {
+      message
+      code
+      path
+    }
+    pagination {
+      page
+      limit
+      total
+      totalPages
+    }
+  }
+}
+
