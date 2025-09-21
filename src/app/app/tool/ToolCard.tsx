@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Badge } from 'src/components/Badge';
 import { ToolData } from 'src/gql/graphql';
 import EditIcon from 'src/components/icons/Edit';
+import ViewIcon from 'src/components/icons/View';
 
 export const ToolCard = ({ tool, setShowDeleteModal, setDeletedToolId }: { 
   tool: ToolData | undefined | null, 
@@ -30,7 +31,7 @@ export const ToolCard = ({ tool, setShowDeleteModal, setDeletedToolId }: {
   const getVisibilityColor = (visibility: string) => {
     switch (visibility) {
       case 'PUBLIC':
-        return '!bg-green-500';
+        return '!bg-yellow-500';
       case 'PRIVATE':
         return '!bg-yellow-500';
       case 'RESTRICTED':
@@ -60,9 +61,7 @@ export const ToolCard = ({ tool, setShowDeleteModal, setDeletedToolId }: {
           priority
         />
         <div className="absolute left-2 top-2 z-10 flex flex-col gap-2">
-          <Badge className={`px-3 py-1 !text-xs uppercase tracking-wide font-bold text-white ${getToolTypeColor(tool?.toolType ?? '')} !rounded-md`}>
-            {tool?.toolType ?? ''}
-          </Badge>
+      
           <Badge className={`px-3 py-1 !text-xs uppercase tracking-wide font-bold text-white ${getVisibilityColor(tool?.visibility ?? '')} !rounded-md`}>
             {tool?.visibility ?? ''}
           </Badge>
@@ -83,10 +82,10 @@ export const ToolCard = ({ tool, setShowDeleteModal, setDeletedToolId }: {
             <h3 className="mb-0 text-lg font-bold text-gray-900" title={tool?.name ?? ''}>
               {tool?.name ?? ""}
             </h3>
-            {tool?.ranking && (
+            {Boolean(tool?.ranking) && (
               <div>
                 <p className="m-0 text-base text-nowrap bg-slate-200 rounded-md p-1 px-3 font-extrabold text-primary">
-                  Rank #{tool.ranking}
+                  Rank #{tool?.ranking}
                 </p>
               </div>
             )}
@@ -102,7 +101,7 @@ export const ToolCard = ({ tool, setShowDeleteModal, setDeletedToolId }: {
                 Created: <span className='text-primary'>{formatDate(tool?.createdAt ?? '')}</span>
               </p>
               <p className="m-0 text-sm font-extrabold text-gray-400">
-                Handle: <span className='text-primary'>{tool?.handle ?? ''}</span>
+                Status: <span className='text-primary'>{tool?.toolStatus ?? ''}</span>
               </p>
             </div>
           </div>
@@ -110,6 +109,17 @@ export const ToolCard = ({ tool, setShowDeleteModal, setDeletedToolId }: {
         
         {/* Action Buttons */}
         <div className="absolute right-3 top-2 z-20 flex gap-2">
+        <Link href={`/${tool?.owner?.username}/${tool?.slug}`} passHref legacyBehavior>
+            <a aria-label="Edit Tool">
+              <IconButton
+                size="small"
+                color="primary"
+                className="bg-white/80 shadow-md backdrop-blur hover:bg-primary/70 hover:text-white"
+              >
+                <ViewIcon className="h-6 w-6" />
+              </IconButton>
+            </a>
+          </Link>
           <Link href={`/app/tool/${tool?.slug}`} passHref legacyBehavior>
             <a aria-label="Edit Tool">
               <IconButton

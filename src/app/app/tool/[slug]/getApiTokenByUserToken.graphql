@@ -1,0 +1,12 @@
+query GetApiTokenByUserToken {
+  getTokenByUserToken {
+    data {
+      id
+      gemenaiToken
+      gptToken
+      userId
+      createdAt
+      updatedAt
+    }
+  }
+}

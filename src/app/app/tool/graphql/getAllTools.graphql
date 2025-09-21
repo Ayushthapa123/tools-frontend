@@ -8,6 +8,7 @@ query GetAllTools($pageSize: Int = 200, $pageNumber: Int = 1, $isSuperAdmin: Boo
       slug
       handle
       thumbnailUrl
+      toolStatus
       ranking
       toolType
       visibility

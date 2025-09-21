@@ -72,7 +72,7 @@ export const ActiveTools = ({ setActiveToolCount }: { setActiveToolCount: (count
         {tools?.data?.map(tool => (
           <div key={tool.id} className="md:mb-4 lg:min-h-48">
             <ToolCard
-             tool={tool as ToolData}
+              tool={tool as ToolData}
               setShowDeleteModal={setShowDeleteModal}
               setDeletedToolId={setDeletedToolId}
             />

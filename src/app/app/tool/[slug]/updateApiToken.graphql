@@ -1,0 +1,12 @@
+mutation UpdateToken($updateTokenInput: UpdateToken!) {
+  updateToken(updateTokenInput: $updateTokenInput) {
+    data {
+      id
+    
+    }
+    error {
+      message
+      code
+    }
+  }
+}

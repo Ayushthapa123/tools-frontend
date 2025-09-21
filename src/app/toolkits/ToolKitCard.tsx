@@ -39,7 +39,7 @@ const ToolCard: React.FC<ToolCardProps> = ({ title, description, icon, href, cat
       <h3 className="mb-2 sm:mb-3 text-lg sm:text-xl font-bold text-gray-900">{title}</h3>
       <p className="mb-3 sm:mb-4 text-sm sm:text-base text-gray-600 flex-1 leading-relaxed">{description}</p>
       {href && !comingSoon && (
-        <Link href={href} className="mt-auto inline-block rounded-md bg-primary px-3 sm:px-4 py-2 text-white font-semibold shadow hover:bg-primary/90 transition text-sm sm:text-base">
+        <Link href={href} target="_blank" className="mt-auto inline-block rounded-md bg-primary px-3 sm:px-4 py-2 text-white font-semibold shadow hover:bg-primary/90 transition text-sm sm:text-base">
           Open Toolkit
         </Link>
       )}

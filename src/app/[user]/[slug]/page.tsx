@@ -5,7 +5,7 @@ import { ToolPage } from './ToolPage';
 
 import { gql } from 'graphql-request';
 import { graphqlClient } from 'src/client/graphqlClient';
-import { GetToolBySlug } from 'src/gql/graphql';
+import { GetToolBySlug, ToolStatus } from 'src/gql/graphql';
 import { Tool } from 'src/gql/graphql';
 
 
@@ -79,7 +79,7 @@ export async function generateMetadata(
 export default async function Home({ params }: { params: { slug: string } }) {
   const slug = params?.slug;
 
-  const data:any = await graphqlClient.request(GetToolBySlug, { slug }) 
+  const data:any = await graphqlClient.request(GetToolBySlug, { slug, toolStatus: ToolStatus.Published }) 
 
   const toolData = data?.getToolBySlug;
 

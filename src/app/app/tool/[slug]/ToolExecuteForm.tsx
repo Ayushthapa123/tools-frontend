@@ -270,7 +270,7 @@ export const ToolExecuteForm = ({
     },
   ];
   const onSubmit = (data: any) => {
-    const dataWithoutDescription = { ...data, description: '',name:"",slug:"" };
+    const dataWithoutDescription = { ...data, description: '',name:"" };
     const toolType = tool?.data?.toolType as ToolType | undefined;
     if (!toolType) {
       enqueueSnackbar('Tool type is missing for this tool', { variant: 'error' });
@@ -379,11 +379,11 @@ export const ToolExecuteForm = ({
     }
   }, [executeCount]);
 
-  const isDisabled = (isPending || isPendingTextToImage || executeCount > 1) && (tool?.data?.toolType === ToolType.IoTextToImage) && (user.userType !== UserType.Admin) ;
+  const isDisabled = (isPending || isPendingTextToImage || executeCount > 0) && (tool?.data?.toolType === ToolType.IoTextToImage) && (tool.data.ownerId === 1) ;
 
   return (
     <div className="w-full  px-4 md:px-6 bg-gray-50">
-
+      
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6 h-[calc(100vh-96px)] relative ">
         <div className='md:col-span-4 h-full'>
           <div className="h-full rounded-xl border border-gray-200 bg-white shadow-sm md:pr-3">

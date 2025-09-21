@@ -1,5 +1,5 @@
-query GetToolBySlug($slug: String!) {
-  getToolBySlug(slug: $slug) {
+query GetToolBySlug($slug: String!, $toolStatus: ToolStatus) {
+  getToolBySlug(slug: $slug, toolStatus: $toolStatus) {
     data {
       id
       name

@@ -2,6 +2,8 @@
 import type { Metadata } from 'next';
 
 import { domainConfig } from 'src/config/domainConfig';
+import { GetApiTokenByUserToken, GetApiTokenByUserTokenQuery, GetApiTokenByUserTokenQueryVariables } from 'src/gql/graphql';
+import { useGraphQLQuery } from 'src/hooks/useGraphqlQuery';
 
 export const metadata: Metadata = {
   title: domainConfig.appSlogan, 
@@ -22,6 +24,9 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
+
+
+
   return (
     <div className="  relative  mx-auto h-auto w-full max-w-[2100px] bg-base-100 ">
       <main className="relative ">

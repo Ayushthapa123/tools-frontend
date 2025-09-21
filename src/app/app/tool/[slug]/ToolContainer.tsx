@@ -9,6 +9,7 @@ import {
   GetToolBySlugQuery,
   GetToolBySlugQueryVariables,
   Tool,
+  ToolStatus,
 } from 'src/gql/graphql';
 
 import { Suspense, useState } from 'react';

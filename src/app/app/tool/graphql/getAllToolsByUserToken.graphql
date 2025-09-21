@@ -9,7 +9,8 @@ query GetToolsByUserToken($pageSize: Int = 30, $pageNumber: Int = 1) {
       handle
       thumbnailUrl
       ranking
-      toolType
+      toolType 
+      toolStatus
       visibility
       ownerId
       verifiedBySuperAdmin
@@ -19,7 +20,8 @@ query GetToolsByUserToken($pageSize: Int = 30, $pageNumber: Int = 1) {
       owner {
         id
         email
-        fullName
+        fullName 
+        username
         profilePicture
         userType
         isVerified

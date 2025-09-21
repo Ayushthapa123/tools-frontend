@@ -125,7 +125,7 @@ const Sidebar = () => {
   // this function
   const bottomItems: MenuItemType[] = [
     // { icon: <SettingsIcon />, text: 'Settings', href: '/app/settings' },
-    { icon: <BiHelpCircle />, text: 'Help', href: '/app/help' },
+    { icon: <SettingsIcon />, text: 'Settings', href: '/app/settings' },
 
     { icon: <LogoutIcon />, text: 'Log Out', href: '/', handleFunc: logOut },
   ];

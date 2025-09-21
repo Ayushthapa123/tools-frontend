@@ -1,0 +1,13 @@
+mutation CreateToken($createTokenInput: CreateToken!) {
+  createToken(createTokenInput: $createTokenInput) {
+    data {
+      id
+      
+    }
+    error {
+      message
+      code
+      
+    }
+  }
+}

@@ -33,6 +33,7 @@ import {
   ProcessGenericIoTextToImageGeminiMutationVariables,
   ProcessGenericIoTextToImageGemini,
   ToolStatus,
+  VisibilityType,
 } from 'src/gql/graphql';
 import { useMutation } from '@tanstack/react-query';
 import { useUserStore } from 'src/store/userStore';
@@ -45,6 +46,7 @@ import ReactSelect from 'src/features/react-hook-form/ReactSelect';
 
 const toolTypeOptions= enumToOptions(ToolType)
 const toolStatusOptions= enumToOptions(ToolStatus)
+const visibilityOptions= enumToOptions(VisibilityType)
 
 export const ToolCreateAndTestForm = ({
   isEdit = false,
@@ -71,6 +73,7 @@ export const ToolCreateAndTestForm = ({
       handle: tool?.data?.handle ?? '',
       toolType: tool?.data?.toolType ?? '',
       toolStatus: tool?.data?.toolStatus ?? '',
+      visibility: tool?.data?.visibility ?? '',
       custom_prompt:
         JSON.parse(tool?.data?.inputSchema?.schema ?? '[]')?.find(
           (item: any) => item.name === 'custom_prompt',
@@ -259,7 +262,7 @@ export const ToolCreateAndTestForm = ({
   ];
   const onSubmit = (data: any) => {
     
-    const dataWithoutDescription = { ...data, description: '',name:"",slug:"", }; 
+    const dataWithoutDescription = { ...data, description: '',name:"", blogStatus:"" }; 
     const tooltype = data.toolType as ToolType; 
     if(!tooltype){
       enqueueSnackbar('Tool type is required', { variant: 'error' });
@@ -301,6 +304,7 @@ export const ToolCreateAndTestForm = ({
           description: getValues('description'),
           handle: getValues('handle'),
           toolStatus: getValues('toolStatus'),
+          visibility: getValues('visibility'),
         },
       }).then(res => {
         enqueueSnackbar('Tool updated successfully', { variant: 'success' });
@@ -324,6 +328,7 @@ export const ToolCreateAndTestForm = ({
           ownerId: user?.userId || 0,
           description: '',
           toolStatus: getValues('toolStatus'),
+          visibility: getValues('visibility'),
         },
       }).then(res => {
         if (res.createTool.error) {
@@ -350,271 +355,331 @@ export const ToolCreateAndTestForm = ({
   };
 
   return (
-    <div className=" ">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {!viewOnly && <div>
-          <div className="w-full">
-            <TextInput
-              name="name"
-              control={control}
-              label="Tool Name"
-              placeholder="Enter Tool Name"
-              error={false}
-              type="text"
-              required
-              // type="number"
-            />
-          </div>
-          <div className="w-full">
-            <TextInput
-              name="slug"
-              control={control}
-              label="Slug"
-              placeholder="Enter Tool Slug"
-              error={false}
-              type="text"
-              required
-              // type="number"
-            />
-          </div>
-          <div className="w-full">
-            <TextArea
-              name="shortDescription"
-              control={control}
-              label="Short Description"
-              placeholder="Enter your short description"
-              error={false}
-              rows={3}
-            />
-          </div>
-          <div>
-            <ReactSelect
-              name="toolStatus"
-              control={control}
-              label="Tool Status"
-              options={toolStatusOptions}
-              error={false}
-            />
-          </div>
-          <div>
-            <ReactSelect
-              name="toolType"
-              control={control}
-              label="Tool Type"
-              options={toolTypeOptions}
-              error={false}
-            />
-          </div>
-        </div>}
-        <div className="border-b-1  w-full border-gray-300" />
-       {!viewOnly && <h2>Users Input Fields</h2>}
-        <div className="flex  w-min">
-          {!viewOnly && <Button
-            label="Add New Field"
-            type="button"
-            onClick={() => {
-              setIsAddFieldModalOpen(true);
-            }}
-          />}
-          <div>
-            <Modal
-              open={isAddFieldModalOpen}
-              onSave={() => {
-                handleAddField(currentField);
-              }}
-              handleClose={() => {
-                setIsAddFieldModalOpen(false);
-
-                setCurrentField({
-                  name: '',
-                  label: '',
-                  placeholder: '',
-                  type: 'text',
-                });
-              }}>
-              <div>
-                <h2>Add New Field</h2>
+    <div className="flex h-full border rounded ">
+      {/* Left Sidebar - Input Fields */}
+      <div className="w-1/3  border-r ">
+        <div className="p-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            {/* Tool Basic Information */}
+            {!viewOnly && (
+              <div className="space-y-4">
+                <h2 className="text-xl font-semibold text-gray-800 mb-4">Tool Information</h2>
+                
                 <div>
-                  <Input
-                    name="name"
-                    label="Field Name"
-                    placeholder="Enter field name"
-                    error={false}
-                    // here no space allowed
-                    value={currentField.name}
-                    onChange={e => {
-                      const value = e.target.value.replace(/\s/g, '');
-                      setCurrentField({
-                        ...currentField,
-                        name: value,
-                      });
-                    }}
-                  />
-                  <Input
-                    name="label"
-                    label="Field Label"
-                    placeholder="Enter field label"
-                    value={currentField.label}
-                    error={false}
-                    onChange={e => {
-                      setCurrentField({
-                        ...currentField,
-                        label: e.target.value,
-                      });
-                    }}
-                  />
-                  <Input
-                    name="placeholder"
-                    label="Field Placeholder"
-                    placeholder="Enter field placeholder"
-                    value={currentField.placeholder}
-                    error={false}
-                    onChange={e => {
-                      setCurrentField({
-                        ...currentField,
-                        placeholder: e.target.value,
-                      });
-                    }}
-                  />
-                  <Select
-                    name="type"
-                    label="Field Type"
-                    value={currentField.type}
-                    options={[
-                      { label: 'Text', value: 'text' },
-                      { label: 'Number', value: 'number' },
-                    ]}
-                    onChange={e => {
-                      setCurrentField({
-                        ...currentField,
-                        type: e.target.value as
-                          | 'text'
-                          | 'number'
-                          | 'email'
-                          | 'phone'
-                          | 'date'
-                          | 'time'
-                          | 'checkbox'
-                          | 'radio'
-                          | 'select'
-                          | 'textarea',
-                      });
-                    }}
-                  />
-                </div>
-              </div>
-            </Modal>
-          </div>
-        </div>
-        <div className="grid grid-cols-1 my-4">
-          {customFields
-            ?.filter(field => field.name !== 'custom_prompt' && field.name !== 'response_format')
-            ?.map((field, index) => (
-              <div key={index} className="flex  w-full">
-                <div className="w-full">
                   <TextInput
-                    name={field.name as keyof CreateToolInput} // fix this issue
+                    name="name"
                     control={control}
-                    label={field.label}
-                    placeholder={field.placeholder}
+                    label="Tool Name"
+                    placeholder="Enter Tool Name"
                     error={false}
-                    type={field.type}
-                    // type="number"
+                    type="text"
+                    required
                   />
                 </div>
-               {!viewOnly && <div className="flex w-10 items-center justify-center  ">
-                  <IconButton
-                    onClick={() => {
-                      
-                      setCustomFields(customFields.filter((_, i) => i !== index));
-                    }}>
-                    <FaTrash className="text-red" />
-                  </IconButton>
-                </div>}
+                
+                <div>
+                  <TextInput
+                    name="slug"
+                    control={control}
+                    label="Slug"
+                    placeholder="Enter Tool Slug"
+                    error={false}
+                    type="text"
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <TextArea
+                    name="shortDescription"
+                    control={control}
+                    label="Short Description"
+                    placeholder="Enter your short description"
+                    error={false}
+                    rows={3}
+                  />
+                </div>
+                
+                <div>
+                  <ReactSelect
+                    name="toolStatus"
+                    control={control}
+                    label="Tool Status"
+                    options={toolStatusOptions}
+                    error={false}
+                  />
+                </div>
+                
+                <div>
+                  <ReactSelect
+                    name="toolType"
+                    control={control}
+                    label="Tool Type"
+                    options={toolTypeOptions}
+                    error={false}
+                  />
+                </div>
+                {/* <div>
+                  <ReactSelect
+                    name="visibility"
+                    control={control}
+                    label="Visibility"
+                    options={visibilityOptions}
+                    error={false}
+                  />
+                </div> */}
               </div>
-            ))}
-        </div>
+            )}
 
-        {!viewOnly && <div className="mt-8">
-          <h2>Creators Guides For Better Response</h2>
-          
-        </div>}
-        { !viewOnly && <div className="grid grid-cols-1">
-          <TextArea
-            name="custom_prompt"
-            control={control}
-            label="Custom Prompt"
-            placeholder="Enter your custom prompt"
-            error={false}
-            rows={8}
-          />
-          <TextArea
-            name="response_format"
-            placeholder="Enter your response format"
-            error={false}
-            control={control}
-            label="Response Format Guide"
-            rows={3}
-          />
-        </div>}
-        <Button label={viewOnly ? "Submit" : "Test Response"} type="submit" loading={IsPendingProcessGenericIo || IsPendingProcessGenericIOTextToImageGemini} />
-      </form>
-      <div className='mt-4 min-h-[300px]  shadow-lg rounded-lg p-2'>
-        <h2>Output</h2>
-        <div className='min-h-[300px] bg-slate-100'>
-         
-          <div dangerouslySetInnerHTML={{ __html: htmlResponse }} />
-          {(lowResolutionImage || mediumResolutionImage || highResolutionImage) && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
-              {[
-                { url: lowResolutionImage, label: 'Low' },
-                { url: mediumResolutionImage, label: 'Medium' },
-                { url: highResolutionImage, label: 'High' },
-              ]
-                .filter(item => !!item.url)
-                .map(item => (
-                  <div key={item.label} className="bg-white rounded-lg border shadow-sm p-2 flex flex-col">
-                    <a href={item.url as string} target="_blank" rel="noreferrer" className="block">
-                      <img
-                        src={item.url as string}
-                        alt={`${item.label} Resolution Image`}
-                        className="w-full h-64 object-contain rounded-md bg-gray-50"
+            {/* Divider */}
+            <div className="border-t border-gray-200 my-6" />
+
+            {/* User Input Fields Section */}
+            {!viewOnly && (
+              <div className="space-y-4">
+                <div className="flex  justify-between flex-col">
+                  <h2 className="text-xl font-semibold text-gray-800 text-left">User Input Fields</h2>
+                  <Button
+                    label="Add New Field"
+                    type="button"
+                    onClick={() => {
+                      setIsAddFieldModalOpen(true);
+                    }}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm"
+                  />
+                </div>
+
+                {/* Add Field Modal */}
+                <Modal
+                  open={isAddFieldModalOpen}
+                  onSave={() => {
+                    handleAddField(currentField);
+                  }}
+                  handleClose={() => {
+                    setIsAddFieldModalOpen(false);
+                    setCurrentField({
+                      name: '',
+                      label: '',
+                      placeholder: '',
+                      type: 'text',
+                    });
+                  }}>
+                  <div className="space-y-4">
+                    <h2 className="text-lg font-semibold">Add New Field</h2>
+                    <div className="space-y-4">
+                      <Input
+                        name="name"
+                        label="Field Name(No space)"
+                        placeholder="Enter field name"
+                        error={false}
+                        value={currentField.name}
+                        onChange={e => {
+                          const value = e.target.value.replace(/\s/g, '');
+                          setCurrentField({
+                            ...currentField,
+                            name: value,
+                          });
+                        }}
                       />
-                    </a>
-                    <div className="flex items-center justify-between mt-2">
-                      <span className="text-sm text-gray-600">
-                        {item.label} Resolution
-                        {imageMetaByUrl[item.url as string] && (
-                          <>
-                            {' '}
-                            <span className="text-gray-400">•</span>{' '}
-                            <span>
-                              {imageMetaByUrl[item.url as string].width}×{imageMetaByUrl[item.url as string].height}
-                            </span>
-                            {' '}
-                            <span className="text-gray-400">•</span>{' '}
-                            <span>
-                              {formatBytes(imageMetaByUrl[item.url as string].bytes)}
-                            </span>
-                          </>
-                        )}
-                      </span>
-                      <a
-                        href={item.url as string}
-                        download
-                        className="text-sm text-blue-600 hover:underline"
-                      >
-                        Download
-                      </a>
+                      <Input
+                        name="label"
+                        label="Field Label"
+                        placeholder="Enter field label"
+                        value={currentField.label}
+                        error={false}
+                        onChange={e => {
+                          setCurrentField({
+                            ...currentField,
+                            label: e.target.value,
+                          });
+                        }}
+                      />
+                      <Input
+                        name="placeholder"
+                        label="Field Placeholder"
+                        placeholder="Enter field placeholder"
+                        value={currentField.placeholder}
+                        error={false}
+                        onChange={e => {
+                          setCurrentField({
+                            ...currentField,
+                            placeholder: e.target.value,
+                          });
+                        }}
+                      />
+                      <Select
+                        name="type"
+                        label="Field Type"
+                        value={currentField.type}
+                        options={[
+                          { label: 'Text', value: 'text' },
+                          { label: 'Number', value: 'number' },
+                        ]}
+                        onChange={e => {
+                          setCurrentField({
+                            ...currentField,
+                            type: e.target.value as
+                              | 'text'
+                              | 'number'
+                              | 'email'
+                              | 'phone'
+                              | 'date'
+                              | 'time'
+                              | 'checkbox'
+                              | 'radio'
+                              | 'select'
+                              | 'textarea',
+                          });
+                        }}
+                      />
                     </div>
                   </div>
-                ))}
+                </Modal>
+
+                {/* Custom Fields List */}
+                <div className="space-y-3">
+                  {customFields
+                    ?.filter(field => field.name !== 'custom_prompt' && field.name !== 'response_format')
+                    ?.map((field, index) => (
+                      <div key={index} className="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg">
+                        <div className="flex-1">
+                          <TextInput
+                            name={field.name as keyof CreateToolInput}
+                            control={control}
+                            label={field.label}
+                            placeholder={field.placeholder}
+                            error={false}
+                            type={field.type}
+                          />
+                        </div>
+                        {!viewOnly && (
+                          <div className="flex-shrink-0">
+                            <IconButton
+                              onClick={() => {
+                                setCustomFields(customFields.filter((_, i) => i !== index));
+                              }}
+                              className="text-red-500 hover:text-red-700">
+                              <FaTrash />
+                            </IconButton>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                </div>
+              </div>
+            )}
+
+            {/* Divider */}
+            <div className="border-t border-gray-200 my-6" />
+
+            {/* Creator Guides Section */}
+            {!viewOnly && (
+              <div className="space-y-4">
+                <h2 className="text-xl font-semibold text-gray-800">Creator Guides</h2>
+                
+                <div className="space-y-4">
+                  <TextArea
+                    name="custom_prompt"
+                    control={control}
+                    label="Custom Prompt"
+                    placeholder="Enter your custom prompt"
+                    error={false}
+                    rows={6}
+                  />
+                  <TextArea
+                    name="response_format"
+                    placeholder="Enter your response format"
+                    error={false}
+                    control={control}
+                    label="Response Format Guide"
+                    rows={2}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Action Buttons */}
+            <div className="flex space-x-4 pt-6 sticky bottom-0 ">
+              <Button 
+                label={viewOnly ? "Submit" : "Test Response"} 
+                type="submit" 
+                loading={IsPendingProcessGenericIo || IsPendingProcessGenericIOTextToImageGemini}
+                className="flex-1 bg-green-600 hover:bg-green-700 text-white" 
+                disabled={!isEdit}
+              />
+              {!viewOnly && (
+                <Button 
+                  label="Save" 
+                  type="button" 
+                  onClick={handleSave}
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                />
+              )}
             </div>
-          )}
+          </form>
         </div>
       </div>
-      <div>
-        {!viewOnly && <Button label="Save" type="button" onClick={handleSave} />}
+
+      {/* Right Side - Output */}
+      <div className="w-2/3  p-6 bg-slate-50">
+        <div className="h-full">
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">Output</h2>
+          <div className="bg-white rounded-lg shadow-sm border h-full overflow-y-auto">
+            <div className="p-6">
+              {/* HTML Response */}
+              <div dangerouslySetInnerHTML={{ __html: htmlResponse }} />
+              
+              {/* Image Results */}
+              {(lowResolutionImage || mediumResolutionImage || highResolutionImage) && (
+                <div className="grid grid-cols-1 gap-4 mt-6">
+                  {[
+                    { url: lowResolutionImage, label: 'Low' },
+                    { url: mediumResolutionImage, label: 'Medium' },
+                    { url: highResolutionImage, label: 'High' },
+                  ]
+                    .filter(item => !!item.url)
+                    .map(item => (
+                      <div key={item.label} className="bg-gray-50 rounded-lg border p-4">
+                        <a href={item.url as string} target="_blank" rel="noreferrer" className="block">
+                          <img
+                            src={item.url as string}
+                            alt={`${item.label} Resolution Image`}
+                            className="w-full h-64 object-contain rounded-md bg-white"
+                          />
+                        </a>
+                        <div className="flex items-center justify-between mt-3">
+                          <span className="text-sm text-gray-600">
+                            {item.label} Resolution
+                            {imageMetaByUrl[item.url as string] && (
+                              <>
+                                {' '}
+                                <span className="text-gray-400">•</span>{' '}
+                                <span>
+                                  {imageMetaByUrl[item.url as string].width}×{imageMetaByUrl[item.url as string].height}
+                                </span>
+                                {' '}
+                                <span className="text-gray-400">•</span>{' '}
+                                <span>
+                                  {formatBytes(imageMetaByUrl[item.url as string].bytes)}
+                                </span>
+                              </>
+                            )}
+                          </span>
+                          <a
+                            href={item.url as string}
+                            download
+                            className="text-sm text-blue-600 hover:underline"
+                          >
+                            Download
+                          </a>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
