@@ -3,7 +3,15 @@ import './globals.css';
 import Head from 'next/head';
 import { TopLevelWrapper } from 'src/features/TopLevelWrapper';
 import { domainConfig } from 'src/config/domainConfig';
+import { Metadata } from 'next';
 
+export const metadata: Metadata = {
+  other: {
+    "google-adsense-account": "ca-pub-9683433840347502",
+    "impact-site-verification": "a3169950-661d-48fc-a4d5-94c5eb26c03f",
+  },
+
+};
 
 
 export default function RootLayout({
