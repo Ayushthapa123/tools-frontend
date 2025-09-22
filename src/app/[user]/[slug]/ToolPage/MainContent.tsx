@@ -7,6 +7,7 @@ import { ToolCreateAndTestForm } from 'src/app/app/tool/[slug]/ToolCreateAndTest
 import { ToolExecuteForm } from 'src/app/app/tool/[slug]/ToolExecuteForm';
 import { FaBookmark } from 'react-icons/fa';
 import CommentSection from './CommentSection';
+import RelatedToolsSection from './RelatedToolsSection';
 
 interface Iprops {
   tool: Tool | undefined | null;
@@ -126,6 +127,9 @@ export default function MainContent(props: Iprops) {
               <div className='mx-auto max-w-6xl mt-10'>
                 {/* comments section */}
                 <CommentSection comments={toolData?.comment || undefined} toolId={Number(toolData?.id ?? 0)} toolType={toolData?.toolType ?? ToolType.Io} />
+              </div>
+              <div className='mx-auto max-w-6xl mt-10'> 
+                <RelatedToolsSection slug={toolData?.slug ?? ''} />
               </div>
             </div>
           </div>

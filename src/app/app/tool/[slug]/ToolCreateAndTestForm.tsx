@@ -41,6 +41,7 @@ import { enqueueSnackbar } from 'notistack';
 import { useRouter } from 'next/navigation';
 import { enumToOptions } from 'src/utils/enumToArray';
 import ReactSelect from 'src/features/react-hook-form/ReactSelect';
+import { GeminiApiKeySection } from '../../settings/GemenaiApiTokenSection';
 
 // it takes dynamic fields and gives response based on the fields
 
@@ -170,7 +171,10 @@ export const ToolCreateAndTestForm = ({
   const [mediumResolutionImage, setMediumResolutionImage] = useState<string>('');
   const [highResolutionImage, setHighResolutionImage] = useState<string>('');
 
-  const [imageMetaByUrl, setImageMetaByUrl] = useState<Record<string, { width: number; height: number; bytes: number }>>({});
+  const [imageMetaByUrl, setImageMetaByUrl] = useState<Record<string, { width: number; height: number; bytes: number }>>({}); 
+
+  const [geminiApiKeyError, setGeminiApiKeyError] = useState(false); 
+  const [gemenaiApiKeyErrorCode, setGemenaiApiKeyErrorCode] = useState<string | null>(null);
 
   const formatBytes = (bytes: number): string => {
     if (!bytes || bytes < 0) return '';
@@ -276,6 +280,10 @@ export const ToolCreateAndTestForm = ({
       },
     }).then(res => {
       setHtmlResponse(res.processGenericIO.data?.htmlResponse || '');
+      if(res.processGenericIO.error?.code){
+        setGeminiApiKeyError(true);
+        setGemenaiApiKeyErrorCode(res.processGenericIO.error?.code);
+      }
     });
   }else if(tooltype === ToolType.IoTextToImage) {
     MutateAsyncProcessGenericIOTextToImageGemini({
@@ -356,6 +364,11 @@ export const ToolCreateAndTestForm = ({
 
   return (
     <div className="flex h-full border rounded ">
+       <Modal  open={geminiApiKeyError} handleClose={() => setGeminiApiKeyError(false)}>
+        <div className="space-y-4">
+        <GeminiApiKeySection />
+        </div>
+      </Modal>
       {/* Left Sidebar - Input Fields */}
       <div className="w-1/3  border-r ">
         <div className="p-6">
@@ -436,7 +449,7 @@ export const ToolCreateAndTestForm = ({
 
             {/* User Input Fields Section */}
             {!viewOnly && (
-              <div className="space-y-4">
+              <div className="space-y-4 ">
                 <div className="flex  justify-between flex-col">
                   <h2 className="text-xl font-semibold text-gray-800 text-left">User Input Fields</h2>
                   <Button
@@ -541,7 +554,7 @@ export const ToolCreateAndTestForm = ({
                   {customFields
                     ?.filter(field => field.name !== 'custom_prompt' && field.name !== 'response_format')
                     ?.map((field, index) => (
-                      <div key={index} className="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg">
+                      <div key={index} className="flex items-center space-x-2 p-3  rounded-lg">
                         <div className="flex-1">
                           <TextInput
                             name={field.name as keyof CreateToolInput}

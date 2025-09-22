@@ -1,0 +1,25 @@
+query GetRelatedToolsBySlug($slug: String!, $toolStatus: ToolStatus, $count: Int) {
+  getRelatedToolsBySlug(slug: $slug, toolStatus: $toolStatus, count: $count) {
+    data {
+      id
+      slug
+      name
+      shortDescription
+      thumbnailUrl
+      toolStatus
+      ownerId
+      handle
+      ranking
+      createdAt
+      updatedAt
+      owner {
+        username
+      }
+    }
+    error {
+      code
+      message
+      path
+    }
+  }
+}

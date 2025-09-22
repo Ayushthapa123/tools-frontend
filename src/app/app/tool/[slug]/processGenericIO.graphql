@@ -5,7 +5,8 @@ mutation ProcessGenericIO($input: IOGenericInput!) {
       htmlResponse
     }
     error {
-      message
+      message 
+      code
     }
   }
 }
