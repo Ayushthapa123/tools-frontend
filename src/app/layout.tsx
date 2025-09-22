@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { TopLevelWrapper } from 'src/features/TopLevelWrapper';
 import { domainConfig } from 'src/config/domainConfig';
 import { Metadata } from 'next';
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   other: {
@@ -35,9 +36,18 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0"  />
         <meta name='impact-site-verification' content='a3169950-661d-48fc-a4d5-94c5eb26c03f' />
         <meta name="google-adsense-account" content="ca-pub-9683433840347502" />
+    
       </Head>
       <body className={`bg-base-body font-sora`}>
+           {/* Google AdSense script (must be outside <head>) */}
+      
         <TopLevelWrapper>{children}</TopLevelWrapper>
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9683433840347502"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

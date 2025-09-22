@@ -8,6 +8,7 @@ import MainContent from './MainContent';
 import { CommonNav } from 'src/features/NavBar/CommonNav';
 import LoadingSpinner from 'src/components/Loading';
 import { notFound } from 'next/navigation';
+import AdsenseAd from 'src/components/AdsenseAd';
 export function ToolPage({
 
   toolData,
@@ -33,6 +34,7 @@ export function ToolPage({
               />
             )}
           </div>
+          <AdsenseAd />
           <Footer />
         </div>
       </div>
