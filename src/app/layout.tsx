@@ -48,6 +48,20 @@ export default function RootLayout({
           crossOrigin="anonymous"
           strategy="afterInteractive"
         />
+            <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-BCW602NW1Y"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            // Important: disable automatic page_view for SPA apps
+            gtag('config', 'G-BCW602NW1Y', { send_page_view: false });
+          `}
+        </Script>
       </body>
     </html>
   );

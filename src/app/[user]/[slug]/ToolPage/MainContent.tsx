@@ -44,7 +44,7 @@ export default function MainContent(props: Iprops) {
       <div className="">
         <div className="box-border w-full lg:flex lg:gap-8">
           <div className="box-border flex-grow overflow-x-hidden overflow-y-hidden rounded-xl ">
-            <div className="mb-2">
+            <div className="mb-2 px-2 md:px-0">
               <div className="mb-10  p-5 ">
                 <div className=" mx-auto max-w-4xl">
             
