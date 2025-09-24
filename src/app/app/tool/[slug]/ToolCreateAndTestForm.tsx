@@ -45,7 +45,7 @@ import { GeminiApiKeySection } from '../../settings/GemenaiApiTokenSection';
 
 // it takes dynamic fields and gives response based on the fields
 
-const toolTypeOptions= enumToOptions(ToolType)
+const toolTypeOptions= enumToOptions(ToolType).filter(option => option.value !== ToolType.Curd)
 const toolStatusOptions= enumToOptions(ToolStatus)
 const visibilityOptions= enumToOptions(VisibilityType)
 
@@ -74,7 +74,7 @@ export const ToolCreateAndTestForm = ({
       handle: tool?.data?.handle ?? '',
       toolType: tool?.data?.toolType ?? '',
       toolStatus: tool?.data?.toolStatus ?? '',
-      visibility: tool?.data?.visibility ?? '',
+      visibility: tool?.data?.visibility ?? VisibilityType.Public,
       custom_prompt:
         JSON.parse(tool?.data?.inputSchema?.schema ?? '[]')?.find(
           (item: any) => item.name === 'custom_prompt',

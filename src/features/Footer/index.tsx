@@ -28,6 +28,11 @@ const Footer = () => {
                 <p className="text-gray-500 text-base lg:text-sm  text-center font-semibold">Categories</p>
               </Link>
             </div>
+            <div>
+              <Link href="/aitools">
+                <p className="text-gray-500 text-base lg:text-sm  text-center font-semibold">Tools</p>
+              </Link>
+            </div>
             
         
        
