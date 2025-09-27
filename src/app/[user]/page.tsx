@@ -18,7 +18,7 @@ type Props = {
 
 
 import { CommonNav } from 'src/features/NavBar/CommonNav';
-import { ToolCard } from './cards/ToolCard';
+import { ToolCard } from '../../components/ToolCard';
 
 export async function generateMetadata(
   { params, searchParams }: Props,
@@ -94,7 +94,7 @@ export default async function Home({params}: {params: {user: string}}) {
           <div className="space-y-4">
             <h2 className="text-xl font-semibold text-gray-800">Tools</h2>
             {userData?.data?.tool && userData.data.tool.length > 0 ? (
-              <div className="space-y-4">
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {userData.data.tool.map((tool: ToolData) => (
                   <ToolCard tool={tool} username={username} key={tool.id} />
                 ))}

@@ -8,7 +8,7 @@ import { Modal } from 'src/components/Modal';
 import { Input } from 'src/components/Input';
 import { Select } from 'src/components/Select';
 import IconButton from 'src/components/IconButton';
-import { FaTrash, FaCopy } from 'react-icons/fa';
+import { FaTrash, FaCopy, FaShare, FaTwitter, FaFacebook, FaLinkedin, FaLink, FaSave } from 'react-icons/fa';
 import { useGraphqlClientRequest } from 'src/hooks/useGraphqlClientRequest';
 import {
   CreateTool,
@@ -32,6 +32,9 @@ import {
   ProcessGenericIoTextToImageGeminiMutation,
   ProcessGenericIoTextToImageGeminiMutationVariables,
   UserType,
+  CreateSavedToolMutationVariables,
+  CreateSavedTool,
+  CreateSavedToolMutation,
 } from 'src/gql/graphql';
 import { useMutation } from '@tanstack/react-query';
 import { useUserStore } from 'src/store/userStore';
@@ -95,6 +98,7 @@ export const ToolExecuteForm = ({
     isEdit ? (JSON.parse(tool?.data?.inputSchema?.schema ?? '[]') as Field[]).filter(field => field.name !== 'custom_prompt' && field.name !== 'response_format') : [],
   );
   const [isAddFieldModalOpen, setIsAddFieldModalOpen] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [executeCount, setExecuteCount] = useState(0);
 
 
@@ -154,6 +158,24 @@ export const ToolExecuteForm = ({
 
   const { mutateAsync: mutateUpdateInputSchemaAsync, isPending: isUpdateInputSchemaPending } =
     useMutation({ mutationFn: mutateUpdateInputSchema });
+
+  const mutateCreateSavedTool = useGraphqlClientRequest<CreateSavedToolMutation, CreateSavedToolMutationVariables>(
+    CreateSavedTool.loc?.source.body!);
+
+  const { mutateAsync: mutateCreateSavedToolAsync, isPending: isCreateSavedToolPending } = useMutation({ mutationFn: mutateCreateSavedTool });
+
+const createSavedTool = () => {
+  mutateCreateSavedToolAsync({
+    createSavedToolInput: {
+      toolId: Number(tool?.data?.id) || 0,
+      userId: user?.userId || 0,
+    },
+  }).then(res => {
+    enqueueSnackbar(' tool saved successfully', { variant: 'success' });
+  }).catch(err => {
+    enqueueSnackbar('Failed to save saved tool', { variant: 'error' });
+  });
+};
 
   const [htmlResponse, setHtmlResponse] = useState<string>('');
   const [lowResolutionImage, setLowResolutionImage] = useState<string>('');
@@ -251,6 +273,45 @@ export const ToolExecuteForm = ({
       console.error('Failed to copy: ', err);
       enqueueSnackbar('Failed to copy response', { variant: 'error' });
     }
+  };
+
+  // Function to copy tool link to clipboard
+  const copyToolLink = async () => {
+    try {
+      const toolUrl = `${window.location.origin}/app/tool/${tool?.data?.slug}`;
+      await navigator.clipboard.writeText(toolUrl);
+      enqueueSnackbar('Tool link copied to clipboard!', { variant: 'success' });
+      setIsShareModalOpen(false);
+    } catch (err) {
+      console.error('Failed to copy link: ', err);
+      enqueueSnackbar('Failed to copy link', { variant: 'error' });
+    }
+  };
+
+  // Function to share on Twitter
+  const shareOnTwitter = () => {
+    const toolUrl = `${window.location.origin}/app/tool/${tool?.data?.slug}`;
+    const text = `Check out this AI tool: ${tool?.data?.name}`;
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(toolUrl)}`;
+    window.open(twitterUrl, '_blank', 'width=600,height=400');
+    setIsShareModalOpen(false);
+  };
+
+  // Function to share on Facebook
+  const shareOnFacebook = () => {
+    const toolUrl = `${window.location.origin}/app/tool/${tool?.data?.slug}`;
+    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(toolUrl)}`;
+    window.open(facebookUrl, '_blank', 'width=600,height=400');
+    setIsShareModalOpen(false);
+  };
+
+  // Function to share on LinkedIn
+  const shareOnLinkedIn = () => {
+    const toolUrl = `${window.location.origin}/app/tool/${tool?.data?.slug}`;
+    const text = `Check out this AI tool: ${tool?.data?.name}`;
+    const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(toolUrl)}&title=${encodeURIComponent(text)}`;
+    window.open(linkedinUrl, '_blank', 'width=600,height=400');
+    setIsShareModalOpen(false);
   };
 
   const prev = [
@@ -532,6 +593,68 @@ export const ToolExecuteForm = ({
                 </Modal>
               </div>
 
+              {/* Share Modal */}
+              <div>
+                <Modal
+                  open={isShareModalOpen}
+                  onSave={() => {}}
+                  handleClose={() => {
+                    setIsShareModalOpen(false);
+                  }}
+                  title="Share Tool"
+                  showSaveButton={false}
+                >
+                  <div className="space-y-4">
+                    <div className="text-center">
+                      <h3 className="text-lg font-medium text-gray-900 mb-2">
+                        Share &quot;{tool?.data?.name}&quot;
+                      </h3>
+                      <p className="text-sm text-gray-500">
+                        Choose how you&apos;d like to share this tool
+                      </p>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-3 text-primary">
+                      <button
+                        onClick={copyToolLink} 
+                        type="button"
+                        className="flex items-center justify-center gap-2 p-3 border  text-primary rounded-lg  hover:bg-gray-50  "
+                      >
+                        <FaLink className="" />
+                        <span className="text-sm font-medium">Copy Link</span>
+                      </button>
+                      
+                      <button
+                        type="button"
+                        onClick={shareOnTwitter}
+                        className="flex items-center justify-center gap-2 p-3 border  text-primary rounded-lg hover:bg-gray-50  "
+                      >
+                        <FaTwitter className="text-blue-400" />
+                        <span className="text-sm font-medium">Twitter</span>
+                      </button>
+                      
+                      <button
+                        type="button"
+                        onClick={shareOnFacebook}
+                        className="flex items-center justify-center gap-2 p-3 border  text-primary  rounded-lg hover:bg-gray-50  "
+                      >
+                        <FaFacebook className="text-blue-600" />
+                        <span className="text-sm font-medium">Facebook</span>
+                      </button>
+                      
+                      <button
+                        type="button"
+                        onClick={shareOnLinkedIn}
+                        className="flex items-center justify-center gap-2 p-3 border  text-primary rounded-lg hover:bg-gray-50  "
+                      >
+                        <FaLinkedin className="text-blue-700" />
+                        <span className="text-sm font-medium">LinkedIn</span>
+                      </button>
+                    </div>
+                  </div>
+                </Modal>
+              </div>
+
               <div className="grid grid-cols-1 gap-3 my-2">
                 {customFields
                   ?.filter(field => field.name !== 'custom_prompt' && field.name !== 'response_format')
@@ -586,7 +709,7 @@ export const ToolExecuteForm = ({
               <Button label={viewOnly ? "Submit" : "Test Response"} type="submit" loading={isPending || isPendingTextToImage} disabled={isDisabled} />
             </div>
             <div>
-             {executeCount > 1 && <p className="text-sm text-gray-500">Please Login/Signup for more credits.</p>}
+             {executeCount > 1 && !user.userId && <p className="text-sm text-gray-500">Please Login/Signup for more credits.</p>}
             </div>
           </form>
           </div>
@@ -595,15 +718,33 @@ export const ToolExecuteForm = ({
         <div className='md:col-span-8  overflow-y-scroll bg-white border border-gray-200 rounded-xl'>
           <div className=' rounded-xl  p-4 shadow-sm md:pl-3 '>
             <div className='flex items-center justify-between'>
-              <h2 className="text-base font-medium">Output</h2>
-              {htmlResponse && (
+              <div className='flex items-center gap-2 w-full'>
+                <div className=' flex-grow'>
+                <h2 className="text-base font-medium">Output</h2> 
+                </div>
+                <div className="flex items-center gap-2">
                 <IconButton
-                  onClick={copyToClipboard}
-                  className="text-gray-500 hover:text-gray-700 transition-colors"
-                >
-                  <FaCopy className="text-lg" />
-                </IconButton>
-              )}
+                    onClick={() => createSavedTool()}
+                    className="text-gray-500 hover:text-gray-700 transition-colors"
+                  >
+                    <FaSave className="text-lg" />
+                  </IconButton>
+                  <IconButton
+                    onClick={() => setIsShareModalOpen(true)}
+                    className="text-gray-500 hover:text-gray-700 transition-colors"
+                  >
+                    <FaShare className="text-lg" />
+                  </IconButton>
+                  {htmlResponse && (
+                    <IconButton
+                      onClick={copyToClipboard}
+                      className="text-gray-500 hover:text-gray-700 transition-colors"
+                    >
+                      <FaCopy className="text-lg" />
+                    </IconButton>
+                  )}
+                </div>
+              </div>
             </div>
             <div className='relative h-full'>
               <div className='  bg-slate-50 rounded-md p-3  h-full'>

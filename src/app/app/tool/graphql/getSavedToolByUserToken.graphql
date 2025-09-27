@@ -1,0 +1,28 @@
+query GetSavedToolsByUserToken {
+  getSavedToolsByUserToken {
+    error {
+      message
+      code
+    }
+    data {
+      id
+      toolId
+      user {
+        id
+        email
+        fullName
+        username
+        profilePicture
+      }
+      tool {
+        id
+        name
+        shortDescription
+        slug 
+        thumbnailUrl
+      }
+      createdAt
+      updatedAt
+    }
+  }
+}

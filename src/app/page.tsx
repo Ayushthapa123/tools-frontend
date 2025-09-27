@@ -5,6 +5,7 @@ import { domainConfig } from 'src/config/domainConfig';
 
 import MainContentSSR from './MainContentSSR';
 import Footer from 'src/features/Footer';
+import AdsenseAd from 'src/components/AdsenseAd';
 export const metadata: Metadata = {
   title: "Research, Discover & List the Best AI Tools- toolsland AI",
   description:
@@ -48,6 +49,7 @@ export default function Home() {
             {/* <h1 className='text-3xl font-bold'>AI Tools</h1> */}
           </div>
         </MainContentSSR>
+        <AdsenseAd/>
         <Footer/>
       </main>
     </div>  

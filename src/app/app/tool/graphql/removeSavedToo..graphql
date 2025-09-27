@@ -1,0 +1,14 @@
+mutation RemoveSavedTool($id: Float!) {
+  removeSavedTool(id: $id) {
+    data {
+      id
+      toolId
+   
+    }
+    error {
+      message
+      code
+      path
+    }
+  }
+}

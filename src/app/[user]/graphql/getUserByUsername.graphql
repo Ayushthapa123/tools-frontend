@@ -10,7 +10,8 @@ query GetUserByUsername($username: String!) {
         name
         slug
         shortDescription
-        thumbnailUrl
+        thumbnailUrl 
+        createdAt
       }
     }
     error {

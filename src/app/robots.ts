@@ -15,6 +15,8 @@ export default function robots(): MetadataRoute.Robots {
       "https://www.toolsland.ai/ai-capability/sitemap.xml",
       "https://www.toolsland.ai/product-type/sitemap.xml",
       "https://www.toolsland.ai/user-type/sitemap.xml",
+      "https://www.toolsland.ai/user/sitemap.xml",
+
     ],
   };
 }

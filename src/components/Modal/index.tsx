@@ -10,6 +10,7 @@ interface Iprops {
   onSave?: () => void;
   handleClose: () => void;
   className?: string;
+  showSaveButton?: boolean;
 }
 
 export const Modal = (props: Iprops) => {
@@ -23,7 +24,7 @@ interface IModalContent extends Omit<Iprops, 'label'> {
   onClose: () => void;
 }
 const ModalContents = (props: IModalContent) => {
-  const { title, children, actionLabel, onClose, onSave, open, className } = props;
+  const { title, children, actionLabel, onClose, onSave, open, className, showSaveButton = true } = props;
 
   const handleSave = async () => {
     onSave?.();
@@ -53,11 +54,13 @@ const ModalContents = (props: IModalContent) => {
                   Close!
                 </label>
               </div>
-              <div>
-                <label className="btn btn-primary" onClick={() => handleSave()}>
-                  {actionLabel ?? 'Save'}
-                </label>
-              </div>
+              {showSaveButton && (
+                <div>
+                  <label className="btn btn-primary" onClick={() => handleSave()}>
+                    {actionLabel ?? 'Save'}
+                  </label>
+                </div>
+              )}
             </div>
           </div>
         </div>

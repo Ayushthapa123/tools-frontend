@@ -1,0 +1,14 @@
+mutation UpdateSavedTool($updateSavedToolInput: UpdateSavedTool!) {
+  updateSavedTool(updateSavedToolInput: $updateSavedToolInput) {
+    data {
+      id
+      toolId
+    
+    }
+    error {
+      message
+      code
+      path
+    }
+  }
+}

@@ -9,6 +9,8 @@ import {
   ToolUserType,
   GetListedAiToolsWithHighPopularityScore,
   AiCapability,
+  GetAllTools,
+  ToolData,
 } from 'src/gql/graphql';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
@@ -21,6 +23,7 @@ import { ListedAiToolCardPublicSSR } from 'src/features/ListedAiToolCardPublicSS
 import Link from 'next/link';
 import EnumLister from 'src/features/EnumLister';
 import { enumToOptions } from 'src/utils/enumToArray';
+import { ToolCard } from 'src/components/ToolCard';
 
 export default async function MainContentSSR({ children }: { children: React.ReactNode }) {
   // Fetch user profile by userId
@@ -55,6 +58,13 @@ export default async function MainContentSSR({ children }: { children: React.Rea
   });
 
   const bestStudentAiTools = studentData?.getListedAiToolsByUserType;
+
+  const allToolsData: any = await graphqlClient.request(GetAllTools, {
+    pageSize: 30,
+    page: 1,
+  });
+
+  const allTools = allToolsData?.getAllTools;
 
   return (
     <ThemeProvider>
@@ -132,11 +142,28 @@ export default async function MainContentSSR({ children }: { children: React.Rea
               </div>
             </div>
 
+            <div className="my-10 items-center justify-center flex">
+              <div className="from-blue-600/10 border-blue-200/50 mb-8 inline-flex items-center gap-2 rounded-full border bg-gradient-to-r to-purple-600/10 px-6 py-3">
+                <span className="bg-blue-500 h-2 w-2 animate-pulse rounded-full"></span>
+                <span className="text-blue-700 font-medium">Custom AI Tools</span>
+              </div>
+            </div>
+
+            <div className="grid w-full grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {allTools?.data?.map((tool: any) => (
+                <div
+                  key={tool.id}
+                  className="group transition-transform duration-300 hover:scale-105">
+                  <ToolCard tool={tool as ToolData} username={tool.owner?.username ?? ''} />
+                </div>
+              ))}
+            </div>
+
             {/* Children Content */}
             {children}
 
             {/* Most Popular AI Tools Section */}
-            <div className="mb-20">
+            <div className="mb-20 mt-20">
               <div className="mb-12 text-center">
                 <div className="to-red-500/10 mb-6 inline-flex items-center gap-2 rounded-full border border-orange-200/50 bg-gradient-to-r from-orange-500/10 px-4 py-2">
                   <span className="h-2 w-2 rounded-full bg-orange-500"></span>

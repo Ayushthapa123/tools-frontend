@@ -1,0 +1,14 @@
+mutation CreateSavedTool($createSavedToolInput: CreateSavedTool!) {
+  createSavedTool(createSavedToolInput: $createSavedToolInput) {
+    data {
+      id
+      toolId
+     
+    }
+    error {
+      message
+      code
+      path
+    }
+  }
+}
