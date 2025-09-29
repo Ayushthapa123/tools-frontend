@@ -13,7 +13,8 @@ query GetRelatedToolsBySlug($slug: String!, $toolStatus: ToolStatus, $count: Int
       createdAt
       updatedAt
       owner {
-        username
+        username 
+      
       }
     }
     error {

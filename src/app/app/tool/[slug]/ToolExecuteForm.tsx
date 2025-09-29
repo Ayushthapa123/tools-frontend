@@ -440,7 +440,7 @@ const createSavedTool = () => {
     }
   }, [executeCount]);
 
-  const isDisabled = (isPending || isPendingTextToImage || executeCount > 0) && (tool?.data?.toolType === ToolType.IoTextToImage) && (tool.data.ownerId === 1) ;
+  const isDisabled = (isPending || isPendingTextToImage || executeCount > 0) && (tool?.data?.toolType === ToolType.IoTextToImage) && (tool.data?.ownerId === 1) ;
 
   return (
     <div className="w-full  px-4 md:px-6 bg-gray-50">
