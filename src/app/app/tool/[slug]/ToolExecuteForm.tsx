@@ -447,7 +447,7 @@ const createSavedTool = () => {
       
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6 h-[calc(100vh-96px)] relative ">
         <div className='md:col-span-4 h-full'>
-          <div className="h-full rounded-xl border border-gray-200 bg-white shadow-sm md:pr-3">
+          <div className="h-[calc(100vh-96px)] rounded-xl border border-gray-200 bg-white shadow-sm md:pr-3 overflow-y-auto ">
           <div className="flex items-start justify-between gap-3 p-4 pb-0">
             <div className="min-w-0">
               <h1 className="text-lg font-semibold truncate">{tool?.data?.name || 'Execute Tool'}</h1>
@@ -459,7 +459,7 @@ const createSavedTool = () => {
               <Button label="Save" type="button" onClick={handleSave} />
             )}
           </div>
-          <form onSubmit={handleSubmit(onSubmit)} className='space-y-4 h-[calc(100%-56px)] overflow-y-auto p-4'>
+          <form onSubmit={handleSubmit(onSubmit)} className='relative space-y-4 h-full p-4'>
             {!viewOnly && <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
               <div className="w-full">
                 <TextInput
