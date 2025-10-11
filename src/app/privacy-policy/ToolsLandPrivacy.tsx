@@ -7,7 +7,7 @@ export default function ToolsLandPrivacy() {
       <p className="mb-4">Last Updated: 2024/07/07</p>
 
       <p className="mb-4">
-        Welcome to <strong>toolsland.ai</strong> (&quot;we&quot;, &quot;us&quot;, or &quot;our&quot;). We are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our AI tools directory platform (the &quot;Service&quot;). By accessing or using our Service, you agree to the terms of this Privacy Policy. If you do not agree, please do not use the Service.
+        Welcome to <strong>toolsland.ai</strong> . We are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our AI tools directory platform . By accessing or using our Service, you agree to the terms of this Privacy Policy. If you do not agree, please do not use the Service.
       </p>
 
       <h2 className="mb-4 mt-6 text-2xl font-semibold">1. Information We Collect</h2>

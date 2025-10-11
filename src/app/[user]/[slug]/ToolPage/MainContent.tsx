@@ -67,6 +67,10 @@ export default function MainContent(props: Iprops) {
                 </div>
               </div>
               {/* Description section */}
+              <div className='mx-auto max-w-6xl relative h-[400px] lg:h-[500px]'> 
+                <Image src={toolData?.toolMetadata?.ogImageUrl ?? ''} alt={toolData?.name ?? ''}  fill className='object-cover rounded-xl' />
+
+              </div>
               <div className="mt-10 rounded-xl rounded-t-none border-t-2 border-gray-100 bg-white/70 pt-1">
                 {/* <h2 className="text-2xl font-semibold text-gray-800">Description</h2> */}
                 <div className="prose mx-auto max-w-6xl p-3 ">
