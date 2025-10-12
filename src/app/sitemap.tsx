@@ -51,6 +51,12 @@ export const SitemapPage = async () => {
       changeFrequency: 'weekly',
       priority: 1,
     },
+    {
+      url: 'https://www.toolsland.ai/toolkits',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 1,
+    },
    
  
     // {
