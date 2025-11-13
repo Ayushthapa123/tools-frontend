@@ -1,5 +1,5 @@
 import ToolCard from './ToolCard';
-import { FaCalculator, FaGlobe, FaList, FaMapMarkerAlt, FaSearchLocation, FaTools, FaUser } from 'react-icons/fa';
+import { FaBook, FaCalculator, FaGlobe, FaList, FaMapMarkerAlt, FaSearchLocation, FaTools, FaUser } from 'react-icons/fa';
 
 export const metadata = {
   title: 'Custom ai Software Tools',
@@ -19,6 +19,13 @@ const tools = [
     description: 'Generate a .com domain name for your business, blog, or project. Available only.',
     icon: <FaGlobe />,
     href: 'https://www.toolsland.ai/tools/dot-com-domain-generator',
+  },
+  // eGuide creator 
+  {
+    title: 'eGuide Creator',
+    description: 'Create an eGuide for your business, blog, or project.',
+    icon: <FaBook />,
+    href: 'https://www.gyanko.com',
   },
   {
     title: 'Travel Destination Finder',
